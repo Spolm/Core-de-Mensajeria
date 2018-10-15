@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="CoreMensajeria">
-    <output-path>$PROJECT_DIR$/out/artifacts/CoreMensajeria</output-path>
-    <root id="archive" name="CoreMensajeria.war" />
-  </artifact>
-</component>
