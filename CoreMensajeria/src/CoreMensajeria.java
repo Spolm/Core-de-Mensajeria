@@ -1,3 +1,5 @@
+import Modulo_1.LogIn;
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
@@ -12,6 +14,7 @@ public class CoreMensajeria extends Application{
     public Set<Class<?>> getClasses() {
         HashSet h = new HashSet<Class<?>>();
         h.add( HelloWorld.class );
+        h.add( LogIn.class);
         return h;
     }
 }
