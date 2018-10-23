@@ -12,32 +12,32 @@ public class Campaign {
         return _idCampaign;
     }
 
-    public void set_idCampaign(int _idCampaign) {
-        this._idCampaign = _idCampaign;
+    public void set_idCampaign(int idCampaign) {
+        _idCampaign = idCampaign;
     }
 
     public String get_nameCampaign() {
         return _nameCampaign;
     }
 
-    public void set_nameCampaign(String _nameCampaign) {
-        this._nameCampaign = _nameCampaign;
+    public void set_nameCampaign(String nameCampaign) {
+        _nameCampaign = nameCampaign;
     }
 
     public String get_descCampaign() {
         return _descCampaign;
     }
 
-    public void set_descCampaign(String _descCampaign) {
-        this._descCampaign = _descCampaign;
+    public void set_descCampaign(String descCampaign) {
+        _descCampaign = descCampaign;
     }
 
     public boolean is_statusCampaign() {
         return _statusCampaign;
     }
 
-    public void set_statusCampaign(boolean _statusCampaign) {
-        this._statusCampaign = _statusCampaign;
+    public void set_statusCampaign(boolean statusCampaign) {
+        _statusCampaign = statusCampaign;
     }
 
     /**
@@ -48,27 +48,27 @@ public class Campaign {
 
     /**
      * Constructor de campañas sin el parametro id
-     * @param _nameCampaign
-     * @param _descCampaign
-     * @param _statusCampaign
+     * @param nameCampaign
+     * @param descCampaign
+     * @param statusCampaign
      */
-    public Campaign(String _nameCampaign, String _descCampaign, boolean _statusCampaign) {
-        this._nameCampaign = _nameCampaign;
-        this._descCampaign = _descCampaign;
-        this._statusCampaign = _statusCampaign;
+    public Campaign(String nameCampaign, String descCampaign, boolean statusCampaign) {
+        _nameCampaign = nameCampaign;
+        _descCampaign = descCampaign;
+        _statusCampaign = statusCampaign;
     }
 
     /**
      * Constructor de campaña con todos los parametros
-     * @param _idCampaign
-     * @param _nameCampaign
-     * @param _descCampaign
-     * @param _statusCampaign
+     * @param idCampaign
+     * @param nameCampaign
+     * @param descCampaign
+     * @param statusCampaign
      */
-    public Campaign(int _idCampaign, String _nameCampaign, String _descCampaign, boolean _statusCampaign) {
-        this._idCampaign = _idCampaign;
-        this._nameCampaign = _nameCampaign;
-        this._descCampaign = _descCampaign;
-        this._statusCampaign = _statusCampaign;
+    public Campaign(int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign) {
+        _idCampaign = idCampaign;
+        _nameCampaign = nameCampaign;
+        _descCampaign = descCampaign;
+        _statusCampaign = statusCampaign;
     }
 }
