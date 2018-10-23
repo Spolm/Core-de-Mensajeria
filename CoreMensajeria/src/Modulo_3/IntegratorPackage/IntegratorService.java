@@ -8,16 +8,12 @@ import java.util.List;
 
 public class IntegratorService {
     private static IntegratorService integratorDAO = null;
-    private DbConnection conn;
-
-    IntegratorService() {
-        this.conn = conn;
-    }
 
     public static IntegratorService getInstance() {
         if (integratorDAO == null)
             integratorDAO = new IntegratorService();
         return integratorDAO;
+
     }
 
     public List<Integrator> listIntegrator() {
@@ -29,16 +25,21 @@ public class IntegratorService {
             ResultSet rs = db.sqlConn("SELECT in_id, in_name, in_messageCost, in_threadCapacity, in_tokenApi" +
                     " FROM integrator");
 
-            while (rs.next()) {
-                IntegratorFactory factory = new IntegratorFactory();
-                String integratorType = rs.getString("in_name");
-                Integrator i = factory.getIntegrator(integratorType, rs.getInt("in_id"), rs.getString("in_name"), rs.getFloat("in_messageCost"),
-                        rs.getInt("in_threadCapacity"), rs.getString("in_tokenApi"));
-                integrators.add(i);
-            }
+            getIntegratorRs(integrators, rs);
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
         }
         return integrators;
     }
+
+    public static void getIntegratorRs(List<Integrator> integrators, ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            IntegratorFactory factory = new IntegratorFactory();
+            String integratorType = rs.getString("in_name");
+            Integrator i = factory.getIntegrator(integratorType, rs.getInt("in_id"), rs.getString("in_name"), rs.getFloat("in_messageCost"),
+                    rs.getInt("in_threadCapacity"), rs.getString("in_tokenApi"));
+            integrators.add(i);
+        }
+    }
+
 }
