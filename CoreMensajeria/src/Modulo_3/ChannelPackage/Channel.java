@@ -52,7 +52,7 @@ public abstract class Channel {
         this.integrators = integrators;
     }
 
-    public Integrator getSingleIntegrator(int id){
+    public Integrator getSingleIntegrator(int id) {
         return this.integrators.get(id);
     }
 }

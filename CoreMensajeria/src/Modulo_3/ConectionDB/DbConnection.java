@@ -7,23 +7,23 @@ import java.sql.SQLException;
 public class DbConnection {
     public Connection connection;
 
-    public DbConnection(){
+    public DbConnection() {
         this.connection = connection;
     }
 
-    public void connect(){
+    public void connect() {
         connection = null;
-        String urlDatabase =  "jdbc:postgresql://localhost/modulo_3";
+        String urlDatabase = "jdbc:postgresql://localhost/modulo_3";
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(urlDatabase,  "postgres", "1234");
+            connection = DriverManager.getConnection(urlDatabase, "postgres", "1234");
         } catch (Exception e) {
             System.out.println(e.toString());
         }
     }
 
-    public void disconnect(){
-        if(connection !=null) try {
+    public void disconnect() {
+        if (connection != null) try {
             connection.close();
         } catch (SQLException ex) {
             System.out.println(ex.toString());

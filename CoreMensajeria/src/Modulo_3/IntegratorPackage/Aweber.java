@@ -8,7 +8,7 @@ public class Aweber extends Integrator {
 
     @Override
     public void testConection() {
-        
+
     }
 
     @Override
