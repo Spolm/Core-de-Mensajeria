@@ -1,9 +1,6 @@
 package Modulo_3.IntegratorPackage;
+import Modulo_3.ConectionDB.*;
 
-import Modulo_3.ConectionDB.DbConnection;
-import Modulo_3.ConectionDB.DbResultSet;
-
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,13 +21,14 @@ public class IntegratorService {
     }
 
     public List<Integrator> listIntegrator() {
-        conn = new DbConnection();
-        conn.connect();
+
+        Sql db = new Sql();
         List<Integrator> integrators = new ArrayList<>();
-        DbResultSet result = new DbResultSet();
+
         try {
-            ResultSet rs = result.getResultSet(conn, "SELECT in_id, in_name, in_messageCost, in_threadCapacity, in_tokenApi" +
+            ResultSet rs = db.sqlConn("SELECT in_id, in_name, in_messageCost, in_threadCapacity, in_tokenApi" +
                     " FROM integrator");
+
             while (rs.next()) {
                 IntegratorFactory factory = new IntegratorFactory();
                 String integratorType = rs.getString("in_name");
