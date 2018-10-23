@@ -13,7 +13,7 @@ public class DbConnection {
 
     public void connect(){
         connection = null;
-        String urlDatabase =  "jdbc:postgresql://localhost/proyectods";
+        String urlDatabase =  "jdbc:postgresql://localhost/modulo_3";
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(urlDatabase,  "postgres", "1234");
