@@ -1,4 +1,4 @@
-package Modulo_3.Integrator;
+package Modulo_3.IntegratorPackage;
 
 public class InfusionSoft extends Integrator {
     @Override

@@ -1,6 +1,6 @@
-package Modulo_3.Channel;
+package Modulo_3.ChannelPackage;
 
-import Modulo_3.Integrator.Integrator;
+import Modulo_3.IntegratorPackage.Integrator;
 
 import java.util.ArrayList;
 

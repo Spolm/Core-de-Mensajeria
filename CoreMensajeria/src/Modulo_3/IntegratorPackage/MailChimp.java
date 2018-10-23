@@ -1,6 +1,4 @@
-package Modulo_3.Integrator;
-
-import Modulo_3.Integrator.Integrator;
+package Modulo_3.IntegratorPackage;
 
 public class MailChimp extends Integrator {
 

@@ -1,4 +1,4 @@
-package Modulo_3.Integrator;
+package Modulo_3.IntegratorPackage;
 
 public interface IIntegrator {
     void testConection();
