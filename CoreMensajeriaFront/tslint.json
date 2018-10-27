@@ -3,13 +3,6 @@
     "node_modules/codelyzer"
   ],
   "rules": {
-    "trailing-comma": [
-      true,
-      {
-        "multiline": "always",
-        "singleline": "never"
-      }
-    ],
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,
@@ -17,6 +10,7 @@
       true,
       "check-space"
     ],
+    "curly": true,
     "eofline": true,
     "forin": true,
     "import-blacklist": [
@@ -31,14 +25,26 @@
     "label-position": true,
     "max-line-length": [
       true,
-      120
+      140
     ],
     "member-access": false,
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "static-field",
+          "instance-field",
+          "static-method",
+          "instance-method"
+        ]
+      }
+    ],
     "no-arg": true,
+    "no-bitwise": true,
     "no-console": [
       true,
       "debug",
-      "log",
+      "info",
       "time",
       "timeEnd",
       "trace"
@@ -49,6 +55,10 @@
     "no-empty": false,
     "no-empty-interface": true,
     "no-eval": true,
+    "no-inferrable-types": [
+      true,
+      "ignore-params"
+    ],
     "no-misused-new": true,
     "no-non-null-assertion": true,
     "no-shadowed-variable": true,
@@ -57,6 +67,7 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
+    "no-unused-expression": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
@@ -105,32 +116,24 @@
     "directive-selector": [
       true,
       "attribute",
-      "ngx",
+      "app",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "ngx",
+      "app",
       "kebab-case"
-    ],
-    "ban": [
-      true,
-      "eval",
-      "fit",
-      "fdescribe",
-      {
-        "name": "$",
-        "message": "please don't"
-      }
     ],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
+    "use-host-property-decorator": true,
+    "no-input-rename": true,
     "no-output-rename": true,
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
-    "no-unused-variable": true
+    "invoke-injectable": true
   }
 }

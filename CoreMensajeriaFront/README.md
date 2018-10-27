@@ -1,87 +1,65 @@
-[![Build Status](https://travis-ci.org/akveo/ngx-admin.svg?branch=master)](https://travis-ci.org/akveo/ngx-admin)
-[![Join the chat at https://gitter.im/ng2-admin/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ng2-admin/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Dependency Status](https://david-dm.org/akveo/ngx-admin/status.svg)](https://david-dm.org/akveo/ng2-admin)
+# SB Admin rewritten in Angular6 and Bootstrap 4
 
-[Who uses ngx-admin?](https://github.com/akveo/ngx-admin/issues/1645)
+Simple Dashboard Admin App built using Angular 6 and Bootstrap 4
 
-# Admin template based on Angular 6+, Bootstrap 4 and <a href="https://github.com/akveo/nebular">Nebular</a>
+This project is a port of the famous Free Admin Bootstrap Theme [SB Admin v6.0](http://startbootstrap.com/template-overviews/sb-admin-2/) to Angular5 Theme.
 
-### Three themes available:
+Powered by [StartAngular](http://startangular.com/) & [StrapUI](http://strapui.com/)
 
-| Corporate Theme |
-|:---------------:|
-|<a target="_blank" href="http://akveo.com/ngx-admin/#/pages/dashboard?theme=corporate&utm_source=github&utm_medium=ngx_admin_readme&utm_campaign=themes"><img src="https://i.imgur.com/axbJYdN.png"/></a>|
+## [Demo](http://rawgit.com/start-angular/SB-Admin-BS4-Angular-6/master/dist/)
 
-| Cosmic Theme | Light Theme |
-|:------------:|:--------------:|
-|<a target="_blank" href="http://akveo.com/ngx-admin/#/pages/dashboard?theme=cosmic&utm_source=github&utm_medium=ngx_admin_readme&utm_campaign=themes"><img src="https://i.imgur.com/FgRZcqL.png"/></a>|<a target="_blank" href="http://akveo.com/ngx-admin/#/pages/dashboard?theme=default&utm_source=github&utm_medium=ngx_admin_readme&utm_campaign=themes"><img src="https://i.imgur.com/fozHlRJ.png"/></a>|
+## [SB Admin Material version](https://github.com/start-javascript/sb-admin-material)
 
-### Ecommerce dashboard
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
 
-| Ecommerce Template |
-|:---------------:|
-|<a target="_blank" href="http://akveo.com/ngx-admin/#/pages/dashboard?utm_source=github&utm_medium=ngx_admin_readme&utm_campaign=themes&utm_content=ecommerce"><img src="https://i.imgur.com/UW7ZmcP.png"/></a>|
+### Introduction
 
-### What's included:
+Provides fast, reliable and extensible starter for the development of Angular projects.
 
-- Angular 6+ & Typescript
-- Bootstrap 4+ & SCSS
-- Responsive layout
-- RTL support
-- High resolution
-- Flexibly configurable themes with **hot-reload** (2 themes included)
-- Authentication module with multiple providers
-- Lots of awesome features:
-  - Buttons
-  - Modals
-  - Popovers
-  - Icons
-  - Typography
-  - Animated searches
-  - Forms
-  - Tabs
-  - Notifications
-  - Tables
-  - Maps
-  - Charts
-  - Editors
-  
-And many more!
+`sb-admin-bs4-angular5` provides the following features:
 
-### Hot Themes Reload
+*   Developed using boostrap-v4.0.0
+*   angular-v6.0.0
+*   angular/cli-v6.0.0
+*   [ng-bootstrap-v2.0.0](https://github.com/ng-bootstrap/)
+*   [ngx-translate-v10.0.0](https://github.com/ngx-translate)
+*   Following the best practices.
+*   Ahead-of-Time compilation support.
+*   Official Angular i18n support.
+*   Production and development builds.
+*   Tree-Shaking production builds.
 
-<a target="_blank" href="http://akveo.com/ngx-admin/#/pages/dashboard?utm_source=github&utm_medium=ngx_admin_readme&utm_campaign=demo"><img src="https://i.imgur.com/XoJtfvK.gif"/></a>
+### How to start
 
-### Demo
+**Note** that this seed project requires **node >=v6.9.0 and npm >=3**.
 
-<a target="_blank" href="http://akveo.com/ngx-admin/">Live Demo</a>
+In order to start the project use:
 
-## Documentation
-This template is using [Nebular](https://github.com/akveo/nebular) modules set, [here you can find documentation and other useful articles](https://akveo.github.io/nebular/docs/guides/install-based-on-starter-kit).
+```bash
+$ git clone https://github.com/start-angular/SB-Admin-BS4-Angular-6
+$ cd SB-Admin-BS4-Angular-6
+# install the project's dependencies
+$ npm install
+# watches your files and uses livereload by default run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+$ npm start
+# prod build, will output the production application in `dist`
+# the produced code can be deployed (rsynced) to a remote server
+$ npm run build
+```
 
-### ng2-admin
-We will continue supporting [ng2-admin](https://github.com/akveo/ngx-admin/tree/ng2-admin) version, but if you are starting from scratch we recommend using `ngx-admin`. Unfortunately, there is no way to automatically update from ng2-admin to ngx-admin, but some parts (Nebular components) could be manually included.
+### Code scaffolding
 
-### Empty starter kit
-Don't need all the pages and modules and just looking for an empty starter kit for your next project? Check out our [starter-kit branch](https://github.com/akveo/ngx-admin/tree/starter-kit).
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
 
-### AngularJS 1.x version
-Here you can find AngularJS 1.x based version: [Blur Admin](http://akveo.github.io/blur-admin/)
+### Running unit tests
 
-## BrowserStack
-This project runs its tests on multiple desktop and mobile browsers using [BrowserStack](http://www.browserstack.com).
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-<img src="https://cloud.githubusercontent.com/assets/131406/22254249/534d889e-e254-11e6-8427-a759fb23b7bd.png" height="40" />
+### Running end-to-end tests
 
-### How can I support developers?
-- Star our GitHub repo :star:
-- Create pull requests, submit bugs, suggest new features or documentation updates :wrench:
-- Follow us on [Twitter](https://twitter.com/akveo_inc) :feet:
-- Like our page on [Facebook](https://www.facebook.com/akveo/) :thumbsup:
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Before running the tests make sure you are serving the app via `ng serve`.
 
-### Looking for engineering services? 
-Visit [our homepage](http://akveo.com/) or simply leave us a message to [contact@akveo.com](mailto:contact@akveo.com). We will be happy to work with you!
+### Further help
 
-### From Akveo
-Made with :heart: by [Akveo team](http://akveo.com/). Follow us on [Twitter](https://twitter.com/akveo_inc) to get the latest news first!
-We're always happy to receive your feedback!
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
