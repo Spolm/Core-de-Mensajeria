@@ -63,3 +63,45 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ### Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+### Instrucciones para crear una nuevo modulo en Angular
+
+  Pasos para activar una nueva vista:
+
+  1. ng g module layout/profile (crea un modulo).
+
+  2. ng g component layout/profile -m=layout/profile/profile.module.ts (crea componente y agrega el enlace al módulo).
+
+  3. Luego creas profile-routing.module.ts y copias de otro ya creado y modificas todo lo necesario.
+	  	import { NgModule } from '@angular/core';
+		import { Routes, RouterModule } from '@angular/router';
+		import { ProfileComponent } from './profile.component';
+
+		const routes: Routes = [
+		    {
+		        path: '',
+		        component: ProfileComponent
+		    }
+		];
+
+		@NgModule({
+		    imports: [RouterModule.forChild(routes)],
+		    exports: [RouterModule]
+		})
+		export class ProfileRoutingModule {}
+
+  4. En su archivo layout-routing.module.ts agregue la carga secundaria
+  	 { path: 'profile', loadChildren: './profile/profile.module#ProfileModule' },
+
+  5. Recuerda haces la importación del routing.modulo ¡Muy importante!
+  		import { NgModule } from '@angular/core';
+		import { CommonModule } from '@angular/common';
+
+		import { ProfileRoutingModule } from './profile-routing.module';
+		import { ProfileComponent } from './profile.component';
+
+		@NgModule({
+		  imports: [CommonModule,ProfileRoutingModule],
+		  declarations: [ProfileComponent]
+		})
+		export class ProfileModule { }
