@@ -4,7 +4,14 @@
             <i class="fa fa-file-o"></i>&nbsp;
             <span>{{ 'Blank Page' | translate }}</span>
         </a>
-        
+        <a [routerLink]="['/channel']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-filter"></i>&nbsp;
+            <span>{{ 'Channel' | translate }}</span>
+        </a>
+        <a [routerLink]="['/integrator']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-reply-all"></i>&nbsp;
+            <span>{{ 'Integrator' | translate }}</span>
+        </a>
         
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
