@@ -1,6 +1,3 @@
-import Modulo_3.ChannelPackage.ChannelServiceAPI;
-import Modulo_3.IntegratorPackage.IntegratorServiceAPI;
-
 import webService.HelloWorld;
 
 
@@ -18,8 +15,6 @@ public class CoreMensajeria extends Application{
     public Set<Class<?>> getClasses() {
         HashSet h = new HashSet<Class<?>>();
         h.add( HelloWorld.class );
-        h.add( IntegratorServiceAPI.class );
-        h.add (ChannelServiceAPI.class);
         return h;
     }
 }
