@@ -1,6 +1,6 @@
 package Modulo_3.ChannelPackage;
+import Classes.Sql;
 
-import Modulo_3.ConectionDB.Sql;
 import Modulo_3.IntegratorPackage.Integrator;
 import Modulo_3.IntegratorPackage.IntegratorService;
 

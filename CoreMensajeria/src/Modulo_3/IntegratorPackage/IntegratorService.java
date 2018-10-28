@@ -1,5 +1,5 @@
 package Modulo_3.IntegratorPackage;
-import Modulo_3.ConectionDB.*;
+import Classes.Sql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

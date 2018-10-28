@@ -1,6 +1,9 @@
 import Modulo_3.ChannelPackage.ChannelServiceAPI;
 import Modulo_3.IntegratorPackage.IntegratorServiceAPI;
 
+import webService.HelloWorld;
+
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;

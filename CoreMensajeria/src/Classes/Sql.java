@@ -9,9 +9,9 @@ public class Sql {
     private Connection _conn =bdConnect();
     private Statement _st;
     private ResultSet _rs;
-    private static String BD_USER = "CoreMensajeria";
-    private static String BD_PASSWORD = "coremensajeria";
-    private static String BD_URL = "jdbc:postgresql://localhost/CoreMensajeria";
+    private static String BD_USER = "postgres";
+    private static String BD_PASSWORD = "1234";
+    private static String BD_URL = "jdbc:postgresql://localhost/modulo_3";
     private static String BD_CLASS_FOR_NAME = "org.postgresql.Driver";
 
     /**
