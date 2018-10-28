@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import Modulo_3.ChannelPackage.ChannelServiceAPI;
 import Modulo_3.IntegratorPackage.IntegratorServiceAPI;
 
+||||||| merged common ancestors
+=======
+import webService.HelloWorld;
+
+>>>>>>> Develop
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
