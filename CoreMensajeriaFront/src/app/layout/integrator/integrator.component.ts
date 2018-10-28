@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IntegratorComponent implements OnInit {
 
+  // PRUEBA
+  integrators = ['AWeber','MailChimp','Digitel','Movistar','Movilnet']
+  // FIN PRUEBA
+  
   constructor() { }
 
   ngOnInit() {
