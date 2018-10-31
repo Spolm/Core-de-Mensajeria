@@ -14,6 +14,14 @@ export class StatisticsComponent implements OnInit {
     ],
     layout: {width: 500, height: 300, title: 'Cantidad de mensajes enviados por canal'}
 };
+
+public graph2 = {
+  data: [
+              { labels: ['SMS', 'Email'], values: [400, 100], type: 'pie' },
+  ],
+  layout: {width: 500, height: 300, title: 'Cantidad de mensajes enviados por canal'}
+};
+
   
   constructor() { }
 
