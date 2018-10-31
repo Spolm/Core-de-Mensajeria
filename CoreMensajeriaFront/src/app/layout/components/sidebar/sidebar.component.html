@@ -1,0 +1,24 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
+    <div class="list-group">
+        <a [routerLink]="['/blank-page']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-file-o"></i>&nbsp;
+            <span>{{ 'Blank Page' | translate }}</span>
+        </a>
+        <a [routerLink]="['/channel']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-filter"></i>&nbsp;
+            <span>{{ 'Channel' | translate }}</span>
+        </a>
+        <a [routerLink]="['/integrator']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-reply-all"></i>&nbsp;
+            <span>{{ 'Integrator' | translate }}</span>
+        </a>
+        <a [routerLink]="['/statistics']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-bar-chart"></i>&nbsp;
+            <span>{{ 'Statistics' | translate }}</span>
+        </a>
+    </div>
+    <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
+        <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;
+        <span>{{ 'Minimizar' | translate }}</span>
+    </div>
+</nav>

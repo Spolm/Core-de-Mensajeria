@@ -1,0 +1,29 @@
+<app-page-header [heading]="'Integrator'" [icon]="'fa fa-reply-all'"></app-page-header>
+
+<div class="container">
+  
+  <div class="row">
+    <div class="col-sm-4" style="margin: 15px 0px"
+      *ngFor="let integrator of integrators">
+      <div class="card">
+          <img class="card-img-top" src="http://lorempixel.com/400/200" alt="{{ integrator }}">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ integrator }}</h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Capacidad: XXXXX</li>
+            <li class="list-group-item">Costo: XXXX</li>
+            <li class="list-group-item">API: XXXXXXX</li>
+          </ul>
+          <div class="card-body">
+              <div class="btn-group">
+                  <button type="button" class="btn btn-danger">Inhabilitar</button>
+                  <button type="button" class="btn btn-light">Ver Detalle</button>
+                </div>
+          </div>
+          
+        </div>
+    </div>
+  </div>
+
+</div>
