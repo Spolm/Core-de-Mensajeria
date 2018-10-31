@@ -1,4 +1,5 @@
 import webService.HelloWorld;
+import webService.M02_CompanyManagement.M02_Companies;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -14,6 +15,7 @@ public class CoreMensajeria extends Application{
     public Set<Class<?>> getClasses() {
         HashSet h = new HashSet<Class<?>>();
         h.add( HelloWorld.class );
+        h.add(M02_Companies.class);
         return h;
     }
 }
