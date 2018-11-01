@@ -22,33 +22,40 @@ public class LogIn {
 
     public String GetUsers() throws SQLException {
         //Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        //String select = "SELECT * FROM user";
+        String select = "SELECT * FROM user";
 
-        ArrayList userList = new ArrayList();
-        userList.add(new User(1,"Marco",2,"marcolbx@hotmail.com","04241983536",12-12-2020,"Venezuela","Caracas","Masculino","caracas"));
 
         try {
-            ArrayList<User> userList= new ArrayList<>();
+            ArrayList<User> userList = new ArrayList<>();
             Statement st = conn.createStatement();
-            /*
+
             ResultSet result =  st.executeQuery(select);
 
             while(result.next()){
                 User user = new User();
-                user.set_usernameUser(result.getString("nameUser"));
-                UserList.add(user);
-            } */
+                user.set_idUser(result.getInt("userId"));
+                user.set_passwordUser(result.getString("userPassword"));
+                user.set_usernameUser(result.getString("userUsername"));
+                user.set_typeUser(result.getInt("userType"));
+                user.set_emailUser(result.getString("userEmail"));
+                user.set_phoneUser(result.getString("userPhone"));
+                user.set_countryUser(result.getString("userCountry"));
+                user.set_cityUser(result.getString("userCity"));
+                user.set_addressUser(result.getString("userAddress"));
+                user.set_dateOfBirthUser(result.getDate("userDayOfBirth"));
+                user.set_genderUser(result.getString("userGenre"));
+                userList.add(user);
+            }
 
             return gson.toJson(userList);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-          //  throw new SQLException(select);
-        }
-        finally {
+              throw new SQLException(select);
+        } finally {
             Sql.bdClose(conn);
         }
     }
+
 
     // The Java method will process HTTP GET requests
     @Path("/login")

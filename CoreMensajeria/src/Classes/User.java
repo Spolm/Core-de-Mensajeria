@@ -5,31 +5,35 @@ import java.util.Date;
 public class User {
 
     private int _idUser;
+    private String _passwordUser;
     private String _usernameUser;
     private int _typeUser;
     private String _emailUser;
     private String _phoneUser;
-    private Date _dayOfBirthUser;
+    private Date _dateOfBirthUser;
     private String _countryUser;
     private String _addressUser;
-    private String _genreUser;
+    private String _genderUser;
     private String _cityUser;
 
-    public User(int _idUser, String _usernameUser, int _typeUser, String _emailUser, String _phoneUser, Date _dayOfBirthUser, String _countryUser, String _addressUser, String _genreUser, String _cityUser) {
+    public User(int _idUser,String _passwordUser, String _usernameUser, int _typeUser, String _emailUser, String _phoneUser, Date _dayOfBirthUser, String _countryUser, String _addressUser, String _genreUser, String _cityUser) {
         this._idUser = _idUser;
+        this._passwordUser = _passwordUser;
         this._usernameUser = _usernameUser;
         this._typeUser = _typeUser;
         this._emailUser = _emailUser;
         this._phoneUser = _phoneUser;
-        this._dayOfBirthUser = _dayOfBirthUser;
+        this._dateOfBirthUser = _dayOfBirthUser;
         this._countryUser = _countryUser;
         this._addressUser = _addressUser;
-        this._genreUser = _genreUser;
+        this._genderUser = _genreUser;
         this._cityUser = _cityUser;
     }
 
-    public User(int idUser, String marco, int typeUser, String emailUser, String phoneUser, int i, String venezuela, String caracas, String masculino, String cityUser) {
+    public User() {
     }
+
+
 
     public int get_idUser() {
         return _idUser;
@@ -37,6 +41,14 @@ public class User {
 
     public void set_idUser(int _idUser) {
         this._idUser = _idUser;
+    }
+
+    public String get_passwordUser() {
+        return _passwordUser;
+    }
+
+    public void set_passwordUser(String _passwordUser) {
+        this._passwordUser = _passwordUser;
     }
 
     public String get_usernameUser() {
@@ -71,12 +83,12 @@ public class User {
         this._phoneUser = _phoneUser;
     }
 
-    public Date get_dayOfBirthUser() {
-        return _dayOfBirthUser;
+    public Date get_dateOfBirthUser() {
+        return _dateOfBirthUser;
     }
 
-    public void set_dayOfBirthUser(Date _dayOfBirthUser) {
-        this._dayOfBirthUser = _dayOfBirthUser;
+    public void set_dateOfBirthUser(Date _dayOfBirthUser) {
+        this._dateOfBirthUser = _dayOfBirthUser;
     }
 
     public String get_countryUser() {
@@ -95,12 +107,12 @@ public class User {
         this._addressUser = _addressUser;
     }
 
-    public String get_genreUser() {
-        return _genreUser;
+    public String get_genderUser() {
+        return _genderUser;
     }
 
-    public void set_genreUser(String _genreUser) {
-        this._genreUser = _genreUser;
+    public void set_genderUser(String _genreUser) {
+        this._genderUser = _genreUser;
     }
 
     public String get_cityUser() {
