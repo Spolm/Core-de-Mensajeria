@@ -1,20 +1,18 @@
-package Modulo_1;
+package webService.M01_Login;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import Classes.Company;
 import Classes.Sql;
 import Classes.User;
 import com.google.gson.Gson;
 
-@Path("/users")
+@Path("/")
 public class LogIn {
 
     Gson gson = new Gson();
@@ -61,11 +59,11 @@ public class LogIn {
     @Path("/login")
     @GET
     // The Java method will produce content identified by the MIME Media type "text/plain"
-    @Produces("text/plain")
+    @Produces(MediaType.TEXT_PLAIN)
     public String login(@QueryParam("username") String username,@QueryParam("password") String password) {
-        // Return some cliched textual content
-        return "Has intentado ingresar";
+        return null;
     }
+
     @Path("/register")
     @POST
     // The Java method will produce content identified by the MIME Media type "text/plain"
