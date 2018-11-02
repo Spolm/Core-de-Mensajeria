@@ -2,6 +2,9 @@ import { ProfileComponent } from './../profile/profile.component';
 import { PlotlyModule, PlotComponent } from 'angular-plotly.js';
 import { StatisticsServiceService } from './statistics-service.service';
 import { Component, OnInit } from '@angular/core';
+import {Plotly} from 'plotly.js';
+
+
 
 interface myData{
   obj: Object;
@@ -14,12 +17,16 @@ interface myData{
 })
 export class StatisticsComponent implements OnInit {
  json2;
+
  
+
   public graph = {
-    data: [                                                               //y:this.json2
-                { x: ['SMS', 'Email' , 'Telegrama' , 'Senales de humo '], y: [200, 300, 100 , 50] , type: 'bar' },
+    
+     data : [                                                               //y:this.json2
+               this.json2,
     ],
-    layout: {width: 500, height: 300, title: 'Cantidad de mensajes enviados por canal'}
+   layout: {width: 500, height: 300, title: 'Cantidad de mensajes enviados por canal'}
+  
 };
 
 public graph2 = {
@@ -35,11 +42,12 @@ public graph2 = {
   ngOnInit() {
 
     this.Servicio.getStatisticsData().subscribe(data => {
-    this.json2 = data 
-    console.log("data::" + JSON.stringify(data));
+     this.json2 = data
+    //this.graph(this.json2);
+    //console.log("data::" + typeof(data));
+    console.log(this.json2);
     })
     
-
 
   }
   
