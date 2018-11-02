@@ -2,6 +2,7 @@ package webService.M01_Login;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,9 @@ import java.util.ArrayList;
 import Classes.Sql;
 import Classes.User;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Path("/")
 public class LogIn {
@@ -18,9 +22,12 @@ public class LogIn {
     Gson gson = new Gson();
     private Connection conn = Sql.getConInstance();
 
-    public String GetUsers() throws SQLException {
+    @Path("/users")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetUsers() throws SQLException {
         //Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        String select = "SELECT * FROM user";
+        String select = "SELECT * FROM public.user";
 
 
         try {
@@ -40,12 +47,11 @@ public class LogIn {
                 user.set_countryUser(result.getString("userCountry"));
                 user.set_cityUser(result.getString("userCity"));
                 user.set_addressUser(result.getString("userAddress"));
-                user.set_dateOfBirthUser(result.getDate("userDayOfBirth"));
-                user.set_genderUser(result.getString("userGenre"));
+                user.set_dateOfBirthUser(result.getDate("userDateOfBirth"));
+                user.set_genderUser(result.getString("userGender"));
                 userList.add(user);
             }
-
-            return gson.toJson(userList);
+            return Response.ok(gson.toJson(userList)).build();
         } catch (SQLException e) {
             e.printStackTrace();
               throw new SQLException(select);
