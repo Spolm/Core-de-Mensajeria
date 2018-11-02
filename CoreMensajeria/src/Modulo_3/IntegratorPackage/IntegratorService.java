@@ -1,4 +1,5 @@
 package Modulo_3.IntegratorPackage;
+
 import Classes.Sql;
 
 import java.sql.ResultSet;
@@ -19,6 +20,7 @@ public class IntegratorService {
     public List<Integrator> listIntegrator() {
 
         Sql db = new Sql();
+
         List<Integrator> integrators = new ArrayList<>();
 
         try {
