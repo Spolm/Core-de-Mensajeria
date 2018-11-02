@@ -32,8 +32,8 @@ CREATE TABLE public.campaign
     CampaignName varchar(255) NOT NULL,
     CampaignDescription varchar(1000)NOT NULL,
     CampaignStatus boolean NOT NULL,
-    CampaignStartDate date NOT NULL,
-    CampaignEndDate date NOT NULL,
+    CampaignStartDate timestamp NOT NULL,
+    CampaignEndDate timestamp NOT NULL,
     CompanyId integer NOT NULL,
     CONSTRAINT fk_company_id FOREIGN KEY ("CompanyId")
         REFERENCES public.company (id) MATCH SIMPLE
