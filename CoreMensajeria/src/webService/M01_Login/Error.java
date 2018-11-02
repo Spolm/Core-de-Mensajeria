@@ -1,5 +1,6 @@
 package webService.M01_Login;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Error {
@@ -8,12 +9,15 @@ public class Error {
 
     public Error(String _error) {
         this._error = _error;
+        this._errors= new HashMap<String,String>();
     }
 
     public Error() {
+        this._error = "Error por definir";
+        this._errors= new HashMap<String,String>();
     }
 
-    public String getError() {
+    public String get_error() {
         return _error;
     }
 
@@ -33,7 +37,7 @@ public class Error {
         _errors.put(name,description);
     }
 
-    public boolean get_error() {
+    public boolean isError() {
         if(_errors.isEmpty()) return false;
         return true;
     }

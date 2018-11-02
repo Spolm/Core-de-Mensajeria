@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { routerTransition } from '../router.animations';
 import { HttpClient } from '@angular/common/http';
+import { LoginService } from './login.service';
 
 @Component({
     selector: 'app-login',
@@ -10,14 +11,36 @@ import { HttpClient } from '@angular/common/http';
     animations: [routerTransition()]
 })
 export class LoginComponent implements OnInit {
-    constructor(public router: Router,private http: HttpClient) {}
+    users:any = [];
+    response:any
+    @Input() userData = { _username:'', _password: ''};
+
+ 
+    constructor(public router: Router,private http: HttpClient,public rest:LoginService) {
+    }
 
     ngOnInit() {}
 
+    getUsers() {
+        this.users = [];
+        this.rest.getUsers().subscribe((data: {}) => {
+          console.log(data);
+          this.users = data;
+        });
+      }
+
+    logIn() {
+        this.rest.logUser(this.userData).subscribe((result) => {
+          console.log(result)
+          this.router.navigate(['/blank-page']);
+        }, (err) => {
+          console.log(err);
+        });
+      }
     onLoggedin() {
         localStorage.setItem('isLoggedin', 'true');
-        this.http.get('https://jsonplaceholder.typicode.com/todos/1').subscribe(data => {
-      console.log(data);
-    });
+        console.log(this.userData);
+        this.logIn();
+        //this.logIn();
     }
 }
