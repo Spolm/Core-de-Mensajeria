@@ -7,7 +7,7 @@ import Modulo_3.IntegratorPackage.IntegratorService;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class ChannelService {
     private static ChannelService channelDAO = null;
@@ -19,10 +19,10 @@ public class ChannelService {
 
     }
 
-    public List<Integrator> listIntegratorByChannel(int id) {
+    public ArrayList<Integrator> listIntegratorByChannel(int id) {
 
         Sql db = new Sql();
-        List<Integrator> integrators = new ArrayList<>();
+        ArrayList<Integrator> integrators = new ArrayList<>();
 
         try {
             ResultSet rs = db.sqlConn("SELECT in_id, in_name, in_messageCost, in_threadCapacity, in_tokenApi" +
@@ -35,5 +35,24 @@ public class ChannelService {
             System.err.println(ex.getStackTrace());
         }
         return integrators;
+    }
+
+    public ArrayList<Channel> listChannel(){
+
+        Sql db = new Sql();
+        ArrayList<Channel> channels = new ArrayList<>();
+
+        try {
+            ResultSet rs = db.sqlConn("SELECT ch_id, ch_name, ch_description FROM CHANNEL");
+            while (rs.next()) {
+                ChannelFactory f = new ChannelFactory();
+                int id = rs.getInt("ch_id");
+                Channel c = f.getChannel(rs.getInt("ch_id"),rs.getString("ch_name"),rs.getString("ch_description"), listIntegratorByChannel(id));
+                channels.add(c);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.getStackTrace());
+        }
+        return channels;
     }
 }
