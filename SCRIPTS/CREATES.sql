@@ -12,3 +12,32 @@ create table public.User(
  userGender char
 );
 
+CREATE TABLE public.company
+(
+    id_company serial primary key,
+    company_name varchar(255) NOT NULL,
+    company_desc varchar(1000) NOT NULL,
+    company_status boolean NOT NULL,
+    user_id integer NOT NULL,
+    CONSTRAINT fk_user_id FOREIGN KEY ("user_id")
+        REFERENCES public.User (userId) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+
+CREATE TABLE public.campaign
+(
+    CampaignId serial PRIMARY KEY,
+    CampaignName varchar(255) NOT NULL,
+    CampaignDescription varchar(1000)NOT NULL,
+    CampaignStatus boolean NOT NULL,
+    CampaignStartDate timestamp NOT NULL,
+    CampaignEndDate timestamp NOT NULL,
+    CompanyId integer NOT NULL,
+    CONSTRAINT fk_company_id FOREIGN KEY ("CompanyId")
+        REFERENCES public.company (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
