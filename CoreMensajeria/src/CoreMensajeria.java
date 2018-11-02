@@ -1,4 +1,4 @@
-import webService.M01_Login.LogIn;
+import webService.M01_Login.M01_Login;
 
 import webService.HelloWorld;
 import webService.M02_CompanyManagement.M02_Companies;
@@ -17,7 +17,7 @@ public class CoreMensajeria extends Application{
     public Set<Class<?>> getClasses() {
         HashSet h = new HashSet<Class<?>>();
         h.add( HelloWorld.class );
-        h.add( LogIn.class);
+        h.add( M01_Login.class);
         h.add(M02_Companies.class);
         return h;
     }
