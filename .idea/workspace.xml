@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d47dddb4-f2c6-4603-81e2-69952079da30" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/CoreMensajeria/src/CoreMensajeria.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoreMensajeria/src/CoreMensajeria.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/angular.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/1.07ff48a34011da30d496.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/10.5e38288e5f1ce7d9c47e.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/11.148c568d5f43def6f662.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/12.1faac5a34040be8bfbf9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/13.ebf8bc8b2bdca88ed122.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/14.4cdcc8acdfedb5fe06f2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/2.d5d66fb565cc35cb25a4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/3.4e06f20e1abe7db485c4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/3rdpartylicenses.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/4.5155810445d94ceb6b58.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/5.a503abe30ae186904613.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/6.a97c2d3de28a197cadc1.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/7.bb44c1a7321ed80a9959.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/8.8ff81c58b04baca19ff5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/9.bc17644bc96b34a5eff3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/assets/i18n/de.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/assets/i18n/en.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/assets/i18n/es.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/assets/i18n/fa.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/assets/i18n/fr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/assets/i18n/it.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/assets/i18n/ur.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/assets/i18n/zh-CHS.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/assets/images/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/assets/images/slider1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/assets/images/slider2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/assets/images/slider3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/common.f16d6f70975b6e9a3881.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/fontawesome-webfont.674f50d287a8c48dc19b.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/fontawesome-webfont.912ec66d7572ff821749.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/fontawesome-webfont.af7ae505a9eed503f8b8.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/fontawesome-webfont.b06871f281fee6b241d6.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/fontawesome-webfont.fee66e712a8a08eef580.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/main.4b20b7ce32df78939b4f.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/polyfills.1371016fb090fbda5d54.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/runtime.fc1c0265092c2882fc36.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/scripts.1cd05d3e7f9761ff7fcc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/dist/styles.205f7bdd876b2e9f7b05.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/e2e/app.e2e-spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/e2e/app.po.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/e2e/tsconfig.e2e.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/karma.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/protractor.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/access-denied/access-denied-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/access-denied/access-denied.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/access-denied/access-denied.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/access-denied/access-denied.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/access-denied/access-denied.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/access-denied/access-denied.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/access-denied/access-denied.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/app-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/app.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/app.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/app.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/app.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/app.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/app.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/blank-page/blank-page-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/blank-page/blank-page.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/blank-page/blank-page.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/blank-page/blank-page.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/blank-page/blank-page.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/blank-page/blank-page.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/blank-page/blank-page.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/bs-component-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/bs-component.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/bs-component.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/bs-component.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/bs-component.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/bs-component.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/bs-component.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/alert/alert.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/alert/alert.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/alert/alert.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/alert/alert.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/buttons/buttons.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/buttons/buttons.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/buttons/buttons.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/buttons/buttons.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/collapse/collapse.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/collapse/collapse.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/collapse/collapse.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/collapse/collapse.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/date-picker/date-picker.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/date-picker/date-picker.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/date-picker/date-picker.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/date-picker/date-picker.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/dropdown/dropdown.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/dropdown/dropdown.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/dropdown/dropdown.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/dropdown/dropdown.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/modal/modal.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/modal/modal.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/modal/modal.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/modal/modal.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/pagination/pagination.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/pagination/pagination.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/pagination/pagination.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/pagination/pagination.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/pop-over/pop-over.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/pop-over/pop-over.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/pop-over/pop-over.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/pop-over/pop-over.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/progressbar/progressbar.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/progressbar/progressbar.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/progressbar/progressbar.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/progressbar/progressbar.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/rating/rating.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/rating/rating.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/rating/rating.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/rating/rating.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/tabs/tabs.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/tabs/tabs.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/tabs/tabs.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/tabs/tabs.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/timepicker/timepicker.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/timepicker/timepicker.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/timepicker/timepicker.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/timepicker/timepicker.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/tooltip/tooltip.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/tooltip/tooltip.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/tooltip/tooltip.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-component/components/tooltip/tooltip.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-element/bs-element-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-element/bs-element.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-element/bs-element.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-element/bs-element.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-element/bs-element.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-element/bs-element.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/bs-element/bs-element.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/channel/channel-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/channel/channel.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/channel/channel.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/channel/channel.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/channel/channel.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/channel/channel.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/channel/channel.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/charts/charts-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/charts/charts.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/charts/charts.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/charts/charts.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/charts/charts.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/charts/charts.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/charts/charts.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/components/header/header.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/components/header/header.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/components/header/header.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/components/header/header.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/components/sidebar/sidebar.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/components/sidebar/sidebar.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/components/sidebar/sidebar.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/components/sidebar/sidebar.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/chat/chat.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/chat/chat.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/chat/chat.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/chat/chat.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/notification/notification.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/notification/notification.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/notification/notification.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/notification/notification.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/timeline/timeline.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/timeline/timeline.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/timeline/timeline.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/components/timeline/timeline.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/dashboard-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/dashboard.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/dashboard.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/dashboard.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/dashboard.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/dashboard.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/dashboard/dashboard.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/form/form-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/form/form.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/form/form.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/form/form.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/form/form.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/form/form.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/form/form.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/grid/grid-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/grid/grid.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/grid/grid.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/grid/grid.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/grid/grid.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/grid/grid.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/grid/grid.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/integrator/integrator-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/integrator/integrator.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/integrator/integrator.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/integrator/integrator.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/integrator/integrator.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/integrator/integrator.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/integrator/integrator.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/layout-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/layout.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/layout.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/layout.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/layout.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/layout.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/layout.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/profile/profile-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/profile/profile.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/profile/profile.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/profile/profile.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/profile/profile.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/profile/profile.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/profile/profile.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/tables/tables-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/tables/tables.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/tables/tables.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/tables/tables.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/tables/tables.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/tables/tables.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/layout/tables/tables.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/login/login-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/login/login.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/login/login.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/login/login.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/login/login.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/login/login.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/login/login.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/not-found/not-found-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/not-found/not-found.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/not-found/not-found.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/not-found/not-found.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/not-found/not-found.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/not-found/not-found.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/not-found/not-found.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/router.animations.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/server-error/server-error-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/server-error/server-error.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/server-error/server-error.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/server-error/server-error.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/server-error/server-error.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/server-error/server-error.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/server-error/server-error.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/guard/auth.guard.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/guard/auth.guard.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/guard/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/page-header/page-header.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/page-header/page-header.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/page-header/page-header.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/page-header/page-header.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/page-header/page-header.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/page-header/page-header.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/stat/stat.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/stat/stat.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/stat/stat.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/stat/stat.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/stat/stat.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/modules/stat/stat.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/pipes/shared-pipes.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/shared/services/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/signup/signup-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/signup/signup.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/signup/signup.component.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/signup/signup.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/signup/signup.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/signup/signup.module.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/app/signup/signup.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/assets/i18n/de.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/assets/i18n/en.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/assets/i18n/es.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/assets/i18n/fa.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/assets/i18n/fr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/assets/i18n/it.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/assets/i18n/ur.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/assets/i18n/zh-CHS.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/assets/images/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/assets/images/slider1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/assets/images/slider2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/assets/images/slider3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/environments/environment.prod.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/environments/environment.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/main.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/polyfills.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/_responsive.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/_rtl.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/_spinner.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/_utils.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/app.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_alert.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_badge.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_breadcrumb.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_button-group.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_buttons.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_card.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_carousel.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_close.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_code.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_custom-forms.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_dropdown.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_forms.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_functions.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_grid.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_images.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_input-group.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_jumbotron.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_list-group.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_media.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_mixins.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_modal.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_nav.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_navbar.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_pagination.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_popover.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_print.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_progress.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_reboot.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_root.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_tables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_tooltip.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_transitions.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_type.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_utilities.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/_variables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/bootstrap-grid.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/bootstrap-reboot.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/bootstrap.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_alert.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_background-variant.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_badge.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_border-radius.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_box-shadow.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_breakpoints.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_buttons.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_caret.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_clearfix.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_float.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_forms.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_gradients.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_grid-framework.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_grid.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_hover.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_image.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_list-group.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_lists.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_nav-divider.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_navbar-align.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_pagination.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_reset-text.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_resize.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_screen-reader.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_size.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_table-row.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_text-emphasis.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_text-hide.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_text-truncate.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_transition.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/mixins/_visibility.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_align.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_background.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_borders.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_clearfix.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_display.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_embed.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_flex.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_float.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_position.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_screenreaders.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_sizing.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_spacing.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_text.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/styles/bootstrap/utilities/_visibility.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/tsconfig.app.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/tsconfig.spec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/src/typings.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/tslint.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoreMensajeriaFront/yarn.lock" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="1438922199">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="3" />
+          <entry key="project.open.time.69" value="1" />
+          <entry key="project.open.time.83" value="1" />
+          <entry key="project.open.time.89" value="1" />
+          <entry key="project.opened" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="html" value="1" />
+          <entry key="java" value="13" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="HTML" value="1" />
+          <entry key="JAVA" value="13" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="java" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="2" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CoreMensajeria/src/CoreMensajeria.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="311">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/CoreMensajeria/src/CoreMensajeria.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="10" />
+    <option name="y" value="20" />
+    <option name="width" value="1260" />
+    <option name="height" value="720" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Core-de-Mensajeria" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Core-de-Mensajeria" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Core-de-Mensajeria" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Core-de-Mensajeria" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Core-de-Mensajeria" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Core-de-Mensajeria" type="462c0819:PsiDirectoryNode" />
+              <item name="CoreMensajeria" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Core-de-Mensajeria" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Core-de-Mensajeria" type="462c0819:PsiDirectoryNode" />
+              <item name="CoreMensajeria" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Core-de-Mensajeria" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Core-de-Mensajeria" type="462c0819:PsiDirectoryNode" />
+              <item name="CoreMensajeria" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="webService" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Core-de-Mensajeria" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Core-de-Mensajeria" type="462c0819:PsiDirectoryNode" />
+              <item name="CoreMensajeria" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="webService" type="462c0819:PsiDirectoryNode" />
+              <item name="M02_CompanyManagement" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541039170344" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CoreMensajeria/web" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="GlassfishConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="GlassFish 5.0.0" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment />
+      <server-settings>
+        <option name="DOMAIN" value="domain1" />
+        <option name="PRESERVE" value="false" />
+        <option name="COMPATIBILITY" value="false" />
+        <option name="VIRTUAL_SERVER" />
+        <option name="USERNAME" value="admin" />
+        <option name="PASSWORD" value="" />
+      </server-settings>
+      <predefined_log_file id="GlassFish" enabled="true" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="9009" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GlassfishConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="GlassFish 5.0.0" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="C:/Archivos de programa/Java/jre1.8.0_91">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment />
+      <server-settings>
+        <option name="DOMAIN" value="" />
+        <option name="PRESERVE" value="false" />
+        <option name="COMPATIBILITY" value="false" />
+        <option name="VIRTUAL_SERVER" />
+        <option name="USERNAME" value="admin" />
+        <option name="PASSWORD" value="" />
+      </server-settings>
+      <predefined_log_file id="GlassFish" enabled="true" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="9009" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d47dddb4-f2c6-4603-81e2-69952079da30" name="Default Changelist" comment="" />
+      <created>1540927904394</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1540927904394</updated>
+      <workItem from="1540927923054" duration="691000" />
+      <workItem from="1541032771170" duration="5367000" />
+      <workItem from="1541114409833" duration="2028000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="All_Features_in__webService - 2018.10.31 at 21h 42m 01s.xml">
+      <configuration name="All Features in: webService" configurationId="CucumberJavaRunConfigurationType" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="8086000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1296" height="776" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25080907" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Application Servers" sideWeight="0.49919093" weight="0.32866043" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.7200647" weight="0.32866043" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.27993527" side_tool="true" visible="true" weight="0.32866043" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="right" id="Theme Preview" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Maven Projects" order="8" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25416666" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="right" id="Theme Preview" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Maven Projects" order="8" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/CoreMensajeria/src/Modulo_3/IntegratorPackage/IIntegrator.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreMensajeria/src/Modulo_3/IntegratorPackage/Digitel.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreMensajeria/src/webService/M02_CompanyManagement/M02_Companies.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-94" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreMensajeria/src/Modulo_3/ChannelPackage/Channel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-409" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreMensajeria/src/Modulo_3/ChannelPackage/ChannelSms.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreMensajeria/src/webService/HelloWorld.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreMensajeria/src/Modulo_3/ChannelPackage/ChannelEmail.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreMensajeria/src/Modulo_3/ChannelPackage/ChannelFactory.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreMensajeria/src/Modulo_9/prueba.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreMensajeria/src/Modulo_9/Statistics.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreMensajeria/src/CoreMensajeria.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>CoreMensajeria:war exploded</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Core-de-Mensajeria</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
