@@ -30,35 +30,45 @@ public class M01_Login {
     public Response login( LoginIntent loginIntent) throws SQLException {
         Error error = null;
 
+
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SELECT);
-            preparedStatement.setString(1, loginIntent.get_username());
-            result = preparedStatement.executeQuery();
-            user = new User();
+            if(loginIntent.get_username().matches("[a-zA-Z0-9]+") && loginIntent.get_password().matches("[a-zA-Z0-9.$%'*+/^_`{|}~-]+")){
+                PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SELECT);
+                preparedStatement.setString(1, loginIntent.get_username());
+                result = preparedStatement.executeQuery();
+                user = new User();
 
-            while (result.next()) {
+                while (result.next()) {
 
-                user.set_idUser(result.getInt("use_Id"));
-                user.set_passwordUser(result.getString("use_password"));
-                user.set_usernameUser(result.getString("use_username"));
-                user.set_typeUser(result.getInt("use_type"));
-                user.set_emailUser(result.getString("use_email"));
-                user.set_phoneUser(result.getString("use_phone"));
-                user.set_countryUser(result.getString("use_country"));
-                user.set_cityUser(result.getString("use_city"));
-                user.set_addressUser(result.getString("use_address"));
-                user.set_dateOfBirthUser(result.getDate("use_date_of_birth"));
-                user.set_genderUser(result.getString("use_gender"));
+                    user.set_idUser(result.getInt("use_Id"));
+                    user.set_passwordUser(result.getString("use_password"));
+                    user.set_usernameUser(result.getString("use_username"));
+                    user.set_typeUser(result.getInt("use_type"));
+                    user.set_emailUser(result.getString("use_email"));
+                    user.set_phoneUser(result.getString("use_phone"));
+                    user.set_countryUser(result.getString("use_country"));
+                    user.set_cityUser(result.getString("use_city"));
+                    user.set_addressUser(result.getString("use_address"));
+                    user.set_dateOfBirthUser(result.getDate("use_date_of_birth"));
+                    user.set_genderUser(result.getString("use_gender"));
+
+                }
+                if (user.get_passwordUser().equals(loginIntent.get_password())) {
+                    user.set_passwordUser("");
+                    return Response.accepted(gson.toJson(user)).build();
+                } else {
+                    error = new Error("No se pudo acceder al sistema");
+                    error.addError("credenciales","Las credenciales ingresadas son incorrectas");
+                    return Response.status(404).entity(error).build();
+                }
 
             }
-            if (user.get_passwordUser().equals(loginIntent.get_password())) {
-                user.set_passwordUser("");
-                return Response.accepted(gson.toJson(user)).build();
-            } else {
+            else {
                 error = new Error("No se pudo acceder al sistema");
-                error.addError("credenciales","Las credenciales ingresadas son incorrectas");
+                error.addError("credenciales","Los datos ingresados no tienen el formato adecuado");
                 return Response.status(404).entity(error).build();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
