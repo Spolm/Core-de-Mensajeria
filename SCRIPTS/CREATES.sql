@@ -10,7 +10,7 @@ create table public.User
     use_city varchar(20),
     use_address varchar(20),
     use_date_of_birth timestamp,
-    user_gender char
+    use_gender char
 );
 
 CREATE TABLE public.Company
