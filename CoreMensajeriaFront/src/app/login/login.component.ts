@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { routerTransition } from '../router.animations';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from './login.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
     @Input() userData = { _username:'', _password: ''};
 
  
-    constructor(public router: Router,private http: HttpClient,public rest:LoginService) {
+    constructor(public router: Router,private http: HttpClient,public rest:LoginService, private toastr: ToastrService) {
     }
 
     ngOnInit() {}
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
         });
       }
     onLoggedin() {
+      this.toastr.success('hola mi corazon de melocoton','holis');
         localStorage.setItem('isLoggedin', 'true');
         console.log(this.userData);
         this.logIn();
