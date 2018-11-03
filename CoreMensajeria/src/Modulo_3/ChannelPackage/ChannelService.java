@@ -30,7 +30,7 @@ public class ChannelService {
                                         " CHANNEL"+
                                         " WHERE IN_ID = CI_INTEGRATOR_ID AND" +
                                         " CI_CHANNEL_ID = CH_ID AND CH_ID = "+id);
-            IntegratorService.getIntegratorRs(integrators, rs);
+            IntegratorService.getIntegratorsRs(integrators, rs);
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
         }
