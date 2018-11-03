@@ -6,43 +6,42 @@ import { LoginService } from './login.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    animations: [routerTransition()]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  animations: [routerTransition()]
 })
 export class LoginComponent implements OnInit {
-    users:any = [];
-    response:any
-    @Input() userData = { _username:'', _password: ''};
+  users: any = [];
+  response: any
+  @Input() userData = { _username: '', _password: '' };
 
- 
-    constructor(public router: Router,private http: HttpClient,public rest:LoginService, private toastr: ToastrService) {
-    }
 
-    ngOnInit() {}
+  constructor(public router: Router, private http: HttpClient, public rest: LoginService, private toastr: ToastrService) {
+  }
 
-    getUsers() {
-        this.users = [];
-        this.rest.getUsers().subscribe((data: {}) => {
-          console.log(data);
-          this.users = data;
-        });
-      }
+  ngOnInit() { }
 
-    logIn() {
-        this.rest.logUser(this.userData).subscribe((result) => {
-          console.log(result)
-          this.router.navigate(['/blank-page']);
-        }, (err) => {
-          console.log(err);
-        });
-      }
-    onLoggedin() {
-      this.toastr.success('hola mi corazon de melocoton','holis');
-        localStorage.setItem('isLoggedin', 'true');
-        console.log(this.userData);
-        this.logIn();
-        //this.logIn();
-    }
+  login() {
+    this.toastr.info("Espere un momento",'Intentando acceder',{
+      progressBar: true
+    });
+    this.rest.logUser(this.userData).subscribe((result) => {
+      this.toastr.error('Has iniciado sesión');
+      localStorage.setItem('isLoggedin', 'true');
+      localStorage.setItem('userConnected', this.userData._username);
+      this.router.navigate(['/blank-page']);
+    }, (err) => {
+      console.log(err);
+      if (err.status == 0) this.toastr.error('Problema de conexión');
+      else this.toastr.error('Credenciales incorrectas');
+    });
+  }
+
+  handleLogin() {
+    if (this.userData._username.length > 0 && this.userData._password.length > 0)
+      this.login();
+    else
+      this.toastr.error('Debes ingresar las credenciales');
+  }
 }

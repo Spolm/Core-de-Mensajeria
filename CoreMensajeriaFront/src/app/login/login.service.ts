@@ -30,9 +30,8 @@ export class LoginService {
   }
   
   logUser (user): Observable<any> {
-    console.log(user);
     return this.http.post<any>(endpoint + 'login', JSON.stringify(user), httpOptions).pipe(
-      tap((user) => console.log(`User logged w/ ${user}`)),
+      tap((user) => console.log(`User logged w/ ${user._username}`)),
     );
   }
 }
