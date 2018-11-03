@@ -2,16 +2,15 @@ package Classes;
 
 import java.sql.*;
 
-
 public class Sql {
 
     private static Connection conInstance;
-    private Connection _conn =bdConnect();
+    private Connection _conn = bdConnect();
     private Statement _st;
     private ResultSet _rs;
     private static String BD_USER = "CoreMensajeria";
     private static String BD_PASSWORD = "coremensajeria";
-    private static String BD_URL = "jdbc:postgresql://localhost/CoreMensajeria";
+    private static String BD_URL = "jdbc:postgresql://localhost:5432/CoreMensajeria";
     private static String BD_CLASS_FOR_NAME = "org.postgresql.Driver";
 
     /**
@@ -21,7 +20,6 @@ public class Sql {
     public static Connection getConInstance(){
 
         conInstance = bdConnect();
-
         return conInstance;
     }
 
@@ -38,11 +36,11 @@ public class Sql {
      */
     private static Connection bdConnect()
     {
-        Connection conn = null;
         try
         {
+
             Class.forName(BD_CLASS_FOR_NAME);
-            conn = DriverManager.getConnection(BD_URL,BD_USER, BD_PASSWORD);
+            return DriverManager.getConnection(BD_URL,BD_USER, BD_PASSWORD);
         }
         catch (ClassNotFoundException e)
         {
@@ -52,7 +50,7 @@ public class Sql {
         {
             e.printStackTrace();
         }
-        return conn;
+        return null;
     }
 
 
