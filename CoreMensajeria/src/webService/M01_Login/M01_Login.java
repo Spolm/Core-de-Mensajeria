@@ -17,7 +17,7 @@ public class M01_Login {
     private Connection conn = Sql.getConInstance();
     User user = new User();
     ResultSet result = null;
-    static String QUERY_SELECT = "SELECT * FROM public.user where use_username=?";
+    static String QUERY_SELECT = "SELECT * FROM public.user where use_username=? or use_email=?";
 
 
 
@@ -32,9 +32,10 @@ public class M01_Login {
 
 
         try {
-            if(loginIntent.get_username().matches("[a-zA-Z0-9]+") && loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
+            if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") && loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
                 PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SELECT);
                 preparedStatement.setString(1, loginIntent.get_username());
+                preparedStatement.setString(2, loginIntent.get_username());
                 result = preparedStatement.executeQuery();
                 user = new User();
 
