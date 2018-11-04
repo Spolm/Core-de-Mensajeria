@@ -19,7 +19,8 @@ const routes: Routes = [
             { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' },
             { path: 'channel', loadChildren: './channel/channel.module#ChannelModule' },
             { path: 'integrator', loadChildren: './integrator/integrator.module#IntegratorModule' },            
-    	    { path: 'statistics', loadChildren: './statistics/statistics.module#StatisticsModule' },
+            { path: 'statistics', loadChildren: './statistics/statistics.module#StatisticsModule' },
+            { path: 'application', loadChildren: './application/application.module#ApplicationModule' }
         ]
     }
 ];
