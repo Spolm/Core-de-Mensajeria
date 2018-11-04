@@ -3,6 +3,8 @@ package webService.M10_Profile;
 import Classes.Sql;
 import Classes.User;
 
+import javax.ws.rs.FormParam;
+import javax.ws.rs.QueryParam;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,7 +22,11 @@ public class M10_ProfileService {
 
     }
 
-    public User SearchUser(String username) {
+    /**
+     * @param username Nombre de usuario a buscar
+     * @return User con todos los datos del usuario
+     */
+    public User searchUser(String username) {
         String consulta= "SELECT use_id, use_password, use_username, use_type, use_email, use_phone,use_country, use_city, use_address, use_date_of_birth, use_gender From public.user WHERE use_username ='" +username+"'";
         Sql db = new Sql();
         User user = new User();
@@ -43,5 +49,41 @@ public class M10_ProfileService {
             System.err.println(ex.getStackTrace());
         }
         return user;
+    }
+
+    /**
+     *
+     * @param id id del usuario a editar
+     * @param username nombre del usuario
+     * @param email email del usuario
+     * @param phone telefono del usuario
+     * @param country   pais del usuario
+     * @param birthday  fecha de nacimiento
+     * @param city  ciudad
+     * @param address   direccion
+     * @return  String con mensaje de exito
+     * @throws SQLException
+     */
+    public String editProfile( String id, String username, String email, String phone, String country, String birthday,
+                            String city, String address ) {
+
+        //Query a realizar
+        String query = "UPDATE" +
+                " users(use_username, use_phone, use_country, use_date_of__birth, use_city, use_address)" +
+                " VALUES '"+username+"','"+phone+"','"+country+"',"+birthday+",'"+city+"','"+address+"'"+
+                "WHERE use_id = '"+id+"'";
+
+        //Se crea conexion a la dc
+        Sql db = new Sql();
+
+        try {
+            //Se realiza query, falta codigo aqui para validar si se realizo correctamente el query
+            db.sqlConn(query);
+        }
+        catch (SQLException e) {
+            System.err.println(e.getStackTrace());
+        }
+
+        return "Perfil editado con éxito";
     }
 }
