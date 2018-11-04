@@ -22,11 +22,7 @@ public class CoreMensajeria extends Application{
         h.add( M01_Login.class );
         h.add( M01_User.class );
         h.add(M02_Companies.class);
-<<<<<<< HEAD
-        h.add(M10_Profile.class);
-=======
         h.add(M09_Statistics.class);
->>>>>>> 1baad99669df4bba8b6505b384c9d209bb4cc0f9
         return h;
     }
 
