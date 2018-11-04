@@ -20,7 +20,8 @@ const routes: Routes = [
             { path: 'channel', loadChildren: './channel/channel.module#ChannelModule' },
             { path: 'integrator', loadChildren: './integrator/integrator.module#IntegratorModule' },            
             { path: 'statistics', loadChildren: './statistics/statistics.module#StatisticsModule' },
-            { path: 'application', loadChildren: './application/application.module#ApplicationModule' }
+            { path: 'application', loadChildren: './application/application.module#ApplicationModule' },
+            { path: 'template', loadChildren: './template/template.module#TemplateModule' }
         ]
     }
 ];
