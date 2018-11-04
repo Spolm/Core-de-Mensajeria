@@ -24,17 +24,17 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.toastr.info("Espere un momento",'Intentando acceder',{
-      progressBar: true
+      progressBar: true,
     });
     this.rest.logUser(this.userData).subscribe((result) => {
-      this.toastr.error('Has iniciado sesión');
+      this.toastr.success('Has iniciado sesión');
       localStorage.setItem('isLoggedin', 'true');
       localStorage.setItem('userConnected', this.userData._username);
       this.router.navigate(['/blank-page']);
     }, (err) => {
       console.log(err);
       if (err.status == 0) this.toastr.error('Problema de conexión');
-      else this.toastr.error('Credenciales incorrectas');
+      else this.toastr.error(err.error._error);
     });
   }
 
