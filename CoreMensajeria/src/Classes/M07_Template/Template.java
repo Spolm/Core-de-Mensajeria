@@ -2,7 +2,8 @@ package Classes.M07_Template;
 
 import Classes.M07_Template.MessagePackage.Message;
 import Classes.M07_Template.PlanningPackage.Planning;
-import Classes.M07_Template.StatusPackage.Status;
+import Classes.M07_Template.StatusPackage.IStatus;
+import Classes.M07_Template.StatusPackage.IStatus;
 
 public class Template {
     private Message message;
@@ -26,8 +27,8 @@ public class Template {
         this.status = status;
     }
 
-    public IStatus getStatus() {
-        return status.getStatusTemplate();
+    public String getStatus() {
+        return status.getIStatusTemplate();
     }
 
     public void setStatus(IStatus status) {
