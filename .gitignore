@@ -12,3 +12,7 @@ WebAPI/\.vs/
 .idea/
 glassfish5/
 out/
+
+CoreMensajeria/\.idea/google-java-format\.xml
+
+CoreMensajeria/CoreMensajeria\.iml

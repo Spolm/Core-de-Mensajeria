@@ -27,7 +27,7 @@ public class Template {
     }
 
     public String getStatus() {
-        return status.getStatusTemplate();
+        return status.getIStatusTemplate();
     }
 
     public void setStatus(IStatus status) {

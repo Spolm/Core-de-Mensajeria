@@ -4,6 +4,6 @@ import Classes.M07_Template.StatusPackage.ApprovedStatus;
 import Classes.M07_Template.StatusPackage.NotApprovedStatus;
 
 public interface IStatus {
-    public String getStatusTemplate();
+    public String getIStatusTemplate();
 }
 
