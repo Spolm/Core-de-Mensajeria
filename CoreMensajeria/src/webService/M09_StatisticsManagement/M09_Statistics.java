@@ -4,6 +4,7 @@ import Classes.Campaign;
 import Classes.Company;
 import Classes.Sql;
 import Classes.User;
+import Modulo_9.PieChart;
 import Modulo_9.Statistics;
 import com.google.gson.Gson;
 
@@ -45,6 +46,51 @@ public class M09_Statistics extends Application {
         gr.x = listlabels;
         gr.y = listNum;
         return gson.toJson(gr);
+    }
+
+    @GET
+    @Path("/Grafica2")
+    @Produces("application/json")
+    public String Mandarnumeros2() {
+        Statistics gr = new Statistics();
+        ArrayList<Integer> listNum = new ArrayList<Integer>();
+        listNum.add(50);
+        listNum.add(70);
+        listNum.add(300);
+        listNum.add(147);
+
+        ArrayList<String> listlabels = new ArrayList<String>();
+        listlabels.add("Telegram");
+        listlabels.add("SMS");
+        listlabels.add("MAIL");
+        listlabels.add("SENALES DE HUMO");
+        gr.type = "line";
+        gr.x = listlabels;
+        gr.y = listNum;
+        return gson.toJson(gr);
+    }
+
+
+    @GET
+    @Path("/Grafica3")
+    @Produces("application/json")
+    public String Mandarnumeros3() {
+        PieChart PieC = new PieChart();
+        ArrayList<Integer> listNum = new ArrayList<Integer>();
+        listNum.add(50);
+        listNum.add(70);
+        listNum.add(300);
+        listNum.add(147);
+
+        ArrayList<String> listlabels = new ArrayList<String>();
+        listlabels.add("Telegram");
+        listlabels.add("SMS");
+        listlabels.add("MAIL");
+        listlabels.add("SENALES DE HUMO");
+        PieC.type = "pie";
+        PieC.labels = listlabels;
+        PieC.values = listNum;
+        return gson.toJson(PieC);
     }
 
     @GET
