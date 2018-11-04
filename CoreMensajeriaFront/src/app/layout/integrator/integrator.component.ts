@@ -6,10 +6,9 @@ import { Http } from '@angular/http';
   templateUrl: './integrator.component.html',
   styleUrls: ['./integrator.component.scss']
 })
-
+ 
 export class IntegratorComponent implements OnInit {
 
-  // PRUEBA
   integrators = [
     {
       apiIntegrator: '',
@@ -19,8 +18,7 @@ export class IntegratorComponent implements OnInit {
       threadCapacity: ''
     }
   ];
-  // FIN PRUEBA
-  
+
   constructor( private http: Http) { 
 
   }
