@@ -4,21 +4,21 @@ import java.util.ArrayList;
 
 public class Statistics {
 
-   public   ArrayList<String> x;
+   public   ArrayList x;
    public   ArrayList<Integer> y;
    public   String type;
 
-    public Statistics(ArrayList<String> x, ArrayList<Integer> y, String type) {
+    public Statistics(ArrayList x, ArrayList<Integer> y, String type) {
         this.x = x;
         this.y = y;
         this.type = type;
     }
 
-    public ArrayList<String> getX() {
+    public ArrayList getX() {
         return x;
     }
 
-    public void setX(ArrayList<String> x) {
+    public void setX(ArrayList x) {
         this.x = x;
     }
 

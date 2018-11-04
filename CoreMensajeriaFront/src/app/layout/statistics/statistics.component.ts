@@ -2,9 +2,8 @@ import { ProfileComponent } from './../profile/profile.component';
 import { PlotlyModule, PlotComponent } from 'angular-plotly.js';
 import { StatisticsServiceService } from './statistics-service.service';
 import { Component, OnInit } from '@angular/core';
-import {Plotly} from 'plotly.js';
-
-
+import * as Plotly from 'plotly.js/dist/plotly.js';
+import{Config, Data, Layout} from 'plotly.js/dist/plotly.js';
 
 interface myData{
   obj: Object;
@@ -19,15 +18,15 @@ export class StatisticsComponent implements OnInit {
  json2;
 
  
-
-  public graph = {
+ public graph = {
     
-     data : [                                                               //y:this.json2
-               this.json2,
-    ],
-   layout: {width: 500, height: 300, title: 'Cantidad de mensajes enviados por canal'}
-  
+  data : [
+
+ ],
+layout: {width: 500, height: 300, title: 'Cantidad de mensajes enviados por canal'}
+
 };
+
 
 public graph2 = {
   data: [
@@ -43,12 +42,17 @@ public graph2 = {
 
     this.Servicio.getStatisticsData().subscribe(data => {
      this.json2 = data
-    //this.graph(this.json2);
-    //console.log("data::" + typeof(data));
-    console.log(this.json2);
+    this.chart(this.json2) 
+    
     })
     
 
   }
-  
+  chart(datos){
+    const graph= [datos];
+     const linediv = document.getElementById("bar-chart");
+    const  layout = {width: 500, height: 300, title: 'Cantidad de mensajes enviados por canal'}
+    Plotly.plot(linediv,graph,layout);
+   }
+
 }
