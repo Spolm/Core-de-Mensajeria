@@ -32,17 +32,17 @@ public class M01_User {
 
             while (result.next()) {
                 User user = new User();
-                user.set_idUser(result.getInt("userId"));
-                user.set_passwordUser(result.getString("userPassword"));
-                user.set_usernameUser(result.getString("userUsername"));
-                user.set_typeUser(result.getInt("userType"));
-                user.set_emailUser(result.getString("userEmail"));
-                user.set_phoneUser(result.getString("userPhone"));
-                user.set_countryUser(result.getString("userCountry"));
-                user.set_cityUser(result.getString("userCity"));
-                user.set_addressUser(result.getString("userAddress"));
-                user.set_dateOfBirthUser(result.getDate("userDateOfBirth"));
-                user.set_genderUser(result.getString("userGender"));
+                user.set_idUser(result.getInt("use_Id"));
+                user.set_passwordUser(result.getString("use_password"));
+                user.set_usernameUser(result.getString("use_username"));
+                user.set_typeUser(result.getInt("use_type"));
+                user.set_emailUser(result.getString("use_email"));
+                user.set_phoneUser(result.getString("use_phone"));
+                user.set_countryUser(result.getString("use_country"));
+                user.set_cityUser(result.getString("use_city"));
+                user.set_addressUser(result.getString("use_address"));
+                user.set_dateOfBirthUser(result.getDate("use_date_of_birth"));
+                user.set_genderUser(result.getString("use_gender"));
                 userList.add(user);
             }
             return Response.ok(gson.toJson(userList)).build();

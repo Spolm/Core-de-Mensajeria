@@ -17,7 +17,7 @@ public class M01_Login {
     private Connection conn = Sql.getConInstance();
     User user = new User();
     ResultSet result = null;
-    static String QUERY_SELECT = "SELECT * FROM public.user where userUsername=?";
+    static String QUERY_SELECT = "SELECT * FROM public.user where use_username=?";
 
 
 
@@ -30,43 +30,53 @@ public class M01_Login {
     public Response login( LoginIntent loginIntent) throws SQLException {
         Error error = null;
 
+
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SELECT);
-            preparedStatement.setString(1, loginIntent.get_username());
-            result = preparedStatement.executeQuery();
-            user = new User();
+            if(loginIntent.get_username().matches("[a-zA-Z0-9]+") && loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
+                PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SELECT);
+                preparedStatement.setString(1, loginIntent.get_username());
+                result = preparedStatement.executeQuery();
+                user = new User();
 
-            while (result.next()) {
+                while (result.next()) {
 
-                user.set_idUser(result.getInt("userId"));
-                user.set_passwordUser(result.getString("userPassword"));
-                user.set_usernameUser(result.getString("userUsername"));
-                user.set_typeUser(result.getInt("userType"));
-                user.set_emailUser(result.getString("userEmail"));
-                user.set_phoneUser(result.getString("userPhone"));
-                user.set_countryUser(result.getString("userCountry"));
-                user.set_cityUser(result.getString("userCity"));
-                user.set_addressUser(result.getString("userAddress"));
-                user.set_dateOfBirthUser(result.getDate("userDateOfBirth"));
-                user.set_genderUser(result.getString("userGender"));
+                    user.set_idUser(result.getInt("use_Id"));
+                    user.set_passwordUser(result.getString("use_password"));
+                    user.set_usernameUser(result.getString("use_username"));
+                    user.set_typeUser(result.getInt("use_type"));
+                    user.set_emailUser(result.getString("use_email"));
+                    user.set_phoneUser(result.getString("use_phone"));
+                    user.set_countryUser(result.getString("use_country"));
+                    user.set_cityUser(result.getString("use_city"));
+                    user.set_addressUser(result.getString("use_address"));
+                    user.set_dateOfBirthUser(result.getDate("use_date_of_birth"));
+                    user.set_genderUser(result.getString("use_gender"));
+
+                }
+                if (user.get_passwordUser().equals(loginIntent.get_password())) {
+                    user.set_passwordUser("");
+                    return Response.accepted(gson.toJson(user)).build();
+                } else {
+                    error = new Error("Las credenciales ingresadas son incorrectas");
+                    error.addError("credenciales","No se encontro el usuario deseado");
+                    return Response.status(404).entity(error).build();
+                }
 
             }
-            if (user.get_passwordUser().equals(loginIntent.get_password())) {
-                user.set_passwordUser("");
-                return Response.accepted(gson.toJson(user)).build();
-            } else {
-                error = new Error("No se pudo acceder al sistema");
-                error.addError("credenciales","Las credenciales ingresadas son incorrectas");
+            else {
+                error = new Error("Los datos ingresados no tienen el formato adecuado");
+                error.addError("credenciales","Los valores no pueden incluir caracteres especiales que no sean: /*_-");
                 return Response.status(404).entity(error).build();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
-            error.addError("Query deseado","QUERY_SELECT");
+            error.addError("Query deseado",QUERY_SELECT);
             return Response.status(500).entity(error).build();
         } catch (NullPointerException e){
-            error = new Error("No se pudo acceder al sistema");
-            error.addError("credenciales","Las credenciales ingresadas son incorrectas");
+            error = new Error("Las credenciales ingresadas son incorrectas");
+            error.addError("credenciales","No se encontro el usuario deseado");
             return Response.status(404).entity(error).build();
         } catch (Exception e) {
             e.printStackTrace();
