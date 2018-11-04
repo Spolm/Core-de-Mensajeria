@@ -3,6 +3,7 @@ import webService.M01_Login.M01_Login;
 import webService.HelloWorld;
 import webService.M01_Login.M01_User;
 import webService.M02_CompanyManagement.M02_Companies;
+import webService.M10_Profile.M10_Profile;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -21,6 +22,7 @@ public class CoreMensajeria extends Application{
         h.add( M01_Login.class );
         h.add( M01_User.class );
         h.add(M02_Companies.class);
+        h.add(M10_Profile.class);
         return h;
     }
 }
