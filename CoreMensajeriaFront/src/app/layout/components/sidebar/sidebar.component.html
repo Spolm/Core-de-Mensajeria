@@ -20,6 +20,10 @@
             <i class="fa fa-file-o"></i>&nbsp;
             <span>{{ 'Origen' | translate }}</span>
         </a>
+        <a [routerLink]="['/template']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-sticky-note"></i>&nbsp;
+            <span>{{ 'Template' | translate }}</span>
+        </a>
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
         <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;
