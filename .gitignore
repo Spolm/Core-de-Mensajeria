@@ -8,3 +8,7 @@
 
 WebAPI/\.vs/
 /WebAPI*
+
+.idea/
+glassfish5/
+out/
