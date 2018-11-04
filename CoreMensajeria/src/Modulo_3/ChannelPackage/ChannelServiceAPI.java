@@ -6,21 +6,31 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/channel")
+
 public class ChannelServiceAPI {
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listChannel() {
+        ArrayList<Channel> p = ChannelService.getInstance().listChannel();
+        return Response
+                .ok()
+                .entity(p)
+                .build();
+    }
 
     @Path("/i/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listIntegrator(@PathParam( "id" ) int id) {
-        System.out.println("aqui!"+id);
         List<Integrator> i = ChannelService.getInstance().listIntegratorByChannel(id);
         return Response
                 .ok()
                 .entity(i)
                 .build();
     }
-
 }

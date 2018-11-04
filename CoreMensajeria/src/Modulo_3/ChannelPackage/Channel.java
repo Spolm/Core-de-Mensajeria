@@ -1,17 +1,12 @@
 package Modulo_3.ChannelPackage;
-
 import Modulo_3.IntegratorPackage.Integrator;
-
 import java.util.ArrayList;
 
 public abstract class Channel {
     private int idChannel;
     private String nameChannel;
     private String descriptionChannel;
-    private ArrayList<Integrator> integrators;
-
-    public Channel() {
-    }
+    ArrayList<Integrator> integrators;
 
     public Channel(int idChannel, String channelName, String channelDescription, ArrayList<Integrator> integrators) {
         this.idChannel = idChannel;
@@ -52,7 +47,4 @@ public abstract class Channel {
         this.integrators = integrators;
     }
 
-    public Integrator getSingleIntegrator(int id) {
-        return this.integrators.get(id);
-    }
 }
