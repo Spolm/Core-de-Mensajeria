@@ -11,7 +11,7 @@ export class StatisticsServiceService {
 
 getStatisticsData(){
 
-return this.http.get('http://localhost:8080/ApiPrueba2_war_exploded/api/Servicios/numero')
+return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/Grafica')
 
 }
 
