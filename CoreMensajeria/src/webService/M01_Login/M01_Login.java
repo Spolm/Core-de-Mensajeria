@@ -17,7 +17,7 @@ public class M01_Login {
     private Connection conn = Sql.getConInstance();
     User user = new User();
     ResultSet result = null;
-    static String QUERY_SELECT = "SELECT * FROM public.user where userUsername=?";
+    static String QUERY_SELECT = "SELECT * FROM public.user where use_username=?";
 
 
 
@@ -32,7 +32,7 @@ public class M01_Login {
 
 
         try {
-            if(loginIntent.get_username().matches("[a-zA-Z0-9]+") && loginIntent.get_password().matches("[a-zA-Z0-9.$%'*+/^_`{|}~-]+")){
+            if(loginIntent.get_username().matches("[a-zA-Z0-9]+") && loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
                 PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SELECT);
                 preparedStatement.setString(1, loginIntent.get_username());
                 result = preparedStatement.executeQuery();
@@ -57,26 +57,26 @@ public class M01_Login {
                     user.set_passwordUser("");
                     return Response.accepted(gson.toJson(user)).build();
                 } else {
-                    error = new Error("No se pudo acceder al sistema");
-                    error.addError("credenciales","Las credenciales ingresadas son incorrectas");
+                    error = new Error("Las credenciales ingresadas son incorrectas");
+                    error.addError("credenciales","No se encontro el usuario deseado");
                     return Response.status(404).entity(error).build();
                 }
 
             }
             else {
-                error = new Error("No se pudo acceder al sistema");
-                error.addError("credenciales","Los datos ingresados no tienen el formato adecuado");
+                error = new Error("Los datos ingresados no tienen el formato adecuado");
+                error.addError("credenciales","Los valores no pueden incluir caracteres especiales que no sean: /*_-");
                 return Response.status(404).entity(error).build();
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
-            error.addError("Query deseado","QUERY_SELECT");
+            error.addError("Query deseado",QUERY_SELECT);
             return Response.status(500).entity(error).build();
         } catch (NullPointerException e){
-            error = new Error("No se pudo acceder al sistema");
-            error.addError("credenciales","Las credenciales ingresadas son incorrectas");
+            error = new Error("Las credenciales ingresadas son incorrectas");
+            error.addError("credenciales","No se encontro el usuario deseado");
             return Response.status(404).entity(error).build();
         } catch (Exception e) {
             e.printStackTrace();
