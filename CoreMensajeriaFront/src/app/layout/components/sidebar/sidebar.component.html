@@ -6,11 +6,11 @@
         </a>
         <a [routerLink]="['/channel']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-filter"></i>&nbsp;
-            <span>{{ 'Channel' | translate }}</span>
+            <span>Canales</span>
         </a>
         <a [routerLink]="['/integrator']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-reply-all"></i>&nbsp;
-            <span>{{ 'Integrator' | translate }}</span>
+            <span>Integradores</span>
         </a>
         <a [routerLink]="['/statistics']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-bar-chart"></i>&nbsp;
@@ -19,6 +19,10 @@
         <a [routerLink]="['/application']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-file-o"></i>&nbsp;
             <span>{{ 'Origen' | translate }}</span>
+        </a>
+        <a [routerLink]="['/template']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-sticky-note"></i>&nbsp;
+            <span>{{ 'Template' | translate }}</span>
         </a>
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
