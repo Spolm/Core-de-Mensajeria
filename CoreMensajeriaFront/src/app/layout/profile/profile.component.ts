@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import { Users } from './models/users';
+import { Http } from '@angular/http';
 
 @Component({
   selector: 'app-profile',
@@ -9,9 +11,14 @@ import { routerTransition } from '../../router.animations';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
 
   ngOnInit() {
+  }
+
+  Users : Array<Users>;
+
+  constructor(private http: Http){
+  	this.http.get('http://jsonplaceholder.typicode.com/users').subscribe(resp=>this.Users = resp.json());
   }
 
 }

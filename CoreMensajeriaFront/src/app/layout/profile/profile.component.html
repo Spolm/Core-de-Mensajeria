@@ -1,5 +1,23 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Perfil de usuario'" [icon]="'fa-user'"></app-page-header>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Usuario</th>
+              <th scope="col">E-mail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of Users;">
+              <th>{{user.id}}</th>
+              <th>{{user.name}}</th>
+              <th>{{user.username}}</th>
+              <th>{{user.email}}</th>
+            </tr>
+          </tbody>
+        </table>
     <img src="https://cdn.icon-icons.com/icons2/317/PNG/512/user-male-icon_34332.png" alt="" class="profile-img">
     <div class="row">
         <div class="col-md-12">
