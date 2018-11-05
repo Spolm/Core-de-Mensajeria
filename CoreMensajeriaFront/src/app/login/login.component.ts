@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.toastr.info("Espere un momento",'Intentando acceder',{
-      progressBar: true,
+      progressBar: true
     });
     this.rest.logUser(this.userData).subscribe((result) => {
       this.toastr.success('Has iniciado sesión');

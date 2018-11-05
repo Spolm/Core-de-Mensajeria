@@ -46,5 +46,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="JAX-RS" level="project" />
+    <orderEntry type="library" name="org.junit.jupiter:junit-jupiter-api:5.4.0-SNAPSHOT" level="project" />
   </component>
 </module>
