@@ -1,6 +1,7 @@
-package Classes;
+package Classes.M01_Login;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.Objects;
 
 public class User {
 
@@ -34,6 +35,28 @@ public class User {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return _idUser == user._idUser &&
+                _typeUser == user._typeUser &&
+                Objects.equals(_passwordUser, user._passwordUser) &&
+                Objects.equals(_usernameUser, user._usernameUser) &&
+                Objects.equals(_emailUser, user._emailUser) &&
+                Objects.equals(_phoneUser, user._phoneUser) &&
+                Objects.equals(_dateOfBirthUser, user._dateOfBirthUser) &&
+                Objects.equals(_countryUser, user._countryUser) &&
+                Objects.equals(_addressUser, user._addressUser) &&
+                Objects.equals(_genderUser, user._genderUser) &&
+                Objects.equals(_cityUser, user._cityUser);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(_idUser, _passwordUser, _usernameUser, _typeUser, _emailUser, _phoneUser, _dateOfBirthUser, _countryUser, _addressUser, _genderUser, _cityUser);
+    }
 
     public int get_idUser() {
         return _idUser;
