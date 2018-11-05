@@ -15,7 +15,7 @@ insert into public.Status (sta_name)
 values ('aprobado');
 
 insert into public.template_status (ts_date,ts_template,ts_status)
-values ('2003-2-1',1,2);
+values ('2003-2-1',1,1);
 
 insert into public.message_parameter (mp_message,mp_parameter)
-values (2,1);
+values (1,1);
