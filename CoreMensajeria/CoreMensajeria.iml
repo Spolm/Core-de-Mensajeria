@@ -32,5 +32,8 @@
     </orderEntry>
     <orderEntry type="library" name="postgresql-42.2.5" level="project" />
     <orderEntry type="library" name="gson-2.8.5" level="project" />
+    <orderEntry type="library" name="javax.ws.rs-api" level="project" />
+    <orderEntry type="library" name="GlassFish 5.0.0-RESTful Web Service" level="project" />
+    <orderEntry type="library" name="org.json" level="project" />
   </component>
 </module>
