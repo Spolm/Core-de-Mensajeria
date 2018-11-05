@@ -68,10 +68,10 @@ public class M10_ProfileService {
                             String city, String address ) {
 
         //Query a realizar
-        String query = "UPDATE" +
-                " users(use_username, use_phone, use_country, use_date_of__birth, use_city, use_address)" +
-                " VALUES '"+username+"','"+phone+"','"+country+"',"+birthday+",'"+city+"','"+address+"'"+
-                "WHERE use_id = '"+id+"'";
+        String query = "UPDATE public.User SET " +
+                "use_username='"+username+"' , use_phone='"+phone+"', use_country='"+country+"', use_date_of_birth='"+birthday+"'"+
+                ", use_city='"+city+"', use_address='"+address+"'"+
+                "WHERE use_id = "+id;
 
         //Se crea conexion a la dc
         Sql db = new Sql();
