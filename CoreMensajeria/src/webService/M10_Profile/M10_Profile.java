@@ -25,7 +25,7 @@ public class M10_Profile {
     @Produces(MediaType.APPLICATION_JSON)
     public Response editProfile(@FormParam("id") String id, @FormParam("username") String username,
                                 @FormParam("email") String email, @FormParam("phone") String phone,
-                                @FormParam("country") String country, @FormParam("date_of_birth") String birthday,
+                                @FormParam("country") String country, @FormParam("date_of_birth") int birthday,
                                 @FormParam("city") String city, @FormParam("address") String address) {
         String success = M10_ProfileService.getInstance().editProfile( id, username, email, phone, country, birthday, city,
                 address );

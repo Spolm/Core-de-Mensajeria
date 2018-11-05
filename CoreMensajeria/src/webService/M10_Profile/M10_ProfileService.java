@@ -64,12 +64,12 @@ public class M10_ProfileService {
      * @return  String con mensaje de exito
      * @throws SQLException
      */
-    public String editProfile( String id, String username, String email, String phone, String country, String birthday,
+    public String editProfile( String id, String username, String email, String phone, String country, int birthday,
                             String city, String address ) {
 
         //Query a realizar
         String query = "UPDATE" +
-                " users(use_username, use_phone, use_country, use_date_of__birth, use_city, use_address)" +
+                " public.user(use_username, use_phone, use_country, use_date_of_birth, use_city, use_address)" +
                 " VALUES '"+username+"','"+phone+"','"+country+"',"+birthday+",'"+city+"','"+address+"'"+
                 "WHERE use_id = '"+id+"'";
 
