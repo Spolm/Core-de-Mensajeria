@@ -55,3 +55,40 @@ create table public.Application
 	CONSTRAINT fk_user_aplication foreign key ("app_user_creator") 
 	REFERENCES public.User(use_id) 
 );
+
+create table public.Template
+(
+    tem_id serial primary key,
+    tem_creation_date timestamp
+);
+
+create table public.Message
+(
+    mes_id serial PRIMARY KEY,
+    mes_text varchar(160) NOT NULL,
+    mes_template integer NOT NULL,
+    CONSTRAINT fk_template_id FOREIGN KEY ("mes_template") REFERENCES public.Template (tem_id)
+);
+
+create table public.Parameter
+(
+    par_id serial PRIMARY KEY,
+    Par_name varchar(15)
+);
+
+create table public.Message_Parameter
+(
+    mp_id serial PRIMARY KEY,
+    mp_message integer NOT NULL,
+    mp_parameter integer NOT NULL,
+    CONSTRAINT fk_message_id FOREIGN KEY ("mp_message") REFERENCES public.message (mes_id),
+    CONSTRAINT fk_parameter_id FOREIGN KEY ("mp_parameter") REFERENCES public.parameter (par_id)
+);
+
+create table public.Status
+(
+    sta_id serial PRIMARY KEY,
+    sta_name varchar(15) NOT NULL
+
+);
+

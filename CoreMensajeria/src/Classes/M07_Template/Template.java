@@ -5,9 +5,9 @@ import Classes.M07_Template.PlanningPackage.Planning;
 import Classes.M07_Template.StatusPackage.IStatus;
 
 public class Template {
-    private Message message;
-    private Planning planning;
-    private IStatus status;
+    private Message _message;
+    // private Planning _planning;
+    private IStatus _status;
     //private Campaign _campaing;
     //private Channel _channel;
     //private Integrator _integrator
@@ -20,19 +20,24 @@ public class Template {
     public Template() {
     }
 
-    public Template(Message message, Planning planning, IStatus status) {
-        this.message = message;
-        this.planning = planning;
-        this.status = status;
+    public Template(Message message, IStatus status) {
+        this._message = message;
+        //   this._planning = planning;
+        this._status = status;
     }
+
+
 
     public String getStatus() {
-        return status.getIStatusTemplate();
+        return _status.getIStatusTemplate();
     }
 
-    public void setStatus(IStatus status) {
+    public void setStatus(IStatus status) { this._status = status; }
 
-        this.status = status;
-    }
+    public String getMessage(){ return _message.getMessage(); }
+
+    public void set_message(Message _message) { this._message = _message; }
+
+    // public Planning get_planning() { return _planning; }
 }
 
