@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 
 import Classes.Company;
 import Classes.Sql;
-import com.google.gson.JsonObject;
+
 
 
 @Path("/M02_Companies")
@@ -55,9 +55,10 @@ public class M02_Companies {
     public String GetCompanies() throws  SQLException {
         //Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
         String select = "SELECT * FROM company";
+        ArrayList<Company> companyList= new ArrayList<>();
 
         try {
-            ArrayList<Company> companyList= new ArrayList<>();
+
             Statement st = conn.createStatement();
             ResultSet result =  st.executeQuery(select);
 
@@ -68,8 +69,6 @@ public class M02_Companies {
                 co.set_status(result.getBoolean("status"));
                 companyList.add(co);
             }
-
-            return gson.toJson(companyList);
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -78,5 +77,6 @@ public class M02_Companies {
         finally {
             Sql.bdClose(conn);
         }
+        return gson.toJson(companyList);
     }
 }

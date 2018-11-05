@@ -1,0 +1,22 @@
+<div class="login-page" [@routerTransition]>
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <img src="assets/images/logo.png" width="150px" class="user-avatar" />
+            <h1>Core de Mensajería</h1>
+            <h5>Universidad Católica Andrés Bello</h5>
+            <form role="form">
+                <div class="form-content">
+                    <div class="form-group">
+                        <input type="text" [(ngModel)]="userData._username" class="form-control input-underline input-lg" id="" placeholder="Email"  name="username">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" [(ngModel)]="userData._password" class="form-control input-underline input-lg" id="" placeholder="Contraseña" name="password">
+                    </div>
+                </div>
+                <a class="btn rounded-btn" (click)="handleLogin()"> Iniciar sesión </a>
+            </form>
+        </div>
+    </div>
+</div>
+
