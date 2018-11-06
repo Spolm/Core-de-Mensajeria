@@ -5,9 +5,9 @@ import Classes.M07_Template.MessagePackage.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
@@ -19,6 +19,7 @@ class MessageTest {
     @BeforeEach
     void init(){
         parameters = new ArrayList<Parameter>();
+
         for (int i=1 ; i < 4 ; i++){
             parameters.add(new Parameter("parameter" + i));
         }
@@ -28,17 +29,16 @@ class MessageTest {
     }
 
     @Test
-    void objectsNotNull(){
+    void correctAttributes(){
+        String text;
+
         assertNotNull(message);
         assertNotNull(parameters);
+
         for (int i=0 ; i < 3 ; i++){
             assertNotNull(parameters.get(i));
         }
-    }
 
-    @Test
-    void correctAttributes(){
-        String text;
         text ="hola " + parameters.get(0).getName()
                 + " este es un mensaje " + parameters.get(1).getName()
                 + " de prueba " + parameters.get(2).getName();
