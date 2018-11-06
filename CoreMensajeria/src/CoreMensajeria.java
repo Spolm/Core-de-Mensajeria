@@ -1,5 +1,5 @@
-import Modulo_3.ChannelPackage.ChannelServiceAPI;
-import Modulo_3.IntegratorPackage.IntegratorServiceAPI;
+import webService.M03_Channel_Integrator.ChannelServiceAPI;
+import webService.M03_Channel_Integrator.IntegratorServiceAPI;
 import webService.M01_Login.M01_Login;
 import webService.HelloWorld;
 import webService.M01_Login.M01_User;
