@@ -1,4 +1,4 @@
-package Classes;
+package Classes.M01_Login;
 
 public class LoginIntent {
     private String _username;
