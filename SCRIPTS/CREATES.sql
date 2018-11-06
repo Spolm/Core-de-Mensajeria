@@ -55,3 +55,13 @@ create table public.Application
 	CONSTRAINT fk_user_aplication foreign key ("app_user_creator") 
 	REFERENCES public.User(use_id) 
 );
+
+create table public.Message
+(
+    mes_id serial not null,
+    mes_date timestamp not null,
+    mes_cam_id integer not null, 
+    CONSTRAINT pk_message primary key (mes_id),
+    CONSTRAINT fk_campaign_message foreign key ("mes_cam_id")
+    REFERENCES public.Campaign (cam_id)
+);
