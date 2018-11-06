@@ -11,17 +11,17 @@ export class StatisticsServiceService {
 
 getStatisticsData1(){
 
-return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/NumberCompany')
+return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/MessageCompanyBar')
 }
 
 getStatisticsData2(){
 
- return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/Grafica2') 
+ return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/MessageCompanyLine') 
 }
 
 getStatisticsData3(){
 
-  return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/Grafica3') 
+  return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/MessageCompanyPie') 
 }
 
 
