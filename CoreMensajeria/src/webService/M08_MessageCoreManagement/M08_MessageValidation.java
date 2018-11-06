@@ -1,9 +1,8 @@
 package webService.M08_MessageCoreManagement;
 
-import Classes.Sql;
-import Classes.ValidationParameter;
-import Classes.ValidationTemplate;
-import Modulo_8.Validation.Validation;
+import Classes.M08_Validation.ValidationParameter;
+import Classes.M08_Validation.ValidationTemplate;
+import Modulo_8.Validation;
 
 import javax.ws.rs.*;
 import com.google.gson.Gson;

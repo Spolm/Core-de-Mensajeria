@@ -1,7 +1,7 @@
-package Modulo_8.Validation;
+package Modulo_8;
 
-import Classes.ValidationParameter;
-import Classes.ValidationTemplate;
+import Classes.M08_Validation.ValidationParameter;
+import Classes.M08_Validation.ValidationTemplate;
 
 import java.util.Date;
 
@@ -34,7 +34,7 @@ public class Validation {
     //Funcion para validar la longitud del mensaje si es sms
     public boolean ValidateSMSlentgh(String message,String chanel){
 
-        if ((chanel=="SMS") && (message.length()<=160)){
+        if ((chanel.equals("SMS")) && (message.length()>160)){
             return true;
         }
         if (chanel=="CANAL"){
@@ -53,7 +53,7 @@ public class Validation {
     }
 
     //Funcion para validar las validaciones
-    public String Validate_Condicion(boolean date, boolean hour, boolean lentgh, boolean message, ValidationTemplate template, ValidationParameter parameters){
+    public String Validate_Condicion(boolean date, boolean hour, boolean message, boolean lentgh, ValidationTemplate template, ValidationParameter parameters){
 
         if (!date){ return "No se puede enviar plantilla la fecha de envio no valida";}
         else if (!hour){return "No se puede enviar plantilla la hora no es valida"; }
@@ -65,7 +65,7 @@ public class Validation {
             template.set_chanel(parameters.get_chanel());
 
             //Envio el template con los parametros a los integradores
-            String responseIntegradores = "exito o fracaso";
+            String responseIntegradores = "Exito en Envio";
 
             //Registro el response en base de datos
 

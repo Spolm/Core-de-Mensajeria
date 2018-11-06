@@ -55,7 +55,8 @@ public class M01_Login {
                 }
                 if (user.get_passwordUser().equals(loginIntent.get_password())) {
                     user.set_passwordUser("");
-                    return Response.accepted(gson.toJson(user)).build();
+                    return Response.ok(gson.toJson(user)).build();
+
                 } else {
                     error = new Error("Las credenciales ingresadas son incorrectas");
                     error.addError("credenciales","No se encontro el usuario deseado");
