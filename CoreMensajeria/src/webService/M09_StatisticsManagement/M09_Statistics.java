@@ -3,6 +3,7 @@ package webService.M09_StatisticsManagement;
 import Classes.Campaign;
 import Classes.Company;
 import Classes.Sql;
+import Classes.SqlEstrella;
 import Modulo_9.PieChart;
 import Modulo_9.Statistics;
 import com.google.gson.Gson;
@@ -23,7 +24,8 @@ import java.util.ArrayList;
 public class M09_Statistics extends Application {
 
     Gson gson = new Gson();
-    private Connection conn = Sql.getConInstance();
+    //private Connection conn = Sql.getConInstance();
+    private Connection conn = SqlEstrella.getConInstance();
 
     @GET
     @Path("/Grafica")
@@ -165,58 +167,135 @@ public class M09_Statistics extends Application {
     }
 
 
-        //Falta algunas modificaciones a este metodo:
-
-        //Estaba Pensando en colocar una consulta donde primero consultes todos los nombres de
-        //las empresas lo guardes en un array, hacer un ,length y luego un for con esa cantidad de
-        //empresas y dentro otra conexion sql con el nombre de las empresas concatenado
     @GET
-    @Path("/NumberCompany")
+    @Path("/MessageCompanyBar")
     @Produces("application/json")
-    public Response getNumeroDeCompanys() throws SQLException {
-        String aux ;
-        String select = "SELECT count(*) FROM public.Company";
-        String select2 = "SELECT com_name FROM public.Company";
+    public Response getNumberOfCompanysChart() throws SQLException {
+        String aux = "";
+        String select2 = "SELECT com_name  from dim_company_campaign";
+
         try {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
             ArrayList<String> listCompany = new ArrayList<String>();
             int n = 0 ;
-
-            Statement st = conn.createStatement();
             Statement st2 = conn.createStatement();
             ResultSet result2 = st2.executeQuery(select2);
-            ResultSet result = st.executeQuery(select);
-
-            while (result2.next()) {
-
+            while ( result2.next() ) {
                 Company co = new Company();
-                co.set_name(result2.getString("com_name"));
+                co.set_name( result2.getString("com_name"));
                 aux = co.get_name();
-                listCompany.add(aux) ;
-
-
+                listCompany.add( aux ) ;
             }
-            if(result.next()) {
-                n = result.getInt(1);
-                listNum.add(n);
-                listNum.add(n);
-                listNum.add(n);
-                listNum.add(n);
-            }
-
+            listNum = CountOfMessage(listCompany);
             gr.type = "bar";
             gr.x = listCompany;
             gr.y = listNum;
-
-            return Response.ok(gson.toJson(gr)).build();
-        } catch (SQLException e) {
+            return Response.ok( gson.toJson( gr ) ).build();
+        } catch ( SQLException e ) {
             e.printStackTrace();
-            throw new SQLException(select);
+            throw new SQLException( select2 );
         } finally {
-            Sql.bdClose(conn);
+            Sql.bdClose( conn );
         }
     }
+
+    @GET
+    @Path("/MessageCompanyLine")
+    @Produces("application/json")
+    public Response getNumberOfCompanysLine() throws SQLException {
+        String aux = "";
+        String select2 = "SELECT com_name  from dim_company_campaign";
+        try {
+            Statistics gr = new Statistics();
+            ArrayList<Integer> listNum = new ArrayList<Integer>();
+            ArrayList<String> listCompany = new ArrayList<String>();
+            int n = 0 ;
+            Statement st2 = conn.createStatement();
+            ResultSet result2 = st2.executeQuery(select2);
+            while ( result2.next() ) {
+                Company co = new Company();
+                co.set_name( result2.getString("com_name"));
+                aux = co.get_name();
+                listCompany.add( aux ) ;
+            }
+            listNum = CountOfMessage(listCompany);
+            gr.type = "line";
+            gr.x = listCompany;
+            gr.y = listNum;
+            return Response.ok( gson.toJson( gr ) ).build();
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            throw new SQLException( select2 );
+        } finally {
+            Sql.bdClose( conn );
+        }
+    }
+
+    @GET
+    @Path("/MessageCompanyPie")
+    @Produces("application/json")
+    public Response getNumberOfCompanysPie() throws SQLException {
+        String aux = "";
+        String select2 = "SELECT com_name  from dim_company_campaign";
+        try {
+            PieChart PieC = new PieChart();
+            ArrayList<Integer> listNum = new ArrayList<Integer>();
+            ArrayList<String> listlabels = new ArrayList<String>();
+            int n = 0 ;
+            Statement st2 = conn.createStatement();
+            ResultSet result2 = st2.executeQuery(select2);
+            while ( result2.next() ) {
+                Company co = new Company();
+                co.set_name( result2.getString("com_name"));
+                aux = co.get_name();
+                listlabels.add( aux ) ;
+            }
+            listNum = CountOfMessage(listlabels);
+            PieC.type = "pie";
+            PieC.labels = listlabels;
+            PieC.values = listNum;
+            return Response.ok( gson.toJson( PieC ) ).build();
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            throw new SQLException( select2 );
+        } finally {
+            Sql.bdClose( conn );
+        }
+    }
+
+
+
+    public ArrayList<Integer> CountOfMessage (ArrayList<String > listCompany){
+
+        String aux2 = "" ;
+        int n = 0  ;
+        ArrayList<Integer> listNum = new ArrayList<>();
+
+        try {
+        for ( int i = 0 ; i < listCompany.size() ; i++ ) {
+
+            aux2 = listCompany.get(i).toString();
+            String select = "SELECT count(M.*) from fact_message as M , dim_company_campaign as C \n" +
+                    "where C.cam_id = M.mes_cam_id and C.com_name = '" + aux2 + "' ";
+
+            Statement st = conn.createStatement();
+            ResultSet result = st.executeQuery(select);
+            while (result.next()) {
+                n = result.getInt(1);
+                listNum.add(n);
+            }
+        }
+        }
+        catch ( SQLException e ) {
+            e.printStackTrace();
+           // throw new SQLException();
+        } finally {
+            Sql.bdClose( conn );
+        }
+        return listNum;
+    }
+
 
 }
 
