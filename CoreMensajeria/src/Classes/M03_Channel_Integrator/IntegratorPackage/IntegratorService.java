@@ -1,4 +1,4 @@
-package Modulo_3.IntegratorPackage;
+package Classes.M03_Channel_Integrator.IntegratorPackage;
 
 import Classes.Sql;
 

@@ -1,8 +1,8 @@
-package Modulo_3.ChannelPackage;
+package Classes.M03_Channel_Integrator.ChannelPackage;
 import Classes.Sql;
 
-import Modulo_3.IntegratorPackage.Integrator;
-import Modulo_3.IntegratorPackage.IntegratorService;
+import Classes.M03_Channel_Integrator.IntegratorPackage.Integrator;
+import Classes.M03_Channel_Integrator.IntegratorPackage.IntegratorService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

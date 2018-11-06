@@ -1,5 +1,7 @@
-package Modulo_3.ChannelPackage;
-import Modulo_3.IntegratorPackage.Integrator;
+package webService.M03_Channel_Integrator;
+import Classes.M03_Channel_Integrator.ChannelPackage.Channel;
+import Classes.M03_Channel_Integrator.ChannelPackage.ChannelService;
+import Classes.M03_Channel_Integrator.IntegratorPackage.Integrator;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
