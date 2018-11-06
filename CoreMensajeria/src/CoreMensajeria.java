@@ -10,7 +10,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
-//agregar mi clase donde estan los metodos a implementar
+
 //Defines the base URI for all resource URIs.
 @ApplicationPath("/")
 //The java class declares root resource and provider classes
@@ -28,5 +28,4 @@ public class CoreMensajeria extends Application{
         h.add(ChannelServiceAPI.class);
         return h;
     }
-
 }
