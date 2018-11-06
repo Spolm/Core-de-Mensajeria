@@ -49,19 +49,17 @@ public class TemplateHandler {
         }
     }
 
-    public void postTemplateStatus(int id) {
+    public void postTemplateStatus(int id){
+        Connection con = Sql.getConInstance();
         String query="insert into public.template_status (ts_date,ts_template,ts_status) values (CURRENT_TIMESTAMP,"+id+",(select sta_id from public.status where sta_name='aprobado'))";
-
         try {
-            ResultSet resultSet = sql.sqlConn(query);
-
-        }catch(SQLException e){
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.executeUpdate();
+        }  catch(SQLException e){
             e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
         }
-        finally {
-            Sql.bdClose(conn);
-        }
+        Sql.bdClose(con);
     }
 }
