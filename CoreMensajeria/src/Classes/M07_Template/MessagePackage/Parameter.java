@@ -9,7 +9,7 @@ public class Parameter {
     public Parameter() {
     }
 
-    public Parameter(String _name) {
+    public Parameter(String name) {
         this.name = name;
     }
 
