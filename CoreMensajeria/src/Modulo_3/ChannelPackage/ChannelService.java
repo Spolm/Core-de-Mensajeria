@@ -25,11 +25,11 @@ public class ChannelService {
         ArrayList<Integrator> integrators = new ArrayList<>();
 
         try {
-            ResultSet rs = db.sqlConn("SELECT in_id, in_name, in_messageCost, in_threadCapacity, in_tokenApi" +
+            ResultSet rs = db.sqlConn("SELECT int_id, int_name, int_messageCost, int_threadCapacity, int_tokenApi" +
                                         " FROM INTEGRATOR, CHANNEL_INTEGRATOR ," +
                                         " CHANNEL"+
-                                        " WHERE IN_ID = CI_INTEGRATOR_ID AND" +
-                                        " CI_CHANNEL_ID = CH_ID AND CH_ID = "+id);
+                                        " WHERE INT_ID = CI_INTEGRATOR_ID AND" +
+                                        " CI_CHANNEL_ID = CHA_ID AND CHA_ID = "+id);
             IntegratorService.getIntegratorsRs(integrators, rs);
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
@@ -43,11 +43,11 @@ public class ChannelService {
         ArrayList<Channel> channels = new ArrayList<>();
 
         try {
-            ResultSet rs = db.sqlConn("SELECT ch_id, ch_name, ch_description FROM CHANNEL");
+            ResultSet rs = db.sqlConn("SELECT cha_id, cha_name, cha_description FROM CHANNEL");
             while (rs.next()) {
                 ChannelFactory f = new ChannelFactory();
-                int id = rs.getInt("ch_id");
-                Channel c = f.getChannel(rs.getInt("ch_id"),rs.getString("ch_name"),rs.getString("ch_description"), listIntegratorByChannel(id));
+                int id = rs.getInt("cha_id");
+                Channel c = f.getChannel(rs.getInt("cha_id"),rs.getString("cha_name"),rs.getString("cha_description"), listIntegratorByChannel(id));
                 channels.add(c);
             }
         } catch (SQLException ex) {

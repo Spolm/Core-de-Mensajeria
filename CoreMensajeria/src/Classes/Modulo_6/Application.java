@@ -1,6 +1,6 @@
 package Classes.Modulo_6;
 
-import Classes.User;
+import Classes.M01_Login.User;
 
 import java.util.Date;
 
