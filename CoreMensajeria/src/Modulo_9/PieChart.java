@@ -8,7 +8,7 @@ public class PieChart {
     public   ArrayList labels;
     public   String type;
 
-    public PieChart(ArrayList lables, ArrayList<Integer> values, String type) {
+    public PieChart(ArrayList labels, ArrayList<Integer> values, String type) {
         this.labels = labels;
         this.values = values;
         this.type = type;
