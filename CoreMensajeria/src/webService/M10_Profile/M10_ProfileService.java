@@ -1,7 +1,7 @@
 package webService.M10_Profile;
 
 import Classes.Sql;
-import Classes.User;
+import Classes.M01_Login.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

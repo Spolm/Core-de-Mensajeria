@@ -1,6 +1,6 @@
 package webService.M10_Profile;
 
-import Classes.User;
+import Classes.M01_Login.User;
 import com.google.gson.Gson;
 
 import javax.ws.rs.GET;

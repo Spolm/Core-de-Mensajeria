@@ -3,7 +3,6 @@ package webService.M09_StatisticsManagement;
 import Classes.Campaign;
 import Classes.Company;
 import Classes.Sql;
-import Classes.User;
 import Modulo_9.PieChart;
 import Modulo_9.Statistics;
 import com.google.gson.Gson;
@@ -171,7 +170,8 @@ public class M09_Statistics extends Application {
     @Path("/NumberCompany")
     @Produces("application/json")
     public Response getNumeroDeCompanys() throws SQLException {
-
+        String aux ;
+        ArrayList<String> CompanyName = new ArrayList<>();
         String select = "SELECT count(*) FROM public.Company";
         String select2 = "SELECT com_name FROM public.Company";
         try {
@@ -190,9 +190,10 @@ public class M09_Statistics extends Application {
                 Company co = new Company();
                 co.set_name(result2.getString("com_name"));
                 listCompany.add(co);
+                aux = listCompany.get(0).toString();
+                CompanyName.add(aux);
+
             }
-
-
             if(result.next()) {
                 //Si hay resultados obtengo el valor.
                 n = result.getInt(1);
@@ -203,7 +204,7 @@ public class M09_Statistics extends Application {
             }
 
             gr.type = "bar";
-            gr.x = listCompany;
+            gr.x = CompanyName;
             gr.y = listNum;
 
             return Response.ok(gson.toJson(gr)).build();
