@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IntegratorService {
-    private static IntegratorService integratorDAO = null;
+    private static IntegratorService _integratorDAO = null;
 
     public static IntegratorService getInstance() {
-        if (integratorDAO == null)
-            integratorDAO = new IntegratorService();
-        return integratorDAO;
+        if (_integratorDAO == null)
+            _integratorDAO = new IntegratorService();
+        return _integratorDAO;
 
     }
 
@@ -30,6 +30,8 @@ public class IntegratorService {
             getIntegratorsRs(integrators, rs);
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
+        }finally{
+            db.bdClose(db.getConn());
         }
         return integrators;
     }
@@ -49,6 +51,8 @@ public class IntegratorService {
             }
         } catch (SQLException e) {
             System.err.println(e.getStackTrace());
+        }finally{
+            db.bdClose(db.getConn());
         }
         return null;
     }

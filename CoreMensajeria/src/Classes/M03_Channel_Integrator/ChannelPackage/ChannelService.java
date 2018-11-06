@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 
 public class ChannelService {
-    private static ChannelService channelDAO = null;
+    private static ChannelService _channelDAO = null;
 
     public static ChannelService getInstance() {
-        if (channelDAO == null)
-            channelDAO = new ChannelService();
-        return channelDAO;
+        if (_channelDAO == null)
+            _channelDAO = new ChannelService();
+        return _channelDAO;
 
     }
 
@@ -33,6 +33,8 @@ public class ChannelService {
             IntegratorService.getIntegratorsRs(integrators, rs);
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
+        }finally{
+            db.bdClose(db.getConn());
         }
         return integrators;
     }
@@ -52,6 +54,8 @@ public class ChannelService {
             }
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
+        }finally{
+            db.bdClose(db.getConn());
         }
         return channels;
     }

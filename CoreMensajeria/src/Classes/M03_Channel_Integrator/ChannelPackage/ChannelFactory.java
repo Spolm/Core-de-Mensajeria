@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 
 public class ChannelFactory {
-    public Channel getChannel(int idChannel, String nameChannel, String descriptionChannel, ArrayList<Integrator> integrators) {
+    public Channel getChannel(int idChannel, String nameChannel,
+                              String descriptionChannel, ArrayList<Integrator> integrators) {
         if (nameChannel == null)
             return null;
         if (nameChannel.equalsIgnoreCase("SMS"))
