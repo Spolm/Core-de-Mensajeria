@@ -1,3 +1,5 @@
+\c CoreMensajeria_StarSchema CoreMensajeria
+
 create table public.Dim_Date(
 	dat_id timestamp not null,
     dat_year int not null,
