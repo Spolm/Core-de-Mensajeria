@@ -1,7 +1,8 @@
 package Classes.M07_Template.MessagePackage;
 
 import Classes.M07_Template.MessagePackage.Parameter;
-import java.util.ArrayList;
+
+import java.util.*;
 
 public class Message {
     private ArrayList<Parameter> parameters;
@@ -29,6 +30,20 @@ public class Message {
 
     public void set_message(String message) {
         this.message = message;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Message)) return false;
+        Message message1 = (Message) o;
+        return Objects.equals(getParameters(), message1.getParameters()) &&
+                Objects.equals(getMessage(), message1.getMessage());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getParameters(), getMessage());
     }
 }
 
