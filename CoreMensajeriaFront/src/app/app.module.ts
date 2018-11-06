@@ -29,7 +29,8 @@ export const createTranslateLoader = (http: HttpClient) => {
         BrowserAnimationsModule,
         ToastrModule.forRoot({
             preventDuplicates: true,
-            maxOpened : 1
+            maxOpened : 1,
+            autoDismiss : true,
         }),
         HttpClientModule,
         TranslateModule.forRoot({
