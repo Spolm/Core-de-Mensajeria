@@ -171,13 +171,12 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getNumeroDeCompanys() throws SQLException {
         String aux ;
-        ArrayList<String> CompanyName = new ArrayList<>();
         String select = "SELECT count(*) FROM public.Company";
         String select2 = "SELECT com_name FROM public.Company";
         try {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
-            ArrayList<Company> listCompany = new ArrayList<Company>();
+            ArrayList<String> listCompany = new ArrayList<String>();
             int n = 0 ;
 
             Statement st = conn.createStatement();
@@ -189,13 +188,12 @@ public class M09_Statistics extends Application {
 
                 Company co = new Company();
                 co.set_name(result2.getString("com_name"));
-                listCompany.add(co);
-                aux = listCompany.get(0).toString();
-                CompanyName.add(aux);
+                aux = co.get_name();
+                listCompany.add(aux) ;
+
 
             }
             if(result.next()) {
-                //Si hay resultados obtengo el valor.
                 n = result.getInt(1);
                 listNum.add(n);
                 listNum.add(n);
@@ -204,7 +202,7 @@ public class M09_Statistics extends Application {
             }
 
             gr.type = "bar";
-            gr.x = CompanyName;
+            gr.x = listCompany;
             gr.y = listNum;
 
             return Response.ok(gson.toJson(gr)).build();

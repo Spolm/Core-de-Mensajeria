@@ -11,7 +11,7 @@ export class StatisticsServiceService {
 
 getStatisticsData1(){
 
-return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/Grafica')
+return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/NumberCompany')
 }
 
 getStatisticsData2(){
