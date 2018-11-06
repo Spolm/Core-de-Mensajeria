@@ -165,7 +165,11 @@ public class M09_Statistics extends Application {
     }
 
 
-        //Falta algunas modificaciones a este metodo
+        //Falta algunas modificaciones a este metodo:
+
+        //Estaba Pensando en colocar una consulta donde primero consultes todos los nombres de
+        //las empresas lo guardes en un array, hacer un ,length y luego un for con esa cantidad de
+        //empresas y dentro otra conexion sql con el nombre de las empresas concatenado
     @GET
     @Path("/NumberCompany")
     @Produces("application/json")

@@ -10,7 +10,7 @@ public class SqlEstrella {
     private ResultSet _rs;
     private static String BD_USER = "CoreMensajeria";
     private static String BD_PASSWORD = "coremensajeria";
-    private static String BD_URL = "jdbc:postgresql://localhost:5432/CoreMensajeria";
+    private static String BD_URL = "jdbc:postgresql://localhost:5432/CoreMensajeria_StarSchema";
     private static String BD_CLASS_FOR_NAME = "org.postgresql.Driver";
 
     /**
@@ -22,8 +22,6 @@ public class SqlEstrella {
         conInstance = bdConnect();
         return conInstance;
     }
-
-
 
     /**
      * Metodo que realiza la conexion con la base de datos
