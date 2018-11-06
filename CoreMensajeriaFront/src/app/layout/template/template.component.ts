@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import { TemplateService } from './template.service';
 
 @Component({
   selector: 'app-template',
@@ -7,9 +8,17 @@ import { routerTransition } from '../../router.animations';
   styleUrls: ['./template.component.scss'],
   animations: [routerTransition()]
 })
+
 export class TemplateComponent implements OnInit {
 
-  constructor() { }
+  templates: any = [];
+  status = false;
+
+  constructor(private templateService: TemplateService) {
+    templateService.getTemplates().subscribe(data => {
+      this.templates = data;
+    });
+  }
 
   ngOnInit() {
   }
