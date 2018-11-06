@@ -92,3 +92,13 @@ create table public.Status
 
 );
 
+create table public.Template_Status
+(
+    ts_id serial PRIMARY KEY,
+    ts_date timestamp,
+    ts_template integer,
+    ts_status integer,
+    CONSTRAINT fk_template_id FOREIGN KEY ("ts_template") REFERENCES public.Template (tem_id),
+    CONSTRAINT fk_Status_id FOREIGN KEY ("ts_id") REFERENCES public.Status (sta_id)
+);
+
