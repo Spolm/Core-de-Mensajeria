@@ -3,8 +3,7 @@ package Classes.M07_Template.HandlerPackage;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class TemplateHandler {
@@ -47,6 +46,22 @@ public class TemplateHandler {
             e.printStackTrace();
         } finally {
             return template;
+        }
+    }
+
+    public void postTemplateStatus(int id) {
+        String query="insert into public.template_status (ts_date,ts_template,ts_status) values (CURRENT_TIMESTAMP,"+id+",(select sta_id from public.status where sta_name='aprobado'))";
+
+        try {
+            ResultSet resultSet = sql.sqlConn(query);
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            Sql.bdClose(conn);
         }
     }
 }
