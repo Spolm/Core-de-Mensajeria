@@ -1,8 +1,10 @@
 package Classes.M07_Template;
 
-import Classes.M07_Template.MessagePackage.Message;
-import Classes.M07_Template.PlanningPackage.Planning;
-import Classes.M07_Template.StatusPackage.IStatus;
+import Classes.M07_Template.MessagePackage.*;
+import Classes.M07_Template.StatusPackage.*;
+
+import java.util.*;
+
 
 public class Template {
     private Message _message;
@@ -56,5 +58,21 @@ public class Template {
     public void setMessage(Message _message) { this._message = _message; }
 
     // public Planning get_planning() { return _planning; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Template)) return false;
+        Template template = (Template) o;
+        return getTemplateId() == template.getTemplateId() &&
+                Objects.equals(_message, template._message) &&
+                Objects.equals(getCreationDate(), template.getCreationDate()) &&
+                Objects.equals(_status, template._status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(_message, getCreationDate(), getTemplateId(), _status);
+    }
 }
 
