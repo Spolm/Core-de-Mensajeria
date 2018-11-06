@@ -31,7 +31,7 @@ create table public.Fact_Message(
 	mes_com_id serial not null,
     CONSTRAINT pk_Application primary key("mes_id","mes_cam_id","mes_dat_id","mes_com_id"),
     CONSTRAINT fk_Application_Company_Campaign foreign key("mes_cam_id","mes_com_id")
-    REFERENCES public.Dim_Company_Campaing("cam_id","com_id"),
+    REFERENCES public.Dim_Company_Campaign("cam_id","com_id"),
     CONSTRAINT fk_Application_Date foreign key("mes_dat_id")
     REFERENCES public.Dim_Date
 );
