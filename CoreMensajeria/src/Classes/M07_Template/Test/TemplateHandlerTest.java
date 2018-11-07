@@ -41,6 +41,8 @@ public class TemplateHandlerTest {
         for (int i=0 ; i < 5 ; i++){
             assertEquals(templateHandler.getTemplates().get(i).getTemplateId(), i+1);
         }
+
+        statusTemplateCorrectly();
     }
 
     @Test
@@ -49,19 +51,29 @@ public class TemplateHandlerTest {
         for (int i=1 ; i < 6 ; i++){
             assertEquals(templateHandler.getTemplate(i).getTemplateId(), i);
         }
+
+        statusTemplateCorrectly();
     }
 
     @Test
     void postTemplateStatusCorrectly(){
-        assertTrue(templateHandler.postTemplateStatus(1));
-        assertFalse(templateHandler.postTemplateStatus(2));
-        assertTrue(templateHandler.postTemplateStatus(3));
-        assertFalse(templateHandler.postTemplateStatus(4));
-        assertFalse(templateHandler.postTemplateStatus(5));
+        assertFalse(templateHandler.postTemplateStatus(1));
+        assertTrue(templateHandler.postTemplateStatus(2));
+        assertFalse(templateHandler.postTemplateStatus(3));
+        assertTrue(templateHandler.postTemplateStatus(4));
+        assertTrue(templateHandler.postTemplateStatus(5));
     }
 
     @AfterEach
     void tearDown(){
         templateHandler = null;
+    }
+
+    void statusTemplateCorrectly(){
+        assertEquals(templateHandler.getTemplates().get(1).getStatus(), "Aprobado");
+        assertEquals(templateHandler.getTemplates().get(1).getStatus(), "No aprobado");
+        assertEquals(templateHandler.getTemplates().get(1).getStatus(), "Aprobado");
+        assertEquals(templateHandler.getTemplates().get(1).getStatus(), "No aprobado");
+        assertEquals(templateHandler.getTemplates().get(1).getStatus(), "No aprobado");
     }
 }
