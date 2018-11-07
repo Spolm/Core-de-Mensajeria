@@ -2,9 +2,12 @@
 
 <div class="container">
 
-  <div class="row">
+  <div class="row menu-filter">
     <div class="col-sm-12">
-        
+        <button type="button" class="btn btn-primary" 
+        (click)="GetAllIntegrators()">Todos los Integradores</button>
+        <button type="button" class="btn btn-primary" (click)="GetMailIntegrators()">Por Email</button>
+        <button type="button" class="btn btn-primary" (click)="GetSMSIntegrators()">Por SMS</button>
     </div>
   </div>
   
@@ -13,13 +16,13 @@
       *ngFor="let integrator of integrators">
       <div class="card">
           <div class="card-body">
-            <h5 class="card-title text-center"><b>{{ integrator.nameIntegrator }}</b></h5>
+            <h5 class="card-title text-center"><b>{{ integrator._nameIntegrator }}</b></h5>
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Capacidad de Hilos: {{ integrator.threadCapacity }}</li>
-            <li class="list-group-item">Costo del Mensaje: {{ integrator.messageCost }}</li>
-            <li class="list-group-item">API: {{ integrator.apiIntegrator }}</li>
-            <li class="list-group-item">Id: <b>{{ integrator.idIntegrator }}</b></li>
+            <li class="list-group-item">Capacidad de Hilos: {{ integrator._threadCapacity }}</li>
+            <li class="list-group-item">Costo del Mensaje: {{ integrator._messageCost }}</li>
+            <li class="list-group-item">API: {{ integrator._apiIntegrator }}</li>
+            <li class="list-group-item">Id: <b>{{ integrator._idIntegrator }}</b></li>
           </ul>
           <div class="card-body">
               <div class="btn-group">

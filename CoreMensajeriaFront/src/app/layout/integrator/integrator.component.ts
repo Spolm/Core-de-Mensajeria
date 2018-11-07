@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
+import { ApiService } from './api.service';
+import { ToastrService } from 'ngx-toastr';
+import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-integrator',
@@ -8,25 +10,53 @@ import { Http } from '@angular/http';
 })
  
 export class IntegratorComponent implements OnInit {
+  
+  integrators: any = [];
 
-  integrators = [
-    {
-      apiIntegrator: '',
-      idIntegrator: '',
-      messageCost: '',
-      nameIntegrator: '',
-      threadCapacity: ''
-    }
-  ];
+  constructor(public rest: ApiService, private toastr: ToastrService) {
 
-  constructor( private http: Http) { 
+    this.GetAllIntegrators();
 
-  }
+   }
 
   ngOnInit() {
-    this.http.get( 'http://localhost:8080/CoreMensajeria_war_exploded/' + 'integrators' ).
-      toPromise().then( r => r.json() ).
-      then( r => this.integrators = r);
+    
+  }
+
+  GetAllIntegrators() {
+    this.integrators = [];
+    this.rest.GetAllIntegrators().
+    subscribe((data: {}) => {
+      this.integrators = data;
+      this.toastr.remove(this.toastr.currentlyActive);
+      this.toastr.success("Lista Recibida");
+    },(err) => {
+      this.toastr.error("Error en la Conexión");
+    })
+  }
+
+  GetSMSIntegrators(){
+    this.integrators = [];
+    this.rest.GetSMSIntegrators().
+    subscribe((data: {}) => {
+      this.integrators = data;
+      this.toastr.remove(this.toastr.currentlyActive);
+      this.toastr.success("Lista Recibida");
+    },(err) => {
+      this.toastr.error("Error en la Conexión");
+    })
+  }
+
+  GetMailIntegrators(){
+    this.integrators = [];
+    this.rest.GetMailIntegrators().
+    subscribe((data: {}) => {
+      this.integrators = data;
+      this.toastr.remove(this.toastr.currentlyActive);
+      this.toastr.success("Lista Recibida");
+    },(err) => {
+      this.toastr.error("Error en la Conexión");
+    })
   }
 
 }
