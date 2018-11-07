@@ -21,7 +21,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - RESTful Web Service" level="application_server_libraries" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0" level="application_server_libraries" />
-    <orderEntry type="library" name="com.google.code.gson:gson:2.8.5" level="project" />
     <orderEntry type="module-library">
       <library name="JUnit5.2">
         <CLASSES>
@@ -34,6 +33,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="postgresql-42.2.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="com.google.code.gson:gson:2.8.51" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="org.postgresql:postgresql:42.2.5" level="application" />
   </component>
 </module>
