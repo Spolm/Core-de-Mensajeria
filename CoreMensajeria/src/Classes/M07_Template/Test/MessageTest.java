@@ -20,12 +20,12 @@ class MessageTest {
     void init(){
         parameters = new ArrayList<Parameter>();
 
-        for (int i=1 ; i < 4 ; i++){
-            parameters.add(new Parameter("parameter" + i));
+        for (int i = 1 ; i < 4 ; i++){
+            parameters.add(new Parameter(i,"parameter" + i));
         }
 
         String text = "hola parameter1 este es un mensaje parameter2 de prueba parameter3";
-        message = new Message(parameters, text);
+        message = new Message(1, parameters, text);
     }
 
     @Test
@@ -35,8 +35,9 @@ class MessageTest {
         assertNotNull(message);
         assertNotNull(parameters);
 
-        for (int i=0 ; i < 3 ; i++){
+        for (int i = 0 ; i < 3 ; i++){
             assertNotNull(parameters.get(i));
+            assertEquals(parameters.get(i).getParameterId(), i + 1);
         }
 
         text ="hola " + parameters.get(0).getName()
@@ -44,6 +45,7 @@ class MessageTest {
                 + " de prueba " + parameters.get(2).getName();
         assertEquals(message.getMessage(), text);
         assertEquals(message.getParameterArrayList(), parameters);
+        assertEquals(message.getMessageId(), 1);
     }
 
     @AfterEach
