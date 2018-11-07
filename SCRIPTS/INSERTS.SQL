@@ -74,7 +74,7 @@ INSERT INTO public.Template (tem_creation_date)
 values (CURRENT_DATE);
 
 INSERT INTO public.Message (mes_text,mes_template)
-values ('Acabas de escuchar [.cancion.] Envia SI al 86667 si lo quieres como tu Entretono. Renta Bs.S. [.renta.] c/impuestos. Entretono Bs.S. [.entretono.] c/impuestos.',(SELECT MAX(tem_id) FROM public.Template));
+values ('Acabas de escuchar [.cancion.] Envia SI al 86667 si lo quieres como tu Entretono. Renta Bs.S. [.renta.] c/impuestos. Entretono Bs.S. [.impuesto.] c/impuestos.',(SELECT MAX(tem_id) FROM public.Template));
 
 insert into public.Parameter (par_name)
 values ('cancion');
@@ -83,10 +83,16 @@ insert into public.Parameter (par_name)
 values ('renta');
 
 insert into public.Parameter (par_name)
-values ('entretono');
+values ('impuesto');
 
 insert into public.message_parameter (mp_message,mp_parameter)
-values ((SELECT MAX(mes_id) FROM public.message),(select max (par_id) from public.Parameter where par_name='fecha'));
+values ((SELECT MAX(mes_id) FROM public.message),(select max (par_id) from public.Parameter where par_name='cancion'));
+
+insert into public.message_parameter (mp_message,mp_parameter)
+values ((SELECT MAX(mes_id) FROM public.message),(select max (par_id) from public.Parameter where par_name='renta'));
+
+insert into public.message_parameter (mp_message,mp_parameter)
+values ((SELECT MAX(mes_id) FROM public.message),(select max (par_id) from public.Parameter where par_name='impuesto'));
 
 insert into public.template_status (ts_date,ts_template,ts_status)
 values (CURRENT_TIMESTAMP,(SELECT MAX(tem_id) FROM public.Template),(select sta_id from public.status where sta_name='no aprobado'));
