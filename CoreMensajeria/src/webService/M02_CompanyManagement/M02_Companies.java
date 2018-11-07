@@ -3,7 +3,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.sql.*;
 import java.util.ArrayList;
-
 import Classes.M01_Login.User;
 import com.google.gson.Gson;
 
