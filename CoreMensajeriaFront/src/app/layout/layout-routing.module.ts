@@ -21,6 +21,7 @@ const routes: Routes = [
             { path: 'integrator', loadChildren: './integrator/integrator.module#IntegratorModule' },            
             { path: 'statistics', loadChildren: './statistics/statistics.module#StatisticsModule' },
             { path: 'application', loadChildren: './application/application.module#ApplicationModule' },
+            { path: 'campaigns', loadChildren: './campaign/campaign.module#CampaignModule' },
             { path: 'template', loadChildren: './template/template.module#TemplateModule' }
         ]
     }
