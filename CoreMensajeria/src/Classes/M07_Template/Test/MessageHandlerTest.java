@@ -4,10 +4,7 @@ import Classes.M07_Template.HandlerPackage.MessageHandler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import Classes.M07_Template.HandlerPackage.TemplateHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -19,15 +16,6 @@ public class MessageHandlerTest {
     void init(){
         messageHandler = new MessageHandler();
         objectsNotNull();
-    }
-
-    void objectsNotNull(){
-        assertNotNull(messageHandler);
-        assertNotNull(messageHandler.getMessages());
-
-        for (int i=0 ; i < 5 ; i++){
-            assertNotNull(messageHandler.getMessages().get(i));
-        }
     }
 
     @Test
@@ -45,6 +33,15 @@ public class MessageHandlerTest {
     @AfterEach
     void tearDown(){
         messageHandler = null;
+    }
+
+    void objectsNotNull(){
+        assertNotNull(messageHandler);
+        assertNotNull(messageHandler.getMessages());
+
+        for (int i=0 ; i < 5 ; i++){
+            assertNotNull(messageHandler.getMessages().get(i));
+        }
     }
 
     void sizeParameterArrayListCorrectly(){
