@@ -11,6 +11,10 @@ public class Message {
 
     public Message() {}
 
+    public Message(int messageId) {
+        this.messageId = messageId;
+    }
+
     public Message(ArrayList<Parameter> parameterArrayList, String message) {
         this.parameterArrayList = parameterArrayList;
         this.message = message;
