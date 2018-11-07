@@ -6,6 +6,8 @@ import Classes.M07_Template.MessagePackage.Message;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 import com.google.gson.Gson;
+import com.oracle.wls.shaded.org.apache.xpath.operations.Bool;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import javax.ws.rs.*;
@@ -45,9 +47,11 @@ public class M07_Template {
 
     @POST
     @Path("/update/{templateId}")//Subsequent Path
-    public void postTemplateStatus(@PathParam("templateId") int id){
+    public Boolean postTemplateStatus(@PathParam("templateId") int id){
+        Boolean flag = false;
         TemplateHandler templateHandler = new TemplateHandler();
-        templateHandler.postTemplateStatus(id);
+        flag = templateHandler.postTemplateStatus(id);
+        return flag;
     }
 
 }
