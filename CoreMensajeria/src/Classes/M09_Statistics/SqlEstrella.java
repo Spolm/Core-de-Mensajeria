@@ -125,7 +125,7 @@ public class SqlEstrella {
             System.err.println( "NullPointerExceptionSql: " + e.getMessage() );
         }
         catch ( Exception e ){
-            System.err.println( "ExceptionSql: " + e.getMessage() + " , Query: " + query ;
+            System.err.println( "ExceptionSql: " + e.getMessage() + " , Query: " + query) ;
             e.printStackTrace();
         }
         finally {
