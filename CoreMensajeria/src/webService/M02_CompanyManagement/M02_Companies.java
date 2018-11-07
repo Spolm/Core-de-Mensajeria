@@ -1,8 +1,8 @@
 package webService.M02_CompanyManagement;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.sql.*;
 import java.util.ArrayList;
-
 import Classes.M01_Login.User;
 import com.google.gson.Gson;
 
@@ -54,7 +54,8 @@ public class M02_Companies {
     @Produces("application/json")
 
 
-    public String getCompanies(@QueryParam("id") int id) throws  SQLException {
+    public Response getCompanies(@QueryParam("id") int id) throws  SQLException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
         //Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
         String select = "SELECT * FROM company where com_user_id = ?";
         ArrayList<Company> companyList= new ArrayList<>();
@@ -69,11 +70,13 @@ public class M02_Companies {
 
             while(result.next()){
                 Company co = new Company();
+                co.set_idCompany(result.getInt("com_id"));
                 co.set_name(result.getString("com_name"));
                 co.set_desc(result.getString("com_description"));
                 co.set_status(result.getBoolean("com_status"));
                 companyList.add(co);
             }
+            rb.entity(gson.toJson(companyList));
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -82,6 +85,6 @@ public class M02_Companies {
         finally {
             Sql.bdClose(conn);
         }
-        return gson.toJson(companyList);
+        return rb.build();
     }
 }

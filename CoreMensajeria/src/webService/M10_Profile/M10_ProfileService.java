@@ -3,6 +3,8 @@ package webService.M10_Profile;
 import Classes.Sql;
 import Classes.M01_Login.User;
 
+import javax.ws.rs.FormParam;
+import javax.ws.rs.QueryParam;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,13 +22,21 @@ public class M10_ProfileService {
 
     }
 
-    public User SearchUser(String username) {
-        String consulta= "SELECT use_id, use_password, use_username, use_type, use_email, use_phone,use_country, use_city, use_address, use_date_of_birth, use_gender From public.user WHERE use_username ='" +username+"'";
+    /**
+     * @param username Nombre de usuario a buscar
+     * @return User con todos los datos del usuario
+     */
+    public ArrayList<User> searchUser(String username) {
+        String consulta= "SELECT use_id, use_password, use_username, use_type, use_email, use_phone,use_country," +
+                " use_city, use_address, use_date_of_birth, use_gender From public.user " +
+                "WHERE use_username ='" +username+"'";
+        ArrayList<User> userList = new ArrayList<>();
         Sql db = new Sql();
-        User user = new User();
+
         try {
             ResultSet rs = db.sqlConn(consulta);
             while (rs.next()) {
+                User user = new User();
                 user.set_idUser(rs.getInt("use_id"));
                 user.set_passwordUser(rs.getString("use_password"));
                 user.set_usernameUser(rs.getString("use_username"));
@@ -38,10 +48,46 @@ public class M10_ProfileService {
                 user.set_cityUser(rs.getString("use_city"));
                 user.set_addressUser(rs.getString("use_address"));
                 user.set_genderUser(rs.getString("use_gender"));
+                userList.add(user);
             }
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
         }
-        return user;
+        return userList;
+    }
+
+    /**
+     *
+     * @param id id del usuario a editar
+     * @param email email del usuario
+     * @param phone telefono del usuario
+     * @param country   pais del usuario
+     * @param birthday  fecha de nacimiento
+     * @param city  ciudad
+     * @param address   direccion
+     * @return  String con mensaje de exito
+     * @throws SQLException
+     */
+    public String editProfile( int id, String email, String phone, String country, String birthday,
+                            String city, String address ) {
+
+        //Query a realizar
+        String query = "UPDATE public.User SET " +
+                "use_phone='"+phone+"', use_country='"+country+"', use_date_of_birth='"+birthday+"'"+
+                ", use_city='"+city+"', use_address='"+address+"'"+
+                "WHERE use_id = "+id;
+
+        //Se crea conexion a la dc
+        Sql db = new Sql();
+
+        try {
+            //Se realiza query, falta codigo aqui para validar si se realizo correctamente el query
+            db.sqlConn(query);
+        }
+        catch (SQLException e) {
+            System.err.println(e.getStackTrace());
+        }
+
+        return "Perfil editado con éxito";
     }
 }

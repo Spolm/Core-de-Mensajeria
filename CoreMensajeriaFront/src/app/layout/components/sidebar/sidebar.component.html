@@ -20,9 +20,21 @@
             <i class="fa fa-file-o"></i>&nbsp;
             <span>{{ 'Origen' | translate }}</span>
         </a>
+        <a [routerLink]="['/campaigns']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-bullhorn"></i>&nbsp;
+            <span>{{ 'Campaigns' | translate }}</span>
+        </a>
         <a [routerLink]="['/template']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-sticky-note"></i>&nbsp;
             <span>{{ 'Template' | translate }}</span>
+        </a>
+        <a [routerLink]="['/company']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-rebel"></i>&nbsp;
+            <span>{{ 'Company' | translate }}</span>
+        </a>
+        <a [routerLink]="['/profile']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-user-circle"></i>&nbsp;
+            <span>{{ 'Profile' | translate }}</span>
         </a>
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
