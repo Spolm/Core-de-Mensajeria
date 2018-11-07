@@ -1,4 +1,4 @@
-INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country, 
+﻿INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country, 
 					use_city, use_address, use_date_of_birth, use_gender) values
 					('1234', 'Ronnie', 1, 'ronnie@gmail.com', '0414255', 'Ve', 'Mi', 'Caricuao', '04/05/1995', 'F');
 
@@ -48,3 +48,45 @@ values ('2003-2-1',1,1);
 
 insert into public.message_parameter (mp_message,mp_parameter)
 values (1,1);
+
+
+/* Template 2 */
+
+
+INSERT INTO public.Template (tem_creation_date) 
+values (CURRENT_DATE);
+
+INSERT INTO public.Message (mes_text,mes_template)
+values ('Movistar te invita a una funcion gratuita del Festival de Cine Espanol. Ven el [.fecha.] Plaza Los Palos Grandes',(SELECT MAX(tem_id) FROM public.Template));
+
+insert into public.Parameter (par_name)
+values ('fecha');
+
+insert into public.message_parameter (mp_message,mp_parameter)
+values ((SELECT MAX(mes_id) FROM public.message),(select max (par_id) from public.Parameter where par_name='fecha'));
+
+insert into public.template_status (ts_date,ts_template,ts_status)
+values (CURRENT_TIMESTAMP,(SELECT MAX(tem_id) FROM public.Template),(select sta_id from public.status where sta_name='aprobado'));
+
+/* Template 3 */
+
+INSERT INTO public.Template (tem_creation_date) 
+values (CURRENT_DATE);
+
+INSERT INTO public.Message (mes_text,mes_template)
+values ('Acabas de escuchar [.cancion.] Envia SI al 86667 si lo quieres como tu Entretono. Renta Bs.S. [.renta.] c/impuestos. Entretono Bs.S. [.entretono.] c/impuestos.',(SELECT MAX(tem_id) FROM public.Template));
+
+insert into public.Parameter (par_name)
+values ('cancion');
+
+insert into public.Parameter (par_name)
+values ('renta');
+
+insert into public.Parameter (par_name)
+values ('entretono');
+
+insert into public.message_parameter (mp_message,mp_parameter)
+values ((SELECT MAX(mes_id) FROM public.message),(select max (par_id) from public.Parameter where par_name='fecha'));
+
+insert into public.template_status (ts_date,ts_template,ts_status)
+values (CURRENT_TIMESTAMP,(SELECT MAX(tem_id) FROM public.Template),(select sta_id from public.status where sta_name='no aprobado'));
