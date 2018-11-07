@@ -7,10 +7,14 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class TemplateHandler {
-    public Sql sql;
+    private Sql sql;
 
     public TemplateHandler() {
         sql = new Sql();
+    }
+
+    public Sql getSql() {
+        return sql;
     }
 
     public ArrayList<Template> getTemplates() {
