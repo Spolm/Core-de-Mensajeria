@@ -58,6 +58,34 @@ create table public.Application
 	REFERENCES public.User(use_id) 
 );
 
+CREATE TABLE integrator(
+	int_id serial PRIMARY KEY,	
+	int_name varchar(250) not null,
+	int_messageCost float not null,
+	int_threadCapacity int not null,
+	int_tokenApi varchar(250) not null
+);
+
+CREATE TABLE channel(
+	cha_id serial PRIMARY KEY,	
+	cha_name varchar(250) not null,
+	cha_description varchar(250) not null
+);
+
+CREATE TABLE channel_integrator(
+	ci_id serial primary key,
+	ci_channel_id int not null,
+	ci_integrator_id int not null
+);
+
+ALTER TABLE channel_integrator
+ADD CONSTRAINT fk_channel_id FOREIGN KEY (ci_channel_id) 
+REFERENCES channel (cha_id);
+
+ALTER TABLE channel_integrator
+ADD CONSTRAINT fk_integrator_id FOREIGN KEY (ci_integrator_id) 
+REFERENCES integrator (int_id);
+
 create table public.Message
 (
     mes_id serial not null,
