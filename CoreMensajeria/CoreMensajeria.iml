@@ -38,5 +38,68 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="postgresql-42.2.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Bean Validation" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - CDI: Contexts and Dependency Injection" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Concurrency Utils (JSR 236)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JSF" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Connector Architecture (JSR 322)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - WebSocket" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JMS: Java Message Service" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Bean Validation" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - CDI: Contexts and Dependency Injection" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Concurrency Utils (JSR 236)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JSF" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Connector Architecture (JSR 322)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - WebSocket" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JMS: Java Message Service" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Bean Validation" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - CDI: Contexts and Dependency Injection" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Concurrency Utils (JSR 236)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JSF" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Connector Architecture (JSR 322)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - WebSocket" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JMS: Java Message Service" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Bean Validation" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - CDI: Contexts and Dependency Injection" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Concurrency Utils (JSR 236)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JSF" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Connector Architecture (JSR 322)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - WebSocket" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JMS: Java Message Service" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Bean Validation" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - CDI: Contexts and Dependency Injection" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Concurrency Utils (JSR 236)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JSF" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Connector Architecture (JSR 322)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - WebSocket" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JMS: Java Message Service" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Bean Validation" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - CDI: Contexts and Dependency Injection" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Concurrency Utils (JSR 236)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JSF" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Connector Architecture (JSR 322)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - WebSocket" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JMS: Java Message Service" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Bean Validation" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - CDI: Contexts and Dependency Injection" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Concurrency Utils (JSR 236)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JSF" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Connector Architecture (JSR 322)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - WebSocket" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JMS: Java Message Service" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Bean Validation" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - CDI: Contexts and Dependency Injection" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Concurrency Utils (JSR 236)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JSF" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Connector Architecture (JSR 322)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - WebSocket" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JMS: Java Message Service" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Bean Validation" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - CDI: Contexts and Dependency Injection" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Concurrency Utils (JSR 236)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JSF" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - Connector Architecture (JSR 322)" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - WebSocket" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - JMS: Java Message Service" level="application_server_libraries" />
   </component>
 </module>
