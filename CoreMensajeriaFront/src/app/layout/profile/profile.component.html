@@ -1,47 +1,26 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Perfil de usuario'" [icon]="'fa-user'"></app-page-header>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">id</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Usuario</th>
-              <th scope="col">E-mail</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let user of Users;">
-              <th>{{user.id}}</th>
-              <th>{{user.name}}</th>
-              <th>{{user.username}}</th>
-              <th>{{user.email}}</th>
-            </tr>
-          </tbody>
-        </table>
     <img src="https://cdn.icon-icons.com/icons2/317/PNG/512/user-male-icon_34332.png" alt="" class="profile-img">
-    <div class="row">
+    <div class="row" *ngFor="let user of Users;">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-4">
                 	<h3 class="mt-sm mb-xs"></h3>                                               
-                	<p><strong>Nombre y Apellido: </strong>Alexander De Azevedo</p>
-                	<p><strong>E-mail: </strong><a href="mailto:#">oeneikaphotos@gmail.com</a></p>
-                	<p><strong>Usuario: </strong>oeneika</p>   
-                	
-                	
+                	<p><strong>E-mail: </strong><a href=""></a>{{user._emailUser}}</p>
+                	<p><strong>Usuario: {{user._usernameUser}}</strong></p>
                 </div>
                 <div class="col-md-4">
                     <h3 class="mt-sm mb-xs"></h3>              
-                    <p><strong>Fecha de nacimiento: </strong>08/02/1996</p>
-                    <p><strong>País: </strong>Venezuela</p> 
-                    <p><strong>Ciudad: </strong>Caracas</p>
+                    <p><strong>Fecha de nacimiento:{{user._dateOfBirthUser}}</strong></p>
+                    <p><strong>País: {{user._countryUser}}</strong></p> 
+                    <p><strong>Ciudad: {{user._cityUser}}</strong></p>
                     
                 </div>
                 <div class="col-md-4">
                     <h3 class="mt-sm mb-xs"></h3>      
-                    <p><strong>Dirección: </strong>Los 2 caminos</p>        
-                    <p><strong>Teléfono Local: </strong>02121234567</p> 
-                	<p><strong>Sexo: </strong> Masculino</p>
+                    <p><strong>Dirección: {{user._addressUser}}</strong></p>        
+                    <p><strong>Teléfono Local: {{user._phoneUser}}</strong></p> 
+                	<p><strong>Sexo: {{user._genderUser}}</strong></p>
                 </div>
             </div>
             <hr>
@@ -50,28 +29,16 @@
     <div class="row">
     	<div class="col-md-12">
     		<h3>Modificación de datos personales</h3>
-    		<form action="" method="post">
+    		<form action="http://localhost:8080/CoreMensajeria_war/profile/edit" method="post">
     			<div class="row">
     			
     				<div class="col-md-6">
-    					<div class="form-group">
-                        	<label for="ImagenPerfil" class="control-label">Imagen de perfil</label>
-                        	<input type="file" class="form-control-file" id="exampleInputFile">
-                        </div>
-                        <div class="form-group">
-                        	<label for="name" class="control-label">Nombre</label>
-                        	<input type="text" name="name" class="form-control" placeholder="Introduce tu nombre">
-                        </div>
                         <div class="form-group">
                         	<label for="location" class="control-label">Dirección</label>
                         	<input type="text" name="location" class="form-control" placeholder="Introduce tu dirección domiciliaria">
                         </div>
 	    			</div>
 	    			<div class="col-md-6">
-    					<div class="form-group">
-                        	<label for="name" class="control-label">Apellido</label>
-                        	<input type="text" name="lastname" class="form-control" placeholder="Introduce tu apellido">
-                        </div>
                         <div class="form-group">
                         	<label for="name" class="control-label">E-mail</label>
                         	<input type="text" name="email" class="form-control" placeholder="Introduce tu e-mail">

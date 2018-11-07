@@ -26,13 +26,17 @@ public class M10_ProfileService {
      * @param username Nombre de usuario a buscar
      * @return User con todos los datos del usuario
      */
-    public User searchUser(String username) {
-        String consulta= "SELECT use_id, use_password, use_username, use_type, use_email, use_phone,use_country, use_city, use_address, use_date_of_birth, use_gender From public.user WHERE use_username ='" +username+"'";
+    public ArrayList<User> searchUser(String username) {
+        String consulta= "SELECT use_id, use_password, use_username, use_type, use_email, use_phone,use_country," +
+                " use_city, use_address, use_date_of_birth, use_gender From public.user " +
+                "WHERE use_username ='" +username+"'";
+        ArrayList<User> userList = new ArrayList<>();
         Sql db = new Sql();
-        User user = new User();
+
         try {
             ResultSet rs = db.sqlConn(consulta);
             while (rs.next()) {
+                User user = new User();
                 user.set_idUser(rs.getInt("use_id"));
                 user.set_passwordUser(rs.getString("use_password"));
                 user.set_usernameUser(rs.getString("use_username"));
@@ -44,11 +48,12 @@ public class M10_ProfileService {
                 user.set_cityUser(rs.getString("use_city"));
                 user.set_addressUser(rs.getString("use_address"));
                 user.set_genderUser(rs.getString("use_gender"));
+                userList.add(user);
             }
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
         }
-        return user;
+        return userList;
     }
 
     /**
