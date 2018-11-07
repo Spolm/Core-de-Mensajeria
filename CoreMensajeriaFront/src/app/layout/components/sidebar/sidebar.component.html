@@ -24,6 +24,10 @@
             <i class="fa fa-sticky-note"></i>&nbsp;
             <span>{{ 'Template' | translate }}</span>
         </a>
+        <a [routerLink]="['/company']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-rebel"></i>&nbsp;
+            <span>{{ 'Company' | translate }}</span>
+        </a>
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
         <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;
