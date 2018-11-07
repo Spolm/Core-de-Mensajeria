@@ -23,4 +23,8 @@ export class TemplateComponent implements OnInit {
   ngOnInit() {
   }
 
+  approveTemplate(templateId: number){
+    console.log(templateId);
+  }
+
 }

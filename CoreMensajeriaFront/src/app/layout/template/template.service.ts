@@ -25,7 +25,7 @@ export class TemplateService {
   }
 
   getTemplates(){
-    return this.http.get(endpoint + 'templates').pipe(
+    return this.http.get(endpoint + 'templates/messages').pipe(
       map(this.extractData));
   }
 
