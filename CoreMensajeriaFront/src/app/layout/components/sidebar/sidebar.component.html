@@ -32,6 +32,10 @@
             <i class="fa fa-rebel"></i>&nbsp;
             <span>{{ 'Company' | translate }}</span>
         </a>
+        <a [routerLink]="['/profile']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-user-circle"></i>&nbsp;
+            <span>{{ 'Profile' | translate }}</span>
+        </a>
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
         <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;
