@@ -38,7 +38,7 @@ public class Error {
     }
 
     public boolean isError() {
-        if (_errors.isEmpty()) { return false; }
+        if(_errors.isEmpty()) return false;
         return true;
     }
 

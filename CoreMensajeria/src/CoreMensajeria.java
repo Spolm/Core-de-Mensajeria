@@ -6,7 +6,6 @@ import webService.M01_Login.M01_User;
 import webService.M02_CompanyManagement.M02_Companies;
 import webService.M06_DataOrigin.M06_Application;
 import webService.M09_StatisticsManagement.M09_Statistics;
-import webService.M08_MessageCoreManagement.M08_MessageValidation;
 import webService.M10_Profile.M10_Profile;
 
 import javax.ws.rs.ApplicationPath;
@@ -26,7 +25,6 @@ public class CoreMensajeria extends Application{
         h.add( M01_Login.class );
         h.add( M01_User.class );
         h.add(M02_Companies.class);
-        h.add(M08_MessageValidation.class);
         h.add( M06_Application.class );
         h.add(IntegratorServiceAPI.class);
         h.add(ChannelServiceAPI.class);
