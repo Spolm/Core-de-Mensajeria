@@ -30,15 +30,6 @@ class MessageTest {
         objectsNotNull();
     }
 
-    void objectsNotNull(){
-        assertNotNull(message);
-        assertNotNull(parameters);
-
-        for (int i = 0 ; i < 3 ; i++){
-            assertNotNull(parameters.get(i));
-        }
-    }
-
     @Test
     void correctAttributes(){
         String text;
@@ -59,5 +50,14 @@ class MessageTest {
     void tearDown(){
         message = null;
         parameters = null;
+    }
+
+    void objectsNotNull(){
+        assertNotNull(message);
+        assertNotNull(parameters);
+
+        for (int i = 0 ; i < 3 ; i++){
+            assertNotNull(parameters.get(i));
+        }
     }
 }

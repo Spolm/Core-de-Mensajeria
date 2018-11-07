@@ -21,13 +21,6 @@ public class TemplateTest {
         objectsNotNull();
     }
 
-    void objectsNotNull() {
-        assertNotNull(template);
-        assertNotNull(template.getMessage());
-        assertNotNull(template.getStatus());
-        assertNotNull(template.getCreationDate());
-    }
-
     @Test
     void correctAttributes(){
         assertEquals(template.getStatus(), "Not Approved Template");
@@ -48,5 +41,12 @@ public class TemplateTest {
     @AfterEach
     void tearDown(){
         template = null;
+    }
+
+    void objectsNotNull() {
+        assertNotNull(template);
+        assertNotNull(template.getMessage());
+        assertNotNull(template.getStatus());
+        assertNotNull(template.getCreationDate());
     }
 }

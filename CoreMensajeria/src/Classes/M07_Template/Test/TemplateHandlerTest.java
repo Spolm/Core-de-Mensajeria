@@ -20,20 +20,6 @@ public class TemplateHandlerTest {
         objectsNotNull();
     }
 
-    void objectsNotNull(){
-        assertNotNull(templateHandler);
-        assertNotNull(templateHandler.getSql());
-        assertNotNull(templateHandler.getTemplates());
-
-        for (int i=0 ; i < 5 ; i++){
-            assertNotNull(templateHandler.getTemplates().get(i));
-        }
-
-        for (int i=1 ; i < 6 ; i++){
-            assertNotNull(templateHandler.getTemplate(i));
-        }
-    }
-
     @Test
     void getTemplatesCorrectly(){
         assertEquals(templateHandler.getTemplates().size(), 5);
@@ -67,6 +53,20 @@ public class TemplateHandlerTest {
     @AfterEach
     void tearDown(){
         templateHandler = null;
+    }
+
+    void objectsNotNull(){
+        assertNotNull(templateHandler);
+        assertNotNull(templateHandler.getSql());
+        assertNotNull(templateHandler.getTemplates());
+
+        for (int i=0 ; i < 5 ; i++){
+            assertNotNull(templateHandler.getTemplates().get(i));
+        }
+
+        for (int i=1 ; i < 6 ; i++){
+            assertNotNull(templateHandler.getTemplate(i));
+        }
     }
 
     void statusTemplateCorrectly(){
