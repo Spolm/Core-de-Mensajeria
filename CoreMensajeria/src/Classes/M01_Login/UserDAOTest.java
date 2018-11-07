@@ -14,13 +14,13 @@ public class UserDAOTest {
     private User _newUser;
     private UserDAO _userDAO = new UserDAO();
 
-    private void createLoginIntent(){
+    private void createLoginIntent() {
         _loginIntent = new LoginIntent();
         _loginIntent.set_username("prueba");
         _loginIntent.set_password("Al28*/12");
     }
 
-    private  void createUser(){
+    private  void createUser() {
         _user = new User();
         _user.set_usernameUser("prueba");
         _user.set_passwordUser("Al28*/12");
