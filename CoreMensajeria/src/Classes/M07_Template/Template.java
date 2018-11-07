@@ -14,7 +14,7 @@ public class Template {
 
     public Template() {}
 
-    public Template(Message message, IStatus status,String creationDate,int templateId) {
+    public Template(Message message, IStatus status, String creationDate, int templateId) {
         this.message = message;
         this.status = status;
         this.creationDate = creationDate;
@@ -43,9 +43,9 @@ public class Template {
 
     public void setStatus(IStatus status) { this.status = status; }
 
-    public String getMessage(){ return message.getMessage(); }
+    public Message getMessage(){ return message; }
 
-    public void setMessage(Message _message) { this.message = _message; }
+    public void setMessage(Message message) { this.message = message; }
 
     @Override
     public boolean equals(Object o) {
