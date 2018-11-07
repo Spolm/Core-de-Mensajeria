@@ -107,7 +107,7 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getNumberOfCompanysChart() throws SQLException {
         String aux = "";
-        String select2 = "SELECT com_name  from dim_company_campaign";
+        String select2 = "SELECT com_name  from dim_company_campaign group by con_name";
 
         try {
             Statistics gr = new Statistics();
@@ -140,7 +140,7 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getNumberOfCompanysLine() throws SQLException {
         String aux = "";
-        String select2 = "SELECT com_name  from dim_company_campaign";
+        String select2 = "SELECT com_name  from dim_company_campaign group by con_name ";
         try {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
@@ -172,7 +172,7 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getNumberOfCompanysPie() throws SQLException {
         String aux = "";
-        String select2 = "SELECT com_name  from dim_company_campaign";
+        String select2 = "SELECT com_name  from dim_company_campaign group by con_name";
         try {
             PieChart PieC = new PieChart();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
