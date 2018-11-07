@@ -21,17 +21,14 @@ public class M01_User {
 
         try {
             return Response.ok(_gson.toJson(_userDAO.findAll())).build();
-
         } catch (SQLException e) {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
             return Response.status(500).entity(error).build();
-
         } catch (NullPointerException e){
             error = new Error("Las credenciales ingresadas son incorrectas");
             error.addError("credenciales","No se encontro el usuario deseado");
             return Response.status(404).entity(error).build();
-
         } catch (Exception e) {
             e.printStackTrace();
             error = new Error("Error Interno");
@@ -49,12 +46,10 @@ public class M01_User {
         try {
             _userDAO.saveUser(user);
             return Response.ok(_gson.toJson(user)).build();
-
         } catch (SQLException e) {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
             return Response.status(500).entity(error).build();
-
         } catch (Exception e) {
             e.printStackTrace();
             error = new Error("Error Interno");

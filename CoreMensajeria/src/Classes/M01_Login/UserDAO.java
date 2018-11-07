@@ -30,7 +30,7 @@ public class UserDAO {
         _conn = Sql.getConInstance();
     }
 
-    public User findByUsernameOrEmail( String username ) throws SQLException {
+    public User findByUsernameOrEmail (String username) throws SQLException {
         _user = new User();
 
         PreparedStatement preparedStatement = _conn.prepareStatement( QUERY_SELECT_BY_USERNAME_OR_EMAIL );
@@ -38,21 +38,21 @@ public class UserDAO {
         preparedStatement.setString( 2, username );
         _result = preparedStatement.executeQuery();
 
-        while ( _result.next() ) {
+        while (_result.next()) {
             setUserParams( _result, _user );
         }
 
         return _user;
     }
 
-    public User findByUsernameId( int id ) throws SQLException {
+    public User findByUsernameId (int id) throws SQLException {
         _user = new User();
 
         PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_BY_ID);
         preparedStatement.setInt( 1, id );
         _result = preparedStatement.executeQuery();
 
-        while ( _result.next() ) {
+        while (_result.next()) {
             setUserParams( _result, _user );
         }
 
@@ -66,10 +66,10 @@ public class UserDAO {
         Statement st = _conn.createStatement();
         _result = st.executeQuery( QUERY_SELECT );
 
-        while ( _result.next() ) {
+        while (_result.next()) {
             _user = new User();
-            setUserParams( _result, _user );
-            _userList.add( _user );
+            setUserParams (_result, _user);
+            _userList.add (_user);
         }
 
         return _userList;

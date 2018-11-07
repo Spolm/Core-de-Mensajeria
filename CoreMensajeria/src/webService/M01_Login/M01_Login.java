@@ -26,12 +26,12 @@ public class M01_Login {
 
         try {
 
-            if( loginIntent.get_username().matches( "[a-zA-Z0-9.@+/*-]+" ) &&
-                    loginIntent.get_password().matches( "[a-zA-Z0-9/*_-]+" ) ){
+            if (loginIntent.get_username().matches( "[a-zA-Z0-9.@+/*-]+" ) &&
+                    loginIntent.get_password().matches( "[a-zA-Z0-9/*_-]+" )){
 
                 user = _userDAO.findByUsernameOrEmail(loginIntent.get_username());
 
-                if ( user.get_passwordUser().equals(loginIntent.get_password()) ) {
+                if (user.get_passwordUser().equals(loginIntent.get_password())) {
                     user.set_passwordUser("");
                     return Response.accepted(_gson.toJson(user)).build();
 
@@ -40,25 +40,24 @@ public class M01_Login {
                     error.addError("credenciales","No se encontro el usuario deseado");
                     return Response.status(404).entity(error).build();
                 }
-            }
-            else {
+            } else {
                 error = new Error("Los datos ingresados no tienen el formato adecuado");
                 error.addError("credenciales"
                         ,"Los valores no pueden incluir caracteres especiales que no sean: /*_-");
                 return Response.status(404).entity(error).build();
             }
 
-        } catch ( SQLException e ) {
+        } catch (SQLException e) {
             e.printStackTrace();
             error = new Error( "Error a nivel de base de datos" );
             return Response.status(500).entity(error).build();
 
-        } catch ( NullPointerException e ){
+        } catch (NullPointerException e){
             error = new Error( "Las credenciales ingresadas son incorrectas" );
             error.addError( "credenciales","No se encontro el usuario deseado" );
             return Response.status(404).entity(error).build();
 
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
             error = new Error( "Error Interno" );
             error.addError( "Excepcion",e.getMessage() );
