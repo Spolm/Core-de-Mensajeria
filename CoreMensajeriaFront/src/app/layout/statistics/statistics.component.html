@@ -1,12 +1,17 @@
-<ul>
-    <li *ngFor="let c of json2">
-      {{c}}
-    </li>
-  
-  </ul> 
+<h2 class="text-center text-capitalize main-title">
+    Estadísticas
+</h2>
 
-<plotly-plot [data]="graph.data" [layout]="graph.layout"></plotly-plot>
-
-
-<plotly-plot [data]="graph2.data" [layout]="graph2.layout"></plotly-plot>
-
+<div class="Container">
+    <div class="row" style="margin: 5% 0%">
+      <div class="card bg-primary">
+        <div id= "bar-chart"></div>   
+            </div>
+                <div class="card bg-primary">
+                    <div id= "line-chart"></div>
+                     </div>
+                          <div class="card bg-primary">
+                             <div id= "pie-chart"></div>  
+                                 </div>
+ </div>
+</div>
