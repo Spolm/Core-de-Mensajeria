@@ -1,56 +1,58 @@
 package webService.M01_Login;
 
-import Classes.Sql;
-import Classes.User;
+import Classes.M01_Login.User;
+import Classes.M01_Login.UserDAO;
 import com.google.gson.Gson;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.SQLException;
 
 @Path("/users")
 public class M01_User {
 
-    Gson gson = new Gson();
-    private Connection conn = Sql.getConInstance();
+    Gson _gson = new Gson();
+    UserDAO _userDAO = new UserDAO();
 
-    @Path("/")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetUsers() throws SQLException {
-        //Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        String select = "SELECT * FROM public.user";
-
-
+    public Response GetUsers(){
+        Error error;
         try {
-            ArrayList<User> userList = new ArrayList<>();
-            Statement st = conn.createStatement();
-
-            ResultSet result = st.executeQuery(select);
-
-            while (result.next()) {
-                User user = new User();
-                user.set_idUser(result.getInt("userId"));
-                user.set_passwordUser(result.getString("userPassword"));
-                user.set_usernameUser(result.getString("userUsername"));
-                user.set_typeUser(result.getInt("userType"));
-                user.set_emailUser(result.getString("userEmail"));
-                user.set_phoneUser(result.getString("userPhone"));
-                user.set_countryUser(result.getString("userCountry"));
-                user.set_cityUser(result.getString("userCity"));
-                user.set_addressUser(result.getString("userAddress"));
-                user.set_dateOfBirthUser(result.getDate("userDateOfBirth"));
-                user.set_genderUser(result.getString("userGender"));
-                userList.add(user);
-            }
-            return Response.ok(gson.toJson(userList)).build();
+            return Response.ok(_gson.toJson(_userDAO.findAll())).build();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SQLException(select);
-        } finally {
-            Sql.bdClose(conn);
+            error = new Error("Error a nivel de base de datos");
+            return Response.status(500).entity(error).build();
+        } catch (NullPointerException e){
+            error = new Error("Las credenciales ingresadas son incorrectas");
+            error.addError("credenciales","No se encontro el usuario deseado");
+            return Response.status(404).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error("Error Interno");
+            error.addError("Excepcion",e.getMessage());
+            return Response.status(500).entity(error).build();
+        }
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response postUser(User user){
+        Error error;
+        try {
+            _userDAO.saveUser(user);
+            return Response.ok(_gson.toJson(user)).build();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            error = new Error("Error a nivel de base de datos");
+            return Response.status(500).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error("Error Interno");
+            error.addError("Excepcion",e.getMessage());
+            return Response.status(500).entity(error).build();
         }
     }
 }

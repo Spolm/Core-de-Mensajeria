@@ -10,7 +10,7 @@ create table public.User
     use_city varchar(20),
     use_address varchar(20),
     use_date_of_birth timestamp,
-    user_gender char
+    use_gender char
 );
 
 CREATE TABLE public.Company
@@ -55,3 +55,31 @@ create table public.Application
 	CONSTRAINT fk_user_aplication foreign key ("app_user_creator") 
 	REFERENCES public.User(use_id) 
 );
+
+CREATE TABLE integrator(
+	int_id serial PRIMARY KEY,	
+	int_name varchar(250) not null,
+	int_messageCost float not null,
+	int_threadCapacity int not null,
+	int_tokenApi varchar(250) not null
+);
+
+CREATE TABLE channel(
+	cha_id serial PRIMARY KEY,	
+	cha_name varchar(250) not null,
+	cha_description varchar(250) not null
+);
+
+CREATE TABLE channel_integrator(
+	ci_id serial primary key,
+	ci_channel_id int not null,
+	ci_integrator_id int not null
+);
+
+ALTER TABLE channel_integrator
+ADD CONSTRAINT fk_channel_id FOREIGN KEY (ci_channel_id) 
+REFERENCES channel (cha_id);
+
+ALTER TABLE channel_integrator
+ADD CONSTRAINT fk_integrator_id FOREIGN KEY (ci_integrator_id) 
+REFERENCES integrator (int_id);
