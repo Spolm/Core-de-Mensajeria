@@ -63,21 +63,21 @@ public graph2 = {
   chart3(datos){
     const graph= [datos];
      const linediv = document.getElementById("pie-chart");
-    const  layout = {width: 500, height: 300, title: 'Cantidad de mensajes enviados por canal'}
+    const  layout = {width: 500, height: 300, title: 'Cantidad de mensajes enviados por Compañia'}
     Plotly.plot(linediv,graph,layout);
   }
 
   chart2(datos){
     const graph= [datos];
      const linediv = document.getElementById("line-chart");
-    const  layout = {width: 500, height: 300, title: 'Cantidad de mensajes enviados por canal'}
+    const  layout = {width: 500, height: 300, title: 'Cantidad de mensajes enviados por Compañia'}
     Plotly.plot(linediv,graph,layout);
   }
 
   chart(datos){
     const graph= [datos];
      const linediv = document.getElementById("bar-chart");
-    const  layout = {width: 500, height: 300, title: 'Cantidad de mensajes enviados por canal'}
+    const  layout = {width: 500, height: 300, title: 'Cantidad de mensajes enviados por Compañia'}
     Plotly.plot(linediv,graph,layout);
    }
 

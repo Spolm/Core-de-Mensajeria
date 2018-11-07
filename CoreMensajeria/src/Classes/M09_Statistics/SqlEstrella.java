@@ -37,14 +37,14 @@ public class SqlEstrella {
         try
         {
 
-            Class.forName(BD_CLASS_FOR_NAME);
-            return DriverManager.getConnection(BD_URL,BD_USER, BD_PASSWORD);
+            Class.forName( BD_CLASS_FOR_NAME );
+            return DriverManager.getConnection( BD_URL,BD_USER, BD_PASSWORD );
         }
-        catch (ClassNotFoundException e)
+        catch ( ClassNotFoundException e )
         {
             e.printStackTrace();
         }
-        catch (SQLException e)
+        catch ( SQLException e )
         {
             e.printStackTrace();
         }
@@ -61,7 +61,7 @@ public class SqlEstrella {
      * @throws Exception
      * @see ResultSet
      */
-    public ResultSet sql (String query) throws SQLException , NullPointerException {
+    public ResultSet sql ( String query ) throws SQLException , NullPointerException {
 
         try {
             _st = _conn.createStatement();
@@ -70,7 +70,7 @@ public class SqlEstrella {
         }
         catch ( NullPointerException e ){
             e.printStackTrace();
-            System.err.println("NullPointerExceptionSql: " + e.getMessage() + " , Query: " + query);
+            System.err.println( "NullPointerExceptionSql: " + e.getMessage() + " , Query: " + query );
             return null;
         }
 
@@ -122,10 +122,10 @@ public class SqlEstrella {
         }
         catch ( NullPointerException e ){
             e.printStackTrace();
-            System.err.println("NullPointerExceptionSql: " + e.getMessage());
+            System.err.println( "NullPointerExceptionSql: " + e.getMessage() );
         }
         catch ( Exception e ){
-            System.err.println("ExceptionSql: " + e.getMessage() + " , Query: " + query);
+            System.err.println( "ExceptionSql: " + e.getMessage() + " , Query: " + query ;
             e.printStackTrace();
         }
         finally {
@@ -139,7 +139,7 @@ public class SqlEstrella {
      * @param conn conexion activa
      * @throws SQLException Error al cerrar la conexion
      */
-    public void closeConnection(Connection conn) throws SQLException {
+    public void closeConnection( Connection conn ) throws SQLException {
         conn.close();
     }
 
@@ -154,11 +154,11 @@ public class SqlEstrella {
      * @param conn
      */
 
-    public static void bdClose(Connection conn) {
+    public static void bdClose( Connection conn ) {
         try{
             conn.close();
         }
-        catch (SQLException e){
+        catch ( SQLException e ){
             e.printStackTrace();
         }
     }

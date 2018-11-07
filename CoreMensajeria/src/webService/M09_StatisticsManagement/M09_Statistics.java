@@ -28,72 +28,6 @@ public class M09_Statistics extends Application {
     //private Connection conn = Sql.getConInstance();
     private Connection conn = SqlEstrella.getConInstance();
 
-    @GET
-    @Path("/Grafica")
-    @Produces("application/json")
-    public String Mandarnumeros() {
-        Statistics gr = new Statistics();
-        ArrayList<Integer> listNum = new ArrayList<Integer>();
-        listNum.add(100);
-        listNum.add(200);
-        listNum.add(300);
-        listNum.add(400);
-
-        ArrayList<String> listlabels = new ArrayList<String>();
-        listlabels.add("Telegram");
-        listlabels.add("SMS");
-        listlabels.add("MAIL");
-        listlabels.add("SENALES DE HUMO");
-        gr.type = "bar";
-        gr.x = listlabels;
-        gr.y = listNum;
-        return gson.toJson(gr);
-    }
-
-    @GET
-    @Path("/Grafica2")
-    @Produces("application/json")
-    public String Mandarnumeros2() {
-        Statistics gr = new Statistics();
-        ArrayList<Integer> listNum = new ArrayList<Integer>();
-        listNum.add(50);
-        listNum.add(70);
-        listNum.add(300);
-        listNum.add(147);
-
-        ArrayList<String> listlabels = new ArrayList<String>();
-        listlabels.add("Telegram");
-        listlabels.add("SMS");
-        listlabels.add("MAIL");
-        listlabels.add("SENALES DE HUMO");
-        gr.type = "line";
-        gr.x = listlabels;
-        gr.y = listNum;
-        return gson.toJson(gr);
-    }
-
-
-    @GET
-    @Path("/Grafica3")
-    @Produces("application/json")
-    public String Mandarnumeros3() {
-        PieChart PieC = new PieChart();
-        ArrayList<Integer> listNum = new ArrayList<Integer>();
-        listNum.add(50);
-        listNum.add(70);
-        listNum.add(300);
-        listNum.add(147);
-
-        ArrayList<String> listlabels = new ArrayList<String>();
-        listlabels.add("Telegram");
-        listlabels.add("SMS");
-        listlabels.add("MAIL");
-        listlabels.add("SENALES DE HUMO");
-        PieC.type = "pie";
-        PieC.labels = listlabels;
-        PieC.values = listNum;
-        return gson.toJson(PieC);
-    }
 
     @GET
     @Path("/ConsultaCompany")
@@ -110,19 +44,19 @@ public class M09_Statistics extends Application {
             while (result.next()) {
                 Company co = new Company();
 
-                co.set_idCompany(result.getInt("com_id"));
-                co.set_name(result.getString("com_name"));
-                co.set_desc(result.getString("com_description"));
-                co.set_status(result.getBoolean("com_status"));
+                co.set_idCompany( result.getInt("com_id" ) );
+                co.set_name( result.getString("com_name" ) );
+                co.set_desc( result.getString("com_description" ) );
+                co.set_status( result.getBoolean("com_status" ) );
 
                 companyList.add(co);
             }
-            return Response.ok(gson.toJson(companyList)).build();
+            return Response.ok( gson.toJson( companyList ) ).build();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SQLException(select);
+            throw new SQLException( select );
         } finally {
-            Sql.bdClose(conn);
+            Sql.bdClose( conn );
         }
     }
 
@@ -145,23 +79,23 @@ public class M09_Statistics extends Application {
                 Company co = new Company();
                 Campaign ca = new Campaign();
 
-                ca.set_idCampaign(result.getInt("cam_id"));
-                ca.set_nameCampaign(result.getString("cam_name"));
-                ca.set_descCampaign(result.getString("cam_description"));
-                ca.set_statusCampaign(result.getBoolean("cam_status"));
-                ca.set_startCampaign(result.getTimestamp("cam_start_date"));
-                ca.set_endCampaign(result.getTimestamp("cam_end_date"));
-                co.set_idCompany(result.getInt("com_id"));
-                co.set_name(result.getString("com_name"));
-                co.set_status(result.getBoolean("com_status"));
-                co.set_desc(result.getString("com_descrption"));
+                ca.set_idCampaign( result.getInt("cam_id" ) );
+                ca.set_nameCampaign( result.getString("cam_name" ) );
+                ca.set_descCampaign( result.getString("cam_description" ) );
+                ca.set_statusCampaign( result.getBoolean("cam_status" ) );
+                ca.set_startCampaign( result.getTimestamp("cam_start_date" ) );
+                ca.set_endCampaign( result.getTimestamp("cam_end_date" ) );
+                co.set_idCompany( result.getInt("com_id" ) );
+                co.set_name( result.getString("com_name" ) );
+                co.set_status( result.getBoolean("com_status" ) );
+                co.set_desc( result.getString("com_descrption" ) );
                 //companyList.add(co);
-                campaignList.add(ca);
+                campaignList.add( ca );
             }
-            return Response.ok(gson.toJson(campaignList)).build();
+            return Response.ok( gson.toJson( campaignList )).build();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SQLException(select);
+            throw new SQLException( select );
         } finally {
             Sql.bdClose(conn);
         }
@@ -184,7 +118,7 @@ public class M09_Statistics extends Application {
             ResultSet result2 = st2.executeQuery(select2);
             while ( result2.next() ) {
                 Company co = new Company();
-                co.set_name( result2.getString("com_name"));
+                co.set_name( result2.getString("com_name" ) );
                 aux = co.get_name();
                 listCompany.add( aux ) ;
             }
@@ -213,14 +147,14 @@ public class M09_Statistics extends Application {
             ArrayList<String> listCompany = new ArrayList<String>();
             int n = 0 ;
             Statement st2 = conn.createStatement();
-            ResultSet result2 = st2.executeQuery(select2);
+            ResultSet result2 = st2.executeQuery( select2 );
             while ( result2.next() ) {
                 Company co = new Company();
-                co.set_name( result2.getString("com_name"));
+                co.set_name( result2.getString("com_name" ) );
                 aux = co.get_name();
                 listCompany.add( aux ) ;
             }
-            listNum = CountOfMessage(listCompany);
+            listNum = CountOfMessage( listCompany );
             gr.type = "line";
             gr.x = listCompany;
             gr.y = listNum;
@@ -248,11 +182,11 @@ public class M09_Statistics extends Application {
             ResultSet result2 = st2.executeQuery(select2);
             while ( result2.next() ) {
                 Company co = new Company();
-                co.set_name( result2.getString("com_name"));
+                co.set_name( result2.getString("com_name" ) );
                 aux = co.get_name();
                 listlabels.add( aux ) ;
             }
-            listNum = CountOfMessage(listlabels);
+            listNum = CountOfMessage( listlabels );
             PieC.type = "pie";
             PieC.labels = listlabels;
             PieC.values = listNum;
@@ -267,7 +201,7 @@ public class M09_Statistics extends Application {
 
 
 
-    public ArrayList<Integer> CountOfMessage (ArrayList<String > listCompany){
+    public ArrayList<Integer> CountOfMessage ( ArrayList<String> listCompany ){
 
         String aux2 = "" ;
         int n = 0  ;
@@ -281,7 +215,7 @@ public class M09_Statistics extends Application {
                     "where C.cam_id = M.mes_cam_id and C.com_name = '" + aux2 + "' ";
 
             Statement st = conn.createStatement();
-            ResultSet result = st.executeQuery(select);
+            ResultSet result = st.executeQuery( select );
             while (result.next()) {
                 n = result.getInt(1);
                 listNum.add(n);
