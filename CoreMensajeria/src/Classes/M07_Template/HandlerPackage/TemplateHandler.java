@@ -3,8 +3,7 @@ package Classes.M07_Template.HandlerPackage;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class TemplateHandler {
@@ -37,7 +36,7 @@ public class TemplateHandler {
     public Template getTemplate(int id){
         Template template = new Template();
         try{
-            ResultSet resultSet = sql.sqlConn("SELECT * FROM PUBLIC.TEMPLATE WHERE ID = "+id);
+            ResultSet resultSet = sql.sqlConn("SELECT * FROM PUBLIC.TEMPLATE WHERE TEM_ID = "+id);
             resultSet.next();
             template.setTemplateId(resultSet.getInt("tem_id"));
             template.setCreationDate(resultSet.getString("tem_creation_date"));
@@ -48,5 +47,24 @@ public class TemplateHandler {
         } finally {
             return template;
         }
+    }
+
+    public Boolean postTemplateStatus(int id){
+        Boolean flag=false;
+        Connection con = Sql.getConInstance();
+        String query="insert into public.template_status (ts_date,ts_template,ts_status) values (CURRENT_TIMESTAMP,"+id+",(select sta_id from public.status where sta_name='aprobado'))";
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.executeUpdate();
+            flag=true;
+        }  catch(SQLException e){
+            e.printStackTrace();
+            flag=false;
+        } catch (Exception e){
+            e.printStackTrace();
+            flag=false;
+        }
+        Sql.bdClose(con);
+        return flag;
     }
 }

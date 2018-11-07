@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
 
 class MessageTest {
 
@@ -43,7 +43,7 @@ class MessageTest {
                 + " este es un mensaje " + parameters.get(1).getName()
                 + " de prueba " + parameters.get(2).getName();
         assertEquals(message.getMessage(), text);
-        assertEquals(message.getParameters(), parameters);
+        assertEquals(message.getParameterArrayList(), parameters);
     }
 
     @AfterEach

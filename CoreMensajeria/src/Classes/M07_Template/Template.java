@@ -7,27 +7,16 @@ import java.util.*;
 
 
 public class Template {
-    private Message _message;
+    private Message message;
     private String creationDate;
     private int templateId;
-    // private Planning _planning;
-    private IStatus _status;
-    //private Campaign _campaing;
-    //private Channel _channel;
-    //private Integrator _integrator
-    //Private Origin _origin
-    //Private User _user
+    private IStatus status;
 
-    /**
-     * Constructor Vacio
-     */
-    public Template() {
-    }
+    public Template() {}
 
     public Template(Message message, IStatus status,String creationDate,int templateId) {
-        this._message = message;
-        //   this._planning = planning;
-        this._status = status;
+        this.message = message;
+        this.status = status;
         this.creationDate = creationDate;
         this.templateId = templateId;
     }
@@ -35,6 +24,7 @@ public class Template {
     public int getTemplateId(){
         return templateId;
     }
+
     public void setTemplateId(int templateId){
         this.templateId = templateId;
     }
@@ -48,16 +38,14 @@ public class Template {
     }
 
     public String getStatus() {
-        return _status.getIStatusTemplate();
+        return status.getIStatusTemplate();
     }
 
-    public void setStatus(IStatus status) { this._status = status; }
+    public void setStatus(IStatus status) { this.status = status; }
 
-    public String getMessage(){ return _message.getMessage(); }
+    public String getMessage(){ return message.getMessage(); }
 
-    public void setMessage(Message _message) { this._message = _message; }
-
-    // public Planning get_planning() { return _planning; }
+    public void setMessage(Message _message) { this.message = _message; }
 
     @Override
     public boolean equals(Object o) {
@@ -65,14 +53,14 @@ public class Template {
         if (!(o instanceof Template)) return false;
         Template template = (Template) o;
         return getTemplateId() == template.getTemplateId() &&
-                Objects.equals(_message, template._message) &&
+                Objects.equals(message, template.message) &&
                 Objects.equals(getCreationDate(), template.getCreationDate()) &&
-                Objects.equals(_status, template._status);
+                Objects.equals(status, template.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(_message, getCreationDate(), getTemplateId(), _status);
+        return Objects.hash(message, getCreationDate(), getTemplateId(), status);
     }
 }
 

@@ -1,15 +1,16 @@
 package webService.M07_Template;
 
+import Classes.M07_Template.HandlerPackage.MessageHandler;
 import Classes.M07_Template.HandlerPackage.TemplateHandler;
+import Classes.M07_Template.MessagePackage.Message;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 import com.google.gson.Gson;
+import com.oracle.wls.shaded.org.apache.xpath.operations.Bool;
+
 import java.sql.Connection;
 import java.util.ArrayList;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -35,13 +36,22 @@ public class M07_Template {
         return Response.ok(gson.toJson(template)).build();
     }
 
-    //@GET
+    @GET
     @Path("/messages")
-    public M07_Message getMessages(){
-
-        return new M07_Message();
+    public Response  getMessages(){
+        MessageHandler messageHandler = new MessageHandler();
+        ArrayList<Message> messageArrayList = messageHandler.getMessages();
+        return Response.ok(gson.toJson(messageArrayList)).build();
+        //return new M07_Message();
     }
 
-
+    @POST
+    @Path("/update/{templateId}")//Subsequent Path
+    public Boolean postTemplateStatus(@PathParam("templateId") int id){
+        Boolean flag = false;
+        TemplateHandler templateHandler = new TemplateHandler();
+        flag = templateHandler.postTemplateStatus(id);
+        return flag;
+    }
 
 }
