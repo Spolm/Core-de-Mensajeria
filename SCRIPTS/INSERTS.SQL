@@ -1,5 +1,5 @@
 ﻿INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country, 
-					use_city, use_address, use_date_of_birth, use_gender) values
+					use_city, use_address, use_date_of_birth, use_gender) VALUES
 					('1234', 'Ronnie', 1, 'ronnie@gmail.com', '0414255', 'Ve', 'Mi', 'Caricuao', '04/05/1995', 'F');
 
 
@@ -22,77 +22,128 @@ VALUES ('Aweber', 2.3, 90, 'ooiiewqoiw');
 INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
 VALUES ('Infusionsoft', 18, 150, 'odiw24idididmm1');
 
-insert into channel (cha_name, cha_description) values ('SMS', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ae magna ultrices blandit. Nam blandit mi congue, vitae posuere odio blandit.');
+INSERT INTO channel (cha_name, cha_description) VALUES ('SMS', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ae magna ultrices blandit. Nam blandit mi congue, vitae posuere odio blandit.');
 
-insert into channel (cha_name, cha_description) values ('Email', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ae magna ultrices blandit. Nam blandit mi congue, vitae posuere odio blandit.');
+INSERT INTO channel (cha_name, cha_description) VALUES ('Email', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ae magna ultrices blandit. Nam blandit mi congue, vitae posuere odio blandit.');
 
-insert into channel_integrator (ci_channel_id, ci_integrator_id) values
+INSERT INTO channel_integrator (ci_channel_id, ci_integrator_id) VALUES
 (1,1), (1,2),
 (1,3), (2,4),
 (2,5), (2,6);
 
 INSERT INTO public.Template (tem_creation_date) 
-values ('2003-2-1');
+VALUES ('2003-2-1');
 
 INSERT INTO public.Message (mes_text,mes_template)
-values ('esto es un mensaje de template con un [�$Parametro$�]',1);
+VALUES ('esto es un mensaje de template con un [.$Parametro$.]',1);
 
-insert into public.Parameter (par_name)
-values ('parametron');
+INSERT INTO public.Parameter (par_name)
+VALUES ('Parametro');
 
-insert into public.Status (sta_name)
-values ('aprobado');
+INSERT INTO public.Status (sta_name)
+VALUES ('Aprobado');
 
-insert into public.template_status (ts_date,ts_template,ts_status)
-values ('2003-2-1',1,1);
+INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
+VALUES ('2003-2-1',1,1);
 
-insert into public.message_parameter (mp_message,mp_parameter)
-values (1,1);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
+VALUES (1,1);
 
-
-/* Template 2 */
-
+INSERT INTO public.Status (sta_name)
+VALUES ('No Aprobado');
 
 INSERT INTO public.Template (tem_creation_date) 
-values (CURRENT_DATE);
+VALUES ('2012-10-11');
 
-INSERT INTO public.Message (mes_text,mes_template)
-values ('Movistar te invita a una funcion gratuita del Festival de Cine Espanol. Ven el [.fecha.] Plaza Los Palos Grandes',(SELECT MAX(tem_id) FROM public.Template));
+INSERT INTO public.Message(mes_text,mes_template)
+VALUES ('BANESCO REGISTRO: CONSUMO EN PUNTO DE VENTA CON TDD [.$Numero tarjeta$.] BS. [.$Monto$.] EL [.$Fecha$.] REF [.$REF$.].',2);
 
-insert into public.Parameter (par_name)
-values ('fecha');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Numero tarjeta');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Monto');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Fecha');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('REF');
 
-insert into public.message_parameter (mp_message,mp_parameter)
-values ((SELECT MAX(mes_id) FROM public.message),(select max (par_id) from public.Parameter where par_name='fecha'));
+INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
+VALUES ('2012-10-11',2,2);
 
-insert into public.template_status (ts_date,ts_template,ts_status)
-values (CURRENT_TIMESTAMP,(SELECT MAX(tem_id) FROM public.Template),(select sta_id from public.status where sta_name='aprobado'));
-
-/* Template 3 */
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (2,2);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (2,3);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (2,4);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (2,5);
 
 INSERT INTO public.Template (tem_creation_date) 
-values (CURRENT_DATE);
+VALUES ('2014-10-11');
 
-INSERT INTO public.Message (mes_text,mes_template)
-values ('Acabas de escuchar [.cancion.] Envia SI al 86667 si lo quieres como tu Entretono. Renta Bs.S. [.renta.] c/impuestos. Entretono Bs.S. [.impuesto.] c/impuestos.',(SELECT MAX(tem_id) FROM public.Template));
+INSERT INTO public.Message(mes_text,mes_template)
+VALUES ('Movistar te invita a una funcion gratuita del [.$Evento$.]. Ven el [.$Fecha$.] [.$Hora$.] [.$Lugar$.].',3);
 
-insert into public.Parameter (par_name)
-values ('cancion');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Evento');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Hora');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Lugar');
 
-insert into public.Parameter (par_name)
-values ('renta');
+INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
+VALUES ('2014-10-12',3,1);
 
-insert into public.Parameter (par_name)
-values ('impuesto');
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (3,6);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (3,4);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (3,7);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (3,8);
 
-insert into public.message_parameter (mp_message,mp_parameter)
-values ((SELECT MAX(mes_id) FROM public.message),(select max (par_id) from public.Parameter where par_name='cancion'));
+INSERT INTO public.Template (tem_creation_date) 
+VALUES ('2014-11-11');
 
-insert into public.message_parameter (mp_message,mp_parameter)
-values ((SELECT MAX(mes_id) FROM public.message),(select max (par_id) from public.Parameter where par_name='renta'));
+INSERT INTO public.Message(mes_text,mes_template)
+VALUES ('Acabas de escuchar [.$Cancion$.] Envia SI al [.$Codigo$.] si lo quieres como tu Entretono. Renta Bs.S. [.$Renta$.] c/impuestos. Entretono Bs.S. [.$Monto$.] c/impuestos.',4);
 
-insert into public.message_parameter (mp_message,mp_parameter)
-values ((SELECT MAX(mes_id) FROM public.message),(select max (par_id) from public.Parameter where par_name='impuesto'));
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Cancion');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Codigo');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Renta');
 
-insert into public.template_status (ts_date,ts_template,ts_status)
-values (CURRENT_TIMESTAMP,(SELECT MAX(tem_id) FROM public.Template),(select sta_id from public.status where sta_name='no aprobado'));
+INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
+VALUES ('2014-11-11',4,2);
+
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (4,9);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (4,10);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (4,1);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (4,3);
+
+INSERT INTO public.Template (tem_creation_date) 
+VALUES ('2016-07-04');
+
+INSERT INTO public.Message(mes_text,mes_template)
+VALUES ('Si tu edad es entre 18 y 30, alistate en la FANB. Prensentate del [.$Fecha inicio$.] al [.$Fecha fin$.] en la unidad militar mas cercana',5);
+
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Fecha inicio');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Fecha fin');
+
+INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
+VALUES ('2016-07-04',5,2);
+
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (5,12);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (5,13);

@@ -93,7 +93,7 @@ create table public.Template
 create table public.Message
 (
     mes_id serial PRIMARY KEY,
-    mes_text varchar(160) NOT NULL,
+    mes_text varchar(360) NOT NULL,
     mes_template integer NOT NULL,
     CONSTRAINT fk_template_id FOREIGN KEY ("mes_template") REFERENCES public.Template (tem_id)
 );
