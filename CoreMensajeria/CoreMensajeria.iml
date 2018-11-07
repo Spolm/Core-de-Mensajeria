@@ -24,8 +24,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0" level="application_server_libraries" />
-    <orderEntry type="library" name="com.google.code.gson:gson:2.8.5" level="project" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" scope="PROVIDED">
       <library name="JUnit5.2">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.3.1/junit-jupiter-api-5.3.1.jar!/" />
@@ -37,6 +36,9 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="postgresql-42.2.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="postgresql-42.2.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="com.google.code.gson:gson:2.8.5" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="org.postgresql:postgresql:42.2.5" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 5.0.0 - RESTful Web Service" level="application_server_libraries" />
   </component>
 </module>
