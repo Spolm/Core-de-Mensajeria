@@ -22,7 +22,8 @@ const routes: Routes = [
             { path: 'statistics', loadChildren: './statistics/statistics.module#StatisticsModule' },
             { path: 'application', loadChildren: './application/application.module#ApplicationModule' },
             { path: 'template', loadChildren: './template/template.module#TemplateModule' },
-            { path: 'company', loadChildren: './company/company.module#CompanyModule' }
+            { path: 'company', loadChildren: './company/company.module#CompanyModule' },
+            { path: 'campaigns', loadChildren: './campaign/campaign.module#CampaignModule' },
         ]
     }
 ];
