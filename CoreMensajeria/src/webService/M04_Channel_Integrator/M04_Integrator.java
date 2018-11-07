@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/integrators")
-public class IntegratorServiceAPI {
+public class M04_Integrator {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

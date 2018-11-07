@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Path("/channel")
-public class ChannelServiceAPI {
+public class M05_Channel {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
