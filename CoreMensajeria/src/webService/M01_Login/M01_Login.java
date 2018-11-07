@@ -13,8 +13,8 @@ import java.sql.SQLException;
 @Path("/")
 public class M01_Login {
 
-    Gson _gson = new Gson();
-    UserDAO _userDAO = new UserDAO();
+    private Gson _gson = new Gson();
+    private UserDAO _userDAO = new UserDAO();
 
     @Path("/login")
     @POST
@@ -23,15 +23,18 @@ public class M01_Login {
     public Response login( LoginIntent loginIntent){
         Error error;
         User user;
+
         try {
-            if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
-                    loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
+
+            if( loginIntent.get_username().matches( "[a-zA-Z0-9.@+/*-]+" ) &&
+                    loginIntent.get_password().matches( "[a-zA-Z0-9/*_-]+" ) ){
 
                 user = _userDAO.findByUsernameOrEmail(loginIntent.get_username());
 
-                if (user.get_passwordUser().equals(loginIntent.get_password())) {
+                if ( user.get_passwordUser().equals(loginIntent.get_password()) ) {
                     user.set_passwordUser("");
                     return Response.accepted(_gson.toJson(user)).build();
+
                 } else {
                     error = new Error("Las credenciales ingresadas son incorrectas");
                     error.addError("credenciales","No se encontro el usuario deseado");
@@ -45,18 +48,20 @@ public class M01_Login {
                 return Response.status(404).entity(error).build();
             }
 
-        } catch (SQLException e) {
+        } catch ( SQLException e ) {
             e.printStackTrace();
-            error = new Error("Error a nivel de base de datos");
+            error = new Error( "Error a nivel de base de datos" );
             return Response.status(500).entity(error).build();
-        } catch (NullPointerException e){
-            error = new Error("Las credenciales ingresadas son incorrectas");
-            error.addError("credenciales","No se encontro el usuario deseado");
+
+        } catch ( NullPointerException e ){
+            error = new Error( "Las credenciales ingresadas son incorrectas" );
+            error.addError( "credenciales","No se encontro el usuario deseado" );
             return Response.status(404).entity(error).build();
-        } catch (Exception e) {
+
+        } catch ( Exception e ) {
             e.printStackTrace();
-            error = new Error("Error Interno");
-            error.addError("Excepcion",e.getMessage());
+            error = new Error( "Error Interno" );
+            error.addError( "Excepcion",e.getMessage() );
             return Response.status(500).entity(error).build();
         }
     }
