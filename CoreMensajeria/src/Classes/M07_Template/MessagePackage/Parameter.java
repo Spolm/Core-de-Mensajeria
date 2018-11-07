@@ -18,6 +18,11 @@ public class Parameter {
         this.description = description;
     }
 
+    public Parameter(int parameterId, String name) {
+        this.parameterId = parameterId;
+        this.name = name;
+    }
+
     public Parameter(int parameterId, String name, String description) {
         this.parameterId = parameterId;
         this.name = name;
