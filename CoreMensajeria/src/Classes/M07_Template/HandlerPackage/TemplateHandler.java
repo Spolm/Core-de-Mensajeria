@@ -7,10 +7,14 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class TemplateHandler {
-    public Sql sql;
+    private Sql sql;
 
     public TemplateHandler() {
         sql = new Sql();
+    }
+
+    public Sql getSql() {
+        return sql;
     }
 
     public ArrayList<Template> getTemplates() {
@@ -36,7 +40,7 @@ public class TemplateHandler {
     public Template getTemplate(int id){
         Template template = new Template();
         try{
-            ResultSet resultSet = sql.sqlConn("SELECT * FROM PUBLIC.TEMPLATE WHERE ID = "+id);
+            ResultSet resultSet = sql.sqlConn("SELECT * FROM PUBLIC.TEMPLATE WHERE TEM_ID = "+id);
             resultSet.next();
             template.setTemplateId(resultSet.getInt("tem_id"));
             template.setCreationDate(resultSet.getString("tem_creation_date"));
