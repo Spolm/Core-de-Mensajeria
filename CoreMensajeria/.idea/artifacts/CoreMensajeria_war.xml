@@ -6,6 +6,11 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="lib">
           <element id="library" level="module" name="JUnit5.2" module-name="CoreMensajeria" />
+          <element id="library" level="project" name="gson-2.8.2" />
+          <element id="library" level="project" name="JAX-RS" />
+          <element id="library" level="project" name="org.junit.jupiter:junit-jupiter-api:5.3.1" />
+          <element id="library" level="project" name="org.pac4j.jax-rs:core:3.0.0" />
+          <element id="library" level="project" name="org.postgresql:postgresql:42.2.5" />
         </element>
       </element>
     </root>
