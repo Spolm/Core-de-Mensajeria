@@ -16,10 +16,10 @@ public class TemplateHandlerTest {
 
     @BeforeEach
     void init(){
-      templateHandler = new TemplateHandler();
+        templateHandler = new TemplateHandler();
+        ObjectsNotNull();
     }
 
-    @Test
     void ObjectsNotNull(){
         assertNotNull(templateHandler);
         assertNotNull(templateHandler.getSql());

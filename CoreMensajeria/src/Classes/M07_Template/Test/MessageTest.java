@@ -26,9 +26,10 @@ class MessageTest {
 
         String text = "hola parameter1 este es un mensaje parameter2 de prueba parameter3";
         message = new Message(1, parameters, text);
+
+        ObjectsNotNull();
     }
 
-    @Test
     void ObjectsNotNull(){
         assertNotNull(message);
         assertNotNull(parameters);
