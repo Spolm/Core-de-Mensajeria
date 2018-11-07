@@ -3,48 +3,48 @@ import Classes.M03_Channel_Integrator.IntegratorPackage.Integrator;
 import java.util.ArrayList;
 
 public abstract class Channel {
-    private int _idChannel;
-    private String _nameChannel;
-    private String _descriptionChannel;
-    ArrayList<Integrator> _integrators;
+    private int idChannel;
+    private String nameChannel;
+    private String descriptionChannel;
+    ArrayList<Integrator> integrators;
 
-    public Channel(int _idChannel, String channelName, String channelDescription,
-                   ArrayList<Integrator> _integrators) {
-        this._idChannel = _idChannel;
-        this._nameChannel = channelName;
-        this._descriptionChannel = channelDescription;
-        this._integrators = _integrators;
+    public Channel(int idChannel, String channelName, String channelDescription, ArrayList<Integrator> integrators) {
+        this.idChannel = idChannel;
+        this.nameChannel = channelName;
+        this.descriptionChannel = channelDescription;
+        this.integrators = integrators;
     }
 
-    public int get_idChannel() {
-        return _idChannel;
+    public int getIdChannel() {
+        return idChannel;
     }
 
-    public void set_idChannel(int _idChannel) {
-        this._idChannel = _idChannel;
+    public void setIdChannel(int idChannel) {
+        this.idChannel = idChannel;
     }
 
-    public String get_nameChannel() {
-        return _nameChannel;
+    public String getNameChannel() {
+        return nameChannel;
     }
 
-    public void set_nameChannel(String _nameChannel) {
-        this._nameChannel = _nameChannel;
+    public void setNameChannel(String nameChannel) {
+        this.nameChannel = nameChannel;
     }
 
-    public String get_descriptionChannel() {
-        return _descriptionChannel;
+    public String getDescriptionChannel() {
+        return descriptionChannel;
     }
 
-    public void set_descriptionChannel(String _descriptionChannel) {
-        this._descriptionChannel = _descriptionChannel;
+    public void setDescriptionChannel(String descriptionChannel) {
+        this.descriptionChannel = descriptionChannel;
     }
 
-    public ArrayList<Integrator> get_integrators() {
-        return _integrators;
+    public ArrayList<Integrator> getIntegrators() {
+        return integrators;
     }
 
-    public void set_integrators(ArrayList<Integrator> _integrators) {
-        this._integrators = _integrators;
+    public void setIntegrators(ArrayList<Integrator> integrators) {
+        this.integrators = integrators;
     }
+
 }

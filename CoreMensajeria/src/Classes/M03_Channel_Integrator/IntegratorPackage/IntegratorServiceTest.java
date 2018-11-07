@@ -24,9 +24,13 @@ class IntegratorServiceTest {
 
     @Test
     public void testIntegratorConcrete() {
-        Movistar m = new Movistar(1, 25, 13.4f,
-                   "Movistar", "oqiwueyeiu");
+        Movistar m = new Movistar(1, 25, 13.4f, "Movistar", "oqiwueyeiu");
         Integrator integrator = i.getConcreteIntegrator(1);
-        assertEquals(m,integrator);
+        assertNotNull(integrator);
+        assertEquals(m.getNameIntegrator(), integrator.getNameIntegrator());
+        assertEquals(m.getApiIntegrator(), integrator.getApiIntegrator());
+        assertEquals(m.getIdIntegrator(), integrator.getIdIntegrator());
+        assertEquals(m.getThreadCapacity(), integrator.getThreadCapacity());
+        assertEquals(m.getMessageCost(), integrator.getMessageCost());
     }
 }

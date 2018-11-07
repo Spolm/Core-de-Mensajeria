@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/integrators")
+
 public class IntegratorServiceAPI {
 
     @GET
