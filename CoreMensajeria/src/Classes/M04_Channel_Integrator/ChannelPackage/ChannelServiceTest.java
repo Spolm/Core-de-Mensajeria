@@ -1,6 +1,6 @@
-package Classes.M03_Channel_Integrator.ChannelPackage;
+package Classes.M04_Channel_Integrator.ChannelPackage;
 
-import Classes.M03_Channel_Integrator.IntegratorPackage.Integrator;
+import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package webService.M03_Channel_Integrator;
-import Classes.M03_Channel_Integrator.IntegratorPackage.Integrator;
-import Classes.M03_Channel_Integrator.IntegratorPackage.IntegratorService;
+package webService.M04_Channel_Integrator;
+import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
+import Classes.M04_Channel_Integrator.IntegratorPackage.IntegratorService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

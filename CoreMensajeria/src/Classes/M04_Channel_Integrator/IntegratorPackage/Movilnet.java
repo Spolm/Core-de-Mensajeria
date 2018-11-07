@@ -1,8 +1,8 @@
-package Classes.M03_Channel_Integrator.IntegratorPackage;
+package Classes.M04_Channel_Integrator.IntegratorPackage;
 
-public class Movistar extends Integrator {
+public class Movilnet extends Integrator {
 
-    public Movistar(int idIntegrator, int threadCapacity, float messageCost,
+    public Movilnet(int idIntegrator, int threadCapacity, float messageCost,
                     String nameIntegrator, String apiIntegrator) {
         super(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator);
     }

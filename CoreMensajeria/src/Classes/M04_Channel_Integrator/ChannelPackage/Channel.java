@@ -1,5 +1,5 @@
-package Classes.M03_Channel_Integrator.ChannelPackage;
-import Classes.M03_Channel_Integrator.IntegratorPackage.Integrator;
+package Classes.M04_Channel_Integrator.ChannelPackage;
+import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
 import java.util.ArrayList;
 
 public abstract class Channel {

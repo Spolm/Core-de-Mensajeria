@@ -1,4 +1,4 @@
-package Classes.M03_Channel_Integrator.IntegratorPackage;
+package Classes.M04_Channel_Integrator.IntegratorPackage;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
