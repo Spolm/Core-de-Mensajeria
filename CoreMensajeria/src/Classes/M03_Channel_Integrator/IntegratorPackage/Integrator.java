@@ -9,14 +9,24 @@ public abstract class Integrator implements IIntegrator {
     private String _nameIntegrator;
     private String _apiIntegrator;
 
-    public Integrator(int _idIntegrator, int _threadCapacity,
-                      float _messageCost, String _nameIntegrator,
-                      String _apiIntegrator) {
+    public Integrator(int _idIntegrator, int _threadCapacity, float _messageCost,
+                      String _nameIntegrator, String _apiIntegrator) {
         this._idIntegrator = _idIntegrator;
         this._threadCapacity = _threadCapacity;
         this._messageCost = _messageCost;
         this._nameIntegrator = _nameIntegrator;
         this._apiIntegrator = _apiIntegrator;
+    }
+
+    @Override
+    public String toString() {
+        return "Integrator{" +
+                "_idIntegrator=" + _idIntegrator +
+                ", _threadCapacity=" + _threadCapacity +
+                ", _messageCost=" + _messageCost +
+                ", _nameIntegrator='" + _nameIntegrator + '\'' +
+                ", _apiIntegrator='" + _apiIntegrator + '\'' +
+                '}';
     }
 
     @Override
@@ -30,7 +40,6 @@ public abstract class Integrator implements IIntegrator {
                 Objects.equals(_nameIntegrator, that._nameIntegrator) &&
                 Objects.equals(_apiIntegrator, that._apiIntegrator);
     }
-
 
     public int get_idIntegrator() {
         return _idIntegrator;
@@ -70,16 +79,5 @@ public abstract class Integrator implements IIntegrator {
 
     public void set_apiIntegrator(String _apiIntegrator) {
         this._apiIntegrator = _apiIntegrator;
-    }
-
-    @Override
-    public String toString() {
-        return "Integrator{" +
-                "_idIntegrator=" + _idIntegrator +
-                ", _threadCapacity=" + _threadCapacity +
-                ", _messageCost=" + _messageCost +
-                ", _nameIntegrator='" + _nameIntegrator + '\'' +
-                ", _apiIntegrator='" + _apiIntegrator + '\'' +
-                '}';
     }
 }

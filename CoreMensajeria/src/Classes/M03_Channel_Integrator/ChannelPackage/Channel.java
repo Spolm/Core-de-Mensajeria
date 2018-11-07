@@ -8,8 +8,8 @@ public abstract class Channel {
     private String _descriptionChannel;
     ArrayList<Integrator> _integrators;
 
-    public Channel(int _idChannel, String channelName,
-                   String channelDescription, ArrayList<Integrator> _integrators) {
+    public Channel(int _idChannel, String channelName, String channelDescription,
+                   ArrayList<Integrator> _integrators) {
         this._idChannel = _idChannel;
         this._nameChannel = channelName;
         this._descriptionChannel = channelDescription;
@@ -47,5 +47,4 @@ public abstract class Channel {
     public void set_integrators(ArrayList<Integrator> _integrators) {
         this._integrators = _integrators;
     }
-
 }

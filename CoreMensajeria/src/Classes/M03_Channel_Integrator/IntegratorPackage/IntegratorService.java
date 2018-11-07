@@ -14,13 +14,10 @@ public class IntegratorService {
         if (_integratorDAO == null)
             _integratorDAO = new IntegratorService();
         return _integratorDAO;
-
     }
 
     public List<Integrator> listIntegrator() {
-
         Sql db = new Sql();
-
         List<Integrator> integrators = new ArrayList<>();
 
         try {
@@ -30,7 +27,7 @@ public class IntegratorService {
             getIntegratorsRs(integrators, rs);
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
-        }finally{
+        } finally {
             db.bdClose(db.getConn());
         }
         return integrators;
@@ -38,20 +35,22 @@ public class IntegratorService {
 
     public Integrator getConcreteIntegrator(int id) {
         Sql db = new Sql();
+
         try {
             ResultSet rs = db.sqlConn("SELECT int_id, int_name, int_messageCost, int_threadCapacity, int_tokenApi" +
                     " FROM integrator" +
                     " WHERE int_id = " + id);
-            while (rs.next()){
+            while (rs.next()) {
                 IntegratorFactory factory = new IntegratorFactory();
                 String integratorType = rs.getString("int_name");
-                Integrator i = factory.getIntegrator(integratorType, rs.getInt("int_id"), rs.getString("int_name"), rs.getFloat("int_messageCost"),
-                        rs.getInt("int_threadCapacity"), rs.getString("int_tokenApi"));
+                Integrator i = factory.getIntegrator(integratorType, rs.getInt("int_id"), rs.getString("int_name"),
+                               rs.getFloat("int_messageCost"), rs.getInt("int_threadCapacity"),
+                               rs.getString("int_tokenApi"));
                 return i;
             }
         } catch (SQLException e) {
             System.err.println(e.getStackTrace());
-        }finally{
+        } finally {
             db.bdClose(db.getConn());
         }
         return null;
@@ -61,10 +60,10 @@ public class IntegratorService {
         while (rs.next()) {
             IntegratorFactory factory = new IntegratorFactory();
             String integratorType = rs.getString("int_name");
-            Integrator i = factory.getIntegrator(integratorType, rs.getInt("int_id"), rs.getString("int_name"), rs.getFloat("int_messageCost"),
-                    rs.getInt("int_threadCapacity"), rs.getString("int_tokenApi"));
+            Integrator i = factory.getIntegrator(integratorType, rs.getInt("int_id"), rs.getString("int_name"),
+                           rs.getFloat("int_messageCost"), rs.getInt("int_threadCapacity"),
+                           rs.getString("int_tokenApi"));
             integrators.add(i);
         }
     }
-
 }

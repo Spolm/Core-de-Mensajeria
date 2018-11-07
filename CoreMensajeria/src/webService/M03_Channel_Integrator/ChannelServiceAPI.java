@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Path("/channel")
-
 public class ChannelServiceAPI {
 
     @GET
