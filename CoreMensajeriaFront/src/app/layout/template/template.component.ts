@@ -15,6 +15,8 @@ export class TemplateComponent implements OnInit {
 
   templates: any = [];
   status = false;
+  counter: number = 0;
+  lastTemplateId: number;
 
   constructor(private templateService: TemplateService, private toastr: ToastrService) {
     templateService.getTemplates().subscribe(data => {
@@ -26,13 +28,24 @@ export class TemplateComponent implements OnInit {
   }
 
   approveTemplate(templateId: number){
-    this.toastr.info("Para confirmar realice click de nuevo", "Aprobar la plantilla id: "+templateId,
+    this.toastr.info("Para confirmar realice doble click de nuevo", "Aprobar la plantilla id: "+templateId,
     {
-      timeOut: 5000,
+      timeOut: 2800,
       progressBar: true,
       positionClass: 'toast-top-left'
     });
-    //HTTP POST
+    this.counter++;
+    if(this.counter == 2 && this.lastTemplateId == templateId){
+      this.toastr.success("Aprobada", "Plantilla id: "+templateId,
+    {
+      timeOut: 2800,
+      progressBar: true,
+      positionClass: 'toast-top-left'
+    });
+      this.counter = 0;
+    }
+    if(this.counter >= 2) this.counter = 0;
+    this.lastTemplateId = templateId;
   }
 
 }
