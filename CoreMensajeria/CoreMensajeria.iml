@@ -39,5 +39,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="postgresql-42.2.5" level="project" />
+    <orderEntry type="library" name="org.glassfish.jersey.core:jersey-common:2.27" level="project" />
   </component>
 </module>
