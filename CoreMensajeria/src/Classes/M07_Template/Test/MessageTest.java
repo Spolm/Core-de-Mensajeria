@@ -29,14 +29,20 @@ class MessageTest {
     }
 
     @Test
-    void correctAttributes(){
-        String text;
-
+    void ObjectsNotNull(){
         assertNotNull(message);
         assertNotNull(parameters);
 
         for (int i = 0 ; i < 3 ; i++){
             assertNotNull(parameters.get(i));
+        }
+    }
+
+    @Test
+    void correctAttributes(){
+        String text;
+
+        for (int i = 0 ; i < 3 ; i++){
             assertEquals(parameters.get(i).getParameterId(), i + 1);
         }
 
