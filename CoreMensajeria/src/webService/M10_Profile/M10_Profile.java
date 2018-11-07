@@ -1,8 +1,8 @@
 package webService.M10_Profile;
 
-import Classes.User;
+import Classes.M01_Login.User;
 import com.google.gson.Gson;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -25,11 +25,10 @@ public class M10_Profile {
     @Path("/edit")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editProfile(@FormParam("id") String id, @FormParam("username") String username,
-                                @FormParam("email") String email, @FormParam("phone") String phone,
+    public Response editProfile(@FormParam("id") int id,@FormParam("email") String email, @FormParam("phone") String phone,
                                 @FormParam("country") String country, @FormParam("date_of_birth") String birthday,
                                 @FormParam("city") String city, @FormParam("address") String address) {
-        String success = M10_ProfileService.getInstance().editProfile( id, username, email, phone, country, birthday, city,
+        String success = M10_ProfileService.getInstance().editProfile(id, email, phone, country, birthday, city,
                 address );
         return Response.ok("{'message':'"+success+"', }").build();
     }

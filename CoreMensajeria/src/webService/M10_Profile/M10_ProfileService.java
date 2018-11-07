@@ -1,7 +1,7 @@
 package webService.M10_Profile;
 
 import Classes.Sql;
-import Classes.User;
+import Classes.M01_Login.User;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.QueryParam;
@@ -59,7 +59,6 @@ public class M10_ProfileService {
     /**
      *
      * @param id id del usuario a editar
-     * @param username nombre del usuario
      * @param email email del usuario
      * @param phone telefono del usuario
      * @param country   pais del usuario
@@ -69,12 +68,12 @@ public class M10_ProfileService {
      * @return  String con mensaje de exito
      * @throws SQLException
      */
-    public String editProfile( String id, String username, String email, String phone, String country, String birthday,
+    public String editProfile( int id, String email, String phone, String country, String birthday,
                             String city, String address ) {
 
         //Query a realizar
         String query = "UPDATE public.User SET " +
-                "use_username='"+username+"' , use_phone='"+phone+"', use_country='"+country+"', use_date_of_birth='"+birthday+"'"+
+                "use_phone='"+phone+"', use_country='"+country+"', use_date_of_birth='"+birthday+"'"+
                 ", use_city='"+city+"', use_address='"+address+"'"+
                 "WHERE use_id = "+id;
 
