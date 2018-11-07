@@ -1,5 +1,5 @@
-package Modulo_3.ChannelPackage;
-import Modulo_3.IntegratorPackage.Integrator;
+package Classes.M03_Channel_Integrator.ChannelPackage;
+import Classes.M03_Channel_Integrator.IntegratorPackage.Integrator;
 import java.util.ArrayList;
 
 public abstract class Channel {

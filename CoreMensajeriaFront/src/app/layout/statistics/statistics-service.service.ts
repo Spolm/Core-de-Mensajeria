@@ -9,7 +9,7 @@ export class StatisticsServiceService {
 
   constructor(private http: HttpClient) { }
 
-getStatisticsData1(){
+getStatisticsData(){
 
 return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/MessageCompanyBar')
 }
@@ -19,10 +19,6 @@ getStatisticsData2(){
  return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/MessageCompanyLine') 
 }
 
-getStatisticsData3(){
 
   return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/MessageCompanyPie') 
-}
-
-
 }

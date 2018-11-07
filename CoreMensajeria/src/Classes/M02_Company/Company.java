@@ -51,12 +51,12 @@ public class Company {
 
     }
 
-    /*public Company(int id, String name, String desc, boolean status) {
+    public Company(int id, String name, String desc, boolean status) {
 
         _idCompany = id;
         _name = name;
         _desc = desc;
         _status = status;
 
-    }*/
+    }
 }

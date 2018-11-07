@@ -1,5 +1,5 @@
-import Modulo_3.ChannelPackage.ChannelServiceAPI;
-import Modulo_3.IntegratorPackage.IntegratorServiceAPI;
+import webService.M03_Channel_Integrator.ChannelServiceAPI;
+import webService.M03_Channel_Integrator.IntegratorServiceAPI;
 import webService.M01_Login.M01_Login;
 import webService.HelloWorld;
 import webService.M01_Login.M01_User;
@@ -11,7 +11,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
-//agregar mi clase donde estan los metodos a implementar
+
 //Defines the base URI for all resource URIs.
 @ApplicationPath("/")
 //The java class declares root resource and provider classes
@@ -30,5 +30,4 @@ public class CoreMensajeria extends Application{
         h.add( M09_Statistics.class );
         return h;
     }
-
 }
