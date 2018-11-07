@@ -1,4 +1,4 @@
-package Classes;
+package Classes.M09_Statistics;
 
 import java.sql.*;
 

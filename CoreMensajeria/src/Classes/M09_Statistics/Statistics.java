@@ -1,12 +1,12 @@
-package Modulo_9;
+package Classes.M09_Statistics;
 
 import java.util.ArrayList;
 
 public class Statistics {
 
-   public   ArrayList x;
-   public   ArrayList<Integer> y;
-   public   String type;
+    public   ArrayList x;
+    public   ArrayList<Integer> y;
+    public   String type;
 
     public Statistics(ArrayList x, ArrayList<Integer> y, String type) {
         this.x = x;

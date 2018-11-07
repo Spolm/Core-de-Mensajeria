@@ -1,4 +1,4 @@
-package Modulo_9;
+package Classes.M09_Statistics;
 
 import java.util.ArrayList;
 

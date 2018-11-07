@@ -3,22 +3,23 @@ package webService.M09_StatisticsManagement;
 import Classes.Campaign;
 import Classes.Company;
 import Classes.Sql;
-import Classes.SqlEstrella;
-import Modulo_9.PieChart;
-import Modulo_9.Statistics;
+import Classes.M09_Statistics.SqlEstrella;
 import com.google.gson.Gson;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
-import java.io.Console;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import Classes.M09_Statistics.PieChart;
+import Classes.M09_Statistics.Statistics;
+
+
+
 
 @Path("/M09_Statistics")
 public class M09_Statistics extends Application {
