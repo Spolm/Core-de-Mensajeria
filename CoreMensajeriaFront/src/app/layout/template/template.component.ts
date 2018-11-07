@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { TemplateService } from './template.service';
+import { ToastrService } from 'ngx-toastr';
+import { timeout } from 'q';
 
 @Component({
   selector: 'app-template',
@@ -14,7 +16,7 @@ export class TemplateComponent implements OnInit {
   templates: any = [];
   status = false;
 
-  constructor(private templateService: TemplateService) {
+  constructor(private templateService: TemplateService, private toastr: ToastrService) {
     templateService.getTemplates().subscribe(data => {
       this.templates = data;
     });
@@ -24,7 +26,13 @@ export class TemplateComponent implements OnInit {
   }
 
   approveTemplate(templateId: number){
-    console.log(templateId);
+    this.toastr.info("Para confirmar realice click de nuevo", "Aprobar la plantilla id: "+templateId,
+    {
+      timeOut: 5000,
+      progressBar: true,
+      positionClass: 'toast-top-left'
+    });
+    //HTTP POST
   }
 
 }
