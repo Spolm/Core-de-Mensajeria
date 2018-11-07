@@ -21,19 +21,19 @@ export class ApiService {
     return body || { };
   }
 
-  public GetAllIntegrators(): Observable<any>{
+  public getAllIntegrators(): Observable<any>{
      
     return this.http.get( apiRestUrl + 'integrators' ).
       pipe( map( this.extractData ) );
   
   }
 
-  public GetSMSIntegrators(): Observable<any>{
+  public getSMSIntegrators(): Observable<any>{
     return this.http.get( apiRestUrl + 'channel/i/1' ).
       pipe( map( this.extractData ) );
   }
 
-  public GetMailIntegrators(): Observable<any>{
+  public getMailIntegrators(): Observable<any>{
     return this.http.get( apiRestUrl + 'channel/i/2' ).
       pipe( map( this.extractData ) );
   }

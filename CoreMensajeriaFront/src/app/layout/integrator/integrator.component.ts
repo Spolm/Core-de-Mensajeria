@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './api.service';
+
 import { ToastrService } from 'ngx-toastr';
-import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-integrator',
@@ -15,7 +15,7 @@ export class IntegratorComponent implements OnInit {
 
   constructor(public rest: ApiService, private toastr: ToastrService) {
 
-    this.GetAllIntegrators();
+    this.getAllIntegrators();
 
    }
 
@@ -23,9 +23,9 @@ export class IntegratorComponent implements OnInit {
     
   }
 
-  GetAllIntegrators() {
+  getAllIntegrators() {
     this.integrators = [];
-    this.rest.GetAllIntegrators().
+    this.rest.getAllIntegrators().
     subscribe((data: {}) => {
       this.integrators = data;
       this.toastr.remove(this.toastr.currentlyActive);
@@ -35,9 +35,9 @@ export class IntegratorComponent implements OnInit {
     })
   }
 
-  GetSMSIntegrators(){
+  getSMSIntegrators(){
     this.integrators = [];
-    this.rest.GetSMSIntegrators().
+    this.rest.getSMSIntegrators().
     subscribe((data: {}) => {
       this.integrators = data;
       this.toastr.remove(this.toastr.currentlyActive);
@@ -47,9 +47,9 @@ export class IntegratorComponent implements OnInit {
     })
   }
 
-  GetMailIntegrators(){
+  getMailIntegrators(){
     this.integrators = [];
-    this.rest.GetMailIntegrators().
+    this.rest.getMailIntegrators().
     subscribe((data: {}) => {
       this.integrators = data;
       this.toastr.remove(this.toastr.currentlyActive);

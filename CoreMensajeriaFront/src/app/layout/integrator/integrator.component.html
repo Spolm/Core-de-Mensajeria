@@ -4,10 +4,15 @@
 
   <div class="row menu-filter">
     <div class="col-sm-12">
+        
+      <button type="button" class="btn btn-primary" 
+        (click)="getAllIntegrators()">Todos los Integradores</button>
+        
         <button type="button" class="btn btn-primary" 
-        (click)="GetAllIntegrators()">Todos los Integradores</button>
-        <button type="button" class="btn btn-primary" (click)="GetMailIntegrators()">Por Email</button>
-        <button type="button" class="btn btn-primary" (click)="GetSMSIntegrators()">Por SMS</button>
+          (click)="getMailIntegrators()">Por Email</button>
+        
+        <button type="button" class="btn btn-primary" 
+          (click)="getSMSIntegrators()">Por SMS</button>
     </div>
   </div>
   
