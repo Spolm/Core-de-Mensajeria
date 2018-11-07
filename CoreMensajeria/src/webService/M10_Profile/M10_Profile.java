@@ -2,7 +2,7 @@ package webService.M10_Profile;
 
 import Classes.M01_Login.User;
 import com.google.gson.Gson;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
