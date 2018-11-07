@@ -1,6 +1,8 @@
 package webService.M07_Template;
 
+import Classes.M07_Template.HandlerPackage.MessageHandler;
 import Classes.M07_Template.HandlerPackage.TemplateHandler;
+import Classes.M07_Template.MessagePackage.Message;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 import com.google.gson.Gson;
@@ -32,11 +34,13 @@ public class M07_Template {
         return Response.ok(gson.toJson(template)).build();
     }
 
-    //@GET
+    @GET
     @Path("/messages")
-    public M07_Message getMessages(){
-
-        return new M07_Message();
+    public Response  getMessages(){
+        MessageHandler messageHandler = new MessageHandler();
+        ArrayList<Message> messageArrayList = messageHandler.getMessages();
+        return Response.ok(gson.toJson(messageArrayList)).build();
+        //return new M07_Message();
     }
 
     @POST

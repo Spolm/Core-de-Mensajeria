@@ -3,13 +3,13 @@ package Classes.M07_Template.MessagePackage;
 import java.util.*;
 
 public class Parameter {
+    private int parameterId;
     private String name;
     private String description;
 
-    public Parameter() {
-    }
+    public Parameter() {}
 
-    public Parameter(String name) {
+    public Parameter (String name){
         this.name = name;
     }
 
@@ -18,13 +18,23 @@ public class Parameter {
         this.description = description;
     }
 
-    public String getName() {
-        return name;
+    public Parameter(int parameterId, String name, String description) {
+        this.parameterId = parameterId;
+        this.name = name;
+        this.description = description;
     }
 
-    public String getDescription() {
-        return description;
-    }
+    public int getParameterId() { return parameterId; }
+
+    public void setParameterId(int parameterId) { this.parameterId = parameterId; }
+
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
 
     @Override
     public boolean equals(Object o) {
@@ -39,5 +49,6 @@ public class Parameter {
     public int hashCode() {
         return Objects.hash(getName(), getDescription());
     }
+
 }
 
