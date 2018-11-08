@@ -25,14 +25,17 @@ export class TemplateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.templateService.getTemplates().subscribe(data => {
+      this.templates = data;
+    });
+    console.log("Cargue de nuevo");
   }
 
   approveTemplate(templateId: number){
     this.toastr.info("Para confirmar realice doble click de nuevo", "Aprobar la plantilla id: "+templateId,
     {
       timeOut: 2800,
-      progressBar: true,
-      positionClass: 'toast-top-left'
+      progressBar: true
     });
     this.counter++;
     if(this.counter == 2 && this.lastTemplateId == templateId){
@@ -40,10 +43,10 @@ export class TemplateComponent implements OnInit {
       this.toastr.success("Aprobada", "Plantilla id: "+templateId,
       {
         timeOut: 2800,
-        progressBar: true,
-        positionClass: 'toast-top-right'
+        progressBar: true
       });
       this.counter = 0;
+      this.ngOnInit();
     }
     if(this.counter >= 2) this.counter = 0;
     this.lastTemplateId = templateId;

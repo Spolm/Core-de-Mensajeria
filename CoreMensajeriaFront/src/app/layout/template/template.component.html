@@ -15,19 +15,19 @@
     </thead>
     <tbody>
       <tr scope="row" *ngFor="let template of templates; let i = index">
-        <td *ngIf="template.userId > 1; else elseBlock">
-          {{template.messageId}} <br> 
+        <td *ngIf="template.templateId < 2; else elseBlock">
+          {{template.templateId}} <br> 
           <span class="badge badge-success">Aprobado</span>
         </td>
         <ng-template #elseBlock>
-          {{template.messageId}} <br> 
-          <span class="badge badge-danger" (click)="approveTemplate(template.messageId)">
+          {{template.templateId}} <br> &nbsp;
+          <span class="badge badge-danger" (click)="approveTemplate(template.templateId)">
             No Aprobado
           </span>
         </ng-template>
-        <td class="message">{{template.message}}</td>
+        <td class="message">{{template.message.message}}</td>
         <td class="parameters">
-          <li *ngFor="let parameter of template.parameterArrayList">
+          <li *ngFor="let parameter of template.message.parameterArrayList">
             {{parameter.name}}
           </li>
         </td>
