@@ -2,6 +2,7 @@ package Classes.M07_Template.HandlerPackage;
 
 import Classes.M07_Template.MessagePackage.Message;
 import Classes.M07_Template.MessagePackage.Parameter;
+import Classes.M07_Template.Template;
 import Classes.Sql;
 
 import java.sql.ResultSet;
@@ -16,21 +17,23 @@ public class MessageHandler {
     }
 
     /*
-     * Algo ineficiente, refactorisable
+     *
+      Algo ineficiente, refactorisable
      */
-    public ArrayList<Message> getMessages(){
-        ArrayList<Message> messagesArrayList = new ArrayList<>();
+    public ArrayList<Template> getMessages(ArrayList<Template> templateArrayList){
         try {
-            ResultSet resultSet = sql.sqlConn("SELECT * FROM PUBLIC.MESSAGE");
-            while(resultSet.next()){
+            for(int x = 0; x < templateArrayList.size(); x++){
+                ResultSet resultSet = sql.sqlConn("SELECT * FROM PUBLIC.MESSAGE WHERE MES_TEMPLATE = " +
+                        templateArrayList.get(x).getTemplateId());
+                resultSet.next();
                 Message message = new Message();
                 message.setMessageId(resultSet.getInt("mes_id"));
                 message.setMessage(resultSet.getString("mes_text"));
                 ResultSet resultSetAux = sql.sqlConn(
                         "SELECT PAR_ID,PAR_NAME FROM PARAMETER P " +
-                        "INNER JOIN MESSAGE_PARAMETER MP " +
-                        "ON P.PAR_ID = MP.MP_PARAMETER " +
-                        "WHERE MP.MP_MESSAGE = " + message.getMessageId());
+                                "INNER JOIN MESSAGE_PARAMETER MP " +
+                                "ON P.PAR_ID = MP.MP_PARAMETER " +
+                                "WHERE MP.MP_MESSAGE = " + message.getMessageId());
                 ArrayList<Parameter> parameterArrayList = new ArrayList<>();
                 while(resultSetAux.next()) {
                     Parameter parameter = new Parameter();
@@ -39,14 +42,14 @@ public class MessageHandler {
                     parameterArrayList.add(parameter);
                 }
                 message.setParameters(parameterArrayList);
-                messagesArrayList.add(message);
+                templateArrayList.get(x).setMessage(message);
             }
         }catch (SQLException e) {
             e.printStackTrace();
         }catch(Exception e){
             e.printStackTrace();
         }finally {
-            return messagesArrayList;
+            return templateArrayList;
         }
     }
 
