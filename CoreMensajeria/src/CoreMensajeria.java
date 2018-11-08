@@ -1,5 +1,5 @@
-import webService.M03_Channel_Integrator.ChannelServiceAPI;
-import webService.M03_Channel_Integrator.IntegratorServiceAPI;
+import webService.M04_Channel_Integrator.M05_Channel;
+import webService.M04_Channel_Integrator.M04_Integrator;
 import webService.M01_Login.M01_Login;
 import webService.HelloWorld;
 import webService.M01_Login.M01_User;
@@ -26,8 +26,8 @@ public class CoreMensajeria extends Application{
         h.add( M01_User.class );
         h.add(M02_Companies.class);
         h.add( M06_Application.class );
-        h.add(IntegratorServiceAPI.class);
-        h.add(ChannelServiceAPI.class);
+        h.add(M04_Integrator.class);
+        h.add(M05_Channel.class);
         h.add(M09_Statistics.class );
         h.add(M10_ProfileService.class);
         return h;
