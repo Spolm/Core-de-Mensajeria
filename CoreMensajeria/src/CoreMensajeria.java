@@ -5,7 +5,6 @@ import webService.HelloWorld;
 import webService.M01_Login.M01_User;
 import webService.M02_CompanyManagement.M02_Companies;
 import webService.M06_DataOrigin.M06_Application;
-<<<<<<< HEAD
 import webService.M07_Template.M07_Template;
 
 import webService.M09_StatisticsManagement.M09_Statistics;
