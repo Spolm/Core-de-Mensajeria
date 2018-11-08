@@ -14,13 +14,14 @@ import java.util.ArrayList;
 
 public class MessageHandlerTest {
     MessageHandler messageHandler;
-    ArrayList<Template> templateArrayList = new ArrayList<Template>();
+    ArrayList<Template> templateArrayList;
 
    @BeforeEach
     void init(){
         messageHandler = new MessageHandler();
 
         Template template;
+        templateArrayList = new ArrayList<Template>();
 
         for (byte i = 1 ; i < 6; i++){
             template = new Template(i);
@@ -76,11 +77,11 @@ public class MessageHandlerTest {
                 , "Parametro");
         assertEquals(messageHandler.getMessages(templateArrayList).get(1).getMessage().getParameterArrayList().get(0).getName()
                 , "Numero tarjeta");
-        assertEquals(messageHandler.getMessages(templateArrayList).get(1).getMessage().getParameterArrayList().get(0).getName()
+        assertEquals(messageHandler.getMessages(templateArrayList).get(1).getMessage().getParameterArrayList().get(1).getName()
                 , "Monto");
-        assertEquals(messageHandler.getMessages(templateArrayList).get(1).getMessage().getParameterArrayList().get(0).getName()
+        assertEquals(messageHandler.getMessages(templateArrayList).get(1).getMessage().getParameterArrayList().get(2).getName()
                 , "Fecha");
-        assertEquals(messageHandler.getMessages(templateArrayList).get(1).getMessage().getParameterArrayList().get(0).getName()
+        assertEquals(messageHandler.getMessages(templateArrayList).get(1).getMessage().getParameterArrayList().get(3).getName()
                 , "REF");
         assertEquals(messageHandler.getMessages(templateArrayList).get(2).getMessage().getParameterArrayList().get(0).getName()
                 , "Evento");
@@ -92,15 +93,15 @@ public class MessageHandlerTest {
                 , "Lugar");
         assertEquals(messageHandler.getMessages(templateArrayList).get(3).getMessage().getParameterArrayList().get(0).getName()
                 , "Cancion");
-        assertEquals(messageHandler.getMessages(templateArrayList).get(3).getMessage().getParameterArrayList().get(0).getName()
+        assertEquals(messageHandler.getMessages(templateArrayList).get(3).getMessage().getParameterArrayList().get(1).getName()
                 , "Codigo");
-        assertEquals(messageHandler.getMessages(templateArrayList).get(3).getMessage().getParameterArrayList().get(0).getName()
+        assertEquals(messageHandler.getMessages(templateArrayList).get(3).getMessage().getParameterArrayList().get(2).getName()
                 , "Renta");
-        assertEquals(messageHandler.getMessages(templateArrayList).get(3).getMessage().getParameterArrayList().get(0).getName()
+        assertEquals(messageHandler.getMessages(templateArrayList).get(3).getMessage().getParameterArrayList().get(3).getName()
                 , "Monto");
         assertEquals(messageHandler.getMessages(templateArrayList).get(4).getMessage().getParameterArrayList().get(0).getName()
                 , "Fecha inicial");
-        assertEquals(messageHandler.getMessages(templateArrayList).get(4).getMessage().getParameterArrayList().get(0).getName()
+        assertEquals(messageHandler.getMessages(templateArrayList).get(4).getMessage().getParameterArrayList().get(1).getName()
                 , "Fecha fin");
     }
 }
