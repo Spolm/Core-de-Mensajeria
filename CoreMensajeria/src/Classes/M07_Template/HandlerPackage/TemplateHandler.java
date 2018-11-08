@@ -68,7 +68,7 @@ public class TemplateHandler {
     public Boolean postTemplateStatus(int id){
         Boolean flag=false;
         Connection con = Sql.getConInstance();
-        String query="insert into public.template_status (ts_date,ts_template,ts_status) values (CURRENT_TIMESTAMP,"+id+",(select sta_id from public.status where sta_name='aprobado'))";
+        String query="insert into public.template_status (ts_date,ts_template,ts_status) values (CURRENT_TIMESTAMP,"+id+",(select sta_id from public.status where sta_name='Aprobado'))";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.executeUpdate();
