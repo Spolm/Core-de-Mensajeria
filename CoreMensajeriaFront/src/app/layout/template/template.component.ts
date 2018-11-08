@@ -36,12 +36,13 @@ export class TemplateComponent implements OnInit {
     });
     this.counter++;
     if(this.counter == 2 && this.lastTemplateId == templateId){
+      this.templateService.approveTemplate(templateId);
       this.toastr.success("Aprobada", "Plantilla id: "+templateId,
-    {
-      timeOut: 2800,
-      progressBar: true,
-      positionClass: 'toast-top-left'
-    });
+      {
+        timeOut: 2800,
+        progressBar: true,
+        positionClass: 'toast-top-right'
+      });
       this.counter = 0;
     }
     if(this.counter >= 2) this.counter = 0;

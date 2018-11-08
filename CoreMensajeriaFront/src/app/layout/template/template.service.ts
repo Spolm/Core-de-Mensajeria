@@ -29,4 +29,8 @@ export class TemplateService {
       map(this.extractData));
   }
 
+  approveTemplate(templateId: Number){
+    return this.http.post(endpoint+'templates/update/'+templateId, templateId).subscribe();
+  }
+  
 }
