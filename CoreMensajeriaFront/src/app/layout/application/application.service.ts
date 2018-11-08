@@ -24,7 +24,7 @@ export class ApplicationService {
   }
 
   getApps(): Observable<any> {
-    return this.http.get(endpoint + 'application').pipe(
+    return this.http.get(endpoint + 'applications').pipe(
       map(this.extractData));
   }
 

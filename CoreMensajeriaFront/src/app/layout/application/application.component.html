@@ -1,4 +1,4 @@
-<h2 class="text-center text-capitalize main-title">
+﻿<h2 class="text-center text-capitalize main-title">
   Origen de datos
 </h2>
 <div class="card">
@@ -13,7 +13,12 @@
     </thead>
     <tbody>
       <tr *ngFor="let app of applications">
-        <td class="col-2">{{app._nameApplication}} <span class="badge badge-danger">Inactivo</span></td>
+   	
+	<td class="col-2">{{app._nameApplication}} 
+<span *ngIf="app._statusApplication" class="badge badge-success">Activo</span>
+	  
+		<span *ngIf="!app._statusApplication" class="badge badge-danger">Inactivo</span>
+</td>
         <td class="col-4 text-justify">{{app._descriptionApplication}}</td>
         <td class="col-4 text-center">{{app._tokenApplication}}</td>
         <td class="col text-center">

@@ -1,6 +1,6 @@
 package webService.M06_DataOrigin;
 
-import Classes.Modulo_6.Application;
+import Classes.M06_DataOrigin.Application;
 import Classes.Sql;
 import com.google.gson.Gson;
 
