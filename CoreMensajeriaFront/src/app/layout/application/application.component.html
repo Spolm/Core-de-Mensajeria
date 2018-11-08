@@ -1,27 +1,27 @@
-<h2 class="text-center text-capitalize main-title">
+﻿<h2 class="text-center text-capitalize main-title">
   Origen de datos
 </h2>
 <div class="card">
   <table class="table">
     <thead>
       <tr>
-        <th class="col-4">Nombre</th>
+        <th class="col-2">Nombre</th>
+        <th class="col-4 text-center">Descripción</th>
         <th class="col-4 text-center">Token</th>
-        <th class="col text-center">Operaciones</th>
+        <th class="col text-center">Operación</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="col-4">Mercantil en Linea <span class="badge badge-danger">Inactivo</span></td>
-        <td class="col-4 text-center">1045.......................................................4865</td>
-        <td class="col-4 text-center">
-          <i class="fa fa-play"></i>
-        </td>
-      </tr>
-      <tr>
-        <td class="col-4">Banesco online <span class="badge badge-success">Activo</span> </td>
-        <td class="col-4 text-center">1789.......................................................1685</td>
-        <td class="col-4 text-center">
+      <tr *ngFor="let app of applications">
+   	
+	<td class="col-2">{{app._nameApplication}} 
+<span *ngIf="app._statusApplication" class="badge badge-success">Activo</span>
+	  
+		<span *ngIf="!app._statusApplication" class="badge badge-danger">Inactivo</span>
+</td>
+        <td class="col-4 text-justify">{{app._descriptionApplication}}</td>
+        <td class="col-4 text-center">{{app._tokenApplication}}</td>
+        <td class="col text-center">
           <i class="fa fa-play"></i>
         </td>
       </tr>
