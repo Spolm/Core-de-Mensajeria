@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.Objects;
 
 public class User {
-
     private int _idUser;
     private String _passwordUser;
     private String _usernameUser;
@@ -17,7 +16,10 @@ public class User {
     private String _genderUser;
     private String _cityUser;
 
-    public User(int _idUser,String _passwordUser, String _usernameUser, int _typeUser, String _emailUser, String _phoneUser, Date _dayOfBirthUser, String _countryUser, String _addressUser, String _genreUser, String _cityUser) {
+    public User(int _idUser,String _passwordUser, String _usernameUser,
+                int _typeUser, String _emailUser, String _phoneUser,
+                Date _dayOfBirthUser, String _countryUser, String _addressUser,
+                String _genreUser, String _cityUser) {
         this._idUser = _idUser;
         this._passwordUser = _passwordUser;
         this._usernameUser = _usernameUser;
@@ -34,11 +36,10 @@ public class User {
     public User() {
     }
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
         User user = (User) o;
         return _idUser == user._idUser &&
                 _typeUser == user._typeUser &&
@@ -55,7 +56,9 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(_idUser, _passwordUser, _usernameUser, _typeUser, _emailUser, _phoneUser, _dateOfBirthUser, _countryUser, _addressUser, _genderUser, _cityUser);
+        return Objects.hash(_idUser, _passwordUser, _usernameUser, _typeUser,
+                _emailUser, _phoneUser, _dateOfBirthUser, _countryUser,
+                _addressUser, _genderUser, _cityUser);
     }
 
     public int get_idUser() {
