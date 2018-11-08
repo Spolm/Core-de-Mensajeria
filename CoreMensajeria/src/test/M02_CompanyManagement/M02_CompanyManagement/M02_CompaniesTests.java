@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import java.sql.*;
 import Classes.Sql;
 
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.junit.jupiter.api.AfterEach;
@@ -15,11 +14,10 @@ import webService.M02_CompanyManagement.M02_Companies;
 import javax.ws.rs.core.Response;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class M02_CompaniesTests {
 
-    Gson gson = new GsonBuilder().setLenient().create();;
+    Gson gson = new Gson();
     /*public M02_CompaniesTest() {
 
     }*/
@@ -35,15 +33,20 @@ public class M02_CompaniesTests {
 
     }
 
-    @Test
+
+  /*@Test
     public void testGetCompanies() throws Exception {
         System.out.println("getCompanies");
         M02_Companies instance = new M02_Companies();
-        Response result;
-        result = instance.getCompanies(99);
-        assertNotNull(result);
+        Response result = instance.getCompanies(99);
+        JsonParser parser = new JsonParser();
+        JsonObject json = parser.parse(result.toString()).getAsJsonObject();
+        assertEquals(99, (json.get("com_id").getAsInt()));
+        assertEquals("Prueba", (json.get("com_name").getAsString()));
+        assertEquals("prueba prueba", (json.get("com_description").getAsString()));
+        assertEquals( true, (json.get("com_status").getAsBoolean()));
     }
-
+*/
     @AfterEach
     public void tearDownClass() throws SQLException {
         Connection conn;
