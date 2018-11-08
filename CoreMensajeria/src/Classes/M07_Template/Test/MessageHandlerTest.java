@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class MessageHandlerTest {
     MessageHandler messageHandler;
 
-    @BeforeEach
+   @BeforeEach
     void init(){
         messageHandler = new MessageHandler();
         objectsNotNull();

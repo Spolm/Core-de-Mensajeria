@@ -11,6 +11,7 @@ public class Template {
     private String creationDate;
     private int templateId;
     private IStatus status;
+    private int statusId;
 
     public Template() {}
 
@@ -61,6 +62,14 @@ public class Template {
     @Override
     public int hashCode() {
         return Objects.hash(message, getCreationDate(), getTemplateId(), status);
+    }
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 }
 
