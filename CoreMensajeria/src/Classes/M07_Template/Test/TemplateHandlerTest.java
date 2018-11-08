@@ -28,26 +28,17 @@ public class TemplateHandlerTest {
             assertEquals(templateHandler.getTemplates().get(i).getTemplateId(), i+1);
         }
 
-        statusTemplateCorrectly();
+        //statusTemplateCorrectly();
     }
 
     @Test
     void getTemplateCorrectly(){
 
-        for (int i=1 ; i < 6 ; i++){
-            assertEquals(templateHandler.getTemplate(i).getTemplateId(), i);
+        for (int i=0 ; i < 5 ; i++){
+            assertEquals(templateHandler.getTemplate(i).getTemplateId(), i+1);
         }
 
-        statusTemplateCorrectly();
-    }
-
-    @Test
-    void postTemplateStatusCorrectly(){
-        assertFalse(templateHandler.postTemplateStatus(1));
-        assertTrue(templateHandler.postTemplateStatus(2));
-        assertFalse(templateHandler.postTemplateStatus(3));
-        assertTrue(templateHandler.postTemplateStatus(4));
-        assertTrue(templateHandler.postTemplateStatus(5));
+        //statusTemplateCorrectly();
     }
 
     @AfterEach
