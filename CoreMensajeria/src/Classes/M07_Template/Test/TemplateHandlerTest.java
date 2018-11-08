@@ -70,10 +70,10 @@ public class TemplateHandlerTest {
     }
 
     void statusTemplateCorrectly(){
-        assertEquals(templateHandler.getTemplates().get(1).getStatus(), "Aprobado");
+        assertEquals(templateHandler.getTemplates().get(0).getStatus(), "Aprobado");
         assertEquals(templateHandler.getTemplates().get(1).getStatus(), "No aprobado");
-        assertEquals(templateHandler.getTemplates().get(1).getStatus(), "Aprobado");
-        assertEquals(templateHandler.getTemplates().get(1).getStatus(), "No aprobado");
-        assertEquals(templateHandler.getTemplates().get(1).getStatus(), "No aprobado");
+        assertEquals(templateHandler.getTemplates().get(2).getStatus(), "Aprobado");
+        assertEquals(templateHandler.getTemplates().get(3).getStatus(), "No aprobado");
+        assertEquals(templateHandler.getTemplates().get(4).getStatus(), "No aprobado");
     }
 }
