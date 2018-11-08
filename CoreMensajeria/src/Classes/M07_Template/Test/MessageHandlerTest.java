@@ -41,7 +41,7 @@ public class MessageHandlerTest {
         }
 
         sizeParameterArrayListCorrectly();
-        nameParameterArrayListCorrectly();
+       //nameParameterArrayListCorrectly();
     }
 
     @AfterEach
