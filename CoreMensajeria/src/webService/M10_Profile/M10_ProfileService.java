@@ -8,22 +8,37 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Path("/profile")
 public class M10_ProfileService {
-    Gson gson= new Gson();
+    Gson _gson= new Gson();
+    ArrayList<User> _us;
 
     @Path("/user/{username}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listIntegrator(@PathParam( "username" ) String name) { //Hay que cambiarle el nombre a esto
-        ArrayList<User> us = M10_Profile.getInstance().searchUser(name);
-        return Response.ok(gson.toJson(us)).build();
+        try {
+
+            _us = M10_Profile.getInstance().searchUser(name);
+        }
+        catch(NullPointerException e)
+        {
+            _us = null;
+            String mess="error al cargar el usuario";
+        }
+        catch (Exception e)
+        {
+            _us = null;
+
+        }
+        return Response.ok(_gson.toJson(_us)).build();
     }
 
     @Path("/edit")
-    @POST
+    @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Response editProfile(@FormParam("email") String email, @FormParam("phone") String phone,
                                 @FormParam("location") String address) throws URISyntaxException {

@@ -47,7 +47,7 @@ public class M10_Profile {
                 userList.add(user);
             }
         } catch (SQLException ex) {
-            System.err.println(ex.getStackTrace());
+            userList=null;
         }
         return userList;
     }

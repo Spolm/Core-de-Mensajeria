@@ -5,6 +5,7 @@ import Classes.M01_Login.UserDAO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -52,12 +53,19 @@ public class M10_ProfileTest {
 
     @Test
     public void loadCorrectProfile(){
+            _search = M10_Profile.getInstance().searchUser(_userProfile.get_usernameUser()).get(0);
+            assertEquals(_userProfile, _search);
+    }
+
+    @Test
+    public void loadCorrectProfileError(){
         try {
-            _search = M10_Profile.getInstance().searchUser("Ronnie").get(0);
+            _search = M10_Profile.getInstance().searchUser("Alonzo").get(0);
             assertEquals(_userProfile, _search);
         }
-        catch(IndexOutOfBoundsException e){
-            e.printStackTrace();
+        catch(IndexOutOfBoundsException e)
+        {
+            assertNull(_search);
         }
     }
 
