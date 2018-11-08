@@ -1,3 +1,5 @@
+\c CoreMensajeria CoreMensajeria
+
 create table public.User
 (
     use_id serial primary key,

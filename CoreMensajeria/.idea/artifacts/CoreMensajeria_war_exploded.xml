@@ -9,12 +9,18 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="com.google.code.gson:gson:2.8.5" />
           <element id="file-copy" path="$PROJECT_DIR$/.idea/libraries/postgresql-42.2.5.jar" />
+<<<<<<< HEAD
           <element id="library" level="application" name="com.google.code.gson:gson:2.3.11" />
           <element id="library" level="application" name="cd.connect.common:connect-prometheus-jersey:2.21" />
           <element id="library" level="module" name="JUnit5.2" module-name="CoreMensajeria" />
           <element id="library" level="application" name="cd.connect.common:connect-prometheus-jersey:2.2" />
           <element id="library" level="application" name="com.google.code.gson:gson:2.8.5" />
           <element id="library" level="application" name="org.postgresql:postgresql:42.2.5.jre7" />
+=======
+          <element id="library" level="project" name="postgresql-42.2.5" />
+          <element id="library" level="module" name="JUnit5.2" module-name="CoreMensajeria" />
+          <element id="library" level="project" name="org.glassfish.jersey.core:jersey-common:2.27" />
+>>>>>>> Develop
         </element>
       </element>
       <element id="javaee-facet-resources" facet="CoreMensajeria/web/Web" />
