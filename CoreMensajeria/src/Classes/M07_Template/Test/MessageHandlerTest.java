@@ -16,7 +16,7 @@ public class MessageHandlerTest {
     MessageHandler messageHandler;
     ArrayList<Template> templateArrayList = new ArrayList<Template>();
 
-    @BeforeEach
+   @BeforeEach
     void init(){
         messageHandler = new MessageHandler();
 

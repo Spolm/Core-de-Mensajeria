@@ -1,5 +1,8 @@
 package Classes.M07_Template.HandlerPackage;
 
+import Classes.M07_Template.StatusPackage.ApprovedStatus;
+import Classes.M07_Template.StatusPackage.IStatus;
+import Classes.M07_Template.StatusPackage.NotApprovedStatus;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 
@@ -25,6 +28,15 @@ public class TemplateHandler {
                 Template template = new Template();
                 template.setTemplateId(resultSet.getInt("tem_id"));
                 template.setCreationDate(resultSet.getString("tem_creation_date"));
+                int i = template.getTemplateId();
+                ResultSet resultSetAux = sql.sqlConn("SELECT * FROM TEMPLATE_STATUS WHERE TS_TEMPLATE = " +
+                        template.getTemplateId() +
+                        " ORDER BY TS_ID DESC LIMIT 1");
+                resultSetAux.next();
+                int statusId = resultSetAux.getInt("ts_status");
+                template.setStatusId(statusId);
+                /*resultSetAux = sql.sqlConn("SELECT * FROM STATUS WHERE STA_ID = " + statusId);
+                String statusName = resultSetAux.getString("sta_name");*/
                 templateArrayList.add(template);
             }
 
