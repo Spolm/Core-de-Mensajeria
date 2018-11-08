@@ -15,6 +15,10 @@ public class Template {
 
     public Template() {}
 
+    public Template(int templateId) {
+        this.templateId = templateId;
+    }
+
     public Template(Message message, IStatus status, String creationDate, int templateId) {
         this.message = message;
         this.status = status;
