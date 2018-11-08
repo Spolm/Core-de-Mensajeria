@@ -7,6 +7,7 @@ import webService.M02_CompanyManagement.M02_Companies;
 import webService.M06_DataOrigin.M06_Application;
 import webService.M09_StatisticsManagement.M09_Statistics;
 import webService.M10_Profile.M10_Profile;
+import webService.M10_Profile.M10_ProfileService;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -28,6 +29,8 @@ public class CoreMensajeria extends Application{
         h.add( M06_Application.class );
         h.add(M04_Integrator.class);
         h.add(M05_Channel.class);
+        h.add(M09_Statistics.class );
+        h.add(M10_ProfileService.class);
         return h;
     }
 }
