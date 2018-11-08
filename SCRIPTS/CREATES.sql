@@ -1,3 +1,5 @@
+\c CoreMensajeria CoreMensajeria
+
 create table public.User
 (
     use_id serial primary key,
@@ -83,3 +85,13 @@ REFERENCES channel (cha_id);
 ALTER TABLE channel_integrator
 ADD CONSTRAINT fk_integrator_id FOREIGN KEY (ci_integrator_id) 
 REFERENCES integrator (int_id);
+
+create table public.Message
+(
+    mes_id serial not null,
+    mes_date timestamp not null,
+    mes_cam_id integer not null, 
+    CONSTRAINT pk_message primary key (mes_id),
+    CONSTRAINT fk_campaign_message foreign key ("mes_cam_id")
+    REFERENCES public.Campaign (cam_id)
+);

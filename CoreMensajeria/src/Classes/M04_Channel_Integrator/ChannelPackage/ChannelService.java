@@ -8,16 +8,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 public class ChannelService {
-    private static ChannelService _channelDAO = null;
+    private static ChannelService channelDAO = null;
 
     public static ChannelService getInstance() {
-        if (_channelDAO == null)
-            _channelDAO = new ChannelService();
-        return _channelDAO;
+        if (channelDAO == null)
+            channelDAO = new ChannelService();
+        return channelDAO;
+
     }
 
     public ArrayList<Integrator> listIntegratorByChannel(int id) {
+
         Sql db = new Sql();
         ArrayList<Integrator> integrators = new ArrayList<>();
 
@@ -30,13 +33,12 @@ public class ChannelService {
             IntegratorService.getIntegratorsRs(integrators, rs);
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
-        } finally {
-            db.bdClose(db.getConn());
         }
         return integrators;
     }
 
-    public ArrayList<Channel> listChannel() {
+    public ArrayList<Channel> listChannel(){
+
         Sql db = new Sql();
         ArrayList<Channel> channels = new ArrayList<>();
 
@@ -45,14 +47,11 @@ public class ChannelService {
             while (rs.next()) {
                 ChannelFactory f = new ChannelFactory();
                 int id = rs.getInt("cha_id");
-                Channel c = f.getChannel(rs.getInt("cha_id"), rs.getString("cha_name"),
-                            rs.getString("cha_description"), listIntegratorByChannel(id));
+                Channel c = f.getChannel(rs.getInt("cha_id"),rs.getString("cha_name"),rs.getString("cha_description"), listIntegratorByChannel(id));
                 channels.add(c);
             }
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
-        } finally {
-            db.bdClose(db.getConn());
         }
         return channels;
     }

@@ -2,5 +2,22 @@
 
 <div class="container">
   
+  <div class="row">
+    <div class="col-sm-6"
+      *ngFor="let channel of channels; index as i">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title"><b>{{ channel }}</b></h2>
+          
+          <ul>
+              <li *ngFor="let integrator of integrators">
+                  {{ integrator }}
+              </li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
