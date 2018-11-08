@@ -1,0 +1,40 @@
+<h2 class="text-center text-capitalize main-title">
+  Plantillas
+</h2>
+<div class="card">
+  <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Mensaje</th>
+        <th scope="col">Parametros</th>
+        <th scope="col">Canal</th>
+        <th scope="col">Integrador</th>
+        <th scope="col">Origen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr scope="row" *ngFor="let template of templates; let i = index">
+        <td *ngIf="template.statusId == 1; else elseBlock">
+          {{template.templateId}} <br> 
+          <span class="badge badge-success">Aprobado</span>
+        </td>
+        <ng-template #elseBlock>
+          {{template.templateId}} <br> &nbsp;
+          <span class="badge badge-danger" (click)="approveTemplate(template.templateId)">
+            No Aprobado
+          </span>
+        </ng-template>
+        <td class="message">{{template.message.message}}</td>
+        <td class="parameters">
+          <li *ngFor="let parameter of template.message.parameterArrayList">
+            {{parameter.name}}
+          </li>
+        </td>
+        <td>Email</td>
+        <td>Movistar</td>
+        <td>Banesco online</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

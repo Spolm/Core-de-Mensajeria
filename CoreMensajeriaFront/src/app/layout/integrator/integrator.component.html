@@ -1,0 +1,38 @@
+<app-page-header [heading]="'Integradores'" [icon]="'fa fa-reply-all'"></app-page-header>
+
+<div class="container">
+
+  <div class="row menu-filter">
+    <div class="col-sm-12">
+
+        <button type="button" class="btn btn-primary" 
+        (click)="getAllIntegrators()">Todos los Integradores</button>
+        
+        <button type="button" class="btn btn-primary" 
+          (click)="getMailIntegrators()">Por Email</button>
+        
+        <button type="button" class="btn btn-primary" 
+          (click)="getSMSIntegrators()">Por SMS</button>
+        
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-4" style="margin: 15px 0px"
+      *ngFor="let integrator of integrators">
+      <div class="card">
+          <div class="card-body">
+            <h5 class="card-title text-center"><b>{{ integrator.nameIntegrator }}</b></h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Capacidad de Hilos: {{ integrator.threadCapacity }}</li>
+            <li class="list-group-item">Costo del Mensaje: {{ integrator.messageCost }}</li>
+            <li class="list-group-item">API: {{ integrator.apiIntegrator }}</li>
+            <li class="list-group-item">Id: <b>{{ integrator.idIntegrator }}</b></li>
+          </ul>
+          
+        </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,56 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Perfil de usuario'" [icon]="'fa-user'"></app-page-header>
+    <img src="https://cdn.icon-icons.com/icons2/317/PNG/512/user-male-icon_34332.png" alt="" class="profile-img">
+    <div class="row" *ngFor="let user of Users;">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4">
+                	<h3 class="mt-sm mb-xs"></h3>                                               
+                	<p><strong>E-mail: </strong><a href=""></a>{{user._emailUser}}</p>
+                	<p><strong>Usuario: {{user._usernameUser}}</strong></p>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="mt-sm mb-xs"></h3>              
+                    <p><strong>Fecha de nacimiento:{{user._dateOfBirthUser}}</strong></p>
+                    <p><strong>País: {{user._countryUser}}</strong></p> 
+                    <p><strong>Ciudad: {{user._cityUser}}</strong></p>
+                    
+                </div>
+                <div class="col-md-4">
+                    <h3 class="mt-sm mb-xs"></h3>      
+                    <p><strong>Dirección: {{user._addressUser}}</strong></p>        
+                    <p><strong>Teléfono Local: {{user._phoneUser}}</strong></p> 
+                	<p><strong>Sexo: {{user._genderUser}}</strong></p>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+    	<div class="col-md-12">
+    		<h3>Modificación de datos personales</h3>
+    		<form action="http://localhost:8080/CoreMensajeria_war/profile/edit" method="put">
+    			<div class="row">
+    			
+    				<div class="col-md-6">
+                        <div class="form-group">
+                        	<label for="location" class="control-label">Dirección</label>
+                        	<input type="text" name="location" class="form-control" placeholder="Introduce tu dirección domiciliaria">
+                        </div>
+	    			</div>
+	    			<div class="col-md-6">
+                        <div class="form-group">
+                        	<label for="email" class="control-label">E-mail</label>
+                        	<input type="text" name="email" class="form-control" placeholder="Introduce tu e-mail">
+                        </div>
+                        <div class="form-group">
+                        	<label for="phone" class="control-label">Télefono</label>
+                        	<input type="number" name="phone" class="form-control" placeholder="Introduce tu télefono">
+                        </div>
+                        <button type="button" class="btn btn-lg btn-success float-md-right">Modificar</button>
+	    			</div>
+    			</div>
+    		</form>
+    	</div>
+    </div>
+</div>
