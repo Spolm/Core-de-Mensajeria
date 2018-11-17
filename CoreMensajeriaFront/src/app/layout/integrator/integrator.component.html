@@ -2,8 +2,17 @@
 
 <div class="container">
 
-  <div class="row">
+  <div class="row menu-filter">
     <div class="col-sm-12">
+
+        <button type="button" class="btn btn-primary" 
+        (click)="getAllIntegrators()">Todos los Integradores</button>
+        
+        <button type="button" class="btn btn-primary" 
+          (click)="getMailIntegrators()">Por Email</button>
+        
+        <button type="button" class="btn btn-primary" 
+          (click)="getSMSIntegrators()">Por SMS</button>
         
     </div>
   </div>
@@ -21,11 +30,6 @@
             <li class="list-group-item">API: {{ integrator.apiIntegrator }}</li>
             <li class="list-group-item">Id: <b>{{ integrator.idIntegrator }}</b></li>
           </ul>
-          <div class="card-body">
-              <div class="btn-group">
-                  <button type="button" class="btn btn-danger">Inhabilitar</button>
-                </div>
-          </div>
           
         </div>
     </div>

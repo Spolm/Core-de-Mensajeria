@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class UserDAO {
 
+
     final String QUERY_SELECT_BY_USERNAME_OR_EMAIL = "SELECT * FROM public.user where use_username=? or use_email=?";
     final String QUERY_SELECT_BY_ID = "SELECT * FROM public.user where use_id=?";
     final String QUERY_DELETE = "DELETE FROM public.user where use_id=?";
@@ -22,63 +23,57 @@ public class UserDAO {
 
     private Connection _conn;
     private User _user;
+    private User _newUser;
     private ArrayList<User> _userList;
     private ResultSet _result;
     private ResultSet _generatedKeys;
+
+
 
     public UserDAO() {
         _conn = Sql.getConInstance();
     }
 
-    public User findByUsernameOrEmail (String username) throws SQLException {
-        _user = new User();
-
-        PreparedStatement preparedStatement = _conn.prepareStatement( QUERY_SELECT_BY_USERNAME_OR_EMAIL );
-        preparedStatement.setString( 1, username );
-        preparedStatement.setString( 2, username );
+    public User findByUsernameOrEmail(String username) throws SQLException {
+        PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_BY_USERNAME_OR_EMAIL);
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, username);
         _result = preparedStatement.executeQuery();
-
+        _user = new User();
         while (_result.next()) {
-            setUserParams( _result, _user );
+            setUserParams(_result, _user);
         }
-
         return _user;
     }
 
-    public User findByUsernameId (int id) throws SQLException {
-        _user = new User();
-
+    public User findByUsernameId(int id) throws SQLException {
         PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_BY_ID);
-        preparedStatement.setInt( 1, id );
+        preparedStatement.setInt(1, id);
         _result = preparedStatement.executeQuery();
-
+        _user = new User();
         while (_result.next()) {
-            setUserParams( _result, _user );
+            setUserParams(_result, _user);
         }
-
         return _user;
     }
 
     public ArrayList<User> findAll() throws SQLException {
         _user = new User();
         _userList = new ArrayList<>();
-
         Statement st = _conn.createStatement();
-        _result = st.executeQuery( QUERY_SELECT );
+
+        _result = st.executeQuery(QUERY_SELECT);
 
         while (_result.next()) {
             _user = new User();
-            setUserParams (_result, _user);
-            _userList.add (_user);
+            setUserParams(_result, _user);
+            _userList.add(_user);
         }
-
         return _userList;
     }
 
     public void saveUser(User user) throws SQLException {
-
         PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_INSERT, Statement.RETURN_GENERATED_KEYS);
-
         preparedStatement.setString(1,user.get_passwordUser());
         preparedStatement.setString(2,user.get_usernameUser());
         preparedStatement.setInt(3,user.get_typeUser());
@@ -90,10 +85,8 @@ public class UserDAO {
         preparedStatement.setDate(9,user.get_dateOfBirthUser());
         preparedStatement.setString(10, user.get_genderUser());
         preparedStatement.execute();
-
         _generatedKeys= preparedStatement.getGeneratedKeys();
-
-        if ( _generatedKeys.next() ) {
+        if (_generatedKeys.next()) {
             user.set_idUser(_generatedKeys.getInt(1));
         }
     };

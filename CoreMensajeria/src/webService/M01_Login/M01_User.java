@@ -11,14 +11,13 @@ import java.sql.SQLException;
 @Path("/users")
 public class M01_User {
 
-    private Gson _gson = new Gson();
-    private UserDAO _userDAO = new UserDAO();
+    Gson _gson = new Gson();
+    UserDAO _userDAO = new UserDAO();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response GetUsers(){
         Error error;
-
         try {
             return Response.ok(_gson.toJson(_userDAO.findAll())).build();
         } catch (SQLException e) {
@@ -42,7 +41,6 @@ public class M01_User {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postUser(User user){
         Error error;
-
         try {
             _userDAO.saveUser(user);
             return Response.ok(_gson.toJson(user)).build();
