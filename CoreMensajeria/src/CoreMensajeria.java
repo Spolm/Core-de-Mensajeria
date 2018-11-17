@@ -27,7 +27,7 @@ public class CoreMensajeria extends Application{
         h.add( M01_User.class );
         h.add(M02_Companies.class);
         h.add( M06_Application.class );
-
+        h.add( M07_Template.class );
         h.add(M04_Integrator.class);
         h.add(M05_Channel.class);
         h.add(M09_Statistics.class );
