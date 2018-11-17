@@ -122,7 +122,6 @@ out/
 
 CoreMensajeria/\.idea/google-java-format\.xml
 
-<<<<<<< HEAD
 CoreMensajeria/CoreMensajeria.iml
 *.iml
 
@@ -130,6 +129,5 @@ CoreMensajeria/CoreMensajeria.iml
 CoreMensajeria/CoreMensajeria\.iml
 
 *.iml
->>>>>>> 0f03005ed5ff59f4261436c85deb73cab6ce0a07
 
 *.xml
