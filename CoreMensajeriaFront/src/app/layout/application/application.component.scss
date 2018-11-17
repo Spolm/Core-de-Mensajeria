@@ -1,6 +1,17 @@
 .main-title{
     padding: 25px 0;
 }
+#add-btn{
+    margin-bottom: 10px;
+}
 .table{
     margin-bottom: 0;
+    td{
+        i.fa{
+            cursor: pointer;
+        }
+        .fa-trash{
+            color: #DC3545;
+        }
+    }
 }
