@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../router.animations';
-import { ApplicationService } from './application.service';
 import { ToastrService } from 'ngx-toastr';
-//import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { RestService } from '../../shared/services/rest.service';
 
 @Component({
   selector: 'app-application',
@@ -11,23 +10,51 @@ import { ToastrService } from 'ngx-toastr';
   animations: [routerTransition()]
 })
 export class ApplicationComponent implements OnInit {
-  applications: any;
 
-  constructor(public rest: ApplicationService, private toastr: ToastrService) {
-    
-   }
+  applications: any = [];
+  @Input() newApp = { _name : '', _description : '' };
+  displayModal = false;
+
+  constructor(public rest: RestService,  private toastr: ToastrService) { 
+  }
 
   ngOnInit() {
-    this.rest.getApps().subscribe((result) => {
-      console.log('Aplicaciones cargadas');
-      this.applications = result;
-      console.log(this.applications);
-      
-    }, (err) => {
-      console.log(err);
-      if (err.status == 0) this.toastr.error('Problema de conexión');
-      else this.toastr.error(err.error._error);
+    this.getApplications();
+  }
+  
+  getApplications() {
+    this.applications = [];
+    this.rest.getData("applications").subscribe((data: {}) => {
+      console.log(data);
+      this.applications = data;
     });
+  }
+
+  deleteApplication(id){
+    console.log("app:" + id);
+    
+    this.applications = [];
+    this.rest.deleteData("applications", id)
+    .subscribe(res => {
+      this.toastr.success("Good");
+      this.getApplications();
+    }, (err) => {
+      this.toastr.error("Error de conexion.");
+      console.log(err);
+    }
+    );
+  }
+
+  addApplication(){
+    console.log(this.newApp);
+  }
+
+  openModal(){
+    this.displayModal = true; 
+  }
+
+  closeModal(){
+    this.displayModal = false; 
   }
 
 }

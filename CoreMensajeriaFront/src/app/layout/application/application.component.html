@@ -3,7 +3,7 @@
     Origen de datos
   </h2>
   <div class="col-4 offset-8 text-right">
-    <button type="button" id="add-btn" class="btn btn-outline-secondary" (click)="openModal('newAppModal')">
+    <button type="button" id="add-btn" class="btn btn-outline-secondary" (click)="openModal()">
       <i class="fa fa-plus"></i> Agregar
     </button>
   </div>
@@ -35,4 +35,32 @@
       </tr>
     </tbody>
   </table>
+  <div class="backdrop" [class.show]="displayModal"></div>
+  <div class="modal" tabindex="-1" role="dialog" [class.show]="displayModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Nueva Aplicacion</h5>
+          <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form >
+            <div class="form-group">
+              <label for="name">Nombre:</label>
+              <input type="text" class="form-control" id="name" placeholder="Nombre de la aplicación">
+            </div>
+            <div class="form-group">
+              <label for="description">Descripción:</label>
+              <textarea type="text" name="description" class="form-control" id="description" placeholder="Breve descripcion de la aplicación"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="addApplication()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
