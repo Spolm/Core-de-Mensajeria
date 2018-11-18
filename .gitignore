@@ -127,3 +127,6 @@ CoreMensajeria/CoreMensajeria.iml
 *.iml
 
 *.xml
+
+/**/target/
+!pom.xml
