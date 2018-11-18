@@ -122,6 +122,11 @@ out/
 
 CoreMensajeria/\.idea/google-java-format\.xml
 
-CoreMensajeria/CoreMensajeria\.iml
+CoreMensajeria/CoreMensajeria.iml
 
 *.iml
+
+*.xml
+
+/**/target/
+!pom.xml
