@@ -16,6 +16,11 @@ interface myData{
 })
 export class StatisticsComponent implements OnInit {
  json2;
+ datos;
+ opcionSeleccionado: string  = '0';
+ verSeleccion: string        = '';
+ opcionDateSleccionado: Date;
+ verDate: string;
 
  
  public graph = {
@@ -36,7 +41,10 @@ public graph2 = {
 };
 
   
-  constructor(private Servicio : StatisticsServiceService) { }
+  constructor(private Servicio : StatisticsServiceService) { 
+
+    this.datos = ['Compañias','Campañas','Canales'];
+  }
 
   ngOnInit() {
 
@@ -59,6 +67,18 @@ public graph2 = {
     })
     
   }
+
+  capturar() {
+    // Pasamos el valor seleccionado a la variable verSeleccion
+    this.verSeleccion = this.opcionSeleccionado;
+    console.log( "Valor Capturado", this.verSeleccion );
+}
+
+  capturarDate(){
+    this.verDate = this.opcionDateSleccionado.toString();
+    console.log( "FechaCapturada", this.verDate );
+
+}
 
   chart3(datos){
     const graph= [datos];
