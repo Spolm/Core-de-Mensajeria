@@ -1,3 +1,5 @@
+\c CoreMensajeria CoreMensajeria
+
 create table public.User
 (
     use_id serial primary key,
@@ -83,3 +85,50 @@ REFERENCES channel (cha_id);
 ALTER TABLE channel_integrator
 ADD CONSTRAINT fk_integrator_id FOREIGN KEY (ci_integrator_id) 
 REFERENCES integrator (int_id);
+
+create table public.Template
+(
+    tem_id serial primary key,
+    tem_creation_date timestamp
+);
+
+create table public.Message
+(
+    mes_id serial PRIMARY KEY,
+    mes_text varchar(360) NOT NULL,
+    mes_template integer NOT NULL,
+    CONSTRAINT fk_template_id FOREIGN KEY ("mes_template") REFERENCES public.Template (tem_id)
+);
+
+create table public.Parameter
+(
+    par_id serial PRIMARY KEY,
+    Par_name varchar(15)
+);
+
+create table public.Message_Parameter
+(
+    mp_id serial PRIMARY KEY,
+    mp_message integer NOT NULL,
+    mp_parameter integer NOT NULL,
+    CONSTRAINT fk_message_id FOREIGN KEY ("mp_message") REFERENCES public.message (mes_id),
+    CONSTRAINT fk_parameter_id FOREIGN KEY ("mp_parameter") REFERENCES public.parameter (par_id)
+);
+
+create table public.Status
+(
+    sta_id serial PRIMARY KEY,
+    sta_name varchar(15) NOT NULL
+
+);
+
+create table public.Template_Status
+(
+    ts_id serial PRIMARY KEY,
+    ts_date timestamp,
+    ts_template integer,
+    ts_status integer,
+    CONSTRAINT fk_template_id FOREIGN KEY ("ts_template") REFERENCES public.Template (tem_id),
+    CONSTRAINT fk_Status_id FOREIGN KEY ("ts_status") REFERENCES public.Status (sta_id)
+);
+
