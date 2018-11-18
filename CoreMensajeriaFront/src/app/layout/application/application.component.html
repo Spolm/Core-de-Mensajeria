@@ -49,11 +49,11 @@
           <form >
             <div class="form-group">
               <label for="name">Nombre:</label>
-              <input type="text" class="form-control" id="name" placeholder="Nombre de la aplicación">
+              <input [(ngModel)]="newApp._name" name="name" type="text" class="form-control" id="name" placeholder="Nombre de la aplicación">
             </div>
             <div class="form-group">
               <label for="description">Descripción:</label>
-              <textarea type="text" name="description" class="form-control" id="description" placeholder="Breve descripcion de la aplicación"></textarea>
+              <textarea [(ngModel)]="newApp._description" type="text" name="description" class="form-control" id="description" placeholder="Breve descripcion de la aplicación"></textarea>
             </div>
           </form>
         </div>
