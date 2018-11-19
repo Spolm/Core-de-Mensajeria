@@ -216,6 +216,18 @@ public class M09_Statistics extends Application {
         }
     }
 
+    @GET
+    @Path("/{NombreConsulta}/{FechaDeConsulta}")
+    @Produces("application/json")
+
+    public Response test(@PathParam( "NombreConsulta" ) String Consulta,
+                         @PathParam( "FechaDeConsulta" ) String Fecha) {
+
+        return Response.ok( gson.toJson( Consulta + " " + Fecha ) ).build();
+
+    }
+
+
 
 
     public ArrayList<Integer> CountOfMessage ( ArrayList<String> listCompany ){
