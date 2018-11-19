@@ -4,6 +4,8 @@ import { StatisticsServiceService } from './statistics-service.service';
 import { Component, OnInit } from '@angular/core';
 import * as Plotly from 'plotly.js/dist/plotly.js';
 import{Config, Data, Layout} from 'plotly.js/dist/plotly.js';
+import { ToastrService } from 'ngx-toastr';
+
 
 interface myData{
   obj: Object;
@@ -19,7 +21,7 @@ export class StatisticsComponent implements OnInit {
  datos;
  opcionSeleccionado: string  = '0';
  verSeleccion: string        = '';
- opcionDateSleccionado: Date;
+ opcionDateSleccionado: Date = null;
  verDate: string;
 
  
@@ -41,7 +43,7 @@ public graph2 = {
 };
 
   
-  constructor(private Servicio : StatisticsServiceService) { 
+  constructor(private Servicio : StatisticsServiceService, private toastr: ToastrService) { 
 
     this.datos = ['Compañias','Campañas','Canales'];
   }
@@ -69,16 +71,22 @@ public graph2 = {
   }
 
   capturar() {
+	 if (this.opcionSeleccionado != '0'){ 
     // Pasamos el valor seleccionado a la variable verSeleccion
     this.verSeleccion = this.opcionSeleccionado;
-    console.log( "Valor Capturado", this.verSeleccion );
+	 console.log( "Valor Capturado", this.verSeleccion );}
+	 else 
+		       this.toastr.error('Debe seleccionar otra opcion');
 }
 
   capturarDate(){
+if (this.opcionDateSleccionado != null){ 	  
     this.verDate = this.opcionDateSleccionado.toString();
-    console.log( "FechaCapturada", this.verDate );
-
+     console.log( "FechaCapturada", this.verDate );}
+	 else 
+	this.toastr.error('Debe seleccionar una fecha');
 }
+
 
   chart3(datos){
     const graph= [datos];
