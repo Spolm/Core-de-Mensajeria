@@ -20,7 +20,7 @@
     </thead>
     <tbody>
       <tr scope="row" *ngFor="let template of templates; let i = index">
-        <td class="text-center" *ngIf="template.statusId == 1; else elseBlock">
+        <td class="text-center" *ngIf="template.status.statusName == 'Aprobado'; else elseBlock">
           {{template.templateId}}
           <br>
           <span class="badge badge-success notclickable">Aprobado</span>
