@@ -8,9 +8,7 @@ import Classes.M09_Statistics.Statistics;
 import Classes.Sql;
 import com.google.gson.Gson;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
@@ -24,82 +22,7 @@ import java.util.ArrayList;
 public class M09_Statistics extends Application {
 
     Gson gson = new Gson();
-    //private Connection conn = Sql.getConInstance();
     private Connection conn = SqlEstrella.getConInstance();
-
-
-    @GET
-    @Path("/ConsultaCompany")
-    @Produces("application/json")
-    public Response getCompany() throws SQLException {
-        String select = "SELECT * FROM public.Company";
-
-        try {
-            ArrayList<Company> companyList = new ArrayList<>();
-            Statement st = conn.createStatement();
-
-            ResultSet result = st.executeQuery(select);
-
-            while (result.next()) {
-                Company co = new Company();
-
-                co.set_idCompany( result.getInt("com_id" ) );
-                co.set_name( result.getString("com_name" ) );
-                co.set_desc( result.getString("com_description" ) );
-                co.set_status( result.getBoolean("com_status" ) );
-
-                companyList.add(co);
-            }
-            return Response.ok( gson.toJson( companyList ) ).build();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new SQLException( select );
-        } finally {
-            Sql.bdClose( conn );
-        }
-    }
-
-
-    @GET
-    @Path("/ConsultaCampaign")
-    @Produces("application/json")
-    public Response getCampaign() throws SQLException {
-
-        String select = "SELECT * FROM public.Campaign";
-        try {
-            //ArrayList<Company> companyList = new ArrayList<>();
-            ArrayList<Campaign> campaignList = new ArrayList<>();
-            Statement st = conn.createStatement();
-
-            ResultSet result = st.executeQuery(select);
-
-            while (result.next()) {
-
-                Company co = new Company();
-                Campaign ca = new Campaign();
-
-                ca.set_idCampaign( result.getInt("cam_id" ) );
-                ca.set_nameCampaign( result.getString("cam_name" ) );
-                ca.set_descCampaign( result.getString("cam_description" ) );
-                ca.set_statusCampaign( result.getBoolean("cam_status" ) );
-                ca.set_startCampaign( result.getTimestamp("cam_start_date" ) );
-                ca.set_endCampaign( result.getTimestamp("cam_end_date" ) );
-                co.set_idCompany( result.getInt("com_id" ) );
-                co.set_name( result.getString("com_name" ) );
-                co.set_status( result.getBoolean("com_status" ) );
-                co.set_desc( result.getString("com_descrption" ) );
-                //companyList.add(co);
-                campaignList.add( ca );
-            }
-            return Response.ok( gson.toJson( campaignList )).build();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new SQLException( select );
-        } finally {
-            Sql.bdClose(conn);
-        }
-    }
-
 
     @GET
     @Path("/MessageCompanyBar")
@@ -197,8 +120,113 @@ public class M09_Statistics extends Application {
             Sql.bdClose( conn );
         }
     }
+    @GET
+    @Path("/{NombreConsulta}/{FechaDeConsulta}")
+    @Produces("application/json")
+
+    public Response test(@PathParam( "NombreConsulta" ) String Consulta,
+                         @PathParam( "FechaDeConsulta" ) String Fecha) {
+
+        return Response.ok( gson.toJson( Consulta + " " + Fecha ) ).build();
+
+    }
 
 
+    @GET
+    @Path("/PruebaParam")
+    @Produces("application/json")
+
+    public Response test2(@QueryParam( "paramDate" ) String paramDate,
+                          @QueryParam( "paramType" ) String paramType) {
+
+        if (paramType.equals("Compañias")){
+            try {
+
+                Response responseGraphCompany = getNumberOfCompanysLine();
+                return responseGraphCompany ;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (paramType.equals("Campañas")){
+
+        }
+
+        else {
+
+        }
+
+        return Response.ok( gson.toJson(" mi fecha es " + paramDate+ " mi seleccion es "+ paramType) ).build();
+
+
+
+        // String squery ="select * from producto where id="@id;
+        //squery=squery.replace("@id","1");
+    }
+
+    @GET
+    @Path("/PruebaParam2")
+    @Produces("application/json")
+
+    public Response test1(@QueryParam( "paramDate" ) String paramDate,
+                          @QueryParam( "paramType" ) String paramType) {
+
+        if (paramType.equals("Compañias")){
+            try {
+
+                Response responseGraphCompany = getNumberOfCompanysPie();
+                return responseGraphCompany ;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (paramType.equals("Campañas")){
+
+        }
+
+        else {
+
+        }
+
+        return Response.ok( gson.toJson(" mi fecha es " + paramDate+ " mi seleccion es "+ paramType) ).build();
+
+
+
+        // String squery ="select * from producto where id="@id;
+        //squery=squery.replace("@id","1");
+    }
+
+    @GET
+    @Path("/PruebaParam3")
+    @Produces("application/json")
+
+    public Response test3(@QueryParam( "paramDate" ) String paramDate,
+                          @QueryParam( "paramType" ) String paramType) {
+
+        if (paramType.equals("Compañias")){
+            try {
+
+                Response responseGraphCompany = getNumberOfCompanysChart();
+                return responseGraphCompany ;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (paramType.equals("Campañas")){
+
+        }
+
+        else {
+
+        }
+
+        return Response.ok( gson.toJson(" mi fecha es " + paramDate+ " mi seleccion es "+ paramType) ).build();
+
+
+
+        // String squery ="select * from producto where id="@id;
+        //squery=squery.replace("@id","1");
+    }
 
     public ArrayList<Integer> CountOfMessage ( ArrayList<String> listCompany ){
 
