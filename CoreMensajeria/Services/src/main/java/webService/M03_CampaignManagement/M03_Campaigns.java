@@ -78,8 +78,8 @@ public class M03_Campaigns {
                     ca.set_idCampaign(result.getInt("cam_id"));
                     ca.set_nameCampaign(result.getString("cam_name"));
                     ca.set_descCampaign(result.getString("cam_description"));
-                    ca.set_startCampaign(result.getDate("cam_startDate"));
-                    ca.set_endCampaign(result.getDate("cam_endDate"));
+                    ca.set_startCampaign(result.getDate("cam_start_date"));
+                    ca.set_endCampaign(result.getDate("cam_end_date"));
                     ca.set_statusCampaign(result.getBoolean("cam_status"));
                     campaignList.add(ca);
                 }
