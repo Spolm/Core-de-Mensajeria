@@ -11,12 +11,7 @@ export class StatisticsServiceService {
 
   constructor(private http: HttpClient) { }
 
-
-  //idea: lograr enviar los datos captados y en el back adaptar los metodos con los pathparam
-  // de modo tal que cuando apriete consultar ejecute 3 metodos( uno por cada grafica) que logre ajustarse
-  //a los parametros
-
-getStatisticsData1(){
+/*getStatisticsData1(){
 
 return this.http.get(this.ApiURL + 'MessageCompanyBar')
 }
@@ -29,7 +24,19 @@ getStatisticsData2(){
 getStatisticsData3(){
 
   return this.http.get(this.ApiURL + 'MessageCompanyPie') 
-}
+}*/
 
+getStatisticsData4(sparam : string){
+
+  return this.http.get(this.ApiURL + 'PruebaParam'+sparam) 
+}
+getStatisticsData5(sparam : string){
+
+  return this.http.get(this.ApiURL + 'PruebaParam2'+sparam) 
+}
+getStatisticsData6(sparam : string){
+
+  return this.http.get(this.ApiURL + 'PruebaParam3'+sparam) 
+}
 
 }

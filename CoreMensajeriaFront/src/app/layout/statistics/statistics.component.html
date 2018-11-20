@@ -23,14 +23,12 @@
                 </div>  
             </div>
 
-        <button type="button" class="btn btn-success btn-lg" (click) = "capturar() ; capturarDate()">Consultar</button>
+        <button type="button" class="btn btn-success btn-lg" (click) = "capturar() ; capturarDate();DoGraficas() ">Consultar</button>
 
 
         <p [hidden]="opcionSeleccionado == '0'">Haz seleccionado la Consulta acerca :  {{ verSeleccion }}</p>
-
-      
+     
  </div>
-
 
 <div class="Container">
     <div class="row" style="margin: 5% 0%">
@@ -45,3 +43,6 @@
                                  </div>
  </div>
 </div>
+
+
+
