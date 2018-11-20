@@ -7,22 +7,36 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class StatisticsServiceService {
 
+  private ApiURL : string = 'http://localhost:8080/CoreMensajeria_war_exploded/M09_Statistics/'
+
   constructor(private http: HttpClient) { }
 
-getStatisticsData1(){
+/*getStatisticsData1(){
 
-return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/MessageCompanyBar')
+return this.http.get(this.ApiURL + 'MessageCompanyBar')
 }
 
 getStatisticsData2(){
 
- return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/MessageCompanyLine') 
+ return this.http.get(this.ApiURL + 'MessageCompanyLine') 
 }
 
 getStatisticsData3(){
 
-  return this.http.get('http://localhost:8080/CoreMensajeria_war/M09_Statistics/MessageCompanyPie') 
-}
+  return this.http.get(this.ApiURL + 'MessageCompanyPie') 
+}*/
 
+getStatisticsData4(sparam : string){
+
+  return this.http.get(this.ApiURL + 'PruebaParam'+sparam) 
+}
+getStatisticsData5(sparam : string){
+
+  return this.http.get(this.ApiURL + 'PruebaParam2'+sparam) 
+}
+getStatisticsData6(sparam : string){
+
+  return this.http.get(this.ApiURL + 'PruebaParam3'+sparam) 
+}
 
 }
