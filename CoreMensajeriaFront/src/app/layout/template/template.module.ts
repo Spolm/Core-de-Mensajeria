@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { NgbdModalApprove } from './modals/modal-approve';
 import { TemplateRoutingModule } from './template-routing.module';
 import { TemplateComponent } from './template.component';
 import { PageHeaderModule } from './../../shared';
-import { importType } from '@angular/compiler/src/output/output_ast';
 
 @NgModule({
   imports: [
@@ -12,6 +11,9 @@ import { importType } from '@angular/compiler/src/output/output_ast';
     TemplateRoutingModule,
     PageHeaderModule
   ],
-  declarations: [TemplateComponent]
+  declarations: [
+    TemplateComponent,
+    NgbdModalApprove
+  ]
 })
 export class TemplateModule { }
