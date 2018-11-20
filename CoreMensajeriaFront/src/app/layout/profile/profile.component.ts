@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
   Users : Array<Users>;
 
   constructor(private http: Http){
-    this.http.get('http://localhost:8080/CoreMensajeria_war/profile/user/Ronnie').subscribe(resp=>this.Users = resp.json());
+    this.http.get('http://localhost:8080/CoreMensajeria_war_exploded/profile/user/Ronnie').subscribe(resp=>this.Users = resp.json());
   }
 
 }

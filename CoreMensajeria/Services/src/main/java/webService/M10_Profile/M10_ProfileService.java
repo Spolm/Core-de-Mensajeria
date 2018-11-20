@@ -37,11 +37,11 @@ public class M10_ProfileService {
     }
 
     @Path("/edit")
-    @PUT
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response editProfile(@FormParam("email") String email, @FormParam("phone") String phone,
-                                @FormParam("location") String address) throws URISyntaxException {
-        String success = M10_Profile.getInstance().editProfile(1, email, phone,address );
+                                @FormParam("location") String address, @FormParam("user_id") int user_id) throws URISyntaxException {
+        String success = M10_Profile.getInstance().editProfile(user_id, email, phone,address );
         java.net.URI location = new java.net.URI("http://localhost:4200/profile");
         return Response.temporaryRedirect(location).build();
     }
