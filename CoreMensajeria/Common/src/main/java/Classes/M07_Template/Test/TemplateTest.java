@@ -17,7 +17,7 @@ public class TemplateTest {
 
     @BeforeEach
     void init(){
-        template = new Template(new Message(1), new NotApprovedStatus(), "01-01-18", 1);
+        //template = new Template(new Message(1), new NotApprovedStatus(), "01-01-18", 1);
         objectsNotNull();
     }
 
@@ -32,7 +32,7 @@ public class TemplateTest {
     @Test
     void changeAttributes(){
         template.setMessage(new Message(2));
-        template.setStatus(new ApprovedStatus());
+        //template.setStatus(new ApprovedStatus());
 
         assertEquals(template.getStatus(), "Approved Template");
         assertEquals(template.getMessage().getMessageId(), 2);

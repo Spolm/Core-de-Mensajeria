@@ -1,8 +1,8 @@
 package Classes.M07_Template.HandlerPackage;
 
 import Classes.M07_Template.StatusPackage.ApprovedStatus;
-import Classes.M07_Template.StatusPackage.IStatus;
 import Classes.M07_Template.StatusPackage.NotApprovedStatus;
+import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 
@@ -20,6 +20,9 @@ public class TemplateHandler {
         return sql;
     }
 
+    /*
+     * Ineficiente, Refactorisable (JOIN)
+     */
     public ArrayList<Template> getTemplates() {
         ArrayList<Template> templateArrayList = new ArrayList<>();
         try {
@@ -34,9 +37,19 @@ public class TemplateHandler {
                         " ORDER BY TS_ID DESC LIMIT 1");
                 resultSetAux.next();
                 int statusId = resultSetAux.getInt("ts_status");
-                template.setStatusId(statusId);
-                /*resultSetAux = sql.sqlConn("SELECT * FROM STATUS WHERE STA_ID = " + statusId);
-                String statusName = resultSetAux.getString("sta_name");*/
+                resultSetAux = sql.sqlConn("SELECT * FROM STATUS WHERE STA_ID = " + statusId);
+                resultSetAux.next();
+                Status status;
+                String statusName = resultSetAux.getString("sta_name");
+                if(statusName.equals("Aprobado")){
+                    status = new ApprovedStatus(statusId,statusName);
+                }else if(statusName.equals("No Aprobado")){
+                    status = new NotApprovedStatus(statusId,statusName);
+                }else{
+                    status = null;
+                }
+                template.setStatus(status);
+                //template.setStatusId(statusId);
                 templateArrayList.add(template);
             }
 
