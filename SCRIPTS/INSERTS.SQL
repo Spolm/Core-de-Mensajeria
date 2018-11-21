@@ -179,38 +179,39 @@ INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_
 INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 14', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 4);
 INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 15', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 5);
 
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-01-01', 1);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-03-15', 1);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-06-23', 1);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-06-30', 2);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-11-25', 2);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-11-29', 2);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-04-12', 3);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-04-13', 3);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-07-23', 3);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-07-23', 4);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-09-09', 4);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-09-11', 4);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-12-24', 5);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-12-25', 5);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-12-31', 6);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-02-05', 7);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-02-10', 8);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-03-07', 8);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-03-17', 8);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-04-19', 8);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-05-11', 9);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-08-28', 10);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-08-31', 11);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-10-12', 12);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-10-23', 13);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-10-23', 14);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-11-09', 14);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-04-16', 15);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-07-23', 15);
-
 INSERT INTO public.application(app_name,app_description,app_token,app_date,app_status,app_user_creator) values 
 ('Amazon','Pagina Web','BF5453E0B1BF86A7FA020A4B87D7C0A9B0946ACCEB403E918E352D10BD35007D','04/05/1995',0,1), 
 ('Mercantil en linea','Aplicacion movil de mercantil','5E182FC1A42614D37B951A7A38648350D0D166E9D78BA26E59EF7ECE9462BE34','12/13/2017',1,1), 
 ('Banesco Online','Aplicacion web de banesco','5DD3CE9EF2B7614FB471B442050DDB24ADDBE88424B3C1382C7DD224A99203BD','01/08/2015',1,1);
+
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-03-15', 1, 1, 1, 1, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-01-01', 1, 1, 2, 2, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-06-23', 1, 1, 1, 3, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-06-30', 1, 1, 2, 4, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-11-25', 1, 1, 1, 5, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-11-29', 1, 1, 2, 6, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-04-12', 1, 2, 1, 1, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-04-13', 1, 2, 2, 2, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-07-23', 1, 2, 1, 3, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-07-23', 1, 3, 2, 4, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-09-09', 1, 3, 1, 5, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-09-11', 1, 3, 2, 6, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-12-24', 1, 3, 1, 1, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-12-25', 1, 4, 2, 2, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-12-31', 1, 4, 1, 3, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-02-05', 2, 5, 2, 4, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-02-10', 2, 5, 1, 5, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-03-07', 2, 5, 2, 6, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-03-17', 2, 6, 1, 1, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-04-19', 2, 6, 2, 2, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-05-11', 2, 6, 1, 3, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-08-28', 2, 7, 2, 4, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-08-31', 2, 8, 1, 5, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-10-12', 2, 9, 2, 6, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-10-23', 2, 10, 1, 1, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-10-23', 2, 11, 2, 2, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-11-09', 2, 12, 1, 3, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-04-16', 2, 13, 2, 4, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-07-23', 2, 14, 1, 5, 1);
+
 
