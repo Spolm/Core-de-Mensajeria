@@ -19,5 +19,5 @@ CREATE USER MAPPING FOR "CoreMensajeria" SERVER statistics_server OPTIONS (user 
 
 CREATE SCHEMA stats;
 
-IMPORT FOREIGN SCHEMA public LIMIT TO (Message, Company, Campaign) FROM SERVER statistics_server INTO stats;
+IMPORT FOREIGN SCHEMA public LIMIT TO (Sent_Message, Company, Campaign) FROM SERVER statistics_server INTO stats;
 
