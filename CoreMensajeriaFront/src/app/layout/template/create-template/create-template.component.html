@@ -1,0 +1,31 @@
+<router-outlet></router-outlet>
+
+<form>
+  <div class="form-row">
+    <div class="form-group col-9">
+      <label for="formMessage">Mensaje de la plantilla</label>
+      <textarea class="form-control" id="formMessage" rows="3" placeholder="Mensaje" [(ngModel)]="formMessage" name="message"></textarea>
+    </div>
+    <div class="form-group col">
+      <label for="formParameters">Parametros</label>
+      <br>
+      <select id="formParameters" [(ngModel)]="formParameters" name="param" (change)="addParameter(formMessage, formParameters)">
+        <option *ngFor="let parameter of parameters">
+          {{parameter.name}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div id="test" class="form-group">
+    channel & integrator
+  </div>
+
+  <div>
+    planification
+  </div>
+</form>
+
+<div class="d-flex flex-row-reverse">
+  <button type="button" class="btn btn-success m-1">Crear</button>
+  <button type="button" class="btn btn-danger m-1" routerLink="/template">Cancelar</button>
+</div>
