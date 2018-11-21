@@ -53,6 +53,18 @@ public class IntegratorService {
         return null;
     }
 
+    public void enabledIntegrator(int id){
+        Sql db = new Sql();
+        Integrator i = getConcreteIntegrator(id);
+        boolean enabled = !i.isEnabled();
+        try {
+            db.sqlConn("UPDATE integrator SET int_enabled = " +enabled+ " WHERE int_id = " +id);
+
+        } catch (SQLException e) {
+            System.err.println(e.getStackTrace());
+        }
+    }
+
     public static void getIntegratorsRs(List<Integrator> integrators, ResultSet rs) throws SQLException {
         while (rs.next()) {
             IntegratorFactory factory = new IntegratorFactory();
