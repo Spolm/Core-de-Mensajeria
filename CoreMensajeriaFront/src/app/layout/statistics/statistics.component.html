@@ -3,6 +3,34 @@
 </h2>
 
 <div class="Container">
+<div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">Estadistcas de: </label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="opcionSeleccionado">  <!-- (change) = "capturar()" -->
+          <option selected value="0">Elija</option>
+          <option *ngFor="let dato of datos">
+            {{dato}}
+          </option>
+        </select>
+      </div>
+      
+    
+      <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="dateOfBirth">Filtro de Tiempo</label>
+              <input type="date" class="form-control" id="myDate" [(ngModel)]="opcionDateSleccionado">  <!-- (change) = "capturarDate()" -->
+                </div>  
+            </div>
+
+        <button type="button" class="btn btn-success btn-lg" (click) = "capturar() ; capturarDate();DoGraficas() ">Consultar</button>
+
+
+        <p [hidden]="opcionSeleccionado == '0'">Haz seleccionado la Consulta acerca :  {{ verSeleccion }}</p>
+     
+ </div>
+
+<div class="Container">
     <div class="row" style="margin: 5% 0%">
       <div class="card bg-primary">
         <div id= "bar-chart"></div>   
@@ -15,3 +43,6 @@
                                  </div>
  </div>
 </div>
+
+
+

@@ -16,7 +16,7 @@ const httpOptions = {
 export class TemplateService {
 
   constructor(private http: HttpClient) {
-    
+
   }
 
   private extractData(res: Response) {
@@ -37,5 +37,10 @@ export class TemplateService {
   approveTemplate(templateId: Number){
     return this.http.post(endpoint+'templates/update/'+templateId, templateId).subscribe();
   }
-  
+
+    doPOST() {
+        console.log('POST');
+        let body = [{name:"foo",parameterId:55}];
+        this.http.post(endpoint + 'templates/posttemplate', body).subscribe(response => console.log(response.toString()));
+    }
 }
