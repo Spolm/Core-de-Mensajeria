@@ -120,191 +120,9 @@ public class M09_Statistics extends Application {
             Sql.bdClose( conn );
         }
     }
-    @GET
-    @Path("/{NombreConsulta}/{FechaDeConsulta}")
-    @Produces("application/json")
-
-    public Response test(@PathParam( "NombreConsulta" ) String Consulta,
-                         @PathParam( "FechaDeConsulta" ) String Fecha) {
-
-        return Response.ok( gson.toJson( Consulta + " " + Fecha ) ).build();
-
-    }
-
-
-    @GET
-    @Path("/PruebaParam")
-    @Produces("application/json")
-
-    public Response test2(@QueryParam( "paramDate" ) String paramDate,
-                          @QueryParam( "paramType" ) String paramType) {
-
-        if (paramType.equals("Compañias")){
-            try {
-
-                Response responseGraphCompany = getNumberOfCompanysLine();
-                return responseGraphCompany ;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        else if (paramType.equals("Campañas")){
-            try {
-                Response responseGreaphCampaign= getNumberOfCampaignLine();
-                return responseGreaphCampaign;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        else {
-
-        }
-
-        return Response.ok( gson.toJson(" mi fecha es " + paramDate+ " mi seleccion es "+ paramType) ).build();
 
 
 
-        // String squery ="select * from producto where id="@id;
-        //squery=squery.replace("@id","1");
-    }
-
-    @GET
-    @Path("/PruebaParam2")
-    @Produces("application/json")
-
-    public Response test1(@QueryParam( "paramDate" ) String paramDate,
-                          @QueryParam( "paramType" ) String paramType) {
-
-        if (paramType.equals("Compañias")){
-            try {
-
-                Response responseGraphCompany = getNumberOfCompanysPie();
-                return responseGraphCompany ;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        else if (paramType.equals("Campañas")){
-            try {
-                Response responseGreaphCampaign= getNumberOfCampaignPie();
-                return responseGreaphCampaign;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        else {
-
-        }
-
-        return Response.ok( gson.toJson(" mi fecha es " + paramDate+ " mi seleccion es "+ paramType) ).build();
-
-
-
-        // String squery ="select * from producto where id="@id;
-        //squery=squery.replace("@id","1");
-    }
-
-    @GET
-    @Path("/PruebaParam3")
-    @Produces("application/json")
-
-    public Response test3(@QueryParam( "paramDate" ) String paramDate,
-                          @QueryParam( "paramType" ) String paramType) {
-
-        if (paramType.equals("Compañias")){
-            try {
-
-                Response responseGraphCompany = getNumberOfCompanysChart();
-                return responseGraphCompany ;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        else if (paramType.equals("Campañas")){
-            try {
-                Response responseGreaphCampaign= getNumberOfCampaignChart();
-                return responseGreaphCampaign;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        else {
-
-        }
-
-        return Response.ok( gson.toJson(" mi fecha es " + paramDate+ " mi seleccion es "+ paramType) ).build();
-
-
-
-        // String squery ="select * from producto where id="@id;
-        //squery=squery.replace("@id","1");
-    }
-
-    public ArrayList<Integer> CountOfMessageCamp ( ArrayList<String> listCampaign ){
-
-        String aux2 = "" ;
-        int n = 0  ;
-        ArrayList<Integer> listNum = new ArrayList<>();
-
-        try {
-            for ( int i = 0 ; i < listCampaign.size() ; i++ ) {
-
-                aux2 = listCampaign.get(i).toString();
-                String select = "SELECT count(M.*) from fact_message as M , dim_company_campaign as C \n" +
-                        "where C.cam_id = M.mes_cam_id and C.cam_name = '" + aux2 + "' ";
-
-                Statement st = conn.createStatement();
-                ResultSet result = st.executeQuery( select );
-                while (result.next()) {
-                    n = result.getInt(1);
-                    listNum.add(n);
-                }
-            }
-        }
-        catch ( SQLException e ) {
-            e.printStackTrace();
-            // throw new SQLException();
-        } finally {
-            Sql.bdClose( conn );
-        }
-        return listNum;
-    }
-
-
-    public ArrayList<Integer> CountOfMessage ( ArrayList<String> listCompany ){
-
-        String aux2 = "" ;
-        int n = 0  ;
-        ArrayList<Integer> listNum = new ArrayList<>();
-
-        try {
-        for ( int i = 0 ; i < listCompany.size() ; i++ ) {
-
-            aux2 = listCompany.get(i).toString();
-            String select = "SELECT count(M.*) from fact_message as M , dim_company_campaign as C \n" +
-                    "where C.cam_id = M.mes_cam_id and C.com_name = '" + aux2 + "' ";
-
-            Statement st = conn.createStatement();
-            ResultSet result = st.executeQuery( select );
-            while (result.next()) {
-                n = result.getInt(1);
-                listNum.add(n);
-            }
-        }
-        }
-        catch ( SQLException e ) {
-            e.printStackTrace();
-           // throw new SQLException();
-        } finally {
-            Sql.bdClose( conn );
-        }
-        return listNum;
-    }
-
-//////////////////////////////////////
     @GET
     @Path("/MessageCampaignPie")
     @Produces("application/json")
@@ -401,6 +219,217 @@ public class M09_Statistics extends Application {
             Sql.bdClose( conn );
         }
     }
+
+
+    @GET
+    @Path("/{NombreConsulta}/{FechaDeConsulta}")
+    @Produces("application/json")
+
+    public Response test(@PathParam( "NombreConsulta" ) String Consulta,
+                         @PathParam( "FechaDeConsulta" ) String Fecha) {
+
+        return Response.ok( gson.toJson( Consulta + " " + Fecha ) ).build();
+
+    }
+
+
+    @GET
+    @Path("/PruebaParam")
+    @Produces("application/json")
+
+    public Response test2(@QueryParam( "paramDate" ) String paramDate,
+                          @QueryParam( "paramType" ) String paramType) {
+
+
+        Response responseAnswerLine = filterOfTypeStatisticsLine(paramDate,paramType);
+
+        return responseAnswerLine ;
+
+
+
+        // String squery ="select * from producto where id="@id;
+        //squery=squery.replace("@id","1");
+    }
+
+    @GET
+    @Path("/PruebaParam2")
+    @Produces("application/json")
+
+    public Response test1(@QueryParam( "paramDate" ) String paramDate,
+                          @QueryParam( "paramType" ) String paramType) {
+
+        Response responseAnswerPie = filterOfTypeStatisticsPie(paramDate,paramType);
+
+        return responseAnswerPie ;
+
+        // String squery ="select * from producto where id="@id;
+        //squery=squery.replace("@id","1");
+    }
+
+    @GET
+    @Path("/PruebaParam3")
+    @Produces("application/json")
+
+    public Response test3(@QueryParam( "paramDate" ) String paramDate,
+                          @QueryParam( "paramType" ) String paramType) {
+
+        Response responseAnswerBar = filterOfTypeStatisticsBar(paramDate,paramType);
+
+        return responseAnswerBar ;
+
+        // String squery ="select * from producto where id="@id;
+        //squery=squery.replace("@id","1");
+    }
+
+
+    //Metodo para contar la cantidad me menajes enviados por Campana
+    public ArrayList<Integer> CountOfMessageCamp ( ArrayList<String> listCampaign ){
+
+        String aux2 = "" ;
+        int n = 0  ;
+        ArrayList<Integer> listNum = new ArrayList<>();
+
+        try {
+            for ( int i = 0 ; i < listCampaign.size() ; i++ ) {
+
+                aux2 = listCampaign.get(i).toString();
+                String select = "SELECT count(M.*) from fact_message as M , dim_company_campaign as C \n" +
+                        "where C.cam_id = M.mes_cam_id and C.cam_name = '" + aux2 + "' ";
+
+                Statement st = conn.createStatement();
+                ResultSet result = st.executeQuery( select );
+                while (result.next()) {
+                    n = result.getInt(1);
+                    listNum.add(n);
+                }
+            }
+        }
+        catch ( SQLException e ) {
+            e.printStackTrace();
+            // throw new SQLException();
+        } finally {
+            Sql.bdClose( conn );
+        }
+        return listNum;
+    }
+
+// metodo para contar la cantidad de mensajes enviados por compania
+    public ArrayList<Integer> CountOfMessage ( ArrayList<String> listCompany ){
+
+        String aux2 = "" ;
+        int n = 0  ;
+        ArrayList<Integer> listNum = new ArrayList<>();
+
+        try {
+        for ( int i = 0 ; i < listCompany.size() ; i++ ) {
+
+            aux2 = listCompany.get(i).toString();
+            String select = "SELECT count(M.*) from fact_message as M , dim_company_campaign as C \n" +
+                    "where C.cam_id = M.mes_cam_id and C.com_name = '" + aux2 + "' ";
+
+            Statement st = conn.createStatement();
+            ResultSet result = st.executeQuery( select );
+            while (result.next()) {
+                n = result.getInt(1);
+                listNum.add(n);
+            }
+        }
+        }
+        catch ( SQLException e ) {
+            e.printStackTrace();
+           // throw new SQLException();
+        } finally {
+            Sql.bdClose( conn );
+        }
+        return listNum;
+    }
+
+
+    //Metodos con los if y los Filtros
+
+    public Response filterOfTypeStatisticsBar(String paramDate, String paramType){
+
+        if (paramType.equals("Compañias")){   //&& paramDate.equals(null)
+            try {
+
+                Response responseGraphCompany = getNumberOfCompanysChart();
+                return responseGraphCompany ;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (paramType.equals("Campañas")){
+            try {
+                Response responseGreaphCampaign= getNumberOfCampaignChart();
+                return responseGreaphCampaign;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        else {
+
+        }
+
+        return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsBar") ).build() ;
+    }
+
+    public Response filterOfTypeStatisticsLine(String paramDate, String paramType){
+
+
+        if (paramType.equals("Compañias")){
+            try {
+
+                Response responseGraphCompany = getNumberOfCompanysLine();
+                return responseGraphCompany ;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (paramType.equals("Campañas")){
+            try {
+                Response responseGreaphCampaign= getNumberOfCampaignLine();
+                return responseGreaphCampaign;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        else {
+
+        }
+
+        return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsLine") ).build();
+    }
+
+    public Response filterOfTypeStatisticsPie(String paramDate, String paramType){
+
+        if (paramType.equals("Compañias")){
+            try {
+
+                Response responseGraphCompany = getNumberOfCompanysPie();
+                return responseGraphCompany ;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else if (paramType.equals("Campañas")){
+            try {
+                Response responseGreaphCampaign= getNumberOfCampaignPie();
+                return responseGreaphCampaign;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        else {
+
+        }
+
+        return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsPie") ).build();
+    }
+
+/////////////////////////////////////
 
 
 }
