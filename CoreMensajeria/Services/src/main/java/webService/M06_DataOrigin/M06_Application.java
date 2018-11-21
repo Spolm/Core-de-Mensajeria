@@ -1,79 +1,106 @@
 package webService.M06_DataOrigin;
 
-import Classes.M06_DataOrigin.Application;
 import Classes.M06_DataOrigin.ApplicationDAO;
-import Classes.Sql;
 import com.google.gson.Gson;
+import exceptions.ApplicationNotFoundException;
+import exceptions.DatabaseConnectionProblemException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Date;
 
 @Path("/applications")
 public class M06_Application {
-    final String QUERY_INSERT_APPLICATION = "INSERT INTO public.application " +
-            "(app_name,app_description,app_token,app_status,app_user_creator,app_date) values" +
-            "(?, ?, ? , ?, ?, timestamp);";
 
-    final String QUERY_DELETE_APPLICATION = "DELETE FROM public.application where use_id=?";
+    private Gson gson = new Gson();
+    private ApplicationDAO _applicationDAO = new ApplicationDAO();
 
-    Gson gson = new Gson();
-
-    ApplicationDAO _applicationDAO = new ApplicationDAO();
-
-    private Connection _conn = Sql.getConInstance();
-
-    //private ResultSet _generatedKeys;
-
-
-    @Path("/")
     @GET
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetApplications() throws SQLException {
-        //Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        String select = "SELECT * FROM public.application";
+    public Response getApplications(){
+        try{
+            return Response.ok(gson.toJson(_applicationDAO.getApplications())).build();
+        }catch (ApplicationNotFoundException e){
+            return Response.status(404).entity(gson.toJson(e.getMessage())).build();
+        }
+        catch (DatabaseConnectionProblemException e) {
+            return Response.status(500).entity(gson.toJson(e.getMessage())).build();
+        }
+
+    }
+
+    @GET
+    @Path("/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getApplications(@PathParam("id") int id){
+        try{
+            return Response.ok(gson.toJson(_applicationDAO.getApplication(id))).build();
+        }catch (ApplicationNotFoundException e){
+            return Response.status(404).entity(gson.toJson(e.getMessage())).build();
+        }
+        catch (DatabaseConnectionProblemException e) {
+            return Response.status(500).entity(gson.toJson(e.getMessage())).build();
+        }
+
+    }
+
+    @GET
+    @Path("/token/{token}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getApplications(@PathParam("token") String token){
+        try{
+            return Response.ok(gson.toJson(_applicationDAO.getApplication(token))).build();
+        }catch (ApplicationNotFoundException e){
+            return Response.status(404).entity(gson.toJson(e.getMessage())).build();
+        }
+        catch (DatabaseConnectionProblemException e) {
+            return Response.status(500).entity(gson.toJson(e.getMessage())).build();
+        }
+
+    }
+
+    @PUT
+    @Path("/active/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response activeApplication(@PathParam("id") int id) {
 
         try {
-            ArrayList<Application> applicationList = new ArrayList<>();
-            Statement st = _conn.createStatement();
+            String message = "Aplicacion actualizada.";
+            _applicationDAO.updateApplication(id,1);
+            return Response.ok(gson.toJson(message)).build();
+        } catch (DatabaseConnectionProblemException e) {
+            return Response.status(500).entity(gson.toJson(e.getMessage())).build();
+        }
+    }
+    @PUT
+    @Path("/inactive/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response inactiveApplication(@PathParam("id") int id) {
 
-            ResultSet result = st.executeQuery(select);
-
-            while (result.next()) {
-                Application application = new Application();
-                application.set_idApplication(result.getInt("app_id"));
-                application.set_nameApplication(result.getString("app_name"));
-                application.set_descriptionApplication(result.getString("app_description"));
-                application.set_tokenApplication(result.getString("app_token"));
-                application.set_dateOfCreateApplication(result.getDate("app_date"));
-                application.set_statusApplication(result.getInt("app_status"));
-                application.set_userCreatorApplication(result.getInt("app_user_creator"));
-                applicationList.add(application);
-            }
-            return Response.ok(gson.toJson(applicationList)).build();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new SQLException(select);
-        } finally {
-            Sql.bdClose(_conn);
+        try {
+            String message = "Aplicacion actualizada.";
+            _applicationDAO.updateApplication(id, 0);
+            return Response.ok(gson.toJson(message)).build();
+        } catch (DatabaseConnectionProblemException e) {
+            return Response.status(500).entity(gson.toJson(e.getMessage())).build();
         }
     }
 
     @DELETE
     @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteApplication(@PathParam("id") int id) {
-
+        String message = "Aplicacion eliminada.";
         try {
             _applicationDAO.deleteApplication(id);
-            return Response.ok().build();
+            return Response.ok(gson.toJson(message)).build();
         } catch (SQLException e) {
-            System.out.println("Error al ingresar id");
             return Response.status(404).build();
-
         }
     }
     /*    POR AHI VAN LOS TIROS
