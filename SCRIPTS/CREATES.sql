@@ -3,7 +3,7 @@
 create table public.User
 (
     use_id serial primary key,
-    use_password varchar (18),    
+    use_password varchar (18),
     use_username varchar(20),
     use_type integer,
     use_email varchar(30),
@@ -54,12 +54,12 @@ create table public.Application
     app_status integer not null,
     app_user_creator integer not null,
 	CONSTRAINT pk_aplication primary key (app_id),
-	CONSTRAINT fk_user_aplication foreign key ("app_user_creator") 
-	REFERENCES public.User(use_id) 
+	CONSTRAINT fk_user_aplication foreign key ("app_user_creator")
+	REFERENCES public.User(use_id)
 );
 
 CREATE TABLE integrator(
-	int_id serial PRIMARY KEY,	
+	int_id serial PRIMARY KEY,
 	int_name varchar(250) not null,
 	int_messageCost float not null,
 	int_threadCapacity int not null,
@@ -67,7 +67,7 @@ CREATE TABLE integrator(
 );
 
 CREATE TABLE channel(
-	cha_id serial PRIMARY KEY,	
+	cha_id serial PRIMARY KEY,
 	cha_name varchar(250) not null,
 	cha_description varchar(250) not null
 );
@@ -79,11 +79,11 @@ CREATE TABLE channel_integrator(
 );
 
 ALTER TABLE channel_integrator
-ADD CONSTRAINT fk_channel_id FOREIGN KEY (ci_channel_id) 
+ADD CONSTRAINT fk_channel_id FOREIGN KEY (ci_channel_id)
 REFERENCES channel (cha_id);
 
 ALTER TABLE channel_integrator
-ADD CONSTRAINT fk_integrator_id FOREIGN KEY (ci_integrator_id) 
+ADD CONSTRAINT fk_integrator_id FOREIGN KEY (ci_integrator_id)
 REFERENCES integrator (int_id);
 
 create table public.Template
@@ -132,6 +132,7 @@ create table public.Template_Status
     CONSTRAINT fk_Status_id FOREIGN KEY ("ts_status") REFERENCES public.Status (sta_id)
 );
 
+<<<<<<< HEAD
 create table public.TEMPATE_CHANNEL_INTEGRATOR
 (
 	tci_id serial PRIMARY KEY,
@@ -140,3 +141,20 @@ create table public.TEMPATE_CHANNEL_INTEGRATOR
 	CONSTRAINT fk_template_id FOREIGN KEY("tci_template_id") REFERENCES public.Template(tem_id),
 	CONSTRAINT fk_ci_id FOREIGN KEY("tci_ci_id") REFERENCES public.CHANNEL_INTEGRATOR(ci_id)
 );
+=======
+create table public.Sent_Message
+(
+    sen_id serial PRIMARY KEY,
+    sen_time timestamp,
+    sen_message integer NOT NULL,
+    sen_campaign integer NOT NULL,
+    sen_channel integer NOT NULL,
+    sen_integrator integer NOT NULL,
+    sen_application integer NOT NULL,
+    CONSTRAINT fk_message_id FOREIGN KEY ("sen_message") REFERENCES public.Message (mes_id),
+    CONSTRAINT fk_campaign_id FOREIGN KEY ("sen_campaign") REFERENCES public.Campaign (cam_id),
+    CONSTRAINT fk_channel_id FOREIGN KEY ("sen_channel") REFERENCES channel (cha_id),
+    CONSTRAINT fk_integrator_id FOREIGN KEY ("sen_integrator") REFERENCES integrator (int_id),
+    CONSTRAINT fk_application_id FOREIGN KEY ("sen_application") REFERENCES public.Application (app_id)
+);
+>>>>>>> origin/Develop
