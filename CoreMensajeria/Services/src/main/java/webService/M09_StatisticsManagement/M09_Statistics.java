@@ -149,7 +149,12 @@ public class M09_Statistics extends Application {
             }
         }
         else if (paramType.equals("Campañas")){
-
+            try {
+                Response responseGreaphCampaign= getNumberOfCampaignLine();
+                return responseGreaphCampaign;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         else {
@@ -181,7 +186,12 @@ public class M09_Statistics extends Application {
             }
         }
         else if (paramType.equals("Campañas")){
-
+            try {
+                Response responseGreaphCampaign= getNumberOfCampaignPie();
+                return responseGreaphCampaign;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         else {
@@ -213,7 +223,12 @@ public class M09_Statistics extends Application {
             }
         }
         else if (paramType.equals("Campañas")){
-
+            try {
+                Response responseGreaphCampaign= getNumberOfCampaignChart();
+                return responseGreaphCampaign;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         else {
@@ -227,6 +242,37 @@ public class M09_Statistics extends Application {
         // String squery ="select * from producto where id="@id;
         //squery=squery.replace("@id","1");
     }
+
+    public ArrayList<Integer> CountOfMessageCamp ( ArrayList<String> listCampaign ){
+
+        String aux2 = "" ;
+        int n = 0  ;
+        ArrayList<Integer> listNum = new ArrayList<>();
+
+        try {
+            for ( int i = 0 ; i < listCampaign.size() ; i++ ) {
+
+                aux2 = listCampaign.get(i).toString();
+                String select = "SELECT count(M.*) from fact_message as M , dim_company_campaign as C \n" +
+                        "where C.cam_id = M.mes_cam_id and C.cam_name = '" + aux2 + "' ";
+
+                Statement st = conn.createStatement();
+                ResultSet result = st.executeQuery( select );
+                while (result.next()) {
+                    n = result.getInt(1);
+                    listNum.add(n);
+                }
+            }
+        }
+        catch ( SQLException e ) {
+            e.printStackTrace();
+            // throw new SQLException();
+        } finally {
+            Sql.bdClose( conn );
+        }
+        return listNum;
+    }
+
 
     public ArrayList<Integer> CountOfMessage ( ArrayList<String> listCompany ){
 
@@ -256,6 +302,104 @@ public class M09_Statistics extends Application {
             Sql.bdClose( conn );
         }
         return listNum;
+    }
+
+//////////////////////////////////////
+    @GET
+    @Path("/MessageCampaignPie")
+    @Produces("application/json")
+    public Response getNumberOfCampaignPie() throws SQLException {
+        String aux = "";
+        String select2 = "SELECT cam_name  from dim_company_campaign ";
+        try {
+            PieChart PieC = new PieChart();
+            ArrayList<Integer> listNum = new ArrayList<Integer>();
+            ArrayList<String> listlabels = new ArrayList<String>();
+            int n = 0 ;
+            Statement st2 = conn.createStatement();
+            ResultSet result2 = st2.executeQuery(select2);
+            while ( result2.next() ) {
+                Campaign ca = new Campaign();
+                ca.set_nameCampaign( result2.getString("cam_name" ) );
+                aux = ca.get_nameCampaign();
+                listlabels.add( aux ) ;
+            }
+            listNum = CountOfMessageCamp( listlabels );
+            PieC.type = "pie";
+            PieC.labels = listlabels;
+            PieC.values = listNum;
+            return Response.ok( gson.toJson( PieC ) ).build();
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            throw new SQLException( select2 );
+        } finally {
+            Sql.bdClose( conn );
+        }
+    }
+
+    @GET
+    @Path("/MessageCampaignBar")
+    @Produces("application/json")
+    public Response getNumberOfCampaignChart() throws SQLException {
+        String aux = "";
+        String select2 ="SELECT cam_name  from dim_company_campaign";
+
+        try {
+            Statistics gr = new Statistics();
+            ArrayList<Integer> listNum = new ArrayList<Integer>();
+            ArrayList<String> listCampaign = new ArrayList<String>();
+            int n = 0 ;
+            Statement st2 = conn.createStatement();
+            ResultSet result2 = st2.executeQuery(select2);
+            while ( result2.next() ) {
+                Campaign co = new Campaign();
+                co.set_nameCampaign( result2.getString("cam_name" ) );
+                aux = co.get_nameCampaign();
+                listCampaign.add( aux ) ;
+            }
+            listNum = CountOfMessageCamp(listCampaign);
+            gr.type = "bar";
+            gr.x = listCampaign;
+            gr.y = listNum;
+            return Response.ok( gson.toJson( gr ) ).build();
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            throw new SQLException( select2 );
+        } finally {
+            Sql.bdClose( conn );
+        }
+    }
+
+    @GET
+    @Path("/MessageCampaignLine")
+    @Produces("application/json")
+    public Response getNumberOfCampaignLine() throws SQLException {
+        String aux = "";
+        String select2 = " SELECT cam_name  from dim_company_campaign";
+        try {
+            Statistics gr = new Statistics();
+            ArrayList<Integer> listNum = new ArrayList<Integer>();
+            ArrayList<String> listCamp = new ArrayList<String>();
+            int n = 0 ;
+            Statement st2 = conn.createStatement();
+            ResultSet result2 = st2.executeQuery( select2 );
+            while ( result2.next() ) {
+                Campaign co = new Campaign();
+                co.set_nameCampaign( result2.getString("cam_name" ) );
+                aux = co.get_nameCampaign();
+                listCamp.add( aux ) ;
+            }
+            listNum = CountOfMessageCamp( listCamp );
+            gr.type = "line";
+            gr.x = listCamp;
+            gr.y = listNum;
+            return Response.ok( gson.toJson( gr ) ).build();
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            throw new SQLException( select2 );
+        } finally {
+            Sql.bdClose( conn );
+        }
     }
 
 
