@@ -11,6 +11,18 @@ public abstract class Status {
         this.statusName = statusName;
     }
 
+    public static Status createStatus(int statusId,String statusName){
+        Status status;
+        if(statusName.equals("Aprobado")){
+            status = new ApprovedStatus(statusId,statusName);
+        }else if(statusName.equals("No Aprobado")){
+            status = new NotApprovedStatus(statusId,statusName);
+        }else{
+            status = null;
+        }
+        return status;
+    }
+
     public String getStatusName() {
         return statusName;
     }

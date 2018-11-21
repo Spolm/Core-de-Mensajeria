@@ -1,2 +1,2 @@
-DROP DATABASE "CoreMensajeria_StarSchema";
-DROP DATABASE "CoreMensajeria";
+DROP DATABASE IF EXISTS "CoreMensajeria_StarSchema";
+DROP DATABASE IF EXISTS "CoreMensajeria";

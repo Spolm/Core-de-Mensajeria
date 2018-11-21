@@ -11,12 +11,14 @@ CREATE FUNCTION update_starschema() RETURNS void AS $$
     INSERT INTO Dim_Company_Campaign SELECT com_id, cam_id, com_name, cam_name, cam_description, cam_status, cam_start_date, cam_end_date
                                    FROM stats.Company, stats.Campaign WHERE com_id = cam_company_id;
     -- Fill time dimension from message created date.
-    INSERT INTO Dim_Date SELECT DISTINCT mes_date, EXTRACT(YEAR FROM mes_date), EXTRACT(MONTH FROM mes_date),
-                        EXTRACT(ISODOW FROM mes_date), EXTRACT(WEEK FROM mes_date), EXTRACT(DAY FROM mes_date),
-                        EXTRACT(DOY FROM mes_date), EXTRACT(HOUR FROM mes_date), EXTRACT(MINUTE FROM mes_date),
-                        EXTRACT(SECOND FROM mes_date), EXTRACT(QUARTER FROM mes_date) FROM stats.Message;
+    INSERT INTO Dim_Date SELECT DISTINCT sen_time, EXTRACT(YEAR FROM sen_time), EXTRACT(MONTH FROM sen_time),
+                        EXTRACT(ISODOW FROM sen_time), EXTRACT(WEEK FROM sen_time), EXTRACT(DAY FROM sen_time),
+                        EXTRACT(DOY FROM sen_time), EXTRACT(HOUR FROM sen_time), EXTRACT(MINUTE FROM sen_time),
+                        EXTRACT(SECOND FROM sen_time), EXTRACT(QUARTER FROM sen_time) FROM stats.Sent_Message;
     -- Create facts table
-    INSERT INTO Fact_Message SELECT m.mes_id, m.mes_cam_id, m.mes_date, c.cam_company_id
-                            FROM stats.Message m, stats.Campaign c WHERE c.cam_id = m.mes_cam_id;
+    INSERT INTO Fact_Message SELECT m.sen_id, m.sen_campaign, m.sen_time, c.cam_company_id
+                            FROM stats.Sent_Message m, stats.Campaign c WHERE c.cam_id = m.sen_campaign;
   END; $$
   LANGUAGE 'plpgsql';
+
+SELECT update_starschema();

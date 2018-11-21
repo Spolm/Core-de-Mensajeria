@@ -1,5 +1,6 @@
 package Classes.M07_Template;
 
+import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
 import Classes.M07_Template.MessagePackage.*;
 import Classes.M07_Template.StatusPackage.*;
 
@@ -11,6 +12,7 @@ public class Template {
     private String creationDate;
     private int templateId;
     private Status status;
+    private ArrayList<Channel> channels;
 
     public Template() {}
 
@@ -50,6 +52,18 @@ public class Template {
     public Message getMessage(){ return message; }
 
     public void setMessage(Message message) { this.message = message; }
+
+    public ArrayList<Channel> getChannels() {
+        return channels;
+    }
+
+    public void setChannels(ArrayList<Channel> channels) {
+        this.channels = channels;
+    }
+
+    public void addChannel(Channel channel){
+        channels.add(channel);
+    }
 
     @Override
     public boolean equals(Object o) {
