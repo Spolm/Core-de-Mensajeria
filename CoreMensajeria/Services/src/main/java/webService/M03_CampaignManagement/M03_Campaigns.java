@@ -55,13 +55,44 @@ public class M03_Campaigns {
     }*/
 
         @GET
+        @Path("/CampaignDetails")
+        @Produces("application/json")
+
+        public Response getCampaignDetails(@QueryParam("id") int id) throws CampaignDoesntExistsException {
+            Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+            String select = "SELECT * FROM campaign where cam_id = ?";
+
+            try {
+
+                PreparedStatement ps = conn.prepareStatement(select);
+                ps.setInt(1, id);
+                ResultSet result = ps.executeQuery();
+                Campaign ca = new Campaign();
+                while (result.next()) {
+                    ca.set_idCampaign(result.getInt("cam_id"));
+                    ca.set_nameCampaign(result.getString("cam_name"));
+                    ca.set_descCampaign(result.getString("cam_description"));
+                    ca.set_startCampaign(result.getDate("cam_start_date"));
+                    ca.set_endCampaign(result.getDate("cam_end_date"));
+                    ca.set_statusCampaign(result.getBoolean("cam_status"));
+                }
+                rb.entity(gson.toJson(ca));
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+                throw new CampaignDoesntExistsException(e);
+            }
+
+            return rb.build();
+        }
+
+
+        @GET
         @Path("/GetCampaigns")
         @Produces("application/json")
 
-
         public Response getCampaigns(@QueryParam("id") int id) throws CampaignDoesntExistsException {
             Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-            //Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
             String select = "SELECT * FROM campaign where cam_company_id = ?";
             ArrayList<Campaign> campaignList= new ArrayList<>();
 
@@ -88,6 +119,9 @@ public class M03_Campaigns {
             catch (SQLException e) {
                 e.printStackTrace();
                 throw new CampaignDoesntExistsException(e);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
             }
             finally {
                 Sql.bdClose(conn);
