@@ -16,15 +16,15 @@ export class CampaignComponent implements OnInit {
   constructor(public router: Router, private http: HttpClient, 
     public rest: CampaignService, private toastr: ToastrService) { }
 
-private companyList = Array<Campaign>();
+private campaignList = Array<Campaign>();
 private vacio: boolean;
 
 ngOnInit() {
 
 this.rest.getCampaigns().subscribe((data) => {
 this.vacio = true;
-this.companyList = data;
-if (this.companyList.length > 0) {
+this.campaignList = data;
+if (this.campaignList.length > 0) {
 this.vacio = false;
 }
 }, (err) => {

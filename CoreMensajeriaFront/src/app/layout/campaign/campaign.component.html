@@ -2,15 +2,15 @@
   Campa&ntilde;as
 </h2>
 <div class="card">
-  <table class="table">
+  <table class="table mat-table">
     <thead>
       <tr>
-        <th class="col-3">Id</th>
-        <th class="col-4">Nombre</th>
-        <th class="col-4 text-center">Descripci&oacute;n</th>
-        <th class="col-4">Fecha Inicio</th>
-        <th class="col-4">Fecha Fin</th>
-        <th class="col-4 text-center">Estado</th>
+        <th class="col-2">Id</th>
+        <th class="col-2">Nombre</th>
+        <th class="col-2 text-center">Descripci&oacute;n</th>
+        <th class="col-2">Fecha Inicio</th>
+        <th class="col-2">Fecha Fin</th>
+        <th class="col-2 text-center">Estado</th>
       </tr>
     </thead>
     <tbody>
@@ -20,12 +20,12 @@
       <tr *ngIf="!empty">-->
           <tr *ngFor="let campaign of campaignList">
             <th>{{campaign._idCampaign}}</th> 
-            <th>{{campaign._name}}</th> 
-            <th>{{campaign._desc}}</th> 
-            <th>{{campaign._startDate}}</th> 
-            <th>{{campaign._endDate}}</th> 
-            <th *ngIf="!campaign._status"><span class="badge badge-danger">Inactiva</span></th>
-            <th *ngIf="campaign._status"><span class="badge badge-success">Activa</span></th> 
+            <th>{{campaign._nameCampaign}}</th> 
+            <th>{{campaign._descCampaign}}</th> 
+            <th>{{campaign._startCampaign}}</th> 
+            <th>{{campaign._endCampaign}}</th> 
+            <th *ngIf="!campaign._statusCampaign"><span class="badge badge-danger">Inactiva</span></th>
+            <th *ngIf="campaign._statusCampaign"><span class="badge badge-success">Activa</span></th> 
           </tr>
           
      <!-- </tr>-->

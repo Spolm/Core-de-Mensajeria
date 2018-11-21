@@ -1,3 +1,4 @@
+import webService.M03_CampaignManagement.M03_Campaigns;
 import webService.M04_Channel_Integrator.M05_Channel;
 import webService.M04_Channel_Integrator.M04_Integrator;
 import webService.M01_Login.M01_Login;
@@ -24,6 +25,7 @@ public class CoreMensajeria extends Application{
         h.add( M01_Login.class );
         h.add( M01_User.class );
         h.add(M02_Companies.class);
+        h.add(M03_Campaigns.class);
         h.add( M06_Application.class );
         h.add( M07_Template.class );
         h.add(M04_Integrator.class);

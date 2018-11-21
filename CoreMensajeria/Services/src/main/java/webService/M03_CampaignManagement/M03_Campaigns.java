@@ -23,7 +23,7 @@ public class M03_Campaigns {
     private Connection conn = Sql.getConInstance();
 /*
     @POST
-    @Path( "/AddCompany" )
+    @Path( "/AddCampaign" )
     @Produces( "application/json" )
 
     public String addCompany( @FormParam( "name" ) String name, @FormParam( "description" ) String description,
@@ -55,7 +55,7 @@ public class M03_Campaigns {
     }*/
 
         @GET
-        @Path("/GetCompanies")
+        @Path("/GetCampaigns")
         @Produces("application/json")
 
 

@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
-const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/M03_Campaigns/';
+const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/M03_Campaign/';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
