@@ -5,25 +5,24 @@ INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_ph
 					use_city, use_address, use_date_of_birth, use_gender) values
 					('1234', 'Ronnie', 1, 'ronnie@gmail.com', '0414255', 'Ve', 'Mi', 'Caricuao', '04/05/1995', 'F');
 
+INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
+VALUES ('Movistar', 13.4, 25, 'oqiwueyeiu',TRUE);
 
-INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
-VALUES ('Movistar', 13.4, 25, 'oqiwueyeiu');
 
+INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
+VALUES ('Digitel', 10, 20, 'oqiwueyeiu',TRUE);
 
-INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
-VALUES ('Digitel', 10, 20, 'oqiwueyeiu');
+INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
+VALUES ('Movilnet', 5.5, 2, 'kjdwlkajdjwkw',TRUE);
 
-INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
-VALUES ('Movilnet', 5.5, 2, 'kjdwlkajdjwkw');
+INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
+VALUES ('MailChimp', 1.5, 100, 'akwjdjkwjjwj',TRUE);
 
-INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
-VALUES ('MailChimp', 1.5, 100, 'akwjdjkwjjwj');
+INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
+VALUES ('Aweber', 2.3, 90, 'ooiiewqoiw',TRUE);
 
-INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
-VALUES ('Aweber', 2.3, 90, 'ooiiewqoiw');
-
-INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
-VALUES ('Infusionsoft', 18, 150, 'odiw24idididmm1');
+INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
+VALUES ('Infusionsoft', 18, 150, 'odiw24idididmm1',TRUE);
 
 INSERT INTO channel (cha_name, cha_description) VALUES ('SMS', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ae magna ultrices blandit. Nam blandit mi congue, vitae posuere odio blandit.');
 
@@ -151,6 +150,14 @@ VALUES (5,12);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
 VALUES (5,13);
 
+
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (1,1);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (2,2);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (2,4);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (3,2);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (4,9);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (4,11);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (5,6);
 
 
 INSERT INTO Company(com_name, com_description, com_status, com_user_id) values ('Company 1', 'Description', true, 1);

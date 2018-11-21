@@ -3,6 +3,9 @@ package webService.M07_Template;
 import Classes.M07_Template.HandlerPackage.TemplateHandler;
 import Classes.M07_Template.Template;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -46,6 +49,26 @@ public class M07_Template {
         TemplateHandler templateHandler = new TemplateHandler();
         flag = templateHandler.postTemplateStatus(id);
         return flag;
+    }
+
+    @POST
+    @Path("posttemplate")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response postTemplate(String json){
+        try {
+            JsonParser parser = new JsonParser();
+            JsonArray gsonArr = parser.parse(json).getAsJsonArray();
+            JsonObject gsonObj = gsonArr.get(0).getAsJsonObject();
+
+            String name = gsonObj.get("name").getAsString();
+            int parameterId = gsonObj.get("parameterId").getAsInt();
+            String text = "name: " + name + " id: " + String.valueOf(parameterId);
+            return Response.ok(gson.toJson(text)).build();
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
     }
 
 }
