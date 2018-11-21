@@ -63,7 +63,8 @@ CREATE TABLE integrator(
 	int_name varchar(250) not null,
 	int_messageCost float not null,
 	int_threadCapacity int not null,
-	int_tokenApi varchar(250) not null
+	int_tokenApi varchar(250) not null,
+	int_enabled boolean not null
 );
 
 CREATE TABLE channel(
