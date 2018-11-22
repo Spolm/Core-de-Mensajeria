@@ -10,8 +10,7 @@ public class Template {
     private Message message;
     private String creationDate;
     private int templateId;
-    private IStatus status;
-    private int statusId;
+    private Status status;
 
     public Template() {}
 
@@ -19,7 +18,7 @@ public class Template {
         this.templateId = templateId;
     }
 
-    public Template(Message message, IStatus status, String creationDate, int templateId) {
+    public Template(Message message, Status status, String creationDate, int templateId) {
         this.message = message;
         this.status = status;
         this.creationDate = creationDate;
@@ -42,11 +41,11 @@ public class Template {
         this.creationDate = creationDate;
     }
 
-    public String getStatus() {
-        return status.getIStatusTemplate();
+    public Status getStatus() {
+        return status;
     }
 
-    public void setStatus(IStatus status) { this.status = status; }
+    public void setStatus(Status status) { this.status = status; }
 
     public Message getMessage(){ return message; }
 
@@ -68,12 +67,5 @@ public class Template {
         return Objects.hash(message, getCreationDate(), getTemplateId(), status);
     }
 
-    public int getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
-    }
 }
 
