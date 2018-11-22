@@ -148,7 +148,7 @@ create table public.Sent_Message
     CONSTRAINT fk_application_id FOREIGN KEY ("sen_application") REFERENCES public.Application (app_id)
 );
 
-create table public.TEMPATE_CHANNEL_INTEGRATOR
+create table public.TEMPLATE_CHANNEL_INTEGRATOR
  (
  	tci_id serial PRIMARY KEY,
  	tci_template_id integer NOT NULL,
