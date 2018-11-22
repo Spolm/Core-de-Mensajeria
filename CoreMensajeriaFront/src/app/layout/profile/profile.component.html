@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-md-4">
                     <h3 class="mt-sm mb-xs"></h3>      
-                    <p><strong>Dirección: {{user._addressUser}}</strong></p>        
+                    <p><strong>Dirección: {{ user._addressUser }}</strong></p>        
                     <p><strong>Teléfono Local: {{user._phoneUser}}</strong></p> 
                 	<p><strong>Sexo: {{user._genderUser}}</strong></p>
                 </div>
@@ -29,25 +29,25 @@
     <div class="row" *ngFor="let user of Users;">
     	<div class="col-md-12">
     		<h3>Modificación de datos personales</h3>
-    		<form action="http://localhost:8080/CoreMensajeria_war_exploded/profile/edit" method="POST">
+    		<form role="form">
     			<div class="row">
-                    <input type="hidden" name="user_id" value="{{ user._idUser }}">
+                    <input type="hidden" name="_idUser" [(ngModel)]="user._idUser" >
     				<div class="col-md-6">
                         <div class="form-group">
                         	<label for="location" class="control-label">Dirección</label>
-                        	<input type="text" value="{{user._addressUser}}" name="location" class="form-control" placeholder="Introduce tu dirección domiciliaria">
+                        	<input type="text" name="_addressUser" [(ngModel)]="user._addressUser" class="form-control" placeholder="Introduce tu dirección domiciliaria">
                         </div>
 	    			</div>
 	    			<div class="col-md-6">
                         <div class="form-group">
                         	<label for="email" class="control-label">E-mail</label>
-                        	<input type="text" value="{{ user._emailUser }}" name="email" class="form-control" placeholder="Introduce tu e-mail">
+                        	<input type="text" name="_emailUser" [(ngModel)]="user._emailUser" class="form-control" placeholder="Introduce tu e-mail">
                         </div>
                         <div class="form-group">
                         	<label for="phone" class="control-label">Télefono</label>
-                        	<input type="number" value="{{user._phoneUser}}" name="phone" class="form-control" placeholder="Introduce tu télefono">
+                        	<input type="number" name="_phoneUser" [(ngModel)]="user._phoneUser" class="form-control" placeholder="Introduce tu télefono">
                         </div>
-                        <button type="submit" class="btn btn-lg btn-success float-md-right">Modificar</button>
+                        <button (click)="handleEdit()" class="btn btn-lg btn-success float-md-right">Modificar</button>
 	    			</div>
     			</div>
     		</form>
