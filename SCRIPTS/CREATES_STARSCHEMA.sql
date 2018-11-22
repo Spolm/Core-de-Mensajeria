@@ -16,8 +16,8 @@ create table public.Dim_Date(
 );
 
 create table public.Dim_Company_Campaign(
-	  com_id serial not null,
-	  cam_id serial not null,
+	  com_id int not null,
+	  cam_id int not null,
 	  com_name varchar(255) not null,
 	  cam_name varchar(255) NOT NULL,
     cam_description varchar(1000)NOT NULL,
@@ -28,21 +28,21 @@ create table public.Dim_Company_Campaign(
 );
 
 create table public.Dim_Channel(
-  	cha_id serial not null,
+  	cha_id int not null,
 	  cha_name varchar(250) not null,
   	cha_description varchar(250) not null,
 		CONSTRAINT pk_Channel primary key (cha_id)
 );
 
 create table public.Dim_Integrator(
-  	int_id serial not null,
+  	int_id int not null,
 	  int_name varchar(250) not null,
   	int_messageCost float not null,
 		CONSTRAINT pk_Integrator primary key (int_id)
 );
 
 create table public.Dim_Application(
-	  app_id serial not null,
+	  app_id int not null,
   	app_name varchar(32) not null,
 	  app_description varchar(500),
 		app_date timestamp not null,
