@@ -73,6 +73,14 @@
             <!-- (change) = "capturarDate()" -->
         </div>
     </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="dateOfBirth">Filtro de Tiempo</label>
+                <input type="date" class="form-control" id="myDate2" [(ngModel)]="opcionDateSleccionado2">  <!-- (change) = "capturarDate()" -->
+                  </div>  
+              </div>
+
+        <button type="button" class="btn btn-success btn-lg" (click) = "capturar() ; capturarDate();DoGraficas() ">Consultar</button>
 
     <button
         type="button"
