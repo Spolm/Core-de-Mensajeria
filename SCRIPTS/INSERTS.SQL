@@ -33,8 +33,8 @@ INSERT INTO channel_integrator (ci_channel_id, ci_integrator_id) VALUES
 (1,3), (2,4),
 (2,5), (2,6);
 
-INSERT INTO public.Template (tem_creation_date) 
-VALUES ('2003-2-1');
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
+VALUES ('2003-2-1', 1);
 
 INSERT INTO public.Message (mes_text,mes_template)
 VALUES ('esto es un mensaje de template con un [.$Parametro$.]',1);
@@ -54,8 +54,8 @@ VALUES (1,1);
 INSERT INTO public.Status (sta_name)
 VALUES ('No Aprobado');
 
-INSERT INTO public.Template (tem_creation_date) 
-VALUES ('2012-10-11');
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
+VALUES ('2012-10-11', 4);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('BANESCO REGISTRO: CONSUMO EN PUNTO DE VENTA CON TDD [.$Numero tarjeta$.] BS. [.$Monto$.] EL [.$Fecha$.] REF [.$REF$.].',2);
@@ -81,8 +81,8 @@ VALUES (2,4);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
 VALUES (2,5);
 
-INSERT INTO public.Template (tem_creation_date) 
-VALUES ('2014-10-11');
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
+VALUES ('2014-10-11', 8);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Movistar te invita a una funcion gratuita del [.$Evento$.]. Ven el [.$Fecha$.] [.$Hora$.] [.$Lugar$.].',3);
@@ -106,8 +106,8 @@ VALUES (3,7);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
 VALUES (3,8);
 
-INSERT INTO public.Template (tem_creation_date) 
-VALUES ('2014-11-11');
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
+VALUES ('2014-11-11', 10);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Acabas de escuchar [.$Cancion$.] Envia SI al [.$Codigo$.] si lo quieres como tu Entretono. Renta Bs.S. [.$Renta$.] c/impuestos. Entretono Bs.S. [.$Monto$.] c/impuestos.',4);
@@ -131,8 +131,8 @@ VALUES (4,1);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
 VALUES (4,3);
 
-INSERT INTO public.Template (tem_creation_date) 
-VALUES ('2016-07-04');
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
+VALUES ('2016-07-04', 13);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Si tu edad es entre 18 y 30, alistate en la FANB. Prensentate del [.$Fecha inicio$.] al [.$Fecha fin$.] en la unidad militar mas cercana',5);
