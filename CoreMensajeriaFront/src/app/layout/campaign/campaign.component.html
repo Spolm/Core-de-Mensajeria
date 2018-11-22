@@ -1,16 +1,15 @@
-<h2 class="text-center text-capitalize main-title">
-  Campa&ntilde;as
-</h2>
-<div class="card">
-  <table class="table mat-table">
-    <thead>
+<app-page-header [heading]="'Campañas'" [icon]="'fa fa-bullhorn'"></app-page-header>
+
+<div class="container-fluid">
+  <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
       <tr>
-        <th class="col-2">Id</th>
-        <th class="col-2">Nombre</th>
-        <th class="col-2 text-center">Descripci&oacute;n</th>
-        <th class="col-2">Fecha Inicio</th>
-        <th class="col-2">Fecha Fin</th>
-        <th class="col-2 text-center">Estado</th>
+        <th class="col">Id</th>
+        <th class="col">Nombre</th>
+        <th class="col">Descripci&oacute;n</th>
+        <th class="col">Fecha Inicio</th>
+        <th class="col">Fecha Fin</th>
+        <th class="col">Estado</th>
       </tr>
     </thead>
     <tbody>
@@ -19,33 +18,14 @@
       </tr>
       <tr *ngIf="!empty">-->
           <tr *ngFor="let campaign of campaignList">
-            <th>{{campaign._idCampaign}}</th> 
-            <th>{{campaign._nameCampaign}}</th> 
-            <th>{{campaign._descCampaign}}</th> 
-            <th>{{campaign._startCampaign}}</th> 
-            <th>{{campaign._endCampaign}}</th> 
-            <th *ngIf="!campaign._statusCampaign"><span class="badge badge-danger">Inactiva</span></th>
-            <th *ngIf="campaign._statusCampaign"><span class="badge badge-success">Activa</span></th> 
+            <td>{{campaign._idCampaign}}</td> 
+            <td>{{campaign._nameCampaign}}</td> 
+            <td>{{campaign._descCampaign}}</td> 
+            <td>{{campaign._startCampaign}}</td> 
+            <td>{{campaign._endCampaign}}</td> 
+            <td *ngIf="!campaign._statusCampaign"><span class="badge badge-danger" (click)="activateCampaign(campaign._idCampaign)">Inactiva</span></td>
+            <td *ngIf="campaign._statusCampaign"><span class="badge badge-success">Activa</span></td> 
           </tr>
-          
-     <!-- </tr>-->
-      
-
-      <!--<tr>
-        <td class="col-4">Mercantil en Linea </td>
-        <td class="col-4 text-center">1045.......................................................4865</td>
-        <td class="col-4 text-center">
-          <i class="fa fa-play"></i>
-        </td>
-        <td class="col-4 text-center" ><span class="badge badge-danger">Inactivo</span></td>
-      </tr>
-      <tr>
-        <td class="col-4">Banesco online <span class="badge badge-success">Activo</span> </td>
-        <td class="col-4 text-center">1789.......................................................1685</td>
-        <td class="col-4 text-center">
-          <i class="fa fa-play"></i>
-        </td>
-      </tr>-->
     </tbody>
   </table>
 </div>

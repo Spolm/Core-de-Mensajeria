@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
-const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/M03_Campaign/';
+const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/M03_Campaigns/';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
@@ -33,4 +33,9 @@ export class CampaignService {
       tap((campaign) => console.log(`Campaign added w/ ${campaign._name}`)),
     );
   }
+
+  activateCampaign(_idCampaign: Number){
+    return this.http.post(endpoint+'campaigns/update/'+_idCampaign, _idCampaign).subscribe();
+  }
+
 }

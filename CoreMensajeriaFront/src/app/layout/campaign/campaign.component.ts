@@ -9,19 +9,26 @@ import { Campaign } from '../../../model/campaign-model';
 @Component({
   selector: 'app-campaign',
   templateUrl: './campaign.component.html',
-  styleUrls: ['./campaign.component.scss']
+  styleUrls: ['./campaign.component.scss'],
+  animations: [routerTransition()]
 })
 export class CampaignComponent implements OnInit {
 
-  constructor(public router: Router, private http: HttpClient, 
-    public rest: CampaignService, private toastr: ToastrService) { }
+  campaigns: any = [];
 
+  constructor(public router: Router, private http: HttpClient, 
+    public campaignService: CampaignService, private toastr: ToastrService) { 
+      campaignService.getCampaigns().subscribe(data => {
+        this.campaigns = data;
+      });
+    }
+private counter: number = 0;
 private campaignList = Array<Campaign>();
 private vacio: boolean;
-
+private lastCampaignId: number;
 ngOnInit() {
 
-this.rest.getCampaigns().subscribe((data) => {
+this.campaignService.getCampaigns().subscribe((data) => {
 this.vacio = true;
 this.campaignList = data;
 if (this.campaignList.length > 0) {
@@ -32,23 +39,25 @@ console.log(err);
 })
 }
 
-/*getCampaigns() {
-this.toastr.info("Espere un momento",'Intentando acceder',{
-progressBar: true
-});
-this.rest.getCampaigns().subscribe((result) => {
-}, (err) => {
-console.log(err);
-if (err.status == 0) this.toastr.error('Problema de conexión');
-else this.toastr.error(err.error._error);
-});
-}*/
-
-/*handleLogin() {
-if (this.userData._username.length > 0 && this.userData._password.length > 0)
-this.login();
-else
-this.toastr.error('Debes ingresar las credenciales');
-}*/
+activateCampaign(_idCampaign: number){
+  this.toastr.info("Para confirmar realice doble click de nuevo", "Activar la campaña id: "+ _idCampaign,
+  {
+    timeOut: 2800,
+    progressBar: true
+  });
+  this.counter++;
+  if(this.counter == 2 && this.lastCampaignId == _idCampaign){
+    this.campaignService.activateCampaign(_idCampaign);
+    this.toastr.success("Estatus cambiado", "Campaign id: "+ _idCampaign,
+    {
+      timeOut: 2800,
+      progressBar: true
+    });
+    this.counter = 0;
+    this.ngOnInit();
+  }
+  if(this.counter >= 2) this.counter = 0;
+  this.lastCampaignId = _idCampaign;
+}
 
 }

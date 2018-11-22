@@ -2,6 +2,7 @@ package webService.M02_CompanyManagement;
 
 import Classes.M02_Company.Company;
 import Classes.Sql;
+import Exceptions.CompanyDoesntExistsException;
 import com.google.gson.Gson;
 
 import javax.ws.rs.GET;
@@ -53,6 +54,42 @@ public class M02_Companies {
             Sql.bdClose(conn);
         }
     }*/
+
+
+    @GET
+    @Path("/CompanyDetails")
+    @Produces("application/json")
+
+    public Response getCompanyDetails(@QueryParam("id") int id) throws CompanyDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        String select = "SELECT * FROM company where com_id = ?";
+
+        try {
+
+            PreparedStatement ps = conn.prepareStatement(select);
+            ps.setInt(1, id);
+            ResultSet result = ps.executeQuery();
+            Company co = new Company();
+            while (result.next()) {
+                co.set_idCompany(result.getInt("com_id"));
+                co.set_name(result.getString("com_name"));
+                co.set_desc(result.getString("com_description"));
+                co.set_status(result.getBoolean("com_status"));
+            }
+            rb.entity(gson.toJson(co));
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new CompanyDoesntExistsException(e);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return rb.build();
+    }
+
+
 
     @GET
     @Path("/GetCompanies")
