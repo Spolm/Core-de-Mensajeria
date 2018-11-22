@@ -1,5 +1,9 @@
 package Classes.M07_Template.HandlerPackage;
 
+import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
+import Classes.M04_Channel_Integrator.ChannelPackage.ChannelFactory;
+import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
+import Classes.M04_Channel_Integrator.IntegratorPackage.IntegratorService;
 import Classes.M07_Template.StatusPackage.ApprovedStatus;
 import Classes.M07_Template.StatusPackage.NotApprovedStatus;
 import Classes.M07_Template.StatusPackage.Status;
@@ -20,45 +24,77 @@ public class TemplateHandler {
         return sql;
     }
 
-    /*
-     * Ineficiente, Refactorisable (JOIN)
-     */
-    public ArrayList<Template> getTemplates() {
+    public ArrayList<Template> getTemplates(){
         ArrayList<Template> templateArrayList = new ArrayList<>();
-        try {
-            ResultSet resultSet = sql.sqlConn("SELECT * FROM PUBLIC.TEMPLATE");
-            while (resultSet.next()){
+        try{
+            ResultSet resultSet = sql.sqlConn("select t.tem_id, t.tem_creation_date, s.sta_id, s.sta_name\n" +
+                    "from template t\n" +
+                    "inner join template_status ts\n" +
+                    "on ts.ts_template = t.tem_id\n" +
+                    "\tinner join\n" +
+                    "\t(\n" +
+                    "\t\tselect ts_template, max(ts_id) maxID from template_status \n" +
+                    "\t\tgroup by ts_template\n" +
+                    "\t)ts_ on ts_.ts_template = ts.ts_template\n" +
+                    "\t\tand ts.ts_id = ts_.maxID\n" +
+                    "inner join status s\n" +
+                    "on ts.ts_status = s.sta_id\n" +
+                    "order by t.tem_id");
+            while(resultSet.next()){
                 Template template = new Template();
                 template.setTemplateId(resultSet.getInt("tem_id"));
                 template.setCreationDate(resultSet.getString("tem_creation_date"));
-                int i = template.getTemplateId();
-                ResultSet resultSetAux = sql.sqlConn("SELECT * FROM TEMPLATE_STATUS WHERE TS_TEMPLATE = " +
-                        template.getTemplateId() +
-                        " ORDER BY TS_ID DESC LIMIT 1");
-                resultSetAux.next();
-                int statusId = resultSetAux.getInt("ts_status");
-                resultSetAux = sql.sqlConn("SELECT * FROM STATUS WHERE STA_ID = " + statusId);
-                resultSetAux.next();
-                Status status;
-                String statusName = resultSetAux.getString("sta_name");
-                if(statusName.equals("Aprobado")){
-                    status = new ApprovedStatus(statusId,statusName);
-                }else if(statusName.equals("No Aprobado")){
-                    status = new NotApprovedStatus(statusId,statusName);
-                }else{
-                    status = null;
-                }
+                Status status = Status.createStatus(resultSet.getInt("sta_id"),
+                        resultSet.getString("sta_name"));
                 template.setStatus(status);
-                //template.setStatusId(statusId);
+                template.setChannels(getChannels(template.getTemplateId()));
                 templateArrayList.add(template);
             }
-
         }catch (SQLException e) {
             e.printStackTrace();
         }catch (Exception e){
             e.printStackTrace();
         }finally {
             return templateArrayList;
+        }
+    }
+
+    public ArrayList<Channel> getChannels(int templateId){
+        ArrayList<Channel> channels = new ArrayList<>();
+        try {
+            ResultSet resultSet =
+                    sql.sqlConn(
+                            "select tci.tci_template_id, ci.ci_channel_id, ci.ci_integrator_id, \n"
+                                    + "c.cha_name, cha_description\n"
+                                    + "from channel_integrator ci\n"
+                                    + "inner join template_channel_integrator tci\n"
+                                    + "on tci.tci_ci_id = ci.ci_id\n"
+                                    + "inner join channel c\n"
+                                    + "on c.cha_id = ci.ci_channel_id\n"
+                                    + "where tci.tci_template_id = " + templateId + "\n"
+                                    + "order by ci.ci_channel_id;");
+            while(resultSet.next()){
+                ArrayList<Integrator> integrators = new ArrayList<>();
+                IntegratorService integratorService = IntegratorService.getInstance();
+                Integrator integrator = integratorService.getConcreteIntegrator(
+                        resultSet.getInt("ci_integrator_id")
+                );
+                integrators.add(integrator);
+                Channel channel = new ChannelFactory().getChannel(
+                        resultSet.getInt("ci_channel_id"),
+                        resultSet.getString("cha_name"),
+                        resultSet.getString("cha_description"),
+                        integrators
+                );
+                channels.add(channel);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }finally{
+            return channels;
         }
     }
 
