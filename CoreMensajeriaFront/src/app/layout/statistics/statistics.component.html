@@ -1,51 +1,96 @@
-<h2 class="text-center text-capitalize main-title">
-    Estadísticas
-</h2>
+<h2 class="text-center text-capitalize main-title">Estadísticas</h2>
 
-<div class="Container">
-<div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="inputGroupSelect01">Estadistcas de: </label>
-        </div>
-        <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="opcionSeleccionado">  <!-- (change) = "capturar()" -->
-          <option selected value="0">Elija</option>
-          <option *ngFor="let dato of datos">
-            {{dato}}
-          </option>
-        </select>
-      </div>
-      <div class="alert alert-info" role="alert">
-        <p> NOTA! : Si no proporciona algunos de los filtros el sistema mostrara los resultados globales de 
-        la estadística que se selecciono a consultar.</p>
-      </div>
-    
-      <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="dateOfBirth">Filtro de Tiempo</label>
-              <input type="date" class="form-control" id="myDate" [(ngModel)]="opcionDateSleccionado">  <!-- (change) = "capturarDate()" -->
-                </div>  
+<div class="container">
+    <form>
+        <div class="row">
+            <div class="col-md-3">
+                <ng-multiselect-dropdown
+                    [placeholder]="'Compañía'"
+                    [data]="companiesDropdown"
+                    [(ngModel)]="selectedCompanies"
+                    [settings]="companiesDropdownSettings"
+                >
+                </ng-multiselect-dropdown>
             </div>
 
-        <button type="button" class="btn btn-success btn-lg" (click) = "capturar() ; capturarDate();DoGraficas() ">Consultar</button>
+            <div class="col-md-3">
+                <ng-multiselect-dropdown
+                    [placeholder]="'Campaña'"
+                    [data]="campaignsDropdown"
+                    [(ngModel)]="selectedCampaigns"
+                    [settings]="campaignsDropdownSettings"
+                >
+                </ng-multiselect-dropdown>
+            </div>
 
+            <div class="col-md-3">
+                <ng-multiselect-dropdown
+                    [placeholder]="'Canal'"
+                    [data]="channelsDropdown"
+                    [(ngModel)]="selectedChannels"
+                    [settings]="channelsDropdownSettings"
+                >
+                </ng-multiselect-dropdown>
+            </div>
+        </div>
+    </form>
+</div>
 
-        <p [hidden]="opcionSeleccionado == '0'">Haz seleccionado la Consulta acerca :  {{ verSeleccion }}</p>
-     
- </div>
+<div class="Container">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">
+                Estadistcas de:
+            </label>
+        </div>
+        <select
+            class="custom-select"
+            id="inputGroupSelect01"
+            [(ngModel)]="opcionSeleccionado"
+        >
+            <!-- (change) = "capturar()" -->
+            <option selected value="0">Elija</option>
+            <option *ngFor="let dato of datos"> {{ dato }} </option>
+        </select>
+    </div>
+    <div class="alert alert-info" role="alert">
+        <p>
+            NOTA! : Si no proporciona algunos de los filtros el sistema mostrara
+            los resultados globales de la estadística que se selecciono a
+            consultar.
+        </p>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="dateOfBirth">Filtro de Tiempo</label>
+            <input
+                type="date"
+                class="form-control"
+                id="myDate"
+                [(ngModel)]="opcionDateSleccionado"
+            />
+            <!-- (change) = "capturarDate()" -->
+        </div>
+    </div>
+
+    <button
+        type="button"
+        class="btn btn-success btn-lg"
+        (click)="capturar(); capturarDate(); DoGraficas()"
+    >
+        Consultar
+    </button>
+
+    <p [hidden]="opcionSeleccionado == '0'">
+        Haz seleccionado la Consulta acerca : {{ verSeleccion }}
+    </p>
+</div>
 
 <div class="Container">
     <div class="row" style="margin: 5% 0%">
-      <div class="card bg-primary">
-        <div id= "bar-chart"></div>   
-            </div>
-                <div class="card bg-primary">
-                    <div id= "line-chart"></div>
-                     </div>
-                          <div class="card bg-primary">
-                             <div id= "pie-chart"></div>  
-                                 </div>
- </div>
+        <div class="card bg-primary"><div id="bar-chart"></div></div>
+        <div class="card bg-primary"><div id="line-chart"></div></div>
+        <div class="card bg-primary"><div id="pie-chart"></div></div>
+    </div>
 </div>
-
-
-

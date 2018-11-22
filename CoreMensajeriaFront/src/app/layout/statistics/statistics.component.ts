@@ -25,6 +25,18 @@ export class StatisticsComponent implements OnInit {
     paramDate: string;
     paramType: string;
 
+    companiesDropdown = [];
+    companiesDropdownSettings = {};
+    selectedCompanies = [];
+
+    campaignsDropdown = [];
+    campaignsDropdownSettings = {};
+    selectedCampaigns = [];
+
+    channelsDropdown = [];
+    channelsDropdownSettings = {};
+    selectedChannels = [];
+
     public graph = {
         data: [],
         layout: {
@@ -51,6 +63,54 @@ export class StatisticsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.companiesDropdown = [
+            { company_id: 1, company_name: "Compañía 1" },
+            { company_id: 2, company_name: "Compañía 2" },
+            { company_id: 3, company_name: "Compañía 3" },
+            { company_id: 3, company_name: "Compañía 4" }
+        ];
+
+        this.companiesDropdownSettings = {
+            singleSelection: false,
+            idField: "company_id",
+            textField: "company_name",
+            selectAllText: "Seleccionar todos",
+            unSelectAllText: "Deseleccionar todos",
+            itemsShowLimit: 1,
+            allowSearchFilter: true
+        };
+
+        this.campaignsDropdown = [
+            { campaign_id: 1, campaign_name: "Campaña 1" },
+            { campaign_id: 2, campaign_name: "Campaña 2" },
+            { campaign_id: 3, campaign_name: "Campaña 3" },
+            { campaign_id: 3, campaign_name: "Campaña 4" }
+        ];
+
+        this.campaignsDropdownSettings = {
+            singleSelection: false,
+            idField: "campaign_id",
+            textField: "campaign_name",
+            selectAllText: "Seleccionar todos",
+            unSelectAllText: "Deseleccionar todos",
+            itemsShowLimit: 1,
+            allowSearchFilter: true
+        };
+
+        this.channelsDropdown = [
+            { channel_id: 1, channel_name: "SMS" },
+            { channel_id: 2, channel_name: "Email" }
+        ];
+
+        this.channelsDropdownSettings = {
+            singleSelection: false,
+            idField: "channel_id",
+            textField: "channel_name",
+            selectAllText: "Seleccionar todos",
+            unSelectAllText: "Deseleccionar todos",
+            itemsShowLimit: 1,
+            allowSearchFilter: true
+        };
         // this.Servicio.getStatisticsData1().subscribe(data => {
         //  this.json2 = data
         // this.chart(this.json2)
@@ -133,7 +193,24 @@ export class StatisticsComponent implements OnInit {
             console.log("DataChart:", this.json2);
         });
     }
- 
+    /* Eliminar(id, id2, id3){
+  var coso= document.getElementById(id);
+  var coso2 =document.getElementById(id2);
+  var coso3 = document.getElementById(id3);
+   
+   if (!coso &&!coso2 &&!coso3)
+
+   {
+console.log("ALERTA");
+   }
+   else
+   {
+     coso.remove();
+     coso2.remove();
+     coso3.remove();
+       }
+   }*/
+
     chart3(datos) {
         const graph = [datos];
         const linediv = document.getElementById("pie-chart");
