@@ -1,7 +1,9 @@
 package webService.M06_DataOrigin;
 
+import Classes.M06_DataOrigin.AddApplicationData;
 import Classes.M06_DataOrigin.ApplicationDAO;
 import com.google.gson.Gson;
+import exceptions.AddApplicationProblemException;
 import exceptions.ApplicationNotFoundException;
 import exceptions.DatabaseConnectionProblemException;
 
@@ -36,6 +38,7 @@ public class M06_Application {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getApplications(@PathParam("id") int id){
         try{
+            System.out.println("Id API:"+id);
             return Response.ok(gson.toJson(_applicationDAO.getApplication(id))).build();
         }catch (ApplicationNotFoundException e){
             return Response.status(404).entity(gson.toJson(e.getMessage())).build();
@@ -92,7 +95,6 @@ public class M06_Application {
 
     @DELETE
     @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteApplication(@PathParam("id") int id) {
         String message = "Aplicacion eliminada.";
@@ -101,6 +103,21 @@ public class M06_Application {
             return Response.ok(gson.toJson(message)).build();
         } catch (SQLException e) {
             return Response.status(404).build();
+        }
+    }
+
+
+    @Path("/add")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addApplication(AddApplicationData application){
+
+        try {
+            _applicationDAO.addApplication(application);
+            return Response.ok().build();
+        } catch (AddApplicationProblemException e) {
+            return Response.status(404).entity(gson.toJson(e.getMessage())).build();
         }
     }
     /*    POR AHI VAN LOS TIROS

@@ -1,6 +1,7 @@
 package Classes.M06_DataOrigin;
 
 import Classes.Sql;
+import exceptions.AddApplicationProblemException;
 import exceptions.ApplicationNotFoundException;
 import exceptions.DatabaseConnectionProblemException;
 
@@ -10,14 +11,14 @@ import java.util.ArrayList;
 public class ApplicationDAO {
 
     final String QUERY_SELECT_ALL_APPLICATIONS = "SELECT * FROM public.application ORDER BY app_name";
-    final String QUERY_SELECT_APPLICATION_BY_ID = "SELECT * FROM public.application WHERE app_id=?";
+    final String QUERY_SELECT_APPLICATION_BY_ID = "SELECT * FROM public.application where app_id= ?";
     final String QUERY_SELECT_APPLICATION_BY_TOKEN = "SELECT * FROM public.application WHERE app_token=?";
     final String QUERY_INSERT_APPLICATION = "INSERT INTO public.application" +
                                     "(app_name,app_description,app_token,app_user_creator,app_status,app_date) values" +
-                                    "(?, ?, ?, ?, 1, timestamp );";
+                                    "(?, ?, ?, ?, 1, now() );";
     final String QUERY_UPDATE_APPLICATION = "UPDATE FROM public.application SET " +
                                     "app_name=? , app_description=? WHERE app_id=? ;";
-    final String QUERY_UPDATE_APPLICATION_STATUS = "UPDATE FROM public.application SET app_status=? WHERE app_id=? ;";
+    final String QUERY_UPDATE_APPLICATION_STATUS = "UPDATE public.application SET app_status=? WHERE app_id=? ;";
     final String QUERY_DELETE_APPLICATION = "DELETE FROM public.application where app_id=?";
 
     private Connection _conn;
@@ -50,11 +51,11 @@ public class ApplicationDAO {
             PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_APPLICATION_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
-
+            result.next();
             return this.extractApplication(result);
 
         } catch (SQLException e) {
-            throw new DatabaseConnectionProblemException("Error de conexion.", e);
+            throw new DatabaseConnectionProblemException("Error al extraer data.", e);
         } finally {
             Sql.bdClose(_conn);
         }
@@ -65,7 +66,7 @@ public class ApplicationDAO {
             PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_APPLICATION_BY_TOKEN);
             preparedStatement.setString(1, token);
             ResultSet result = preparedStatement.executeQuery();
-
+            result.next();
             return this.extractApplication(result);
 
         } catch (SQLException e) {
@@ -108,19 +109,20 @@ public class ApplicationDAO {
         }
     }
 
-    public void addApplication (Application app) throws SQLException, DatabaseConnectionProblemException {
+    public void addApplication (AddApplicationData app) throws AddApplicationProblemException {
 
         try {
             PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_INSERT_APPLICATION);
             preparedStatement.setString(1, app.get_nameApplication());
             preparedStatement.setString(2, app.get_descriptionApplication());
             preparedStatement.setString(3, this._encrypter.encrypt(
-                    app.get_idApplication() + app.get_nameApplication() + app.get_dateOfCreateApplication()
+                    app.get_userId() + app.get_nameApplication()
             ));
-            preparedStatement.setInt(4, app.get_userCreatorApplication());
+            preparedStatement.setInt(4, app.get_userId());
             preparedStatement.execute();
         }catch (SQLException e){
-            throw new DatabaseConnectionProblemException("Error de conexion.", e);
+            throw new AddApplicationProblemException("Error al insertar en la Base de Datos", e);
+
         }
     }
 
