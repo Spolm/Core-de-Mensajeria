@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ParameterHandler {
-    public static Sql sql = new Sql();;
+    public static Sql sql;
 
     public ParameterHandler() {
         sql = new Sql();
@@ -42,6 +42,7 @@ public class ParameterHandler {
 
     private static ArrayList<Parameter> executeParameterQuery(String query) {
         ArrayList<Parameter> parameterList = new ArrayList<>();
+        sql = new Sql();
         try {
             ResultSet resultSet = sql.sqlConn(query);
             while(resultSet.next()){

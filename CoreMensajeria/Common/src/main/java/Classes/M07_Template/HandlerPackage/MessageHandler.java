@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MessageHandler {
-    public static Sql sql = new Sql();
+    public static Sql sql;
 
     public MessageHandler() {
         sql = new Sql();
@@ -29,6 +29,8 @@ public class MessageHandler {
                 Message message = new Message();
                 message.setMessageId(resultSet.getInt("mes_id"));
                 message.setMessage(resultSet.getString("mes_text"));
+                message.setParameters(ParameterHandler.getParametersByMessage(message.getMessageId()));
+                /*
                 ResultSet resultSetAux = sql.sqlConn(
                         "SELECT PAR_ID,PAR_NAME FROM PARAMETER P " +
                                 "INNER JOIN MESSAGE_PARAMETER MP " +
@@ -42,6 +44,7 @@ public class MessageHandler {
                     parameterArrayList.add(parameter);
                 }
                 message.setParameters(parameterArrayList);
+                */
                 templateArrayList.get(x).setMessage(message);
             }
         }catch (SQLException e) {
@@ -56,6 +59,7 @@ public class MessageHandler {
     public static Message getMessage(int templateId){
         String query = "select mes_id,mes_text from message where mes_template =" + templateId;
         Message message = new Message();
+        sql = new Sql();
         try {
             ResultSet resultSet = sql.sqlConn(query);
             if (resultSet.next()){
