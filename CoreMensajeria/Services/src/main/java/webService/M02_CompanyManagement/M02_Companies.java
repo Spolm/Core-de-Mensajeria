@@ -56,31 +56,47 @@ public class M02_Companies {
     }*/
 
 
-    @GET
-    @Path("/CompanyDetails")
-    @Produces("application/json")
 
-    public Response getCompanyDetails(@QueryParam("id") int id) throws CompanyDoesntExistsException {
-        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+
+    //region API Detalles Compañia
+
+    public Company getDetails (int id) throws CompanyDoesntExistsException {
         String select = "SELECT * FROM company where com_id = ?";
-
+        Company co = new Company();
         try {
 
             PreparedStatement ps = conn.prepareStatement(select);
             ps.setInt(1, id);
             ResultSet result = ps.executeQuery();
-            Company co = new Company();
             while (result.next()) {
                 co.set_idCompany(result.getInt("com_id"));
                 co.set_name(result.getString("com_name"));
                 co.set_desc(result.getString("com_description"));
                 co.set_status(result.getBoolean("com_status"));
             }
-            rb.entity(gson.toJson(co));
         }
         catch (SQLException e) {
             e.printStackTrace();
             throw new CompanyDoesntExistsException(e);
+        }
+
+        return co;
+    }
+
+    //endregion
+
+    @GET
+    @Path("/CompanyDetails")
+    @Produces("application/json")
+
+    public Response getCompanyDetails(@QueryParam("id") int id) throws CompanyDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        try {
+            Company co = getDetails(id);
+            rb.entity(gson.toJson(co));
+        }
+        catch (CompanyDoesntExistsException e) {
+            e.printStackTrace();
         }
         catch (Exception e) {
             e.printStackTrace();

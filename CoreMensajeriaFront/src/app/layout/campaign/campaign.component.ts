@@ -48,7 +48,7 @@ activateCampaign(_idCampaign: number){
   this.counter++;
   if(this.counter == 2 && this.lastCampaignId == _idCampaign){
     this.campaignService.activateCampaign(_idCampaign);
-    this.toastr.success("Estatus cambiado", "Campaign id: "+ _idCampaign,
+    this.toastr.success("Campaña activada", "Campaign id: "+ _idCampaign,
     {
       timeOut: 2800,
       progressBar: true
