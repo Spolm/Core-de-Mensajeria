@@ -53,9 +53,12 @@ create table public.Application
     app_date timestamp not null,
     app_status integer not null,
     app_user_creator integer not null,
+    app_company_owner integer not null,
 	CONSTRAINT pk_aplication primary key (app_id),
 	CONSTRAINT fk_user_aplication foreign key ("app_user_creator") 
-	REFERENCES public.User(use_id) 
+	REFERENCES public.User(use_id),
+	CONSTRAINT fk_company_aplication foreign key ("app_company_owner") 
+	REFERENCES public.Company(com_id)
 );
 
 CREATE TABLE integrator(
