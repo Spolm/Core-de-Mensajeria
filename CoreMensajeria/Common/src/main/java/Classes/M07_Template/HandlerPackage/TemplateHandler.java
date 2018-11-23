@@ -60,6 +60,41 @@ public class TemplateHandler {
         }
     }
 
+    public Template getTemplate(int id){
+        Template template = new Template();
+        String query="select tem_id,ts_id, tem_creation_date, sta_name\n" +
+                "from template_status,template,status\n" +
+                "where tem_id = "+ id + " and tem_id = ts_template and sta_id = ts_status\n" +
+                "order by ts_id desc limit 1";
+        try{
+            ResultSet resultSet = sql.sqlConn(query);
+            if (resultSet.next()){
+                //asignamos los datos basicmos del propio
+                template.setTemplateId(resultSet.getInt("tem_id"));
+                template.setCreationDate(resultSet.getString("tem_creation_date"));
+
+                //asignamos el mensae y status del template
+                template.setMessage(MessageHandler.getMessage(template.getTemplateId()));
+                template.setStatus(Status.createStatus(resultSet.getInt("ts_id"),
+                        resultSet.getString("sta_name")));
+
+                //asignamos canales y campañas
+                template.setChannels(getChannels(template.getTemplateId()));
+                template.setCampaign(this.getCampaing(template.getTemplateId()));
+
+                //a falta de origenes y usuario creador
+            }
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            return template;
+        }
+    }
+
+
     public ArrayList<Channel> getChannels(int templateId){
         ArrayList<Channel> channels = new ArrayList<>();
         try {
@@ -99,21 +134,6 @@ public class TemplateHandler {
         }
     }
 
-    public Template getTemplate(int id){
-        Template template = new Template();
-        try{
-            ResultSet resultSet = sql.sqlConn("SELECT * FROM PUBLIC.TEMPLATE WHERE TEM_ID = "+id);
-            resultSet.next();
-            template.setTemplateId(resultSet.getInt("tem_id"));
-            template.setCreationDate(resultSet.getString("tem_creation_date"));
-        } catch(SQLException e){
-            e.printStackTrace();
-        } catch (Exception e){
-            e.printStackTrace();
-        } finally {
-            return template;
-        }
-    }
 
     public Campaign getCampaing(int templateId){
         Campaign campaign = new Campaign();

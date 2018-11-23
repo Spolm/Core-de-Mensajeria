@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MessageHandler {
-    public Sql sql;
+    public static Sql sql = new Sql();
 
     public MessageHandler() {
         sql = new Sql();
@@ -53,4 +53,22 @@ public class MessageHandler {
         }
     }
 
+    public static Message getMessage(int templateId){
+        String query = "select mes_id,mes_text from message where mes_template =" + templateId;
+        Message message = new Message();
+        try {
+            ResultSet resultSet = sql.sqlConn(query);
+            if (resultSet.next()){
+                message.setMessageId(resultSet.getInt("mes_id"));
+                message.setMessage(resultSet.getString("mes_text"));
+                message.setParameters(ParameterHandler.getParametersByMessage(message.getMessageId()));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally {
+            return message;
+        }
+    }
 }
