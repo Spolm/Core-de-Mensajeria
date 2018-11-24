@@ -11,9 +11,13 @@ import { RestService } from '../../shared/services/rest.service';
 })
 export class ApplicationComponent implements OnInit {
 
+  @Input() newApp = { _nameApplication : '', _descriptionApplication : '', _userId : 1, _companyId: 0 };
   applications: any = [];
-  @Input() newApp = { _name : '', _description : '' };
-  displayModal = false;
+  singleApplication: any =[];
+  companies : any = [];
+  modalBackdrop = false;
+  displayNewAppModal = false;
+  displayAppInfoModal = false;
 
   constructor(public rest: RestService,  private toastr: ToastrService) { 
   }
@@ -25,36 +29,82 @@ export class ApplicationComponent implements OnInit {
   getApplications() {
     this.applications = [];
     this.rest.getData("applications").subscribe((data: {}) => {
-      console.log(data);
       this.applications = data;
+    },
+    (err) => {
+      this.toastr.error("Error de Conexion.");
+      console.log(err);
     });
   }
 
   deleteApplication(id){
-    console.log("app:" + id);
-    
-    this.applications = [];
     this.rest.deleteData("applications", id)
     .subscribe(res => {
-      this.toastr.success("Good");
+      this.toastr.success(res._message);
       this.getApplications();
     }, (err) => {
-      this.toastr.error("Error de conexion.");
+      this.toastr.error(err.error._message);
       console.log(err);
     }
     );
   }
 
   addApplication(){
-    console.log(this.newApp);
+    this.newApp._companyId = 2;
+    this.rest.postData("applications", this.newApp)
+    .subscribe(res => {
+      this.toastr.success(res._message);
+      this.toggleNewAppModal();
+      this.getApplications();
+    }, (err) => {
+      this.toastr.error(err.error._message);
+      console.log(err);
+    });
   }
 
-  openModal(){
-    this.displayModal = true; 
+  activeApplication(id){
+    this.rest.putData("applications/active","", id)
+    .subscribe(res => {
+      this.toastr.success(res._message);
+      this.getApplications();
+    }, (err) => {
+      this.toastr.error(err.error._message);
+      console.log(err);
+    });
   }
 
-  closeModal(){
-    this.displayModal = false; 
+  pauseApplication(id){
+    this.rest.putData("applications/inactive","", id)
+    .subscribe(res => {
+      this.toastr.success(res._message);
+      this.getApplications();
+    }, (err) => {
+      this.toastr.error(err.error._message);
+      console.log(err);
+    });
+  }
+
+  viewApplication(id){
+    this.rest.getData("applications/id/" + id)
+    .subscribe((data: {}) => {
+      this.singleApplication = data;
+      this.toggleAppInfoModal();
+      console.log(data);
+      
+    }, (err) => {
+      this.toastr.error(err.error._message);
+      console.log(err);
+    });
+  }
+
+  toggleNewAppModal(){
+    this.modalBackdrop = !this.modalBackdrop; 
+    this.displayNewAppModal = !this.displayNewAppModal;
+  }
+
+  toggleAppInfoModal(){
+    this.modalBackdrop = !this.modalBackdrop; 
+    this.displayAppInfoModal = !this.displayAppInfoModal;
   }
 
 }

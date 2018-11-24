@@ -32,13 +32,13 @@ export class RestService {
       map(this.extractData));
   }
   
-  addData (component, data): Observable<any> {
+  postData (component, data): Observable<any> {
     return this.http.post<any>(this.endpoint + component, JSON.stringify(data), this.httpOptions).pipe(
       //catchError(this.handleError<any>('addProduct'))
     );
   }
   
-  updateData (component, data, id): Observable<any> {
+  putData (component, data, id): Observable<any> {
     return this.http.put(this.endpoint + component + '/' + id, JSON.stringify(data), this.httpOptions).pipe(
       tap(_ => console.log(`updated id=${id}`))/*,
       catchError(this.handleError<any>('updateData'))*/
