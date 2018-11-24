@@ -69,7 +69,7 @@ public class TemplateHandler {
         try{
             ResultSet resultSet = sql.sqlConn(query);
             if (resultSet.next()){
-                //asignamos los datos basicmos del propio
+                //asignamos los datos basicos del propio template
                 template.setTemplateId(resultSet.getInt("tem_id"));
                 template.setCreationDate(resultSet.getString("tem_creation_date"));
 
