@@ -2,15 +2,12 @@ package webService.M06_DataOrigin;
 
 import Classes.M06_DataOrigin.AddApplicationData;
 import Classes.M06_DataOrigin.ApplicationDAO;
-import com.google.gson.Gson;
-import exceptions.AddApplicationProblemException;
+import com.google.gson.*;
 import exceptions.ApplicationNotFoundException;
 import exceptions.DatabaseConnectionProblemException;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.*;
 
 @Path("/applications")
 public class M06_Application {
@@ -18,155 +15,141 @@ public class M06_Application {
     private Gson gson = new Gson();
     private ApplicationDAO _applicationDAO = new ApplicationDAO();
 
+    //                   GET ENDPOINTS
+    //Get all applications endpoint. Path: applications
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getApplications(){
         try{
             return Response.ok(gson.toJson(_applicationDAO.getApplications())).build();
-        }catch (ApplicationNotFoundException e){
-            return Response.status(404).entity(gson.toJson(e.getMessage())).build();
         }
         catch (DatabaseConnectionProblemException e) {
-            return Response.status(500).entity(gson.toJson(e.getMessage())).build();
+            return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
 
     }
 
+    //Get all applications by company ID endpoint. Path: applications/company/{companyID}
+    @GET
+    @Path("/company/{companyId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getApplications(@PathParam("companyId") int companyId){
+        try{
+            return Response.ok(gson.toJson(_applicationDAO.getApplications(companyId))).build();
+        }
+        catch (DatabaseConnectionProblemException e) {
+            return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
+        }
+
+    }
+
+    //Get application by application ID endpoint. Path: applications/id/(id)
     @GET
     @Path("/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getApplications(@PathParam("id") int id){
+    public Response getApplication(@PathParam("id") int id){
         try{
-            System.out.println("Id API:"+id);
             return Response.ok(gson.toJson(_applicationDAO.getApplication(id))).build();
         }catch (ApplicationNotFoundException e){
-            return Response.status(404).entity(gson.toJson(e.getMessage())).build();
+            return Response.status(404).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
         catch (DatabaseConnectionProblemException e) {
-            return Response.status(500).entity(gson.toJson(e.getMessage())).build();
+            return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
 
     }
 
+    //Get application by Token endpoint. Path: applications/token/{token}
     @GET
     @Path("/token/{token}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getApplications(@PathParam("token") String token){
+    public Response getApplication(@PathParam("token") String token){
         try{
             return Response.ok(gson.toJson(_applicationDAO.getApplication(token))).build();
         }catch (ApplicationNotFoundException e){
-            return Response.status(404).entity(gson.toJson(e.getMessage())).build();
+            return Response.status(404).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
         catch (DatabaseConnectionProblemException e) {
-            return Response.status(500).entity(gson.toJson(e.getMessage())).build();
+            return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
 
     }
 
+    //                   PUT ENDPOINTS
+    //Activate an application by application Id. Path: applications/active/{id}
     @PUT
     @Path("/active/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response activeApplication(@PathParam("id") int id) {
-
         try {
-            String message = "Aplicacion actualizada.";
             _applicationDAO.updateApplication(id,1);
-            return Response.ok(gson.toJson(message)).build();
+            return Response.ok(generateSuccessAsJson("Aplicacion activada exitosamente.")).build();
         } catch (DatabaseConnectionProblemException e) {
-            return Response.status(500).entity(gson.toJson(e.getMessage())).build();
+            return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
+        }catch (ApplicationNotFoundException e){
+            return Response.status(404).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
     }
+
+    //Inactivate an application by application Id. Path: applications/inactive/{id}
     @PUT
     @Path("/inactive/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response inactiveApplication(@PathParam("id") int id) {
-
         try {
-            String message = "Aplicacion actualizada.";
             _applicationDAO.updateApplication(id, 0);
-            return Response.ok(gson.toJson(message)).build();
+            return Response.ok(this.generateSuccessAsJson("Aplicacion pausada exitosamente.")).build();
         } catch (DatabaseConnectionProblemException e) {
-            return Response.status(500).entity(gson.toJson(e.getMessage())).build();
+            return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
+        }catch (ApplicationNotFoundException e){
+            return Response.status(404).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
     }
 
+    //                   DELETE ENDPOINTS
+    //Delete an application by application Id. Path: applications/{id}
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteApplication(@PathParam("id") int id) {
-        String message = "Aplicacion eliminada.";
         try {
             _applicationDAO.deleteApplication(id);
-            return Response.ok(gson.toJson(message)).build();
-        } catch (SQLException e) {
-            return Response.status(404).build();
+            return Response.ok(this.generateSuccessAsJson("Aplicacion eliminada exitosamente.")).build();
+        } catch (ApplicationNotFoundException e) {
+            return Response.status(404).entity(this.generateErrorAsJson(e.getMessage())).build();
+        } catch (DatabaseConnectionProblemException e) {
+            return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
     }
 
-
-    @Path("/add")
+    //                   POST ENDPOINTS
+    //Add a new application. Path: applications/
+    @Path("/")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addApplication(AddApplicationData application){
-
         try {
             _applicationDAO.addApplication(application);
-            return Response.ok().build();
-        } catch (AddApplicationProblemException e) {
-            return Response.status(404).entity(gson.toJson(e.getMessage())).build();
+            return Response.ok(this.generateSuccessAsJson("Aplicacion creada exitosamente.")).build();
+        } catch (DatabaseConnectionProblemException e) {
+            return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
     }
-    /*    POR AHI VAN LOS TIROS
-     @POST
-     @Path("/")
-     @Produces(MediaType.APPLICATION_JSON)
-     @Consumes(MediaType.APPLICATION_JSON)
-     public Response addApplication(String nameApplication, String descriptionApplication){
-        try{
-            _applicationDAO.addApplication(nameApplication, descriptionApplication);
-            return Response.ok().build();
-        }catch (SQLException e){
-            System.out.println("Error al ingresar nombre o descripcion de la aplicacion");
-            return Response.status(404).build();
-        }
-     }*/
 
+    //                   UTILITIES
+    //Produces a Json String with a given success message
+    private String generateSuccessAsJson(String message){
+        JsonObject jsonResponse = new JsonObject();
+        jsonResponse.addProperty("_message", message);
+        return gson.toJson(jsonResponse);
+    }
 
-    /*      NI DE VAINA
-    @POST
-    @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void addApp(String nombre, String desc) throws SQLException {
-
-        System.out.println("name: "+nombre);
-        System.out.println("descriopcion: "+desc);
-        try {
-            //_applicationDAO.addApplication(application);
-            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_INSERT_APPLICATION, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1,application.get_nameApplication());
-            preparedStatement.setString(2,application.get_descriptionApplication());
-            preparedStatement.setString(3,application.get_tokenApplication());
-            preparedStatement.setInt(4,application.get_statusApplication());
-            preparedStatement.setInt(5,application.get_userCreatorApplication());
-            preparedStatement.execute();
-            _generatedKeys= preparedStatement.getGeneratedKeys();
-            if (_generatedKeys.next()) {
-                application.set_idApplication(_generatedKeys.getInt(1));
-            }
-
-            return Response.ok(gson.toJson(application)).build();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new SQLException(e);
-        }finally {
-            Sql.bdClose(_conn);
-        }
-    }*/
-
-
+    //Produces a Json String with a given error message
+    private String generateErrorAsJson(String message){
+        JsonObject jsonResponse = new JsonObject();
+        jsonResponse.addProperty("_message", message);
+        return gson.toJson(jsonResponse);
+    }
 }
