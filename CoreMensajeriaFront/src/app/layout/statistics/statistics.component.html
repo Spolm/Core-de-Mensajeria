@@ -3,7 +3,7 @@
 <div class="container">
     <form>
         <div class="row">
-            <div class="col-md-3 dropdown">
+            <div class="col-md-3 dropdown" *ngIf="companiesDropdown.length > 0">
                 <ng-multiselect-dropdown
                     [placeholder]="'Compañía'"
                     [data]="companiesDropdown"
@@ -13,7 +13,7 @@
                 </ng-multiselect-dropdown>
             </div>
 
-            <div class="col-md-3 dropdown">
+            <div class="col-md-3 dropdown" *ngIf="campaignsDropdown.length > 0">
                 <ng-multiselect-dropdown
                     [placeholder]="'Campaña'"
                     [data]="campaignsDropdown"
@@ -23,7 +23,7 @@
                 </ng-multiselect-dropdown>
             </div>
 
-            <div class="col-md-3 dropdown">
+            <div class="col-md-3 dropdown" *ngIf="channelsDropdown.length > 0">
                 <ng-multiselect-dropdown
                     [placeholder]="'Canal'"
                     [data]="channelsDropdown"
@@ -73,14 +73,26 @@
             <!-- (change) = "capturarDate()" -->
         </div>
     </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="dateOfBirth">Filtro de Tiempo</label>
-                <input type="date" class="form-control" id="myDate2" [(ngModel)]="opcionDateSleccionado2">  <!-- (change) = "capturarDate()" -->
-                  </div>  
-              </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="dateOfBirth">Filtro de Tiempo</label>
+            <input
+                type="date"
+                class="form-control"
+                id="myDate2"
+                [(ngModel)]="opcionDateSleccionado2"
+            />
+            <!-- (change) = "capturarDate()" -->
+        </div>
+    </div>
 
-        <button type="button" class="btn btn-success btn-lg" (click) = "capturar() ; capturarDate();DoGraficas() ">Consultar</button>
+    <button
+        type="button"
+        class="btn btn-success btn-lg"
+        (click)="capturar(); capturarDate(); DoGraficas()"
+    >
+        Consultar
+    </button>
 
     <button
         type="button"
