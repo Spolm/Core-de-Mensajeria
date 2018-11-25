@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -22,42 +22,21 @@ export class RestService {
     return body || { };
   }
 
-  getData(component): Observable<any> {
-    return this.http.get(this.endpoint + component).pipe(
-      map(this.extractData));
-  }
-  
-  getDataId(component, id): Observable<any> {
-    return this.http.get(this.endpoint + component + '/' + id).pipe(
-      map(this.extractData));
-  }
-  
-  postData (component, data): Observable<any> {
-    return this.http.post<any>(this.endpoint + component, JSON.stringify(data), this.httpOptions).pipe(
-      //catchError(this.handleError<any>('addProduct'))
+  getData(relativePath): Observable<any> {
+    return this.http.get(this.endpoint + relativePath).pipe(
+      map(this.extractData)
     );
   }
   
-  putData (component, data, id): Observable<any> {
-    return this.http.put(this.endpoint + component + '/' + id, JSON.stringify(data), this.httpOptions).pipe(
-      tap(_ => console.log(`updated id=${id}`))/*,
-      catchError(this.handleError<any>('updateData'))*/
-    );
+  postData (relativePath, data): Observable<any> {
+    return this.http.post<any>(this.endpoint + relativePath, JSON.stringify(data), this.httpOptions).pipe();
   }
   
-  deleteData (component, id): Observable<any> {
-    return this.http.delete<any>(this.endpoint + component + '/' + id, this.httpOptions).pipe(
-      tap(_ => console.log(`deleted id=${id}`))/*,
-      catchError(this.handleError<any>('deleteData'))*/
-    );
+  putData (relativePath, data): Observable<any> {
+    return this.http.put(this.endpoint + relativePath, JSON.stringify(data), this.httpOptions).pipe();
   }
-  /*
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
   
-      console.error(error);
-      console.log(`${operation} failed: ${error.message}`);
-      return of(result as T);
-    };
-  }*/
+  deleteData (relativePath): Observable<any> {
+    return this.http.delete<any>(this.endpoint + relativePath, this.httpOptions).pipe();
+  }
 }
