@@ -74,35 +74,6 @@ export class StatisticsComponent implements OnInit {
         this.datos = ["Compañias", "Campañas", "Canales"];
     }
 
-    private insertIntoDropdown(objectType: ObjectType, data: Object) {
-        switch (objectType) {
-            case ObjectType.company:
-                for (var index in data) {
-                    this.companiesDropdown.push({
-                        company_id: data["_idCompany"],
-                        company_name: data["_name"]
-                    });
-                }
-                break;
-            case ObjectType.campaign:
-                for (var index in data) {
-                    this.companiesDropdown.push({
-                        campaign_id: data["_idCampaign"],
-                        campaign_name: data["_name"]
-                    });
-                }
-                break;
-            case ObjectType.channel:
-                for (var index in data) {
-                    this.companiesDropdown.push({
-                        channel_id: data["_idChannel"],
-                        channel_name: data["_name"]
-                    });
-                }
-                break;
-        }
-    }
-
     ngOnInit() {
         this.Servicio.getAllCompanies().subscribe(data => {
             this.insertIntoDropdown(ObjectType.company, data);
@@ -118,12 +89,9 @@ export class StatisticsComponent implements OnInit {
             allowSearchFilter: true
         };
 
-        this.campaignsDropdown = [
-            { campaign_id: 1, campaign_name: "Campaña 1" },
-            { campaign_id: 2, campaign_name: "Campaña 2" },
-            { campaign_id: 3, campaign_name: "Campaña 3" },
-            { campaign_id: 3, campaign_name: "Campaña 4" }
-        ];
+        this.Servicio.getAllCampaigns().subscribe(data => {
+            this.insertIntoDropdown(ObjectType.campaign, data);
+        });
 
         this.campaignsDropdownSettings = {
             singleSelection: false,
@@ -135,10 +103,9 @@ export class StatisticsComponent implements OnInit {
             allowSearchFilter: true
         };
 
-        this.channelsDropdown = [
-            { channel_id: 1, channel_name: "SMS" },
-            { channel_id: 2, channel_name: "Email" }
-        ];
+        this.Servicio.getAllChannels().subscribe(data => {
+            this.insertIntoDropdown(ObjectType.channel, data);
+        });
 
         this.channelsDropdownSettings = {
             singleSelection: false,
@@ -149,6 +116,7 @@ export class StatisticsComponent implements OnInit {
             itemsShowLimit: 1,
             allowSearchFilter: true
         };
+
         // this.Servicio.getStatisticsData1().subscribe(data => {
         //  this.json2 = data
         // this.chart(this.json2)
@@ -164,6 +132,36 @@ export class StatisticsComponent implements OnInit {
         //    this.chart3(this.json2)
         //    console.log("Data3:", this.json2)
         //  })
+    }
+
+    private insertIntoDropdown(objectType: ObjectType, data: Object) {
+        switch (objectType) {
+            case ObjectType.company:
+                for (var index in data) {
+                    this.companiesDropdown.push({
+                        company_id: data[index]["_idCompany"],
+                        company_name: data[index]["_name"]
+                    });
+                }
+                break;
+            case ObjectType.campaign:
+                for (var index in data) {
+                    this.campaignsDropdown.push({
+                        campaign_id: data[index]["_idCampaign"],
+                        campaign_name: data[index]["_nameCampaign"]
+                    });
+                }
+                break;
+            case ObjectType.channel:
+                console.log(data);
+                for (var index in data) {
+                    this.channelsDropdown.push({
+                        channel_id: data[index]["idChannel"],
+                        channel_name: data[index]["nameChannel"]
+                    });
+                }
+                break;
+        }
     }
 
     capturar() {

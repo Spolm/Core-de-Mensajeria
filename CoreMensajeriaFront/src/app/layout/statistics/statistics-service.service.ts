@@ -36,4 +36,12 @@ export class StatisticsServiceService {
     getAllCompanies() {
         return this.http.get(this.ApiURL + "companies");
     }
+
+    getAllCampaigns() {
+        return this.http.get(this.ApiURL + "campaigns");
+    }
+
+    getAllChannels() {
+        return this.http.get(this.ApiURL + "channels");
+    }
 }

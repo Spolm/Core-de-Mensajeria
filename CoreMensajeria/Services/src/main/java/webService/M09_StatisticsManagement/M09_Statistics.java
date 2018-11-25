@@ -499,10 +499,6 @@ public class M09_Statistics extends Application {
         }
         return Response.ok(gson.toJson(channels)).build();
     }
-
-
-/////////////////////////////////////
-
-
+    
 }
 
