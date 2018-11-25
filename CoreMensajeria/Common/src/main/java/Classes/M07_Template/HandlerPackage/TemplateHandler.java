@@ -9,6 +9,8 @@ import Classes.M04_Channel_Integrator.IntegratorPackage.IntegratorService;
 import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
+import Exceptions.CampaignDoesntExistsException;
+import Exceptions.TemplateDoesntExistsException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ public class TemplateHandler {
                         resultSet.getString("sta_name"));
                 template.setStatus(status);
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
+                template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
                 templateArrayList.add(template);
             }
         }catch (SQLException e) {
@@ -87,6 +90,8 @@ public class TemplateHandler {
 
         } catch(SQLException e){
             e.printStackTrace();
+            throw new TemplateDoesntExistsException
+                    ("Error: la plantilla no existe", e, id);
         } catch (Exception e){
             e.printStackTrace();
         } finally {
@@ -149,7 +154,11 @@ public class TemplateHandler {
                     (resultSet.getInt("tem_campaign_id")); */
         } catch (SQLException e){
             e.printStackTrace();
-        } catch (Exception e){
+            throw new TemplateDoesntExistsException
+                    ("Error: la plantilla no existe", e, templateId);
+       /* } catch (CampaignDoesntExistsException e) {
+            */
+        }catch (Exception e){
             e.printStackTrace();
         } finally {
             Sql.bdClose(sql.getConn());
