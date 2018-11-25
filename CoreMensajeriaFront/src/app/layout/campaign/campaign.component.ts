@@ -60,4 +60,25 @@ activateCampaign(_idCampaign: number){
   this.lastCampaignId = _idCampaign;
 }
 
+deactivateCampaign(_idCampaign: number){
+  this.toastr.info("Para confirmar realice doble click de nuevo", "Desactivar la campaña id: "+ _idCampaign,
+  {
+    timeOut: 2800,
+    progressBar: true
+  });
+  this.counter++;
+  if(this.counter == 2 && this.lastCampaignId == _idCampaign){
+    this.campaignService.activateCampaign(_idCampaign);
+    this.toastr.success("Campaña desactivada", "Campaign id: "+ _idCampaign,
+    {
+      timeOut: 2800,
+      progressBar: true
+    });
+    this.counter = 0;
+    this.ngOnInit();
+  }
+  if(this.counter >= 2) this.counter = 0;
+  this.lastCampaignId = _idCampaign;
+}
+
 }

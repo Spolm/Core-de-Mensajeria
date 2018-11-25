@@ -4,6 +4,7 @@ import Classes.M03_Campaign.Campaign;
 import Classes.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import com.google.gson.Gson;
+import org.junit.FixMethodOrder;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -12,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Path( "/M03_Campaigns" )
 /**
@@ -188,7 +190,7 @@ public class M03_Campaigns {
     @POST
     @Path("/update/{campaignId}")
     public Response changeCampaignStatus(@PathParam("campaignId") int id){
-        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        Response.ResponseBuilder rb = Response.ok();
         Boolean flag = false;
         Campaign ca = new Campaign();
         ca.set_statusCampaign(!ca.is_statusCampaign());
@@ -206,17 +208,27 @@ public class M03_Campaigns {
     @PUT
     @Path("/EditCampaign")
     @Produces("application/json")
-    public Response editCampaign() throws  CampaignDoesntExistsException {
+    public Response editCampaign(@FormParam("campaignName") String campaignName,
+                                 @FormParam("campaignDescription") String campaignDescription,
+                                 @FormParam("campaignStart") Date campaignStart,
+                                 @FormParam("campaignEnd") Date campaignEnd,
+                                 @FormParam("campaignStatus") boolean campaignStatus, @QueryParam("campaignId") int id)
+            throws  CampaignDoesntExistsException {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        String select = "SELECT * FROM campaign where cam_company_id = ?";
-        ArrayList<Campaign> campaignList= new ArrayList<>();
+        String query = "UPDATE public.campaign SET cam_name =?, cam_description=?, cam_start_date=?, " +
+                "cam_end_date=?, cam_status=? WHERE cam_company_id = ?";
 
         try {
-            PreparedStatement ps = conn.prepareStatement(select);
-            //ps.setInt(1, id);
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, campaignName);
+            ps.setString(2, campaignDescription);
+            ps.setDate(3, (java.sql.Date) campaignStart);
+            ps.setDate(4, (java.sql.Date) campaignEnd);
+            ps.setBoolean(5, campaignStatus);
+            ps.setInt(6, id);
             ResultSet result = ps.executeQuery();
 
-            rb.entity(gson.toJson(campaignList));
+            rb.entity(gson.toJson(result));
         }
         catch (SQLException e) {
             e.printStackTrace();
