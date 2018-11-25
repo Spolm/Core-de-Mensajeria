@@ -5,8 +5,6 @@ import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
 import Classes.M04_Channel_Integrator.ChannelPackage.ChannelFactory;
 import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
 import Classes.M04_Channel_Integrator.IntegratorPackage.IntegratorService;
-import Classes.M07_Template.StatusPackage.ApprovedStatus;
-import Classes.M07_Template.StatusPackage.NotApprovedStatus;
 import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
@@ -48,7 +46,7 @@ public class TemplateHandler {
                 Status status = Status.createStatus(resultSet.getInt("sta_id"),
                         resultSet.getString("sta_name"));
                 template.setStatus(status);
-                template.setChannels(getChannels(template.getTemplateId()));
+                template.setChannels(getChannelsByTemplate(template.getTemplateId()));
                 templateArrayList.add(template);
             }
         }catch (SQLException e) {
@@ -56,16 +54,52 @@ public class TemplateHandler {
         }catch (Exception e){
             e.printStackTrace();
         }finally {
+            Sql.bdClose(sql.getConn());
             return templateArrayList;
         }
     }
 
-    public ArrayList<Channel> getChannels(int templateId){
+    public Template getTemplate(int id){
+        Template template = new Template();
+        String query="select tem_id,ts_id, tem_creation_date, sta_name\n" +
+                "from template_status,template,status\n" +
+                "where tem_id = "+ id + " and tem_id = ts_template and sta_id = ts_status\n" +
+                "order by ts_id desc limit 1";
+        try{
+            ResultSet resultSet = sql.sqlConn(query);
+            if (resultSet.next()){
+                //asignamos los datos basicos del propio template
+                template.setTemplateId(resultSet.getInt("tem_id"));
+                template.setCreationDate(resultSet.getString("tem_creation_date"));
+
+                //asignamos el mensae y status del template
+                template.setMessage(MessageHandler.getMessage(template.getTemplateId()));
+                template.setStatus(Status.createStatus(resultSet.getInt("ts_id"),
+                        resultSet.getString("sta_name")));
+
+                //asignamos canales y campañas
+                template.setChannels(getChannelsByTemplate(template.getTemplateId()));
+                template.setCampaign(this.getCampaing(template.getTemplateId()));
+
+                //a falta de origenes y usuario creador
+            }
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+            return template;
+        }
+    }
+
+    public ArrayList<Channel> getChannelsByTemplate(int templateId){
         ArrayList<Channel> channels = new ArrayList<>();
+        Connection connection = Sql.getConInstance();
         try {
-            ResultSet resultSet =
-                    sql.sqlConn(
-                            "select tci.tci_template_id, ci.ci_channel_id, ci.ci_integrator_id, \n"
+            PreparedStatement preparedStatement = connection.prepareStatement
+                    ("select tci.tci_template_id, ci.ci_channel_id, ci.ci_integrator_id, \n"
                                     + "c.cha_name, cha_description\n"
                                     + "from channel_integrator ci\n"
                                     + "inner join template_channel_integrator tci\n"
@@ -74,6 +108,7 @@ public class TemplateHandler {
                                     + "on c.cha_id = ci.ci_channel_id\n"
                                     + "where tci.tci_template_id = " + templateId + "\n"
                                     + "order by ci.ci_channel_id;");
+            ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 ArrayList<Integrator> integrators = new ArrayList<>();
                 IntegratorService integratorService = IntegratorService.getInstance();
@@ -95,25 +130,11 @@ public class TemplateHandler {
         } catch (Exception e){
             e.printStackTrace();
         }finally{
+            Sql.bdClose(connection);
             return channels;
         }
     }
 
-    public Template getTemplate(int id){
-        Template template = new Template();
-        try{
-            ResultSet resultSet = sql.sqlConn("SELECT * FROM PUBLIC.TEMPLATE WHERE TEM_ID = "+id);
-            resultSet.next();
-            template.setTemplateId(resultSet.getInt("tem_id"));
-            template.setCreationDate(resultSet.getString("tem_creation_date"));
-        } catch(SQLException e){
-            e.printStackTrace();
-        } catch (Exception e){
-            e.printStackTrace();
-        } finally {
-            return template;
-        }
-    }
 
     public Campaign getCampaing(int templateId){
         Campaign campaign = new Campaign();
@@ -128,6 +149,7 @@ public class TemplateHandler {
         } catch (Exception e){
             e.printStackTrace();
         } finally {
+            Sql.bdClose(sql.getConn());
             return campaign;
         }
     }
