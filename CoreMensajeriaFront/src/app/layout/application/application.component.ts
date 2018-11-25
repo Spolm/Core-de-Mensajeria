@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { ToastrService } from 'ngx-toastr';
 import { RestService } from '../../shared/services/rest.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-application',
@@ -11,19 +12,28 @@ import { RestService } from '../../shared/services/rest.service';
 })
 export class ApplicationComponent implements OnInit {
 
-  @Input() newApp = { _nameApplication : '', _descriptionApplication : '', _userId : 1, _companyId: 0 };
   applications: any = [];
   singleApplication: any =[];
   companies : any = [];
+  newAppForm: FormGroup;
+  formSubmitted : boolean = false;
   modalBackdrop = false;
   displayNewAppModal = false;
   displayAppInfoModal = false;
 
-  constructor(public rest: RestService,  private toastr: ToastrService) { 
-  }
+  constructor(public rest: RestService,  private toastr: ToastrService, private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.getApplications();
+    this.newAppForm = this.formBuilder.group({
+      _nameApplication: ['',  [Validators.required, 
+                        Validators.pattern('[a-zA-ZñÑ0-9 ]*'),
+                        Validators.maxLength(32)]],
+      _descriptionApplication: ['', [Validators.required, 
+                        Validators.maxLength(500)]],
+      _companyId: [0, [Validators.required]],
+      _userId: "1"
+  });
   }
   
   getApplications() {
@@ -38,7 +48,7 @@ export class ApplicationComponent implements OnInit {
   }
 
   deleteApplication(id){
-    this.rest.deleteData("applications", id)
+    this.rest.deleteData("applications/" + id)
     .subscribe(res => {
       this.toastr.success(res._message);
       this.getApplications();
@@ -50,20 +60,29 @@ export class ApplicationComponent implements OnInit {
   }
 
   addApplication(){
-    this.newApp._companyId = 2;
-    this.rest.postData("applications", this.newApp)
-    .subscribe(res => {
-      this.toastr.success(res._message);
-      this.toggleNewAppModal();
-      this.getApplications();
-    }, (err) => {
-      this.toastr.error(err.error._message);
-      console.log(err);
-    });
+    this.rest.postData("applications", this.newAppForm.value)
+        .subscribe(res => {
+          this.toastr.success(res._message);
+          this.toggleNewAppModal();
+          this.getApplications();
+        }, (err) => {
+          this.toastr.error(err.error._message);
+          console.log(err);
+        });
+  }
+
+  checkApplication(){
+    this.formSubmitted = true;
+    if (this.newAppForm.valid) {
+      this.addApplication();
+    }
+    else{
+      this.toastr.error("Formulario invalido.");
+    }
   }
 
   activeApplication(id){
-    this.rest.putData("applications/active","", id)
+    this.rest.putData("applications/active/" + id,"")
     .subscribe(res => {
       this.toastr.success(res._message);
       this.getApplications();
@@ -74,7 +93,7 @@ export class ApplicationComponent implements OnInit {
   }
 
   pauseApplication(id){
-    this.rest.putData("applications/inactive","", id)
+    this.rest.putData("applications/inactive/" + id,"")
     .subscribe(res => {
       this.toastr.success(res._message);
       this.getApplications();

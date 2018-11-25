@@ -36,5 +36,14 @@
         display: block;
         opacity: 1 !important;
     } 
+    .viewDescription{
+        font-size: 14px;
+    }
+    .modal-footer{
+        justify-content: center;
+        h6{
+            margin-bottom: 0;
+        }
+    }
 }
     

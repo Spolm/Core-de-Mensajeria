@@ -1,12 +1,11 @@
 ﻿<div class="container-fluid">
+  
   <h2 class="text-center text-capitalize main-title">
     Origen de datos
-  </h2>
-  <div class="col-4 offset-8 text-right">
-    <button type="button" id="add-btn" class="btn btn-outline-secondary" (click)="toggleNewAppModal()">
+    <button type="button" id="add-btn" class="btn btn-outline-secondary float-right" (click)="toggleNewAppModal()">
       <i class="fa fa-plus"></i> Agregar
     </button>
-  </div>
+  </h2>
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
@@ -20,7 +19,7 @@
     <tbody>
       <tr *ngFor="let app of applications">
         <td class="col-4">{{app._nameApplication}}</td>
-        <td class="col-3 text-left">{{app._companyId}}</td>
+        <td class="col-3 text-center">{{app._companyId}}</td>
         <td class="col-2 text-center">
           {{app._tokenApplication.substr(0,4)}}****{{app._tokenApplication.substr(60,64)}}
         </td>
@@ -48,28 +47,43 @@
           </button>
         </div>
         <div class="modal-body">
-          <form >
+          <form [formGroup]="newAppForm">
             <div class="form-group">
               <label for="name">Nombre:</label>
-              <input [(ngModel)]="newApp._nameApplication" name="name" type="text" class="form-control" id="name" placeholder="Nombre de la aplicación">
+              <input formControlName="_nameApplication" 
+              [ngClass]="{ 'is-invalid': newAppForm.controls._nameApplication.errors && formSubmitted }" 
+               type="text" class="form-control" id="name" placeholder="Nombre de la aplicación">
+              <div *ngIf="newAppForm.controls._nameApplication.errors && formSubmitted" class="invalid-feedback">
+                  <div *ngIf="newAppForm.controls._nameApplication.errors.required">Campo obligatorio.</div>
+                  <div *ngIf="newAppForm.controls._nameApplication.errors.pattern">Solo se permiten caracteres alfanumericos.</div>
+                  <div *ngIf="newAppForm.controls._nameApplication.errors.maxlength">Maximo 32 caracteres.</div>
+              </div>
             </div>
             <div class="form-group">
               <label for="description">Descripción:</label>
-              <textarea [(ngModel)]="newApp._descriptionApplication" type="text" name="description" class="form-control" id="description" placeholder="Breve descripcion de la aplicación"></textarea>
+              <textarea formControlName="_descriptionApplication" [ngClass]="{ 'is-invalid': newAppForm.controls._descriptionApplication.errors && formSubmitted }" type="text" name="description" class="form-control" id="description" placeholder="Breve descripcion de la aplicación"></textarea>
+              <div *ngIf="newAppForm.controls._descriptionApplication.errors && formSubmitted" class="invalid-feedback">
+                  <div *ngIf="newAppForm.controls._descriptionApplication.errors.required">Campo obligatorio.</div>
+                  <div *ngIf="newAppForm.controls._descriptionApplication.errors.pattern">Solo se permiten caracteres alfanumericos.</div>
+                  <div *ngIf="newAppForm.controls._descriptionApplication.errors.maxlength">Maximo 500 caracteres.</div>
+              </div>
             </div>
             <div class="form-group">
-              <label for="empresa">Empresa:</label>
-              <select [(ngModel)]="newApp._companyId" name="company" class="form-control" id="empresa">
-                <option value="0" selected disabled>--Seleccione</option>
-                <option value="2">Empresa 2</option>
-                <option value="3">Empresa 3</option>
-                <option value="4">Empresa 4</option>
-                <option value="5">Empresa 5</option>
+              <label for="empresa">Compañia:</label>
+              <select formControlName="_companyId" [ngClass]="{ 'is-invalid': newAppForm.value._companyId == 0 && formSubmitted }" name="company" class="form-control" id="empresa">
+                <option [ngValue]="0" selected disabled>--Seleccione</option>
+                <option [ngValue]="2">Empresa 2</option>
+                <option [ngValue]="3">Empresa 3</option>
+                <option [ngValue]="4">Empresa 4</option>
+                <option [ngValue]="5">Empresa 5</option>
               </select>
+              <div *ngIf="newAppForm.value._companyId == 0 && formSubmitted" class="invalid-feedback">
+                  <div *ngIf="newAppForm.value._companyId == 0">Campo obligatorio.</div>
+              </div>
             </div>
           </form>
           <div class="text-center">
-            <button type="button" class="btn btn-success" (click)="addApplication()">Guardar</button>
+            <button type="button" class="btn btn-success" (click)="checkApplication()">Guardar</button>
           </div>
         </div>
       </div>
@@ -85,15 +99,15 @@
           </button>
         </div>
         <div class="modal-body">
-          <h6>Estatus:</h6>
-          <p>
+          <h6>
+              Estatus:
               <span *ngIf="singleApplication._statusApplication" class="badge badge-success">Activo</span>
               <span *ngIf="!singleApplication._statusApplication" class="badge badge-danger">Inactivo</span>
-          </p>
+          </h6>
           <h6>Descripcion:</h6>
-          <p class="text-justify">{{singleApplication._descriptionApplication}}</p>
+          <p class="viewDescription text-justify">&emsp;{{singleApplication._descriptionApplication}}</p>
         </div>
-        <div class="modal-footer text-left">
+        <div class="modal-footer text-center">
           <h6>Token</h6>
           <kbd>{{singleApplication._tokenApplication}}</kbd>
         </div>
