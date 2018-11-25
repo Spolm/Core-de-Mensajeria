@@ -3,19 +3,32 @@
 <div class="container">
   
   <div class="row">
-    <div class="col-sm-6"
+    <div class="col-sm-4" style="margin: 15px 0px"
       *ngFor="let channel of channels; index as i">
       <div class="card">
         <div class="card-body">
-          <h2 class="card-title"><b>{{ channel }}</b></h2>
-          
-          <ul>
-              <li *ngFor="let integrator of integrators">
-                  {{ integrator }}
+          <h2 class="card-title text-center"><b>{{ channel.nameChannel }}</b></h2>
+          <p class="card-text text-center"> {{ channel.descriptionChannel }}  </p>
+        </div>
+          <h3 class="card-title text-center"> Integradores </h3>
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item"
+                *ngFor="let integrator of channel.integrators">
+                <p>{{ integrator.nameIntegrator }}
+                
+                  <span *ngIf="integrator.enabled; else elseBlock" 
+                  class="badge badge-primary">
+                  Habilitado
+                </span>
+                
+                <ng-template #elseBlock>
+                    <span class="badge badge-danger">Inhabilitado</span>
+                </ng-template>
+
+              </p>
               </li>
           </ul>
           
-        </div>
       </div>
     </div>
   </div>

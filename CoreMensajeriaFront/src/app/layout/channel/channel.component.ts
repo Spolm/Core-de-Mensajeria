@@ -1,19 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment';
+
+import { ChannelDataService } from './channel-data.service'
+import { Channel } from './channel'
+
 @Component({
   selector: 'app-channel',
   templateUrl: './channel.component.html',
-  styleUrls: ['./channel.component.scss']
+  styleUrls: ['./channel.component.scss'],
+  providers: [ChannelDataService]
 })
 export class ChannelComponent implements OnInit {
 
-  // PRUEBA
-  channels = ['SMS','Email'];
-  integrators = ['AWeber','MailChimp','Digitel','Movistar','Movilnet']
-  // FIN PRUEBA
-  constructor() { }
+  channels: Channel[] = [];
+
+  constructor(
+    private channelDataService: ChannelDataService,
+  ) { }
 
   ngOnInit() {
+    this.channelDataService
+    .getAllChannels()
+    .subscribe(
+      (channels) => {
+        this.channels = channels;
+        console.log(channels);
+      }
+    )
   }
 
 }
