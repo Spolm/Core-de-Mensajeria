@@ -17,13 +17,14 @@ public class TemplateTest {
 
     @BeforeEach
     void init(){
-        template = new Template(new Message(1), new NotApprovedStatus(), "01-01-18", 1);
+        template = new Template(new Message(1), new NotApprovedStatus(1, "Not Approved Template"), "01-01-18", 1);
         objectsNotNull();
     }
 
     @Test
     void correctAttributes(){
-        assertEquals(template.getStatus(), "Not Approved Template");
+        assertEquals(template.getStatus().getStatusName(), "Not Approved Template");
+        assertEquals(template.getStatus().getStatusId(),1);
         assertEquals(template.getTemplateId(), 1);
         assertEquals(template.getCreationDate(), "01-01-18");
         assertEquals(template.getMessage().getMessageId(), 1);
@@ -32,9 +33,10 @@ public class TemplateTest {
     @Test
     void changeAttributes(){
         template.setMessage(new Message(2));
-        template.setStatus(new ApprovedStatus());
+        template.setStatus(new ApprovedStatus(2, "Approved Template"));
 
-        assertEquals(template.getStatus(), "Approved Template");
+        assertEquals(template.getStatus().getStatusName(), "Approved Template");
+        assertEquals(template.getStatus().getStatusId(),2);
         assertEquals(template.getMessage().getMessageId(), 2);
     }
 

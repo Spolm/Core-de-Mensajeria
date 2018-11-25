@@ -5,9 +5,8 @@ import Classes.M03_Campaign.Campaign;
 import Classes.Sql;
 import Classes.M09_Statistics.SqlEstrella;
 import com.google.gson.Gson;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
@@ -198,6 +197,24 @@ public class M09_Statistics extends Application {
             Sql.bdClose( conn );
         }
     }
+
+
+    @GET
+    @Path("/ParamPrueba/{mensaje}")
+    @Produces("application/json")
+    public Response GetWithParam(@PathParam("mensaje") String mensaje) throws SQLException {
+        try {
+
+            return Response.ok(mensaje).build();
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            throw new SQLException( e );
+        } finally {
+            Sql.bdClose( conn );
+        }
+    }
+
+
 
 
 
