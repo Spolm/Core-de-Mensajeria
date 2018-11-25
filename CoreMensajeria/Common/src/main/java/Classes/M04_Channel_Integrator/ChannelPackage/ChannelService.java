@@ -33,6 +33,8 @@ public class ChannelService {
             IntegratorService.getIntegratorsRs(integrators, rs);
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
+        }finally {
+            Sql.bdClose(db.getConn());
         }
         return integrators;
     }
@@ -52,6 +54,8 @@ public class ChannelService {
             }
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
+        }finally {
+            Sql.bdClose(db.getConn());
         }
         return channels;
     }
