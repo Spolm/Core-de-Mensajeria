@@ -429,6 +429,14 @@ public class M09_Statistics extends Application {
         return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsPie") ).build();
     }
 
+    @GET
+    @Path("/companies")
+    @Produces("application/json")
+    public Response getCompanies() {
+
+    }
+
+
 /////////////////////////////////////
 
 
