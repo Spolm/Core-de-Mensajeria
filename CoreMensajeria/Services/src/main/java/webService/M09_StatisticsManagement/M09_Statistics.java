@@ -293,7 +293,7 @@ public class M09_Statistics extends Application {
             for ( int i = 0 ; i < listCampaign.size() ; i++ ) {
 
                 aux2 = listCampaign.get(i).toString();
-                String select = "SELECT count(M.*) from fact_message as M , dim_company_campaign as C \n" +
+                String select = "SELECT count(M.*) from fact_sent_message as M , dim_company_campaign as C \n" +
                         "where C.cam_id = M.mes_cam_id and C.cam_name = '" + aux2 + "' ";
 
                 Statement st = conn.createStatement();
@@ -324,7 +324,7 @@ public class M09_Statistics extends Application {
         for ( int i = 0 ; i < listCompany.size() ; i++ ) {
 
             aux2 = listCompany.get(i).toString();
-            String select = "SELECT count(M.*) from fact_message as M , dim_company_campaign as C \n" +
+            String select = "SELECT count(M.*) from fact_sent_message as M , dim_company_campaign as C \n" +
                     "where C.cam_id = M.mes_cam_id and C.com_name = '" + aux2 + "' ";
 
             Statement st = conn.createStatement();
