@@ -1,6 +1,7 @@
 package Classes.M07_Template.HandlerPackage;
 
 import Classes.M03_Campaign.Campaign;
+//import webService.M03_CampaingManagement.M03_Campaigns;
 import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
 import Classes.M04_Channel_Integrator.ChannelPackage.ChannelFactory;
 import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
@@ -79,7 +80,7 @@ public class TemplateHandler {
 
                 //asignamos canales y campañas
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
-                template.setCampaign(this.getCampaing(template.getTemplateId()));
+                template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
 
                 //a falta de origenes y usuario creador
             }
@@ -136,14 +137,16 @@ public class TemplateHandler {
     }
 
 
-    public Campaign getCampaing(int templateId){
+    public Campaign getCampaingByTemplate(int templateId){
         Campaign campaign = new Campaign();
         try{
             ResultSet resultSet = sql.sqlConn(
                     "SELECT tem_campaign_id \n"
                             + "FROM Template\n"
                             + "WHERE tem_id = " + templateId + ";");
-            //llamo api de Campaing para que me retorne
+           /* M03_Campaigns campaignsService = new M03_Campaigns();
+            campaign = campaignsService.getDetails
+                    (resultSet.getInt("tem_campaign_id")); */
         } catch (SQLException e){
             e.printStackTrace();
         } catch (Exception e){
