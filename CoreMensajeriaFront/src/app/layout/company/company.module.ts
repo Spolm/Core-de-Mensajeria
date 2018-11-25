@@ -4,6 +4,7 @@ import { CompanyComponent } from './company.component';
 import { CompanyRoutingModule } from './company-routing.module';
 import { PageHeaderModule } from './../../shared';
 import { Company } from '../../../model/company-model';
+import { CreateCompanyComponent } from './create-company/create-company.component';
 
 @NgModule({
   imports: [
@@ -11,7 +12,7 @@ import { Company } from '../../../model/company-model';
     CompanyRoutingModule,
     PageHeaderModule
   ],
-  declarations: [CompanyComponent]
+  declarations: [CompanyComponent, CreateCompanyComponent]
 })
 export class CompanyModule implements OnInit {
 
