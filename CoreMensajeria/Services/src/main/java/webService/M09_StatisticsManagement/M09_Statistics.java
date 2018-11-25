@@ -239,12 +239,18 @@ public class M09_Statistics extends Application {
     @Path("/PruebaParam")
     @Produces("application/json")
 
-    public Response test2(@QueryParam( "paramDate" ) String paramDate,
+    public Response test2(@QueryParam( "paramDay" ) String paramDay1,
+                          @QueryParam( "paramMonth" ) String paramMonth1,
+                          @QueryParam( "paramYear" ) String paramYear1,
+                          @QueryParam( "paramDay2" ) String paramDay2,
+                          @QueryParam( "paramMonth2" ) String paramMonth2,
+                          @QueryParam( "paramYear2" ) String paramYear2,
                           @QueryParam( "paramType" ) String paramType) {
 
-
-        Response responseAnswerLine = filterOfTypeStatisticsLine(paramDate,paramType);
-
+        System.out.println( paramDay1 +" "+ paramMonth1 +" "+ paramYear1 );
+        System.out.println( paramDay2 +" "+ paramMonth2 +" "+ paramYear2 );
+        System.out.println( paramType );
+        Response responseAnswerLine = filterOfTypeStatisticsLine( paramMonth1 ,paramType );
         return responseAnswerLine ;
 
 
@@ -260,7 +266,7 @@ public class M09_Statistics extends Application {
     public Response test1(@QueryParam( "paramDate" ) String paramDate,
                           @QueryParam( "paramType" ) String paramType) {
 
-        Response responseAnswerPie = filterOfTypeStatisticsPie(paramDate,paramType);
+        Response responseAnswerPie = filterOfTypeStatisticsPie( paramDate,paramType );
 
         return responseAnswerPie ;
 
@@ -275,7 +281,7 @@ public class M09_Statistics extends Application {
     public Response test3(@QueryParam( "paramDate" ) String paramDate,
                           @QueryParam( "paramType" ) String paramType) {
 
-        Response responseAnswerBar = filterOfTypeStatisticsBar(paramDate,paramType);
+        Response responseAnswerBar = filterOfTypeStatisticsBar( paramDate,paramType );
 
         return responseAnswerBar ;
 
@@ -414,11 +420,12 @@ public class M09_Statistics extends Application {
 
     public Response filterOfTypeStatisticsLine(String paramDate, String paramType){
 
-
-        if (paramType.equals("Compañias")){
+        Integer paramMonthRigth  = ( Integer.valueOf( paramDate ) + 1 );  // El getMonth devuelve valor entre 0 y 11
+        Integer paramMonth2Rigth = ( Integer.valueOf( paramDate ) + 1 );  // aca sumamos uno para obtener el mes real
+        if (paramType.equals( "Compañias" ) && paramMonthRigth.equals(11) ){
             try {
 
-                Response responseGraphCompany = getNumberOfCompanysLine();
+                Response responseGraphCompany = getNumberOfCompanysLine(); // anadimos los filtros aca como parametros
                 return responseGraphCompany ;
             } catch (SQLException e) {
                 e.printStackTrace();
