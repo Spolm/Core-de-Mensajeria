@@ -1,5 +1,6 @@
 package Classes.M07_Template.HandlerPackage;
 
+import Classes.M03_Campaign.Campaign;
 import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
 import Classes.M04_Channel_Integrator.ChannelPackage.ChannelFactory;
 import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
@@ -111,6 +112,23 @@ public class TemplateHandler {
             e.printStackTrace();
         } finally {
             return template;
+        }
+    }
+
+    public Campaign getCampaing(int templateId){
+        Campaign campaign = new Campaign();
+        try{
+            ResultSet resultSet = sql.sqlConn(
+                    "SELECT tem_campaign_id \n"
+                            + "FROM Template\n"
+                            + "WHERE tem_id = " + templateId + ";");
+            //llamo api de Campaing para que me retorne
+        } catch (SQLException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            return campaign;
         }
     }
 

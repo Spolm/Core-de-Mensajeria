@@ -1,5 +1,6 @@
 package Classes.M07_Template;
 
+import Classes.M03_Campaign.Campaign;
 import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
 import Classes.M07_Template.MessagePackage.*;
 import Classes.M07_Template.StatusPackage.*;
@@ -13,6 +14,8 @@ public class Template {
     private int templateId;
     private Status status;
     private ArrayList<Channel> channels;
+    private Campaign campaign;
+    //private Origin origin;
 
     public Template() {}
 
@@ -63,6 +66,14 @@ public class Template {
 
     public void addChannel(Channel channel){
         channels.add(channel);
+    }
+
+    public Campaign getCampaign() {
+        return campaign;
+    }
+
+    public void setCampaign(Campaign campaign) {
+        this.campaign = campaign;
     }
 
     @Override

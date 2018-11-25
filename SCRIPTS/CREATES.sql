@@ -149,11 +149,16 @@ create table public.Sent_Message
     CONSTRAINT fk_application_id FOREIGN KEY ("sen_application") REFERENCES public.Application (app_id)
 );
 
-create table public.TEMPATE_CHANNEL_INTEGRATOR
+create table public.TEMPLATE_CHANNEL_INTEGRATOR
  (
  	tci_id serial PRIMARY KEY,
  	tci_template_id integer NOT NULL,
  	tci_ci_id integer NOT NULL,
  	CONSTRAINT fk_template_id FOREIGN KEY("tci_template_id") REFERENCES public.Template(tem_id),
  	CONSTRAINT fk_ci_id FOREIGN KEY("tci_ci_id") REFERENCES public.CHANNEL_INTEGRATOR(ci_id)
- ); 
+ );
+
+ALTER TABLE Template
+ADD COLUMN tem_campaign_id integer NOT NULL,
+ADD CONSTRAINT fk_campaign_id FOREIGN KEY ("tem_campaign_id") 
+REFERENCES Campaign (cam_id);
