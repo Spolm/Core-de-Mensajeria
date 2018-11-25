@@ -32,4 +32,8 @@ export class StatisticsServiceService {
     getStatisticsData6(sparam: string) {
         return this.http.get(this.ApiURL + "PruebaParam3" + sparam);
     }
+
+    getAllCompanies() {
+        return this.http.get(this.ApiURL + "companies");
+    }
 }
