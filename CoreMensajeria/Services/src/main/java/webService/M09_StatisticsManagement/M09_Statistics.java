@@ -2,6 +2,8 @@ package webService.M09_StatisticsManagement;
 
 import Classes.M02_Company.Company;
 import Classes.M03_Campaign.Campaign;
+import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
+import Classes.M04_Channel_Integrator.ChannelPackage.ChannelFactory;
 import Classes.M09_Statistics.PieChart;
 import Classes.M09_Statistics.SqlEstrella;
 import Classes.M09_Statistics.Statistics;
@@ -432,8 +434,70 @@ public class M09_Statistics extends Application {
     @GET
     @Path("/companies")
     @Produces("application/json")
-    public Response getCompanies() {
+    public Response getAllCompanies() {
+        String query = "SELECT DISTINCT com_id, com_name FROM dim_company_campaign ORDER BY com_id;";
+        ArrayList<Company> companies = new ArrayList<>();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
 
+            while (result.next()) {
+                Company company = new Company(result.getInt("com_id"), result.getString("com_name"), "", true);
+                companies.add(company);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(conn);
+        }
+        return Response.ok(gson.toJson(companies)).build();
+    }
+
+    @GET
+    @Path("/campaigns")
+    @Produces("application/json")
+    public Response getAllCampaigns() {
+        String query = "SELECT DISTINCT cam_id, cam_name FROM dim_company_campaign ORDER BY cam_id;";
+        ArrayList<Campaign> campaigns = new ArrayList<>();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Campaign campaign = new Campaign();
+                campaign.set_idCampaign(result.getInt("cam_id"));
+                campaign.set_nameCampaign(result.getString("cam_name"));
+                campaigns.add(campaign);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(conn);
+        }
+        return Response.ok(gson.toJson(campaigns)).build();
+    }
+
+    @GET
+    @Path("/channels")
+    @Produces("application/json")
+    public Response getAllChannels() {
+        String query = "SELECT DISTINCT cha_id, cha_name FROM dim_channel ORDER BY cha_id;";
+        ArrayList<Channel> channels = new ArrayList<>();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                ChannelFactory channelFactory = new ChannelFactory();
+                Channel channel = channelFactory.getChannel(result.getInt("cha_id"), result.getString("cha_name"), null, null);
+                channels.add(channel);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(conn);
+        }
+        return Response.ok(gson.toJson(channels)).build();
     }
 
 
