@@ -10,6 +10,12 @@ interface myData {
     obj: Object;
 }
 
+enum ObjectType {
+    company = 1,
+    campaign,
+    channel
+}
+
 @Component({
     selector: "app-statistics",
     templateUrl: "./statistics.component.html",
@@ -68,13 +74,39 @@ export class StatisticsComponent implements OnInit {
         this.datos = ["Compañias", "Campañas", "Canales"];
     }
 
+    private insertIntoDropdown(objectType: ObjectType, data: Object) {
+        switch (objectType) {
+            case ObjectType.company:
+                for (var index in data) {
+                    this.companiesDropdown.push({
+                        company_id: data["_idCompany"],
+                        company_name: data["_name"]
+                    });
+                }
+                break;
+            case ObjectType.campaign:
+                for (var index in data) {
+                    this.companiesDropdown.push({
+                        campaign_id: data["_idCampaign"],
+                        campaign_name: data["_name"]
+                    });
+                }
+                break;
+            case ObjectType.channel:
+                for (var index in data) {
+                    this.companiesDropdown.push({
+                        channel_id: data["_idChannel"],
+                        channel_name: data["_name"]
+                    });
+                }
+                break;
+        }
+    }
+
     ngOnInit() {
-        this.companiesDropdown = [
-            { company_id: 1, company_name: "Compañía 1" },
-            { company_id: 2, company_name: "Compañía 2" },
-            { company_id: 3, company_name: "Compañía 3" },
-            { company_id: 3, company_name: "Compañía 4" }
-        ];
+        this.Servicio.getAllCompanies().subscribe(data => {
+            this.insertIntoDropdown(ObjectType.company, data);
+        });
 
         this.companiesDropdownSettings = {
             singleSelection: false,
@@ -279,7 +311,6 @@ export class StatisticsComponent implements OnInit {
             console.log("DataChart:", this.json2);
         });
     }
-  
 
     chart3(datos) {
         const graph = [datos];
