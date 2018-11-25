@@ -212,23 +212,7 @@ export class StatisticsComponent implements OnInit {
             console.log("DataChart:", this.json2);
         });
     }
-    /* Eliminar(id, id2, id3){
-  var coso= document.getElementById(id);
-  var coso2 =document.getElementById(id2);
-  var coso3 = document.getElementById(id3);
-   
-   if (!coso &&!coso2 &&!coso3)
-
-   {
-console.log("ALERTA");
-   }
-   else
-   {
-     coso.remove();
-     coso2.remove();
-     coso3.remove();
-       }
-   }*/
+  
 
     chart3(datos) {
         const graph = [datos];
