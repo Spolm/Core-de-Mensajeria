@@ -30,6 +30,8 @@ public class IntegratorService {
             getIntegratorsRs(integrators, rs);
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
+        }finally {
+            Sql.bdClose(db.getConn());
         }
         return integrators;
     }
@@ -49,6 +51,8 @@ public class IntegratorService {
             }
         } catch (SQLException e) {
             System.err.println(e.getStackTrace());
+        }finally {
+            Sql.bdClose(db.getConn());
         }
         return null;
     }
@@ -62,6 +66,8 @@ public class IntegratorService {
 
         } catch (SQLException e) {
             System.err.println(e.getStackTrace());
+        }finally {
+            Sql.bdClose(db.getConn());
         }
     }
 
