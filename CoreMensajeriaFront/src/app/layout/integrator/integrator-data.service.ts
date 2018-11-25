@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Channel } from './channel';
+import { Integrator } from './integrator';
 import { ApiService } from './api.service';
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class ChannelDataService {
+export class IntegratorDataService {
 
-  channels: Channel[] = [];
+  integrators: Integrator[] = [];
 
   constructor(
     private api: ApiService
   ) { }
 
-  public getAllChannels(): Observable<Channel[]>{
-    return this.api.getAllChannels();
+  public getAllIntegrators(): Observable<Integrator[]>{
+    return this.api.getAllIntegrators();
   }
 }

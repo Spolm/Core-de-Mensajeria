@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Channel } from './channel';
 
-
 const API_URL = environment.apiUrl;
 
 @Injectable({
@@ -27,7 +26,7 @@ export class ApiService {
       return channels.map( (channel) => new Channel(channel) );
     }))
     .pipe( catchError( err => {
-      this.handleError;
+      this.handleError( err );
       return null;
     }));
   }

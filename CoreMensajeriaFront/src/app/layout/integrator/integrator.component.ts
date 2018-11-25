@@ -1,15 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './api.service';
 
+import { IntegratorDataService } from './integrator-data.service'
 import { ToastrService } from 'ngx-toastr';
+import { Integrator } from './integrator'
+
 
 @Component({
   selector: 'app-integrator',
   templateUrl: './integrator.component.html',
-  styleUrls: ['./integrator.component.scss']
+  styleUrls: ['./integrator.component.scss'],
+  providers: [IntegratorDataService]
 })
  
 export class IntegratorComponent implements OnInit {
+  
+  integrators: Integrator[] = [];
+
+  constructor(
+    private integratorDataService: IntegratorDataService,
+    private toastr: ToastrService
+  ) { }
+
+  ngOnInit() {
+    this.integratorDataService
+    .getAllIntegrators()
+    .subscribe(
+      (integrators) => {
+        this.integrators = integrators;
+        this.toastr.success("Lista Recibida");
+      },(err => {
+        this.toastr.error("Error en la Conexión");
+      })
+    )
+  }
+
+  
+  /*
 
   integrators: any = [];
 
@@ -59,4 +86,5 @@ export class IntegratorComponent implements OnInit {
       this.toastr.error("Error en la Conexión");
     })
   }
+  */
 }
