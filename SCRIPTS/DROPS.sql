@@ -14,6 +14,6 @@ ALTER SEQUENCE template_channel_integrator_tci_id_seq RESTART;
 ALTER SEQUENCE template_status_ts_id_seq RESTART;
 ALTER SEQUENCE template_tem_id_seq RESTART;
 ALTER SEQUENCE user_use_id_seq RESTART;
-\C postgresql
+\C postgres
 DROP DATABASE IF EXISTS "CoreMensajeria_StarSchema";
 DROP DATABASE IF EXISTS "CoreMensajeria";
