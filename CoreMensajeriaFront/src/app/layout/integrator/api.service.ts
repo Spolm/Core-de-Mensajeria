@@ -31,6 +31,19 @@ export class ApiService {
     }));
   }
 
+  public getIntegratorsPerChannel(index: string): Observable<Integrator[]>{
+    return this.http
+    .get(API_URL+'/channel/i/'+index)
+    .pipe( map( response => {
+      const integrators = response.json();
+      return integrators.map( (integrator) => new Integrator(integrator) );
+    }))
+    .pipe( catchError( err => {
+      this.handleError( err );
+      return null;
+    }));
+  }
+
   private handleError (error: Response | any) {
     console.error('ApiService::handleError', error);
     return Observable.throw(error);

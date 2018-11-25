@@ -18,4 +18,8 @@ export class IntegratorDataService {
   public getAllIntegrators(): Observable<Integrator[]>{
     return this.api.getAllIntegrators();
   }
+
+  public getIntegratorsPerChannel(index: string):Observable<Integrator[]>{
+    return this.api.getIntegratorsPerChannel(index);
+  }
 }

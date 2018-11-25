@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ChannelDataService } from './channel-data.service'
-import { Channel } from './channel'
+import { ChannelDataService } from './channel-data.service';
+import { ToastrService } from 'ngx-toastr';
+import { Channel } from './channel';
 
 @Component({
   selector: 'app-channel',
@@ -15,6 +16,7 @@ export class ChannelComponent implements OnInit {
 
   constructor(
     private channelDataService: ChannelDataService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -23,8 +25,10 @@ export class ChannelComponent implements OnInit {
     .subscribe(
       (channels) => {
         this.channels = channels;
-        console.log(channels);
-      }
+        this.toastr.success("Lista Recibida");
+      },(err => {
+        this.toastr.error("Error en la Conexión");
+      })
     )
   }
 
