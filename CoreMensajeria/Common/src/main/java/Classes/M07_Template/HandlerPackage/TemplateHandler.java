@@ -176,12 +176,16 @@ public class TemplateHandler {
             flag=true;
         }  catch(SQLException e){
             e.printStackTrace();
+            con.rollback();
             flag=false;
         } catch (Exception e){
             e.printStackTrace();
             flag=false;
+        } finally {
+            if (con != null) {
+                Sql.bdClose(con);
+            }
+            return flag;
         }
-        Sql.bdClose(con);
-        return flag;
     }
 }
