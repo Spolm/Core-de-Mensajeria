@@ -1,27 +1,31 @@
+<app-page-header [heading]="'Campañas'" [icon]="'fa fa-bullhorn'"></app-page-header>
 
-<h2 class="text-center text-capitalize main-title">
-  Campañas
-</h2>
-<div class="card">
-  <table class="table">
-    <thead>
+<div class="container-fluid">
+  <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
       <tr>
-        <th class="w-2">Codigo</th>
-        <th class="w-50">Nombre de camapaña</th>        
-        <th class="w-20">Fecha inicio</th>
-        <th class="w-20">Fecha fin</th>
-        <th class="w-20">Duracion</th>        
-        
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Descripci&oacute;n</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+        <th>Estado</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>17</td>
-        <td>Campaña de prueba.</td>
-        <td>07/08/2018</td>
-        <td>07/09/2018</td>
-        <td>20 días</td>
+     <!--<tr *ngIf="empty">
+        <p style="text-align: center">No tiene Compa&ntilde;as.</p>
       </tr>
+      <tr *ngIf="!empty">-->
+          <tr *ngFor="let campaign of campaignList">
+            <td>{{campaign._idCampaign}}</td> 
+            <td>{{campaign._nameCampaign}}</td> 
+            <td>{{campaign._descCampaign}}</td> 
+            <td>{{campaign._startCampaign}}</td> 
+            <td>{{campaign._endCampaign}}</td> 
+            <td *ngIf="!campaign._statusCampaign"><span class="badge badge-danger" (click)="activateCampaign(campaign._idCampaign)">Inactiva</span></td>
+            <td *ngIf="campaign._statusCampaign"><span class="badge badge-success" (click)="deactivateCampaign(campaign._idCampaign)">Activa</span></td> 
+          </tr>
     </tbody>
   </table>
 </div>

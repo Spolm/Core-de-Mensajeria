@@ -4,6 +4,7 @@ import Classes.M07_Template.MessagePackage.Message;
 import Classes.M07_Template.MessagePackage.Parameter;
 import Classes.M07_Template.Template;
 import Classes.Sql;
+import Exceptions.MessageDoesntExistsException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,21 +31,6 @@ public class MessageHandler {
                 message.setMessageId(resultSet.getInt("mes_id"));
                 message.setMessage(resultSet.getString("mes_text"));
                 message.setParameters(ParameterHandler.getParametersByMessage(message.getMessageId()));
-                /*
-                ResultSet resultSetAux = sql.sqlConn(
-                        "SELECT PAR_ID,PAR_NAME FROM PARAMETER P " +
-                                "INNER JOIN MESSAGE_PARAMETER MP " +
-                                "ON P.PAR_ID = MP.MP_PARAMETER " +
-                                "WHERE MP.MP_MESSAGE = " + message.getMessageId());
-                ArrayList<Parameter> parameterArrayList = new ArrayList<>();
-                while(resultSetAux.next()) {
-                    Parameter parameter = new Parameter();
-                    parameter.setParameterId(resultSetAux.getInt("par_id"));
-                    parameter.setName(resultSetAux.getString("par_name"));
-                    parameterArrayList.add(parameter);
-                }
-                message.setParameters(parameterArrayList);
-                */
                 templateArrayList.get(x).setMessage(message);
             }
         }catch (SQLException e) {
@@ -52,6 +38,7 @@ public class MessageHandler {
         }catch(Exception e){
             e.printStackTrace();
         }finally {
+            Sql.bdClose(sql.getConn());
             return templateArrayList;
         }
     }
@@ -69,9 +56,14 @@ public class MessageHandler {
             }
         }catch (SQLException e) {
             e.printStackTrace();
+            throw new MessageDoesntExistsException
+                ("Error: No existe mensaje para esta plantilla.", e, templateId);
         }catch(Exception e){
             e.printStackTrace();
         }finally {
+            if (sql.getConn() != null) {
+                Sql.bdClose(sql.getConn());
+            }
             return message;
         }
     }

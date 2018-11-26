@@ -56,6 +56,7 @@ public class ParameterHandler {
         } catch (Exception e){
             e.printStackTrace();
         }finally {
+            Sql.bdClose(sql.getConn());
             return parameterList;
         }
     }
