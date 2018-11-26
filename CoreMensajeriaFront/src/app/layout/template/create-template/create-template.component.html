@@ -4,18 +4,30 @@
   <div class="form-row">
     <div class="form-group col-9">
       <label for="formMessage">Mensaje de la plantilla</label>
-      <textarea class="form-control" id="formMessage" rows="3" placeholder="Mensaje" [(ngModel)]="formMessage" name="message"></textarea>
+      <textarea class="form-control" id="formMessage" rows="5" placeholder="Mensaje" [(ngModel)]="formMessage" name="message"></textarea>
     </div>
     <div class="form-group col">
       <label for="formParameters">Parametros</label>
       <br>
-      <select id="formParameters" [(ngModel)]="formParameters" name="param" (change)="addParameter(formMessage, formParameters)">
-        <option *ngFor="let parameter of parameters">
-          {{parameter.name}}
-        </option>
-      </select>
+      <div class="d-flex flex-row-reverse">
+          <button type="button" class="btn btn-primary btn-sm m-1">+</button>
+        <select id="formParameters" [(ngModel)]="formParameters" name="param" (change)="addParameter(formMessage, formParameters)">
+          <option *ngFor="let parameter of parameters">
+            {{parameter.name}}
+          </option>
+        </select>        
+      </div>
     </div>
   </div>
+
+  <div class="row">
+    <div *ngFor="let parameter of parametersOrder">
+      <button type="button" class="btn btn-danger m-1" (click)="deleteParameter(formMessage, parameter)">
+        {{parameter}}
+      </button>
+    </div>
+  </div>
+
   <div id="test" class="form-group">
     channel & integrator
   </div>

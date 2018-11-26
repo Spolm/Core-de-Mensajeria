@@ -39,7 +39,7 @@ export class StatisticsComponent implements OnInit {
 
     companiesDropdown = [];
     companiesDropdownSettings = {};
-    selectedCompanies = [];
+    selectedCompanies: Number[] = [];
 
     campaignsDropdown = [];
     campaignsDropdownSettings = {};
@@ -89,9 +89,7 @@ export class StatisticsComponent implements OnInit {
             allowSearchFilter: true
         };
 
-        this.Servicio.getAllCampaigns().subscribe(data => {
-            this.insertIntoDropdown(ObjectType.campaign, data);
-        });
+        this.getAllCampaigns();
 
         this.campaignsDropdownSettings = {
             singleSelection: false,
@@ -145,6 +143,7 @@ export class StatisticsComponent implements OnInit {
                 }
                 break;
             case ObjectType.campaign:
+                this.campaignsDropdown = [];
                 for (var index in data) {
                     this.campaignsDropdown.push({
                         campaign_id: data[index]["_idCampaign"],
@@ -180,34 +179,30 @@ export class StatisticsComponent implements OnInit {
             this.verDate = this.opcionDateSleccionado.toString();
             this.paramDay1 =
                 "?paramDay=" +
-                new Date(this.opcionDateSleccionado).getDate() +
-                1;
+                new Date(this.opcionDateSleccionado).getUTCDate();
             this.paramMounth1 =
                 "?paramMonth=" +
-                new Date(this.opcionDateSleccionado).getMonth() +
-                1;
+                new Date(this.opcionDateSleccionado).getUTCMonth();
             this.paramYear1 =
                 "?paramYear=" +
                 new Date(this.opcionDateSleccionado).getFullYear();
             this.paramDay2 =
                 "?paramDay2=" +
-                new Date(this.opcionDateSleccionado2).getDate() +
-                1;
+                new Date(this.opcionDateSleccionado2).getUTCDate();
             this.paramMounth2 =
                 "?paramMonth2=" +
-                new Date(this.opcionDateSleccionado2).getMonth() +
-                1;
+                new Date(this.opcionDateSleccionado2).getUTCMonth();
             this.paramYear2 =
                 "?paramYear2=" +
                 new Date(this.opcionDateSleccionado2).getFullYear();
             this.paramType = "paramType=" + this.verSeleccion;
             console.log(
                 "FechaCapturada",
-                new Date(this.opcionDateSleccionado).getDate() + 1,
-                new Date(this.opcionDateSleccionado).getMonth() + 1,
+                new Date(this.opcionDateSleccionado).getUTCDate(),
+                new Date(this.opcionDateSleccionado).getUTCMonth(),
                 new Date(this.opcionDateSleccionado).getFullYear(),
-                new Date(this.opcionDateSleccionado2).getDate() + 1,
-                new Date(this.opcionDateSleccionado2).getMonth() + 1,
+                new Date(this.opcionDateSleccionado2).getUTCDate(),
+                new Date(this.opcionDateSleccionado2).getUTCMonth(),
                 new Date(this.opcionDateSleccionado2).getFullYear()
             );
             this.Servicio.getStatisticsData4(
@@ -341,5 +336,60 @@ export class StatisticsComponent implements OnInit {
             title: "Cantidad de mensajes enviados por " + this.verSeleccion
         };
         Plotly.newPlot(linediv, graph, layout);
+    }
+
+    getAllCampaigns() {
+        this.Servicio.getAllCampaigns().subscribe(data => {
+            this.insertIntoDropdown(ObjectType.campaign, data);
+        });
+    }
+
+    companySelected(company: any) {
+        this.selectedCompanies.push(company["company_id"]);
+        this.getCampaignsForCompanies();
+    }
+
+    companyDeselected(company: any) {
+        this.removeItemFromArray(company["company_id"], this.selectedCompanies);
+        if (this.arrayIsEmpty(this.selectedCompanies)) {
+            this.getAllCampaigns();
+        } else {
+            this.getCampaignsForCompanies();
+        }
+    }
+
+    getCampaignsForCompanies() {
+        this.Servicio.getCampaingsForCompany(this.selectedCompanies).subscribe(
+            data => {
+                this.campaignsDropdown = [];
+                this.insertIntoDropdown(ObjectType.campaign, data);
+            }
+        );
+    }
+
+    selectAllCompanies() {
+        for (var index in this.companiesDropdown) {
+            this.selectedCompanies.push(
+                this.companiesDropdown[index]["company_id"]
+            );
+        }
+        this.getAllCampaigns();
+    }
+
+    deselectAllCampaigns() {
+        this.selectedCompanies = [];
+        this.getAllCampaigns();
+    }
+
+    removeItemFromArray(item: Number, array: Number[]) {
+        for (var i = 0; i < array.length; i++) {
+            if (item == array[i]) {
+                array.splice(i, 1);
+            }
+        }
+    }
+
+    arrayIsEmpty(array) {
+        return !Array.isArray(array) || !array.length;
     }
 }
