@@ -4,6 +4,7 @@ import Classes.M07_Template.MessagePackage.Message;
 import Classes.M07_Template.MessagePackage.Parameter;
 import Classes.M07_Template.Template;
 import Classes.Sql;
+import Exceptions.MessageDoesntExistsException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,10 +56,14 @@ public class MessageHandler {
             }
         }catch (SQLException e) {
             e.printStackTrace();
+            throw new MessageDoesntExistsException
+                ("Error: No existe mensaje para esta plantilla.", e, templateId);
         }catch(Exception e){
             e.printStackTrace();
         }finally {
-            Sql.bdClose(sql.getConn());
+            if (sql.getConn() != null) {
+                Sql.bdClose(sql.getConn());
+            }
             return message;
         }
     }

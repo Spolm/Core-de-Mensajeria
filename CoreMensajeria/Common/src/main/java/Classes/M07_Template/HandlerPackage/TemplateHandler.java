@@ -10,6 +10,7 @@ import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 import Exceptions.CampaignDoesntExistsException;
+import Exceptions.MessageDoesntExistsException;
 import Exceptions.TemplateDoesntExistsException;
 
 import java.sql.*;
@@ -63,15 +64,15 @@ public class TemplateHandler {
         }
     }
 
-    public Template getTemplate(int id){
+    public Template getTemplate(int id) {
         Template template = new Template();
-        String query="select tem_id,ts_id, tem_creation_date, sta_name\n" +
+        String query = "select tem_id,ts_id, tem_creation_date, sta_name\n" +
                 "from template_status,template,status\n" +
-                "where tem_id = "+ id + " and tem_id = ts_template and sta_id = ts_status\n" +
+                "where tem_id = " + id + " and tem_id = ts_template and sta_id = ts_status\n" +
                 "order by ts_id desc limit 1";
-        try{
+        try {
             ResultSet resultSet = sql.sqlConn(query);
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 //asignamos los datos basicos del propio template
                 template.setTemplateId(resultSet.getInt("tem_id"));
                 template.setCreationDate(resultSet.getString("tem_creation_date"));
@@ -141,7 +142,13 @@ public class TemplateHandler {
         }
     }
 
-
+    /**
+     *
+     * @param templateId
+     * @return campaign
+     *
+     * Retorna una campana que tiene asociada la plantilla con el id = templateId
+     */
     public Campaign getCampaingByTemplate(int templateId){
         Campaign campaign = new Campaign();
         try{
