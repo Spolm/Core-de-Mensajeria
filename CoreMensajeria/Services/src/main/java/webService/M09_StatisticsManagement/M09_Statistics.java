@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Path("/M09_Statistics")
@@ -458,23 +459,7 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getAllCampaigns() {
         String query = "SELECT DISTINCT cam_id, cam_name FROM dim_company_campaign ORDER BY cam_id;";
-        ArrayList<Campaign> campaigns = new ArrayList<>();
-        try {
-            Statement statement = conn.createStatement();
-            ResultSet result = statement.executeQuery(query);
-
-            while (result.next()) {
-                Campaign campaign = new Campaign();
-                campaign.set_idCampaign(result.getInt("cam_id"));
-                campaign.set_nameCampaign(result.getString("cam_name"));
-                campaigns.add(campaign);
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Sql.bdClose(conn);
-        }
-        return Response.ok(gson.toJson(campaigns)).build();
+        return getCampaigns(query);
     }
 
     @GET
@@ -499,6 +484,38 @@ public class M09_Statistics extends Application {
         }
         return Response.ok(gson.toJson(channels)).build();
     }
-    
+
+    @GET
+    @Path("/campaignCompany")
+    @Produces("application/json")
+    public Response getCampaignsForCompany(@QueryParam("companyId") List<Integer> companyIds) {
+        String query = "SELECT DISTINCT cam_id, cam_name FROM dim_company_campaign WHERE com_id IN (";
+        for (int i = 0; i < companyIds.size() - 1;  i++) {
+            query += companyIds.get(i) + ", ";
+        }
+        query += companyIds.get(companyIds.size() - 1) + ") ORDER BY cam_id;";
+
+        return getCampaigns(query);
+    }
+
+    public Response getCampaigns(String query) {
+        ArrayList<Campaign> campaigns = new ArrayList<>();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Campaign campaign = new Campaign();
+                campaign.set_idCampaign(result.getInt("cam_id"));
+                campaign.set_nameCampaign(result.getString("cam_name"));
+                campaigns.add(campaign);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(conn);
+        }
+        return Response.ok(gson.toJson(campaigns)).build();
+    }
 }
 
