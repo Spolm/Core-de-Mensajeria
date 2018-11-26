@@ -179,34 +179,30 @@ export class StatisticsComponent implements OnInit {
             this.verDate = this.opcionDateSleccionado.toString();
             this.paramDay1 =
                 "?paramDay=" +
-                new Date(this.opcionDateSleccionado).getDate() +
-                1;
+                new Date(this.opcionDateSleccionado).getUTCDate();
             this.paramMounth1 =
                 "?paramMonth=" +
-                new Date(this.opcionDateSleccionado).getMonth() +
-                1;
+                new Date(this.opcionDateSleccionado).getUTCMonth();
             this.paramYear1 =
                 "?paramYear=" +
                 new Date(this.opcionDateSleccionado).getFullYear();
             this.paramDay2 =
                 "?paramDay2=" +
-                new Date(this.opcionDateSleccionado2).getDate() +
-                1;
+                new Date(this.opcionDateSleccionado2).getUTCDate();
             this.paramMounth2 =
                 "?paramMonth2=" +
-                new Date(this.opcionDateSleccionado2).getMonth() +
-                1;
+                new Date(this.opcionDateSleccionado2).getUTCMonth();
             this.paramYear2 =
                 "?paramYear2=" +
                 new Date(this.opcionDateSleccionado2).getFullYear();
             this.paramType = "paramType=" + this.verSeleccion;
             console.log(
                 "FechaCapturada",
-                new Date(this.opcionDateSleccionado).getDate() + 1,
-                new Date(this.opcionDateSleccionado).getMonth() + 1,
+                new Date(this.opcionDateSleccionado).getUTCDate(),
+                new Date(this.opcionDateSleccionado).getUTCMonth(),
                 new Date(this.opcionDateSleccionado).getFullYear(),
-                new Date(this.opcionDateSleccionado2).getDate() + 1,
-                new Date(this.opcionDateSleccionado2).getMonth() + 1,
+                new Date(this.opcionDateSleccionado2).getUTCDate(),
+                new Date(this.opcionDateSleccionado2).getUTCMonth(),
                 new Date(this.opcionDateSleccionado2).getFullYear()
             );
             this.Servicio.getStatisticsData4(
