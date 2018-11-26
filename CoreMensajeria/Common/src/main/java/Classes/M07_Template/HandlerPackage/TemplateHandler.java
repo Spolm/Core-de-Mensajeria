@@ -152,11 +152,14 @@ public class TemplateHandler {
     public Campaign getCampaingByTemplate(int templateId){
         Campaign campaign = new Campaign();
         try{
+            //query que obtiene el id de la campana que tiene asociada la plantilla
             ResultSet resultSet = sql.sqlConn(
                     "SELECT tem_campaign_id \n"
                             + "FROM Template\n"
                             + "WHERE tem_id = " + templateId + ";");
+            //instanciando el api de campana
            /* M03_Campaigns campaignsService = new M03_Campaigns();
+            //obtener objeto campana con el id de campana del query anterior
             campaign = campaignsService.getDetails
                     (resultSet.getInt("tem_campaign_id")); */
         } catch (SQLException e){
