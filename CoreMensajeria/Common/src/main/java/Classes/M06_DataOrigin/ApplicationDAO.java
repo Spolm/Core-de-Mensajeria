@@ -1,8 +1,8 @@
 package Classes.M06_DataOrigin;
 
 import Classes.Sql;
-import exceptions.ApplicationNotFoundException;
-import exceptions.DatabaseConnectionProblemException;
+import Exceptions.ApplicationNotFoundException;
+import Exceptions.DatabaseConnectionProblemException;
 
 import java.sql.*;
 import java.util.ArrayList;
