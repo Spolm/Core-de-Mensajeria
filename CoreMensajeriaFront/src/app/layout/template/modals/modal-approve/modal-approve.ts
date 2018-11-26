@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TemplateService } from '../template.service';
+import { TemplateService } from '../../template.service';
 import { ToastrService } from 'ngx-toastr';
 import { delay } from 'q';
 

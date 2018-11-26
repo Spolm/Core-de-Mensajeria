@@ -1,0 +1,23 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Seleccionar Compañia</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-check" *ngFor="let company of companies">
+      <div *ngIf="company._status">
+        <input class="form-check-input" type="radio" name="company" id="company._idCompany">
+        <label for="company._idCompany">
+          {{company._name}}
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary">Siguiente</button>
+  </div>
+</ng-template>
+
+<button type="button" class="btn btn-dark" (click)="open(content)">Crear Plantilla</button>

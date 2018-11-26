@@ -34,6 +34,21 @@ export class TemplateService {
       map(this.extractData));
   }
 
+  getCompanies(userId: number){
+    return this.http.get(endpoint + 'M02_Companies/GetCompanies?id=' + userId).pipe(
+      map(this.extractData));
+  }
+
+  getChannels(){
+    return this.http.get(endpoint + 'channel').pipe(
+      map(this.extractData));
+  }
+
+  getIntegrators(channel: number){
+    return this.http.get(endpoint + 'channel/i/' + channel).pipe(
+      map(this.extractData));
+  }
+
   approveTemplate(templateId: Number){
     return this.http.post(endpoint+'templates/update/'+templateId, templateId).subscribe();
   }
