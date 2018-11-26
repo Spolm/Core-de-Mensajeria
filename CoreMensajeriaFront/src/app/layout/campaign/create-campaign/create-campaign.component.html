@@ -1,10 +1,33 @@
 <router-outlet></router-outlet>
 
+<div class="container-fluid">
 <form>
   <div class="form-row">
-    <div class="form-group col-9">
-      <label for="formMessage">Nombre de la Campaña</label>
-      <input class="form-control">
+    <div class="col-4">
+      <div class="form-group">
+        <label for="formMessage">Nombre de la Campaña</label>
+        <input class="form-control" placeholder="Nombre">
+      </div>
+      <div class="form-group">
+        <label for="formMessage">Descripción de la Campaña</label>
+        <input class="form-control" placeholder="Descripción">
+      </div>
+      <div class="form-group">
+        <label for="formMessage">Fecha de Inicio de la Campaña</label>
+        <input class="form-control" placeholder="Fecha Inicio DD/MM/YYYY">
+      </div>
+    </div>
+    <div class="col-4">
+        <div class="form-group">
+            <label for="formMessage">Fecha de finalización de la Campaña</label>
+            <input class="form-control" placeholder="Fecha Fin DD/MM/YYYY">
+          </div>
+          <div class="form-group">
+              <label for="formMessage">Compañia</label>
+              <select class="form-control">
+                <option *ngFor="let company of companyList" value="{{company._idCompany}}">{{company._name}}</option>
+              </select>
+            </div>
     </div>
   </div>
   <div id="test" class="form-group">
@@ -15,8 +38,9 @@
     test 1
   </div>
 </form>
-
 <div class="d-flex flex-row-reverse">
-  <button type="button" class="btn btn-success m-1">Crear</button>
-  <button type="button" class="btn btn-danger m-1" routerLink="/campaigns">Cancelar</button>
+  <button type="button" class="btn btn-success m-1 col-3">Crear</button>
+  <button type="button" class="btn btn-danger m-1 col-3" routerLink="/campaigns">Cancelar</button>
+</div>
+
 </div>
