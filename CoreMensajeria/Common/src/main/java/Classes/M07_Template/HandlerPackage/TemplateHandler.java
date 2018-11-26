@@ -6,6 +6,8 @@ import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
 import Classes.M04_Channel_Integrator.ChannelPackage.ChannelFactory;
 import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
 import Classes.M04_Channel_Integrator.IntegratorPackage.IntegratorService;
+import Classes.M06_DataOrigin.Application;
+import Classes.M06_DataOrigin.ApplicationDAO;
 import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
@@ -52,6 +54,7 @@ public class TemplateHandler {
                 template.setStatus(status);
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
                 template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
+                template.setApplication(getApplicationByTemplate(template.getTemplateId()));
                 templateArrayList.add(template);
             }
         }catch (SQLException e) {
@@ -82,17 +85,18 @@ public class TemplateHandler {
                 template.setStatus(Status.createStatus(resultSet.getInt("ts_id"),
                         resultSet.getString("sta_name")));
 
-                //asignamos canales y campañas
+                //asignamos canales, campaña y aplicacion
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
                 template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
+                template.setApplication(getApplicationByTemplate(template.getTemplateId()));
 
-                //a falta de origenes y usuario creador
+                //usuario creador
             }
 
         } catch(SQLException e){
             e.printStackTrace();
             throw new TemplateDoesntExistsException
-                    ("Error: la plantilla no existe", e, id);
+                    ("Error: la plantilla " + id + " no existe", e, id);
         } catch (Exception e){
             e.printStackTrace();
         } finally {
@@ -165,14 +169,48 @@ public class TemplateHandler {
         } catch (SQLException e){
             e.printStackTrace();
             throw new TemplateDoesntExistsException
-                    ("Error: la plantilla no existe", e, templateId);
+                    ("Error: la plantilla " + templateId + " no existe", e, templateId);
        /* } catch (CampaignDoesntExistsException e) {
             */
         }catch (Exception e){
             e.printStackTrace();
         } finally {
-            Sql.bdClose(sql.getConn());
+            if (sql.getConn() != null) {
+                Sql.bdClose(sql.getConn());
+            }
             return campaign;
+        }
+    }
+
+    /**
+     *
+     * @param templateId
+     * @return application
+     *
+     * Retornar una aplicacion que tiene asociada la plantilla con el id = templateId
+     */
+    public Application getApplicationByTemplate(int templateId){
+        Application application = new Application();
+        try {
+            //query que obtiene el id de la aplicacion que tiene asociada la plantilla
+            ResultSet resultSet = sql.sqlConn(
+                    "SELECT tem_application_id \n" +
+                            "FROM Template" +
+                            "WHERE tem_id = " + templateId + ";");
+            //instanciado el api ApplicationDAO
+            ApplicationDAO applicationService = new ApplicationDAO();
+            //Obtener objeto aplicacion con el id de aplicacion del query anterior
+            application = applicationService.getApplication
+                    (resultSet.getInt("tem_application_id"));
+        } catch (SQLException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if (sql.getConn() != null) {
+                Sql.bdClose(sql.getConn());
+            }
+            return application;
         }
     }
 
