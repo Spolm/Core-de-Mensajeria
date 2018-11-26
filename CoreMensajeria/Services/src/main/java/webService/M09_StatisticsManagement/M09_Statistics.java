@@ -345,7 +345,36 @@ public class M09_Statistics extends Application {
         }
         return listNum;
     }
+//contar mensajes por canal
+    public ArrayList<Integer> CountOfMessageCha ( ArrayList<String> listChannel ){
 
+        String aux2 = "" ;
+        int n = 0  ;
+        ArrayList<Integer> listNum = new ArrayList<>();
+
+        try {
+            for ( int i = 0 ; i < listChannel.size() ; i++ ) {
+
+                aux2 = listChannel.get(i);
+                String select = "SELECT count(M.*) from fact_sent_message as M , dim_channel as C\n" +
+                                "where C.cha_id = M.sen_cha_id and C.cha_name = '" + aux2 + "' ";
+
+                Statement st = conn.createStatement();
+                ResultSet result = st.executeQuery( select );
+                while (result.next()) {
+                    n = result.getInt(1);
+                    listNum.add(n);
+                }
+            }
+        }
+        catch ( SQLException e ) {
+            e.printStackTrace();
+            // throw new SQLException();
+        } finally {
+            Sql.bdClose( conn );
+        }
+        return listNum;
+    }
 
     //Metodos con los if y los Filtros
 
@@ -370,7 +399,14 @@ public class M09_Statistics extends Application {
         }
 
         else {
-
+            if (paramType.equals("Canales")){
+                try {
+                    Response responseGraphChannel= getNumberOfChannelChart();
+                    return responseGraphChannel;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsBar") ).build() ;
@@ -398,7 +434,14 @@ public class M09_Statistics extends Application {
         }
 
         else {
-
+            if (paramType.equals("Canales")){
+                try {
+                    Response responseGraphChannel= getNumberOfChannelLine();
+                    return responseGraphChannel;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsLine") ).build();
@@ -425,7 +468,14 @@ public class M09_Statistics extends Application {
         }
 
         else {
-
+            if (paramType.equals("Canales")){
+                try {
+                    Response responseGraphChannel= getNumberOfChannelPie();
+                    return responseGraphChannel;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsPie") ).build();
@@ -499,6 +549,101 @@ public class M09_Statistics extends Application {
         }
         return Response.ok(gson.toJson(channels)).build();
     }
-    
+
+    @GET
+    @Path("/MessageChannelLine")
+    @Produces("application/json")
+    public Response getNumberOfChannelLine() throws SQLException {
+        String aux = "";
+        String select2 = " SELECT cha_name  from dim_channel";
+        try {
+            Statistics gr = new Statistics();
+            ArrayList<Integer> listNum = new ArrayList<Integer>();
+            ArrayList<String> listChannel = new ArrayList<String>();
+            Statement st2 = conn.createStatement();
+            ResultSet result2 = st2.executeQuery( select2 );
+            while ( result2.next() ) {
+                ChannelFactory channelFactory = new ChannelFactory();
+                Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
+                aux = channel.getNameChannel();
+                listChannel.add( aux ) ;
+            }
+            listNum = CountOfMessageCha( listChannel );
+            gr.type = "line";
+            gr.x = listChannel;
+            gr.y = listNum;
+            return Response.ok( gson.toJson( gr ) ).build();
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            throw new SQLException( select2 );
+        } finally {
+            Sql.bdClose( conn );
+        }
+    }
+
+    @GET
+    @Path("/MessageChannelBar")
+    @Produces("application/json")
+    public Response getNumberOfChannelChart() throws SQLException {
+        String aux = "";
+        String select2 = " SELECT cha_name  from dim_channel";
+        try {
+            Statistics gr = new Statistics();
+            ArrayList<Integer> listNum = new ArrayList<Integer>();
+            ArrayList<String> listChannel = new ArrayList<String>();
+            Statement st2 = conn.createStatement();
+            ResultSet result2 = st2.executeQuery( select2 );
+            while ( result2.next() ) {
+                ChannelFactory channelFactory = new ChannelFactory();
+                Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
+                aux = channel.getNameChannel();
+                listChannel.add( aux ) ;
+            }
+            listNum = CountOfMessageCha( listChannel );
+            gr.type = "bar";
+            gr.x = listChannel;
+            gr.y = listNum;
+            return Response.ok( gson.toJson( gr ) ).build();
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            throw new SQLException( select2 );
+        } finally {
+            Sql.bdClose( conn );
+        }
+    }
+
+
+    @GET
+    @Path("/MessageChannelPie")
+    @Produces("application/json")
+    public Response getNumberOfChannelPie() throws SQLException {
+        String aux = "";
+        String select2 = " SELECT cha_name  from dim_channel";
+        try {
+            PieChart PieC = new PieChart();
+            ArrayList<Integer> listNum = new ArrayList<Integer>();
+            ArrayList<String> listlabels = new ArrayList<String>();
+            int n = 0 ;
+            Statement st2 = conn.createStatement();
+            ResultSet result2 = st2.executeQuery(select2);
+            while ( result2.next() ) {
+                ChannelFactory channelFactory = new ChannelFactory();
+                Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
+                aux = channel.getNameChannel();
+                listlabels.add( aux ) ;
+            }
+            listNum = CountOfMessageCha( listlabels );
+            PieC.type = "pie";
+            PieC.labels = listlabels;
+            PieC.values = listNum;
+            return Response.ok( gson.toJson( PieC ) ).build();
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            throw new SQLException( select2 );
+        } finally {
+            Sql.bdClose( conn );
+        }
+    }
+
 }
 
