@@ -7,8 +7,11 @@
                 <ng-multiselect-dropdown
                     [placeholder]="'Compañía'"
                     [data]="companiesDropdown"
-                    [(ngModel)]="selectedCompanies"
                     [settings]="companiesDropdownSettings"
+                    (onSelect)="companySelected($event)"
+                    (onDeSelect)="companyDeselected($event)"
+                    (onSelectAll)="selectAllCompanies()"
+                    (onDeSelectAll)="deselectAllCompanies()"
                 >
                 </ng-multiselect-dropdown>
             </div>
@@ -33,7 +36,9 @@
                 </ng-multiselect-dropdown>
             </div>
 
-            <div class="col-md-3 text-center"><a href="#">Más filtros</a></div>
+            <div class="col-md-3 text-center">
+                <a (click)="openModal('custom-modal-1')">Más filtros</a>
+            </div>
         </div>
     </form>
 </div>
