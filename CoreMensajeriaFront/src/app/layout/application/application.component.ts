@@ -13,8 +13,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class ApplicationComponent implements OnInit {
 
   applications: any = [];
-  singleApplication: any =[];
   companies : any = [];
+  singleApplication: any = [];
   newAppForm: FormGroup;
   formSubmitted : boolean = false;
   modalBackdrop = false;
@@ -25,6 +25,7 @@ export class ApplicationComponent implements OnInit {
 
   ngOnInit() {
     this.getApplications();
+    this.getCompanies(localStorage.getItem("userid"));
     this.newAppForm = this.formBuilder.group({
       _nameApplication: ['',  [Validators.required, 
                         Validators.pattern('[a-zA-ZñÑ0-9 ]*'),
@@ -32,14 +33,15 @@ export class ApplicationComponent implements OnInit {
       _descriptionApplication: ['', [Validators.required, 
                         Validators.maxLength(500)]],
       _companyId: [0, [Validators.required]],
-      _userId: "1"
-  });
+      _userId: localStorage.getItem("userid")
+    });
   }
   
   getApplications() {
     this.applications = [];
     this.rest.getData("applications").subscribe((data: {}) => {
       this.applications = data;
+      this.fillApplicationsCompany();
     },
     (err) => {
       this.toastr.error("Error de Conexion.");
@@ -47,24 +49,17 @@ export class ApplicationComponent implements OnInit {
     });
   }
 
-  deleteApplication(id){
-    this.rest.deleteData("applications/" + id)
-    .subscribe(res => {
-      this.toastr.success(res._message);
-      this.getApplications();
-    }, (err) => {
-      this.toastr.error(err.error._message);
-      console.log(err);
-    }
-    );
-  }
-
   addApplication(){
+    //Convert values to integer
+    this.newAppForm.value._companyId *= 1;
+    this.newAppForm.value._userId *= 1;
+    //Send data
     this.rest.postData("applications", this.newAppForm.value)
         .subscribe(res => {
           this.toastr.success(res._message);
           this.toggleNewAppModal();
           this.getApplications();
+          this.resetForm();
         }, (err) => {
           this.toastr.error(err.error._message);
           console.log(err);
@@ -104,16 +99,14 @@ export class ApplicationComponent implements OnInit {
   }
 
   viewApplication(id){
-    this.rest.getData("applications/id/" + id)
-    .subscribe((data: {}) => {
-      this.singleApplication = data;
-      this.toggleAppInfoModal();
-      console.log(data);
-      
-    }, (err) => {
-      this.toastr.error(err.error._message);
-      console.log(err);
-    });
+    for (let index = 0; index < this.applications.length; index++) {
+      const element = this.applications[index];
+      if(element._idApplication == id){
+        this.singleApplication = element;
+        this.toggleAppInfoModal();
+        return;
+      }
+    }
   }
 
   toggleNewAppModal(){
@@ -126,4 +119,48 @@ export class ApplicationComponent implements OnInit {
     this.displayAppInfoModal = !this.displayAppInfoModal;
   }
 
+  fillApplicationsCompany(){
+    for (let index = 0; index < this.applications.length; index++) {
+      const element = this.applications[index];
+      this.getCompanyName(element);
+    }
+  }
+
+  getCompanyName(element){
+    var company:any;
+    this.rest.getData("M02_Companies/CompanyDetails?id=" + element._companyId).subscribe((data: {}) => {
+      company = data;
+      element._companyId = company._name;
+    },
+    (err) => {
+      console.log(err);
+    });
+  }
+
+  getCompanies(userId){
+    this.rest.getData("M02_Companies/GetCompanies?id=" + userId).subscribe((data: {}) => {
+      this.companies = data; 
+      this.cleanCompanies();
+    },
+    (err) => {
+      this.toastr.error("Error de Conexion.");
+      console.log(err);
+    });
+  }
+
+  resetForm(){
+    this.newAppForm.value._nameApplication = "";
+    this.newAppForm.value._descriptionApplication = "";
+    this.newAppForm.value._companyId = 0;
+  }
+
+  cleanCompanies(){
+    var cleanList: any = [];
+    for (let index = 0; index < this.companies.length; index++) {
+      if(this.companies[index]._status = 1){
+        cleanList.push(this.companies[index]);
+      }
+    }
+    this.companies = cleanList;
+  }
 }

@@ -19,7 +19,7 @@
     <tbody>
       <tr *ngFor="let app of applications">
         <td class="col-4">{{app._nameApplication}}</td>
-        <td class="col-3 text-center">{{app._companyId}}</td>
+        <td class="col-3 text-center">{{ app._companyId }}</td>
         <td class="col-2 text-center">
           {{app._tokenApplication.substr(0,4)}}****{{app._tokenApplication.substr(60,64)}}
         </td>
@@ -30,8 +30,7 @@
         <td class="col text-center">
           <i class="fa fa-eye" (click)="viewApplication(app._idApplication)"></i>&nbsp;
           <i *ngIf="!app._statusApplication" class="fa fa-play" title="Activar" (click)="activeApplication(app._idApplication)"></i>
-          <i *ngIf="app._statusApplication" class="fa fa-pause" title="Desactivar" (click)="pauseApplication(app._idApplication)"></i>&nbsp;
-          <i class="fa fa-trash" (click)="deleteApplication(app._idApplication)"></i>
+          <i *ngIf="app._statusApplication" class="fa fa-pause" title="Desactivar" (click)="pauseApplication(app._idApplication)"></i>
         </td>
       </tr>
     </tbody>
@@ -72,10 +71,7 @@
               <label for="empresa">Compañia:</label>
               <select formControlName="_companyId" [ngClass]="{ 'is-invalid': newAppForm.value._companyId == 0 && formSubmitted }" name="company" class="form-control" id="empresa">
                 <option [ngValue]="0" selected disabled>--Seleccione</option>
-                <option [ngValue]="2">Empresa 2</option>
-                <option [ngValue]="3">Empresa 3</option>
-                <option [ngValue]="4">Empresa 4</option>
-                <option [ngValue]="5">Empresa 5</option>
+                <option *ngFor="let company of companies" value="{{ company._idCompany }}">{{ company._name }}</option>
               </select>
               <div *ngIf="newAppForm.value._companyId == 0 && formSubmitted" class="invalid-feedback">
                   <div *ngIf="newAppForm.value._companyId == 0">Campo obligatorio.</div>
@@ -104,8 +100,12 @@
               <span *ngIf="singleApplication._statusApplication" class="badge badge-success">Activo</span>
               <span *ngIf="!singleApplication._statusApplication" class="badge badge-danger">Inactivo</span>
           </h6>
+          <h6>
+            Compañia:
+            <span>{{ singleApplication._companyId }}</span>
+          </h6>
           <h6>Descripcion:</h6>
-          <p class="viewDescription text-justify">&emsp;{{singleApplication._descriptionApplication}}</p>
+          <p class="viewDescription text-justify">&emsp;{{ singleApplication._descriptionApplication }}</p>
         </div>
         <div class="modal-footer text-center">
           <h6>Token</h6>
