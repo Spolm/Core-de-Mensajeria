@@ -1,20 +1,22 @@
 package Classes.M04_Channel_Integrator.IntegratorPackage;
 
+// Clase abstracta que sirve para almacenar los integradores de forma polimorfica Clase padre que tiene atributos y todo los metodos en comun que tiene todos los integradores, a su vez todo los metodos abstractos que implementaran cada clase en concreto
 public abstract class Integrator implements IIntegrator {
     private int idIntegrator;
     private int threadCapacity;
     private float messageCost;
     private String nameIntegrator;
     private String apiIntegrator;
+    private boolean enabled;
 
-    public Integrator(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator) {
+    public Integrator(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator, boolean enabled) {
         this.idIntegrator = idIntegrator;
         this.threadCapacity = threadCapacity;
         this.messageCost = messageCost;
         this.nameIntegrator = nameIntegrator;
         this.apiIntegrator = apiIntegrator;
+        this.enabled = enabled;
     }
-
     public int getIdIntegrator() {
         return idIntegrator;
     }
@@ -55,6 +57,14 @@ public abstract class Integrator implements IIntegrator {
         this.apiIntegrator = apiIntegrator;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         return "Integrator{" +
@@ -63,6 +73,7 @@ public abstract class Integrator implements IIntegrator {
                 ", messageCost=" + messageCost +
                 ", nameIntegrator='" + nameIntegrator + '\'' +
                 ", apiIntegrator='" + apiIntegrator + '\'' +
+                ", enabled=" + enabled +
                 '}';
     }
 }

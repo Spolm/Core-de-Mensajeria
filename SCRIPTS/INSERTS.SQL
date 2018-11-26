@@ -5,25 +5,24 @@ INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_ph
 					use_city, use_address, use_date_of_birth, use_gender) values
 					('1234', 'Ronnie', 1, 'ronnie@gmail.com', '0414255', 'Ve', 'Mi', 'Caricuao', '04/05/1995', 'F');
 
+INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
+VALUES ('Movistar', 13.4, 25, 'oqiwueyeiu',TRUE);
 
-INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
-VALUES ('Movistar', 13.4, 25, 'oqiwueyeiu');
 
+INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
+VALUES ('Digitel', 10, 20, 'oqiwueyeiu',TRUE);
 
-INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
-VALUES ('Digitel', 10, 20, 'oqiwueyeiu');
+INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
+VALUES ('Movilnet', 5.5, 2, 'kjdwlkajdjwkw',TRUE);
 
-INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
-VALUES ('Movilnet', 5.5, 2, 'kjdwlkajdjwkw');
+INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
+VALUES ('MailChimp', 1.5, 100, 'akwjdjkwjjwj',TRUE);
 
-INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
-VALUES ('MailChimp', 1.5, 100, 'akwjdjkwjjwj');
+INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
+VALUES ('Aweber', 2.3, 90, 'ooiiewqoiw',TRUE);
 
-INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
-VALUES ('Aweber', 2.3, 90, 'ooiiewqoiw');
-
-INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi)
-VALUES ('Infusionsoft', 18, 150, 'odiw24idididmm1');
+INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
+VALUES ('Infusionsoft', 18, 150, 'odiw24idididmm1',TRUE);
 
 INSERT INTO channel (cha_name, cha_description) VALUES ('SMS', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ae magna ultrices blandit. Nam blandit mi congue, vitae posuere odio blandit.');
 
@@ -33,125 +32,6 @@ INSERT INTO channel_integrator (ci_channel_id, ci_integrator_id) VALUES
 (1,1), (1,2),
 (1,3), (2,4),
 (2,5), (2,6);
-
-INSERT INTO public.Template (tem_creation_date) 
-VALUES ('2003-2-1');
-
-INSERT INTO public.Message (mes_text,mes_template)
-VALUES ('esto es un mensaje de template con un [.$Parametro$.]',1);
-
-INSERT INTO public.Parameter (par_name)
-VALUES ('Parametro');
-
-INSERT INTO public.Status (sta_name)
-VALUES ('Aprobado');
-
-INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
-VALUES ('2003-2-1',1,1);
-
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
-VALUES (1,1);
-
-INSERT INTO public.Status (sta_name)
-VALUES ('No Aprobado');
-
-INSERT INTO public.Template (tem_creation_date) 
-VALUES ('2012-10-11');
-
-INSERT INTO public.Message(mes_text,mes_template)
-VALUES ('BANESCO REGISTRO: CONSUMO EN PUNTO DE VENTA CON TDD [.$Numero tarjeta$.] BS. [.$Monto$.] EL [.$Fecha$.] REF [.$REF$.].',2);
-
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Numero tarjeta');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Monto');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Fecha');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('REF');
-
-INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
-VALUES ('2012-10-11',2,2);
-
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (2,2);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (2,3);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (2,4);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (2,5);
-
-INSERT INTO public.Template (tem_creation_date) 
-VALUES ('2014-10-11');
-
-INSERT INTO public.Message(mes_text,mes_template)
-VALUES ('Movistar te invita a una funcion gratuita del [.$Evento$.]. Ven el [.$Fecha$.] [.$Hora$.] [.$Lugar$.].',3);
-
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Evento');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Hora');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Lugar');
-
-INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
-VALUES ('2014-10-12',3,1);
-
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (3,6);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (3,4);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (3,7);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (3,8);
-
-INSERT INTO public.Template (tem_creation_date) 
-VALUES ('2014-11-11');
-
-INSERT INTO public.Message(mes_text,mes_template)
-VALUES ('Acabas de escuchar [.$Cancion$.] Envia SI al [.$Codigo$.] si lo quieres como tu Entretono. Renta Bs.S. [.$Renta$.] c/impuestos. Entretono Bs.S. [.$Monto$.] c/impuestos.',4);
-
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Cancion');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Codigo');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Renta');
-
-INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
-VALUES ('2014-11-11',4,2);
-
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (4,9);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (4,10);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (4,1);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (4,3);
-
-INSERT INTO public.Template (tem_creation_date) 
-VALUES ('2016-07-04');
-
-INSERT INTO public.Message(mes_text,mes_template)
-VALUES ('Si tu edad es entre 18 y 30, alistate en la FANB. Prensentate del [.$Fecha inicio$.] al [.$Fecha fin$.] en la unidad militar mas cercana',5);
-
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Fecha inicio');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Fecha fin');
-
-INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
-VALUES ('2016-07-04',5,2);
-
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (5,12);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (5,13);
-
-
 
 INSERT INTO Company(com_name, com_description, com_status, com_user_id) values ('Company 1', 'Description', true, 1);
 INSERT INTO Company(com_name, com_description, com_status, com_user_id) values ('Company 2', 'Description', true, 1);
@@ -179,38 +59,133 @@ INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_
 INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 14', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 4);
 INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 15', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 5);
 
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-01-01', 1);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-03-15', 1);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-06-23', 1);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-06-30', 2);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-11-25', 2);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-11-29', 2);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-04-12', 3);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-04-13', 3);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-07-23', 3);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-07-23', 4);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-09-09', 4);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-09-11', 4);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-12-24', 5);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-12-25', 5);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-12-31', 6);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-02-05', 7);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-02-10', 8);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-03-07', 8);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-03-17', 8);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-04-19', 8);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-05-11', 9);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-08-28', 10);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-08-31', 11);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-10-12', 12);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-10-23', 13);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-10-23', 14);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2016-11-09', 14);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2018-04-16', 15);
-INSERT INTO Message(mes_date, mes_cam_id) VALUES (TIMESTAMP '2017-07-23', 15);
-
 INSERT INTO public.application(app_name,app_description,app_token,app_date,app_status,app_user_creator, app_company) values
 ('Amazon','Pagina Web','BF5453E0B1BF86A7FA020A4B87D7C0A9B0946ACCEB403E918E352D10BD35007D','04/05/1995',0,1,1),
 ('Mercantil en linea','Aplicacion movil de mercantil','5E182FC1A42614D37B951A7A38648350D0D166E9D78BA26E59EF7ECE9462BE34','12/13/2017',1,1,2),
 ('Banesco Online','Aplicacion web de banesco','5DD3CE9EF2B7614FB471B442050DDB24ADDBE88424B3C1382C7DD224A99203BD','01/08/2015',1,1,3);
 
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
+VALUES ('2003-2-1', 1);
+
+INSERT INTO public.Message (mes_text,mes_template)
+VALUES ('esto es un mensaje de template con un [.$Parametro$.]',1);
+
+INSERT INTO public.Parameter (par_name)
+VALUES ('Parametro');
+
+INSERT INTO public.Status (sta_name)
+VALUES ('Aprobado');
+
+INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
+VALUES ('2003-2-1',1,1);
+
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
+VALUES (1,1);
+
+INSERT INTO public.Status (sta_name)
+VALUES ('No Aprobado');
+
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
+VALUES ('2012-10-11', 4);
+
+INSERT INTO public.Message(mes_text,mes_template)
+VALUES ('BANESCO REGISTRO: CONSUMO EN PUNTO DE VENTA CON TDD [.$Numero tarjeta$.] BS. [.$Monto$.] EL [.$Fecha$.] REF [.$REF$.].',2);
+
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Numero tarjeta');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Monto');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Fecha');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('REF');
+
+INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
+VALUES ('2012-10-11',2,2);
+
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (2,2);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (2,3);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (2,4);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (2,5);
+
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
+VALUES ('2014-10-11', 8);
+
+INSERT INTO public.Message(mes_text,mes_template)
+VALUES ('Movistar te invita a una funcion gratuita del [.$Evento$.]. Ven el [.$Fecha$.] [.$Hora$.] [.$Lugar$.].',3);
+
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Evento');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Hora');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Lugar');
+
+INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
+VALUES ('2014-10-12',3,1);
+
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (3,6);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (3,4);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (3,7);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (3,8);
+
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
+VALUES ('2014-11-11', 10);
+
+INSERT INTO public.Message(mes_text,mes_template)
+VALUES ('Acabas de escuchar [.$Cancion$.] Envia SI al [.$Codigo$.] si lo quieres como tu Entretono. Renta Bs.S. [.$Renta$.] c/impuestos. Entretono Bs.S. [.$Monto$.] c/impuestos.',4);
+
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Cancion');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Codigo');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Renta');
+
+INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
+VALUES ('2014-11-11',4,2);
+
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (4,9);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (4,10);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (4,1);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (4,3);
+
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
+VALUES ('2016-07-04', 13);
+
+INSERT INTO public.Message(mes_text,mes_template)
+VALUES ('Si tu edad es entre 18 y 30, alistate en la FANB. Prensentate del [.$Fecha inicio$.] al [.$Fecha fin$.] en la unidad militar mas cercana',5);
+
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Fecha inicio');
+INSERT INTO public.Parameter (par_name) 
+VALUES ('Fecha fin');
+
+INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
+VALUES ('2016-07-04',5,2);
+
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (5,12);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+VALUES (5,13);
+
+
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (1,1);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (2,2);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (2,4);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (3,2);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (4,5);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (4,3);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (5,6);

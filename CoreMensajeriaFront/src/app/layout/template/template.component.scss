@@ -13,3 +13,11 @@
 .parameters {
     max-width: 400px;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+.notclickable {
+    cursor: default;
+}
