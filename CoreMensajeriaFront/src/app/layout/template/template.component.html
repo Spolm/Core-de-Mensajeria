@@ -1,6 +1,12 @@
+<router-outlet></router-outlet>
 <h2 class="text-center text-capitalize main-title">
   Plantillas
 </h2>
+
+<div class="d-flex flex-row-reverse">
+  <button type="button" class="btn btn-dark" routerLink="/template/create">Crear Plantilla</button>
+</div>
+
 <div class="card">
   <table class="table table-bordered table-hover">
     <thead class="thead-dark">
@@ -15,15 +21,17 @@
     </thead>
     <tbody>
       <tr scope="row" *ngFor="let template of templates; let i = index">
-        <td *ngIf="template.statusId == 1; else elseBlock">
-          {{template.templateId}} <br> 
-          <span class="badge badge-success">Aprobado</span>
+        <td class="text-center" *ngIf="template.status.statusName == 'Aprobado'; else elseBlock">
+          {{template.templateId}}
+          <br>
+          <span class="badge badge-success notclickable">Aprobado</span>
         </td>
         <ng-template #elseBlock>
-          {{template.templateId}} <br> &nbsp;
-          <span class="badge badge-danger" (click)="approveTemplate(template.templateId)">
-            No Aprobado
-          </span>
+          <td class="text-center">
+            {{template.templateId}}
+            <br>
+            <ngbd-modal-approve [templateId]="template.templateId" (spread)="getTemplates()"></ngbd-modal-approve>
+          </td>
         </ng-template>
         <td class="message">{{template.message.message}}</td>
         <td class="parameters">
@@ -31,9 +39,21 @@
             {{parameter.name}}
           </li>
         </td>
-        <td>Email</td>
-        <td>Movistar</td>
-        <td>Banesco online</td>
+        <td class="text-center">
+          <div *ngFor="let channel of template.channels; let i = index">
+            <hr *ngIf="i > 0">
+            {{channel.nameChannel}} {{channel.integrators.nameIntegrator}}
+          </div>
+        </td>
+        <td class="text-center">
+          <div *ngFor="let channel of template.channels; let i = index">
+            <hr *ngIf="i > 0">
+            <div *ngFor="let integrator of channel.integrators; let i = index">
+              {{integrator.nameIntegrator}} ({{integrator.messageCost}} Bs.S)
+            </div>
+          </div>
+        </td>
+        <td class="text-center">Banesco online</td>
       </tr>
     </tbody>
   </table>
