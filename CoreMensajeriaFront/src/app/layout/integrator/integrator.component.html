@@ -8,11 +8,8 @@
         <button type="button" class="btn btn-primary" 
         (click)="getAllIntegrators()">Todos los Integradores</button>
         
-        <button type="button" class="btn btn-primary" 
-          (click)="getMailIntegrators()">Por Email</button>
-        
-        <button type="button" class="btn btn-primary" 
-          (click)="getSMSIntegrators()">Por SMS</button>
+        <button *ngFor="let channel of channels" type="button" class="btn btn-primary" 
+        (click)="getIntegratorsPerChannel(channel.idChannel)">{{ channel.nameChannel }}</button>
         
     </div>
   </div>
@@ -22,7 +19,13 @@
       *ngFor="let integrator of integrators">
       <div class="card">
           <div class="card-body">
-            <h5 class="card-title text-center"><b>{{ integrator.nameIntegrator }}</b></h5>
+            <h5 class="card-title text-center">
+              <b>{{ integrator.nameIntegrator }}</b>
+              <span *ngIf="!integrator.enabled" 
+                  class="badge badge-danger">
+                  Inhabilitado
+                </span>
+            </h5>
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Capacidad de Hilos: {{ integrator.threadCapacity }}</li>

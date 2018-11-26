@@ -6,6 +6,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { HttpModule } from "@angular/http";
 
 import { ToastrModule } from "ngx-toastr";
 import { AppRoutingModule } from "./app-routing.module";
@@ -34,6 +35,7 @@ export const createTranslateLoader = (http: HttpClient) => {
             maxOpened: 1,
             autoDismiss: true
         }),
+        HttpModule,
         HttpClientModule,
         TranslateModule.forRoot({
             loader: {
