@@ -107,22 +107,6 @@ public class M06_Application {
         }
     }
 
-    //                   DELETE ENDPOINTS
-    //Delete an application by application Id. Path: applications/{id}
-    @DELETE
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteApplication(@PathParam("id") int id) {
-        try {
-            _applicationDAO.deleteApplication(id);
-            return Response.ok(this.generateSuccessAsJson("Aplicacion eliminada exitosamente.")).build();
-        } catch (ApplicationNotFoundException e) {
-            return Response.status(404).entity(this.generateErrorAsJson(e.getMessage())).build();
-        } catch (DatabaseConnectionProblemException e) {
-            return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
-        }
-    }
-
     //                   POST ENDPOINTS
     //Add a new application. Path: applications/
     @Path("/")
@@ -137,6 +121,22 @@ public class M06_Application {
             return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
     }
+
+    //                   DELETE ENDPOINTS
+    //Delete an application by application Id. Path: applications/{id}
+    /*@DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteApplication(@PathParam("id") int id) {
+        try {
+            _applicationDAO.deleteApplication(id);
+            return Response.ok(this.generateSuccessAsJson("Aplicacion eliminada exitosamente.")).build();
+        } catch (ApplicationNotFoundException e) {
+            return Response.status(404).entity(this.generateErrorAsJson(e.getMessage())).build();
+        } catch (DatabaseConnectionProblemException e) {
+            return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
+        }
+    }*/
 
     //                   UTILITIES
     //Produces a Json String with a given success message

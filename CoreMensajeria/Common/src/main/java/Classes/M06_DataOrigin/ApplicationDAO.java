@@ -17,7 +17,7 @@ public class ApplicationDAO {
                                     "(app_name,app_description,app_token,app_user_creator,app_company,app_status,app_date)" +
                                     "values(?, ?, ?, ?, ?, 1, now() );";
     final String QUERY_UPDATE_APPLICATION_STATUS = "UPDATE public.application SET app_status=? WHERE app_id=? ;";
-    final String QUERY_DELETE_APPLICATION = "DELETE FROM public.application WHERE app_id= ?";
+    //final String QUERY_DELETE_APPLICATION = "DELETE FROM public.application WHERE app_id= ?";
 
     private Connection _conn;
     private Encrypter _encrypter;
@@ -100,23 +100,6 @@ public class ApplicationDAO {
         }
     }
 
-    //          DELETES
-    //Delete the application with the given application id
-    public void deleteApplication(int id) throws DatabaseConnectionProblemException, ApplicationNotFoundException {
-        try {
-            //Find if application exist
-            this.getApplication(id);
-            //Restart DB instance
-            _conn = Sql.getConInstance();
-            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_DELETE_APPLICATION);
-            preparedStatement.setInt(1, id);
-            preparedStatement.execute();
-
-        }catch (SQLException e){
-            throw new DatabaseConnectionProblemException("Error al eliminar aplicacion.",e);
-        }
-    }
-
     //          UPDATES
     //Update the status of the application with the given application id
     public void updateApplication(int id, int status) throws DatabaseConnectionProblemException, ApplicationNotFoundException {
@@ -152,6 +135,23 @@ public class ApplicationDAO {
             throw new DatabaseConnectionProblemException("Error al crear aplicacion.", e);
         }
     }
+
+    //          DELETES
+    //Delete the application with the given application id
+    /*public void deleteApplication(int id) throws DatabaseConnectionProblemException, ApplicationNotFoundException {
+        try {
+            //Find if application exist
+            this.getApplication(id);
+            //Restart DB instance
+            _conn = Sql.getConInstance();
+            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_DELETE_APPLICATION);
+            preparedStatement.setInt(1, id);
+            preparedStatement.execute();
+
+        }catch (SQLException e){
+            throw new DatabaseConnectionProblemException("Error al eliminar aplicacion.",e);
+        }
+    }*/
 
     //          UTILITIES
     //Get the application from the given resultSet
