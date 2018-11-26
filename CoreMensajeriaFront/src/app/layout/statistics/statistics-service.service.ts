@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 @Injectable({
     providedIn: "root"
@@ -31,5 +31,25 @@ export class StatisticsServiceService {
     }
     getStatisticsData6(sparam: string) {
         return this.http.get(this.ApiURL + "PruebaParam3" + sparam);
+    }
+
+    getAllCompanies() {
+        return this.http.get(this.ApiURL + "companies");
+    }
+
+    getAllCampaigns() {
+        return this.http.get(this.ApiURL + "campaigns");
+    }
+
+    getAllChannels() {
+        return this.http.get(this.ApiURL + "channels");
+    }
+
+    getCampaingsForCompany(companyIds: Number[]) {
+        var params = new HttpParams();
+        companyIds.forEach(id => {
+            params = params.append("companyId", id.toString());
+        });
+        return this.http.get(this.ApiURL + "campaignCompany", { params });
     }
 }
