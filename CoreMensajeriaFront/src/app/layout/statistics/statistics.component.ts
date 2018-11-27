@@ -6,6 +6,8 @@ import * as Plotly from "plotly.js/dist/plotly.js";
 import { Config, Data, Layout } from "plotly.js/dist/plotly.js";
 import { ToastrService } from "ngx-toastr";
 import { HttpParams } from "@angular/common/http";
+import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
+import { MoreFiltersComponent } from "./more-filters/more-filters.component";
 
 interface myData {
     obj: Object;
@@ -70,7 +72,8 @@ export class StatisticsComponent implements OnInit {
 
     constructor(
         private Servicio: StatisticsServiceService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        public dialog: MatDialog
     ) {
         this.datos = ["Compañias", "Campañas", "Canales"];
     }
@@ -484,5 +487,20 @@ export class StatisticsComponent implements OnInit {
             params = params.append("channelId", channelId.toString());
         });
         return params;
+    }
+
+    openFilters() {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+            id: 1,
+            title: "Angular For Beginners"
+        };
+        const dialogRef = this.dialog.open(MoreFiltersComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(result => {
+            console.log("Dialog was closed");
+            console.log(result);
+        });
     }
 }
