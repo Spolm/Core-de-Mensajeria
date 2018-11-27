@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import {Observable, of, pipe} from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import {p} from '@angular/core/src/render3';
 
@@ -30,8 +30,8 @@ export class TemplateService {
       map(this.extractData));
   }
 
-  getParameters(){
-    return this.http.get(endpoint + 'parameters/get').pipe(
+  getParameters(companyId:number){
+      return this.http.get(endpoint + 'parameters/get?companyId=' + companyId.toString()).pipe(
       map(this.extractData));
   }
 

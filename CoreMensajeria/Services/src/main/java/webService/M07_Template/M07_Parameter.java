@@ -24,9 +24,9 @@ public class M07_Parameter {
     }
     @GET
     @Path("get")
-    public Response getParameters(){
+    public Response getParameters(@QueryParam("companyId") int companyId){
         ParameterHandler parameterHandler = new ParameterHandler();
-        ArrayList<Parameter> parameterList = parameterHandler.getParameters();
+        ArrayList<Parameter> parameterList = parameterHandler.getParameters(companyId);
         return Response.ok(gson.toJson(parameterList)).build();
     }
 

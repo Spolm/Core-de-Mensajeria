@@ -27,9 +27,11 @@ public class ParameterHandler {
 
     }
 
-    public ArrayList<Parameter> getParameters() {
-        String query = "select par_id,par_name " +
-                "from public.parameter";
+    public ArrayList<Parameter> getParameters(int companyId) {
+        String query = "select par_id,par_name \n" +
+                "from public.parameter\n" +
+                "where par_company_id =" + companyId +"\n" +
+                "order by par_name";
         return executeParameterQuery(query);
     }
 
