@@ -23,15 +23,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Path("/M09_Statistics")
+@Path( "/M09_Statistics" )
 public class M09_Statistics extends Application {
 
     Gson gson = new Gson();
     private Connection conn = SqlEstrella.getConInstance();
 
     @GET
-    @Path("/MessageCompanyBar")
-    @Produces("application/json")
+    @Path( "/MessageCompanyBar" )
+    @Produces( "application/json" )
     public Response getNumberOfCompanysChart() throws SQLException {
         String aux = "";
         String select2 = "SELECT com_name  from dim_company_campaign group by com_name";
@@ -42,14 +42,14 @@ public class M09_Statistics extends Application {
             ArrayList<String> listCompany = new ArrayList<String>();
             int n = 0 ;
             Statement st2 = conn.createStatement();
-            ResultSet result2 = st2.executeQuery(select2);
+            ResultSet result2 = st2.executeQuery( select2 );
             while ( result2.next() ) {
                 Company co = new Company();
                 co.set_name( result2.getString("com_name" ) );
                 aux = co.get_name();
                 listCompany.add( aux ) ;
             }
-            listNum = CountOfMessage(listCompany);
+            listNum = CountOfMessage( listCompany );
             gr.type = "bar";
             gr.x = listCompany;
             gr.y = listNum;
@@ -63,8 +63,8 @@ public class M09_Statistics extends Application {
     }
 
     @GET
-    @Path("/MessageCompanyLine")
-    @Produces("application/json")
+    @Path( "/MessageCompanyLine" )
+    @Produces( "application/json" )
     public Response getNumberOfCompanysLine() throws SQLException {
         String aux = "";
         String select2 = "SELECT com_name  from dim_company_campaign group by com_name ";
@@ -95,8 +95,8 @@ public class M09_Statistics extends Application {
     }
 
     @GET
-    @Path("/MessageCompanyPie")
-    @Produces("application/json")
+    @Path( "/MessageCompanyPie" )
+    @Produces( "application/json" )
     public Response getNumberOfCompanysPie() throws SQLException {
         String aux = "";
         String select2 = "SELECT com_name  from dim_company_campaign group by com_name";
@@ -106,7 +106,7 @@ public class M09_Statistics extends Application {
             ArrayList<String> listlabels = new ArrayList<String>();
             int n = 0 ;
             Statement st2 = conn.createStatement();
-            ResultSet result2 = st2.executeQuery(select2);
+            ResultSet result2 = st2.executeQuery( select2 );
             while ( result2.next() ) {
                 Company co = new Company();
                 co.set_name( result2.getString("com_name" ) );
@@ -129,8 +129,8 @@ public class M09_Statistics extends Application {
 
 
     @GET
-    @Path("/MessageCampaignPie")
-    @Produces("application/json")
+    @Path( "/MessageCampaignPie" )
+    @Produces( "application/json" )
     public Response getNumberOfCampaignPie() throws SQLException {
         String aux = "";
         String select2 = "SELECT cam_name  from dim_company_campaign ";
@@ -180,7 +180,7 @@ public class M09_Statistics extends Application {
                 aux = co.get_nameCampaign();
                 listCampaign.add( aux ) ;
             }
-            listNum = CountOfMessageCamp(listCampaign);
+            listNum = CountOfMessageCamp( listCampaign );
             gr.type = "bar";
             gr.x = listCampaign;
             gr.y = listNum;
@@ -239,21 +239,14 @@ public class M09_Statistics extends Application {
 
 
     @GET
-    @Path("/PruebaParam")
-    @Produces("application/json")
+    @Path( "/PruebaParam" )
+    @Produces( "application/json" )
 
-    public Response test2(@QueryParam( "paramDay" ) String paramDay1,
-                          @QueryParam( "paramMonth" ) String paramMonth1,
-                          @QueryParam( "paramYear" ) String paramYear1,
-                          @QueryParam( "paramDay2" ) String paramDay2,
-                          @QueryParam( "paramMonth2" ) String paramMonth2,
-                          @QueryParam( "paramYear2" ) String paramYear2,
-                          @QueryParam( "paramType" ) String paramType) {
-
-        System.out.println( paramDay1 +" "+ paramMonth1 +" "+ paramYear1 );
-        System.out.println( paramDay2 +" "+ paramMonth2 +" "+ paramYear2 );
+    public Response test2( @QueryParam( "paramDate1" ) String paramDate1,
+                           @QueryParam( "paramDate2" ) String paramDate2,
+                           @QueryParam( "paramType" ) String paramType ) {
         System.out.println( paramType );
-        Response responseAnswerLine = filterOfTypeStatisticsLine( paramMonth1 ,paramType );
+        Response responseAnswerLine = filterOfTypeStatisticsLine( paramDate1 , paramType );
         return responseAnswerLine ;
 
 
@@ -263,13 +256,14 @@ public class M09_Statistics extends Application {
     }
 
     @GET
-    @Path("/PruebaParam2")
-    @Produces("application/json")
+    @Path( "/PruebaParam2" )
+    @Produces( "application/json" )
 
-    public Response test1(@QueryParam( "paramDate" ) String paramDate,
-                          @QueryParam( "paramType" ) String paramType) {
+    public Response test1( @QueryParam( "paramDate1" ) String paramDate1,
+                           @QueryParam( "paramDate2" ) String paramDate2,
+                           @QueryParam( "paramType" ) String paramType ) {
 
-        Response responseAnswerPie = filterOfTypeStatisticsPie( paramDate,paramType );
+        Response responseAnswerPie = filterOfTypeStatisticsPie( paramDate1,paramType );
 
         return responseAnswerPie ;
 
@@ -278,13 +272,14 @@ public class M09_Statistics extends Application {
     }
 
     @GET
-    @Path("/PruebaParam3")
-    @Produces("application/json")
+    @Path( "/PruebaParam3" )
+    @Produces( "application/json" )
 
-    public Response test3(@QueryParam( "paramDate" ) String paramDate,
-                          @QueryParam( "paramType" ) String paramType) {
+    public Response test3( @QueryParam( "paramDate1" ) String paramDate1,
+                           @QueryParam( "paramDate2" ) String paramDate2,
+                           @QueryParam( "paramType" ) String paramType ) {
 
-        Response responseAnswerBar = filterOfTypeStatisticsBar( paramDate,paramType );
+        Response responseAnswerBar = filterOfTypeStatisticsBar( paramDate1,paramType );
 
         return responseAnswerBar ;
 
@@ -304,14 +299,14 @@ public class M09_Statistics extends Application {
             for ( int i = 0 ; i < listCampaign.size() ; i++ ) {
 
                 aux2 = listCampaign.get(i);
-                String select = "SELECT count(M.*) from fact_sent_message as M , dim_company_campaign as C \n" +
+                String select = "SELECT count( M.* ) from fact_sent_message as M , dim_company_campaign as C \n" +
                         "where C.cam_id = sen_cam_id and C.cam_name = '" + aux2 + "' ";
 
                 Statement st = conn.createStatement();
                 ResultSet result = st.executeQuery( select );
-                while (result.next()) {
+                while ( result.next() ) {
                     n = result.getInt(1);
-                    listNum.add(n);
+                    listNum.add( n );
                 }
             }
         }
@@ -335,12 +330,12 @@ public class M09_Statistics extends Application {
         for ( int i = 0 ; i < listCompany.size() ; i++ ) {
 
             aux2 = listCompany.get(i);
-            String select = "SELECT count(M.*) from fact_sent_message as M , dim_company_campaign as C \n" +
+            String select = "SELECT count( M.* ) from fact_sent_message as M , dim_company_campaign as C \n" +
                     "where C.cam_id = M.sen_cam_id and C.com_name = '" + aux2 + "' ";
 
             Statement st = conn.createStatement();
             ResultSet result = st.executeQuery( select );
-            while (result.next()) {
+            while ( result.next() ) {
                 n = result.getInt(1);
                 listNum.add(n);
             }
@@ -372,7 +367,7 @@ public class M09_Statistics extends Application {
                 ResultSet result = st.executeQuery( select );
                 while (result.next()) {
                     n = result.getInt(1);
-                    listNum.add(n);
+                    listNum.add( n );
                 }
             }
         }
@@ -387,32 +382,32 @@ public class M09_Statistics extends Application {
 
     //Metodos con los if y los Filtros
 
-    public Response filterOfTypeStatisticsBar(String paramDate, String paramType){
+    public Response filterOfTypeStatisticsBar( String paramDate, String paramType ){
 
-        if (paramType.equals("Compañias")){   //&& paramDate.equals(null)
+        if ( paramType.equals( "Cantidad de mensajes enviados por Compañias" ) ){   //&& paramDate.equals(null)
             try {
 
                 Response responseGraphCompany = getNumberOfCompanysChart();
                 return responseGraphCompany ;
-            } catch (SQLException e) {
+            } catch ( SQLException e ) {
                 e.printStackTrace();
             }
         }
-        else if (paramType.equals("Campañas")){
+        else if ( paramType.equals( "Cantidad de mensajes enviados por Campañas" ) ){
             try {
-                Response responseGreaphCampaign= getNumberOfCampaignChart();
+                Response responseGreaphCampaign = getNumberOfCampaignChart();
                 return responseGreaphCampaign;
-            } catch (SQLException e) {
+            } catch ( SQLException e ) {
                 e.printStackTrace();
             }
         }
 
         else {
-            if (paramType.equals("Canales")){
+            if ( paramType.equals( "Cantidad de mensajes enviados por Canales" ) ){
                 try {
-                    Response responseGraphChannel= getNumberOfChannelChart();
+                    Response responseGraphChannel = getNumberOfChannelChart();
                     return responseGraphChannel;
-                } catch (SQLException e) {
+                } catch ( SQLException e ) {
                     e.printStackTrace();
                 }
             }
@@ -423,9 +418,9 @@ public class M09_Statistics extends Application {
 
     public Response filterOfTypeStatisticsLine(String paramDate, String paramType){
 
-        Integer paramMonthRigth  = ( Integer.valueOf( paramDate ) + 1 );  // El getMonth devuelve valor entre 0 y 11
-        Integer paramMonth2Rigth = ( Integer.valueOf( paramDate ) + 1 );  // aca sumamos uno para obtener el mes real
-        if (paramType.equals( "Compañias" ) && paramMonthRigth.equals(11) ){
+       // Integer paramMonthRigth  = ( Integer.valueOf( paramDate ) + 1 );  // El getMonth devuelve valor entre 0 y 11
+       // Integer paramMonth2Rigth = ( Integer.valueOf( paramDate ) + 1 );  // aca sumamos uno para obtener el mes real
+        if (paramType.equals( "Cantidad de mensajes enviados por Compañias" ) ){
             try {
 
                 Response responseGraphCompany = getNumberOfCompanysLine(); // anadimos los filtros aca como parametros
@@ -434,7 +429,7 @@ public class M09_Statistics extends Application {
                 e.printStackTrace();
             }
         }
-        else if (paramType.equals("Campañas")){
+        else if ( paramType.equals( "Cantidad de mensajes enviados por Campañas" ) ){
             try {
                 Response responseGreaphCampaign= getNumberOfCampaignLine();
                 return responseGreaphCampaign;
@@ -444,11 +439,11 @@ public class M09_Statistics extends Application {
         }
 
         else {
-            if (paramType.equals("Canales")){
+            if ( paramType.equals( "Cantidad de mensajes enviados por Canales" ) ){
                 try {
-                    Response responseGraphChannel= getNumberOfChannelLine();
+                    Response responseGraphChannel = getNumberOfChannelLine();
                     return responseGraphChannel;
-                } catch (SQLException e) {
+                } catch ( SQLException e ) {
                     e.printStackTrace();
                 }
             }
@@ -457,32 +452,32 @@ public class M09_Statistics extends Application {
         return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsLine") ).build();
     }
 
-    public Response filterOfTypeStatisticsPie(String paramDate, String paramType){
+    public Response filterOfTypeStatisticsPie( String paramDate, String paramType ){
 
-        if (paramType.equals("Compañias")){
+        if ( paramType.equals( "Cantidad de mensajes enviados por Compañias" ) ){
             try {
 
                 Response responseGraphCompany = getNumberOfCompanysPie();
                 return responseGraphCompany ;
-            } catch (SQLException e) {
+            } catch ( SQLException e ) {
                 e.printStackTrace();
             }
         }
-        else if (paramType.equals("Campañas")){
+        else if ( paramType.equals( "Cantidad de mensajes enviados por Campañas" ) ){
             try {
-                Response responseGreaphCampaign= getNumberOfCampaignPie();
+                Response responseGreaphCampaign = getNumberOfCampaignPie();
                 return responseGreaphCampaign;
-            } catch (SQLException e) {
+            } catch ( SQLException e ) {
                 e.printStackTrace();
             }
         }
 
         else {
-            if (paramType.equals("Canales")){
+            if ( paramType.equals( "Cantidad de mensajes enviados por Canales" ) ){
                 try {
-                    Response responseGraphChannel= getNumberOfChannelPie();
+                    Response responseGraphChannel = getNumberOfChannelPie();
                     return responseGraphChannel;
-                } catch (SQLException e) {
+                } catch ( SQLException e ) {
                     e.printStackTrace();
                 }
             }
