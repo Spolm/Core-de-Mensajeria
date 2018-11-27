@@ -691,5 +691,14 @@ public class M09_Statistics extends Application {
             Sql.bdClose( conn );
         }
     }
+
+    @GET
+    @Path("/data")
+    @Produces("application/json")
+    public Response getStatistics(@QueryParam("companyId") List<Integer> companyIds,
+                                  @QueryParam("campaignId") List<Integer> campaignIds,
+                                  @QueryParam("channelId") List<Integer> channelIds) {
+        return Response.ok(gson.toJson("Companies: " + companyIds + " Campaigns: " + campaignIds + " Channels: " + channelIds)).build();
+    }
 }
 
