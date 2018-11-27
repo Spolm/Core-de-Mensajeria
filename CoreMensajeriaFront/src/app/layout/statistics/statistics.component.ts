@@ -179,7 +179,7 @@ export class StatisticsComponent implements OnInit {
     capturarDate() {
         if (
             (this.opcionDateSleccionado != null &&
-            this.opcionDateSleccionado2 != null )
+            this.opcionDateSleccionado2 != null ) 
             && (this.opcionDateSleccionado < this.opcionDateSleccionado2)         
            ) {
             this.Date1Capturado = "?paramDate1=" + this.opcionDateSleccionado.toString();
@@ -206,7 +206,28 @@ export class StatisticsComponent implements OnInit {
             ).subscribe(data => {
                 console.log(data);
             });
-        } else this.toastr.error("Error en las fechas");
+        } else if ( (this.opcionDateSleccionado == null &&
+            this.opcionDateSleccionado2 == null ) || ((this.opcionDateSleccionado.toString().length == 0 &&
+                this.opcionDateSleccionado2.toString().length == 0)) ){ 
+            console.log("hols"+this.opcionDateSleccionado.toString().length);
+          
+            this.Date1Capturado = "?paramDate1=";
+            this.Date2Capturado = "?paramDate2=" ;
+            this.paramType      =  "paramType=" + this.verSeleccion; 
+            this.Servicio.getStatisticsData4(
+                this.Date1Capturado +
+                "&" +
+                this.Date2Capturado +
+                "&" +
+                this.paramType
+        ).subscribe(data => {
+            console.log(data);
+        });
+    }
+        else  {
+        this.toastr.error("Error en las fechas");}
+
+
     }
 
     DoGraficas() {
