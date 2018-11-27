@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
     this.rest.logUser(this.userData).subscribe((result) => {
       this.toastr.success('Has iniciado sesión');
       localStorage.setItem('isLoggedin', 'true');
-      localStorage.setItem('userConnected', this.userData._username);
+      localStorage.setItem('username', result._usernameUser);
+      localStorage.setItem('userid', result._idUser);
       this.router.navigate(['/blank-page']);
     }, (err) => {
       console.log(err);

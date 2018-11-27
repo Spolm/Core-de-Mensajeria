@@ -10,19 +10,23 @@ public class Application {
     private String _tokenApplication;
     private Date _dateOfCreateApplication;
     private int _statusApplication;
-    private int _userCreatorApplication;
-
-    public Application(int _idApplication, String _nameApplication, String _descriptionApplication, String _tokenApplication, Date _dateOfCreateApplication, int _statusApplication, int _userCreatorApplication) {
-        this._idApplication = _idApplication;
-        this._nameApplication = _nameApplication;
-        this._descriptionApplication = _descriptionApplication;
-        this._tokenApplication = _tokenApplication;
-        this._dateOfCreateApplication = _dateOfCreateApplication;
-        this._statusApplication = _statusApplication;
-        this._userCreatorApplication = _userCreatorApplication;
-    }
+    private int _userCreatorId;
+    private int _companyId;
 
     public Application(){
+    }
+
+    public Application(int idApplication, String nameApplication, String descriptionApplication,
+                       String tokenApplication, Date dateOfCreateApplication, int statusApplication,
+                       int userCreatorId, int companyId) {
+        _idApplication = idApplication;
+        _nameApplication = nameApplication;
+        _descriptionApplication = descriptionApplication;
+        _tokenApplication = tokenApplication;
+        _dateOfCreateApplication = dateOfCreateApplication;
+        _statusApplication = statusApplication;
+        _userCreatorId = userCreatorId;
+        _companyId = companyId;
     }
 
     public int get_idApplication() {
@@ -73,11 +77,19 @@ public class Application {
         this._statusApplication = _statusApplication;
     }
 
-    public int get_userCreatorApplication() {
-        return _userCreatorApplication;
+    public int get_userCreatorId() {
+        return _userCreatorId;
     }
 
-    public void set_userCreatorApplication(int _userCreatorApplication) {
-        this._userCreatorApplication = _userCreatorApplication;
+    public void set_userCreatorId(int userCreatorId) {
+        this._userCreatorId = userCreatorId;
+    }
+
+    public int get_companyId() {
+        return _companyId;
+    }
+
+    public void set_companyId(int companyId) {
+        this._companyId = companyId;
     }
 }

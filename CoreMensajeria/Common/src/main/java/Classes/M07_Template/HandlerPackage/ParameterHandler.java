@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ParameterHandler {
-    public Sql sql;
+    public static Sql sql;
 
     public ParameterHandler() {
         sql = new Sql();
@@ -28,8 +28,21 @@ public class ParameterHandler {
     }
 
     public ArrayList<Parameter> getParameters() {
+        String query = "select par_id,par_name " +
+                "from public.parameter";
+        return executeParameterQuery(query);
+    }
+
+    public static ArrayList<Parameter> getParametersByMessage(int messageId) {
+        String query = "select par_id,par_name " +
+                "from parameter,message_parameter " +
+                "where par_id = mp_parameter and mp_message = " + messageId;
+        return executeParameterQuery(query);
+    }
+
+    private static ArrayList<Parameter> executeParameterQuery(String query) {
         ArrayList<Parameter> parameterList = new ArrayList<>();
-        String query = "select par_id,par_name from public.parameter";
+        sql = new Sql();
         try {
             ResultSet resultSet = sql.sqlConn(query);
             while(resultSet.next()){
@@ -42,7 +55,10 @@ public class ParameterHandler {
             e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
+        }finally {
+            Sql.bdClose(sql.getConn());
+            return parameterList;
         }
-        return parameterList;
     }
+
 }
