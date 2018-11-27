@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
+import {p} from '@angular/core/src/render3';
 
 const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/';
 const httpOptions = {
@@ -53,9 +54,16 @@ export class TemplateService {
     return this.http.post(endpoint+'templates/update/'+templateId, templateId).subscribe();
   }
 
-    doPOST() {
-        console.log('POST');
-        let body = [{name:"foo",parameterId:55}];
-        this.http.post(endpoint + 'templates/posttemplate', body).subscribe(response => console.log(response.toString()));
-    }
+  PostParameter() {
+      console.log('POST');
+      let body = new URLSearchParams();
+      //colocar nombre de parametro
+      body.set('name', 'song');
+      //colocar id de comania
+      body.set('companyId', '1');
+      let options = {
+          headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+      };
+      this.http.post(endpoint + 'parameters/add', body.toString(), options).subscribe();
+  }
 }

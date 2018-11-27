@@ -14,9 +14,9 @@ public class ParameterHandler {
         sql = new Sql();
     }
 
-    public void postParameter(String name) {
-        String query = "INSERT INTO public.Parameter (par_name) \n" +
-                "VALUES ('"+name+"')";
+    public void postParameter(String name,int companyId) {
+        String query = "INSERT INTO public.Parameter (par_name,par_company_id) \n" +
+                "VALUES ('"+name+"',"+companyId+")";
         try {
             sql.sqlNoReturn(query);
         } catch (SQLException e) {

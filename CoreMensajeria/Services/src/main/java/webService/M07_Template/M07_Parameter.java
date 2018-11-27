@@ -17,10 +17,10 @@ public class M07_Parameter {
     public Gson gson = new Gson();
 
     @POST
-    @Path("add/{name}")
-    public void postParameter(@PathParam("name") String name){
+    @Path("add")
+    public void postParameter(@FormParam("name") String name,@FormParam("companyId") int companyId){
         ParameterHandler parameterHandler = new ParameterHandler();
-        parameterHandler.postParameter(name);
+        parameterHandler.postParameter(name,companyId);
     }
     @GET
     @Path("get")
