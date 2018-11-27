@@ -339,9 +339,14 @@ export class StatisticsComponent implements OnInit {
     }
 
     getAllCampaigns() {
-        this.Servicio.getAllCampaigns().subscribe(data => {
-            this.insertIntoDropdown(ObjectType.campaign, data);
-        });
+        this.Servicio.getAllCampaigns().subscribe(
+            data => {
+                this.insertIntoDropdown(ObjectType.campaign, data);
+            },
+            error => {
+                this.toastr.error("Error de conexión");
+            }
+        );
     }
 
     companySelected(company: any) {
