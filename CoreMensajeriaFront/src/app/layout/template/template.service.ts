@@ -54,14 +54,14 @@ export class TemplateService {
     return this.http.post(endpoint+'templates/update/'+templateId, templateId).subscribe();
   }
 
-  PostParameter() {
+  PostParameter(name: string, companyId: number) {
       console.log('POST');
-      let body = new URLSearchParams();
+      const body = new URLSearchParams();
       //colocar nombre de parametro
-      body.set('name', 'song');
-      //colocar id de comania
-      body.set('companyId', '1');
-      let options = {
+      body.set('name', name);
+      //colocar id de compañia
+      body.set('companyId', companyId.toString());
+      const options = {
           headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
       };
       this.http.post(endpoint + 'parameters/add', body.toString(), options).subscribe();
