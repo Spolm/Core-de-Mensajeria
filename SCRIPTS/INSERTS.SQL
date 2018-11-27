@@ -63,8 +63,8 @@ INSERT INTO public.application(app_name,app_description,app_token,app_date,app_s
 ('Mercantil en linea','Aplicacion movil de mercantil','5E182FC1A42614D37B951A7A38648350D0D166E9D78BA26E59EF7ECE9462BE34','12/13/2017',1,1,2),
 ('Banesco Online','Aplicacion web de banesco','5DD3CE9EF2B7614FB471B442050DDB24ADDBE88424B3C1382C7DD224A99203BD','01/08/2015',1,1,3);
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
-VALUES ('2003-2-1', 1);
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id) 
+VALUES ('2003-2-1', 1, 1);
 
 INSERT INTO public.Message (mes_text,mes_template)
 VALUES ('esto es un mensaje de template con un [.$Parametro$.]',1);
@@ -84,8 +84,8 @@ VALUES (1,1);
 INSERT INTO public.Status (sta_name)
 VALUES ('No Aprobado');
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
-VALUES ('2012-10-11', 4);
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id) 
+VALUES ('2012-10-11', 4, 2);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('BANESCO REGISTRO: CONSUMO EN PUNTO DE VENTA CON TDD [.$Numero tarjeta$.] BS. [.$Monto$.] EL [.$Fecha$.] REF [.$REF$.].',2);
@@ -111,8 +111,8 @@ VALUES (2,4);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
 VALUES (2,5);
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
-VALUES ('2014-10-11', 8);
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id) 
+VALUES ('2014-10-11', 8, 3);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Movistar te invita a una funcion gratuita del [.$Evento$.]. Ven el [.$Fecha$.] [.$Hora$.] [.$Lugar$.].',3);
@@ -136,8 +136,8 @@ VALUES (3,7);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
 VALUES (3,8);
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
-VALUES ('2014-11-11', 10);
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id) 
+VALUES ('2014-11-11', 10, 1);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Acabas de escuchar [.$Cancion$.] Envia SI al [.$Codigo$.] si lo quieres como tu Entretono. Renta Bs.S. [.$Renta$.] c/impuestos. Entretono Bs.S. [.$Monto$.] c/impuestos.',4);
@@ -161,8 +161,8 @@ VALUES (4,1);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
 VALUES (4,3);
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id) 
-VALUES ('2016-07-04', 13);
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id) 
+VALUES ('2016-07-04', 13, 2);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Si tu edad es entre 18 y 30, alistate en la FANB. Prensentate del [.$Fecha inicio$.] al [.$Fecha fin$.] en la unidad militar mas cercana',5);
