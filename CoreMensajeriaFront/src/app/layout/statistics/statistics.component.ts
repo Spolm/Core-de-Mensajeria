@@ -9,6 +9,7 @@ import { HttpParams } from "@angular/common/http";
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
 import { MoreFiltersComponent } from "./more-filters/more-filters.component";
 
+
 interface myData {
     obj: Object;
 }
@@ -29,15 +30,10 @@ export class StatisticsComponent implements OnInit {
     datos;
     opcionSeleccionado: string = "0";
     verSeleccion: string = "";
+    Date2Capturado: string = "";
+    Date1Capturado: string = "";
     opcionDateSleccionado: Date;
     opcionDateSleccionado2: Date;
-    verDate: string;
-    paramDay1: string;
-    paramDay2: string;
-    paramMounth1: string;
-    paramMounth2: string;
-    paramYear1: string;
-    paramYear2: string;
     paramType: string;
 
     companiesDropdown = [];
@@ -78,7 +74,10 @@ export class StatisticsComponent implements OnInit {
         private toastr: ToastrService,
         public dialog: MatDialog
     ) {
-        this.datos = ["Compañias", "Campañas", "Canales"];
+        this.datos = [ "Cantidad de mensajes enviados por Compañias",
+                       "Cantidad de mensajes enviados por Campañas",
+                       "Cantidad de mensajes enviados por Canales"
+                     ];
     }
 
     ngOnInit() {
@@ -180,31 +179,18 @@ export class StatisticsComponent implements OnInit {
 
     capturarDate() {
         if (
-            this.opcionDateSleccionado != null &&
-            this.opcionDateSleccionado2 != null
-        ) {
-            this.verDate = this.opcionDateSleccionado.toString();
-            this.paramDay1 =
-                "?paramDay=" +
-                new Date(this.opcionDateSleccionado).getUTCDate();
-            this.paramMounth1 =
-                "?paramMonth=" +
-                new Date(this.opcionDateSleccionado).getUTCMonth();
-            this.paramYear1 =
-                "?paramYear=" +
-                new Date(this.opcionDateSleccionado).getFullYear();
-            this.paramDay2 =
-                "?paramDay2=" +
-                new Date(this.opcionDateSleccionado2).getUTCDate();
-            this.paramMounth2 =
-                "?paramMonth2=" +
-                new Date(this.opcionDateSleccionado2).getUTCMonth();
-            this.paramYear2 =
-                "?paramYear2=" +
-                new Date(this.opcionDateSleccionado2).getFullYear();
-            this.paramType = "paramType=" + this.verSeleccion;
+            (this.opcionDateSleccionado != null &&
+            this.opcionDateSleccionado2 != null )
+            && (this.opcionDateSleccionado < this.opcionDateSleccionado2)         
+           ) {
+            this.Date1Capturado = "?paramDate1=" + this.opcionDateSleccionado.toString();
+            this.Date2Capturado = "?paramDate2=" + this.opcionDateSleccionado2.toString();
+            this.paramType      =  "paramType=" + this.verSeleccion;
             console.log(
                 "FechaCapturada",
+                "Dates1: " + this.Date1Capturado ,
+                "Dates2: " + this.Date2Capturado ,
+                + " " +
                 new Date(this.opcionDateSleccionado).getUTCDate(),
                 new Date(this.opcionDateSleccionado).getUTCMonth(),
                 new Date(this.opcionDateSleccionado).getFullYear(),
@@ -213,23 +199,15 @@ export class StatisticsComponent implements OnInit {
                 new Date(this.opcionDateSleccionado2).getFullYear()
             );
             this.Servicio.getStatisticsData4(
-                this.paramDay1 +
+                    this.Date1Capturado +
                     "&" +
-                    this.paramMounth1 +
-                    "&" +
-                    this.paramYear1 +
-                    "&" +
-                    this.paramDay2 +
-                    "&" +
-                    this.paramMounth2 +
-                    "&" +
-                    this.paramYear2 +
+                    this.Date2Capturado +
                     "&" +
                     this.paramType
             ).subscribe(data => {
                 console.log(data);
             });
-        } else this.toastr.error("Debe seleccionar una fecha");
+        } else this.toastr.error("Error en las fechas");
     }
 
     DoGraficas() {
@@ -252,19 +230,11 @@ export class StatisticsComponent implements OnInit {
             })*/
 
         this.Servicio.getStatisticsData4(
-            this.paramDay1 +
-                "&" +
-                this.paramMounth1 +
-                "&" +
-                this.paramYear1 +
-                "&" +
-                this.paramDay2 +
-                "&" +
-                this.paramMounth2 +
-                "&" +
-                this.paramYear2 +
-                "&" +
-                this.paramType
+                    this.Date1Capturado +
+                    "&" +
+                    this.Date2Capturado +
+                    "&" +
+                    this.paramType
         ).subscribe(data => {
             this.json2 = data;
             this.chart2(this.json2);
@@ -272,19 +242,11 @@ export class StatisticsComponent implements OnInit {
         });
 
         this.Servicio.getStatisticsData5(
-            this.paramDay1 +
-                "&" +
-                this.paramMounth1 +
-                "&" +
-                this.paramYear1 +
-                "&" +
-                this.paramDay2 +
-                "&" +
-                this.paramMounth2 +
-                "&" +
-                this.paramYear2 +
-                "&" +
-                this.paramType
+                    this.Date1Capturado +
+                    "&" +
+                    this.Date2Capturado +
+                    "&" +
+                    this.paramType
         ).subscribe(data => {
             this.json2 = data;
             this.chart(this.json2);
@@ -292,19 +254,11 @@ export class StatisticsComponent implements OnInit {
         });
 
         this.Servicio.getStatisticsData6(
-            this.paramDay1 +
-                "&" +
-                this.paramMounth1 +
-                "&" +
-                this.paramYear1 +
-                "&" +
-                this.paramDay2 +
-                "&" +
-                this.paramMounth2 +
-                "&" +
-                this.paramYear2 +
-                "&" +
-                this.paramType
+                   this.Date1Capturado +
+                    "&" +
+                    this.Date2Capturado +
+                    "&" +
+                    this.paramType
         ).subscribe(data => {
             this.json2 = data;
             this.chart3(this.json2);
@@ -318,7 +272,7 @@ export class StatisticsComponent implements OnInit {
         const layout = {
             width: 500,
             height: 300,
-            title: "Cantidad de mensajes enviados por " + this.verSeleccion
+            title: this.verSeleccion
         };
         Plotly.newPlot(linediv, graph, layout);
     }
@@ -329,7 +283,7 @@ export class StatisticsComponent implements OnInit {
         const layout = {
             width: 500,
             height: 300,
-            title: "Cantidad de mensajes enviados por " + this.verSeleccion
+            title: this.verSeleccion
         };
         Plotly.newPlot(linediv, graph, layout);
     }
@@ -340,7 +294,7 @@ export class StatisticsComponent implements OnInit {
         const layout = {
             width: 500,
             height: 300,
-            title: "Cantidad de mensajes enviados por " + this.verSeleccion
+            title: this.verSeleccion
         };
         Plotly.newPlot(linediv, graph, layout);
     }
