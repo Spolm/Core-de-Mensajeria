@@ -54,6 +54,7 @@ public class UserDAO {
         while (_result.next()) {
             setUserParams(_result, _user);
         }
+        _user.set_passwordUser("");
         return _user;
     }
 
@@ -67,8 +68,11 @@ public class UserDAO {
         while (_result.next()) {
             _user = new User();
             setUserParams(_result, _user);
+            _user.set_passwordUser("");
             _userList.add(_user);
+
         }
+
         return _userList;
     }
 
