@@ -1,4 +1,4 @@
-\c CoreMensajeria CoreMensajeria
+--\c CoreMensajeria CoreMensajeria
 
 create table public.User
 (
@@ -44,8 +44,7 @@ CREATE TABLE public.Campaign
         ON DELETE CASCADE
 );
 
-create table public.Application
-(
+create table Application(
     app_id serial not null,
     app_name varchar(32) not null,
     app_description varchar(500),
@@ -53,9 +52,12 @@ create table public.Application
     app_date timestamp not null,
     app_status integer not null,
     app_user_creator integer not null,
-	CONSTRAINT pk_aplication primary key (app_id),
-	CONSTRAINT fk_user_aplication foreign key ("app_user_creator")
-	REFERENCES public.User(use_id)
+    app_company integer not null,
+    CONSTRAINT pk_aplication primary key (app_id),
+    CONSTRAINT fk_user_aplication foreign key ("app_user_creator")
+    REFERENCES User(use_id),
+    CONSTRAINT fk_company_aplication foreign key ("app_company")
+    REFERENCES Company(com_id)
 );
 
 CREATE TABLE integrator(
@@ -163,9 +165,7 @@ ADD COLUMN tem_campaign_id integer NOT NULL,
 ADD CONSTRAINT fk_campaign_id FOREIGN KEY ("tem_campaign_id") 
 REFERENCES Campaign (cam_id);
 
-
-ALTER TABLE Parameter
-ADD COLUMN par_company_id integer,
-ADD CONSTRAINT fk_par_company_id FOREIGN KEY ("par_company_id") 
-REFERENCES Company (com_id);
-
+ALTER TABLE Template
+ADD COLUMN tem_application_id integer NOT NULL,
+ADD CONSTRAINT fk_application_id FOREIGN KEY ("tem_application_id")
+REFERENCES Application (app_id);
