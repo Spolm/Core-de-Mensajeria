@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA } from "@angular/material";
+import { StatisticsServiceService } from "../statistics-service.service";
 
 @Component({
     selector: "app-more-filters",
@@ -7,10 +8,68 @@ import { MAT_DIALOG_DATA } from "@angular/material";
     styleUrls: ["./more-filters.component.scss"]
 })
 export class MoreFiltersComponent implements OnInit {
-    modalTitle: String;
-    constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-        this.modalTitle = data.title;
+    companiesDropdown = [];
+    companiesDropdownSettings = {};
+    selectedCompaniesIds: Number[] = [];
+    selectedCompanies = [];
+
+    campaignsDropdown = [];
+    campaignsDropdownSettings = {};
+    selectedCampaignsIds = [];
+    selectedCampaigns = [];
+
+    channelsDropdown = [];
+    channelsDropdownSettings = {};
+    selectedChannelsIds = [];
+    selectedChannels = [];
+
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private Servicio: StatisticsServiceService
+    ) {
+        this.companiesDropdown = data.companiesDropdown;
+        this.companiesDropdownSettings = data.companiesDropdownSettings;
+        this.selectedCompanies = data.selectedCompanies;
+        this.selectedCompaniesIds = data.selectedCompaniesIds;
+        this.campaignsDropdown = data.campaignsDropdown;
+        this.campaignsDropdownSettings = data.campaignsDropdownSettings;
+        this.selectedCampaigns = data.selectedCampaigns;
+        this.selectedCampaignsIds = data.selectedCampaignsIds;
+        this.channelsDropdown = data.channelsDropdown;
+        this.channelsDropdownSettings = data.channelsDropdownSettings;
+        this.selectedChannels = data.selectedChannels;
+        this.selectedChannelsIds = data.selectedChannelsIds;
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.companiesDropdownSettings = {
+            singleSelection: false,
+            idField: "company_id",
+            textField: "company_name",
+            selectAllText: "Seleccionar todos",
+            unSelectAllText: "Deseleccionar todos",
+            itemsShowLimit: 1,
+            allowSearchFilter: true
+        };
+
+        this.campaignsDropdownSettings = {
+            singleSelection: false,
+            idField: "campaign_id",
+            textField: "campaign_name",
+            selectAllText: "Seleccionar todos",
+            unSelectAllText: "Deseleccionar todos",
+            itemsShowLimit: 1,
+            allowSearchFilter: true
+        };
+
+        this.channelsDropdownSettings = {
+            singleSelection: false,
+            idField: "channel_id",
+            textField: "channel_name",
+            selectAllText: "Seleccionar todos",
+            unSelectAllText: "Deseleccionar todos",
+            itemsShowLimit: 1,
+            allowSearchFilter: true
+        };
+    }
 }

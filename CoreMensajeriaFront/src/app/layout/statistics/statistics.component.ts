@@ -42,15 +42,18 @@ export class StatisticsComponent implements OnInit {
 
     companiesDropdown = [];
     companiesDropdownSettings = {};
-    selectedCompanies: Number[] = [];
+    selectedCompaniesIds: Number[] = [];
+    selectedCompanies = [];
 
     campaignsDropdown = [];
     campaignsDropdownSettings = {};
+    selectedCampaignsIds = [];
     selectedCampaigns = [];
 
     channelsDropdown = [];
     channelsDropdownSettings = {};
-    selectedChannels = [];
+    selectedChannelsIds = [];
+    selectedChannles = [];
 
     public graph = {
         data: [],
@@ -355,13 +358,23 @@ export class StatisticsComponent implements OnInit {
 
     // Handle company selecction
     companySelected(company: any) {
-        this.selectedCompanies.push(company["company_id"]);
+        this.selectedCompaniesIds.push(company["company_id"]);
+        this.selectedCompanies.push(company);
         this.getCampaignsForCompanies();
     }
 
     companyDeselected(company: any) {
-        this.removeItemFromArray(company["company_id"], this.selectedCompanies);
-        if (this.arrayIsEmpty(this.selectedCompanies)) {
+        this.removeItemFromArray(
+            company["company_id"],
+            this.selectedCompaniesIds
+        );
+        this.removeObjectFromArray(
+            company["company_id"],
+            this.selectedCompanies,
+            "company_id"
+        );
+        console.log(this.selectedCompanies.length);
+        if (this.arrayIsEmpty(this.selectedCompaniesIds)) {
             this.getAllCampaigns();
         } else {
             this.getCampaignsForCompanies();
@@ -370,75 +383,104 @@ export class StatisticsComponent implements OnInit {
 
     selectAllCompanies() {
         for (var index in this.companiesDropdown) {
-            this.selectedCompanies.push(
+            this.selectedCompaniesIds.push(
                 this.companiesDropdown[index]["company_id"]
             );
+            this.selectedCompanies.push(this.companiesDropdown[index]);
         }
         this.getAllCampaigns();
     }
 
     deselectAllCompanies() {
+        this.selectedCompaniesIds = [];
         this.selectedCompanies = [];
         this.getAllCampaigns();
     }
 
     // Handle campaign selecction
     campaignSelected(campaign: any) {
-        this.selectedCampaigns.push(campaign["campaign_id"]);
+        this.selectedCampaignsIds.push(campaign["campaign_id"]);
+        this.selectedCampaigns.push(campaign);
     }
 
     campaignDeselected(campaign: any) {
         this.removeItemFromArray(
             campaign["campaign_id"],
-            this.selectedCampaigns
+            this.selectedCampaignsIds
+        );
+        this.removeObjectFromArray(
+            campaign["campaign_id"],
+            this.selectedCampaigns,
+            "campaign_id"
         );
     }
 
     selectAllCampaigns() {
         for (var index in this.campaignsDropdown) {
-            this.selectedCampaigns.push(
+            this.selectedCampaignsIds.push(
                 this.campaignsDropdown[index]["campaign_id"]
             );
+            this.selectedCampaigns.push(this.campaignsDropdown[index]);
         }
     }
 
     deselectAllCampaigns() {
+        this.selectedCampaignsIds = [];
         this.selectedCampaigns = [];
     }
 
     // Handle channel selection
     channelSelected(channel: any) {
-        this.selectedChannels.push(channel["channel_id"]);
+        this.selectedChannelsIds.push(channel["channel_id"]);
+        this.selectedChannles.push(channel);
     }
 
     channelDeselected(channel: any) {
-        this.removeItemFromArray(channel["channel_id"], this.selectedChannels);
+        this.removeItemFromArray(
+            channel["channel_id"],
+            this.selectedChannelsIds
+        );
+        this.removeObjectFromArray(
+            channel["channel_id"],
+            this.selectedChannles,
+            "channel_id"
+        );
     }
 
     selectAllChannels() {
         for (var index in this.channelsDropdown) {
-            this.selectedChannels.push(
+            this.selectedChannelsIds.push(
                 this.channelsDropdown[index]["channel_id"]
             );
+            this.selectedChannles.push(this.channelsDropdown[index]);
         }
     }
 
     deselectAllChannels() {
-        this.selectedChannels = [];
+        this.selectedChannelsIds = [];
+        this.selectedChannles = [];
     }
 
     getCampaignsForCompanies() {
-        this.Servicio.getCampaingsForCompany(this.selectedCompanies).subscribe(
-            data => {
-                this.campaignsDropdown = [];
-                this.insertIntoDropdown(ObjectType.campaign, data);
-            }
-        );
+        this.Servicio.getCampaingsForCompany(
+            this.selectedCompaniesIds
+        ).subscribe(data => {
+            this.campaignsDropdown = [];
+            this.insertIntoDropdown(ObjectType.campaign, data);
+        });
     }
 
     removeItemFromArray(item: Number, array: Number[]) {
         for (var i = 0; i < array.length; i++) {
             if (item == array[i]) {
+                array.splice(i, 1);
+            }
+        }
+    }
+
+    removeObjectFromArray<T>(id: any, array: any[], key: T) {
+        for (var i = 0; i < array.length; i++) {
+            if (id == array[i][key]) {
                 array.splice(i, 1);
             }
         }
@@ -462,28 +504,28 @@ export class StatisticsComponent implements OnInit {
 
     convertSelectedItemsIntoHttpParams(): HttpParams {
         var params = new HttpParams();
-        params = this.convertSelectedCompaniesIntoHttpParams(params);
-        params = this.convertSelectedCampaignsIntoHttpParams(params);
-        params = this.convertSelectedChannelsIntoHttpParams(params);
+        params = this.convertselectedCompaniesIdsIntoHttpParams(params);
+        params = this.convertselectedCampaignsIdsIntoHttpParams(params);
+        params = this.convertselectedChannelsIdsIntoHttpParams(params);
         return params;
     }
 
-    convertSelectedCompaniesIntoHttpParams(params: HttpParams) {
-        this.selectedCompanies.forEach(companyId => {
+    convertselectedCompaniesIdsIntoHttpParams(params: HttpParams) {
+        this.selectedCompaniesIds.forEach(companyId => {
             params = params.append("companyId", companyId.toString());
         });
         return params;
     }
 
-    convertSelectedCampaignsIntoHttpParams(params: HttpParams) {
-        this.selectedCampaigns.forEach(campaignId => {
+    convertselectedCampaignsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedCampaignsIds.forEach(campaignId => {
             params = params.append("campaignId", campaignId.toString());
         });
         return params;
     }
 
-    convertSelectedChannelsIntoHttpParams(params: HttpParams) {
-        this.selectedChannels.forEach(channelId => {
+    convertselectedChannelsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedChannelsIds.forEach(channelId => {
             params = params.append("channelId", channelId.toString());
         });
         return params;
@@ -491,13 +533,27 @@ export class StatisticsComponent implements OnInit {
 
     openFilters() {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
+        dialogConfig.autoFocus = false;
+        dialogConfig.width = "100%";
+        dialogConfig.maxWidth = "100%";
+        dialogConfig.height = "80%";
         dialogConfig.data = {
             id: 1,
-            title: "Angular For Beginners"
+            companiesDropdown: this.companiesDropdown,
+            selectedCompanies: this.selectedCompanies,
+            selectedCompaniesIds: this.selectedCompaniesIds,
+            companiesDropdownSettings: this.companiesDropdownSettings,
+            campaignsDropdown: this.campaignsDropdown,
+            selectedCampaigns: this.selectedCampaigns,
+            selectedCampaignsIds: this.selectedCampaignsIds,
+            campaignsDropdownSettings: this.campaignsDropdownSettings,
+            channelsDropdown: this.channelsDropdown,
+            selectedChannles: this.selectedChannles,
+            selectedChannelsIds: this.selectedChannelsIds,
+            channelsDropdownSettings: this.channelsDropdownSettings
         };
         const dialogRef = this.dialog.open(MoreFiltersComponent, dialogConfig);
+        dialogRef.updatePosition({ top: "55px", right: "0px}", left: "0px" });
         dialogRef.afterClosed().subscribe(result => {
             console.log("Dialog was closed");
             console.log(result);
