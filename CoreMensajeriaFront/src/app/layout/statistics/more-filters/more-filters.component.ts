@@ -27,18 +27,7 @@ export class MoreFiltersComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any,
         private Servicio: StatisticsServiceService
     ) {
-        this.companiesDropdown = data.companiesDropdown;
-        this.companiesDropdownSettings = data.companiesDropdownSettings;
-        this.selectedCompanies = data.selectedCompanies;
-        this.selectedCompaniesIds = data.selectedCompaniesIds;
-        this.campaignsDropdown = data.campaignsDropdown;
-        this.campaignsDropdownSettings = data.campaignsDropdownSettings;
-        this.selectedCampaigns = data.selectedCampaigns;
-        this.selectedCampaignsIds = data.selectedCampaignsIds;
-        this.channelsDropdown = data.channelsDropdown;
-        this.channelsDropdownSettings = data.channelsDropdownSettings;
-        this.selectedChannels = data.selectedChannels;
-        this.selectedChannelsIds = data.selectedChannelsIds;
+        this.initializeDataFromMainFilters(data);
     }
 
     ngOnInit() {
@@ -71,5 +60,20 @@ export class MoreFiltersComponent implements OnInit {
             itemsShowLimit: 1,
             allowSearchFilter: true
         };
+    }
+
+    initializeDataFromMainFilters(data: any) {
+        this.companiesDropdown = data.companiesDropdown;
+        this.companiesDropdownSettings = data.companiesDropdownSettings;
+        this.selectedCompanies = data.selectedCompanies;
+        this.selectedCompaniesIds = data.selectedCompaniesIds;
+        this.campaignsDropdown = data.campaignsDropdown;
+        this.campaignsDropdownSettings = data.campaignsDropdownSettings;
+        this.selectedCampaigns = data.selectedCampaigns;
+        this.selectedCampaignsIds = data.selectedCampaignsIds;
+        this.channelsDropdown = data.channelsDropdown;
+        this.channelsDropdownSettings = data.channelsDropdownSettings;
+        this.selectedChannels = data.selectedChannels;
+        this.selectedChannelsIds = data.selectedChannelsIds;
     }
 }

@@ -53,7 +53,7 @@ export class StatisticsComponent implements OnInit {
     channelsDropdown = [];
     channelsDropdownSettings = {};
     selectedChannelsIds = [];
-    selectedChannles = [];
+    selectedChannels = [];
 
     public graph = {
         data: [],
@@ -159,7 +159,6 @@ export class StatisticsComponent implements OnInit {
                 }
                 break;
             case ObjectType.channel:
-                console.log(data);
                 for (var index in data) {
                     this.channelsDropdown.push({
                         channel_id: data[index]["idChannel"],
@@ -373,7 +372,6 @@ export class StatisticsComponent implements OnInit {
             this.selectedCompanies,
             "company_id"
         );
-        console.log(this.selectedCompanies.length);
         if (this.arrayIsEmpty(this.selectedCompaniesIds)) {
             this.getAllCampaigns();
         } else {
@@ -432,7 +430,7 @@ export class StatisticsComponent implements OnInit {
     // Handle channel selection
     channelSelected(channel: any) {
         this.selectedChannelsIds.push(channel["channel_id"]);
-        this.selectedChannles.push(channel);
+        this.selectedChannels.push(channel);
     }
 
     channelDeselected(channel: any) {
@@ -442,7 +440,7 @@ export class StatisticsComponent implements OnInit {
         );
         this.removeObjectFromArray(
             channel["channel_id"],
-            this.selectedChannles,
+            this.selectedChannels,
             "channel_id"
         );
     }
@@ -452,13 +450,13 @@ export class StatisticsComponent implements OnInit {
             this.selectedChannelsIds.push(
                 this.channelsDropdown[index]["channel_id"]
             );
-            this.selectedChannles.push(this.channelsDropdown[index]);
+            this.selectedChannels.push(this.channelsDropdown[index]);
         }
     }
 
     deselectAllChannels() {
         this.selectedChannelsIds = [];
-        this.selectedChannles = [];
+        this.selectedChannels = [];
     }
 
     getCampaignsForCompanies() {
@@ -548,12 +546,12 @@ export class StatisticsComponent implements OnInit {
             selectedCampaignsIds: this.selectedCampaignsIds,
             campaignsDropdownSettings: this.campaignsDropdownSettings,
             channelsDropdown: this.channelsDropdown,
-            selectedChannles: this.selectedChannles,
+            selectedChannels: this.selectedChannels,
             selectedChannelsIds: this.selectedChannelsIds,
             channelsDropdownSettings: this.channelsDropdownSettings
         };
         const dialogRef = this.dialog.open(MoreFiltersComponent, dialogConfig);
-        dialogRef.updatePosition({ top: "55px", right: "0px}", left: "0px" });
+        dialogRef.updatePosition({ top: "55px", right: "0px", left: "0px" });
         dialogRef.afterClosed().subscribe(result => {
             console.log("Dialog was closed");
             console.log(result);
