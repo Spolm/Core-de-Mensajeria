@@ -44,7 +44,7 @@ CREATE TABLE public.Campaign
         ON DELETE CASCADE
 );
 
-create table Application(
+create table public.Application(
     app_id serial not null,
     app_name varchar(32) not null,
     app_description varchar(500),
@@ -55,9 +55,9 @@ create table Application(
     app_company integer not null,
     CONSTRAINT pk_aplication primary key (app_id),
     CONSTRAINT fk_user_aplication foreign key ("app_user_creator")
-    REFERENCES User(use_id),
+    REFERENCES public.User(use_id),
     CONSTRAINT fk_company_aplication foreign key ("app_company")
-    REFERENCES Company(com_id)
+    REFERENCES public.Company(com_id)
 );
 
 CREATE TABLE integrator(
