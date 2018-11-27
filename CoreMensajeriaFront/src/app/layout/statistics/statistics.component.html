@@ -20,8 +20,11 @@
                 <ng-multiselect-dropdown
                     [placeholder]="'Campaña'"
                     [data]="campaignsDropdown"
-                    [(ngModel)]="selectedCampaigns"
                     [settings]="campaignsDropdownSettings"
+                    (onSelect)="campaignSelected($event)"
+                    (onDeSelect)="campaignDeselected($event)"
+                    (onSelectAll)="selectAllCampaigns()"
+                    (onDeSelectAll)="deselectAllCampaigns()"
                 >
                 </ng-multiselect-dropdown>
             </div>
@@ -30,8 +33,11 @@
                 <ng-multiselect-dropdown
                     [placeholder]="'Canal'"
                     [data]="channelsDropdown"
-                    [(ngModel)]="selectedChannels"
                     [settings]="channelsDropdownSettings"
+                    (onSelect)="channelSelected($event)"
+                    (onDeSelect)="channelDeselected($event)"
+                    (onSelectAll)="selectAllChannels()"
+                    (onDeSelectAll)="deselectAllChannels()"
                 >
                 </ng-multiselect-dropdown>
             </div>
@@ -99,6 +105,14 @@
         (click)="capturar(); capturarDate(); DoGraficas()"
     >
         Consultar
+    </button>
+
+    <button
+        type="button"
+        class="btn btn-success btn-lg"
+        (click)="sendUserRequest()"
+    >
+        Consultar 2
     </button>
 
     <p [hidden]="opcionSeleccionado == '0'">

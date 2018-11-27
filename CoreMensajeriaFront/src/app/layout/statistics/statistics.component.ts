@@ -5,6 +5,7 @@ import { Component, OnInit } from "@angular/core";
 import * as Plotly from "plotly.js/dist/plotly.js";
 import { Config, Data, Layout } from "plotly.js/dist/plotly.js";
 import { ToastrService } from "ngx-toastr";
+import { HttpParams } from "@angular/common/http";
 
 interface myData {
     obj: Object;
@@ -349,6 +350,7 @@ export class StatisticsComponent implements OnInit {
         );
     }
 
+    // Handle company selecction
     companySelected(company: any) {
         this.selectedCompanies.push(company["company_id"]);
         this.getCampaignsForCompanies();
@@ -363,15 +365,6 @@ export class StatisticsComponent implements OnInit {
         }
     }
 
-    getCampaignsForCompanies() {
-        this.Servicio.getCampaingsForCompany(this.selectedCompanies).subscribe(
-            data => {
-                this.campaignsDropdown = [];
-                this.insertIntoDropdown(ObjectType.campaign, data);
-            }
-        );
-    }
-
     selectAllCompanies() {
         for (var index in this.companiesDropdown) {
             this.selectedCompanies.push(
@@ -381,9 +374,63 @@ export class StatisticsComponent implements OnInit {
         this.getAllCampaigns();
     }
 
-    deselectAllCampaigns() {
+    deselectAllCompanies() {
         this.selectedCompanies = [];
         this.getAllCampaigns();
+    }
+
+    // Handle campaign selecction
+    campaignSelected(campaign: any) {
+        this.selectedCampaigns.push(campaign["campaign_id"]);
+    }
+
+    campaignDeselected(campaign: any) {
+        this.removeItemFromArray(
+            campaign["campaign_id"],
+            this.selectedCampaigns
+        );
+    }
+
+    selectAllCampaigns() {
+        for (var index in this.campaignsDropdown) {
+            this.selectedCampaigns.push(
+                this.campaignsDropdown[index]["campaign_id"]
+            );
+        }
+    }
+
+    deselectAllCampaigns() {
+        this.selectedCampaigns = [];
+    }
+
+    // Handle channel selection
+    channelSelected(channel: any) {
+        this.selectedChannels.push(channel["channel_id"]);
+    }
+
+    channelDeselected(channel: any) {
+        this.removeItemFromArray(channel["channel_id"], this.selectedChannels);
+    }
+
+    selectAllChannels() {
+        for (var index in this.channelsDropdown) {
+            this.selectedChannels.push(
+                this.channelsDropdown[index]["channel_id"]
+            );
+        }
+    }
+
+    deselectAllChannels() {
+        this.selectedChannels = [];
+    }
+
+    getCampaignsForCompanies() {
+        this.Servicio.getCampaingsForCompany(this.selectedCompanies).subscribe(
+            data => {
+                this.campaignsDropdown = [];
+                this.insertIntoDropdown(ObjectType.campaign, data);
+            }
+        );
     }
 
     removeItemFromArray(item: Number, array: Number[]) {
@@ -396,5 +443,46 @@ export class StatisticsComponent implements OnInit {
 
     arrayIsEmpty(array) {
         return !Array.isArray(array) || !array.length;
+    }
+
+    sendUserRequest() {
+        var params = this.convertSelectedItemsIntoHttpParams();
+        this.Servicio.getStatistics(params).subscribe(
+            data => {
+                console.log(data);
+            },
+            error => {
+                console.error(error);
+            }
+        );
+    }
+
+    convertSelectedItemsIntoHttpParams(): HttpParams {
+        var params = new HttpParams();
+        params = this.convertSelectedCompaniesIntoHttpParams(params);
+        params = this.convertSelectedCampaignsIntoHttpParams(params);
+        params = this.convertSelectedChannelsIntoHttpParams(params);
+        return params;
+    }
+
+    convertSelectedCompaniesIntoHttpParams(params: HttpParams) {
+        this.selectedCompanies.forEach(companyId => {
+            params = params.append("companyId", companyId.toString());
+        });
+        return params;
+    }
+
+    convertSelectedCampaignsIntoHttpParams(params: HttpParams) {
+        this.selectedCampaigns.forEach(campaignId => {
+            params = params.append("campaignId", campaignId.toString());
+        });
+        return params;
+    }
+
+    convertSelectedChannelsIntoHttpParams(params: HttpParams) {
+        this.selectedChannels.forEach(channelId => {
+            params = params.append("channelId", channelId.toString());
+        });
+        return params;
     }
 }

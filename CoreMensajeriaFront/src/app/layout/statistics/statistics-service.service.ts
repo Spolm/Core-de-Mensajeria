@@ -52,4 +52,8 @@ export class StatisticsServiceService {
         });
         return this.http.get(this.ApiURL + "campaignCompany", { params });
     }
+
+    getStatistics(params: HttpParams) {
+        return this.http.get(this.ApiURL + "data", { params });
+    }
 }
