@@ -8,6 +8,8 @@ import Classes.M09_Statistics.PieChart;
 import Classes.M09_Statistics.SqlEstrella;
 import Classes.M09_Statistics.Statistics;
 import Classes.Sql;
+import Exceptions.CampaignDoesntExistsException;
+import Exceptions.CompanyDoesntExistsException;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -494,6 +496,15 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getAllCompanies() {
         String query = "SELECT DISTINCT com_id, com_name FROM dim_company_campaign ORDER BY com_id;";
+        try {
+            return getCompanies(query);
+        } catch(CompanyDoesntExistsException e) {
+            return Response.serverError().build();
+        }
+
+    }
+
+    private Response getCompanies(String query) throws CompanyDoesntExistsException {
         ArrayList<Company> companies = new ArrayList<>();
         try {
             Statement statement = conn.createStatement();
@@ -505,6 +516,7 @@ public class M09_Statistics extends Application {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            throw new CompanyDoesntExistsException(e);
         } finally {
             Sql.bdClose(conn);
         }
@@ -516,7 +528,12 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getAllCampaigns() {
         String query = "SELECT DISTINCT cam_id, cam_name FROM dim_company_campaign ORDER BY cam_id;";
-        return getCampaigns(query);
+        try {
+            return getCampaigns(query);
+        } catch (CampaignDoesntExistsException e) {
+            return Response.serverError().build();
+        }
+
     }
 
     @GET
@@ -551,11 +568,15 @@ public class M09_Statistics extends Application {
             query += companyIds.get(i) + ", ";
         }
         query += companyIds.get(companyIds.size() - 1) + ") ORDER BY cam_id;";
+        try {
+            return getCampaigns(query);
+        } catch(CampaignDoesntExistsException e) {
+            return Response.serverError().build();
+        }
 
-        return getCampaigns(query);
     }
 
-    public Response getCampaigns(String query) {
+    public Response getCampaigns(String query) throws CampaignDoesntExistsException {
         ArrayList<Campaign> campaigns = new ArrayList<>();
         try {
             Statement statement = conn.createStatement();
@@ -569,6 +590,7 @@ public class M09_Statistics extends Application {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            throw new CampaignDoesntExistsException(e);
         } finally {
             Sql.bdClose(conn);
         }
