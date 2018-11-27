@@ -69,8 +69,8 @@ VALUES ('2003-2-1', 1, 1);
 INSERT INTO public.Message (mes_text,mes_template)
 VALUES ('esto es un mensaje de template con un [.$Parametro$.]',1);
 
-INSERT INTO public.Parameter (par_name)
-VALUES ('Parametro');
+INSERT INTO public.Parameter (par_name,par_company_id)
+VALUES ('Parametro',1);
 
 INSERT INTO public.Status (sta_name)
 VALUES ('Aprobado');
@@ -90,14 +90,14 @@ VALUES ('2012-10-11', 4, 2);
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('BANESCO REGISTRO: CONSUMO EN PUNTO DE VENTA CON TDD [.$Numero tarjeta$.] BS. [.$Monto$.] EL [.$Fecha$.] REF [.$REF$.].',2);
 
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Numero tarjeta');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Monto');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Fecha');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('REF');
+INSERT INTO public.Parameter (par_name,par_company_id)
+VALUES ('Numero tarjeta',1);
+INSERT INTO public.Parameter (par_name,par_company_id)
+VALUES ('Monto',1);
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Fecha',1);
+INSERT INTO public.Parameter (par_name,par_company_id)
+VALUES ('REF',1);
 
 INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
 VALUES ('2012-10-11',2,2);
@@ -117,12 +117,12 @@ VALUES ('2014-10-11', 8, 3);
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Movistar te invita a una funcion gratuita del [.$Evento$.]. Ven el [.$Fecha$.] [.$Hora$.] [.$Lugar$.].',3);
 
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Evento');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Hora');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Lugar');
+INSERT INTO public.Parameter (par_name,par_company_id)
+VALUES ('Evento',1);
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Hora',1);
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Lugar',1);
 
 INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
 VALUES ('2014-10-12',3,1);
@@ -142,12 +142,12 @@ VALUES ('2014-11-11', 10, 1);
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Acabas de escuchar [.$Cancion$.] Envia SI al [.$Codigo$.] si lo quieres como tu Entretono. Renta Bs.S. [.$Renta$.] c/impuestos. Entretono Bs.S. [.$Monto$.] c/impuestos.',4);
 
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Cancion');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Codigo');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Renta');
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Cancion',1);
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Codigo',1);
+INSERT INTO public.Parameter (par_name,par_company_id)
+VALUES ('Renta',1);
 
 INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
 VALUES ('2014-11-11',4,2);
@@ -167,10 +167,10 @@ VALUES ('2016-07-04', 13, 2);
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Si tu edad es entre 18 y 30, alistate en la FANB. Prensentate del [.$Fecha inicio$.] al [.$Fecha fin$.] en la unidad militar mas cercana',5);
 
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Fecha inicio');
-INSERT INTO public.Parameter (par_name) 
-VALUES ('Fecha fin');
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Fecha inicio',1);
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Fecha fin',1);
 
 INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
 VALUES ('2016-07-04',5,2);
