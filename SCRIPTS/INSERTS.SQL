@@ -1,6 +1,3 @@
-
-\c CoreMensajeria CoreMensajeria
-
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
 					('1234', 'Ronnie', 1, 'ronnie@gmail.com', '0414255', 'Ve', 'Mi', 'Caricuao', '04/05/1995', 'F');
@@ -9,7 +6,7 @@ INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_ph
 					('1234', 'superusuario', 1, 'superusuario@gmail.com', '0414255', 'Ve', 'Mi', 'Caracas', '04/08/1991', 'F');
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
-					('1234', 'administrador', 2, 'administrador@gmail.com', '0414255', 'Ve', 'Mi', 'Valencia', '15/08/1987', 'F');
+					('1234', 'administrador', 2, 'administrador@gmail.com', '0414255', 'Ve', 'Mi', 'Valencia', '12/08/1987', 'F');
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
 					('1234', 'creador', 3, 'creador@gmail.com', '0414255', 'Ve', 'Mi', 'Barquisimeto', '04/08/1991', 'F');
@@ -18,7 +15,13 @@ INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_ph
 					('1234', 'aprobador', 4, 'aprobador@gmail.com', '0414255', 'Ve', 'Mi', 'Margarita', '04/08/1981', 'F');
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
-					('1234', 'consultor', 5, 'consultor@gmail.com', '0414255', 'Ve', 'Mi', 'Caracas', '17/03/1985', 'F');
+					('1234', 'consultor', 5, 'consultor@gmail.com', '0414255', 'Ve', 'Mi', 'Caracas', '12/03/1985', 'F');
+
+INSERT INTO public.role(rol_name) values('Superusuario');
+INSERT INTO public.role(rol_name) values('Administrador');
+INSERT INTO public.role(rol_name) values('Creador');
+INSERT INTO public.role(rol_name) values('Aprobador');
+INSERT INTO public.role(rol_name) values('Consultor');
 
 INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
 VALUES ('Movistar', 13.4, 25, 'oqiwueyeiu',TRUE);
