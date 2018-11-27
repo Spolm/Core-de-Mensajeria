@@ -12,7 +12,7 @@ import { CreateCompanyComponent } from './create-company/create-company.componen
     CompanyRoutingModule,
     PageHeaderModule
   ],
-  exports: [CompanyModule, CompanyComponent],
+  exports: [CompanyComponent],
   declarations: [CompanyComponent, CreateCompanyComponent]
 })
 export class CompanyModule implements OnInit {

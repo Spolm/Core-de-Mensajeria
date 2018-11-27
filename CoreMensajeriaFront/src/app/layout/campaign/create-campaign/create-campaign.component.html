@@ -2,25 +2,25 @@
 
 <div class="container-fluid">
 <form>
-  <div class="form-row">
-    <div class="col-4">
+  <div class="row">
+    <div class="col-5">
       <div class="form-group">
         <label for="formMessage">Nombre de la Campaña</label>
         <input class="form-control" placeholder="Nombre">
       </div>
       <div class="form-group">
         <label for="formMessage">Descripción de la Campaña</label>
-        <input class="form-control" placeholder="Descripción">
-      </div>
-      <div class="form-group">
-        <label for="formMessage">Fecha de Inicio de la Campaña</label>
-        <input class="form-control" placeholder="Fecha Inicio DD/MM/YYYY">
+        <textarea class="form-control" id="formDescription" rows="5" placeholder="Descripción"></textarea>
       </div>
     </div>
-    <div class="col-4">
+    <div class="col-5">
+        <div class="form-group">
+            <label for="formMessage">Fecha de Inicio de la Campaña</label>
+            <input class="form-control" type="date">
+          </div>
         <div class="form-group">
             <label for="formMessage">Fecha de finalización de la Campaña</label>
-            <input class="form-control" placeholder="Fecha Fin DD/MM/YYYY">
+            <input type="date" class="form-control">
           </div>
           <div class="form-group">
               <label for="formMessage">Compañia</label>
@@ -30,17 +30,14 @@
             </div>
     </div>
   </div>
-  <div id="test" class="form-group">
-    testing this
-  </div>
-
-  <div>
-    test 1
+  <div class="row">
+    <div class="col-5">
+      <button type="button" class="btn btn-success m-1 col-12">Crear</button>
+    </div>
+    <div class="col-5">
+        <button type="button" class="btn btn-danger m-1 col-12" routerLink="/campaigns">Cancelar</button>
+    </div>  
+      
   </div>
 </form>
-<div class="d-flex flex-row-reverse">
-  <button type="button" class="btn btn-success m-1 col-3">Crear</button>
-  <button type="button" class="btn btn-danger m-1 col-3" routerLink="/campaigns">Cancelar</button>
-</div>
-
 </div>

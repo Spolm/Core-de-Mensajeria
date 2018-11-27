@@ -31,4 +31,3 @@ export class CreateCampaignComponent implements OnInit {
    }
   }
 
-}
