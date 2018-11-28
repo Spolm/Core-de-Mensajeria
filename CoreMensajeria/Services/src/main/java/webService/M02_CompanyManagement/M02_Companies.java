@@ -5,10 +5,7 @@ import Classes.Sql;
 import Exceptions.CompanyDoesntExistsException;
 import com.google.gson.Gson;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -145,4 +142,40 @@ public class M02_Companies {
         }
         return rb.build();
     }
+
+    //region Cambiar Status Compañia
+    //TODO crear excepcion para este metodo
+    @GET
+    @Path("/update/{companyId}")
+    //@Consumes("application/json")
+    @Produces("text/plain")
+    public Response changeCompanyStatus(@PathParam("companyId") int id) throws CompanyDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        Boolean flag;
+        try {
+            Company co = getDetails(id);
+            co.set_status(!co.get_status());
+            String query = "UPDATE public.company SET" +
+                    " com_status ="+co.get_status()+
+                    " WHERE com_id =?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1,id);
+            ps.executeUpdate();
+            flag = co.get_status();
+            rb.header("Company Status Changed", "Success");
+            rb.tag("application/json");
+            rb.entity(gson.toJson(flag));
+
+        } catch (CompanyDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new CompanyDoesntExistsException(e);
+        }
+        return rb.build();
+    }
+
+    //endregion
+
 }
