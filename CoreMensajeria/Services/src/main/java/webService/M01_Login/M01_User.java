@@ -26,6 +26,29 @@ public class M01_User {
             error = new Error("Error a nivel de base de datos");
             return Response.status(500).entity(error).build();
         } catch (NullPointerException e){
+            error = new Error("No se consiguio el usuario");
+            error.addError("id","No se encontro el usuario deseado");
+            return Response.status(404).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error("Error Interno");
+            error.addError("Excepcion",e.getMessage());
+            return Response.status(500).entity(error).build();
+        }
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetUser(@PathParam("id") int id){
+        Error error;
+        try {
+            return Response.ok(_gson.toJson(_userDAO.findByUsernameId(id))).build();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            error = new Error("Error a nivel de base de datos");
+            return Response.status(500).entity(error).build();
+        } catch (NullPointerException e){
             error = new Error("Las credenciales ingresadas son incorrectas");
             error.addError("credenciales","No se encontro el usuario deseado");
             return Response.status(404).entity(error).build();
