@@ -127,12 +127,11 @@ public class M03_Campaigns {
     //endregion
 
     //region Detalle Campaña
+
     /**
      *
-     * @param id Id de la campaña de la que se desean saber los detalles
-     * @return
-     * @throws CampaignDoesntExistsException exception personalizada que indica si la campaña no existe
-     * en la base de datos
+     * @param id recibe el id de la campaña que se desea ver con detalle
+     * @return Response Builder con los detalles de la campaña
      */
     @GET
     @Path("/CampaignDetails")
