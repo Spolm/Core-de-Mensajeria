@@ -1,5 +1,8 @@
-package Classes.M01_Login;
+package M01_Login;
 
+import Classes.M01_Login.LoginIntent;
+import Classes.M01_Login.User;
+import Classes.M01_Login.UserDAO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
