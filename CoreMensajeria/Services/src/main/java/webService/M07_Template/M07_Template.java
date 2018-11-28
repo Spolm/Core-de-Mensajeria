@@ -47,28 +47,16 @@ public class M07_Template {
     public Boolean postTemplateStatus(@PathParam("templateId") int id){
         Boolean flag = false;
         TemplateHandler templateHandler = new TemplateHandler();
-        flag = templateHandler.postTemplateStatus(id);
+        flag = templateHandler.postTemplateStatusAprobado(id);
         return flag;
     }
 
     @POST
-    @Path("posttemplate")
+    @Path("add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postTemplate(String json){
-        try {
-            JsonParser parser = new JsonParser();
-            JsonArray gsonArr = parser.parse(json).getAsJsonArray();
-            JsonObject gsonObj = gsonArr.get(0).getAsJsonObject();
-
-            String name = gsonObj.get("name").getAsString();
-            int parameterId = gsonObj.get("parameterId").getAsInt();
-            String text = "name: " + name + " id: " + String.valueOf(parameterId);
-            return Response.ok(gson.toJson(text)).build();
-        }
-        catch (Exception e){
-            System.out.println(e);
-            return null;
-        }
+    public boolean postTemplate(String json){
+        TemplateHandler templateHandler = new TemplateHandler();
+        return templateHandler.postTemplateData(json);
     }
 
 }

@@ -67,4 +67,21 @@ public class MessageHandler {
             return message;
         }
     }
+
+    public static void postMessage(String message, int templateId) {
+        String query = "INSERT INTO public.Message(mes_text,mes_template)" +
+                "VALUES ('" + message + "'," + templateId + ") returning mes_id";
+        sql = new Sql();
+        int messageId;
+        try{
+            ResultSet resultSet = sql.sqlConn(query);
+            if (resultSet.next())
+                messageId=resultSet.getInt("mes_id");
+
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+        }
+    }
 }

@@ -30,6 +30,11 @@ export class TemplateService {
       map(this.extractData));
   }
 
+  getTemplate(templateId: number){
+      return this.http.get(endpoint + 'templates/'+templateId.toString()).pipe(
+          map(this.extractData));
+  }
+
   getParameters(companyId:number){
       return this.http.get(endpoint + 'parameters/get?companyId=' + companyId.toString()).pipe(
       map(this.extractData));

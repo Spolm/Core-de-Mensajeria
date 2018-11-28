@@ -14,7 +14,12 @@ import Classes.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.TemplateDoesntExistsException;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import javax.ws.rs.core.Response;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -214,10 +219,21 @@ public class TemplateHandler {
         }
     }
 
-    public Boolean postTemplateStatus(int id){
+    public Boolean postTemplateStatusAprobado(int id){
         Boolean flag=false;
         Connection con = Sql.getConInstance();
         String query="insert into public.template_status (ts_date,ts_template,ts_status) values (CURRENT_TIMESTAMP,"+id+",(select sta_id from public.status where sta_name='Aprobado'))";
+        return updateStatus(flag, con, query);
+    }
+
+    public Boolean postTemplateStatusNoAprobado(int id){
+        Boolean flag=false;
+        Connection con = Sql.getConInstance();
+        String query="insert into public.template_status (ts_date,ts_template,ts_status) values (CURRENT_TIMESTAMP,"+id+",(select sta_id from public.status where sta_name='No Aprobado'))";
+        return updateStatus(flag, con, query);
+    }
+
+    private Boolean updateStatus(Boolean flag, Connection con, String query) {
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.executeUpdate();
@@ -234,6 +250,75 @@ public class TemplateHandler {
                 Sql.bdClose(con);
             }
             return flag;
+        }
+    }
+
+    public boolean postTemplateData(String json){
+        try {
+            //recibimos el objeto json
+            JsonParser parser = new JsonParser();
+            JsonObject gsonObj = parser.parse(json).getAsJsonObject();
+            //hay que extraer campaña y aplicacion, parametros por defecto
+            //se crea el template y se retorna su id
+            int templateId = postTemplate(13,2);
+            //se establece el template  como no aprobado
+            postTemplateStatusNoAprobado(templateId);
+            //obtenemos el valor del mensaje, a falta de id's de parametros
+            String message = gsonObj.get("messagge").getAsString();
+            MessageHandler.postMessage(message,templateId);
+
+            //obtenemos los valores de los canales e integradores
+            JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
+            postChannelIntegrator(channelIntegrator,templateId);
+
+            return true;
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+    private void postChannelIntegrator(JsonArray channelIntegratorList,int templateId) {
+        String query= "";
+        JsonObject channelIntegrator;
+        int channel;
+        int integrator;
+        sql = new Sql();
+        try {
+            for (JsonElement list : channelIntegratorList){
+                channelIntegrator = list.getAsJsonObject();
+                channel = channelIntegrator.get("channel").getAsInt();
+                integrator = channelIntegrator.get("integratorNumber").getAsInt();
+                query = query + "insert into public.template_channel_integrator (tci_template_id,tci_ci_id) " +
+                        "values (" + templateId + ",(select ci_id from public.channel_integrator " +
+                        "where ci_channel_id = " + channel + " and ci_integrator_id = " + integrator +"));";
+            }
+            sql.sqlNoReturn(query);
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+        }
+    }
+
+    public int postTemplate(int campaignId,int applicationId){
+        String query = "INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id) \n" +
+                "VALUES (CURRENT_DATE," + campaignId + "," + applicationId + ") RETURNING tem_id";
+        int templateId=0;
+        try{
+            ResultSet resultSet = sql.sqlConn(query);
+            if (resultSet.next())
+                templateId=resultSet.getInt("tem_id");
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+            return templateId;
         }
     }
 }

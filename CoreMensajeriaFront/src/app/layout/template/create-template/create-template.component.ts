@@ -2,12 +2,21 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { TemplateService } from '../template.service';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+
+const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/';
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+    })};
 
 @Component({
   selector: 'app-create-template',
   templateUrl: './create-template.component.html',
   styleUrls: ['./create-template.component.scss']
 })
+
+
 export class CreateTemplateComponent {
 
   parameters: any = [];
@@ -16,13 +25,13 @@ export class CreateTemplateComponent {
   parametersOrder: any = [];
   channel_integrator: any = [];
 
-  constructor(private templateService: TemplateService, @Inject(DOCUMENT) document) {
+  constructor(private templateService: TemplateService, @Inject(DOCUMENT) document, private http: HttpClient) {
     this.getParameters();
     this.getChannels();
   }
 
   getParameters() {
-    this.templateService.getParameters().subscribe(data => {
+    this.templateService.getParameters(1).subscribe(data => {
       this.parameters = data;
     });
   }
@@ -58,5 +67,13 @@ export class CreateTemplateComponent {
     let endMessage = message.slice(pointer + parameter.length + 8, message.length);
     this.formMessage = startMessage + endMessage;
     this.parametersOrder.splice(this.parametersOrder.indexOf(parameter), 1);
+  }
+
+  postTemplate() {
+      const json = {
+          'messagge': this.formMessage.valueOf(),
+          'channel_integrator': this.channel_integrator.valueOf()
+      };
+      this.http.post(endpoint + 'templates/add', json).subscribe();
   }
 }
