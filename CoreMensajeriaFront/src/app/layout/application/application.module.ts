@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ApplicationComponent } from './application.component';
 import { ApplicationRoutingModule } from './application-routing.module';
 import { PageHeaderModule } from './../../shared';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   imports: [
     CommonModule, 
     ApplicationRoutingModule,
-    PageHeaderModule
+    PageHeaderModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [ApplicationComponent]
 })
