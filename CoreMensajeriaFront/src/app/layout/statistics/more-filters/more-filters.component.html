@@ -1,8 +1,13 @@
 <h2 mat-dialog-title>Más filtros</h2>
-<button mat-raised-button mat-dialog-close class="close-button">Close</button>
+<button mat-raised-button mat-dialog-close class="btn btn-danger close-button">
+    Cerrar
+</button>
 <div class="container">
     <div class="row">
-        <div class="col-md-3 dropdown" *ngIf="companiesDropdown.length > 0">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="companiesDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Compañía'"
                 [data]="companiesDropdown"
@@ -16,7 +21,10 @@
             </ng-multiselect-dropdown>
         </div>
 
-        <div class="col-md-3 dropdown" *ngIf="campaignsDropdown.length > 0">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="campaignsDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Campaña'"
                 [data]="campaignsDropdown"
@@ -30,7 +38,10 @@
             </ng-multiselect-dropdown>
         </div>
 
-        <div class="col-md-3 dropdown" *ngIf="channelsDropdown.length > 0">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="channelsDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Canal'"
                 [data]="channelsDropdown"
@@ -40,6 +51,108 @@
                 (onDeSelect)="channelDeselected($event)"
                 (onSelectAll)="selectAllChannels()"
                 (onDeSelectAll)="deselectAllChannels()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-md-3 col-sm-6 dropdown">
+            <ng-multiselect-dropdown
+                [placeholder]="'Integrador'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-6 dropdown">
+            <ng-multiselect-dropdown
+                [placeholder]="'Año'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-md-3 col-sm-6 dropdown">
+            <ng-multiselect-dropdown
+                [placeholder]="'Mes'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-md-3 col-sm-6 dropdown">
+            <ng-multiselect-dropdown
+                [placeholder]="'Día'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-md-3 col-sm-6 dropdown">
+            <ng-multiselect-dropdown
+                [placeholder]="'Semana'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-6 dropdown">
+            <ng-multiselect-dropdown
+                [placeholder]="'Día de semana'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-md-3 col-sm-6 dropdown">
+            <ng-multiselect-dropdown
+                [placeholder]="'Cuarto de año'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
             >
             </ng-multiselect-dropdown>
         </div>

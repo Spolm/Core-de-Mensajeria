@@ -9,7 +9,6 @@ import { HttpParams } from "@angular/common/http";
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
 import { MoreFiltersComponent } from "./more-filters/more-filters.component";
 
-
 interface myData {
     obj: Object;
 }
@@ -74,13 +73,44 @@ export class StatisticsComponent implements OnInit {
         private toastr: ToastrService,
         public dialog: MatDialog
     ) {
-        this.datos = [ "Cantidad de mensajes enviados por Compañias",
-                       "Cantidad de mensajes enviados por Campañas",
-                       "Cantidad de mensajes enviados por Canales"
-                     ];
+        this.datos = [
+            "Cantidad de mensajes enviados por Compañias",
+            "Cantidad de mensajes enviados por Campañas",
+            "Cantidad de mensajes enviados por Canales"
+        ];
     }
 
     ngOnInit() {
+        const graph = [
+            {
+                x: ["Año 2016", "Año 2017", "Año 2018"],
+                y: [11, 8, 10],
+                type: "line"
+            }
+        ];
+        const linediv = document.getElementById("time-line-chart");
+        const layout = {
+            height: 300,
+            margin: 0,
+            title: "Línea de tiempo"
+        };
+        Plotly.newPlot(linediv, graph, layout);
+
+        const graph2 = [
+            {
+                x: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"],
+                y: [11, 8, 10, 21, 12, 54, 65, 23, 12, 65, 34],
+                type: "line"
+            }
+        ];
+        const linediv2 = document.getElementById("time-line-chart");
+        const layout2 = {
+            height: 300,
+            margin: 0,
+            title: "Línea de tiempo"
+        };
+        Plotly.newPlot(linediv, graph, layout);
+
         this.Servicio.getAllCompanies().subscribe(data => {
             this.insertIntoDropdown(ObjectType.company, data);
         });
@@ -178,19 +208,20 @@ export class StatisticsComponent implements OnInit {
 
     capturarDate() {
         if (
-            (this.opcionDateSleccionado != null &&
-            this.opcionDateSleccionado2 != null ) 
-            && (this.opcionDateSleccionado < this.opcionDateSleccionado2)         
-           ) {
-            this.Date1Capturado = "?paramDate1=" + this.opcionDateSleccionado.toString();
-            this.Date2Capturado = "?paramDate2=" + this.opcionDateSleccionado2.toString();
-            this.paramType      =  "paramType=" + this.verSeleccion;
+            this.opcionDateSleccionado != null &&
+            this.opcionDateSleccionado2 != null &&
+            this.opcionDateSleccionado < this.opcionDateSleccionado2
+        ) {
+            this.Date1Capturado =
+                "?paramDate1=" + this.opcionDateSleccionado.toString();
+            this.Date2Capturado =
+                "?paramDate2=" + this.opcionDateSleccionado2.toString();
+            this.paramType = "paramType=" + this.verSeleccion;
             console.log(
                 "FechaCapturada",
-                "Dates1: " + this.Date1Capturado ,
-                "Dates2: " + this.Date2Capturado ,
-                + " " +
-                new Date(this.opcionDateSleccionado).getUTCDate(),
+                "Dates1: " + this.Date1Capturado,
+                "Dates2: " + this.Date2Capturado,
+                +" " + new Date(this.opcionDateSleccionado).getUTCDate(),
                 new Date(this.opcionDateSleccionado).getUTCMonth(),
                 new Date(this.opcionDateSleccionado).getFullYear(),
                 new Date(this.opcionDateSleccionado2).getUTCDate(),
@@ -198,7 +229,7 @@ export class StatisticsComponent implements OnInit {
                 new Date(this.opcionDateSleccionado2).getFullYear()
             );
             this.Servicio.getStatisticsData4(
-                    this.Date1Capturado +
+                this.Date1Capturado +
                     "&" +
                     this.Date2Capturado +
                     "&" +
@@ -206,28 +237,29 @@ export class StatisticsComponent implements OnInit {
             ).subscribe(data => {
                 console.log(data);
             });
-        } else if ( (this.opcionDateSleccionado == null &&
-            this.opcionDateSleccionado2 == null ) || ((this.opcionDateSleccionado.toString().length == 0 &&
-                this.opcionDateSleccionado2.toString().length == 0)) ){ 
-            console.log("hols"+this.opcionDateSleccionado.toString().length);
-          
+        } else if (
+            (this.opcionDateSleccionado == null &&
+                this.opcionDateSleccionado2 == null) ||
+            (this.opcionDateSleccionado.toString().length == 0 &&
+                this.opcionDateSleccionado2.toString().length == 0)
+        ) {
+            console.log("hols" + this.opcionDateSleccionado.toString().length);
+
             this.Date1Capturado = "?paramDate1=";
-            this.Date2Capturado = "?paramDate2=" ;
-            this.paramType      =  "paramType=" + this.verSeleccion; 
+            this.Date2Capturado = "?paramDate2=";
+            this.paramType = "paramType=" + this.verSeleccion;
             this.Servicio.getStatisticsData4(
                 this.Date1Capturado +
-                "&" +
-                this.Date2Capturado +
-                "&" +
-                this.paramType
-        ).subscribe(data => {
-            console.log(data);
-        });
-    }
-        else  {
-        this.toastr.error("Error en las fechas");}
-
-
+                    "&" +
+                    this.Date2Capturado +
+                    "&" +
+                    this.paramType
+            ).subscribe(data => {
+                console.log(data);
+            });
+        } else {
+            this.toastr.error("Error en las fechas");
+        }
     }
 
     DoGraficas() {
@@ -250,11 +282,11 @@ export class StatisticsComponent implements OnInit {
             })*/
 
         this.Servicio.getStatisticsData4(
-                    this.Date1Capturado +
-                    "&" +
-                    this.Date2Capturado +
-                    "&" +
-                    this.paramType
+            this.Date1Capturado +
+                "&" +
+                this.Date2Capturado +
+                "&" +
+                this.paramType
         ).subscribe(data => {
             this.json2 = data;
             this.chart2(this.json2);
@@ -262,11 +294,11 @@ export class StatisticsComponent implements OnInit {
         });
 
         this.Servicio.getStatisticsData5(
-                    this.Date1Capturado +
-                    "&" +
-                    this.Date2Capturado +
-                    "&" +
-                    this.paramType
+            this.Date1Capturado +
+                "&" +
+                this.Date2Capturado +
+                "&" +
+                this.paramType
         ).subscribe(data => {
             this.json2 = data;
             this.chart(this.json2);
@@ -274,11 +306,11 @@ export class StatisticsComponent implements OnInit {
         });
 
         this.Servicio.getStatisticsData6(
-                   this.Date1Capturado +
-                    "&" +
-                    this.Date2Capturado +
-                    "&" +
-                    this.paramType
+            this.Date1Capturado +
+                "&" +
+                this.Date2Capturado +
+                "&" +
+                this.paramType
         ).subscribe(data => {
             this.json2 = data;
             this.chart3(this.json2);

@@ -28,6 +28,7 @@
         "@ng-bootstrap/ng-bootstrap": "^2.0.0",
         "@ngx-translate/core": "^10.0.1",
         "@ngx-translate/http-loader": "^3.0.1",
+        "@swimlane/ngx-charts": "^10.0.0",
         "angular-plotly.js": "^0.1.15",
         "chart.js": "^2.7.2",
         "core-js": "^2.5.5",

@@ -10,7 +10,7 @@ import { StatisticsServiceService } from "../statistics-service.service";
 export class MoreFiltersComponent implements OnInit {
     companiesDropdown = [];
     companiesDropdownSettings = {};
-    selectedCompaniesIds: Number[] = [];
+    selectedCompaniesIds = [];
     selectedCompanies = [];
 
     campaignsDropdown = [];
