@@ -25,7 +25,7 @@ export class MoreFiltersComponent implements OnInit {
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
-        private Servicio: StatisticsServiceService
+        private statisticsService: StatisticsServiceService
     ) {
         this.initializeDataFromMainFilters(data);
     }
