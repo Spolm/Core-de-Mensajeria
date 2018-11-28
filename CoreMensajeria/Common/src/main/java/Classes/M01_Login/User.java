@@ -8,7 +8,7 @@ public class User {
     private int _idUser;
     private String _passwordUser;
     private String _usernameUser;
-    private int _typeUser;
+    private int _typeUser; //1. superusuario, 2. administrador, 3. creador,4. aprobador, 5. consultor
     private String _emailUser;
     private String _phoneUser;
     private Date _dateOfBirthUser;
@@ -16,8 +16,10 @@ public class User {
     private String _addressUser;
     private String _genderUser;
     private String _cityUser;
+    private Integer _blockedUser;
+    private Integer _remainingAttemptsUser;
 
-    public User(int _idUser,String _passwordUser, String _usernameUser, int _typeUser, String _emailUser, String _phoneUser, Date _dayOfBirthUser, String _countryUser, String _addressUser, String _genreUser, String _cityUser) {
+        public User(int _idUser,String _passwordUser, String _usernameUser, int _typeUser, String _emailUser, String _phoneUser, Date _dayOfBirthUser, String _countryUser, String _addressUser, String _genreUser, String _cityUser) {
         this._idUser = _idUser;
         this._passwordUser = _passwordUser;
         this._usernameUser = _usernameUser;
@@ -34,7 +36,6 @@ public class User {
     public User() {
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,7 +43,6 @@ public class User {
         User user = (User) o;
         return _idUser == user._idUser &&
                 _typeUser == user._typeUser &&
-                Objects.equals(_passwordUser, user._passwordUser) &&
                 Objects.equals(_usernameUser, user._usernameUser) &&
                 Objects.equals(_emailUser, user._emailUser) &&
                 Objects.equals(_phoneUser, user._phoneUser) &&
@@ -51,6 +51,7 @@ public class User {
                 Objects.equals(_addressUser, user._addressUser) &&
                 Objects.equals(_genderUser, user._genderUser) &&
                 Objects.equals(_cityUser, user._cityUser);
+
     }
 
     @Override
@@ -144,5 +145,21 @@ public class User {
 
     public void set_cityUser(String _cityUser) {
         this._cityUser = _cityUser;
+    }
+
+    public Integer get_blockedUser() {
+        return _blockedUser;
+    }
+
+    public void set_blockedUser(Integer _blockedUser) {
+        this._blockedUser = _blockedUser;
+    }
+
+    public Integer get_remainingAttemptsUser() {
+        return _remainingAttemptsUser;
+    }
+
+    public void set_remainingAttemptsUser(Integer _remainingAttemptsUser) {
+        this._remainingAttemptsUser = _remainingAttemptsUser;
     }
 }

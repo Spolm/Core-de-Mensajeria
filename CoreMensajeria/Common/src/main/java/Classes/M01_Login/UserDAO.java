@@ -13,7 +13,7 @@ public class UserDAO {
     final String QUERY_DELETE = "DELETE FROM public.user where use_id=?";
     final String QUERY_SELECT = "SELECT * FROM public.user";
     final String QUERY_UPDATE = "UPDATE FROM public.USER SET" +
-            "use_password=? AND use_username=? use_type AND use_email=? use_phone=? AND use_country=? AND" +
+            "use_password=? AND use_username=? AND use_type AND use_email=? AND use_phone=? AND use_country=? AND" +
             "use_city=? AND use_address=? AND use_date_of_birth=? AND use_gender=? AND WHERE use_id=?" +
             "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     final String QUERY_INSERT = "INSERT INTO public.USER " +
@@ -50,10 +50,13 @@ public class UserDAO {
         PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_BY_ID);
         preparedStatement.setInt(1, id);
         _result = preparedStatement.executeQuery();
-        _user = new User();
+        _user = null;
         while (_result.next()) {
+            _user = new User();
             setUserParams(_result, _user);
+            _user.set_passwordUser("");
         }
+
         return _user;
     }
 
@@ -67,8 +70,11 @@ public class UserDAO {
         while (_result.next()) {
             _user = new User();
             setUserParams(_result, _user);
+            _user.set_passwordUser("");
             _userList.add(_user);
+
         }
+
         return _userList;
     }
 
@@ -109,7 +115,7 @@ public class UserDAO {
         user.set_addressUser(result.getString("use_address"));
         user.set_dateOfBirthUser(result.getDate("use_date_of_birth"));
         user.set_genderUser(result.getString("use_gender"));
+        user.set_blockedUser(result.getInt("use_blocked"));
+        user.set_remainingAttemptsUser(result.getInt("use_remaining_attempts"));
     }
-
-
 }
