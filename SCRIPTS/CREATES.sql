@@ -25,7 +25,7 @@ create table public.Privilege
 (
     pri_id serial primary key,
     pri_code varchar (18) not null,
-    pri_action varchar(25)
+    pri_action varchar(50)
 );
 
 create table public.Rol_Pri(
