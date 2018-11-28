@@ -102,7 +102,8 @@ export class StatisticsComponent implements OnInit {
                         {
                             data: [11, 8, 10],
                             borderColor: "#3cba9f",
-                            fill: false
+                            fill: true,
+                            backgroundColor: "rgba(60,186,159, 0.5)"
                         }
                     ]
                 },
