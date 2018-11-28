@@ -2,13 +2,6 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { TemplateService } from '../template.service';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-
-const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/';
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-    })};
 
 @Component({
   selector: 'app-create-template',
@@ -25,7 +18,7 @@ export class CreateTemplateComponent {
   parametersOrder: any = [];
   channel_integrator: any = [];
 
-  constructor(private templateService: TemplateService, @Inject(DOCUMENT) document, private http: HttpClient) {
+  constructor(private templateService: TemplateService, @Inject(DOCUMENT) document) {
     this.getParameters();
     this.getChannels();
   }
@@ -70,10 +63,6 @@ export class CreateTemplateComponent {
   }
 
   postTemplate() {
-      const json = {
-          'messagge': this.formMessage.valueOf(),
-          'channel_integrator': this.channel_integrator.valueOf()
-      };
-      this.http.post(endpoint + 'templates/add', json).subscribe();
+      this.templateService.postTemplate(this.formMessage,this.channel_integrator)
   }
 }

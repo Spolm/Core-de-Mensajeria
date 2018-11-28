@@ -71,4 +71,12 @@ export class TemplateService {
       };
       this.http.post(endpoint + 'parameters/add', body.toString(), options).subscribe();
   }
+
+    postTemplate(formMessage: string, channel_integrator: any[]) {
+        const json = {
+            'messagge': formMessage.valueOf(),
+            'channel_integrator': channel_integrator.valueOf()
+        };
+        this.http.post(endpoint + 'templates/add', json).subscribe();
+    }
 }

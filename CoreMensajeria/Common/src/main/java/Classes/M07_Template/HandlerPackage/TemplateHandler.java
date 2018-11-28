@@ -219,21 +219,10 @@ public class TemplateHandler {
         }
     }
 
-    public Boolean postTemplateStatusAprobado(int id){
+    public Boolean postTemplateStatus(int id,String statusName){
         Boolean flag=false;
         Connection con = Sql.getConInstance();
-        String query="insert into public.template_status (ts_date,ts_template,ts_status) values (CURRENT_TIMESTAMP,"+id+",(select sta_id from public.status where sta_name='Aprobado'))";
-        return updateStatus(flag, con, query);
-    }
-
-    public Boolean postTemplateStatusNoAprobado(int id){
-        Boolean flag=false;
-        Connection con = Sql.getConInstance();
-        String query="insert into public.template_status (ts_date,ts_template,ts_status) values (CURRENT_TIMESTAMP,"+id+",(select sta_id from public.status where sta_name='No Aprobado'))";
-        return updateStatus(flag, con, query);
-    }
-
-    private Boolean updateStatus(Boolean flag, Connection con, String query) {
+        String query="insert into public.template_status (ts_date,ts_template,ts_status) values (CURRENT_TIMESTAMP,"+id+",(select sta_id from public.status where sta_name='" + statusName +"'))";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.executeUpdate();
@@ -262,7 +251,7 @@ public class TemplateHandler {
             //se crea el template y se retorna su id
             int templateId = postTemplate(13,2);
             //se establece el template  como no aprobado
-            postTemplateStatusNoAprobado(templateId);
+            postTemplateStatus(templateId,"No Aprobado");
             //obtenemos el valor del mensaje, a falta de id's de parametros
             String message = gsonObj.get("messagge").getAsString();
             MessageHandler.postMessage(message,templateId);

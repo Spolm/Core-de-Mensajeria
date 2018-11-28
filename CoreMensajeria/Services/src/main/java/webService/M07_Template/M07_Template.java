@@ -47,7 +47,7 @@ public class M07_Template {
     public Boolean postTemplateStatus(@PathParam("templateId") int id){
         Boolean flag = false;
         TemplateHandler templateHandler = new TemplateHandler();
-        flag = templateHandler.postTemplateStatusAprobado(id);
+        flag = templateHandler.postTemplateStatus(id,"Aprobado");
         return flag;
     }
 
