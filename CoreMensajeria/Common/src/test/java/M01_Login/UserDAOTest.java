@@ -5,13 +5,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserDAOTest {
     private LoginIntent _loginIntent;
     private User _user;
     private User _newUser;
+    private ArrayList<User> _userList;
     private UserDAO _userDAO = new UserDAO();
 
     private void createLoginIntent(){
@@ -23,7 +28,7 @@ public class UserDAOTest {
     private  void createUser(){
         _user = new User();
         _user.set_usernameUser("prueba");
-        _user.set_passwordUser("Al28*/12");
+        //_user.set_passwordUser("Al28*/12");
         _user.set_dateOfBirthUser(Date.valueOf("2000-11-01"));
         _user.set_addressUser("kjsaksjd");
         _user.set_cityUser("ksajdl");
@@ -61,6 +66,47 @@ public class UserDAOTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void findByUsernameIdTest(){
+        try{
+            _newUser = _userDAO.findByUsernameId(_user.get_idUser());
+            assertEquals(_user,_newUser);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void findAllTest(){
+        try{
+            ArrayList list = _userDAO.findAll();
+            assertTrue(list.size()>=1);
+        }
+        catch (SQLException e){
+
+        }
+    }
+
+    @Test
+    public void saveUserTest(){
+        try {
+            User user = _userDAO.findByUsernameId(_user.get_idUser());
+            assertEquals(user,_user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void deleteUserTest(){
+            try {
+                _userDAO.deleteUser(_user);
+               assertNull(_userDAO.findByUsernameId(_user.get_idUser()));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
     }
 
 }

@@ -15,6 +15,11 @@ create table public.User
     use_gender char
 );
 
+
+ALTER TABLE User
+ADD COLUMN use_blocked integer DEFAULT 0 NOT NULL,
+ADD CoLUMN use_remaining_attempts integer DEFAULT 3 NOT NULL;
+
 create table public.Role
 (
     rol_id serial primary key,
