@@ -33,19 +33,25 @@ enum EntityType {
     styleUrls: ["./statistics.component.scss"]
 })
 export class StatisticsComponent implements OnInit {
-    // Chats elements in html
+    /* =================================
+           Charts elements from html
+    ==================================== */
     @ViewChild("timeLineChart") canvas: ElementRef;
     @ViewChild("companiesBarChartElement") companiesBarChartElement: ElementRef;
     @ViewChild("campaignsBarChartElement") campaignsBarChartElement: ElementRef;
     @ViewChild("channelsPieChartElement") channelsPieChartElement: ElementRef;
 
-    // Charts
+    /* ==============
+           Charts
+    ================= */
     timeLineChart = [];
     companiesBarChart = [];
     campaignsBarChart = [];
     channelsPieChart = [];
 
-    // Filters
+    /* ==========================
+           Filter dropdowns
+    ============================= */
     companiesDropdown = [];
     companiesDropdownSettings = {};
     selectedCompaniesIds: Number[] = [];
@@ -70,24 +76,6 @@ export class StatisticsComponent implements OnInit {
     opcionDateSleccionado: Date;
     opcionDateSleccionado2: Date;
     paramType: string;
-
-    // public graph = {
-    //     data: [],
-    //     layout: {
-    //         width: 500,
-    //         height: 300,
-    //         title: "Cantidad de mensajes enviados por canal"
-    //     }
-    // };
-
-    // public graph2 = {
-    //     data: [{ x: ["SMS", "Email"], y: [400, 100], type: "pie" }],
-    //     layout: {
-    //         width: 500,
-    //         height: 300,
-    //         title: "Cantidad de mensajes enviados por canal"
-    //     }
-    // };
 
     constructor(
         private statisticsService: StatisticsServiceService,
@@ -346,22 +334,6 @@ export class StatisticsComponent implements OnInit {
                     this.channelsPieChartElement
                 );
             });
-
-        // this.statisticsService.getStatisticsData1().subscribe(data => {
-        //  this.json2 = data
-        // this.chart(this.json2)
-        // console.log("Data1:", this.json2)
-        // })
-        // this.statisticsService.getStatisticsData2().subscribe(data => {
-        //   this.json2 = data
-        //   this.chart2(this.json2)
-        //  console.log("Data2:", this.json2)
-        //  })
-        // this.statisticsService.getStatisticsData3().subscribe(data => {
-        //   this.json2 = data
-        //    this.chart3(this.json2)
-        //    console.log("Data3:", this.json2)
-        //  })
     }
 
     private setupCompaniesDropdownSettings() {
