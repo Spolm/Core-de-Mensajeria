@@ -108,6 +108,10 @@ export class StatisticsComponent implements OnInit {
                     ]
                 },
                 options: {
+                    title: {
+                        display: true,
+                        text: "Línea de tiempo"
+                    },
                     responsive: true,
                     legend: {
                         display: false
