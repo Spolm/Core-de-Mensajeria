@@ -97,10 +97,14 @@ export class StatisticsComponent implements OnInit {
             {
                 type: "line",
                 data: {
-                    labels: ["2016", "2017", "2018"],
+                    labels: ["2015", "2016", "2017", "2018", "2019"],
                     datasets: [
                         {
-                            data: [11, 8, 10],
+                            data: [
+                                { x: new Date("2015-10-5"), y: 10 },
+                                { x: new Date("2017-12-12"), y: 20 },
+                                { x: new Date("2018-11-09"), y: 15 }
+                            ],
                             borderColor: "#3cba9f",
                             fill: true,
                             backgroundColor: "rgba(60,186,159, 0.5)"
@@ -119,7 +123,11 @@ export class StatisticsComponent implements OnInit {
                     scales: {
                         xAxes: [
                             {
-                                display: true
+                                display: true,
+                                type: "time",
+                                time: {
+                                    unit: "month"
+                                }
                             }
                         ],
                         yAxes: [
