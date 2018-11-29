@@ -62,6 +62,8 @@ INSERT INTO public.role(rol_name) values('Creador');
 INSERT INTO public.role(rol_name) values('Aprobador');
 INSERT INTO public.role(rol_name) values('Consultor');
 
+INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 1, pri_id FROM public.Privilege;
+
 INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
 VALUES ('Movistar', 13.4, 25, 'oqiwueyeiu',TRUE);
 
