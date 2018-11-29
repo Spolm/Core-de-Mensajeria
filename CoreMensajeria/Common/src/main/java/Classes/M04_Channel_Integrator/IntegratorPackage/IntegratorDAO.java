@@ -19,9 +19,22 @@ public class IntegratorDAO {
     private ArrayList<Integrator> _integratorList;
     private ResultSet _result;
 
-    public IntegratorDAO(){
+    /**
+     * Constructor que se encarga de realizar la conexion
+     * a la base de datos
+     * @see Connection
+     */
+    public IntegratorDAO() {
         _conn = Sql.getConInstance();
     }
+
+    /**
+     * Retorna una lista de Integradores
+     * Este metodo retorna una lista de integradores, en caso de no existir
+     * el archivo se encontrara en blanco.
+     * @return      Lista de Integradores
+     * @see         Integrator
+     */
 
     public ArrayList<Integrator> listIntegrator() throws DatabaseConnectionProblemException {
         try {
@@ -43,7 +56,7 @@ public class IntegratorDAO {
     public Integrator getIntegrator(ResultSet rs) throws SQLException {
         Integrator integrator = IntegratorFactory.getIntegrator(rs.getString("int_name"),
                 rs.getInt("int_id"), rs.getString("int_name"), rs.getFloat("int_messageCost"),
-                rs.getInt("int_threadCapacity"), rs.getString("int_tokenApi"),rs.getBoolean("int_enabled"));
+                rs.getInt("int_threadCapacity"), rs.getString("int_tokenApi"), rs.getBoolean("int_enabled"));
         return integrator;
     }
 }
