@@ -54,6 +54,33 @@ public class M02_Companies {
 
 
 
+    public ArrayList<Company> companyList(int id) throws CompanyDoesntExistsException {
+        String select = "SELECT * FROM company where com_user_id = ?";
+        ArrayList<Company> coList= new ArrayList<>();
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(select);
+            ps.setInt(1, id);
+            ResultSet result = ps.executeQuery();
+            while(result.next()){
+                Company co = new Company();
+                co.set_idCompany(result.getInt("com_id"));
+                co.set_name(result.getString("com_name"));
+                co.set_desc(result.getString("com_description"));
+                co.set_status(result.getBoolean("com_status"));
+                coList.add(co);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new CompanyDoesntExistsException(e);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return coList;
+    }
+
 
     //region API Detalles Compañia
 
@@ -109,39 +136,24 @@ public class M02_Companies {
     @Produces("application/json")
 
 
-    public Response getCompanies(@QueryParam("id") int id) throws  SQLException {
+    public Response getCompanies(@QueryParam("id") int id) throws  CompanyDoesntExistsException {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        //Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        String select = "SELECT * FROM company where com_user_id = ?";
-        ArrayList<Company> companyList= new ArrayList<>();
-
         try {
-
-            PreparedStatement ps = conn.prepareStatement(select);
-            ps.setInt(1, id);
-            ResultSet result = ps.executeQuery();
-            //Statement st = conn.createStatement();
-            //ResultSet result =  st.executeQuery(select);
-
-            while(result.next()){
-                Company co = new Company();
-                co.set_idCompany(result.getInt("com_id"));
-                co.set_name(result.getString("com_name"));
-                co.set_desc(result.getString("com_description"));
-                co.set_status(result.getBoolean("com_status"));
-                companyList.add(co);
-            }
+            ArrayList<Company> companyList= companyList(id);
             rb.entity(gson.toJson(companyList));
         }
-        catch (SQLException e) {
+        catch (CompanyDoesntExistsException e) {
             e.printStackTrace();
-            throw new SQLException(select);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
         finally {
             Sql.bdClose(conn);
         }
         return rb.build();
     }
+
 
     //region Cambiar Status Compañia
     //TODO crear excepcion para este metodo
