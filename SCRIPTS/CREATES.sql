@@ -16,7 +16,7 @@ create table public.User
 );
 
 
-ALTER TABLE User
+ALTER TABLE public.User
 ADD COLUMN use_blocked integer DEFAULT 0 NOT NULL,
 ADD CoLUMN use_remaining_attempts integer DEFAULT 3 NOT NULL;
 
@@ -30,7 +30,7 @@ create table public.Privilege
 (
     pri_id serial primary key,
     pri_code varchar (18) not null,
-    pri_action varchar(25)
+    pri_action varchar(50)
 );
 
 create table public.Rol_Pri(
