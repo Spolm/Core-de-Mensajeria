@@ -10,7 +10,8 @@ import { Company } from '../../../model/company-model';
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
-  styleUrls: ['./company.component.scss']
+  styleUrls: ['./company.component.scss'],
+  animations: [routerTransition()]
 })
 export class CompanyComponent implements OnInit {
 
