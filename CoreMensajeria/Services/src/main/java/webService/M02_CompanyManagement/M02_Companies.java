@@ -55,11 +55,10 @@ public class M02_Companies {
 
 
     public ArrayList<Company> companyList(int id) throws CompanyDoesntExistsException {
-        String select = "SELECT * FROM company where com_user_id = ?";
         ArrayList<Company> coList= new ArrayList<>();
 
         try {
-            PreparedStatement ps = conn.prepareStatement(select);
+            PreparedStatement ps = conn.prepareCall("{call m02_getcompanies(?)}");
             ps.setInt(1, id);
             ResultSet result = ps.executeQuery();
             while(result.next()){
