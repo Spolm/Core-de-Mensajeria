@@ -23,7 +23,6 @@ public class UserDAO {
 
     private Connection _conn;
     private User _user;
-    private User _newUser;
     private ArrayList<User> _userList;
     private ResultSet _result;
     private ResultSet _generatedKeys;
