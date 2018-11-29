@@ -1,15 +1,24 @@
 <router-outlet></router-outlet>
 <h2 class="text-capitalize main-title">Datos de Plantilla</h2>
-
+<hr>
 <div class="row">
     <div class="col-md-4">
         <p><strong>Identificacion: </strong> {{template.templateId}} </p>
-        <p><strong>Creada por: </strong></p>
-        <p><strong>Status: </strong></p>
-        <p><strong>Fecha de creacion: </strong> {{template.creationDate.}} </p>
+        <p><strong>Creada por: </strong> </p>
+        <p><strong>Status: </strong>
+            <span class="badge badge-success notclickable" *ngIf="template.status.statusName == 'Aprobado'; else elseBlock">
+                Aprobado
+            </span>
+            <ng-template #elseBlock>
+                <span>
+                    <ngbd-modal-approve [templateId]="template.templateId" (spread)="getTemplate()"></ngbd-modal-approve>
+                </span>
+            </ng-template>
+        </p>
+        <p><strong>Fecha de creacion: </strong> {{template.creationDate  | date : date : 'YYYY'}} </p>
     </div>
     <div class="col-md-8">
-        <p><strong>Mensaje:</strong></p>
+        <p><strong>Mensaje:</strong> {{template.message.message}} </p>
         <p></p>
     </div>
 </div>
@@ -26,15 +35,17 @@
                 </tr>
               </thead>
             <tbody>
-                <tr>
+                <tr *ngFor="let channel of template.channels; let i = index">
                     <td class="text-center">
-                        nombre
+                        {{channel.nameChannel}}
                     </td>
                     <td>
-                        Descripcion
+                        {{channel.descriptionChannel}}
                     </td>
                     <td>
-                        Integradores
+                        <div *ngFor="let integrator of channel.integrators; let i = index">
+                            {{integrator.nameIntegrator}}
+                        </div>
                     </td>
                 </tr>
             </tbody>

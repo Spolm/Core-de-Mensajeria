@@ -7,7 +7,7 @@ import { TemplatePageComponent } from './template-page/template-page.component';
 const routes: Routes = [
   { path: '', component: TemplateComponent },
   { path: 'create', component: CreateTemplateComponent },
-  { path: 'info', component: TemplatePageComponent}
+  { path: ':id', component: TemplatePageComponent}
 ];
 
 @NgModule({
