@@ -151,13 +151,13 @@ public class M02_Companies {
     @Produces("text/plain")
     public Response changeCompanyStatus(@PathParam("companyId") int id) throws CompanyDoesntExistsException {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        String query = "UPDATE public.company SET" +
+                    " com_status ="+co.get_status()+
+                    " WHERE com_id =?";
         Boolean flag;
         try {
             Company co = getDetails(id);
             co.set_status(!co.get_status());
-            String query = "UPDATE public.company SET" +
-                    " com_status ="+co.get_status()+
-                    " WHERE com_id =?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1,id);
             ps.executeUpdate();
@@ -176,6 +176,34 @@ public class M02_Companies {
         return rb.build();
     }
 
+    //endregion
+
+    //region Editar Compañia
+
+    @POST
+    @Path("/EditCompany/{idCompany}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response editCompany (@FormParam("nameCompany") String name,@FormParam(descriptionCompany) String description,
+                                 @FormParam("statusCompany") boolean status, @PathParam("idCompany") int id) {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);        
+        String query = "UPDATE public.company SET com_name=?, " 
+            +"com_description=? com_status=? WHERE com_id=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1,"com_name");
+            ps.setString(2,"com_description");
+            ps.setBoolean(3,"com_status");
+            ps.setInt(4,"com_id");
+            ps.executeUpdate();
+            rb.header("Company Edited", "Success");
+            rb.tag("application/json");
+            rb.entity(gson.toJson(co));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
     //endregion
 
 }
