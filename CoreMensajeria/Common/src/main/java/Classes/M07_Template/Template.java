@@ -1,5 +1,6 @@
 package Classes.M07_Template;
 
+import Classes.M01_Login.User;
 import Classes.M03_Campaign.Campaign;
 import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
 import Classes.M06_DataOrigin.Application;
@@ -17,6 +18,7 @@ public class Template {
     private ArrayList<Channel> channels;
     private Campaign campaign;
     private Application application;
+    private User user;
 
     public Template() {}
 
@@ -83,6 +85,14 @@ public class Template {
 
     public void setApplication(Application application) {
         this.application = application;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

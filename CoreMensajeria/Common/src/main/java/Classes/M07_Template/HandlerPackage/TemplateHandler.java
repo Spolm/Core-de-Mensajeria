@@ -1,5 +1,6 @@
 package Classes.M07_Template.HandlerPackage;
 
+import Classes.M01_Login.UserDAO;
 import Classes.M03_Campaign.Campaign;
 //import webService.M03_CampaingManagement.M03_Campaigns;
 import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
@@ -74,7 +75,7 @@ public class TemplateHandler {
 
     public Template getTemplate(int id) {
         Template template = new Template();
-        String query = "select tem_id,ts_id, tem_creation_date, sta_name\n" +
+        String query = "select tem_id,ts_id,tem_user_id, tem_creation_date, sta_name\n" +
                 "from template_status,template,status\n" +
                 "where tem_id = " + id + " and tem_id = ts_template and sta_id = ts_status\n" +
                 "order by ts_id desc limit 1";
@@ -96,6 +97,8 @@ public class TemplateHandler {
                 template.setApplication(getApplicationByTemplate(template.getTemplateId()));
 
                 //usuario creador
+                UserDAO userDAO = new UserDAO();
+                template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
             }
 
         } catch(SQLException e){
@@ -219,28 +222,6 @@ public class TemplateHandler {
         }
     }
 
-    public Boolean postTemplateStatus(int id,String statusName){
-        Boolean flag=false;
-        Connection con = Sql.getConInstance();
-        String query="insert into public.template_status (ts_date,ts_template,ts_status) values (CURRENT_TIMESTAMP,"+id+",(select sta_id from public.status where sta_name='" + statusName +"'))";
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.executeUpdate();
-            flag=true;
-        }  catch(SQLException e){
-            e.printStackTrace();
-            con.rollback();
-            flag=false;
-        } catch (Exception e){
-            e.printStackTrace();
-            flag=false;
-        } finally {
-            if (con != null) {
-                Sql.bdClose(con);
-            }
-            return flag;
-        }
-    }
 
     public boolean postTemplateData(String json){
         try {
@@ -249,9 +230,9 @@ public class TemplateHandler {
             JsonObject gsonObj = parser.parse(json).getAsJsonObject();
             //hay que extraer campaña y aplicacion, parametros por defecto
             //se crea el template y se retorna su id
-            int templateId = postTemplate(13,2);
+            int templateId = postTemplate(13,2, gsonObj.get("userId").getAsInt());
             //se establece el template  como no aprobado
-            postTemplateStatus(templateId,"No Aprobado");
+            StatusHandler.postTemplateStatusNoAprovado(templateId);
             //obtenemos el valor del mensaje, a falta de id's de parametros
             String message = gsonObj.get("messagge").getAsString();
             MessageHandler.postMessage(message,templateId);
@@ -292,9 +273,9 @@ public class TemplateHandler {
         }
     }
 
-    public int postTemplate(int campaignId,int applicationId){
-        String query = "INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id) \n" +
-                "VALUES (CURRENT_DATE," + campaignId + "," + applicationId + ") RETURNING tem_id";
+    public int postTemplate(int campaignId,int applicationId, int userId){
+        String query = "INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) \n" +
+                "VALUES (CURRENT_DATE," + campaignId + "," + applicationId + "," + userId + ") RETURNING tem_id";
         int templateId=0;
         try{
             ResultSet resultSet = sql.sqlConn(query);

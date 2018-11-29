@@ -170,7 +170,19 @@ ADD COLUMN tem_application_id integer NOT NULL,
 ADD CONSTRAINT fk_application_id FOREIGN KEY ("tem_application_id")
 REFERENCES Application(app_id);
 
+ALTER TABLE Template
+ADD COLUMN tem_user_id integer NOT NULL,
+ADD CONSTRAINT fk_template_user_id FOREIGN KEY ("tem_user_id")
+REFERENCES User(use_id);
+
 ALTER TABLE Parameter
 ADD COLUMN par_company_id integer NOT NULL,
 ADD CONSTRAINT fk_par_company_id FOREIGN KEY ("par_company_id") 
 REFERENCES Company (com_id);
+
+ALTER TABLE Template_Status
+ADD COLUMN ts_user_id integer NOT NULL,
+ADD CONSTRAINT fk_Template_Status_user_id FOREIGN KEY ("ts_user_id") 
+REFERENCES User(use_id);
+
+

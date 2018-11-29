@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse,HttpParams } from '@angular/common/http';
 import {Observable, of, pipe} from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import {p} from '@angular/core/src/render3';
@@ -56,7 +56,8 @@ export class TemplateService {
   }
 
   approveTemplate(templateId: Number){
-    return this.http.post(endpoint+'templates/update/'+templateId, templateId).subscribe();
+      let userId = localStorage.getItem('userid');
+      return this.http.post(endpoint+'templates/update/'+templateId, userId).subscribe();
   }
 
   PostParameter(name: string, companyId: number) {
@@ -75,6 +76,7 @@ export class TemplateService {
     postTemplate(formMessage: string, channel_integrator: any[]) {
         const json = {
             'messagge': formMessage.valueOf(),
+            'userId': localStorage.getItem('userid'),
             'channel_integrator': channel_integrator.valueOf()
         };
         this.http.post(endpoint + 'templates/add', json).subscribe();

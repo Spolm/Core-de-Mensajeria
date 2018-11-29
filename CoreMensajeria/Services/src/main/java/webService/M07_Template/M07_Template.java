@@ -1,11 +1,13 @@
 package webService.M07_Template;
 
+import Classes.M07_Template.HandlerPackage.StatusHandler;
 import Classes.M07_Template.HandlerPackage.TemplateHandler;
 import Classes.M07_Template.Template;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.annotations.JsonAdapter;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -44,10 +46,9 @@ public class M07_Template {
 
     @POST
     @Path("/update/{templateId}")//Subsequent Path
-    public Boolean postTemplateStatus(@PathParam("templateId") int id){
+    public Boolean postTemplateStatus(@PathParam("templateId") int templateId, String userId){
         Boolean flag = false;
-        TemplateHandler templateHandler = new TemplateHandler();
-        flag = templateHandler.postTemplateStatus(id,"Aprobado");
+        flag = StatusHandler.postTemplateStatusAprovado(templateId,Integer.valueOf(userId));
         return flag;
     }
 
