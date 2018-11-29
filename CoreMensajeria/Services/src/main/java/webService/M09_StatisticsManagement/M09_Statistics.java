@@ -15,10 +15,7 @@ import com.google.gson.Gson;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +26,108 @@ public class M09_Statistics extends Application {
     Gson gson = new Gson();
     private Connection conn = SqlEstrella.getConInstance();
 
+    /* ====================
+            Endpoints
+    ======================= */
+
     @GET
-    @Path( "/MessageCompanyBar" )
+    @Path( "/PruebaParam" )
     @Produces( "application/json" )
+    public Response test2( @QueryParam( "paramDate1" ) String paramDate1,
+                           @QueryParam( "paramDate2" ) String paramDate2,
+                           @QueryParam( "paramType" ) String paramType ) {
+        Response responseAnswerLine = filterOfTypeStatisticsLine( paramDate1 , paramType );
+        return responseAnswerLine ;
+    }
+
+    @GET
+    @Path( "/PruebaParam2" )
+    @Produces( "application/json" )
+    public Response test1( @QueryParam( "paramDate1" ) String paramDate1,
+                           @QueryParam( "paramDate2" ) String paramDate2,
+                           @QueryParam( "paramType" ) String paramType ) {
+
+        Response responseAnswerPie = filterOfTypeStatisticsPie( paramDate1,paramType );
+
+        return responseAnswerPie ;
+    }
+
+    @GET
+    @Path( "/PruebaParam3" )
+    @Produces( "application/json" )
+    public Response test3( @QueryParam( "paramDate1" ) String paramDate1,
+                           @QueryParam( "paramDate2" ) String paramDate2,
+                           @QueryParam( "paramType" ) String paramType ) {
+
+        Response responseAnswerBar = filterOfTypeStatisticsBar( paramDate1,paramType );
+
+        return responseAnswerBar ;
+    }
+
+    @GET
+    @Path("/companies")
+    @Produces("application/json")
+    public Response getAllCompanies() {
+        String query = "SELECT DISTINCT com_id, com_name FROM dim_company_campaign ORDER BY com_id;";
+        try {
+            return getCompanies(query);
+        } catch(CompanyDoesntExistsException e) {
+            return Response.serverError().build();
+        }
+
+    }
+
+    @GET
+    @Path("/campaigns")
+    @Produces("application/json")
+    public Response getAllCampaigns() {
+        String query = "SELECT DISTINCT cam_id, cam_name FROM dim_company_campaign ORDER BY cam_id;";
+        try {
+            return getCampaigns(query);
+        } catch (CampaignDoesntExistsException e) {
+            return Response.serverError().build();
+        }
+    }
+
+    @GET
+    @Path("/campaignCompany")
+    @Produces("application/json")
+    public Response getCampaignsForCompany(@QueryParam("companyId") List<Integer> companyIds) {
+        String query = "SELECT DISTINCT cam_id, cam_name FROM dim_company_campaign WHERE com_id IN (";
+        for (int i = 0; i < companyIds.size() - 1;  i++) {
+            query += companyIds.get(i) + ", ";
+        }
+        query += companyIds.get(companyIds.size() - 1) + ") ORDER BY cam_id;";
+        try {
+            return getCampaigns(query);
+        } catch(CampaignDoesntExistsException e) {
+            return Response.serverError().build();
+        }
+    }
+
+    @GET
+    @Path("/channels")
+    @Produces("application/json")
+    public Response getAllChannels() {
+        String query = "SELECT DISTINCT cha_id, cha_name FROM dim_channel ORDER BY cha_id;";
+        ArrayList<Channel> channels = new ArrayList<>();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                ChannelFactory channelFactory = new ChannelFactory();
+                Channel channel = channelFactory.getChannel(result.getInt("cha_id"), result.getString("cha_name"), null, null);
+                channels.add(channel);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(conn);
+        }
+        return Response.ok(gson.toJson(channels)).build();
+    }
+    
     public Response getNumberOfCompanysChart() throws SQLException {
         String aux = "";
         String select2 = "SELECT com_name  from dim_company_campaign group by com_name";
@@ -62,9 +158,6 @@ public class M09_Statistics extends Application {
         }
     }
 
-    @GET
-    @Path( "/MessageCompanyLine" )
-    @Produces( "application/json" )
     public Response getNumberOfCompanysLine() throws SQLException {
         String aux = "";
         String select2 = "SELECT com_name  from dim_company_campaign group by com_name ";
@@ -94,9 +187,6 @@ public class M09_Statistics extends Application {
         }
     }
 
-    @GET
-    @Path( "/MessageCompanyPie" )
-    @Produces( "application/json" )
     public Response getNumberOfCompanysPie() throws SQLException {
         String aux = "";
         String select2 = "SELECT com_name  from dim_company_campaign group by com_name";
@@ -126,11 +216,6 @@ public class M09_Statistics extends Application {
         }
     }
 
-
-
-    @GET
-    @Path( "/MessageCampaignPie" )
-    @Produces( "application/json" )
     public Response getNumberOfCampaignPie() throws SQLException {
         String aux = "";
         String select2 = "SELECT cam_name  from dim_company_campaign ";
@@ -160,9 +245,6 @@ public class M09_Statistics extends Application {
         }
     }
 
-    @GET
-    @Path("/MessageCampaignBar")
-    @Produces("application/json")
     public Response getNumberOfCampaignChart() throws SQLException {
         String aux = "";
         String select2 ="SELECT cam_name  from dim_company_campaign";
@@ -193,9 +275,6 @@ public class M09_Statistics extends Application {
         }
     }
 
-    @GET
-    @Path("/MessageCampaignLine")
-    @Produces("application/json")
     public Response getNumberOfCampaignLine() throws SQLException {
         String aux = "";
         String select2 = " SELECT cam_name  from dim_company_campaign";
@@ -226,66 +305,7 @@ public class M09_Statistics extends Application {
     }
 
 
-    @GET
-    @Path("/{NombreConsulta}/{FechaDeConsulta}")
-    @Produces("application/json")
 
-    public Response test(@PathParam( "NombreConsulta" ) String Consulta,
-                         @PathParam( "FechaDeConsulta" ) String Fecha) {
-
-        return Response.ok( gson.toJson( Consulta + " " + Fecha ) ).build();
-
-    }
-
-
-    @GET
-    @Path( "/PruebaParam" )
-    @Produces( "application/json" )
-
-    public Response test2( @QueryParam( "paramDate1" ) String paramDate1,
-                           @QueryParam( "paramDate2" ) String paramDate2,
-                           @QueryParam( "paramType" ) String paramType ) {
-        System.out.println( paramType );
-        Response responseAnswerLine = filterOfTypeStatisticsLine( paramDate1 , paramType );
-        return responseAnswerLine ;
-
-
-
-        // String squery ="select * from producto where id="@id;
-        //squery=squery.replace("@id","1");
-    }
-
-    @GET
-    @Path( "/PruebaParam2" )
-    @Produces( "application/json" )
-
-    public Response test1( @QueryParam( "paramDate1" ) String paramDate1,
-                           @QueryParam( "paramDate2" ) String paramDate2,
-                           @QueryParam( "paramType" ) String paramType ) {
-
-        Response responseAnswerPie = filterOfTypeStatisticsPie( paramDate1,paramType );
-
-        return responseAnswerPie ;
-
-        // String squery ="select * from producto where id="@id;
-        //squery=squery.replace("@id","1");
-    }
-
-    @GET
-    @Path( "/PruebaParam3" )
-    @Produces( "application/json" )
-
-    public Response test3( @QueryParam( "paramDate1" ) String paramDate1,
-                           @QueryParam( "paramDate2" ) String paramDate2,
-                           @QueryParam( "paramType" ) String paramType ) {
-
-        Response responseAnswerBar = filterOfTypeStatisticsBar( paramDate1,paramType );
-
-        return responseAnswerBar ;
-
-        // String squery ="select * from producto where id="@id;
-        //squery=squery.replace("@id","1");
-    }
 
 
     //Metodo para contar la cantidad me menajes enviados por Campana
@@ -486,18 +506,7 @@ public class M09_Statistics extends Application {
         return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsPie") ).build();
     }
 
-    @GET
-    @Path("/companies")
-    @Produces("application/json")
-    public Response getAllCompanies() {
-        String query = "SELECT DISTINCT com_id, com_name FROM dim_company_campaign ORDER BY com_id;";
-        try {
-            return getCompanies(query);
-        } catch(CompanyDoesntExistsException e) {
-            return Response.serverError().build();
-        }
 
-    }
 
     private Response getCompanies(String query) throws CompanyDoesntExistsException {
         ArrayList<Company> companies = new ArrayList<>();
@@ -516,59 +525,6 @@ public class M09_Statistics extends Application {
             Sql.bdClose(conn);
         }
         return Response.ok(gson.toJson(companies)).build();
-    }
-
-    @GET
-    @Path("/campaigns")
-    @Produces("application/json")
-    public Response getAllCampaigns() {
-        String query = "SELECT DISTINCT cam_id, cam_name FROM dim_company_campaign ORDER BY cam_id;";
-        try {
-            return getCampaigns(query);
-        } catch (CampaignDoesntExistsException e) {
-            return Response.serverError().build();
-        }
-
-    }
-
-    @GET
-    @Path("/channels")
-    @Produces("application/json")
-    public Response getAllChannels() {
-        String query = "SELECT DISTINCT cha_id, cha_name FROM dim_channel ORDER BY cha_id;";
-        ArrayList<Channel> channels = new ArrayList<>();
-        try {
-            Statement statement = conn.createStatement();
-            ResultSet result = statement.executeQuery(query);
-
-            while (result.next()) {
-                ChannelFactory channelFactory = new ChannelFactory();
-                Channel channel = channelFactory.getChannel(result.getInt("cha_id"), result.getString("cha_name"), null, null);
-                channels.add(channel);
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Sql.bdClose(conn);
-        }
-        return Response.ok(gson.toJson(channels)).build();
-    }
-
-    @GET
-    @Path("/campaignCompany")
-    @Produces("application/json")
-    public Response getCampaignsForCompany(@QueryParam("companyId") List<Integer> companyIds) {
-        String query = "SELECT DISTINCT cam_id, cam_name FROM dim_company_campaign WHERE com_id IN (";
-        for (int i = 0; i < companyIds.size() - 1;  i++) {
-            query += companyIds.get(i) + ", ";
-        }
-        query += companyIds.get(companyIds.size() - 1) + ") ORDER BY cam_id;";
-        try {
-            return getCampaigns(query);
-        } catch(CampaignDoesntExistsException e) {
-            return Response.serverError().build();
-        }
-
     }
 
     public Response getCampaigns(String query) throws CampaignDoesntExistsException {
@@ -592,9 +548,6 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(campaigns)).build();
     }
 
-    @GET
-    @Path("/MessageChannelLine")
-    @Produces("application/json")
     public Response getNumberOfChannelLine() throws SQLException {
         String aux = "";
         String select2 = " SELECT cha_name  from dim_channel";
@@ -623,9 +576,6 @@ public class M09_Statistics extends Application {
         }
     }
 
-    @GET
-    @Path("/MessageChannelBar")
-    @Produces("application/json")
     public Response getNumberOfChannelChart() throws SQLException {
         String aux = "";
         String select2 = " SELECT cha_name  from dim_channel";
@@ -654,10 +604,6 @@ public class M09_Statistics extends Application {
         }
     }
 
-
-    @GET
-    @Path("/MessageChannelPie")
-    @Produces("application/json")
     public Response getNumberOfChannelPie() throws SQLException {
         String aux = "";
         String select2 = " SELECT cha_name  from dim_channel";

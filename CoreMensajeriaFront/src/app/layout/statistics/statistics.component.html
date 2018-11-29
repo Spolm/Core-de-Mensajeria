@@ -124,8 +124,35 @@
 
 <div class="Container">
     <div class="row" style="margin: 5% 0%">
-        <div class="card bg-primary"><div id="bar-chart"></div></div>
-        <div class="card bg-primary"><div id="line-chart"></div></div>
-        <div class="card bg-primary"><div id="pie-chart"></div></div>
+        <div class="card bg-primary"><div id="bar-chartCompany"></div></div>
+        <div class="card bg-primary"><div id="line-chartCompany"></div></div>
+        <div class="card bg-primary"><div id="pie-chartCompany"></div></div>
+        <div class="card bg-primary"><div id="bar-chartCampaign"></div></div>
+        <div class="card bg-primary"><div id="line-chartCampaign"></div></div>
+        <div class="card bg-primary"><div id="pie-chartCampaign"></div></div>
+        <div class="card bg-primary"><div id="bar-chartChannels"></div></div>
+        <div class="card bg-primary"><div id="line-chartChannels"></div></div>
+        <div class="card bg-primary"><div id="pie-chartChannels"></div></div>
+    </div>
+
+    <div class="row">
+        <div *ngIf="timeLineChart" class="col-lg-12">
+            <canvas #timeLineChart>{{ timeLineChart }}</canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngIf="companiesBarChart" class="col-lg-6">
+            <canvas #companiesBarChartElement>{{ companiesBarChart }}</canvas>
+        </div>
+
+        <div *ngIf="campaignsBarChart" class="col-lg-6">
+            <canvas #campaignsBarChartElement>{{ campaignsBarChart }}</canvas>
+        </div>
+    </div>
+
+    <div class="row">
+        <div *ngIf="channelsPieChart" class="col-lg-6">
+            <canvas #channelsPieChartElement>{{ channelsPieChart }}</canvas>
+        </div>
     </div>
 </div>

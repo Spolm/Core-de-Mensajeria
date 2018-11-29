@@ -10,7 +10,7 @@ import { StatisticsServiceService } from "../statistics-service.service";
 export class MoreFiltersComponent implements OnInit {
     companiesDropdown = [];
     companiesDropdownSettings = {};
-    selectedCompaniesIds: Number[] = [];
+    selectedCompaniesIds = [];
     selectedCompanies = [];
 
     campaignsDropdown = [];
@@ -25,7 +25,7 @@ export class MoreFiltersComponent implements OnInit {
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
-        private Servicio: StatisticsServiceService
+        private statisticsService: StatisticsServiceService
     ) {
         this.initializeDataFromMainFilters(data);
     }

@@ -1,9 +1,66 @@
 
 --\c CoreMensajeria CoreMensajeria
 
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CUSER','Crear usuario');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RUSER','Ver usuario');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UUSER','Modificar usuario');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DUSER','Des o Habilitar usuario');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CCAMPAIGN','Crear campana');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RCAMPAIGN','Ver campana');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UCAMPAIGN','Modificar campana');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DCAMPAIGN','Des o Habilitar campana');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CCOMPANY','Crear compania');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RCOMPANY','Ver compania');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UCOMPANY','Modificar compania');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DCOMPANY','Des o Habilitar compania');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CINTEGRATOR','Crear integrador');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RINTEGRATOR','Ver integrador');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UINTEGRATOR','Modificar integrador');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DINTEGRATOR','Des o Habilitar integrador');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CCHANNEL','Crear canal');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RCHANNEL','Ver canal');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UCHANNEL','Modificar canal');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DCHANNEL','Des o Habilitar canal');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CAPPLICATION','Crear aplicacion');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RAPPLICATION','Ver aplicacion');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UAPPLICATION','Modificar aplicacion');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DAPPLICATION','Des o Habilitar aplicacion');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CTEMPLATE','Crear plantilla');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RTEMPLATE','Ver plantilla');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UTEMPLATE','Modificar plantilla');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DTEMPLATE','Des o Habilitar plantilla');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CMESSAGE','Crear mensaje');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RMESSAGE','Ver mensaje');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UMESSAGE','Modificar mensaje');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DMESSAGE','Des o Habilitar mensaje');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('STATISTICS','Ver estadisticas');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('SEND','Envia');
+
+
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
 					('1234', 'Ronnie', 1, 'ronnie@gmail.com', '0414255', 'Ve', 'Mi', 'Caricuao', '04/05/1995', 'F');
+INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
+					use_city, use_address, use_date_of_birth, use_gender) values
+					('1234', 'superusuario', 1, 'superusuario@gmail.com', '0414255', 'Ve', 'Mi', 'Caracas', '04/08/1991', 'F');
+INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
+					use_city, use_address, use_date_of_birth, use_gender) values
+					('1234', 'administrador', 2, 'administrador@gmail.com', '0414255', 'Ve', 'Mi', 'Valencia', '12/08/1987', 'F');
+INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
+					use_city, use_address, use_date_of_birth, use_gender) values
+					('1234', 'creador', 3, 'creador@gmail.com', '0414255', 'Ve', 'Mi', 'Barquisimeto', '04/08/1991', 'F');
+INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
+					use_city, use_address, use_date_of_birth, use_gender) values
+					('1234', 'aprobador', 4, 'aprobador@gmail.com', '0414255', 'Ve', 'Mi', 'Margarita', '04/08/1981', 'F');
+INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
+					use_city, use_address, use_date_of_birth, use_gender) values
+					('1234', 'consultor', 5, 'consultor@gmail.com', '0414255', 'Ve', 'Mi', 'Caracas', '12/03/1985', 'F');
+
+INSERT INTO public.role(rol_name) values('Superusuario');
+INSERT INTO public.role(rol_name) values('Administrador');
+INSERT INTO public.role(rol_name) values('Creador');
+INSERT INTO public.role(rol_name) values('Aprobador');
+INSERT INTO public.role(rol_name) values('Consultor');
 
 INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
 VALUES ('Movistar', 13.4, 25, 'oqiwueyeiu',TRUE);

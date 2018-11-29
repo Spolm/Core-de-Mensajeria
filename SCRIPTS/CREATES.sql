@@ -15,6 +15,34 @@ create table public.User
     use_gender char
 );
 
+
+ALTER TABLE public.User
+ADD COLUMN use_blocked integer DEFAULT 0 NOT NULL,
+ADD CoLUMN use_remaining_attempts integer DEFAULT 3 NOT NULL;
+
+create table public.Role
+(
+    rol_id serial primary key,
+    rol_name varchar (18)
+);
+
+create table public.Privilege
+(
+    pri_id serial primary key,
+    pri_code varchar (18) not null,
+    pri_action varchar(50)
+);
+
+create table public.Rol_Pri(
+	rol_pri_id serial primary key,
+	rol_pri_pri_id integer not NULL,
+	rol_pri_rol_id integer not NULL,
+	CONSTRAINT fk_pri_id FOREIGN KEY (rol_pri_pri_id)
+	REFERENCES Privilege(pri_id),
+	CONSTRAINT fk_ro_id FOREIGN KEY (rol_pri_rol_id)
+	REFERENCES Role(rol_id)
+);
+
 CREATE TABLE public.Company
 (
     com_id serial primary key,
@@ -28,6 +56,18 @@ CREATE TABLE public.Company
     ON DELETE CASCADE
 );
 
+create table public.Responsability(
+	res_id serial primary key,
+	res_use_id integer not NULL,
+	res_com_id integer,
+	res_rol_id integer not NULL,
+	CONSTRAINT fk_use_id FOREIGN KEY (res_use_id)
+	REFERENCES public.User(use_id),
+	CONSTRAINT fk_com_id FOREIGN KEY (res_com_id)
+	REFERENCES Company(com_id),
+	CONSTRAINT fk_rol_id FOREIGN KEY (res_rol_id)
+	REFERENCES Role(rol_id)
+);
 
 CREATE TABLE public.Campaign
 (
