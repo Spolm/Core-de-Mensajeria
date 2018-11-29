@@ -103,9 +103,6 @@ public class M03_Campaigns {
             PreparedStatement ps = conn.prepareStatement(select);
             ps.setInt(1, id);
             ResultSet result = ps.executeQuery();
-            //Statement st = conn.createStatement();
-            //ResultSet result =  st.executeQuery(select);
-
             while(result.next()){
                 Campaign ca = new Campaign();
                 ca.set_idCampaign(result.getInt("cam_id"));
@@ -130,12 +127,11 @@ public class M03_Campaigns {
     //endregion
 
     //region Detalle Campaña
+
     /**
      *
-     * @param id Id de la campaña de la que se desean saber los detalles
-     * @return
-     * @throws CampaignDoesntExistsException exception personalizada que indica si la campaña no existe
-     * en la base de datos
+     * @param id recibe el id de la campaña que se desea ver con detalle
+     * @return Response Builder con los detalles de la campaña
      */
     @GET
     @Path("/CampaignDetails")
@@ -187,23 +183,39 @@ public class M03_Campaigns {
     //Work in Progress
     //TODO fix this one
     //region Cambiar Status Campaña
-    @POST
+    @GET
     @Path("/update/{campaignId}")
-    public Response changeCampaignStatus(@PathParam("campaignId") int id){
-        Response.ResponseBuilder rb = Response.ok();
-        Boolean flag = false;
-        Campaign ca = new Campaign();
-        ca.set_statusCampaign(!ca.is_statusCampaign());
-        String query = "UPDATE public.campaign SET" +
-                "cam_status ="+ ca.is_statusCampaign()+
-                " WHERE cam_id ="+id;
-        flag = ca.is_statusCampaign();
-        rb.entity(gson.toJson(flag));
+    //@Consumes("application/json")
+    @Produces("text/plain")
+    public Response changeCampaignStatus(@PathParam("campaignId") int id) throws CampaignDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        Boolean flag;
+        try {
+            Campaign ca = getDetails(id);
+            ca.set_statusCampaign(!ca.is_statusCampaign());
+            String query = "UPDATE public.campaign SET" +
+                    " cam_status ="+ca.is_statusCampaign()+
+                    " WHERE cam_id =?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1,id);
+            ps.executeUpdate();
+            flag = ca.is_statusCampaign();
+            rb.header("Campaign Edited", "Success");
+            rb.tag("application/json");
+            rb.entity(gson.toJson(flag));
+
+        } catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new CampaignDoesntExistsException(e);
+        }
         return rb.build();
     }
 
     //endregion
-    //TODO
+
     //region Modificar Campaña
     @PUT
     @Path("/EditCampaign")
