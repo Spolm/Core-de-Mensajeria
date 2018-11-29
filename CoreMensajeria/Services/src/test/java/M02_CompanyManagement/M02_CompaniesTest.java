@@ -53,7 +53,7 @@ public class M02_CompaniesTest {
     @Test
     public void getCompanyDetails() throws CompanyDoesntExistsException {
         System.out.println("getDetails");
-        _co = _coMng.getDetails(1);
+        _co = _coMng.getDetails(99);
         assertNotNull(_co);
     }
 

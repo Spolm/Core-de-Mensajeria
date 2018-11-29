@@ -163,13 +163,13 @@ public class M02_Companies {
     @Produces("text/plain")
     public Response changeCompanyStatus(@PathParam("companyId") int id) throws CompanyDoesntExistsException {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        String query = "UPDATE public.company SET" +
-                    " com_status ="+co.get_status()+
-                    " WHERE com_id =?";
         Boolean flag;
         try {
             Company co = getDetails(id);
             co.set_status(!co.get_status());
+            String query = "UPDATE public.company SET" +
+                    " com_status ="+co.get_status()+
+                    " WHERE com_id =?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1,id);
             ps.executeUpdate();
@@ -192,7 +192,7 @@ public class M02_Companies {
 
     //region Editar Compañia
 
-    @POST
+    /*@POST
     @Path("/EditCompany/{idCompany}")
     @Consumes("application/json")
     @Produces("application/json")
@@ -215,7 +215,7 @@ public class M02_Companies {
             e.printStackTrace();
         }
         return rb.build();
-    }
+    }*/
     //endregion
 
 }
