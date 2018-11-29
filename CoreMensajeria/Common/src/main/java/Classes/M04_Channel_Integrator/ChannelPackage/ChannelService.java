@@ -25,7 +25,7 @@ public class ChannelService {
         ArrayList<Integrator> integrators = new ArrayList<>();
 
         try {
-            ResultSet rs = db.sqlConn("SELECT int_id, int_name, int_messageCost, int_threadCapacity, int_tokenApi" +
+            ResultSet rs = db.sqlConn("SELECT int_id, int_name, int_messageCost, int_threadCapacity, int_tokenApi, int_enabled" +
                                         " FROM INTEGRATOR, CHANNEL_INTEGRATOR ," +
                                         " CHANNEL"+
                                         " WHERE INT_ID = CI_INTEGRATOR_ID AND" +
@@ -33,6 +33,8 @@ public class ChannelService {
             IntegratorService.getIntegratorsRs(integrators, rs);
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
+        }finally {
+            Sql.bdClose(db.getConn());
         }
         return integrators;
     }
@@ -52,6 +54,8 @@ public class ChannelService {
             }
         } catch (SQLException ex) {
             System.err.println(ex.getStackTrace());
+        }finally {
+            Sql.bdClose(db.getConn());
         }
         return channels;
     }
