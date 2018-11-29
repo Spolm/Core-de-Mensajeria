@@ -16,7 +16,7 @@ create table public.User
 );
 
 
-ALTER TABLE User
+ALTER TABLE public.User
 ADD COLUMN use_blocked integer DEFAULT 0 NOT NULL,
 ADD CoLUMN use_remaining_attempts integer DEFAULT 3 NOT NULL;
 
@@ -30,7 +30,7 @@ create table public.Privilege
 (
     pri_id serial primary key,
     pri_code varchar (18) not null,
-    pri_action varchar(25)
+    pri_action varchar(50)
 );
 
 create table public.Rol_Pri(
@@ -200,29 +200,29 @@ create table public.TEMPLATE_CHANNEL_INTEGRATOR
  	CONSTRAINT fk_ci_id FOREIGN KEY("tci_ci_id") REFERENCES public.CHANNEL_INTEGRATOR(ci_id)
  );
 
-ALTER TABLE Template
+ALTER TABLE public.Template
 ADD COLUMN tem_campaign_id integer NOT NULL,
 ADD CONSTRAINT fk_campaign_id FOREIGN KEY ("tem_campaign_id") 
-REFERENCES Campaign(cam_id);
+REFERENCES public.Campaign(cam_id);
 
-ALTER TABLE Template
+ALTER TABLE public.Template
 ADD COLUMN tem_application_id integer NOT NULL,
 ADD CONSTRAINT fk_application_id FOREIGN KEY ("tem_application_id")
-REFERENCES Application(app_id);
+REFERENCES public.Application(app_id);
 
-ALTER TABLE Template
+ALTER TABLE public.Template
 ADD COLUMN tem_user_id integer NOT NULL,
 ADD CONSTRAINT fk_template_user_id FOREIGN KEY ("tem_user_id")
-REFERENCES User(use_id);
+REFERENCES public.User(use_id);
 
-ALTER TABLE Parameter
+ALTER TABLE public.Parameter
 ADD COLUMN par_company_id integer NOT NULL,
 ADD CONSTRAINT fk_par_company_id FOREIGN KEY ("par_company_id") 
-REFERENCES Company (com_id);
+REFERENCES public.Company (com_id);
 
-ALTER TABLE Template_Status
-ADD COLUMN ts_user_id integer NOT NULL,
+ALTER TABLE public.Template_Status
+ADD COLUMN ts_user_id integer,
 ADD CONSTRAINT fk_Template_Status_user_id FOREIGN KEY ("ts_user_id") 
-REFERENCES User(use_id);
+REFERENCES public.User(use_id);
 
 

@@ -1,8 +1,8 @@
 package Classes.M07_Template.HandlerPackage;
 
 import Classes.M01_Login.UserDAO;
+import Classes.M02_Company.Company;
 import Classes.M03_Campaign.Campaign;
-//import webService.M03_CampaingManagement.M03_Campaigns;
 import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
 import Classes.M04_Channel_Integrator.ChannelPackage.ChannelFactory;
 import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
@@ -12,27 +12,46 @@ import Classes.M06_DataOrigin.ApplicationDAO;
 import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
-import Exceptions.CampaignDoesntExistsException;
-import Exceptions.MessageDoesntExistsException;
 import Exceptions.TemplateDoesntExistsException;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import javax.ws.rs.core.Response;
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class TemplateHandler {
     private Sql sql;
 
-    public TemplateHandler() {
-        sql = new Sql();
-    }
+    private static final String GET_TEMPLATES_BY_USER = "";
 
-    public Sql getSql() {
-        return sql;
+  private static final String GET_CAMPAIGN_BY_USER_OR_COMPANY =
+      "select c.cam_id, c.cam_name, c.cam_description, c.cam_status, c.cam_start_date, c.cam_end_date,  co.com_id, co.com_name, co.com_description, co.com_status\n"
+          + "from public.campaign c\n"
+          + "inner join public.responsability r\n"
+          + "on c.cam_company_id = r.res_com_id\n"
+          + "inner join public.company co\n"
+          + "on c.cam_company_id = co.com_id\n"
+          + "where r.res_use_id = ? OR (r.res_use_id = ? AND r.res_com_id = ?)\n"
+          + "order by c.cam_id";
+
+    public ArrayList<Template> getTemplates(int userId,int companyId){
+        ArrayList<Template> templateArrayList = new ArrayList<>();
+        ArrayList<Campaign> campaignArrayList = null;
+        Connection connection = Sql.getConInstance();
+        try{
+            campaignArrayList = getCampaignsByUserOrCompany(userId,companyId);
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_TEMPLATES_BY_USER);
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            Sql.bdClose(connection);
+            return templateArrayList;
+        }
     }
 
     public ArrayList<Template> getTemplates(){
@@ -72,7 +91,6 @@ public class TemplateHandler {
             return templateArrayList;
         }
     }
-
     public Template getTemplate(int id) {
         Template template = new Template();
         String query = "select tem_id,ts_id,tem_user_id, tem_creation_date, sta_name\n" +
@@ -110,6 +128,43 @@ public class TemplateHandler {
         } finally {
             Sql.bdClose(sql.getConn());
             return template;
+        }
+    }
+
+    public ArrayList<Campaign> getCampaignsByUserOrCompany(int userId, int companyId){
+        ArrayList<Campaign> campaignArrayList = new ArrayList<>();
+        Connection connection = Sql.getConInstance();
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_CAMPAIGN_BY_USER_OR_COMPANY);
+            if((userId!=0)&&(companyId!=0)){
+                preparedStatement.setInt(1,0);
+                preparedStatement.setInt(2,userId);
+                preparedStatement.setInt(3,companyId);
+            }else if(userId!=0){
+                preparedStatement.setInt(1,userId);
+                preparedStatement.setInt(2,0);
+                preparedStatement.setInt(3,0);
+            }else{
+                return null;
+            }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Campaign campaign = new Campaign();
+                campaign.set_idCampaign(resultSet.getInt("cam_id"));
+                campaign.set_nameCampaign(resultSet.getString("cam_name"));
+                campaign.set_descCampaign(resultSet.getString("cam_description"));
+                campaign.set_statusCampaign(resultSet.getBoolean("cam_status"));
+                campaign.set_startCampaign(resultSet.getDate("cam_start_date"));
+                campaign.set_endCampaign(resultSet.getDate("cam_end_date"));
+                campaignArrayList.add(campaign);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connection);
+            return campaignArrayList;
         }
     }
 
@@ -290,5 +345,13 @@ public class TemplateHandler {
             Sql.bdClose(sql.getConn());
             return templateId;
         }
+    }
+
+    public TemplateHandler() {
+        sql = new Sql();
+    }
+
+    public Sql getSql() {
+        return sql;
     }
 }

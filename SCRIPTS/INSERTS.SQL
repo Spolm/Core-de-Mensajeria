@@ -1,6 +1,42 @@
 
 --\c CoreMensajeria CoreMensajeria
 
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CUSER','Crear usuario');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RUSER','Ver usuario');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UUSER','Modificar usuario');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DUSER','Des o Habilitar usuario');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CCAMPAIGN','Crear campana');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RCAMPAIGN','Ver campana');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UCAMPAIGN','Modificar campana');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DCAMPAIGN','Des o Habilitar campana');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CCOMPANY','Crear compania');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RCOMPANY','Ver compania');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UCOMPANY','Modificar compania');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DCOMPANY','Des o Habilitar compania');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CINTEGRATOR','Crear integrador');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RINTEGRATOR','Ver integrador');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UINTEGRATOR','Modificar integrador');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DINTEGRATOR','Des o Habilitar integrador');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CCHANNEL','Crear canal');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RCHANNEL','Ver canal');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UCHANNEL','Modificar canal');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DCHANNEL','Des o Habilitar canal');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CAPPLICATION','Crear aplicacion');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RAPPLICATION','Ver aplicacion');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UAPPLICATION','Modificar aplicacion');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DAPPLICATION','Des o Habilitar aplicacion');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CTEMPLATE','Crear plantilla');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RTEMPLATE','Ver plantilla');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UTEMPLATE','Modificar plantilla');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DTEMPLATE','Des o Habilitar plantilla');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CMESSAGE','Crear mensaje');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('RMESSAGE','Ver mensaje');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('UMESSAGE','Modificar mensaje');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('DMESSAGE','Des o Habilitar mensaje');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('STATISTICS','Ver estadisticas');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('SEND','Envia');
+
+
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
 					('1234', 'Ronnie', 1, 'ronnie@gmail.com', '0414255', 'Ve', 'Mi', 'Caricuao', '04/05/1995', 'F');
@@ -84,8 +120,8 @@ INSERT INTO public.application(app_name,app_description,app_token,app_date,app_s
 ('Mercantil en linea','Aplicacion movil de mercantil','5E182FC1A42614D37B951A7A38648350D0D166E9D78BA26E59EF7ECE9462BE34','12/13/2017',1,1,2),
 ('Banesco Online','Aplicacion web de banesco','5DD3CE9EF2B7614FB471B442050DDB24ADDBE88424B3C1382C7DD224A99203BD','01/08/2015',1,1,3);
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id) 
-VALUES ('2003-2-1', 1, 1);
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) 
+VALUES ('2003-2-1', 1, 1, 3);
 
 INSERT INTO public.Message (mes_text,mes_template)
 VALUES ('esto es un mensaje de template con un [.$Parametro$.]',1);
@@ -105,8 +141,8 @@ VALUES (1,1);
 INSERT INTO public.Status (sta_name)
 VALUES ('No Aprobado');
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id) 
-VALUES ('2012-10-11', 4, 2);
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) 
+VALUES ('2012-10-11', 4, 2,4);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('BANESCO REGISTRO: CONSUMO EN PUNTO DE VENTA CON TDD [.$Numero tarjeta$.] BS. [.$Monto$.] EL [.$Fecha$.] REF [.$REF$.].',2);
@@ -132,8 +168,8 @@ VALUES (2,4);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
 VALUES (2,5);
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id) 
-VALUES ('2014-10-11', 8, 3);
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) 
+VALUES ('2014-10-11', 8, 3, 3);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Movistar te invita a una funcion gratuita del [.$Evento$.]. Ven el [.$Fecha$.] [.$Hora$.] [.$Lugar$.].',3);
@@ -157,8 +193,8 @@ VALUES (3,7);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
 VALUES (3,8);
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id) 
-VALUES ('2014-11-11', 10, 1);
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) 
+VALUES ('2014-11-11', 10, 1, 4);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Acabas de escuchar [.$Cancion$.] Envia SI al [.$Codigo$.] si lo quieres como tu Entretono. Renta Bs.S. [.$Renta$.] c/impuestos. Entretono Bs.S. [.$Monto$.] c/impuestos.',4);
@@ -182,8 +218,8 @@ VALUES (4,1);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
 VALUES (4,3);
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id) 
-VALUES ('2016-07-04', 13, 2);
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) 
+VALUES ('2016-07-04', 13, 2, 4);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Si tu edad es entre 18 y 30, alistate en la FANB. Prensentate del [.$Fecha inicio$.] al [.$Fecha fin$.] en la unidad militar mas cercana',5);

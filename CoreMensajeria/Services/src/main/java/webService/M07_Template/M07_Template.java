@@ -4,10 +4,6 @@ import Classes.M07_Template.HandlerPackage.StatusHandler;
 import Classes.M07_Template.HandlerPackage.TemplateHandler;
 import Classes.M07_Template.Template;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.annotations.JsonAdapter;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -20,11 +16,21 @@ public class M07_Template {
 
     public Gson gson = new Gson();
 
+    /**
+     *
+     * @param userId
+     * @param companyId
+     * @return
+     */
     @GET
-    public Response getTemplates(){
+    public Response getTemplates(@QueryParam("userId") int userId,
+                                 @QueryParam("companyId") int companyId){
+        ArrayList<Template> templateArrayList = null;
         TemplateHandler templateHandler = new TemplateHandler();
-        ArrayList<Template> templateArrayList = templateHandler.getTemplates();
-        return Response.ok(gson.toJson(templateArrayList)).build();
+        templateArrayList = templateHandler.getTemplates(userId,companyId);
+
+        return Response.ok(gson.toJson("userId: " + userId + " companyId: " + companyId)).build();
+        //return Response.ok(gson.toJson(templateArrayList)).build();
     }
 
     @GET
@@ -35,10 +41,6 @@ public class M07_Template {
         return Response.ok(gson.toJson(template)).build();
     }
 
-    /*
-     * Delegando la responsabilidad al servicio M07_Message
-     * Ruta: /templates/messages
-     */
     @Path("/messages")
     public M07_Message getMessages(){
         return new M07_Message();

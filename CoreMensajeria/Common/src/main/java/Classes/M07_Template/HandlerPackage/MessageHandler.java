@@ -17,10 +17,6 @@ public class MessageHandler {
         sql = new Sql();
     }
 
-    /*
-     *
-      Algo ineficiente, refactorisable
-     */
     public ArrayList<Template> getMessages(ArrayList<Template> templateArrayList){
         try {
             for(int x = 0; x < templateArrayList.size(); x++){
