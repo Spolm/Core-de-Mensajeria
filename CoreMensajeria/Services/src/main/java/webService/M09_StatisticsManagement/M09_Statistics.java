@@ -130,7 +130,7 @@ public class M09_Statistics extends Application {
     
     public Response getNumberOfCompanysChart() throws SQLException {
         String aux = "";
-        String select2 = "SELECT com_name  from dim_company_campaign group by com_name";
+        String select2 = "SELECT companiesName as com_name from public.Get_CompanyName()";
 
         try {
             Statistics gr = new Statistics();
@@ -160,7 +160,7 @@ public class M09_Statistics extends Application {
 
     public Response getNumberOfCompanysLine() throws SQLException {
         String aux = "";
-        String select2 = "SELECT com_name  from dim_company_campaign group by com_name ";
+        String select2 = "SELECT companiesName as com_name from public.Get_CompanyName() ";
         try {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
@@ -186,10 +186,12 @@ public class M09_Statistics extends Application {
             Sql.bdClose( conn );
         }
     }
-
+    @GET
+    @Path("/messagesCompany")
+    @Produces("application/json")
     public Response getNumberOfCompanysPie() throws SQLException {
         String aux = "";
-        String select2 = "SELECT com_name  from dim_company_campaign group by com_name";
+        String select2 = "SELECT companiesName as com_name from public.Get_CompanyName()";
         try {
             PieChart PieC = new PieChart();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
@@ -218,7 +220,7 @@ public class M09_Statistics extends Application {
 
     public Response getNumberOfCampaignPie() throws SQLException {
         String aux = "";
-        String select2 = "SELECT cam_name  from dim_company_campaign ";
+        String select2 = "SELECT campaignName as cam_name from public.Get_CampaignName() ";
         try {
             PieChart PieC = new PieChart();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
@@ -244,10 +246,12 @@ public class M09_Statistics extends Application {
             Sql.bdClose( conn );
         }
     }
-
+    @GET
+    @Path("/CampaignChart")
+    @Produces("application/json")
     public Response getNumberOfCampaignChart() throws SQLException {
         String aux = "";
-        String select2 ="SELECT cam_name  from dim_company_campaign";
+        String select2 ="SELECT campaignName as cam_name from public.Get_CampaignName()";
 
         try {
             Statistics gr = new Statistics();
@@ -275,9 +279,13 @@ public class M09_Statistics extends Application {
         }
     }
 
+
+    @GET
+    @Path("/messages")
+    @Produces("application/json")
     public Response getNumberOfCampaignLine() throws SQLException {
         String aux = "";
-        String select2 = " SELECT cam_name  from dim_company_campaign";
+        String select2 = "SELECT campaignName as cam_name from public.Get_CampaignName()";
         try {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
@@ -304,10 +312,6 @@ public class M09_Statistics extends Application {
         }
     }
 
-
-
-
-
     //Metodo para contar la cantidad me menajes enviados por Campana
     public ArrayList<Integer> CountOfMessageCamp ( ArrayList<String> listCampaign ){
 
@@ -319,8 +323,7 @@ public class M09_Statistics extends Application {
             for ( int i = 0 ; i < listCampaign.size() ; i++ ) {
 
                 aux2 = listCampaign.get(i);
-                String select = "SELECT count( M.* ) from fact_sent_message as M , dim_company_campaign as C \n" +
-                        "where C.cam_id = sen_cam_id and C.cam_name = '" + aux2 + "' ";
+                String select = "SELECT * from public.Get_CountOfMessagesCampaign( '" + aux2 + "' ); ";
 
                 Statement st = conn.createStatement();
                 ResultSet result = st.executeQuery( select );
@@ -350,8 +353,7 @@ public class M09_Statistics extends Application {
         for ( int i = 0 ; i < listCompany.size() ; i++ ) {
 
             aux2 = listCompany.get(i);
-            String select = "SELECT count( M.* ) from fact_sent_message as M , dim_company_campaign as C \n" +
-                    "where C.cam_id = M.sen_cam_id and C.com_name = '" + aux2 + "' ";
+            String select = "SELECT * from public.Get_CountOfMessagesCompany( '" + aux2 + "' );";
 
             Statement st = conn.createStatement();
             ResultSet result = st.executeQuery( select );
@@ -380,13 +382,11 @@ public class M09_Statistics extends Application {
             for ( int i = 0 ; i < listChannel.size() ; i++ ) {
 
                 aux2 = listChannel.get(i);
-                String select = "SELECT count(M.*) from fact_sent_message as M , dim_channel as C\n" +
-                                "where C.cha_id = M.sen_cha_id and C.cha_name = '" + aux2 + "' ";
-
+                String select = "SELECT * from public.Get_CountOfMessagesChannel( '"+aux2+"' )";
                 Statement st = conn.createStatement();
                 ResultSet result = st.executeQuery( select );
                 while (result.next()) {
-                    n = result.getInt(1);
+                     n = result.getInt(1);
                     listNum.add( n );
                 }
             }
@@ -547,10 +547,12 @@ public class M09_Statistics extends Application {
         }
         return Response.ok(gson.toJson(campaigns)).build();
     }
-
+    @GET
+    @Path("/channelLine")
+    @Produces("application/json")
     public Response getNumberOfChannelLine() throws SQLException {
         String aux = "";
-        String select2 = " SELECT cha_name  from dim_channel";
+        String select2 = "SELECT channelId as cha_id, channelName as cha_name  from public.Get_ChannelName() ";
         try {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
@@ -578,7 +580,7 @@ public class M09_Statistics extends Application {
 
     public Response getNumberOfChannelChart() throws SQLException {
         String aux = "";
-        String select2 = " SELECT cha_name  from dim_channel";
+        String select2 = " SELECT channelId as cha_id, channelName as cha_name  from public.Get_ChannelName()";
         try {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
@@ -606,7 +608,7 @@ public class M09_Statistics extends Application {
 
     public Response getNumberOfChannelPie() throws SQLException {
         String aux = "";
-        String select2 = " SELECT cha_name  from dim_channel";
+        String select2 = "SELECT channelId as cha_id, channelName as cha_name  from public.Get_ChannelName()";
         try {
             PieChart PieC = new PieChart();
             ArrayList<Integer> listNum = new ArrayList<Integer>();

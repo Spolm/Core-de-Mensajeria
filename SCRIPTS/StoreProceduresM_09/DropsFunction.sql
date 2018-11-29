@@ -1,0 +1,6 @@
+DROP FUNCTION Get_CompanyName () 
+DROP FUNCTION Get_CampaignName () 
+DROP FUNCTION Get_ChannelName () 
+DROP FUNCTION Get_CountOfMessagesCampaign (campName VARCHAR(200)) 
+DROP FUNCTION Get_CountOfMessagesCompany (compName VARCHAR(200)) 
+DROP FUNCTION Get_CountOfMessagesChannel (chaName VARCHAR(200)) 
