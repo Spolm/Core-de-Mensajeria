@@ -12,14 +12,21 @@ public class UserDAO {
     final String QUERY_SELECT_BY_ID = "SELECT * FROM public.user where use_id=?";
     final String QUERY_DELETE = "DELETE FROM public.user where use_id=?";
     final String QUERY_SELECT = "SELECT * FROM public.user";
-    final String QUERY_UPDATE = "UPDATE FROM public.USER SET" +
-            "use_password=? AND use_username=? AND use_type AND use_email=? AND use_phone=? AND use_country=? AND" +
-            "use_city=? AND use_address=? AND use_date_of_birth=? AND use_gender=? AND WHERE use_id=?" +
-            "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    final String QUERY_UPDATE = "UPDATE public.USER SET" +
+            " use_password=? , use_type=? , use_email=? , use_phone=? , use_country=? , " +
+            " use_city=? , use_address=? , use_date_of_birth=? , use_gender=? , use_blocked=? , " +
+            " use_remaining_attempts=? " +
+            " WHERE use_id=?; ";
     final String QUERY_INSERT = "INSERT INTO public.USER " +
             "(use_password, use_username, use_type, use_email, use_phone, use_country," +
             "use_city, use_address, use_date_of_birth, use_gender) values" +
             "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    final String QUERY_UPDATE_REMAINING_ATTEMPTS = "UPDATE public.USER SET" +
+            " use_remaining_attempts=? " +
+            " WHERE use_id=?; ";
+    final String QUERY_UPDATE_BLOCKED = "UPDATE public.USER SET"+
+            " use_blocked=? "+
+            " WHERE use_id=?";
 
     private Connection _conn;
     private User _user;
@@ -117,4 +124,20 @@ public class UserDAO {
         user.set_blockedUser(result.getInt("use_blocked"));
         user.set_remainingAttemptsUser(result.getInt("use_remaining_attempts"));
     }
+
+    public void updateUserRemainingAttempts(User user) throws SQLException {
+        PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_UPDATE_REMAINING_ATTEMPTS);
+        preparedStatement.setInt(1,user.get_remainingAttemptsUser());
+        preparedStatement.setInt(2,user.get_idUser());
+        preparedStatement.executeUpdate();
+    }
+
+    public void blockUser(User user) throws SQLException {
+        PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_UPDATE_BLOCKED);
+        preparedStatement.setInt(1,1);
+        preparedStatement.setInt(2,user.get_idUser());
+        preparedStatement.executeUpdate();
+    }
+
+
 }
