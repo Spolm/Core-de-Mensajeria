@@ -693,7 +693,79 @@ public class M09_Statistics extends Application {
     public Response getStatistics(@QueryParam("companyId") List<Integer> companyIds,
                                   @QueryParam("campaignId") List<Integer> campaignIds,
                                   @QueryParam("channelId") List<Integer> channelIds) {
-        return Response.ok(gson.toJson("Companies: " + companyIds + " Campaigns: " + campaignIds + " Channels: " + channelIds)).build();
+        String companyin = setParametersforQuery(companyIds,"and me.sen_com_id in ");
+        String campaignin = setParametersforQuery(campaignIds,"and me.sen_cam_id in ");
+        String channelin = setParametersforQuery(channelIds,"and me.sen_cha_id in ");
+        ArrayList<Statistics> stats = new ArrayList<Statistics>();
+        try {
+            Statement st = conn.createStatement();
+            if (!companyIds.isEmpty()) {
+                stats.add(getMessagesParam(companyin, campaignin, channelin, "me.sen_com_id", "co.com_name",
+                    "public.dim_company_campaign co", "co.com_id", st));
+            }
+            if (!campaignIds.isEmpty()) {
+                stats.add(getMessagesParam(companyin, campaignin, channelin, "me.sen_cam_id", "ca.cam_name",
+                    "public.dim_company_campaign ca", "ca.cam_id", st));
+            }
+            if (!channelIds.isEmpty()) {
+                stats.add(getMessagesParam(companyin, campaignin, channelin, "me.sen_cha_id", "ch.cha_name",
+                    "public.dim_channel ch", "ch.cha_id", st));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+         finally {
+            Sql.bdClose( conn );
+        }
+        return Response.ok(gson.toJson(stats)).build();
     }
+
+    public Statistics getMessagesParam(String companyIds, String campaignIds, String channelIds, String param1, String param2, String param3,
+                                       String param4, Statement st){
+        int num;
+        String name;
+        ArrayList<String> listName = new ArrayList<>();
+        ArrayList<Integer> listNum = new ArrayList<>();
+        Statistics gr = new Statistics();
+        try {
+            String select = "SELECT count(DISTINCT me.*) as msgs, " + param1 +", "+ param2 +" as name \n"+
+                    "FROM fact_sent_message me, "+ param3 +" \n" +
+                    "WHERE " + param1 + " = " + param4 + " "+ companyIds + " " + campaignIds + "  " + channelIds + " \n" +
+                    "GROUP BY " + param1 + ", "+ param2 +"";
+            System.out.println(select);
+            ResultSet result = st.executeQuery( select );
+            while ( result.next() ) {
+                num = result.getInt("msgs");
+                name = result.getString("name");
+                listNum.add( num );
+                listName.add( name );
+                gr.x = listName;
+                gr.y = listNum;
+            }
+        }
+        catch ( SQLException e ) {
+            e.printStackTrace();
+            // throw new SQLException();
+        }
+        return gr;
+    }
+
+    public String setParametersforQuery(List<Integer> ids, String params){
+        if (ids.isEmpty()) {
+            return "";
+        }
+        params = params.concat("(");
+        for(int i=0;i<ids.size();i++){
+            params = params.concat(ids.get(i).toString());
+            if (i == ids.size()-1){
+                params = params.concat(")");
+            }
+            else{
+                params = params.concat(",");
+            }
+        }
+        return params;
+    }
+
 }
 
