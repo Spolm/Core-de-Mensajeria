@@ -121,15 +121,17 @@ public class M09_StatisticsTests {
     @Test
     void testGetNumberOfCompanysLine()throws SQLException {
         M09_Statistics instance = new M09_Statistics();
-
-        assertNotNull( instance.getNumberOfCompanysLine() );
+        Response res = instance.getNumberOfCompanysLine();
+        assertEquals(200, res.getStatus());
+        assertNotNull( res.getEntity() );
     }
 
     @Test
     void testGetNumberOfCompanysPie()throws SQLException {
         M09_Statistics instance = new M09_Statistics();
-
-        assertNotNull( instance.getNumberOfCompanysPie() );
+        Response res = instance.getNumberOfCompanysPie();
+        assertEquals(200,res.getStatus());
+        assertNotNull( res.getEntity() );
     }
 
 
@@ -139,43 +141,49 @@ public class M09_StatisticsTests {
     @Test
     void testGetNumberOfCampaignLine()throws SQLException {
         M09_Statistics instance = new M09_Statistics();
-
-        assertNotNull( instance.getNumberOfCampaignLine() );
+        Response res = instance.getNumberOfCampaignLine();
+        assertEquals( 200, res.getStatus() );
+        assertNotNull( res.getEntity() );
     }
 
     @Test
     void testgetNumberOfCampaignChart()throws SQLException {
         M09_Statistics instance = new M09_Statistics();
-
-        assertNotNull( instance.getNumberOfCampaignChart() );
+        Response res = instance.getNumberOfCampaignChart();
+        assertEquals( 200, res.getStatus() );
+        assertNotNull( res.getEntity() );
     }
 
     @Test
     void testGetNumberOfCampaignPie()throws SQLException {
         M09_Statistics instance = new M09_Statistics();
-
-        assertNotNull( instance.getNumberOfCampaignPie() );
+        Response res = instance.getNumberOfCampaignPie();
+        assertEquals( 200, res.getStatus() );
+        assertNotNull( res.getEntity() );
     }
 
     @Test
     void testGetNumberOfChannelChart()throws SQLException {
         M09_Statistics instance = new M09_Statistics();
-
-        assertNotNull( instance.getNumberOfChannelChart() );
+        Response res = instance.getNumberOfChannelChart();
+        assertEquals( 200, res.getStatus() );
+        assertNotNull( res.getEntity() );
     }
 
     @Test
     void testGetNumberOfChannelLine()throws SQLException {
         M09_Statistics instance = new M09_Statistics();
-
-        assertNotNull( instance.getNumberOfChannelLine() );
+        Response res = instance.getNumberOfChannelLine();
+        assertEquals( 200, res.getStatus() );
+        assertNotNull( res.getEntity() );
     }
 
     @Test
     void testGetNumberOfChannelPie()throws SQLException {
         M09_Statistics instance = new M09_Statistics();
-
-        assertNotNull( instance.getNumberOfChannelPie() );
+        Response res = instance.getNumberOfChannelPie();
+        assertEquals( 200, res.getStatus() );
+        assertNotNull( res.getEntity() );
     }
 
 
