@@ -15,12 +15,13 @@ import { HttpParams } from "@angular/common/http";
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
 import { MoreFiltersComponent } from "./more-filters/more-filters.component";
 import { Chart } from "chart.js";
+//import { create } from "domain";
 
 interface myData {
     obj: Object;
 }
 
-enum ObjectType {
+enum EntityType {
     company = 1,
     campaign,
     channel
@@ -32,16 +33,25 @@ enum ObjectType {
     styleUrls: ["./statistics.component.scss"]
 })
 export class StatisticsComponent implements OnInit {
-    json2;
-    datos;
-    opcionSeleccionado: string = "0";
-    verSeleccion: string = "";
-    Date2Capturado: string = "";
-    Date1Capturado: string = "";
-    opcionDateSleccionado: Date;
-    opcionDateSleccionado2: Date;
-    paramType: string;
+    /* =================================
+           Charts elements from html
+    ==================================== */
+    @ViewChild("timeLineChart") canvas: ElementRef;
+    @ViewChild("companiesBarChartElement") companiesBarChartElement: ElementRef;
+    @ViewChild("campaignsBarChartElement") campaignsBarChartElement: ElementRef;
+    @ViewChild("channelsPieChartElement") channelsPieChartElement: ElementRef;
 
+    /* ==============
+           Charts
+    ================= */
+    timeLineChart = [];
+    companiesBarChart = [];
+    campaignsBarChart = [];
+    channelsPieChart = [];
+
+    /* ==========================
+           Filter dropdowns
+    ============================= */
     companiesDropdown = [];
     companiesDropdownSettings = {};
     selectedCompaniesIds: Number[] = [];
@@ -57,26 +67,18 @@ export class StatisticsComponent implements OnInit {
     selectedChannelsIds = [];
     selectedChannels = [];
 
-    public graph = {
-        data: [],
-        layout: {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por canal"
-        }
-    };
-
-    public graph2 = {
-        data: [{ x: ["SMS", "Email"], y: [400, 100], type: "pie" }],
-        layout: {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por canal"
-        }
-    };
+    json2;
+    datos;
+    opcionSeleccionado: string = "0";
+    verSeleccion: string = "";
+    Date2Capturado: string = "";
+    Date1Capturado: string = "";
+    opcionDateSleccionado: Date;
+    opcionDateSleccionado2: Date;
+    paramType: string;
 
     constructor(
-        private Servicio: StatisticsServiceService,
+        private statisticsService: StatisticsServiceService,
         private toastr: ToastrService,
         public dialog: MatDialog
     ) {
@@ -87,11 +89,8 @@ export class StatisticsComponent implements OnInit {
         ];
     }
 
-    timeLineChart = [];
-    @ViewChild("timeLineChart") canvas: ElementRef;
-
     ngAfterViewInit() {
-        console.log(this.canvas);
+        // Refactorizar la creación de esta gráfica
         this.timeLineChart = new Chart(
             this.canvas.nativeElement.getContext("2d"),
             {
@@ -139,15 +138,205 @@ export class StatisticsComponent implements OnInit {
                 }
             }
         );
-
-        console.log(this.timeLineChart);
     }
 
     ngOnInit() {
-        this.Servicio.getAllCompanies().subscribe(data => {
-            this.insertIntoDropdown(ObjectType.company, data);
-        });
+        this.setupCompaniesDropdownSettings();
+        this.setupCampaignsDropdownSettings();
+        this.setupChannelsDropdownSettings();
 
+        this.getAllCompanies();
+        this.getAllCampaigns();
+        this.getAllChannels();
+
+        this.statisticsService
+            .getDataLineChartCompany(
+                "?paramDate1=" +
+                    "&" +
+                    "?paramDate2=" +
+                    "&" +
+                    "paramType=Cantidad de mensajes enviados por Compañias"
+            )
+            .subscribe(data => {
+                this.json2 = data;
+                this.linechartCompany(this.json2);
+                console.log("DataLine:", this.json2);
+            });
+
+        this.statisticsService
+            .getDataBarChartCompany(
+                "?paramDate1=" +
+                    "&" +
+                    "?paramDate2=" +
+                    "&" +
+                    "paramType=Cantidad de mensajes enviados por Compañias"
+            )
+            .subscribe(data => {
+                this.json2 = data;
+                this.barchartCompany(this.json2);
+                console.log("DataPie:", this.json2);
+
+                let labels = data["labels"];
+                let values = data["values"];
+
+                var datos: any[] = [];
+                var colors: String[] = [];
+
+                for (var i = 0; i < labels.length; i++) {
+                    datos.push({ x: labels[i], y: values[i] });
+                    colors.push(this.getRandomColor());
+                }
+
+                this.companiesBarChart = this.createChart(
+                    "Cantidad de mensajes por compañía",
+                    labels,
+                    datos,
+                    colors,
+                    "bar",
+                    this.companiesBarChartElement
+                );
+            });
+
+        this.statisticsService
+            .getDataPieChartCompany(
+                "?paramDate1=" +
+                    "&" +
+                    "?paramDate2=" +
+                    "&" +
+                    "paramType=Cantidad de mensajes enviados por Compañias"
+            )
+            .subscribe(data => {
+                this.json2 = data;
+                this.piechartCompany(this.json2);
+                console.log("DataChart:", this.json2);
+            });
+
+        this.statisticsService
+            .getDataLineChartCampaign(
+                "?paramDate1=" +
+                    "&" +
+                    "?paramDate2=" +
+                    "&" +
+                    "paramType=Cantidad de mensajes enviados por Campañas"
+            )
+            .subscribe(data => {
+                this.json2 = data;
+                this.linechartCampaign(this.json2);
+                console.log("DataChart:", this.json2);
+            });
+
+        this.statisticsService
+            .getDataBarChartCampaign(
+                "?paramDate1=" +
+                    "&" +
+                    "?paramDate2=" +
+                    "&" +
+                    "paramType=Cantidad de mensajes enviados por Campañas"
+            )
+            .subscribe(data => {
+                this.json2 = data;
+                this.barchartCampaign(this.json2);
+                console.log("DataChart:", this.json2);
+
+                let labels = data["labels"];
+                let values = data["values"];
+
+                var datos: any[] = [];
+                var colors: String[] = [];
+
+                for (var i = 0; i < labels.length; i++) {
+                    datos.push({ x: labels[i], y: values[i] });
+                    colors.push(this.getRandomColor());
+                }
+
+                this.campaignsBarChart = this.createChart(
+                    "Cantidad de mensajes por campaña",
+                    labels,
+                    datos,
+                    colors,
+                    "bar",
+                    this.campaignsBarChartElement
+                );
+            });
+
+        this.statisticsService
+            .getDataPieChartCampaign(
+                "?paramDate1=" +
+                    "&" +
+                    "?paramDate2=" +
+                    "&" +
+                    "paramType=Cantidad de mensajes enviados por Campañas"
+            )
+            .subscribe(data => {
+                this.json2 = data;
+                this.piechartCampaign(this.json2);
+                console.log("DataChart:", this.json2);
+            });
+
+        this.statisticsService
+            .getDataLineChartChannels(
+                "?paramDate1=" +
+                    "&" +
+                    "?paramDate2=" +
+                    "&" +
+                    "paramType=Cantidad de mensajes enviados por Canales"
+            )
+            .subscribe(data => {
+                this.json2 = data;
+                this.linechartChannels(this.json2);
+                console.log("DataChart:", this.json2);
+            });
+
+        this.statisticsService
+            .getDataBarChartChannels(
+                "?paramDate1=" +
+                    "&" +
+                    "?paramDate2=" +
+                    "&" +
+                    "paramType=Cantidad de mensajes enviados por Canales"
+            )
+            .subscribe(data => {
+                this.json2 = data;
+                this.barchartChannels(this.json2);
+                console.log("DataChart:", this.json2);
+            });
+
+        this.statisticsService
+            .getDataPieChartChannels(
+                "?paramDate1=" +
+                    "&" +
+                    "?paramDate2=" +
+                    "&" +
+                    "paramType=Cantidad de mensajes enviados por Canales"
+            )
+            .subscribe(data => {
+                this.json2 = data;
+                this.piechartChannels(this.json2);
+                console.log("Hola:", this.json2);
+
+                let labels = data["x"];
+                let values = data["y"];
+
+                var datos: any[] = [];
+                var colors: String[] = [];
+
+                for (var i = 0; i < labels.length; i++) {
+                    datos.push({ x: labels[i], y: values[i] });
+                    colors.push(this.getRandomColor());
+                }
+
+                this.channelsPieChart = this.createChart(
+                    "Cantidad de mensajes por canal",
+                    labels,
+                    values,
+                    colors,
+                    "doughnut",
+                    this.channelsPieChartElement
+                );
+            });
+    }
+
+    private setupCompaniesDropdownSettings() {
         this.companiesDropdownSettings = {
             singleSelection: false,
             idField: "company_id",
@@ -157,9 +346,9 @@ export class StatisticsComponent implements OnInit {
             itemsShowLimit: 1,
             allowSearchFilter: true
         };
+    }
 
-        this.getAllCampaigns();
-
+    private setupCampaignsDropdownSettings() {
         this.campaignsDropdownSettings = {
             singleSelection: false,
             idField: "campaign_id",
@@ -169,11 +358,9 @@ export class StatisticsComponent implements OnInit {
             itemsShowLimit: 1,
             allowSearchFilter: true
         };
+    }
 
-        this.Servicio.getAllChannels().subscribe(data => {
-            this.insertIntoDropdown(ObjectType.channel, data);
-        });
-
+    private setupChannelsDropdownSettings() {
         this.channelsDropdownSettings = {
             singleSelection: false,
             idField: "channel_id",
@@ -183,137 +370,23 @@ export class StatisticsComponent implements OnInit {
             itemsShowLimit: 1,
             allowSearchFilter: true
         };
-
-        this.Servicio.getDataLineChartCompany(
-            "?paramDate1=" +
-                "&" +
-            "?paramDate2=" +
-                "&" +
-            "paramType=Cantidad de mensajes enviados por Compañias"
-        ).subscribe(data => {
-            this.json2 = data;
-            this.linechartCompany(this.json2);
-            console.log("DataLine:", this.json2);
-        });
-
-        this.Servicio.getDataBarChartCompany(
-            "?paramDate1=" +
-                "&" +
-            "?paramDate2=" +
-                "&" +
-            "paramType=Cantidad de mensajes enviados por Compañias"
-        ).subscribe(data => {
-            this.json2 = data;
-            this.barchartCompany(this.json2);
-            console.log("DataPie:", this.json2);
-        });
-
-        this.Servicio.getDataPieChartCompany(
-             "?paramDate1=" +
-                "&" +
-             "?paramDate2=" +
-                "&" +
-             "paramType=Cantidad de mensajes enviados por Compañias"
-        ).subscribe(data => {
-            this.json2 = data;
-            this.piechartCompany(this.json2);
-            console.log("DataChart:", this.json2);
-        });
-
-        this.Servicio.getDataLineChartCampaign(
-            "?paramDate1=" +
-               "&" +
-            "?paramDate2=" +
-               "&" +
-            "paramType=Cantidad de mensajes enviados por Campañas"
-       ).subscribe(data => {
-           this.json2 = data;
-           this.linechartCampaign(this.json2);
-           console.log("DataChart:", this.json2);
-       });
-
-       this.Servicio.getDataBarChartCampaign(
-        "?paramDate1=" +
-           "&" +
-        "?paramDate2=" +
-           "&" +
-        "paramType=Cantidad de mensajes enviados por Campañas"
-   ).subscribe(data => {
-       this.json2 = data;
-       this.barchartCampaign(this.json2);
-       console.log("DataChart:", this.json2);
-   });
-
-   this.Servicio.getDataPieChartCampaign(
-    "?paramDate1=" +
-       "&" +
-    "?paramDate2=" +
-       "&" +
-    "paramType=Cantidad de mensajes enviados por Campañas"
-).subscribe(data => {
-   this.json2 = data;
-   this.piechartCampaign(this.json2);
-   console.log("DataChart:", this.json2);
-});
-
-this.Servicio.getDataLineChartChannels(
-    "?paramDate1=" +
-       "&" +
-    "?paramDate2=" +
-       "&" +
-    "paramType=Cantidad de mensajes enviados por Canales"
-).subscribe(data => {
-   this.json2 = data;
-   this.linechartChannels(this.json2);
-   console.log("DataChart:", this.json2);
-});
-
-this.Servicio.getDataBarChartChannels(
-    "?paramDate1=" +
-       "&" +
-    "?paramDate2=" +
-       "&" +
-    "paramType=Cantidad de mensajes enviados por Canales"
-).subscribe(data => {
-   this.json2 = data;
-   this.barchartChannels(this.json2);
-   console.log("DataChart:", this.json2);
-});
-
-this.Servicio.getDataPieChartChannels(
-    "?paramDate1=" +
-       "&" +
-    "?paramDate2=" +
-       "&" +
-    "paramType=Cantidad de mensajes enviados por Canales"
-).subscribe(data => {
-   this.json2 = data;
-   this.piechartChannels(this.json2);
-   console.log("DataChart:", this.json2);
-});
-   
-
-
-        // this.Servicio.getStatisticsData1().subscribe(data => {
-        //  this.json2 = data
-        // this.chart(this.json2)
-        // console.log("Data1:", this.json2)
-        // })
-        // this.Servicio.getStatisticsData2().subscribe(data => {
-        //   this.json2 = data
-        //   this.chart2(this.json2)
-        //  console.log("Data2:", this.json2)
-        //  })
-        // this.Servicio.getStatisticsData3().subscribe(data => {
-        //   this.json2 = data
-        //    this.chart3(this.json2)
-        //    console.log("Data3:", this.json2)
-        //  })
     }
 
-    private insertIntoDropdown(objectType: ObjectType, data: Object) {
-        switch (objectType) {
-            case ObjectType.company:
+    private getAllCompanies() {
+        this.statisticsService.getAllCompanies().subscribe(data => {
+            this.insertIntoDropdown(EntityType.company, data);
+        });
+    }
+
+    private getAllChannels() {
+        this.statisticsService.getAllChannels().subscribe(data => {
+            this.insertIntoDropdown(EntityType.channel, data);
+        });
+    }
+
+    private insertIntoDropdown(entityType: EntityType, data: Object) {
+        switch (entityType) {
+            case EntityType.company:
                 for (var index in data) {
                     this.companiesDropdown.push({
                         company_id: data[index]["_idCompany"],
@@ -321,7 +394,7 @@ this.Servicio.getDataPieChartChannels(
                     });
                 }
                 break;
-            case ObjectType.campaign:
+            case EntityType.campaign:
                 this.campaignsDropdown = [];
                 for (var index in data) {
                     this.campaignsDropdown.push({
@@ -330,7 +403,7 @@ this.Servicio.getDataPieChartChannels(
                     });
                 }
                 break;
-            case ObjectType.channel:
+            case EntityType.channel:
                 for (var index in data) {
                     this.channelsDropdown.push({
                         channel_id: data[index]["idChannel"],
@@ -371,15 +444,18 @@ this.Servicio.getDataPieChartChannels(
                 new Date(this.opcionDateSleccionado2).getUTCMonth(),
                 new Date(this.opcionDateSleccionado2).getFullYear()
             );
-            this.Servicio.getDataLineChartCompany(   /* getStatisticsData4 */
-                this.Date1Capturado +
-                    "&" +
-                    this.Date2Capturado +
-                    "&" +
-                    this.paramType
-            ).subscribe(data => {
-                console.log(data);
-            });
+            this.statisticsService
+                .getDataLineChartCompany(
+                    /* getStatisticsData4 */
+                    this.Date1Capturado +
+                        "&" +
+                        this.Date2Capturado +
+                        "&" +
+                        this.paramType
+                )
+                .subscribe(data => {
+                    console.log(data);
+                });
         } else if (
             (this.opcionDateSleccionado == null &&
                 this.opcionDateSleccionado2 == null) ||
@@ -391,34 +467,37 @@ this.Servicio.getDataPieChartChannels(
             this.Date1Capturado = "?paramDate1=";
             this.Date2Capturado = "?paramDate2=";
             this.paramType = "paramType=" + this.verSeleccion;
-            this.Servicio.getDataLineChartCompany(    /* getStatisticsData4 */
-                this.Date1Capturado +
-                    "&" +
-                    this.Date2Capturado +
-                    "&" +
-                    this.paramType
-            ).subscribe(data => {
-                console.log(data);
-            });
+            this.statisticsService
+                .getDataLineChartCompany(
+                    /* getStatisticsData4 */
+                    this.Date1Capturado +
+                        "&" +
+                        this.Date2Capturado +
+                        "&" +
+                        this.paramType
+                )
+                .subscribe(data => {
+                    console.log(data);
+                });
         } else {
             this.toastr.error("Error en las fechas");
         }
     }
 
     DoGraficas() {
-        /*     this.Servicio.getStatisticsData1().subscribe(data => {
+        /*     this.statisticsService.getStatisticsData1().subscribe(data => {
       this.json2 = data
       this.chart(this.json2) 
       console.log("Data1:", this.json2)   
       })*/
         /*
-      this.Servicio.getStatisticsData2().subscribe(data => {
+      this.statisticsService.getStatisticsData2().subscribe(data => {
         this.json2 = data
         this.chart(this.json2) 
         console.log("Data2:", this.json2)   
         })*/
         /*
-        this.Servicio.getStatisticsData3().subscribe(data => {
+        this.statisticsService.getStatisticsData3().subscribe(data => {
           this.json2 = data
           this.chart(this.json2) 
           console.log("Data3:", this.json2) 
@@ -457,7 +536,6 @@ this.Servicio.getDataPieChartChannels(
         };
         Plotly.newPlot(linediv, graph, layout);
     }
-
 
     piechartCompany(datos) {
         const graph = [datos];
@@ -515,7 +593,7 @@ this.Servicio.getDataPieChartChannels(
     }
 
     barchartChannels(datos) {
-        const graph = [datos];                      
+        const graph = [datos];
         const linediv = document.getElementById("bar-chartChannels");
         const layout = {
             width: 500,
@@ -526,16 +604,15 @@ this.Servicio.getDataPieChartChannels(
     }
 
     getAllCampaigns() {
-        this.Servicio.getAllCampaigns().subscribe(
+        this.statisticsService.getAllCampaigns().subscribe(
             data => {
-                this.insertIntoDropdown(ObjectType.campaign, data);
+                this.insertIntoDropdown(EntityType.campaign, data);
             },
             error => {
                 this.toastr.error("Error de conexión");
             }
         );
     }
-
 
     // Handle company selecction
     companySelected(company: any) {
@@ -642,12 +719,12 @@ this.Servicio.getDataPieChartChannels(
     }
 
     getCampaignsForCompanies() {
-        this.Servicio.getCampaingsForCompany(
-            this.selectedCompaniesIds
-        ).subscribe(data => {
-            this.campaignsDropdown = [];
-            this.insertIntoDropdown(ObjectType.campaign, data);
-        });
+        this.statisticsService
+            .getCampaingsForCompany(this.selectedCompaniesIds)
+            .subscribe(data => {
+                this.campaignsDropdown = [];
+                this.insertIntoDropdown(EntityType.campaign, data);
+            });
     }
 
     removeItemFromArray(item: Number, array: Number[]) {
@@ -672,7 +749,7 @@ this.Servicio.getDataPieChartChannels(
 
     sendUserRequest() {
         var params = this.convertSelectedItemsIntoHttpParams();
-        this.Servicio.getStatistics(params).subscribe(
+        this.statisticsService.getStatistics(params).subscribe(
             data => {
                 console.log(data);
             },
@@ -737,6 +814,60 @@ this.Servicio.getDataPieChartChannels(
         dialogRef.afterClosed().subscribe(result => {
             console.log("Dialog was closed");
             console.log(result);
+        });
+    }
+
+    getRandomColor() {
+        var letters = "0123456789ABCDEF";
+        var color = "#";
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    createChart(
+        title: String,
+        labels: String[],
+        data: any[],
+        colors: String[],
+        type: String,
+        element: ElementRef
+    ): Chart {
+        return new Chart(element.nativeElement.getContext("2d"), {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        data: data,
+                        fill: true,
+                        backgroundColor: colors
+                    }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: title
+                },
+                responsive: true,
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [
+                        {
+                            display: true
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            display: true
+                        }
+                    ]
+                }
+            }
         });
     }
 }
