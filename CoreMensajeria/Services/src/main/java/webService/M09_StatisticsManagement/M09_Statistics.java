@@ -15,10 +15,7 @@ import com.google.gson.Gson;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +36,6 @@ public class M09_Statistics extends Application {
     public Response test2( @QueryParam( "paramDate1" ) String paramDate1,
                            @QueryParam( "paramDate2" ) String paramDate2,
                            @QueryParam( "paramType" ) String paramType ) {
-        System.out.println( paramType );
         Response responseAnswerLine = filterOfTypeStatisticsLine( paramDate1 , paramType );
         return responseAnswerLine ;
     }
@@ -131,7 +127,7 @@ public class M09_Statistics extends Application {
         }
         return Response.ok(gson.toJson(channels)).build();
     }
-
+    
     public Response getNumberOfCompanysChart() throws SQLException {
         String aux = "";
         String select2 = "SELECT com_name  from dim_company_campaign group by com_name";
