@@ -1,6 +1,5 @@
 package M09_StatisticsManagement;
 
-import Classes.M02_Company.Company;
 import Classes.M09_Statistics.SqlEstrella;
 import Classes.M09_Statistics.Statistics;
 import Classes.Sql;
@@ -11,6 +10,7 @@ import javax.ws.rs.core.Response;
 import java.sql.*;
 import java.util.ArrayList;
 import static  org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 public class M09_StatisticsTests {
@@ -24,6 +24,7 @@ public class M09_StatisticsTests {
         try {
             Response res = instance.getNumberOfCompanysChart();
             assertEquals(200, res.getStatus());
+            assertNotNull(res.getEntity());
         }
         catch (SQLException e){}
 
