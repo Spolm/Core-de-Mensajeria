@@ -2,7 +2,7 @@ package Classes.M04_Channel_Integrator.IntegratorPackage;
 // Es un patro de diseno factory, se encarga de regresar el tipo de integrador dependiendo del parametro
 public class IntegratorFactory {
 // Metodo que regresa el integrador completo dependiendo principalmente del parametro intregratorType
-    public Integrator getIntegrator(String integratorType, int idIntegrator, String nameIntegrator,
+    public static Integrator getIntegrator(String integratorType, int idIntegrator, String nameIntegrator,
                                     float messageCost, int threadCapacity, String apiIntegrator, boolean enabled) {
         if (integratorType == null) {
             return null;
