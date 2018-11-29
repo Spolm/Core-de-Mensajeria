@@ -16,7 +16,7 @@ create table public.User
 );
 
 
-ALTER TABLE User
+ALTER TABLE public.User
 ADD COLUMN use_blocked integer DEFAULT 0 NOT NULL,
 ADD CoLUMN use_remaining_attempts integer DEFAULT 3 NOT NULL;
 
