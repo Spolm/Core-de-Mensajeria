@@ -167,7 +167,7 @@ export class StatisticsComponent implements OnInit {
         this.createChart(
             title,
             Point.getXArray(pointsForChart),
-            pointsOfChartJson,
+            Point.getYArray(pointsOfChartJson),
             colors,
             chartType,
             chartElement
@@ -481,26 +481,6 @@ export class StatisticsComponent implements OnInit {
         } else {
             this.toastr.error("Error en las fechas");
         }
-    }
-
-    DoGraficas() {
-        /*     this.statisticsService.getStatisticsData1().subscribe(data => {
-      this.json2 = data
-      this.chart(this.json2) 
-      console.log("Data1:", this.json2)   
-      })*/
-        /*
-      this.statisticsService.getStatisticsData2().subscribe(data => {
-        this.json2 = data
-        this.chart(this.json2) 
-        console.log("Data2:", this.json2)   
-        })*/
-        /*
-        this.statisticsService.getStatisticsData3().subscribe(data => {
-          this.json2 = data
-          this.chart(this.json2) 
-          console.log("Data3:", this.json2) 
-            })*/
     }
 
     piechartCampaign(datos) {
