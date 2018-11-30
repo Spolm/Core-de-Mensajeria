@@ -8,6 +8,16 @@ import Exceptions.DatabaseConnectionProblemException;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Clase que nos permite realizar la conexion a la base de datos
+ * con los metodos relacionados a la clase Channel
+ *
+ * @Author Josè Salas
+ * @Author Manuel Espinoza
+ * @Author Josè Cedeño
+ * @see Channel
+ */
+
 public class ChannelDAO {
 
     private Connection _conn;
@@ -15,9 +25,26 @@ public class ChannelDAO {
     public ArrayList<Integrator> _integratorList;
     public ArrayList<Channel> _channelList;
 
+    /**
+     * Constructor que se encarga de realizar la conexion
+     * a la base de datos
+     *
+     * @see Connection
+     */
+
     public ChannelDAO() {
         _conn = Sql.getConInstance();
     }
+
+    /**
+     * Retorna una lista de integradores por canal
+     * Este metodo retorna una lista de integradores, en caso de no tener
+     * el archivo se encontrara en blanco.
+     *
+     * @return Lista de canales
+     * @see Channel
+     * @see Integrator
+     */
 
     public ArrayList<Integrator> listIntegratorByChannel(int id) throws DatabaseConnectionProblemException, ChannelNotFoundException {
         try {
@@ -41,6 +68,15 @@ public class ChannelDAO {
         }
         return _integratorList;
     }
+
+    /**
+     * Retorna una lista de canales
+     * Este metodo retorna una lista de canales, en caso de no tener
+     * el archivo se encontrara en blanco.
+     *
+     * @return Lista de canales
+     * @see Channel
+     */
 
     public ArrayList<Channel> listChannel() throws DatabaseConnectionProblemException {
         try {

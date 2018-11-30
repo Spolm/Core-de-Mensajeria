@@ -7,6 +7,16 @@ import Exceptions.IntegratorNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Clase que nos permite realizar la conexion a la base de datos
+ * con los metodos relacionados a la clase integrador
+ *
+ * @Author Josè Salas
+ * @Author Manuel Espinoza
+ * @Author Josè Cedeño
+ * @see Integrator
+ */
+
 public class IntegratorDAO {
 
     private Connection _conn;
@@ -20,6 +30,7 @@ public class IntegratorDAO {
      *
      * @see Connection
      */
+
     public IntegratorDAO() {
         _conn = Sql.getConInstance();
     }
@@ -50,6 +61,16 @@ public class IntegratorDAO {
         }
     }
 
+    /**
+     * Retorna un solo integrador
+     * Este metodo retorna un integrador en concreto
+     * en caso de no existir
+     *
+     * @param id del integrador a buscar en la base de datos
+     * @return Lista de Integradores
+     * @see Integrator
+     */
+
     public Integrator getConcreteIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
         try {
             PreparedStatement preparedStatement = _conn.prepareCall("{call m04_getConcreteIntegrator(?)}");
@@ -72,6 +93,14 @@ public class IntegratorDAO {
         return _integrator;
     }
 
+    /**
+     * Metodo que nos permite deshabilitar integrador
+     * permite cambiar el estado del integrador
+     *
+     * @param id del integrador a buscar en la base de datos
+     * @see Integrator
+     */
+
     public void disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
         try {
             getConcreteIntegrator(id);
@@ -86,6 +115,14 @@ public class IntegratorDAO {
             Sql.bdClose(_conn);
         }
     }
+
+    /**
+     * Metodo que nos permite habilitar integrador
+     * permite cambiar el estado del integrador
+     *
+     * @param id del integrador a buscar en la base de datos
+     * @see Integrator
+     */
 
     public void enableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
         try {
