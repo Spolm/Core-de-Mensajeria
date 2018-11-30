@@ -6,3 +6,4 @@
 \ir 'CREATE DB_STARSCHEMA.sql'
 \ir CREATES_STARSCHEMA.sql
 \ir FUNCTIONS.sql
+\ir StoreProceduresM_09/FuntionsGet.sql
