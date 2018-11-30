@@ -1,4 +1,4 @@
-package Classes.M04_Channel_Integrator.IntegratorPackage;
+package Classes.M04_Integrator;
 
 public class MailChimp extends Integrator {
 
