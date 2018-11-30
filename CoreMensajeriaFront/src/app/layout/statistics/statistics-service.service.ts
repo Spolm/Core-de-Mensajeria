@@ -32,7 +32,7 @@ export class StatisticsServiceService {
     getDataPieChartCompany(sparam: string) {
         return this.http.get(this.ApiURL + "PruebaParam3" + sparam);
     }
-  /*  Campanas  */
+    /*  Campanas  */
     getDataLineChartCampaign(sparam: string) {
         return this.http.get(this.ApiURL + "PruebaParam" + sparam);
     }
@@ -42,7 +42,7 @@ export class StatisticsServiceService {
     getDataPieChartCampaign(sparam: string) {
         return this.http.get(this.ApiURL + "PruebaParam3" + sparam);
     }
- /* Canales   */
+    /* Canales   */
     getDataLineChartChannels(sparam: string) {
         return this.http.get(this.ApiURL + "PruebaParam" + sparam);
     }
@@ -74,6 +74,6 @@ export class StatisticsServiceService {
     }
 
     getStatistics(params: HttpParams) {
-        return this.http.get(this.ApiURL + "data", { params });
+        return this.http.get(this.ApiURL + "filters", { params });
     }
 }
