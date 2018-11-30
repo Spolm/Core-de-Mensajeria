@@ -3,6 +3,7 @@ package webService.M07_Template;
 import Classes.M07_Template.HandlerPackage.StatusHandler;
 import Classes.M07_Template.HandlerPackage.TemplateHandler;
 import Classes.M07_Template.Template;
+import Exceptions.TemplateDoesntExistsException;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -37,8 +38,15 @@ public class M07_Template {
     @Path("/{templateId}")//Subsequent Path
     public Response getTemplate(@PathParam("templateId") int id){
         TemplateHandler templateHandler = new TemplateHandler();
-        Template template = templateHandler.getTemplate(id);
-        return Response.ok(gson.toJson(template)).build();
+        Template template = new Template();
+        try {
+            template = templateHandler.getTemplate(id);
+        }catch (TemplateDoesntExistsException e){
+            e.printStackTrace();
+        }
+        finally {
+            return Response.ok(gson.toJson(template)).build();
+        }
     }
 
     @Path("/messages")

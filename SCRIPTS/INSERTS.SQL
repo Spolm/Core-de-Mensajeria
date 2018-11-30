@@ -117,7 +117,7 @@ INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_
 
 INSERT INTO public.application(app_name,app_description,app_token,app_date,app_status,app_user_creator, app_company) values
 ('Amazon','Pagina Web','BF5453E0B1BF86A7FA020A4B87D7C0A9B0946ACCEB403E918E352D10BD35007D','04/05/1995',0,1,1),
-('Mercantil en linea','Aplicacion movil de mercantil','5E182FC1A42614D37B951A7A38648350D0D166E9D78BA26E59EF7ECE9462BE34','12/13/2017',1,1,2),
+('Mercantil en linea','Aplicacion movil de mercantil','5E182FC1A42614D37B951A7A38648350D0D166E9D78BA26E59EF7ECE9462BE34','07/06/2017',1,1,2),
 ('Banesco Online','Aplicacion web de banesco','5DD3CE9EF2B7614FB471B442050DDB24ADDBE88424B3C1382C7DD224A99203BD','01/08/2015',1,1,3);
 
 INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) 

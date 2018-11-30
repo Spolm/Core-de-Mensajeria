@@ -12,6 +12,7 @@ import Classes.M06_DataOrigin.ApplicationDAO;
 import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
+import Exceptions.MessageDoesntExistsException;
 import Exceptions.TemplateDoesntExistsException;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -91,7 +92,7 @@ public class TemplateHandler {
             return templateArrayList;
         }
     }
-    public Template getTemplate(int id) {
+    public Template getTemplate(int id) throws TemplateDoesntExistsException{
         Template template = new Template();
         String query = "select tem_id,ts_id,tem_user_id, tem_creation_date, sta_name\n" +
                 "from template_status,template,status\n" +
@@ -104,7 +105,7 @@ public class TemplateHandler {
                 template.setTemplateId(resultSet.getInt("tem_id"));
                 template.setCreationDate(resultSet.getString("tem_creation_date"));
 
-                //asignamos el mensae y status del template
+                //asignamos el mensaje y status del template
                 template.setMessage(MessageHandler.getMessage(template.getTemplateId()));
                 template.setStatus(Status.createStatus(resultSet.getInt("ts_id"),
                         resultSet.getString("sta_name")));
@@ -119,8 +120,9 @@ public class TemplateHandler {
                 template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
             }
 
-        } catch(SQLException e){
+        }catch (MessageDoesntExistsException e){
             e.printStackTrace();
+        }catch(SQLException e){
             throw new TemplateDoesntExistsException
                     ("Error: la plantilla " + id + " no existe", e, id);
         } catch (Exception e){
