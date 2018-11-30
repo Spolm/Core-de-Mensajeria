@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import Exceptions.TemplateDoesntExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -33,12 +34,14 @@ public class TemplateHandlerTest {
 
     @Test
     void getTemplateCorrectly(){
-
-        for (int i=0 ; i < 5 ; i++){
-            assertEquals(templateHandler.getTemplate(i).getTemplateId(), i+1);
+        try{
+            for (int i=0 ; i < 5 ; i++){
+                assertEquals(templateHandler.getTemplate(i).getTemplateId(), i+1);
+                //statusTemplateCorrectly();
+            }
+        }catch (TemplateDoesntExistsException e){
+            e.printStackTrace();
         }
-
-        //statusTemplateCorrectly();
     }
 
     @AfterEach
@@ -55,8 +58,12 @@ public class TemplateHandlerTest {
             assertNotNull(templateHandler.getTemplates().get(i));
         }
 
-        for (int i=1 ; i < 6 ; i++){
-            assertNotNull(templateHandler.getTemplate(i));
+        try {
+            for (int i = 1; i < 6; i++) {
+                assertNotNull(templateHandler.getTemplate(i));
+            }
+        }catch (TemplateDoesntExistsException e){
+            e.printStackTrace();
         }
     }
 

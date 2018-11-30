@@ -1,6 +1,14 @@
 package Classes.M07_Template.HandlerPackage;
 
+import Classes.M01_Login.UserDAO;
+import Classes.M02_Company.Company;
 import Classes.M03_Campaign.Campaign;
+import Classes.M06_DataOrigin.Application;
+import Classes.M06_DataOrigin.ApplicationDAO;
+import Classes.M07_Template.StatusPackage.Status;
+import Classes.M07_Template.Template;
+import Classes.Sql;
+import Exceptions.MessageDoesntExistsException;
 //import webService.M03_CampaingManagement.M03_Campaigns;
 import Classes.M05_Channel.Channel;
 import Classes.M05_Channel.ChannelFactory;
@@ -10,19 +18,45 @@ import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 import Exceptions.TemplateDoesntExistsException;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class TemplateHandler {
     private Sql sql;
 
-    public TemplateHandler() {
-        sql = new Sql();
-    }
+    private static final String GET_TEMPLATES_BY_USER = "";
 
-    public Sql getSql() {
-        return sql;
+  private static final String GET_CAMPAIGN_BY_USER_OR_COMPANY =
+      "select c.cam_id, c.cam_name, c.cam_description, c.cam_status, c.cam_start_date, c.cam_end_date,  co.com_id, co.com_name, co.com_description, co.com_status\n"
+          + "from public.campaign c\n"
+          + "inner join public.responsability r\n"
+          + "on c.cam_company_id = r.res_com_id\n"
+          + "inner join public.company co\n"
+          + "on c.cam_company_id = co.com_id\n"
+          + "where r.res_use_id = ? OR (r.res_use_id = ? AND r.res_com_id = ?)\n"
+          + "order by c.cam_id";
+
+    public ArrayList<Template> getTemplates(int userId,int companyId){
+        ArrayList<Template> templateArrayList = new ArrayList<>();
+        ArrayList<Campaign> campaignArrayList = null;
+        Connection connection = Sql.getConInstance();
+        try{
+            campaignArrayList = getCampaignsByUserOrCompany(userId,companyId);
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_TEMPLATES_BY_USER);
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            Sql.bdClose(connection);
+            return templateArrayList;
+        }
     }
 
     public ArrayList<Template> getTemplates(){
@@ -50,6 +84,7 @@ public class TemplateHandler {
                 template.setStatus(status);
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
                 template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
+                template.setApplication(getApplicationByTemplate(template.getTemplateId()));
                 templateArrayList.add(template);
             }
         }catch (SQLException e) {
@@ -61,10 +96,9 @@ public class TemplateHandler {
             return templateArrayList;
         }
     }
-
-    public Template getTemplate(int id) {
+    public Template getTemplate(int id) throws TemplateDoesntExistsException{
         Template template = new Template();
-        String query = "select tem_id,ts_id, tem_creation_date, sta_name\n" +
+        String query = "select tem_id,ts_id,tem_user_id, tem_creation_date, sta_name\n" +
                 "from template_status,template,status\n" +
                 "where tem_id = " + id + " and tem_id = ts_template and sta_id = ts_status\n" +
                 "order by ts_id desc limit 1";
@@ -75,27 +109,68 @@ public class TemplateHandler {
                 template.setTemplateId(resultSet.getInt("tem_id"));
                 template.setCreationDate(resultSet.getString("tem_creation_date"));
 
-                //asignamos el mensae y status del template
+                //asignamos el mensaje y status del template
                 template.setMessage(MessageHandler.getMessage(template.getTemplateId()));
                 template.setStatus(Status.createStatus(resultSet.getInt("ts_id"),
                         resultSet.getString("sta_name")));
 
-                //asignamos canales y campañas
+                //asignamos canales, campaña y aplicacion
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
                 template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
+                template.setApplication(getApplicationByTemplate(template.getTemplateId()));
 
-                //a falta de origenes y usuario creador
+                //usuario creador
+                UserDAO userDAO = new UserDAO();
+                template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
             }
 
-        } catch(SQLException e){
+        }catch (MessageDoesntExistsException e){
             e.printStackTrace();
+        }catch(SQLException e){
             throw new TemplateDoesntExistsException
-                    ("Error: la plantilla no existe", e, id);
+                    ("Error: la plantilla " + id + " no existe", e, id);
         } catch (Exception e){
             e.printStackTrace();
         } finally {
             Sql.bdClose(sql.getConn());
             return template;
+        }
+    }
+
+    public ArrayList<Campaign> getCampaignsByUserOrCompany(int userId, int companyId){
+        ArrayList<Campaign> campaignArrayList = new ArrayList<>();
+        Connection connection = Sql.getConInstance();
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_CAMPAIGN_BY_USER_OR_COMPANY);
+            if((userId!=0)&&(companyId!=0)){
+                preparedStatement.setInt(1,0);
+                preparedStatement.setInt(2,userId);
+                preparedStatement.setInt(3,companyId);
+            }else if(userId!=0){
+                preparedStatement.setInt(1,userId);
+                preparedStatement.setInt(2,0);
+                preparedStatement.setInt(3,0);
+            }else{
+                return null;
+            }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Campaign campaign = new Campaign();
+                campaign.set_idCampaign(resultSet.getInt("cam_id"));
+                campaign.set_nameCampaign(resultSet.getString("cam_name"));
+                campaign.set_descCampaign(resultSet.getString("cam_description"));
+                campaign.set_statusCampaign(resultSet.getBoolean("cam_status"));
+                campaign.set_startCampaign(resultSet.getDate("cam_start_date"));
+                campaign.set_endCampaign(resultSet.getDate("cam_end_date"));
+                campaignArrayList.add(campaign);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connection);
+            return campaignArrayList;
         }
     }
 
@@ -150,47 +225,139 @@ public class TemplateHandler {
     public Campaign getCampaingByTemplate(int templateId){
         Campaign campaign = new Campaign();
         try{
+            //query que obtiene el id de la campana que tiene asociada la plantilla
             ResultSet resultSet = sql.sqlConn(
                     "SELECT tem_campaign_id \n"
                             + "FROM Template\n"
                             + "WHERE tem_id = " + templateId + ";");
-           /* M03_Campaigns campaignsService = new M03_Campaigns();
+            //instanciando el api de campana
+            /* M03_Campaigns campaignsService = new M03_Campaigns();
+            //obtener objeto campana con el id de campana del query anterior
             campaign = campaignsService.getDetails
-                    (resultSet.getInt("tem_campaign_id")); */
+                    (resultSet.getInt("tem_campaign_id"));*/
         } catch (SQLException e){
             e.printStackTrace();
             throw new TemplateDoesntExistsException
-                    ("Error: la plantilla no existe", e, templateId);
+                    ("Error: la plantilla " + templateId + " no existe", e, templateId);
        /* } catch (CampaignDoesntExistsException e) {
             */
         }catch (Exception e){
             e.printStackTrace();
         } finally {
-            Sql.bdClose(sql.getConn());
+            if (sql.getConn() != null) {
+                Sql.bdClose(sql.getConn());
+            }
             return campaign;
         }
     }
 
-    public Boolean postTemplateStatus(int id){
-        Boolean flag=false;
-        Connection con = Sql.getConInstance();
-        String query="insert into public.template_status (ts_date,ts_template,ts_status) values (CURRENT_TIMESTAMP,"+id+",(select sta_id from public.status where sta_name='Aprobado'))";
+    /**
+     *
+     * @param templateId
+     * @return application
+     *
+     * Retornar una aplicacion que tiene asociada la plantilla con el id = templateId
+     */
+    public Application getApplicationByTemplate(int templateId){
+        Application application = new Application();
         try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.executeUpdate();
-            flag=true;
-        }  catch(SQLException e){
+            //query que obtiene el id de la aplicacion que tiene asociada la plantilla
+            ResultSet resultSet = sql.sqlConn(
+                    "SELECT tem_application_id \n" +
+                            "FROM Template" +
+                            "WHERE tem_id = " + templateId + ";");
+            //instanciado el api ApplicationDAO
+            ApplicationDAO applicationService = new ApplicationDAO();
+            //Obtener objeto aplicacion con el id de aplicacion del query anterior
+            application = applicationService.getApplication
+                    (resultSet.getInt("tem_application_id"));
+        } catch (SQLException e){
             e.printStackTrace();
-            con.rollback();
-            flag=false;
         } catch (Exception e){
             e.printStackTrace();
-            flag=false;
         } finally {
-            if (con != null) {
-                Sql.bdClose(con);
+            if (sql.getConn() != null) {
+                Sql.bdClose(sql.getConn());
             }
-            return flag;
+            return application;
         }
+    }
+
+
+    public boolean postTemplateData(String json){
+        try {
+            //recibimos el objeto json
+            JsonParser parser = new JsonParser();
+            JsonObject gsonObj = parser.parse(json).getAsJsonObject();
+            //hay que extraer campaña y aplicacion, parametros por defecto
+            //se crea el template y se retorna su id
+            int templateId = postTemplate(13,2, gsonObj.get("userId").getAsInt());
+            //se establece el template  como no aprobado
+            StatusHandler.postTemplateStatusNoAprovado(templateId);
+            //obtenemos el valor del mensaje, a falta de id's de parametros
+            String message = gsonObj.get("messagge").getAsString();
+            MessageHandler.postMessage(message,templateId);
+
+            //obtenemos los valores de los canales e integradores
+            JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
+            postChannelIntegrator(channelIntegrator,templateId);
+
+            return true;
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+    private void postChannelIntegrator(JsonArray channelIntegratorList,int templateId) {
+        String query= "";
+        JsonObject channelIntegrator;
+        int channel;
+        int integrator;
+        sql = new Sql();
+        try {
+            for (JsonElement list : channelIntegratorList){
+                channelIntegrator = list.getAsJsonObject();
+                channel = channelIntegrator.get("channel").getAsInt();
+                integrator = channelIntegrator.get("integratorNumber").getAsInt();
+                query = query + "insert into public.template_channel_integrator (tci_template_id,tci_ci_id) " +
+                        "values (" + templateId + ",(select ci_id from public.channel_integrator " +
+                        "where ci_channel_id = " + channel + " and ci_integrator_id = " + integrator +"));";
+            }
+            sql.sqlNoReturn(query);
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+        }
+    }
+
+    public int postTemplate(int campaignId,int applicationId, int userId){
+        String query = "INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) \n" +
+                "VALUES (CURRENT_DATE," + campaignId + "," + applicationId + "," + userId + ") RETURNING tem_id";
+        int templateId=0;
+        try{
+            ResultSet resultSet = sql.sqlConn(query);
+            if (resultSet.next())
+                templateId=resultSet.getInt("tem_id");
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+            return templateId;
+        }
+    }
+
+    public TemplateHandler() {
+        sql = new Sql();
+    }
+
+    public Sql getSql() {
+        return sql;
     }
 }

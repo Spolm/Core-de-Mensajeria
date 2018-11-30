@@ -17,16 +17,16 @@ public class M07_Parameter {
     public Gson gson = new Gson();
 
     @POST
-    @Path("add/{name}")
-    public void postParameter(@PathParam("name") String name){
+    @Path("add")
+    public void postParameter(@FormParam("name") String name,@FormParam("companyId") int companyId){
         ParameterHandler parameterHandler = new ParameterHandler();
-        parameterHandler.postParameter(name);
+        parameterHandler.postParameter(name,companyId);
     }
     @GET
     @Path("get")
-    public Response getParameters(){
+    public Response getParameters(@QueryParam("companyId") int companyId){
         ParameterHandler parameterHandler = new ParameterHandler();
-        ArrayList<Parameter> parameterList = parameterHandler.getParameters();
+        ArrayList<Parameter> parameterList = parameterHandler.getParameters(companyId);
         return Response.ok(gson.toJson(parameterList)).build();
     }
 
