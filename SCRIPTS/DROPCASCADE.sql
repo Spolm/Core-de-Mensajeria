@@ -17,3 +17,5 @@ DROP TABLE rol_pri CASCADE;
 DROP TABLE privilege CASCADE;
 DROP TABLE public.role CASCADE;
 DROP TABLE public.user CASCADE;
+DROP FUNCTION m02_getcompanies(integer);
+DROP FUNCTION m03_getcampaigns(integer);
