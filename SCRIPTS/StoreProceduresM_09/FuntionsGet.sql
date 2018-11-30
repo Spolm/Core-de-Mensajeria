@@ -37,7 +37,6 @@ SELECT campaignName as cam_name, icount from public.Get_CampaignName();
 */
 
 /*-------------------------------------------------------------------------------*/
-drop function Get_ChannelName()
 /*Nombre de Canales*/
 CREATE OR REPLACE FUNCTION Get_ChannelName () 
  RETURNS TABLE (
