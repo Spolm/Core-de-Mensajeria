@@ -16,6 +16,7 @@ public abstract class Integrator implements IIntegrator {
         this.apiIntegrator = apiIntegrator;
         this.enabled = enabled;
     }
+
     public int getIdIntegrator() {
         return idIntegrator;
     }
