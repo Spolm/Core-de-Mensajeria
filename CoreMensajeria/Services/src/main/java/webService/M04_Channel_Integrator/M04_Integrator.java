@@ -3,6 +3,7 @@ import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
 import Classes.M04_Channel_Integrator.IntegratorPackage.IntegratorDAO;
 import Classes.M04_Channel_Integrator.IntegratorPackage.IntegratorService;
 import Exceptions.DatabaseConnectionProblemException;
+import Exceptions.IntegratorNotFoundException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -31,11 +32,14 @@ public class M04_Integrator {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getConcreteIntegrator(@PathParam( "id" ) int id) {
-        Integrator i = IntegratorService.getInstance().getConcreteIntegrator(id);
-        return Response
-                .ok()
-                .entity(i)
-                .build();
+        try {
+            Integrator i = _integratorDAO.getConcreteIntegrator(id);
+            return Response.ok().entity(i).build();
+        } catch (DatabaseConnectionProblemException e) {
+            return Response.status(500).entity(e.getMessage()).build();
+        } catch (IntegratorNotFoundException e) {
+            return Response.status(404).entity(e.getMessage()).build();
+        }
     }
 
     @PUT

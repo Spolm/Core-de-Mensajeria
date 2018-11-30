@@ -2,17 +2,15 @@ package Classes.M04_Channel_Integrator.IntegratorPackage;
 
 import Classes.Sql;
 import Exceptions.DatabaseConnectionProblemException;
+import Exceptions.IntegratorNotFoundException;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class IntegratorDAO {
 
     final String QUERY_SELECT = "SELECT * FROM integrator";
-    final String QUERY_SELECT_BY_ID = "SELECT * FROM iratxr where int_id=?";
+    final String QUERY_SELECT_BY_ID = "SELECT * FROM integrator where int_id=?";
 
     private Connection _conn;
     private Integrator _integrator;
@@ -38,6 +36,28 @@ public class IntegratorDAO {
         } finally {
             Sql.bdClose(_conn);
         }
+    }
+
+    public Integrator getConcreteIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException{
+        try {
+            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_BY_ID);
+            preparedStatement.setInt(1, id);
+            _result = preparedStatement.executeQuery();
+            _integrator = null;
+
+            while (_result.next()) {
+                _integrator = getIntegrator(_result);
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseConnectionProblemException("Error al obtener aplicacion.", e);
+        } finally {
+            Sql.bdClose(_conn);
+        }
+        if(_integrator == null){
+            throw new IntegratorNotFoundException("El integrador no existe.");
+        }
+        return _integrator;
     }
 
     public Integrator getIntegrator(ResultSet rs) throws SQLException {
