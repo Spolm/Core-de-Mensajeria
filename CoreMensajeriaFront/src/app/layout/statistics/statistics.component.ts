@@ -47,9 +47,9 @@ export class StatisticsComponent implements OnInit {
            Charts elements from html
     ==================================== */
     @ViewChild("timeLineChart") canvas: ElementRef;
-    @ViewChild("companiesBarChartElement") companiesBarChartElement: ElementRef;
-    @ViewChild("campaignsBarChartElement") campaignsBarChartElement: ElementRef;
-    @ViewChild("channelsPieChartElement") channelsPieChartElement: ElementRef;
+    @ViewChild("companiesChartElement") companiesChartElement: ElementRef;
+    @ViewChild("campaignsChartElement") campaignsChartElement: ElementRef;
+    @ViewChild("channelsChartElement") channelsChartElement: ElementRef;
 
     /* ==============
            Charts
@@ -150,6 +150,30 @@ export class StatisticsComponent implements OnInit {
         );
     }
 
+    insertInitialDataIntoCharts(
+        data: Object,
+        chartElement: ElementRef,
+        title: String,
+        chartType: ChartType
+    ) {
+        let pointsForChart = this.createPointArray(data);
+        var pointsOfChartJson = [];
+        let colors = this.getArrayOfRandomColors(pointsForChart.length);
+
+        pointsForChart.forEach(company => {
+            pointsOfChartJson.push(company.toJson());
+        });
+
+        this.createChart(
+            title,
+            Point.getXArray(pointsForChart),
+            pointsOfChartJson,
+            colors,
+            chartType,
+            chartElement
+        );
+    }
+
     ngOnInit() {
         this.setupCompaniesDropdownSettings();
         this.setupCampaignsDropdownSettings();
@@ -158,6 +182,39 @@ export class StatisticsComponent implements OnInit {
         this.getAllCompanies();
         this.getAllCampaigns();
         this.getAllChannels();
+
+        this.statisticsService
+            .getInitialMessagesForCompanies()
+            .subscribe(data => {
+                this.insertInitialDataIntoCharts(
+                    data,
+                    this.companiesChartElement,
+                    "Cantidad de mensajes por compañía",
+                    ChartType.bar
+                );
+            });
+
+        this.statisticsService
+            .getInitialMessagesForCampaigns()
+            .subscribe(data => {
+                this.insertInitialDataIntoCharts(
+                    data,
+                    this.campaignsChartElement,
+                    "Cantidad de mensajes por campaña",
+                    ChartType.bar
+                );
+            });
+
+        this.statisticsService
+            .getInitialMessagesForChannels()
+            .subscribe(data => {
+                this.insertInitialDataIntoCharts(
+                    data,
+                    this.channelsChartElement,
+                    "Cantidad de mensajes por canal",
+                    ChartType.doughnut
+                );
+            });
 
         this.statisticsService
             .getDataLineChartCompany(
@@ -184,26 +241,6 @@ export class StatisticsComponent implements OnInit {
                 console.log(data);
                 this.json2 = data;
                 this.barchartCompany(this.json2);
-
-                let labels = data["labels"];
-                let values = data["values"];
-
-                var datos: any[] = [];
-                var colors: String[] = [];
-
-                for (var i = 0; i < labels.length; i++) {
-                    datos.push({ x: labels[i], y: values[i] });
-                    colors.push(this.getRandomColor());
-                }
-
-                this.companiesBarChart = this.createChart(
-                    "Cantidad de mensajes por compañía",
-                    labels,
-                    datos,
-                    colors,
-                    ChartType.bar,
-                    this.companiesBarChartElement
-                );
             });
 
         this.statisticsService
@@ -243,26 +280,6 @@ export class StatisticsComponent implements OnInit {
             .subscribe(data => {
                 this.json2 = data;
                 this.barchartCampaign(this.json2);
-
-                let labels = data["labels"];
-                let values = data["values"];
-
-                var datos: any[] = [];
-                var colors: String[] = [];
-
-                for (var i = 0; i < labels.length; i++) {
-                    datos.push({ x: labels[i], y: values[i] });
-                    colors.push(this.getRandomColor());
-                }
-
-                this.campaignsBarChart = this.createChart(
-                    "Cantidad de mensajes por campaña",
-                    labels,
-                    datos,
-                    colors,
-                    ChartType.bar,
-                    this.campaignsBarChartElement
-                );
             });
 
         this.statisticsService
@@ -315,26 +332,6 @@ export class StatisticsComponent implements OnInit {
             .subscribe(data => {
                 this.json2 = data;
                 this.piechartChannels(this.json2);
-
-                let labels = data["x"];
-                let values = data["y"];
-
-                var datos: any[] = [];
-                var colors: String[] = [];
-
-                for (var i = 0; i < labels.length; i++) {
-                    datos.push({ x: labels[i], y: values[i] });
-                    colors.push(this.getRandomColor());
-                }
-
-                this.channelsPieChart = this.createChart(
-                    "Cantidad de mensajes por canal",
-                    labels,
-                    values,
-                    colors,
-                    ChartType.doughnut,
-                    this.channelsPieChartElement
-                );
             });
     }
 
@@ -858,6 +855,14 @@ export class StatisticsComponent implements OnInit {
             console.log("Dialog was closed");
             console.log(result);
         });
+    }
+
+    getArrayOfRandomColors(length: Number): String[] {
+        var colors = [];
+        for (var i = 0; i < length; i++) {
+            colors.push(this.getRandomColor());
+        }
+        return colors;
     }
 
     getRandomColor() {

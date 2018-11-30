@@ -53,6 +53,18 @@ export class StatisticsServiceService {
         return this.http.get(this.ApiURL + "PruebaParam3" + sparam);
     }
 
+    getInitialMessagesForCompanies() {
+        return this.http.get(this.ApiURL + "companiesCount");
+    }
+
+    getInitialMessagesForCampaigns() {
+        return this.http.get(this.ApiURL + "campaignsCount");
+    }
+
+    getInitialMessagesForChannels() {
+        return this.http.get(this.ApiURL + "channelsCount");
+    }
+
     getAllCompanies() {
         return this.http.get(this.ApiURL + "companies");
     }
