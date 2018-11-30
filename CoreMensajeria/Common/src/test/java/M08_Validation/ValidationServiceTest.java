@@ -1,15 +1,9 @@
 package Modulo_8;
 
-import Classes.M08_Validation.ValidationParameter;
-import Classes.M08_Validation.ValidationTemplate;
-import Modulo_8.Validation;
-import webService.M08_MessageCoreManagement.M08_MessageValidation;
-import com.google.gson.Gson;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

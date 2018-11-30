@@ -1,6 +1,6 @@
 package Modulo_8;
 
-import Classes.M08_Validation.ValidationParameter;
+import Classes.M08_Validation.ValidationReciveParameter;
 import Classes.M08_Validation.ValidationTemplate;
 
 import java.util.Date;
@@ -53,7 +53,7 @@ public class Validation {
     }
 
     //Funcion para validar las validaciones
-    public String Validate_Condicion(boolean date, boolean hour, boolean message, boolean lentgh, ValidationTemplate template, ValidationParameter parameters){
+    public String Validate_Condicion(boolean date, boolean hour, boolean message, boolean lentgh, ValidationTemplate template, ValidationReciveParameter parameters){
 
         if (!date){ return "No se puede enviar plantilla la fecha de envio no valida";}
         else if (!hour){return "No se puede enviar plantilla la hora no es valida"; }
