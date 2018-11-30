@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public class ChannelDAO {
 
-    final String QUERY_SELECT = "SELECT * FROM CHANNEL";
-    final String QUERY_SELECT_INTEGRATOR_BY_CHANNEL = "SELECT int_id, int_name, int_messageCost, int_threadCapacity, int_tokenApi, int_enabled FROM INTEGRATOR, CHANNEL_INTEGRATOR , CHANNEL WHERE INT_ID = CI_INTEGRATOR_ID AND CI_CHANNEL_ID = CHA_ID AND CHA_ID =?";
     private Connection _conn;
     private ResultSet _result;
     public ArrayList<Integrator> _integratorList;
@@ -25,7 +23,7 @@ public class ChannelDAO {
         try {
             _conn = Sql.getConInstance();
             _integratorList = new ArrayList<>();
-            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_INTEGRATOR_BY_CHANNEL);
+            PreparedStatement preparedStatement = _conn.prepareCall("{call m04_getIntegratorsByChannel(?)}");
             preparedStatement.setInt(1, id);
             _result = preparedStatement.executeQuery();
 
@@ -47,8 +45,8 @@ public class ChannelDAO {
     public ArrayList<Channel> listChannel() throws DatabaseConnectionProblemException {
         try {
             _channelList = new ArrayList<>();
-            Statement st = _conn.createStatement();
-            ResultSet _result = st.executeQuery(QUERY_SELECT);
+            PreparedStatement st = _conn.prepareCall("{call m04_getchannels()}");
+            ResultSet _result = st.executeQuery();
 
             while (_result.next()) {
                 _channelList.add(getChannel(_result));
