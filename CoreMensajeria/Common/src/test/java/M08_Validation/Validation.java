@@ -61,8 +61,12 @@ public class Validation {
         else if (lentgh){return "La longitud del sms es invalida";}
         else{
             //construyo la plantilla con los parametros
+
+            /*
             template.set_message(parameters.get_message());
             template.set_chanel(parameters.get_chanel());
+
+            */
 
             //Envio el template con los parametros a los integradores
             String responseIntegradores = "Exito en Envio";

@@ -1,6 +1,6 @@
-package Classes.M04_Channel_Integrator.ChannelPackage;
+package Classes.M05_Channel;
 
-import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
+import Classes.M04_Integrator.Integrator;
 
 import java.util.ArrayList;
 

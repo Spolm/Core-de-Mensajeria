@@ -1,4 +1,4 @@
-package Modulo_8;
+package M08_Validation;
 
 
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ValidationServiceTest {
+    /*
     static Validation i;
 
     @BeforeAll
@@ -86,5 +87,5 @@ class ValidationServiceTest {
         System.out.println("\033[32mtestValidationParametersFailMessageLength:: Exito" );
     }
 
-
+*/
 }

@@ -1,4 +1,4 @@
-package Classes.M04_Channel_Integrator.ChannelPackage;
+package Classes.M05_Channel;
 
 public class ChannelNotFoundException extends Exception {
     public ChannelNotFoundException() {
