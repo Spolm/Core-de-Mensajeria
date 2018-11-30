@@ -15,6 +15,9 @@ import { HttpParams } from "@angular/common/http";
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
 import { MoreFiltersComponent } from "./more-filters/more-filters.component";
 import { Chart } from "chart.js";
+import { Point } from "./point";
+import { forEach } from "@angular/router/src/utils/collection";
+import { ChartsComponent } from "../charts/charts.component";
 //import { create } from "domain";
 
 interface myData {
@@ -160,7 +163,6 @@ export class StatisticsComponent implements OnInit {
             .subscribe(data => {
                 this.json2 = data;
                 this.linechartCompany(this.json2);
-                console.log("DataLine:", this.json2);
             });
 
         this.statisticsService
@@ -174,7 +176,6 @@ export class StatisticsComponent implements OnInit {
             .subscribe(data => {
                 this.json2 = data;
                 this.barchartCompany(this.json2);
-                console.log("DataPie:", this.json2);
 
                 let labels = data["labels"];
                 let values = data["values"];
@@ -208,7 +209,6 @@ export class StatisticsComponent implements OnInit {
             .subscribe(data => {
                 this.json2 = data;
                 this.piechartCompany(this.json2);
-                console.log("DataChart:", this.json2);
             });
 
         this.statisticsService
@@ -222,7 +222,6 @@ export class StatisticsComponent implements OnInit {
             .subscribe(data => {
                 this.json2 = data;
                 this.linechartCampaign(this.json2);
-                console.log("DataChart:", this.json2);
             });
 
         this.statisticsService
@@ -236,7 +235,6 @@ export class StatisticsComponent implements OnInit {
             .subscribe(data => {
                 this.json2 = data;
                 this.barchartCampaign(this.json2);
-                console.log("DataChart:", this.json2);
 
                 let labels = data["labels"];
                 let values = data["values"];
@@ -270,7 +268,6 @@ export class StatisticsComponent implements OnInit {
             .subscribe(data => {
                 this.json2 = data;
                 this.piechartCampaign(this.json2);
-                console.log("DataChart:", this.json2);
             });
 
         this.statisticsService
@@ -284,7 +281,6 @@ export class StatisticsComponent implements OnInit {
             .subscribe(data => {
                 this.json2 = data;
                 this.linechartChannels(this.json2);
-                console.log("DataChart:", this.json2);
             });
 
         this.statisticsService
@@ -298,7 +294,6 @@ export class StatisticsComponent implements OnInit {
             .subscribe(data => {
                 this.json2 = data;
                 this.barchartChannels(this.json2);
-                console.log("DataChart:", this.json2);
             });
 
         this.statisticsService
@@ -312,7 +307,6 @@ export class StatisticsComponent implements OnInit {
             .subscribe(data => {
                 this.json2 = data;
                 this.piechartChannels(this.json2);
-                console.log("Hola:", this.json2);
 
                 let labels = data["x"];
                 let values = data["y"];
@@ -751,12 +745,45 @@ export class StatisticsComponent implements OnInit {
         var params = this.convertSelectedItemsIntoHttpParams();
         this.statisticsService.getStatistics(params).subscribe(
             data => {
-                console.log(data);
+                let companiesJson = data["companies"];
+                var companies: Point[] = this.createPointArray(companiesJson);
+                let campaingsJson = data["campaigns"];
+                var campaigns: Point[] = this.createPointArray(campaingsJson);
+                let channelsJson = data["channels"];
+                var channels: Point[] = this.createPointArray(channelsJson);
+
+                var companyData = [];
+                var colors = [];
+                companies.forEach(company => {
+                    companyData.push(company.toJson());
+                    colors.push(this.getRandomColor());
+                });
+
+                this.updateChart(
+                    this.companiesBarChart,
+                    Point.getXArray(companyData),
+                    companyData,
+                    colors,
+                    "bar"
+                );
             },
             error => {
                 console.error(error);
             }
         );
+    }
+
+    createPointArray(pointsJson: any): Point[] {
+        var points: Point[] = [];
+        if (pointsJson) {
+            let xs = pointsJson["x"];
+            let ys = pointsJson["y"];
+
+            for (var i = 0; i < xs.length; i++) {
+                points.push(new Point(xs[i], ys[i]));
+            }
+        }
+        return points;
     }
 
     convertSelectedItemsIntoHttpParams(): HttpParams {
@@ -869,5 +896,20 @@ export class StatisticsComponent implements OnInit {
                 }
             }
         });
+    }
+
+    updateChart(
+        chart: Chart,
+        labels: String[],
+        data: any[],
+        colors: String[],
+        type: String
+    ) {
+        chart.type = type;
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = data;
+        chart.data.datasets[0].backgroundColor = colors;
+
+        chart.update();
     }
 }
