@@ -18,6 +18,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,10 +26,26 @@ import java.util.ArrayList;
 public class TemplateHandler {
     private Sql sql;
 
-    private static final String GET_TEMPLATES_BY_USER = "";
+    private static final String GET_TEMPLATES_BY_USER =
+      "select t.tem_id, t.tem_creation_date, t.tem_campaign_id, t.tem_application_id, t.tem_user_id, s.sta_id, s.sta_name, ts.ts_user_id\n"
+          + "from public.template t\n"
+          + "inner join public.template_status ts\n"
+          + "on ts.ts_template = t.tem_id \n"
+          + "  inner join \n"
+          + "  (\n"
+          + "  select ts_template, max(ts_id) maxID from public.template_status\n"
+          + "  group by ts_template\n"
+          + "  )ts_ on ts_.ts_template = ts.ts_template\n"
+          + "and ts.ts_id = ts_.maxID\n"
+          + "inner join public.status s\n"
+          + "on ts.ts_status = s.sta_id\n"
+          + "inner join public.campaign c\n"
+          + "on c.cam_id = t.tem_campaign_id\n"
+          + "where c.cam_id = ?\n"
+          + "order by t.tem_id";
 
-  private static final String GET_CAMPAIGN_BY_USER_OR_COMPANY =
-      "select c.cam_id, c.cam_name, c.cam_description, c.cam_status, c.cam_start_date, c.cam_end_date,  co.com_id, co.com_name, co.com_description, co.com_status\n"
+    private static final String GET_CAMPAIGN_BY_USER_OR_COMPANY =
+        "select c.cam_id, c.cam_name, c.cam_description, c.cam_status, c.cam_start_date, c.cam_end_date,  co.com_id, co.com_name, co.com_description, co.com_status\n"
           + "from public.campaign c\n"
           + "inner join public.responsability r\n"
           + "on c.cam_company_id = r.res_com_id\n"
@@ -41,9 +58,28 @@ public class TemplateHandler {
         ArrayList<Template> templateArrayList = new ArrayList<>();
         ArrayList<Campaign> campaignArrayList = null;
         Connection connection = Sql.getConInstance();
+        UserDAO userDAO = new UserDAO();
         try{
             campaignArrayList = getCampaignsByUserOrCompany(userId,companyId);
-            PreparedStatement preparedStatement = connection.prepareStatement(GET_TEMPLATES_BY_USER);
+            for(int x = 0; x < campaignArrayList.size(); x++){
+                PreparedStatement preparedStatement = connection.prepareStatement(GET_TEMPLATES_BY_USER);
+                preparedStatement.setInt(1,campaignArrayList.get(x).get_idCampaign());
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while(resultSet.next()){
+                    Template template = new Template();
+                    template.setTemplateId(resultSet.getInt("tem_id"));
+                    template.setCreationDate(resultSet.getString("tem_creation_date"));
+                    Status status = Status.createStatus(resultSet.getInt("sta_id"),
+                            resultSet.getString("sta_name"));
+                    template.setStatus(status);
+                    template.setChannels(getChannelsByTemplate(template.getTemplateId()));
+                    template.setCampaign(campaignArrayList.get(x));
+                    template.setApplication(getApplicationByTemplate(template.getTemplateId()));
+                    template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
+                    template.setMessage(MessageHandler.getMessage(template.getTemplateId()));
+                    templateArrayList.add(template);
+                }
+            }
         }catch (SQLException e) {
             e.printStackTrace();
         }catch (Exception e){
