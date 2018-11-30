@@ -15,9 +15,39 @@ import com.google.gson.Gson;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
+import java.awt.*;
 import java.sql.*;
 import java.util.*;
+import java.util.List;
 
+enum FilterType {
+    company {
+        @Override
+        public String value() {
+            return "com_name";
+        }
+    },
+    campaign {
+        @Override
+        public String value() {
+            return "cam_name";
+        }
+    },
+    channel {
+        @Override
+        public String value() {
+            return "cha_name";
+        }
+    },
+    integrator {
+        @Override
+        public String value() {
+            return "com_name";
+        }
+    };
+
+    public abstract String value();
+}
 
 @Path( "/M09_Statistics" )
 public class M09_Statistics extends Application {
@@ -72,6 +102,8 @@ public class M09_Statistics extends Application {
             return getCompanies(query);
         } catch(CompanyDoesntExistsException e) {
             return Response.serverError().build();
+        } finally {
+            Sql.bdClose(conn);
         }
 
     }
@@ -85,6 +117,8 @@ public class M09_Statistics extends Application {
             return getCampaigns(query);
         } catch (CampaignDoesntExistsException e) {
             return Response.serverError().build();
+        } finally {
+            Sql.bdClose(conn);
         }
     }
 
@@ -101,6 +135,8 @@ public class M09_Statistics extends Application {
             return getCampaigns(query);
         } catch(CampaignDoesntExistsException e) {
             return Response.serverError().build();
+        } finally {
+            Sql.bdClose(conn);
         }
     }
 
@@ -125,6 +161,64 @@ public class M09_Statistics extends Application {
             Sql.bdClose(conn);
         }
         return Response.ok(gson.toJson(channels)).build();
+    }
+
+    @GET
+    @Path("/companiesCount")
+    @Produces("application/json")
+    public Response getCompaniesCount() {
+        return getOverallCountFor(FilterType.company);
+    }
+
+    @GET
+    @Path("/campaignsCount")
+    @Produces("application/json")
+    public Response getCampaignsCount() {
+        return getOverallCountFor(FilterType.campaign);
+    }
+
+    @GET
+    @Path("/channelsCount")
+    @Produces("application/json")
+    public Response getChannelsCount() {
+        return getOverallCountFor(FilterType.channel);
+    }
+
+    public Response getOverallCountFor(FilterType filterType) {
+        String query = queryForOverallCount(filterType);
+        Statistics companies = new Statistics();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                companies.addX(result.getString(filterType.value()));
+                companies.addY(result.getInt("messages"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(conn);
+        }
+        return Response.ok(gson.toJson(companies)).build();
+    }
+
+    public String queryForOverallCount(FilterType filterType) {
+        switch (filterType) {
+            case company:
+                return "SELECT DISTINCT c.com_id, c.com_name, messages from dim_company_campaign c, " +
+                        "(select sen_com_id, count(*) as messages from fact_sent_message " +
+                        "group by sen_com_id) as m where c.com_id = m.sen_com_id ORDER BY c.com_id ASC;";
+            case campaign:
+                return "SELECT DISTINCT c.cam_id, c.cam_name, messages from dim_company_campaign c, " +
+                        "(select sen_cam_id, count(*) as messages from fact_sent_message " +
+                        "group by sen_cam_id) as m where c.cam_id = m.sen_cam_id ORDER BY c.cam_id ASC;";
+            case channel:
+                return "SELECT DISTINCT c.cha_id, c.cha_name, messages from dim_channel c, " +
+                        "(select sen_cha_id, count(*) as messages from fact_sent_message " +
+                        "group by sen_cha_id) as m where c.cha_id = m.sen_cha_id ORDER BY c.cha_id ASC;";
+            default: return "";
+        }
     }
 
 
@@ -477,6 +571,7 @@ public class M09_Statistics extends Application {
         }
         return Response.ok(gson.toJson(campaigns)).build();
     }
+
     @GET
     @Path("/channelLine")
     @Produces("application/json")
@@ -583,7 +678,6 @@ public class M09_Statistics extends Application {
         String campaignin = setParametersforQuery(campaignIds,"and me.sen_cam_id in ");
         String channelin = setParametersforQuery(channelIds,"and me.sen_cha_id in ");
         Map<String, Statistics> stats = new HashMap<String, Statistics>();
-        //ArrayList<Statistics> stats = new ArrayList<Statistics>();
         try {
             Statement st = conn.createStatement();
             if (!companyIds.isEmpty()) {

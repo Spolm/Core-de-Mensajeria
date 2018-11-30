@@ -181,6 +181,7 @@ export class StatisticsComponent implements OnInit {
                     "paramType=Cantidad de mensajes enviados por Compañias"
             )
             .subscribe(data => {
+                console.log(data);
                 this.json2 = data;
                 this.barchartCompany(this.json2);
 
