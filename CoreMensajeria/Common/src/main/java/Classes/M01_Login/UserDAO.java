@@ -20,7 +20,7 @@ public class UserDAO {
     final String QUERY_INSERT = "INSERT INTO public.USER " +
             "(use_password, use_username, use_type, use_email, use_phone, use_country," +
             "use_city, use_address, use_date_of_birth, use_gender) values" +
-            "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            "(MD5(?), ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     final String QUERY_UPDATE_REMAINING_ATTEMPTS = "UPDATE public.USER SET" +
             " use_remaining_attempts=? " +
             " WHERE use_id=?; ";

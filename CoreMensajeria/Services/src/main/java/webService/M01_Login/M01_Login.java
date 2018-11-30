@@ -12,6 +12,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
 import java.sql.SQLException;
 
 @Path("/")
@@ -28,14 +30,20 @@ public class M01_Login {
         Error error;
         User user;
         try {
-
             if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
                     loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
 
 
                 user = _userDAO.findByUsernameOrEmail(loginIntent.get_username());
-                if(user.get_blockedUser()==1)throw new UserBlockedException("El usuario ingresado se encuentra bloqueado");
-                if (user.get_passwordUser().equals(loginIntent.get_password()) && user.get_blockedUser()==0) {
+                if( user.get_blockedUser() == 1 )
+                    throw new UserBlockedException("El usuario ingresado se encuentra bloqueado");
+
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(loginIntent.get_password().getBytes());
+                byte[] digest = md.digest();
+                String passwordHash = DatatypeConverter
+                        .printHexBinary(digest).toUpperCase();
+                if (user.get_passwordUser().equals(passwordHash) && user.get_blockedUser()==0) {
                     user.set_remainingAttemptsUser(3);
                     _userDAO.updateUserRemainingAttempts(user);
                     user.set_passwordUser("");

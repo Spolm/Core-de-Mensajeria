@@ -3,7 +3,7 @@
 create table public.User
 (
     use_id serial primary key,
-    use_password varchar (18),
+    use_password varchar (32),
     use_username varchar(20),
     use_type integer,
     use_email varchar(30),
