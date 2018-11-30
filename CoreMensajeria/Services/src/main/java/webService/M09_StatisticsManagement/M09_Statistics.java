@@ -126,16 +126,18 @@ public class M09_Statistics extends Application {
         }
         return Response.ok(gson.toJson(channels)).build();
     }
-    
+
+
     public Response getNumberOfCompanysChart() throws SQLException {
         String aux = "";
-        String select2 = "SELECT companiesName as com_name from public.Get_CompanyName()";
+        String select2 = "SELECT icount , companiesName as com_name from public.Get_CompanyName()";
 
         try {
             Statistics gr = new Statistics();
-            ArrayList<Integer> listNum = new ArrayList<Integer>();
+            ArrayList<Integer> listNum = new ArrayList<>();
             ArrayList<String> listCompany = new ArrayList<String>();
             int n = 0 ;
+            int num = 0;
             Statement st2 = conn.createStatement();
             ResultSet result2 = st2.executeQuery( select2 );
             while ( result2.next() ) {
@@ -143,8 +145,11 @@ public class M09_Statistics extends Application {
                 co.set_name( result2.getString("com_name" ) );
                 aux = co.get_name();
                 listCompany.add( aux ) ;
+                String rs =  result2.getString("icount" );
+                num = Integer.parseInt( rs );
+                listNum.add( num );
             }
-            listNum = CountOfMessage( listCompany );
+
             gr.type = "bar";
             gr.x = listCompany;
             gr.y = listNum;
@@ -159,12 +164,13 @@ public class M09_Statistics extends Application {
 
     public Response getNumberOfCompanysLine() throws SQLException {
         String aux = "";
-        String select2 = "SELECT companiesName as com_name from public.Get_CompanyName() ";
+        String select2 = "SELECT icount , companiesName as com_name from public.Get_CompanyName()";
         try {
             Statistics gr = new Statistics();
-            ArrayList<Integer> listNum = new ArrayList<Integer>();
+            ArrayList<Integer> listNum = new ArrayList<>();
             ArrayList<String> listCompany = new ArrayList<String>();
             int n = 0 ;
+            int num = 0;
             Statement st2 = conn.createStatement();
             ResultSet result2 = st2.executeQuery( select2 );
             while ( result2.next() ) {
@@ -172,8 +178,10 @@ public class M09_Statistics extends Application {
                 co.set_name( result2.getString("com_name" ) );
                 aux = co.get_name();
                 listCompany.add( aux ) ;
+                String rs =  result2.getString("icount" );
+                num = Integer.parseInt( rs );
+                listNum.add( num );
             }
-            listNum = CountOfMessage( listCompany );
             gr.type = "line";
             gr.x = listCompany;
             gr.y = listNum;
@@ -190,12 +198,13 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getNumberOfCompanysPie() throws SQLException {
         String aux = "";
-        String select2 = "SELECT companiesName as com_name from public.Get_CompanyName()";
+        String select2 = "SELECT icount , companiesName as com_name from public.Get_CompanyName()";
         try {
             PieChart PieC = new PieChart();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
             ArrayList<String> listlabels = new ArrayList<String>();
             int n = 0 ;
+            int num = 0 ;
             Statement st2 = conn.createStatement();
             ResultSet result2 = st2.executeQuery( select2 );
             while ( result2.next() ) {
@@ -203,8 +212,10 @@ public class M09_Statistics extends Application {
                 co.set_name( result2.getString("com_name" ) );
                 aux = co.get_name();
                 listlabels.add( aux ) ;
+                String rs =  result2.getString("icount" );
+                num = Integer.parseInt( rs );
+                listNum.add( num );
             }
-            listNum = CountOfMessage( listlabels );
             PieC.type = "pie";
             PieC.labels = listlabels;
             PieC.values = listNum;
@@ -219,12 +230,13 @@ public class M09_Statistics extends Application {
 
     public Response getNumberOfCampaignPie() throws SQLException {
         String aux = "";
-        String select2 = "SELECT campaignName as cam_name from public.Get_CampaignName() ";
+        String select2 = "SELECT campaignName as cam_name, icount from public.Get_CampaignName()";
         try {
             PieChart PieC = new PieChart();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
             ArrayList<String> listlabels = new ArrayList<String>();
             int n = 0 ;
+            int num = 0 ;
             Statement st2 = conn.createStatement();
             ResultSet result2 = st2.executeQuery(select2);
             while ( result2.next() ) {
@@ -232,8 +244,11 @@ public class M09_Statistics extends Application {
                 ca.set_nameCampaign( result2.getString("cam_name" ) );
                 aux = ca.get_nameCampaign();
                 listlabels.add( aux ) ;
+                String rs =  result2.getString("icount" );
+                num = Integer.parseInt( rs );
+                listNum.add( num );
             }
-            listNum = CountOfMessageCamp( listlabels );
+
             PieC.type = "pie";
             PieC.labels = listlabels;
             PieC.values = listNum;
@@ -250,13 +265,14 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getNumberOfCampaignChart() throws SQLException {
         String aux = "";
-        String select2 ="SELECT campaignName as cam_name from public.Get_CampaignName()";
+        String select2 = "SELECT campaignName as cam_name , icount from public.Get_CampaignName()";
 
         try {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
             ArrayList<String> listCampaign = new ArrayList<String>();
             int n = 0 ;
+            int num;
             Statement st2 = conn.createStatement();
             ResultSet result2 = st2.executeQuery(select2);
             while ( result2.next() ) {
@@ -264,8 +280,10 @@ public class M09_Statistics extends Application {
                 co.set_nameCampaign( result2.getString("cam_name" ) );
                 aux = co.get_nameCampaign();
                 listCampaign.add( aux ) ;
+                String rs =  result2.getString("icount" );
+                num = Integer.parseInt( rs );
+                listNum.add( num );
             }
-            listNum = CountOfMessageCamp( listCampaign );
             gr.type = "bar";
             gr.x = listCampaign;
             gr.y = listNum;
@@ -284,12 +302,13 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getNumberOfCampaignLine() throws SQLException {
         String aux = "";
-        String select2 = "SELECT campaignName as cam_name from public.Get_CampaignName()";
+        String select2 = "SELECT campaignName as cam_name, icount from public.Get_CampaignName()";
         try {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
             ArrayList<String> listCamp = new ArrayList<String>();
             int n = 0 ;
+            int num;
             Statement st2 = conn.createStatement();
             ResultSet result2 = st2.executeQuery( select2 );
             while ( result2.next() ) {
@@ -297,8 +316,10 @@ public class M09_Statistics extends Application {
                 co.set_nameCampaign( result2.getString("cam_name" ) );
                 aux = co.get_nameCampaign();
                 listCamp.add( aux ) ;
+                String rs =  result2.getString("icount" );
+                num = Integer.parseInt( rs ) ;
+                listNum.add( num ) ;
             }
-            listNum = CountOfMessageCamp( listCamp );
             gr.type = "line";
             gr.x = listCamp;
             gr.y = listNum;
@@ -310,96 +331,6 @@ public class M09_Statistics extends Application {
             Sql.bdClose( conn );
         }
     }
-
-    //Metodo para contar la cantidad me menajes enviados por Campana
-    public ArrayList<Integer> CountOfMessageCamp ( ArrayList<String> listCampaign ){
-
-        String aux2 = "" ;
-        int n = 0  ;
-        ArrayList<Integer> listNum = new ArrayList<>();
-
-        try {
-            for ( int i = 0 ; i < listCampaign.size() ; i++ ) {
-
-                aux2 = listCampaign.get(i);
-                String select = "SELECT * from public.Get_CountOfMessagesCampaign( '" + aux2 + "' ); ";
-
-                Statement st = conn.createStatement();
-                ResultSet result = st.executeQuery( select );
-                while ( result.next() ) {
-                    n = result.getInt(1);
-                    listNum.add( n );
-                }
-            }
-        }
-        catch ( SQLException e ) {
-            e.printStackTrace();
-            // throw new SQLException();
-        } finally {
-            Sql.bdClose( conn );
-        }
-        return listNum;
-    }
-
-// metodo para contar la cantidad de mensajes enviados por compania
-    public ArrayList<Integer> CountOfMessage ( ArrayList<String> listCompany ){
-
-        String aux2 = "" ;
-        int n = 0  ;
-        ArrayList<Integer> listNum = new ArrayList<>();
-
-        try {
-        for ( int i = 0 ; i < listCompany.size() ; i++ ) {
-
-            aux2 = listCompany.get(i);
-            String select = "SELECT * from public.Get_CountOfMessagesCompany( '" + aux2 + "' );";
-
-            Statement st = conn.createStatement();
-            ResultSet result = st.executeQuery( select );
-            while ( result.next() ) {
-                n = result.getInt(1);
-                listNum.add(n);
-            }
-        }
-        }
-        catch ( SQLException e ) {
-            e.printStackTrace();
-           // throw new SQLException();
-        } finally {
-            Sql.bdClose( conn );
-        }
-        return listNum;
-    }
-//contar mensajes por canal
-    public ArrayList<Integer> CountOfMessageCha ( ArrayList<String> listChannel ){
-
-        String aux2 = "" ;
-        int n = 0  ;
-        ArrayList<Integer> listNum = new ArrayList<>();
-
-        try {
-            for ( int i = 0 ; i < listChannel.size() ; i++ ) {
-
-                aux2 = listChannel.get(i);
-                String select = "SELECT * from public.Get_CountOfMessagesChannel( '"+aux2+"' )";
-                Statement st = conn.createStatement();
-                ResultSet result = st.executeQuery( select );
-                while (result.next()) {
-                     n = result.getInt(1);
-                    listNum.add( n );
-                }
-            }
-        }
-        catch ( SQLException e ) {
-            e.printStackTrace();
-            // throw new SQLException();
-        } finally {
-            Sql.bdClose( conn );
-        }
-        return listNum;
-    }
-
-    //Metodos con los if y los Filtros
 
     public Response filterOfTypeStatisticsBar( String paramDate, String paramType ){
 
@@ -551,20 +482,23 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getNumberOfChannelLine() throws SQLException {
         String aux = "";
-        String select2 = "SELECT channelId as cha_id, channelName as cha_name  from public.Get_ChannelName() ";
+        String select2 = "SELECT icount, channelName as cha_name  from public.Get_ChannelName() ";
         try {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
             ArrayList<String> listChannel = new ArrayList<String>();
             Statement st2 = conn.createStatement();
             ResultSet result2 = st2.executeQuery( select2 );
+            int num;
             while ( result2.next() ) {
                 ChannelFactory channelFactory = new ChannelFactory();
                 Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
                 aux = channel.getNameChannel();
                 listChannel.add( aux ) ;
+                String rs =  result2.getString("icount" );
+                num = Integer.parseInt( rs ) ;
+                listNum.add( num ) ;
             }
-            listNum = CountOfMessageCha( listChannel );
             gr.type = "line";
             gr.x = listChannel;
             gr.y = listNum;
@@ -579,20 +513,23 @@ public class M09_Statistics extends Application {
 
     public Response getNumberOfChannelChart() throws SQLException {
         String aux = "";
-        String select2 = " SELECT channelId as cha_id, channelName as cha_name  from public.Get_ChannelName()";
+        String select2 = "SELECT icount, channelName as cha_name  from public.Get_ChannelName() ";
         try {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
             ArrayList<String> listChannel = new ArrayList<String>();
             Statement st2 = conn.createStatement();
             ResultSet result2 = st2.executeQuery( select2 );
+            int num;
             while ( result2.next() ) {
                 ChannelFactory channelFactory = new ChannelFactory();
                 Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
                 aux = channel.getNameChannel();
                 listChannel.add( aux ) ;
+                String rs =  result2.getString("icount" );
+                num = Integer.parseInt( rs ) ;
+                listNum.add( num ) ;
             }
-            listNum = CountOfMessageCha( listChannel );
             gr.type = "bar";
             gr.x = listChannel;
             gr.y = listNum;
@@ -607,12 +544,12 @@ public class M09_Statistics extends Application {
 
     public Response getNumberOfChannelPie() throws SQLException {
         String aux = "";
-        String select2 = "SELECT channelId as cha_id, channelName as cha_name  from public.Get_ChannelName()";
+        String select2 = "SELECT icount, channelName as cha_name  from public.Get_ChannelName() ";
         try {
             PieChart PieC = new PieChart();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
             ArrayList<String> listlabels = new ArrayList<String>();
-            int n = 0 ;
+            int num ;
             Statement st2 = conn.createStatement();
             ResultSet result2 = st2.executeQuery(select2);
             while ( result2.next() ) {
@@ -620,8 +557,10 @@ public class M09_Statistics extends Application {
                 Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
                 aux = channel.getNameChannel();
                 listlabels.add( aux ) ;
+                String rs =  result2.getString("icount" );
+                num = Integer.parseInt( rs ) ;
+                listNum.add( num ) ;
             }
-            listNum = CountOfMessageCha( listlabels );
             PieC.type = "pie";
             PieC.labels = listlabels;
             PieC.values = listNum;
