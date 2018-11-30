@@ -1,0 +1,33 @@
+<router-outlet></router-outlet>
+
+<div class="container-fluid">
+<form>
+  <div class="form-row">
+    <div class="col-4">
+      <div class="form-group">
+        <label for="formMessage">Nombre de la Compañia</label>
+        <input class="form-control" placeholder="Nombre">
+      </div>
+      <div class="form-group">
+        <label for="formMessage">Descripción de la Compañia</label>
+        <input class="form-control" placeholder="Descripción">
+      </div>
+      <div class="form-group">
+          <label for="formMessage">Administrador de la Compañia</label>
+          <input class="form-control" placeholder="Administrador" disabled>
+        </div>
+    </div>
+  </div>
+  <div id="test" class="form-group">
+    testing this
+  </div>
+
+  <div>
+    test 1
+  </div>
+</form>
+<div class="d-flex flex-row-reverse">
+  <button type="button" class="btn btn-success m-1 col-3">Crear</button>
+  <button type="button" class="btn btn-danger m-1 col-3" routerLink="/company">Cancelar</button>
+</div>
+</div>

@@ -1,6 +1,10 @@
 <app-page-header [heading]="'Campañas'" [icon]="'fa fa-bullhorn'"></app-page-header>
 
-<div class="container-fluid">
+<div class="d-flex flex-row-reverse">
+  <button type="button" class="btn btn-dark" routerLink="/campaigns/create">Crear Campaña</button>
+</div>
+
+<div class="card">
   <table class="table table-bordered table-hover">
     <thead class="thead-dark">
       <tr>

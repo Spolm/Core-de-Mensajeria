@@ -4,6 +4,7 @@ import { CampaignRoutingModule } from './campaign-routing.module';
 import { CampaignComponent } from './campaign.component';
 import { PageHeaderModule } from './../../shared';
 import { Campaign } from '../../../model/campaign-model';
+import { CreateCampaignComponent } from './create-campaign/create-campaign.component';
 
 @NgModule({
   imports: [
@@ -11,7 +12,7 @@ import { Campaign } from '../../../model/campaign-model';
     CampaignRoutingModule,
     PageHeaderModule
   ],
-  declarations: [CampaignComponent]
+  declarations: [CampaignComponent, CreateCampaignComponent]
 })
 export class CampaignModule implements OnInit {  
   
