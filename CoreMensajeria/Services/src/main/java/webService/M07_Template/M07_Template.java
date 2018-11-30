@@ -29,9 +29,7 @@ public class M07_Template {
         ArrayList<Template> templateArrayList = null;
         TemplateHandler templateHandler = new TemplateHandler();
         templateArrayList = templateHandler.getTemplates(userId,companyId);
-
-        return Response.ok(gson.toJson("userId: " + userId + " companyId: " + companyId)).build();
-        //return Response.ok(gson.toJson(templateArrayList)).build();
+        return Response.ok(gson.toJson(templateArrayList)).build();
     }
 
     @GET

@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { TemplateService } from '../template.service';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Integrator } from '../../integrator/integrator';
 
 @Component({
   selector: 'app-create-template',
@@ -16,7 +17,7 @@ export class CreateTemplateComponent {
   formMessage: string;
   channels: any = [];
   parametersOrder: any = [];
-  channel_integrator: any = [];
+  channels_integrators: any = [];
 
   constructor(private templateService: TemplateService, @Inject(DOCUMENT) document) {
     this.getParameters();
@@ -36,22 +37,23 @@ export class CreateTemplateComponent {
   }
 
   addParameter(message: string, parameter: string) {
-    let myFormMessage = document.getElementById('formMessage');
-    let pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
-    let startMessage = message.slice(0, pointer);
-    let endMessage = message.slice(pointer, message.length);
-    this.parametersOrder.push(parameter);
-    this.formMessage = startMessage + ' [.$' + parameter + '$.] ' + endMessage;
+    if (!this.parametersOrder.find(x => x == parameter)) {
+      let myFormMessage = document.getElementById('formMessage');
+      let pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
+      let startMessage = message.slice(0, pointer);
+      let endMessage = message.slice(pointer, message.length);
+      this.parametersOrder.push(parameter);
+      this.formMessage = startMessage + ' [.$' + parameter + '$.] ' + endMessage;
+    }
   }
 
-  addIntegrator(channel: number, integrator: number) {
-    console.log('channel: ' + channel);
-    console.log( integrator);
-    let integratorNumber = Number(integrator);
-    this.channel_integrator.push(
-      { channel, integratorNumber }
-    );
-    console.log(this.channel_integrator);
+  addIntegrator(channel: any, integratorId: number) {
+    if (!this.channels_integrators.find(x => x.integrator.idIntegrator == integratorId)) {
+      let integrator = channel.integrators.find(x => x.idIntegrator == integratorId);
+      this.channels_integrators.push(
+        { channel, integrator }
+      );
+    }
   }
 
   deleteParameter(message: string, parameter: string) {
@@ -62,7 +64,11 @@ export class CreateTemplateComponent {
     this.parametersOrder.splice(this.parametersOrder.indexOf(parameter), 1);
   }
 
+  deleteChannel_Integrator(channel_integrator) {
+    this.channels_integrators.splice(this.channels_integrators.indexOf(channel_integrator), 1);
+  }
+
   postTemplate() {
-      this.templateService.postTemplate(this.formMessage,this.channel_integrator)
+    this.templateService.postTemplate(this.formMessage, this.channels_integrators)
   }
 }

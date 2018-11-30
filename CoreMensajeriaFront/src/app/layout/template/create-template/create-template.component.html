@@ -44,7 +44,7 @@
     </div>
   </div>
 
-  <!-- Input for the  channels and integrators of the template -->
+  <!-- Select for the  channels and integrators of the template -->
   <div>
     <hr>
     <div class="form-row m-6" *ngFor="let channel of channels; let i = index">
@@ -56,7 +56,7 @@
       <div class="form-grup col-4">
         <div class="form-check">
           <select class="form-control" id="integratorInput" name="integratorInput" [(ngModel)]="channel.descriptionChannel"
-            (change)="addIntegrator(channel.idChannel, channel.descriptionChannel)">
+            (change)="addIntegrator(channel, channel.descriptionChannel)">
 
             <option *ngFor="let integrator of channel.integrators" [value]="integrator.idIntegrator">
               <p *ngIf="integrator.enabled">
@@ -67,10 +67,19 @@
           </select>
         </div>
       </div>
-
     </div>
     <hr>
   </div>
+
+  <!-- Buttons for the control of the channel and integrator -->
+  <div class="row">
+    <div *ngFor="let channel_integrator of channels_integrators">
+      <button type="button" class="btn btn-danger m-1" (click)="deleteChannel_Integrator(channel_integrator)">
+        {{channel_integrator.channel.nameChannel}} | {{channel_integrator.integrator.nameIntegrator}} 
+      </button>
+    </div>
+  </div>
+  <br>
 
   <div>
     planification
