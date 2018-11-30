@@ -32,18 +32,13 @@ public class M01_Login {
         try {
             if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
                     loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
-
-
-                user = _userDAO.findByUsernameOrEmail(loginIntent.get_username());
+                user = _userDAO.logUser(loginIntent.get_username(),loginIntent.get_password());
                 if( user.get_blockedUser() == 1 )
                     throw new UserBlockedException("El usuario ingresado se encuentra bloqueado");
-
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                md.update(loginIntent.get_password().getBytes());
-                byte[] digest = md.digest();
-                String passwordHash = DatatypeConverter
-                        .printHexBinary(digest).toUpperCase();
-                if (user.get_passwordUser().equals(passwordHash) && user.get_blockedUser()==0) {
+                user.set_remainingAttemptsUser(3);
+                _userDAO.updateUserRemainingAttempts(user);
+                return Response.ok(_gson.toJson(user)).build();
+                /*if (user.get_passwordUser().equals(passwordHash) && user.get_blockedUser()==0) {
                     user.set_remainingAttemptsUser(3);
                     _userDAO.updateUserRemainingAttempts(user);
                     user.set_passwordUser("");
@@ -61,6 +56,7 @@ public class M01_Login {
                     error.addError("credenciales","No se encontro el usuario deseado o la clave es errada");
                     return Response.status(404).entity(error).build();
                 }
+                */
             }
             else {
                 error = new Error("Los datos ingresados no tienen el formato adecuado");
@@ -69,13 +65,11 @@ public class M01_Login {
                 return Response.status(404).entity(error).build();
             }
 
-        }
-        catch(UserBlockedException e){
+        } catch(UserBlockedException e){
             e.printStackTrace();
             error = new Error("El usuario ha sido bloqueado");
             return Response.status(401).entity(error).build();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
             return Response.status(500).entity(error).build();

@@ -12,6 +12,7 @@ public class UserDAO {
     final String QUERY_SELECT_BY_ID = "SELECT * FROM public.user where use_id=?";
     final String QUERY_DELETE = "DELETE FROM public.user where use_id=?";
     final String QUERY_SELECT = "SELECT * FROM public.user";
+    final String QUERY_LOGIN = "SELECT * FROM m01_loguser(?,?);";
     final String QUERY_UPDATE = "UPDATE public.USER SET" +
             " use_password=? , use_type=? , use_email=? , use_phone=? , use_country=? , " +
             " use_city=? , use_address=? , use_date_of_birth=? , use_gender=? , use_blocked=? , " +
@@ -111,7 +112,7 @@ public class UserDAO {
 
     private void setUserParams(ResultSet result, User user) throws SQLException {
         user.set_idUser(result.getInt("use_Id"));
-        user.set_passwordUser(result.getString("use_password"));
+        //user.set_passwordUser(result.getString("use_password"));
         user.set_usernameUser(result.getString("use_username"));
         user.set_typeUser(result.getInt("use_type"));
         user.set_emailUser(result.getString("use_email"));
@@ -139,5 +140,16 @@ public class UserDAO {
         preparedStatement.executeUpdate();
     }
 
+    public User logUser(String username, String password) throws SQLException {
+        PreparedStatement preparedStatement = _conn.prepareCall("{Call m01_loguser(?,?)}");
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+        _result = preparedStatement.executeQuery();
+        _user = new User();
+        while (_result.next()) {
+            setUserParams(_result, _user);
+        }
+        return _user;
+    }
 
 }
