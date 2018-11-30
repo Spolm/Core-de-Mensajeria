@@ -37,7 +37,7 @@ public class TemplateHandlerTest {
         try{
             for (int i=0 ; i < 5 ; i++){
                 assertEquals(templateHandler.getTemplate(i).getTemplateId(), i+1);
-                //statusTemplateCorrectly();
+                statusTemplateCorrectly();
             }
         }catch (TemplateDoesntExistsException e){
             e.printStackTrace();
@@ -55,7 +55,7 @@ public class TemplateHandlerTest {
         assertNotNull(templateHandler.getTemplates());
 
         for (int i=0 ; i < 5 ; i++){
-            assertNotNull(templateHandler.getTemplates().get(i));
+            assertNotNull(templateHandler.getTemplates().get(i+1));
         }
 
         try {

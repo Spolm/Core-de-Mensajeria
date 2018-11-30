@@ -154,7 +154,10 @@ public class TemplateHandler {
                 //asignamos canales, campaña y aplicacion
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
                 template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
-                template.setApplication(getApplicationByTemplate(template.getTemplateId()));
+                ApplicationDAO applicationService = new ApplicationDAO();
+                template.setApplication(applicationService.getApplication
+                        (template.getTemplateId()));
+                //template.setApplication(getApplicationByTemplate(template.getTemplateId()));
 
                 //usuario creador
                 UserDAO userDAO = new UserDAO();
@@ -264,7 +267,7 @@ public class TemplateHandler {
         try{
             //query que obtiene el id de la campana que tiene asociada la plantilla
             ResultSet resultSet = sql.sqlConn(
-                    "SELECT tem_campaign_id \n"
+                    "SELECT tem_campaign_id\n"
                             + "FROM Template\n"
                             + "WHERE tem_id = " + templateId + ";");
             //instanciando el api de campana
@@ -300,8 +303,8 @@ public class TemplateHandler {
         try {
             //query que obtiene el id de la aplicacion que tiene asociada la plantilla
             ResultSet resultSet = sql.sqlConn(
-                    "SELECT tem_application_id \n" +
-                            "FROM Template" +
+                    "SELECT tem_application_id\n" +
+                            "FROM Template\n" +
                             "WHERE tem_id = " + templateId + ";");
             //instanciado el api ApplicationDAO
             ApplicationDAO applicationService = new ApplicationDAO();
