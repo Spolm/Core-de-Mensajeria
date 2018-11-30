@@ -227,10 +227,10 @@ public class TemplateHandler {
                             + "FROM Template\n"
                             + "WHERE tem_id = " + templateId + ";");
             //instanciando el api de campana
-           /* M03_Campaigns campaignsService = new M03_Campaigns();
+            /* M03_Campaigns campaignsService = new M03_Campaigns();
             //obtener objeto campana con el id de campana del query anterior
             campaign = campaignsService.getDetails
-                    (resultSet.getInt("tem_campaign_id")); */
+                    (resultSet.getInt("tem_campaign_id"));*/
         } catch (SQLException e){
             e.printStackTrace();
             throw new TemplateDoesntExistsException
