@@ -1,8 +1,8 @@
 -- Function: m02_getcompanies(integer)
 
---DROP FUNCTION m03_getcompanies(integer);
+--DROP FUNCTION m02_getcompanies(integer);
 
-CREATE OR REPLACE FUNCTION m03_getcompanies ( IN _user integer)
+CREATE OR REPLACE FUNCTION m02_getcompanies ( IN _user integer)
     RETURNS TABLE(com_id integer, com_name character varying, com_description character varying, com_status boolean) AS
 $BODY$
 BEGIN
@@ -16,5 +16,5 @@ $BODY$
     LANGUAGE plpgsql VOLATILE
     COST 100
     ROWS 1000;
-ALTER FUNCTION m03_getcompanies(integer)
+ALTER FUNCTION m02_getcompanies(integer)
     OWNER TO "CoreMensajeria";

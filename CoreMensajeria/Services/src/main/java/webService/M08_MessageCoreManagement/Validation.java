@@ -1,6 +1,6 @@
-package Modulo_8;
+package webService.M08_MessageCoreManagement;
 
-import Classes.M08_Validation.ValidationParameter;
+import Classes.M08_Validation.ValidationReciveParameter;
 import Classes.M08_Validation.ValidationTemplate;
 
 import java.util.Date;
@@ -53,7 +53,7 @@ public class Validation {
     }
 
     //Funcion para validar las validaciones
-    public String Validate_Condicion(boolean date, boolean hour, boolean message, boolean lentgh, ValidationTemplate template, ValidationParameter parameters){
+    public String Validate_Condicion(boolean date, boolean hour, boolean message, boolean lentgh, ValidationTemplate template, ValidationReciveParameter parameters){
 
         if (!date){ return "No se puede enviar plantilla la fecha de envio no valida";}
         else if (!hour){return "No se puede enviar plantilla la hora no es valida"; }
@@ -61,8 +61,8 @@ public class Validation {
         else if (lentgh){return "La longitud del sms es invalida";}
         else{
             //construyo la plantilla con los parametros
-            template.set_message(parameters.get_message());
-            template.set_chanel(parameters.get_chanel());
+          //  template.set_message(parameters.get_message());
+            //template.set_chanel(parameters.get_chanel());
 
             //Envio el template con los parametros a los integradores
             String responseIntegradores = "Exito en Envio";

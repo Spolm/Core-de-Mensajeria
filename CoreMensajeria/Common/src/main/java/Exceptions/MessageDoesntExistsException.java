@@ -5,7 +5,7 @@ package Exceptions;
  * y cual es el idTemplate que no tiene mensaje.
  */
 public class MessageDoesntExistsException extends Exception{
-    private int idTemplate;
+     private int idTemplate;
 
     public MessageDoesntExistsException() {
         super();

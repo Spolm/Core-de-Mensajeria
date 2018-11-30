@@ -39,7 +39,7 @@ public class MessageHandler {
         }
     }
 
-    public static Message getMessage(int templateId){
+    public static Message getMessage(int templateId) throws MessageDoesntExistsException{
         String query = "select mes_id,mes_text from message where mes_template =" + templateId;
         Message message = new Message();
         sql = new Sql();
