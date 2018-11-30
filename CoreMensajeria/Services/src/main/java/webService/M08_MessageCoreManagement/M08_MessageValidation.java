@@ -1,6 +1,6 @@
 package webService.M08_MessageCoreManagement;
 
-import Classes.M08_Validation.ValidationParameter;
+import Classes.M08_Validation.ValidationReciveParameter;
 import Classes.M08_Validation.ValidationTemplate;
 import Modulo_8.Validation;
 import com.google.gson.Gson;
@@ -48,10 +48,10 @@ public class M08_MessageValidation {
                 "}";
 
 
-        //Convert the json to  Java object (ValidationParameter && ValidationTemplate.class)
+        //Convert the json to  Java object (ValidationReciveParameter && ValidationTemplate.class)
 
         ValidationTemplate  template = g.fromJson(JsonTemplate,ValidationTemplate.class);
-        ValidationParameter parameters = g.fromJson(JsonParameters, ValidationParameter.class);
+        ValidationReciveParameter parameters = g.fromJson(JsonParameters, ValidationReciveParameter.class);
 
         //Validacion de parametros con respecto a la plantilla
         Boolean date = validations.Validate_sendDate(template.get_sendDate());
@@ -87,7 +87,7 @@ public class M08_MessageValidation {
                     "}";
 
             ValidationTemplate  template = g.fromJson(JsonTemplate,ValidationTemplate.class);
-            ValidationParameter parameters = g.fromJson(JsonFile, ValidationParameter.class);
+            ValidationReciveParameter parameters = g.fromJson(JsonFile, ValidationReciveParameter.class);
 
             //Validacion de parametros con respecto a la plantilla
             Boolean date = validations.Validate_sendDate(template.get_sendDate());
