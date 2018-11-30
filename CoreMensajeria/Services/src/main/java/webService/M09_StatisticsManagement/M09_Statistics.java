@@ -2,8 +2,8 @@ package webService.M09_StatisticsManagement;
 
 import Classes.M02_Company.Company;
 import Classes.M03_Campaign.Campaign;
-import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
-import Classes.M04_Channel_Integrator.ChannelPackage.ChannelFactory;
+import Classes.M05_Channel.Channel;
+import Classes.M05_Channel.ChannelFactory;
 import Classes.M09_Statistics.PieChart;
 import Classes.M09_Statistics.SqlEstrella;
 import Classes.M09_Statistics.Statistics;

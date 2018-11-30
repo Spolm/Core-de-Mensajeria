@@ -1,8 +1,8 @@
 package webService.M08_MessageCoreManagement;
 
-import Classes.M08_Validation.ValidationParameter;
+import Classes.M08_Validation.ValidationReciveParameter;
 import Classes.M08_Validation.ValidationTemplate;
-import Modulo_8.Validation;
+
 import com.google.gson.Gson;
 
 import javax.ws.rs.GET;
@@ -48,19 +48,19 @@ public class M08_MessageValidation {
                 "}";
 
 
-        //Convert the json to  Java object (ValidationParameter && ValidationTemplate.class)
+        //Convert the json to  Java object (ValidationReciveParameter && ValidationTemplate.class)
 
         ValidationTemplate  template = g.fromJson(JsonTemplate,ValidationTemplate.class);
-        ValidationParameter parameters = g.fromJson(JsonParameters, ValidationParameter.class);
+        ValidationReciveParameter parameters = g.fromJson(JsonParameters, ValidationReciveParameter.class);
 
         //Validacion de parametros con respecto a la plantilla
         Boolean date = validations.Validate_sendDate(template.get_sendDate());
         Boolean hour = validations.Validate_sendHour(template.get_sendHour());
-        Boolean message = validations.Validate_messageParameter(parameters.get_message());
-        Boolean messageLength = validations.ValidateSMSlentgh(parameters.get_message(),parameters.get_chanel());
+      //  Boolean message = validations.Validate_messageParameter(parameters.get_message());
+       // Boolean messageLength = validations.ValidateSMSlentgh(parameters.get_message(),parameters.get_chanel());
 
-        return validations.Validate_Condicion(date,hour,message,messageLength,template,parameters);
-
+        //return validations.Validate_Condicion(date,hour,message,messageLength,template,parameters);
+    return "null";
     }
 
     @POST
@@ -87,16 +87,16 @@ public class M08_MessageValidation {
                     "}";
 
             ValidationTemplate  template = g.fromJson(JsonTemplate,ValidationTemplate.class);
-            ValidationParameter parameters = g.fromJson(JsonFile, ValidationParameter.class);
+            ValidationReciveParameter parameters = g.fromJson(JsonFile, ValidationReciveParameter.class);
 
             //Validacion de parametros con respecto a la plantilla
             Boolean date = validations.Validate_sendDate(template.get_sendDate());
             Boolean hour = validations.Validate_sendHour(template.get_sendHour());
-            Boolean message = validations.Validate_messageParameter(parameters.get_message());
-            Boolean messageLength = validations.ValidateSMSlentgh(parameters.get_message(),parameters.get_chanel());
+           // Boolean message = validations.Validate_messageParameter(parameters.get_message());
+            //Boolean messageLength = validations.ValidateSMSlentgh(parameters.get_message(),parameters.get_chanel());
 
-            return validations.Validate_Condicion(date,hour,message,messageLength,template,parameters);
-
+           // return validations.Validate_Condicion(date,hour,message,messageLength,template,parameters);
+   return null;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return "El archivo no se encontro o no existe:: "+fileRoute;

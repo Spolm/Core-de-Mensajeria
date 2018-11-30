@@ -1,11 +1,10 @@
 package webService.M07_Template;
 
+import Classes.M07_Template.HandlerPackage.StatusHandler;
 import Classes.M07_Template.HandlerPackage.TemplateHandler;
 import Classes.M07_Template.Template;
+import Exceptions.TemplateDoesntExistsException;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -18,25 +17,38 @@ public class M07_Template {
 
     public Gson gson = new Gson();
 
+    /**
+     *
+     * @param userId
+     * @param companyId
+     * @return
+     */
     @GET
-    public Response getTemplates(){
+    public Response getTemplates(@QueryParam("userId") int userId,
+                                 @QueryParam("companyId") int companyId){
+        ArrayList<Template> templateArrayList = null;
         TemplateHandler templateHandler = new TemplateHandler();
-        ArrayList<Template> templateArrayList = templateHandler.getTemplates();
-        return Response.ok(gson.toJson(templateArrayList)).build();
+        templateArrayList = templateHandler.getTemplates(userId,companyId);
+
+        return Response.ok(gson.toJson("userId: " + userId + " companyId: " + companyId)).build();
+        //return Response.ok(gson.toJson(templateArrayList)).build();
     }
 
     @GET
     @Path("/{templateId}")//Subsequent Path
     public Response getTemplate(@PathParam("templateId") int id){
         TemplateHandler templateHandler = new TemplateHandler();
-        Template template = templateHandler.getTemplate(id);
-        return Response.ok(gson.toJson(template)).build();
+        Template template = new Template();
+        try {
+            template = templateHandler.getTemplate(id);
+        }catch (TemplateDoesntExistsException e){
+            e.printStackTrace();
+        }
+        finally {
+            return Response.ok(gson.toJson(template)).build();
+        }
     }
 
-    /*
-     * Delegando la responsabilidad al servicio M07_Message
-     * Ruta: /templates/messages
-     */
     @Path("/messages")
     public M07_Message getMessages(){
         return new M07_Message();
@@ -44,31 +56,18 @@ public class M07_Template {
 
     @POST
     @Path("/update/{templateId}")//Subsequent Path
-    public Boolean postTemplateStatus(@PathParam("templateId") int id){
+    public Boolean postTemplateStatus(@PathParam("templateId") int templateId, String userId){
         Boolean flag = false;
-        TemplateHandler templateHandler = new TemplateHandler();
-        flag = templateHandler.postTemplateStatus(id);
+        flag = StatusHandler.postTemplateStatusAprovado(templateId,Integer.valueOf(userId));
         return flag;
     }
 
     @POST
-    @Path("posttemplate")
+    @Path("add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postTemplate(String json){
-        try {
-            JsonParser parser = new JsonParser();
-            JsonArray gsonArr = parser.parse(json).getAsJsonArray();
-            JsonObject gsonObj = gsonArr.get(0).getAsJsonObject();
-
-            String name = gsonObj.get("name").getAsString();
-            int parameterId = gsonObj.get("parameterId").getAsInt();
-            String text = "name: " + name + " id: " + String.valueOf(parameterId);
-            return Response.ok(gson.toJson(text)).build();
-        }
-        catch (Exception e){
-            System.out.println(e);
-            return null;
-        }
+    public boolean postTemplate(String json){
+        TemplateHandler templateHandler = new TemplateHandler();
+        return templateHandler.postTemplateData(json);
     }
 
 }

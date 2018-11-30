@@ -1,0 +1,43 @@
+<router-outlet></router-outlet>
+
+<div class="container-fluid">
+<form>
+  <div class="row">
+    <div class="col-5">
+      <div class="form-group">
+        <label for="formMessage">Nombre de la Campaña</label>
+        <input class="form-control" placeholder="Nombre">
+      </div>
+      <div class="form-group">
+        <label for="formMessage">Descripción de la Campaña</label>
+        <textarea class="form-control" id="formDescription" rows="5" placeholder="Descripción"></textarea>
+      </div>
+    </div>
+    <div class="col-5">
+        <div class="form-group">
+            <label for="formMessage">Fecha de Inicio de la Campaña</label>
+            <input class="form-control" type="date">
+          </div>
+        <div class="form-group">
+            <label for="formMessage">Fecha de finalización de la Campaña</label>
+            <input type="date" class="form-control">
+          </div>
+          <div class="form-group">
+              <label for="formMessage">Compañia</label>
+              <select class="form-control">
+                <option *ngFor="let company of companyList" value="{{company._idCompany}}">{{company._name}}</option>
+              </select>
+            </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-5">
+      <button type="button" class="btn btn-success m-1 col-12">Crear</button>
+    </div>
+    <div class="col-5">
+        <button type="button" class="btn btn-danger m-1 col-12" routerLink="/campaigns">Cancelar</button>
+    </div>  
+      
+  </div>
+</form>
+</div>

@@ -8,6 +8,8 @@ import { DOCUMENT } from '@angular/common';
   templateUrl: './create-template.component.html',
   styleUrls: ['./create-template.component.scss']
 })
+
+
 export class CreateTemplateComponent {
 
   parameters: any = [];
@@ -22,7 +24,7 @@ export class CreateTemplateComponent {
   }
 
   getParameters() {
-    this.templateService.getParameters().subscribe(data => {
+    this.templateService.getParameters(1).subscribe(data => {
       this.parameters = data;
     });
   }
@@ -58,5 +60,9 @@ export class CreateTemplateComponent {
     let endMessage = message.slice(pointer + parameter.length + 8, message.length);
     this.formMessage = startMessage + endMessage;
     this.parametersOrder.splice(this.parametersOrder.indexOf(parameter), 1);
+  }
+
+  postTemplate() {
+      this.templateService.postTemplate(this.formMessage,this.channel_integrator)
   }
 }
