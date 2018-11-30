@@ -34,15 +34,18 @@ public class ParameterHandlerTest {
     @Test
     public void postCorrectly(){
         String name="param x";
+        int companyId = 1;
         Sql sql = new Sql();
-        parameterHandler.postParameter(name);
-        String query =  "select par_name from public.parameter order by par_id desc limit 1";
+        parameterHandler.postParameter(name,companyId);
+        String query =  "select * from public.parameter order by par_id desc limit 1";
         try {
             ResultSet resultset = sql.sqlConn(query);
             if (resultset.next()) {
+                int par_id = resultset.getInt("par_id");
                 assertNotNull(resultset.getString("par_name"));
                 assertEquals(name,resultset.getString("par_name"));
-                query = "delete from public.parameter where par_id = (select MAX(par_id) from public.parameter)";
+                assertEquals(companyId,resultset.getInt("par_company_id"));
+                query = "delete from public.parameter where par_id = " + par_id;
                 sql.sqlNoReturn(query);
             }
         } catch (SQLException e) {

@@ -1,6 +1,5 @@
-package Classes.M04_Channel_Integrator.IntegratorPackage;
+package Classes.M04_Integrator;
 
-// Clase abstracta que sirve para almacenar los integradores de forma polimorfica Clase padre que tiene atributos y todo los metodos en comun que tiene todos los integradores, a su vez todo los metodos abstractos que implementaran cada clase en concreto
 public abstract class Integrator implements IIntegrator {
     private int idIntegrator;
     private int threadCapacity;
