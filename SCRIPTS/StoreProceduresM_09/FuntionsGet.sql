@@ -1,106 +1,57 @@
-﻿-- Nombre de las compañias
-CREATE OR REPLACE FUNCTION Get_CompanyName() 
+﻿CREATE OR REPLACE FUNCTION Get_CompanyName () 
  RETURNS TABLE (
+ icount BIGINT,
  companiesName VARCHAR(200)
+ 
 ) 
 AS $$
 BEGIN
-	RETURN QUERY  SELECT com_name from dim_company_campaign group by com_name;
+	RETURN QUERY  select count(M.*), C.com_name from fact_sent_message as M, dim_company_campaign as C 
+    where C.cam_id = M.sen_cam_id GROUP BY C.com_name  ;
 END; $$ 
 Language 'plpgsql';
 
+/*
+SELECT icount , companiesName as com_name from public.Get_CompanyName();
+*/
 
 -- SELECT companiesName as com_name from public.Get_CompanyName();
 
 
--------------------------------------------------------------------------------
-
-
--- Nombre de campañas
-CREATE OR REPLACE FUNCTION Get_CampaignName () 
+/* Nombre de campañas*/
+CREATE OR REPLACE FUNCTION Get_CampaignName  () 
  RETURNS TABLE (
- campaignName VARCHAR(200)
+ icount BIGINT,
+ campaignName  VARCHAR(200)
+ 
 ) 
 AS $$
 BEGIN
-	RETURN QUERY  SELECT cam_name  from dim_company_campaign;
-END; $$
+	RETURN QUERY  select count(M.*), C.cam_name from fact_sent_message as M, dim_company_campaign as C 
+    where C.cam_id = M.sen_cam_id GROUP BY C.cam_name  ;
+END; $$ 
 Language 'plpgsql';
 
--- SELECT campaignName as cam_name from public.Get_CampaignName();
+/*
+SELECT campaignName as cam_name, icount from public.Get_CampaignName();
+*/
 
-
--------------------------------------------------------------------------------
-
--- Nombre de Canales
+/*-------------------------------------------------------------------------------*/
+drop function Get_ChannelName()
+/*Nombre de Canales*/
 CREATE OR REPLACE FUNCTION Get_ChannelName () 
  RETURNS TABLE (
- channelId INT,
+ icount BIGINT,
  channelName VARCHAR(200)
 ) 
 AS $$
 BEGIN
-	RETURN QUERY  SELECT DISTINCT cha_id, cha_name FROM dim_channel ORDER BY cha_id;
+	RETURN QUERY  SELECT count(M.*), C.cha_name from fact_sent_message as M, 
+                         dim_channel as C where C.cha_id = M.sen_cha_id GROUP BY C.cha_name  ;
 END; $$
 Language 'plpgsql';
-
--- SELECT channelId as cha_id, channelName as cha_name  from public.Get_ChannelName();
-
-
--------------------------------------------------------------------------------
-
--- Cantidad de mensajes enviados por campaña
-CREATE OR REPLACE FUNCTION Get_CountOfMessagesCampaign (campName VARCHAR(200)) 
- RETURNS TABLE (
- icount bigint
-) 
-AS $$
-BEGIN
-	RETURN QUERY SELECT count( M.* ) from fact_sent_message as M, 
-	dim_company_campaign as C 
-	where C.cam_id = M.sen_cam_id 
-	and C.cam_name = campName;
-END; $$
-Language 'plpgsql';
-
--- SELECT * from public.Get_CountOfMessagesCampaign( aux2 );
-
--------------------------------------------------------------------------------
-
--- Cantidad de mensajes enviados por compania
-CREATE OR REPLACE FUNCTION Get_CountOfMessagesCompany (compName VARCHAR(200)) 
- RETURNS TABLE (
- icount BIGINT
-) 
-AS $$
-BEGIN
-	RETURN QUERY SELECT count( M.* ) from fact_sent_message as M, 
-	dim_company_campaign as C 
-	where C.cam_id = M.sen_cam_id 
-	and C.com_name = compName;
-END; $$
-Language 'plpgsql';
-
--- SELECT * from public.Get_CountOfMessagesCompany( aux2 );
-
--------------------------------------------------------------------------------
-
--- Cantidad de mensajes enviados por canal
-CREATE OR REPLACE FUNCTION Get_CountOfMessagesChannel (chaName VARCHAR(200)) 
- RETURNS TABLE (
- icount BIGINT
-) 
-AS $$
-BEGIN
-	RETURN QUERY SELECT count( M.* ) from fact_sent_message as M, 
-	dim_channel as C 
-	where C.cha_id = M.sen_cha_id 
-	and C.cha_name = chaName;
-END; $$
-Language 'plpgsql';
-
-
--- SELECT * from public.Get_CountOfMessagesChannel( 'aux2' );
-
+/*
+SELECT icount, channelName as cha_name  from public.Get_ChannelName();
+*/
 
 
