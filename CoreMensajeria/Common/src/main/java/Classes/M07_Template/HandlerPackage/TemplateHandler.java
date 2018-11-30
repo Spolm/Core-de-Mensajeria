@@ -2,15 +2,13 @@ package Classes.M07_Template.HandlerPackage;
 
 import Classes.M03_Campaign.Campaign;
 //import webService.M03_CampaingManagement.M03_Campaigns;
-import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
-import Classes.M04_Channel_Integrator.ChannelPackage.ChannelFactory;
-import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
-import Classes.M04_Channel_Integrator.IntegratorPackage.IntegratorService;
+import Classes.M05_Channel.Channel;
+import Classes.M05_Channel.ChannelFactory;
+import Classes.M04_Integrator.Integrator;
+import Classes.M04_Integrator.IntegratorService;
 import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
-import Exceptions.CampaignDoesntExistsException;
-import Exceptions.MessageDoesntExistsException;
 import Exceptions.TemplateDoesntExistsException;
 
 import java.sql.*;
