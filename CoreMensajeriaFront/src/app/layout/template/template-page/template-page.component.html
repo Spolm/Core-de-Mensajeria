@@ -1,0 +1,54 @@
+<router-outlet></router-outlet>
+<h2 class="text-capitalize main-title">Datos de Plantilla</h2>
+<hr>
+<div class="row">
+    <div class="col-md-4">
+        <p><strong>Identificacion: </strong> {{template.templateId}} </p>
+        <p><strong>Creada por: </strong> {{template.user._usernameUser}} </p>
+        <p><strong>Status: </strong>
+            <span class="badge badge-success notclickable" *ngIf="template.status.statusName == 'Aprobado'; else elseBlock">
+                Aprobado
+            </span>
+            <ng-template #elseBlock>
+                <span>
+                    <ngbd-modal-approve [templateId]="template.templateId" (spread)="getTemplate()"></ngbd-modal-approve>
+                </span>
+            </ng-template>
+        </p>
+        <p><strong>Fecha de creacion: </strong> {{template.creationDate  | date : date : 'YYYY'}} </p>
+    </div>
+    <div class="col-md-8">
+        <p><strong>Mensaje:</strong> {{template.message.message}} </p>
+        <p></p>
+    </div>
+</div>
+
+<h3>Canales e Integradores</h3>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Canal</th>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Integradores</th>
+                </tr>
+              </thead>
+            <tbody>
+                <tr *ngFor="let channel of template.channels;" >
+                    <td class="text-center">
+                        {{channel.nameChannel}}
+                    </td>
+                    <td>
+                        {{channel.descriptionChannel}}
+                    </td>
+                    <td>
+                        <div *ngFor="let integrator of channel.integrators;">
+                            {{integrator.nameIntegrator}}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
