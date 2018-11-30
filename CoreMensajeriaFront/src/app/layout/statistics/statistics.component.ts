@@ -55,9 +55,9 @@ export class StatisticsComponent implements OnInit {
            Charts
     ================= */
     timeLineChart = [];
-    companiesBarChart = [];
-    campaignsBarChart = [];
-    channelsPieChart = [];
+    companiesChart = [];
+    campaignsChart = [];
+    channelsChart = [];
 
     /* ==========================
            Filter dropdowns
@@ -155,7 +155,7 @@ export class StatisticsComponent implements OnInit {
         chartElement: ElementRef,
         title: String,
         chartType: ChartType
-    ) {
+    ): Chart {
         let pointsForChart = this.createPointArray(data);
         var pointsOfChartJson = [];
         let colors = this.getArrayOfRandomColors(pointsForChart.length);
@@ -164,7 +164,7 @@ export class StatisticsComponent implements OnInit {
             pointsOfChartJson.push(company.toJson());
         });
 
-        this.createChart(
+        return this.createChart(
             title,
             Point.getXArray(pointsForChart),
             Point.getYArray(pointsOfChartJson),
@@ -186,7 +186,7 @@ export class StatisticsComponent implements OnInit {
         this.statisticsService
             .getInitialMessagesForCompanies()
             .subscribe(data => {
-                this.insertInitialDataIntoCharts(
+                this.companiesChart = this.insertInitialDataIntoCharts(
                     data,
                     this.companiesChartElement,
                     "Cantidad de mensajes por compañía",
@@ -197,7 +197,7 @@ export class StatisticsComponent implements OnInit {
         this.statisticsService
             .getInitialMessagesForCampaigns()
             .subscribe(data => {
-                this.insertInitialDataIntoCharts(
+                this.campaignsChart = this.insertInitialDataIntoCharts(
                     data,
                     this.campaignsChartElement,
                     "Cantidad de mensajes por campaña",
@@ -208,7 +208,7 @@ export class StatisticsComponent implements OnInit {
         this.statisticsService
             .getInitialMessagesForChannels()
             .subscribe(data => {
-                this.insertInitialDataIntoCharts(
+                this.channelsChart = this.insertInitialDataIntoCharts(
                     data,
                     this.channelsChartElement,
                     "Cantidad de mensajes por canal",
@@ -737,8 +737,8 @@ export class StatisticsComponent implements OnInit {
                 let channelsJson = data["channels"];
                 var channels: Point[] = this.createPointArray(channelsJson);
 
-                this.insertDataIntoChart(
-                    this.companiesBarChart,
+                this.updateChartData(
+                    this.companiesChart,
                     companies,
                     ChartType.bar
                 );
@@ -749,7 +749,7 @@ export class StatisticsComponent implements OnInit {
         );
     }
 
-    insertDataIntoChart(chart: Chart, data: Point[], typeOfChart: ChartType) {
+    updateChartData(chart: Chart, data: Point[], typeOfChart: ChartType) {
         var dataJsonArray = [];
         var colors = [];
         data.forEach(company => {
