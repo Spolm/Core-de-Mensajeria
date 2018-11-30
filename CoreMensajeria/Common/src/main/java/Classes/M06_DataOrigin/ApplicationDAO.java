@@ -88,7 +88,6 @@ public class ApplicationDAO {
             PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_APPLICATION_BY_TOKEN);
             preparedStatement.setString(1, token);
             ResultSet result = preparedStatement.executeQuery();
-            result.next();
             if(result.next())
                 return this.extractApplication(result);
             else
@@ -118,21 +117,25 @@ public class ApplicationDAO {
     }
     //          CREATES
     //Create a new application
-    public void addApplication (AddApplicationData app) throws DatabaseConnectionProblemException {
+    public Application createApplication (AddApplicationData app) throws DatabaseConnectionProblemException {
         try {
+
+            String token = this._encrypter.encrypt(
+                    app.get_userId() + app.get_companyId() + app.get_nameApplication());
             PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_INSERT_APPLICATION);
 
             preparedStatement.setString(1, app.get_nameApplication());
             preparedStatement.setString(2, app.get_descriptionApplication());
-            preparedStatement.setString(3, this._encrypter.encrypt(
-                    app.get_userId() + app.get_companyId() + app.get_nameApplication()
-            ));
+            preparedStatement.setString(3, token);
             preparedStatement.setInt(4, app.get_userId());
             preparedStatement.setInt(5, app.get_companyId());
 
             preparedStatement.execute();
+            return this.getApplication(token);
         }catch (SQLException e){
             throw new DatabaseConnectionProblemException("Error al crear aplicacion.", e);
+        }catch (ApplicationNotFoundException e){
+            throw new DatabaseConnectionProblemException("Error al obtener aplicacion.", e);
         }
     }
 
