@@ -30,6 +30,13 @@ enum EntityType {
     channel
 }
 
+enum ChartType {
+    line = "line",
+    bar = "bar",
+    pie = "pie",
+    doughnut = "doughnut"
+}
+
 @Component({
     selector: "app-statistics",
     templateUrl: "./statistics.component.html",
@@ -193,7 +200,7 @@ export class StatisticsComponent implements OnInit {
                     labels,
                     datos,
                     colors,
-                    "bar",
+                    ChartType.bar,
                     this.companiesBarChartElement
                 );
             });
@@ -252,7 +259,7 @@ export class StatisticsComponent implements OnInit {
                     labels,
                     datos,
                     colors,
-                    "bar",
+                    ChartType.bar,
                     this.campaignsBarChartElement
                 );
             });
@@ -324,7 +331,7 @@ export class StatisticsComponent implements OnInit {
                     labels,
                     values,
                     colors,
-                    "doughnut",
+                    ChartType.doughnut,
                     this.channelsPieChartElement
                 );
             });
@@ -752,24 +759,32 @@ export class StatisticsComponent implements OnInit {
                 let channelsJson = data["channels"];
                 var channels: Point[] = this.createPointArray(channelsJson);
 
-                var companyData = [];
-                var colors = [];
-                companies.forEach(company => {
-                    companyData.push(company.toJson());
-                    colors.push(this.getRandomColor());
-                });
-
-                this.updateChart(
+                this.insertDataIntoChart(
                     this.companiesBarChart,
-                    Point.getXArray(companyData),
-                    companyData,
-                    colors,
-                    "bar"
+                    companies,
+                    ChartType.bar
                 );
             },
             error => {
                 console.error(error);
             }
+        );
+    }
+
+    insertDataIntoChart(chart: Chart, data: Point[], typeOfChart: ChartType) {
+        var dataJsonArray = [];
+        var colors = [];
+        data.forEach(company => {
+            dataJsonArray.push(company.toJson());
+            colors.push(this.getRandomColor());
+        });
+
+        this.updateChart(
+            chart,
+            Point.getXArray(dataJsonArray),
+            dataJsonArray,
+            colors,
+            typeOfChart
         );
     }
 
@@ -858,11 +873,12 @@ export class StatisticsComponent implements OnInit {
         labels: String[],
         data: any[],
         colors: String[],
-        type: String,
+        type: ChartType,
         element: ElementRef
     ): Chart {
+        console.log(type.valueOf());
         return new Chart(element.nativeElement.getContext("2d"), {
-            type: type,
+            type: type.valueOf(),
             data: {
                 labels: labels,
                 datasets: [
@@ -903,9 +919,9 @@ export class StatisticsComponent implements OnInit {
         labels: String[],
         data: any[],
         colors: String[],
-        type: String
+        type: ChartType
     ) {
-        chart.type = type;
+        chart.type = type.valueOf();
         chart.data.labels = labels;
         chart.data.datasets[0].data = data;
         chart.data.datasets[0].backgroundColor = colors;
