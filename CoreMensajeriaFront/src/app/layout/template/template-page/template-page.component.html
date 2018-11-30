@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-4">
         <p><strong>Identificacion: </strong> {{template.templateId}} </p>
-        <p><strong>Creada por: </strong> </p>
+        <p><strong>Creada por: </strong> {{template.user._usernameUser}} </p>
         <p><strong>Status: </strong>
             <span class="badge badge-success notclickable" *ngIf="template.status.statusName == 'Aprobado'; else elseBlock">
                 Aprobado
@@ -35,7 +35,7 @@
                 </tr>
               </thead>
             <tbody>
-                <tr *ngFor="let channel of template.channels; let i = index">
+                <tr *ngFor="let channel of template.channels;" >
                     <td class="text-center">
                         {{channel.nameChannel}}
                     </td>
@@ -43,7 +43,7 @@
                         {{channel.descriptionChannel}}
                     </td>
                     <td>
-                        <div *ngFor="let integrator of channel.integrators; let i = index">
+                        <div *ngFor="let integrator of channel.integrators;">
                             {{integrator.nameIntegrator}}
                         </div>
                     </td>
