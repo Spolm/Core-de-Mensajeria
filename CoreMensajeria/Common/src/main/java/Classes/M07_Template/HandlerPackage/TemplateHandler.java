@@ -56,6 +56,7 @@ public class TemplateHandler {
           + "order by c.cam_id";
 
     public ArrayList<Template> getTemplates(int userId,int companyId){
+
         ArrayList<Template> templateArrayList = new ArrayList<>();
         ArrayList<Campaign> campaignArrayList = null;
         Connection connection = Sql.getConInstance();
