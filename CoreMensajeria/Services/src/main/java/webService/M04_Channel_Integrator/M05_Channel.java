@@ -26,8 +26,8 @@ public class M05_Channel {
                 .build();
     }
 
-    @Path("/i/{id}")
     @GET
+    @Path("/i/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listIntegrator(@PathParam( "id" ) int id) {
         List<Integrator> i = ChannelService.getInstance().listIntegratorByChannel(id);

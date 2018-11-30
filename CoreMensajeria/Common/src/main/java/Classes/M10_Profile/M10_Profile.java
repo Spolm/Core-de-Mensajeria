@@ -63,15 +63,16 @@ public class M10_Profile {
      */
     public String editProfile( int id, String email, String phone,String address ) {
 
-        //Query a realizar
-        String query = "UPDATE public.User SET " +
-                "use_phone='"+phone+"',use_email='"+email+"' ,use_address='"+address+"'"+
-                "WHERE use_id = "+id;
-
-        //Se crea conexion a la dc
-        Sql db = new Sql();
-
         try {
+
+            //Query a realizar
+            String query = "UPDATE public.User SET " +
+                    "use_phone='"+phone+"',use_email='"+email+"' ,use_address='"+address+"'"+
+                    "WHERE use_id = "+id;
+
+            //Se crea conexion a la dc
+            Sql db = new Sql();
+
             //Se realiza query, falta codigo aqui para validar si se realizo correctamente el query
             db.sqlConn(query);
             return "Perfil editado con éxito";
@@ -80,7 +81,6 @@ public class M10_Profile {
             System.err.println(e.getStackTrace());
             return "Error al editar el perfil";
         }
-
 
     }
 }

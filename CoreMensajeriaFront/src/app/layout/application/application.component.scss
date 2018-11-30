@@ -1,6 +1,52 @@
 .main-title{
     padding: 25px 0;
 }
+#add-btn{
+    margin-bottom: 10px;
+}
 .table{
     margin-bottom: 0;
+    td{
+        i.fa{
+            cursor: pointer;
+        }
+        .fa-play{
+            color: #17a2b8;
+        }
+        .fa-pause{
+            color: #17a2b8;
+        }
+    }
 }
+.backdrop{
+    background-color:rgba(0,0,0,0.6); 
+    position:fixed;
+    top:0; 
+    left:0; 
+    width:100%; 
+    height:100vh;
+    display: none;
+    opacity: 0;
+    &.show{
+        display: block;
+        opacity: 1 !important;
+    } 
+}
+.modal{
+    display: none;
+    opacity: 0;
+    &.show{
+        display: block;
+        opacity: 1 !important;
+    } 
+    .viewDescription{
+        font-size: 14px;
+    }
+    .modal-footer{
+        justify-content: center;
+        h6{
+            margin-bottom: 0;
+        }
+    }
+}
+    

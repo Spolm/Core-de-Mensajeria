@@ -1,0 +1,83 @@
+<router-outlet></router-outlet>
+
+<form>
+  <div class="form-row">
+
+    <!-- Textarea for the message of the template -->
+    <div class="form-group col-9">
+      <label for="formMessage">Mensaje de la plantilla</label>
+      <textarea class="form-control" id="formMessage" rows="5" placeholder="Mensaje" [(ngModel)]="formMessage" name="message"></textarea>
+    </div>
+
+    <!-- Select for the parameters of the template -->
+    <div class="form-group col">
+      <label for="formParameters">Parametros</label>
+      <br>
+      <div class="d-flex flex-row-reverse">
+        <button type="button" class="btn btn-primary btn-sm m-1">+</button>
+        <select class="form-control" id="formParameters" [(ngModel)]="formParameters" name="param" (change)="addParameter(formMessage, formParameters)">
+          <option *ngFor="let parameter of parameters">
+            {{parameter.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Buttons for the control of the parameters -->
+  <div class="row">
+    <div *ngFor="let parameter of parametersOrder">
+      <button type="button" class="btn btn-danger m-1" (click)="deleteParameter(formMessage, parameter)">
+        {{parameter}}
+      </button>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-2">
+      Canales
+    </div>
+    <div class="col-4">
+      Integradores
+    </div>
+  </div>
+
+  <!-- Input for the  channels and integrators of the template -->
+  <div>
+    <hr>
+    <div class="form-row m-6" *ngFor="let channel of channels; let i = index">
+
+      <div class="form-group col-2" id="{{channel.idChannel}}">
+        {{channel.nameChannel}}
+      </div>
+
+      <div class="form-grup col-4">
+        <div class="form-check">
+          <select class="form-control" id="integratorInput" name="integratorInput" [(ngModel)]="channel.descriptionChannel"
+            (change)="addIntegrator(channel.idChannel, channel.descriptionChannel)">
+
+            <option *ngFor="let integrator of channel.integrators" [value]="integrator.idIntegrator">
+              <p *ngIf="integrator.enabled">
+                {{integrator.nameIntegrator}} | {{integrator.messageCost}} (bs.S)
+              </p>
+            </option>
+
+          </select>
+        </div>
+      </div>
+
+    </div>
+    <hr>
+  </div>
+
+  <div>
+    planification
+  </div>
+</form>
+
+<div class="d-flex flex-row-reverse">
+  <button type="button" class="btn btn-success m-1">Crear</button>
+  <button type="button" class="btn btn-danger m-1" routerLink="/template">Cancelar</button>
+</div>

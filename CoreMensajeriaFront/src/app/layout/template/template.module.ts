@@ -1,17 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { NgbdModalApprove } from './modals/modal-approve/modal-approve';
 import { TemplateRoutingModule } from './template-routing.module';
 import { TemplateComponent } from './template.component';
+import { CreateTemplateComponent } from './create-template/create-template.component';
 import { PageHeaderModule } from './../../shared';
-import { importType } from '@angular/compiler/src/output/output_ast';
+import { FormsModule } from '@angular/forms';
+import { NgbdModalSelectCompany } from './modals/modal-select-company/modal-select-company';
+
 
 @NgModule({
   imports: [
     CommonModule,
     TemplateRoutingModule,
-    PageHeaderModule
+    PageHeaderModule,
+    FormsModule
   ],
-  declarations: [TemplateComponent]
+  declarations: [
+    TemplateComponent,
+    NgbdModalApprove,
+    NgbdModalSelectCompany,
+    CreateTemplateComponent
+  ]
 })
 export class TemplateModule { }
