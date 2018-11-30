@@ -1,7 +1,7 @@
-package Classes.M04_Channel_Integrator.ChannelPackage;
+package Classes.M05_Channel;
 
-import Classes.M04_Channel_Integrator.IntegratorPackage.Integrator;
-import Classes.M04_Channel_Integrator.IntegratorPackage.IntegratorService;
+import Classes.M04_Integrator.Integrator;
+import Classes.M04_Integrator.IntegratorService;
 import Classes.Sql;
 
 import java.sql.ResultSet;
@@ -17,6 +17,7 @@ public class ChannelService {
      * Retorna un ChannelService, clase que se encarga de realizar la
      * conexion a la base de datos.
      * En caso de que esta exista, la retoma.
+     *
      * @return channelService con los metodos para realizar operaciones sobre los canales.
      * @see ChannelService
      */
@@ -56,6 +57,7 @@ public class ChannelService {
 
     /**
      * Metodo que se encarga de mostrar todos los canales existentes
+     *
      * @return Lista de canales
      * @see Channel
      */

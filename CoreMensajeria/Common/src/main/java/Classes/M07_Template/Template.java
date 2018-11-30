@@ -1,7 +1,7 @@
 package Classes.M07_Template;
 
 import Classes.M03_Campaign.Campaign;
-import Classes.M04_Channel_Integrator.ChannelPackage.Channel;
+import Classes.M05_Channel.Channel;
 import Classes.M07_Template.MessagePackage.*;
 import Classes.M07_Template.StatusPackage.*;
 

@@ -1,4 +1,4 @@
-package Classes.M04_Channel_Integrator.IntegratorPackage;
+package Classes.M04_Integrator;
 
 import Classes.Sql;
 import Exceptions.DatabaseConnectionProblemException;
@@ -11,6 +11,8 @@ public class IntegratorDAO {
 
     final String QUERY_SELECT = "SELECT * FROM integrator";
     final String QUERY_SELECT_BY_ID = "SELECT * FROM integrator where int_id=?";
+    final String QUERY_UPDATE_INTEGRATOR = "UPDATE integrator SET int_enabled =? WHERE int_id =?";
+
 
     private Connection _conn;
     private Integrator _integrator;
@@ -63,7 +65,7 @@ public class IntegratorDAO {
             }
 
         } catch (SQLException e) {
-            throw new DatabaseConnectionProblemException("Error al obtener aplicacion.", e);
+            throw new DatabaseConnectionProblemException("Error al obtener integrador.", e);
         } finally {
             Sql.bdClose(_conn);
         }
@@ -73,10 +75,43 @@ public class IntegratorDAO {
         return _integrator;
     }
 
-    public Integrator getIntegrator(ResultSet rs) throws SQLException {
+    public void disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException{
+        try {
+            getConcreteIntegrator(id);
+            _conn = Sql.getConInstance();
+            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_UPDATE_INTEGRATOR);
+            preparedStatement.setBoolean(1, false);
+            preparedStatement.setInt(2, id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DatabaseConnectionProblemException("Error al deshabilitar integrator. " +QUERY_UPDATE_INTEGRATOR , e);
+        } finally {
+            Sql.bdClose(_conn);
+        }
+    }
+
+    public void enableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException{
+        try {
+            getConcreteIntegrator(id);
+            _conn = Sql.getConInstance();
+            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_UPDATE_INTEGRATOR);
+            preparedStatement.setBoolean(1, true);
+            preparedStatement.setInt(2, id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DatabaseConnectionProblemException("Error al deshabilitar integrator. " +QUERY_UPDATE_INTEGRATOR , e);
+        } finally {
+            Sql.bdClose(_conn);
+        }
+    }
+
+    public static Integrator getIntegrator(ResultSet rs) throws SQLException {
         Integrator integrator = IntegratorFactory.getIntegrator(rs.getString("int_name"),
-                rs.getInt("int_id"), rs.getString("int_name"), rs.getFloat("int_messageCost"),
-                rs.getInt("int_threadCapacity"), rs.getString("int_tokenApi"), rs.getBoolean("int_enabled"));
+                rs.getInt("int_id"), rs.getString("int_name"),
+                rs.getFloat("int_messageCost"), rs.getInt("int_threadCapacity"),
+                rs.getString("int_tokenApi"), rs.getBoolean("int_enabled"));
         return integrator;
     }
 }
