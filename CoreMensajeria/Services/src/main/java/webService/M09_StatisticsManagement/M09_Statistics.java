@@ -16,8 +16,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @Path( "/M09_Statistics" )
@@ -636,7 +635,7 @@ public class M09_Statistics extends Application {
     }
 
     @GET
-    @Path("/data")
+    @Path("/filters")
     @Produces("application/json")
     public Response getStatistics(@QueryParam("companyId") List<Integer> companyIds,
                                   @QueryParam("campaignId") List<Integer> campaignIds,
@@ -644,20 +643,24 @@ public class M09_Statistics extends Application {
         String companyin = setParametersforQuery(companyIds,"and me.sen_com_id in ");
         String campaignin = setParametersforQuery(campaignIds,"and me.sen_cam_id in ");
         String channelin = setParametersforQuery(channelIds,"and me.sen_cha_id in ");
-        ArrayList<Statistics> stats = new ArrayList<Statistics>();
+        Map<String, Statistics> stats = new HashMap<String, Statistics>();
+        //ArrayList<Statistics> stats = new ArrayList<Statistics>();
         try {
             Statement st = conn.createStatement();
             if (!companyIds.isEmpty()) {
-                stats.add(getMessagesParam(companyin, campaignin, channelin, "me.sen_com_id", "co.com_name",
-                    "public.dim_company_campaign co", "co.com_id", st));
+                stats.put("companies", getMessagesParam(companyin, campaignin, channelin, "me.sen_com_id", "co.com_name",
+                        "public.dim_company_campaign co", "co.com_id", st));
+                //stats.add();
             }
             if (!campaignIds.isEmpty()) {
-                stats.add(getMessagesParam(companyin, campaignin, channelin, "me.sen_cam_id", "ca.cam_name",
-                    "public.dim_company_campaign ca", "ca.cam_id", st));
+                stats.put("campaigns", getMessagesParam(companyin, campaignin, channelin, "me.sen_cam_id", "ca.cam_name",
+                        "public.dim_company_campaign ca", "ca.cam_id", st));
+                //stats.add();
             }
             if (!channelIds.isEmpty()) {
-                stats.add(getMessagesParam(companyin, campaignin, channelin, "me.sen_cha_id", "ch.cha_name",
-                    "public.dim_channel ch", "ch.cha_id", st));
+                stats.put("channels", getMessagesParam(companyin, campaignin, channelin, "me.sen_cha_id", "ch.cha_name",
+                        "public.dim_channel ch", "ch.cha_id", st));
+                //stats.add();
             }
         } catch (SQLException e) {
             e.printStackTrace();
