@@ -7,12 +7,17 @@ import Exceptions.IntegratorNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Clase que nos permite realizar la conexion a la base de datos
+ * con los metodos relacionados a la clase integrador
+ *
+ * @Author Josè Salas
+ * @Author Manuel Espinoza
+ * @Author Josè Cedeño
+ * @see Integrator
+ */
+
 public class IntegratorDAO {
-
-    final String QUERY_SELECT = "SELECT * FROM integrator";
-    final String QUERY_SELECT_BY_ID = "SELECT * FROM integrator where int_id=?";
-    final String QUERY_UPDATE_INTEGRATOR = "UPDATE integrator SET int_enabled =? WHERE int_id =?";
-
 
     private Connection _conn;
     private Integrator _integrator;
@@ -22,8 +27,10 @@ public class IntegratorDAO {
     /**
      * Constructor que se encarga de realizar la conexion
      * a la base de datos
+     *
      * @see Connection
      */
+
     public IntegratorDAO() {
         _conn = Sql.getConInstance();
     }
@@ -32,15 +39,16 @@ public class IntegratorDAO {
      * Retorna una lista de Integradores
      * Este metodo retorna una lista de integradores, en caso de no existir
      * el archivo se encontrara en blanco.
-     * @return      Lista de Integradores
-     * @see         Integrator
+     *
+     * @return Lista de Integradores
+     * @see Integrator
      */
 
     public ArrayList<Integrator> listIntegrator() throws DatabaseConnectionProblemException {
         try {
             _integratorList = new ArrayList<>();
-            Statement st = _conn.createStatement();
-            _result = st.executeQuery(QUERY_SELECT);
+            PreparedStatement st = _conn.prepareCall("{call m04_getintegrators()}");
+            _result = st.executeQuery();
 
             while (_result.next()) {
                 _integratorList.add(getIntegrator(_result));
@@ -53,9 +61,19 @@ public class IntegratorDAO {
         }
     }
 
-    public Integrator getConcreteIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException{
+    /**
+     * Retorna un solo integrador
+     * Este metodo retorna un integrador en concreto
+     * en caso de no existir
+     *
+     * @param id del integrador a buscar en la base de datos
+     * @return Lista de Integradores
+     * @see Integrator
+     */
+
+    public Integrator getConcreteIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
         try {
-            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_BY_ID);
+            PreparedStatement preparedStatement = _conn.prepareCall("{call m04_getConcreteIntegrator(?)}");
             preparedStatement.setInt(1, id);
             _result = preparedStatement.executeQuery();
             _integrator = null;
@@ -69,39 +87,53 @@ public class IntegratorDAO {
         } finally {
             Sql.bdClose(_conn);
         }
-        if(_integrator == null){
+        if (_integrator == null) {
             throw new IntegratorNotFoundException("El integrador no existe.");
         }
         return _integrator;
     }
 
-    public void disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException{
+    /**
+     * Metodo que nos permite deshabilitar integrador
+     * permite cambiar el estado del integrador
+     *
+     * @param id del integrador a buscar en la base de datos
+     * @see Integrator
+     */
+
+    public void disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
         try {
             getConcreteIntegrator(id);
             _conn = Sql.getConInstance();
-            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_UPDATE_INTEGRATOR);
-            preparedStatement.setBoolean(1, false);
-            preparedStatement.setInt(2, id);
+            PreparedStatement preparedStatement = _conn.prepareCall("{call m04_disableintegrator(?)}");
+            preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DatabaseConnectionProblemException("Error al deshabilitar integrator. " +QUERY_UPDATE_INTEGRATOR , e);
+            throw new DatabaseConnectionProblemException("Error al deshabilitar integrator. ", e);
         } finally {
             Sql.bdClose(_conn);
         }
     }
 
-    public void enableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException{
+    /**
+     * Metodo que nos permite habilitar integrador
+     * permite cambiar el estado del integrador
+     *
+     * @param id del integrador a buscar en la base de datos
+     * @see Integrator
+     */
+
+    public void enableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
         try {
             getConcreteIntegrator(id);
             _conn = Sql.getConInstance();
-            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_UPDATE_INTEGRATOR);
-            preparedStatement.setBoolean(1, true);
-            preparedStatement.setInt(2, id);
+            PreparedStatement preparedStatement = _conn.prepareCall("{call m04_enableintegrator(?)}");
+            preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DatabaseConnectionProblemException("Error al deshabilitar integrator. " +QUERY_UPDATE_INTEGRATOR , e);
+            throw new DatabaseConnectionProblemException("Error al deshabilitar integrator. ", e);
         } finally {
             Sql.bdClose(_conn);
         }
