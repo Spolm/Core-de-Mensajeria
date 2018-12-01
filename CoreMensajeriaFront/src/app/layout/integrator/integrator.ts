@@ -1,10 +1,10 @@
 export class Integrator {
     apiIntegrator: string;
     enabled: boolean;
-    idIntegrator: string;
-    messageCost: string;
+    idIntegrator: number;
+    messageCost: number;
     nameIntegrator: string;
-    threadCapacity: string;
+    threadCapacity: number;
 
     constructor(values: Object = {}){
         Object.assign(this,values);
