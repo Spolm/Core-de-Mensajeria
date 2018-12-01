@@ -24,11 +24,11 @@ export class ChannelComponent implements OnInit {
     this.channelDataService
     .getAllChannels()
     .subscribe(
-      (channels) => {
+      ( channels ) => {
         this.channels = channels;
-        this.toastr.success("Lista Recibida");
-      },(err => {
-        this.toastr.error("Error en la Conexión");
+        this.toastr.success( "Lista Recibida" );
+      },( _ => {
+        this.toastr.error( "Error en la Conexión" );
       })
     )
     
