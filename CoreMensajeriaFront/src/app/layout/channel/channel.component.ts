@@ -20,6 +20,7 @@ export class ChannelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
     this.channelDataService
     .getAllChannels()
     .subscribe(
@@ -30,6 +31,8 @@ export class ChannelComponent implements OnInit {
         this.toastr.error("Error en la Conexión");
       })
     )
+    
+
   }
 
 }
