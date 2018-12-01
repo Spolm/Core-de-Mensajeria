@@ -5,6 +5,7 @@ import Classes.M07_Template.MessagePackage.Parameter;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 import Exceptions.MessageDoesntExistsException;
+import com.google.gson.JsonArray;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -64,16 +65,35 @@ public class MessageHandler {
         }
     }
 
-    public static void postMessage(String message, int templateId) {
+    public static void postMessage(String message, int templateId, String[] parameters,int companyId) {
         String query = "INSERT INTO public.Message(mes_text,mes_template)" +
                 "VALUES ('" + message + "'," + templateId + ") returning mes_id";
         sql = new Sql();
-        int messageId;
+        int messageId=0;
         try{
             ResultSet resultSet = sql.sqlConn(query);
-            if (resultSet.next())
-                messageId=resultSet.getInt("mes_id");
+            if (resultSet.next()) {
+                messageId = resultSet.getInt("mes_id");
+                postParameterOfMessage(messageId,parameters,companyId);
+            }
 
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+        }
+    }
+
+    private static void postParameterOfMessage(int messageId, String[] parameters, int companyId) {
+        sql = new Sql();
+        String query = "";
+        try{
+            for (int i = 0; i < parameters.length; i++)
+                query = query + "insert into public.message_parameter(mp_message,mp_parameter)\n" +
+                        "values (" + messageId + ",(select par_id \n" +
+                        "from public.parameter\n" +
+                        "where par_company_id = " + companyId + "  and par_name = '" + parameters[i] +"'));";
+            sql.sqlNoReturn(query);
         }catch (Exception e){
             e.printStackTrace();
         } finally {

@@ -18,10 +18,7 @@ import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 import Exceptions.TemplateDoesntExistsException;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 
 
 import javax.xml.transform.Result;
@@ -326,6 +323,7 @@ public class TemplateHandler {
 
     public boolean postTemplateData(String json){
         try {
+            Gson gson = new Gson();
             //recibimos el objeto json
             JsonParser parser = new JsonParser();
             JsonObject gsonObj = parser.parse(json).getAsJsonObject();
@@ -334,9 +332,13 @@ public class TemplateHandler {
             int templateId = postTemplate(13,2, gsonObj.get("userId").getAsInt());
             //se establece el template  como no aprobado
             StatusHandler.postTemplateStatusNoAprovado(templateId);
-            //obtenemos el valor del mensaje, a falta de id's de parametros
+            //insertamos los nuevos parametros
+            String[] parameters = gson.fromJson(gsonObj.get("newParameters").getAsJsonArray(),String[].class);
+            ParameterHandler.postParameter(parameters,gsonObj.get("company").getAsInt());
+            //obtenemos el valor del mensaje,y parametros
+            parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
             String message = gsonObj.get("messagge").getAsString();
-            MessageHandler.postMessage(message,templateId);
+            MessageHandler.postMessage(message,templateId,parameters,gsonObj.get("company").getAsInt());
 
             //obtenemos los valores de los canales e integradores
             JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
@@ -358,8 +360,8 @@ public class TemplateHandler {
         try {
             for (JsonElement list : channelIntegratorList){
                 channelIntegrator = list.getAsJsonObject();
-                channel = channelIntegrator.get("channel").getAsInt();
-                integrator = channelIntegrator.get("integratorNumber").getAsInt();
+                channel = channelIntegrator.get("channel").getAsJsonObject().get("idChannel").getAsInt();
+                integrator = channelIntegrator.get("integrator").getAsJsonObject().get("idIntegrator").getAsInt();
                 query = query + "insert into public.template_channel_integrator (tci_template_id,tci_ci_id) " +
                         "values (" + templateId + ",(select ci_id from public.channel_integrator " +
                         "where ci_channel_id = " + channel + " and ci_integrator_id = " + integrator +"));";

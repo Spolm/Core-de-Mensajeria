@@ -73,12 +73,16 @@ export class TemplateService {
       this.http.post(endpoint + 'parameters/add', body.toString(), options).subscribe();
   }
 
-    postTemplate(formMessage: string, channel_integrator: any[]) {
+    postTemplate(formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[]) {
         const json = {
             'messagge': formMessage.valueOf(),
             'userId': localStorage.getItem('userid'),
+            'company': company,
+            'parameters': parameters,
+            'newParameters': newParameters,
             'channel_integrator': channel_integrator.valueOf()
         };
+        console.log(json);
         this.http.post(endpoint + 'templates/add', json).subscribe();
     }
 }

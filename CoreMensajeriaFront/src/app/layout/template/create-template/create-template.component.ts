@@ -92,6 +92,6 @@ export class CreateTemplateComponent {
     console.log(this.parameters);
     console.log(this.newParameters);
     console.log(this.channels_integrators);
-    //this.templateService.postTemplate(this.formMessage, this.channels_integrators)
+    this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1 , this.channels_integrators);
   }
 }

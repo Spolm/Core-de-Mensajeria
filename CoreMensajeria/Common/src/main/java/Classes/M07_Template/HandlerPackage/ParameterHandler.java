@@ -2,6 +2,8 @@ package Classes.M07_Template.HandlerPackage;
 
 import Classes.M07_Template.MessagePackage.Parameter;
 import Classes.Sql;
+import com.google.gson.JsonArray;
+import com.sun.xml.internal.ws.util.StringUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,11 +16,24 @@ public class ParameterHandler {
         sql = new Sql();
     }
 
-    public void postParameter(String name,int companyId) {
-        String query = "INSERT INTO public.Parameter (par_name,par_company_id) \n" +
-                "VALUES ('"+name+"',"+companyId+")";
+    public static void postParameter(String[] parameters, int companyId){
+        for (int i = 0; i < parameters.length;i++)
+            postParameter(parameters[i],companyId);
+    }
+    public static void postParameter(String name, int companyId) {
+        Sql sql = new Sql();
+        String query = "select par_id \n" +
+                "from public.parameter \n" +
+                "where par_company_id = " + companyId + "  and par_name = '" + name +"'";
+
+
         try {
-            sql.sqlNoReturn(query);
+            ResultSet resultSet = sql.sqlConn(query);
+            if (!resultSet.next()) {
+                query = "INSERT INTO public.Parameter (par_name,par_company_id) \n" +
+                        "VALUES ('" + name + "'," + companyId + ")";
+                sql.sqlNoReturn(query);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e){
