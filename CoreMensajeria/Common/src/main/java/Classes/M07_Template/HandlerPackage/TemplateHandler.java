@@ -142,23 +142,20 @@ public class TemplateHandler {
                 //asignamos los datos basicos del propio template
                 template.setTemplateId(resultSet.getInt("tem_id"));
                 template.setCreationDate(resultSet.getString("tem_creation_date"));
-
                 //asignamos el mensaje y status del template
                 template.setMessage(MessageHandler.getMessage(template.getTemplateId()));
                 template.setStatus(Status.createStatus(resultSet.getInt("ts_id"),
                         resultSet.getString("sta_name")));
-
                 //asignamos canales, campaña y aplicacion
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
                 template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
+
+                UserDAO userDAO = new UserDAO();
+                template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
+
                 ApplicationDAO applicationService = new ApplicationDAO();
                 template.setApplication(applicationService.getApplication
                         (template.getTemplateId()));
-                //template.setApplication(getApplicationByTemplate(template.getTemplateId()));
-
-                //usuario creador
-                UserDAO userDAO = new UserDAO();
-                template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
             }
 
         }catch (MessageDoesntExistsException e){
