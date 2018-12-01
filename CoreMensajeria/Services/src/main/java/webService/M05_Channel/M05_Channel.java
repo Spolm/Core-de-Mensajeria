@@ -1,4 +1,4 @@
-package webService.M04_Channel;
+package webService.M05_Channel;
 
 import Classes.M05_Channel.Channel;
 import Classes.M05_Channel.ChannelDAO;

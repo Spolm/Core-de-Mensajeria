@@ -3,7 +3,7 @@ CREATE OR REPLACE FUNCTION m04_getintegrators()
 $BODY$
 BEGIN
 RETURN QUERY
-SELECT * FROM integrator;
+SELECT * FROM integrator order by int_id;
 END;
 $BODY$
     LANGUAGE plpgsql VOLATILE
