@@ -30,6 +30,7 @@ public class UserDAO {
     final String QUERY_UPDATE_BLOCKED = "UPDATE public.USER SET"+
             " use_blocked=? "+
             " WHERE use_id=?";
+    final String CALL_IS_BLOCKED = "{CALL m01_isBlocked(?)}";
 
     private Connection _conn;
     private User _user;
@@ -148,11 +149,15 @@ public class UserDAO {
         preparedStatement.executeUpdate();
     }
 
-    public void blockUser(User user) throws SQLException {
-        PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_UPDATE_BLOCKED);
-        preparedStatement.setInt(1,1);
-        preparedStatement.setInt(2,user.get_idUser());
-        preparedStatement.executeUpdate();
+    public boolean isBlockedUser(String username) throws SQLException {
+        int blocked = 0;
+        PreparedStatement preparedStatement = _conn.prepareCall(CALL_IS_BLOCKED);
+        preparedStatement.setString(1, username);
+        _result = preparedStatement.executeQuery();
+        while (_result.next()) {
+            blocked = _result.getInt(1);
+        }
+        return blocked==1;
     }
 
     public User logUser(String username, String password) throws SQLException {
@@ -160,8 +165,9 @@ public class UserDAO {
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
         _result = preparedStatement.executeQuery();
-        _user = new User();
+        _user = null;
         while (_result.next()) {
+            _user = new User();
             setUserParams(_result, _user);
         }
         return _user;

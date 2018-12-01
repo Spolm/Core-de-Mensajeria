@@ -32,31 +32,14 @@ public class M01_Login {
         try {
             if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
                     loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
-                user = _userDAO.logUser(loginIntent.get_username(),loginIntent.get_password());
-                if( user.get_blockedUser() == 1 )
-                    throw new UserBlockedException("El usuario ingresado se encuentra bloqueado");
-                user.set_remainingAttemptsUser(3);
-                _userDAO.updateUserRemainingAttempts(user);
-                return Response.ok(_gson.toJson(user)).build();
-                /*if (user.get_passwordUser().equals(passwordHash) && user.get_blockedUser()==0) {
-                    user.set_remainingAttemptsUser(3);
-                    _userDAO.updateUserRemainingAttempts(user);
-                    user.set_passwordUser("");
 
-                    return Response.ok(_gson.toJson(user)).build();
-                } else {
-                    error = new Error("Las credenciales ingresadas son incorrectas");
-                    if(user.get_remainingAttemptsUser()>0 && user.get_blockedUser()== 0) {
-                        user.set_remainingAttemptsUser(user.get_remainingAttemptsUser() - 1);
-                        _userDAO.updateUserRemainingAttempts(user);}
-                        else if (user.get_blockedUser() == 1){
-                        user.set_blockedUser(1);
-                        _userDAO.blockUser(user);
-                    }
-                    error.addError("credenciales","No se encontro el usuario deseado o la clave es errada");
-                    return Response.status(404).entity(error).build();
-                }
-                */
+                if( _userDAO.isBlockedUser(loginIntent.get_username()) )
+                    throw new UserBlockedException("El usuario ingresado se encuentra bloqueado");
+
+                user = _userDAO.logUser(loginIntent.get_username(),loginIntent.get_password());
+                if (user == null)
+                    throw new NullPointerException();
+                return Response.ok(_gson.toJson(user)).build();
             }
             else {
                 error = new Error("Los datos ingresados no tienen el formato adecuado");
