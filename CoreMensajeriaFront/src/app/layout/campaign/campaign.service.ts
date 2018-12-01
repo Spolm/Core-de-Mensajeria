@@ -35,7 +35,7 @@ export class CampaignService {
   }
 
   activateCampaign(_idCampaign: Number){
-    return this.http.post(endpoint+'campaigns/update/'+_idCampaign, _idCampaign).subscribe();
+    return this.http.get(endpoint+'update/'+_idCampaign).subscribe();
   }
 
 }

@@ -17,10 +17,6 @@ public class MessageHandler {
         sql = new Sql();
     }
 
-    /*
-     *
-      Algo ineficiente, refactorisable
-     */
     public ArrayList<Template> getMessages(ArrayList<Template> templateArrayList){
         try {
             for(int x = 0; x < templateArrayList.size(); x++){
@@ -43,7 +39,7 @@ public class MessageHandler {
         }
     }
 
-    public static Message getMessage(int templateId){
+    public static Message getMessage(int templateId) throws MessageDoesntExistsException{
         String query = "select mes_id,mes_text from message where mes_template =" + templateId;
         Message message = new Message();
         sql = new Sql();
@@ -65,6 +61,23 @@ public class MessageHandler {
                 Sql.bdClose(sql.getConn());
             }
             return message;
+        }
+    }
+
+    public static void postMessage(String message, int templateId) {
+        String query = "INSERT INTO public.Message(mes_text,mes_template)" +
+                "VALUES ('" + message + "'," + templateId + ") returning mes_id";
+        sql = new Sql();
+        int messageId;
+        try{
+            ResultSet resultSet = sql.sqlConn(query);
+            if (resultSet.next())
+                messageId=resultSet.getInt("mes_id");
+
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
         }
     }
 }

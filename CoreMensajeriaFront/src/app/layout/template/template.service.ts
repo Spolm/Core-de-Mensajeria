@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse,HttpParams } from '@angular/common/http';
+import {Observable, of, pipe} from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
+import {p} from '@angular/core/src/render3';
 
 const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/';
 const httpOptions = {
@@ -29,8 +30,13 @@ export class TemplateService {
       map(this.extractData));
   }
 
-  getParameters(){
-    return this.http.get(endpoint + 'parameters/get').pipe(
+  getTemplate(templateId: number){
+      return this.http.get(endpoint + 'templates/'+templateId.toString()).pipe(
+          map(this.extractData));
+  }
+
+  getParameters(companyId:number){
+      return this.http.get(endpoint + 'parameters/get?companyId=' + companyId.toString()).pipe(
       map(this.extractData));
   }
 
@@ -50,12 +56,29 @@ export class TemplateService {
   }
 
   approveTemplate(templateId: Number){
-    return this.http.post(endpoint+'templates/update/'+templateId, templateId).subscribe();
+      let userId = localStorage.getItem('userid');
+      return this.http.post(endpoint+'templates/update/'+templateId, userId).subscribe();
   }
 
-    doPOST() {
-        console.log('POST');
-        let body = [{name:"foo",parameterId:55}];
-        this.http.post(endpoint + 'templates/posttemplate', body).subscribe(response => console.log(response.toString()));
+  PostParameter(name: string, companyId: number) {
+      console.log('POST');
+      const body = new URLSearchParams();
+      //colocar nombre de parametro
+      body.set('name', name);
+      //colocar id de compañia
+      body.set('companyId', companyId.toString());
+      const options = {
+          headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+      };
+      this.http.post(endpoint + 'parameters/add', body.toString(), options).subscribe();
+  }
+
+    postTemplate(formMessage: string, channel_integrator: any[]) {
+        const json = {
+            'messagge': formMessage.valueOf(),
+            'userId': localStorage.getItem('userid'),
+            'channel_integrator': channel_integrator.valueOf()
+        };
+        this.http.post(endpoint + 'templates/add', json).subscribe();
     }
 }
