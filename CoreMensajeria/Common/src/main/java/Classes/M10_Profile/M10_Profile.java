@@ -83,4 +83,29 @@ public class M10_Profile {
         }
 
     }
+
+    public String addUser(CreateUserRequestBody user){
+        try {
+
+            //Query a realizar
+            String query = "INSERT INTO public.USER " +
+                    "(use_password, use_username, use_type, use_email, use_phone, use_country, use_city, use_address," +
+                    " use_date_of_birth, use_gender) " +
+                    "values('"+ user.get_passwordUser() +"', '"+ user.get_usernameUser() +"'," +
+                    user.get_typeUser() +" , '"+ user.get_emailUser() +"', '"+ user.get_emailUser() +"'," +
+                    "'"+ user.get_countryUser() +"', '"+ user.get_cityUser() +"', '"+ user.get_addressUser() +"', " +
+                    "TO_TIMESTAMP('"+ user.get_birthdateUser() +"','DD/MM/YY'), '"+ user.get_genderUser() +"')";
+
+            //Se crea conexion a la dc
+            Sql db = new Sql();
+
+            //Se realiza query, falta codigo aqui para validar si se realizo correctamente el query
+            db.sqlConn(query);
+            return "Usuario creado con éxito";
+        }
+        catch (SQLException e) {
+            System.err.println(e.getStackTrace());
+            return "Error al crea usuario";
+        }
+    }
 }
