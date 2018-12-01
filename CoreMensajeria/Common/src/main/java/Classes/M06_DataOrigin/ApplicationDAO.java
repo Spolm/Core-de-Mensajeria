@@ -131,8 +131,8 @@ public class ApplicationDAO {
     public Application createApplication (AddApplicationData app) throws DatabaseConnectionProblemException {
         try {
 
-            String token = this._encrypter.encrypt(
-                    app.get_userId() + app.get_companyId() + app.get_nameApplication());
+            String token = this._encrypter.encryptToken(app.get_userId() + app.get_companyId() +
+                    app.get_nameApplication() + Encrypter.getCurrentTime());
             PreparedStatement preparedStatement = _conn.prepareCall(ADD_APPLICATION);
             preparedStatement.setString(1, app.get_nameApplication());
             preparedStatement.setString(2, app.get_descriptionApplication());
