@@ -5,6 +5,7 @@ INSERT INTO public.Privilege (pri_code, pri_action) values ('CUSER','Crear usuar
 INSERT INTO public.Privilege (pri_code, pri_action) values ('RUSER','Ver usuario');
 INSERT INTO public.Privilege (pri_code, pri_action) values ('UUSER','Modificar usuario');
 INSERT INTO public.Privilege (pri_code, pri_action) values ('DUSER','Des o Habilitar usuario');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('CADMIN','Crear un administrador');
 INSERT INTO public.Privilege (pri_code, pri_action) values ('CCAMPAIGN','Crear campana');
 INSERT INTO public.Privilege (pri_code, pri_action) values ('RCAMPAIGN','Ver campana');
 INSERT INTO public.Privilege (pri_code, pri_action) values ('UCAMPAIGN','Modificar campana');
@@ -29,6 +30,7 @@ INSERT INTO public.Privilege (pri_code, pri_action) values ('CTEMPLATE','Crear p
 INSERT INTO public.Privilege (pri_code, pri_action) values ('RTEMPLATE','Ver plantilla');
 INSERT INTO public.Privilege (pri_code, pri_action) values ('UTEMPLATE','Modificar plantilla');
 INSERT INTO public.Privilege (pri_code, pri_action) values ('DTEMPLATE','Des o Habilitar plantilla');
+INSERT INTO public.Privilege (pri_code, pri_action) values ('ATEMPLATE','Aprobar plantilla');
 INSERT INTO public.Privilege (pri_code, pri_action) values ('CMESSAGE','Crear mensaje');
 INSERT INTO public.Privilege (pri_code, pri_action) values ('RMESSAGE','Ver mensaje');
 INSERT INTO public.Privilege (pri_code, pri_action) values ('UMESSAGE','Modificar mensaje');
@@ -39,28 +41,41 @@ INSERT INTO public.Privilege (pri_code, pri_action) values ('SEND','Envia');
 
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
-					('1234', 'Ronnie', 1, 'ronnie@gmail.com', '0414255', 'Ve', 'Mi', 'Caricuao', '04/05/1995', 'F');
+					(MD5('1234'), 'Ronnie', 1, 'ronnie@gmail.com', '0414255', 'Ve', 'Mi', 'Sta Fe', '04/05/1995', 'F');
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
-					('1234', 'superusuario', 1, 'superusuario@gmail.com', '0414255', 'Ve', 'Mi', 'Caracas', '04/08/1991', 'F');
+					(MD5('1234'), 'superusuario', 1, 'superusuario@gmail.com', '0414255', 'Ve', 'Mi', 'Caracas', '04/08/1991', 'F');
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
-					('1234', 'administrador', 2, 'administrador@gmail.com', '0414255', 'Ve', 'Mi', 'Valencia', '12/08/1987', 'F');
+					(MD5('1234'), 'administrador', 2, 'administrador@gmail.com', '0414255', 'Ve', 'Mi', 'Valencia', '12/08/1987', 'F');
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
-					('1234', 'creador', 3, 'creador@gmail.com', '0414255', 'Ve', 'Mi', 'Barquisimeto', '04/08/1991', 'F');
+					(MD5('1234'), 'creador', 3, 'creador@gmail.com', '0414255', 'Ve', 'Mi', 'Barquisimeto', '04/08/1991', 'F');
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
-					('1234', 'aprobador', 4, 'aprobador@gmail.com', '0414255', 'Ve', 'Mi', 'Margarita', '04/08/1981', 'F');
+					(MD5('1234'), 'aprobador', 4, 'aprobador@gmail.com', '0414255', 'Ve', 'Mi', 'Margarita', '04/08/1981', 'F');
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
-					('1234', 'consultor', 5, 'consultor@gmail.com', '0414255', 'Ve', 'Mi', 'Caracas', '12/03/1985', 'F');
+					(MD5('1234'), 'consultor', 5, 'consultor@gmail.com', '0414255', 'Ve', 'Mi', 'Caracas', '12/03/1985', 'F');
 
 INSERT INTO public.role(rol_name) values('Superusuario');
 INSERT INTO public.role(rol_name) values('Administrador');
 INSERT INTO public.role(rol_name) values('Creador');
 INSERT INTO public.role(rol_name) values('Aprobador');
 INSERT INTO public.role(rol_name) values('Consultor');
+
+INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 1, pri_id FROM public.Privilege;
+INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 2, pri_id FROM public.Privilege 
+WHERE pri_code!='CADMIN';
+INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 3, pri_id FROM public.Privilege 
+WHERE pri_code like 'R%' or (pri_code like '%TEMPLATE' and pri_code != 'ATEMPLATE');
+INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 4, pri_id FROM public.Privilege 
+WHERE pri_code like 'R%' or pri_code = 'ATEMPLATE';
+INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 5, pri_id FROM public.Privilege 
+WHERE pri_code like 'R%' or pri_code = 'STATISTICS';
+
+INSERT INTO public.Responsability(res_use_id, res_rol_id) values
+(1,1),(2,1),(3,2),(4,3),(5,4),(6,5);
 
 INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
 VALUES ('Movistar', 13.4, 25, 'oqiwueyeiu',TRUE);
@@ -114,6 +129,13 @@ INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_
 INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 13', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 4);
 INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 14', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 4);
 INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 15', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 5);
+
+INSERT INTO public.Responsability(res_use_id, res_rol_id, res_com_id) values
+(3,2,1),(4,3,1),(5,4,1),(6,5,1);
+INSERT INTO public.Responsability(res_use_id, res_rol_id, res_com_id) values
+(3,2,2),(4,3,2),(5,4,2),(6,5,2);
+INSERT INTO public.Responsability(res_use_id, res_rol_id, res_com_id) values
+(3,2,3),(4,3,3),(5,4,3),(6,5,3);
 
 INSERT INTO public.application(app_name,app_description,app_token,app_date,app_status,app_user_creator, app_company) values
 ('Amazon','Pagina Web','BF5453E0B1BF86A7FA020A4B87D7C0A9B0946ACCEB403E918E352D10BD35007D','04/05/1995',0,1,1),
