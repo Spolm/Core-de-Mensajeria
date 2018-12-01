@@ -1,4 +1,4 @@
-package webService.M05_Channel;
+package webService.M04_Integrator;
 
 import Classes.M04_Integrator.Integrator;
 import Classes.M04_Integrator.IntegratorDAO;
