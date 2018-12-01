@@ -14,12 +14,19 @@
       <label for="formParameters">Parametros</label>
       <br>
       <div class="d-flex flex-row-reverse">
-        <button type="button" class="btn btn-primary btn-sm m-1">+</button>
+        <button type="button" class="btn btn-primary btn-sm m-1" (click)="showInputCreateParameter()">+</button>
         <select class="form-control" id="formParameters" [(ngModel)]="formParameters" name="param" (change)="addParameter(formMessage, formParameters)">
-          <option *ngFor="let parameter of parameters">
+          <option *ngFor="let parameter of parametersJson">
             {{parameter.name}}
           </option>
         </select>
+      </div>
+      <br>
+      <div *ngIf="showInputCreateParameterState">
+        <div class="d-flex flex-row-reverse">
+          <button type="button" class="btn btn-success btn-sm m-1" (click)="addNewParameter(formMessage, newParameter.value)">+</button>
+          <input type="text" #newParameter>
+        </div>
       </div>
     </div>
 
@@ -27,7 +34,7 @@
 
   <!-- Buttons for the control of the parameters -->
   <div class="row">
-    <div *ngFor="let parameter of parametersOrder">
+    <div *ngFor="let parameter of parameters">
       <button type="button" class="btn btn-danger m-1" (click)="deleteParameter(formMessage, parameter)">
         {{parameter}}
       </button>
@@ -47,7 +54,7 @@
   <!-- Select for the  channels and integrators of the template -->
   <div>
     <hr>
-    <div class="form-row m-6" *ngFor="let channel of channels; let i = index">
+    <div class="form-row m-6" *ngFor="let channel of channelsJson; let i = index">
 
       <div class="form-group col-2" id="{{channel.idChannel}}">
         {{channel.nameChannel}}
@@ -75,7 +82,7 @@
   <div class="row">
     <div *ngFor="let channel_integrator of channels_integrators">
       <button type="button" class="btn btn-danger m-1" (click)="deleteChannel_Integrator(channel_integrator)">
-        {{channel_integrator.channel.nameChannel}} | {{channel_integrator.integrator.nameIntegrator}} 
+        {{channel_integrator.channel.nameChannel}} | {{channel_integrator.integrator.nameIntegrator}}
       </button>
     </div>
   </div>
