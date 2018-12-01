@@ -3,6 +3,7 @@ package webService.M01_Login;
 import Classes.M01_Login.LoginIntent;
 import Classes.M01_Login.User;
 import Classes.M01_Login.UserDAO;
+import Exceptions.UserBlockedException;
 import com.google.gson.Gson;
 
 import javax.ws.rs.Consumes;
@@ -11,6 +12,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
 import java.sql.SQLException;
 
 @Path("/")
@@ -29,17 +32,31 @@ public class M01_Login {
         try {
             if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
                     loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
-
-                user = _userDAO.findByUsernameOrEmail(loginIntent.get_username());
-
-                if (user.get_passwordUser().equals(loginIntent.get_password())) {
+                user = _userDAO.logUser(loginIntent.get_username(),loginIntent.get_password());
+                if( user.get_blockedUser() == 1 )
+                    throw new UserBlockedException("El usuario ingresado se encuentra bloqueado");
+                user.set_remainingAttemptsUser(3);
+                _userDAO.updateUserRemainingAttempts(user);
+                return Response.ok(_gson.toJson(user)).build();
+                /*if (user.get_passwordUser().equals(passwordHash) && user.get_blockedUser()==0) {
+                    user.set_remainingAttemptsUser(3);
+                    _userDAO.updateUserRemainingAttempts(user);
                     user.set_passwordUser("");
+
                     return Response.ok(_gson.toJson(user)).build();
                 } else {
                     error = new Error("Las credenciales ingresadas son incorrectas");
-                    error.addError("credenciales","No se encontro el usuario deseado");
+                    if(user.get_remainingAttemptsUser()>0 && user.get_blockedUser()== 0) {
+                        user.set_remainingAttemptsUser(user.get_remainingAttemptsUser() - 1);
+                        _userDAO.updateUserRemainingAttempts(user);}
+                        else if (user.get_blockedUser() == 1){
+                        user.set_blockedUser(1);
+                        _userDAO.blockUser(user);
+                    }
+                    error.addError("credenciales","No se encontro el usuario deseado o la clave es errada");
                     return Response.status(404).entity(error).build();
                 }
+                */
             }
             else {
                 error = new Error("Los datos ingresados no tienen el formato adecuado");
@@ -48,6 +65,10 @@ public class M01_Login {
                 return Response.status(404).entity(error).build();
             }
 
+        } catch(UserBlockedException e){
+            e.printStackTrace();
+            error = new Error("El usuario ha sido bloqueado");
+            return Response.status(401).entity(error).build();
         } catch (SQLException e) {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
