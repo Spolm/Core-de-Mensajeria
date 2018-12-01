@@ -42,8 +42,7 @@ export class IntegratorComponent implements OnInit {
       ( integrators ) => {
         this.integrators = integrators;
         this.viewIdChannel = index;
-      },( err => {
-        console.log(err);
+      },( _ => {
         this.toastr.clear();
         this.toastr.error( "Error en la Conexión" );
       })
@@ -56,8 +55,9 @@ export class IntegratorComponent implements OnInit {
     .subscribe(
       ( channels ) => {
         this.channels = channels;
-      }, err => {
-        console.log( err );
+      }, _ => {
+        this.toastr.clear();
+        this.toastr.error( "Error en la Conexión" );
       }
     );
   }
@@ -69,8 +69,7 @@ export class IntegratorComponent implements OnInit {
       ( integrators ) => {
         this.integrators = integrators;
         this.viewIdChannel = 0;
-      }, err => {
-        console.log(err);
+      }, _ => {
         this.toastr.clear();
         this.toastr.error( "Error en la Conexión" );
       }
@@ -84,8 +83,7 @@ export class IntegratorComponent implements OnInit {
         this.updateIntegratorList();
         this.toastr.clear();
         this.toastr.success( "Habilitado con Éxito" );
-      }, err => {
-        console.log( err );
+      }, _ => {
         this.toastr.clear();
         this.toastr.error( "Error Habilitando" );
       }
@@ -99,8 +97,7 @@ export class IntegratorComponent implements OnInit {
         this.updateIntegratorList();
         this.toastr.clear();
         this.toastr.success( "Inhabilitado con Éxito" );
-      }, err => {
-        console.log( err );
+      }, _ => {
         this.toastr.clear();
         this.toastr.error( "Error habilitando" );
       }

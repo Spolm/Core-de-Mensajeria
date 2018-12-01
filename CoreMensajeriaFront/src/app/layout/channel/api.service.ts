@@ -26,13 +26,13 @@ export class ApiService {
       return channels.map( ( channel ) => new Channel( channel ) );
     }))
     .pipe( catchError( err => {
-      this.handleError( err );
+      this.handleError( "Error obteniendo canales" ,err );
       return err;
     }));
   }
 
-  private handleError (error: Response | any) {
-    console.error( 'ApiService::handleError', error );
+  private handleError ( msg: string, error: Response | any ) {
+    console.error( 'ApiService Error:' + msg, error );
     return Observable.throw( error );
   }
 }
