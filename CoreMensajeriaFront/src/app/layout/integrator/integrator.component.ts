@@ -35,18 +35,17 @@ export class IntegratorComponent implements OnInit {
   
   }
 
-  getIntegratorsPerChannel(index: number){
+  getIntegratorsPerChannel( index: number ){
     this.integratorDataService
-    .getIntegratorsPerChannel(index)
+    .getIntegratorsPerChannel( index )
     .subscribe(
-      (integrators) => {
+      ( integrators ) => {
         this.integrators = integrators;
-        console.log(this.viewIdChannel);
         this.viewIdChannel = index;
-        console.log(this.viewIdChannel);
-      },(err => {
+      },( err => {
+        console.log(err);
         this.toastr.clear();
-        this.toastr.error("Error en la Conexión");
+        this.toastr.error( "Error en la Conexión" );
       })
     )
   }
@@ -55,11 +54,11 @@ export class IntegratorComponent implements OnInit {
     this.channelDataService
     .getAllChannels()
     .subscribe(
-      (channels) => {
+      ( channels ) => {
         this.channels = channels;
-      },(err => {
-        console.log(err);
-      })
+      }, err => {
+        console.log( err );
+      }
     );
   }
 
@@ -67,51 +66,50 @@ export class IntegratorComponent implements OnInit {
     this.integratorDataService
     .getAllIntegrators()
     .subscribe(
-      (integrators) => {
+      ( integrators ) => {
         this.integrators = integrators;
         this.viewIdChannel = 0;
-      },(err => {
+      }, err => {
+        console.log(err);
         this.toastr.clear();
         this.toastr.error( "Error en la Conexión" );
-      })
+      }
     )
   }
 
-  enabledIntegrator(integrator: Integrator){
+  enabledIntegrator( integrator: Integrator ){
     this.integratorDataService.enabledIntegrator( integrator )
     .subscribe(
-      data => {
+      _ => {
         this.updateIntegratorList();
         this.toastr.clear();
         this.toastr.success( "Habilitado con Éxito" );
-      },
-      error => {
-        console.log(error);
+      }, err => {
+        console.log( err );
         this.toastr.clear();
         this.toastr.error( "Error Habilitando" );
       }
     );
   }
 
-  disabledIntegrator(integrator: Integrator){
+  disabledIntegrator( integrator: Integrator ){
     this.integratorDataService.disabledIntegrator( integrator )
     .subscribe(
-      data => {
+      _ => {
         this.updateIntegratorList();
         this.toastr.clear();
         this.toastr.success( "Inhabilitado con Éxito" );
-      },
-      error => {
+      }, err => {
+        console.log( err );
         this.toastr.clear();
         this.toastr.error( "Error habilitando" );
-        console.log(error);
       }
     );
   }
 
   updateIntegratorList(){
     if(this.viewIdChannel > 0)
-      this.getIntegratorsPerChannel(this.viewIdChannel);
+      this.getIntegratorsPerChannel( this.viewIdChannel );
     else
       this.getAllIntegrators();
   }
