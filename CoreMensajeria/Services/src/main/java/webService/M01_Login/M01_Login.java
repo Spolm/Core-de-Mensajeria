@@ -1,19 +1,22 @@
 package webService.M01_Login;
 
-import Classes.M01_Login.LoginIntent;
-import Classes.M01_Login.User;
-import Classes.M01_Login.UserDAO;
+import Classes.M01_Login.*;
 import Exceptions.UserBlockedException;
 import com.google.gson.Gson;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.DatatypeConverter;
+import java.net.InetAddress;
+import java.net.URI;
+import java.net.UnknownHostException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 @Path("/")
@@ -66,5 +69,59 @@ public class M01_Login {
             error.addError("Excepcion",e.getMessage());
             return Response.status(500).entity(error).build();
         }
+    }
+
+    @Context
+    UriInfo uri;
+
+    @GET
+    @Path("/request_password")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response RequestPassword(@QueryParam("email") String email){
+
+        try {
+            String url = "http://localhost:4200/";
+            String token = _userDAO.tokenGenerator(email);
+            MailSender.generateAndSendEmail(url + "change_password?token=" + token,email);
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
+        catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (AddressException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return Response.ok(_gson.toJson("hola")).build();
+
+    }
+
+    @Path("/change")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response login( PasswordChange passwordChange){
+        Error error;
+        User user;
+        int x;
+        try {
+            user = _userDAO.findByUsernameOrEmail(passwordChange.get_username());
+            if(_userDAO.tokenGenerator(user.get_emailUser()).equals(passwordChange.get_token()))
+                _userDAO.changePassword(user.get_usernameUser(),passwordChange.get_newPassword());
+            else {
+
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return Response.ok(_gson.toJson("hola")).build();
     }
 }
