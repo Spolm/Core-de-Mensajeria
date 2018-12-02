@@ -2,6 +2,7 @@ package M10_Profile;
 
 import Classes.M01_Login.User;
 import Classes.M01_Login.UserDAO;
+import Classes.M10_Profile.M10_Profile;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class M10_ProfileTest {
     private User _userProfile;
+    private M10_Profile _profileDao;
     private UserDAO _userDAO = new UserDAO();
     private User _search;
 
@@ -38,8 +40,9 @@ public class M10_ProfileTest {
     }
 
     @BeforeEach
-    public void createProfile(){
+    public void init(){
         newProfile();
+        _profileDao= new M10_Profile();
     }
 
     @AfterEach
@@ -52,15 +55,15 @@ public class M10_ProfileTest {
     }
 
     @Test
-    public void loadCorrectProfile(){
-        _search = M10_Profile.getInstance().searchUser(_userProfile.get_usernameUser()).get(0);
+    public void loadCorrectProfile() throws SQLException {
+        _search = _profileDao.searchUser(_userProfile.get_usernameUser()).get(0);
         assertEquals(_userProfile, _search);
     }
 
     @Test
     public void loadCorrectProfileError(){
         try {
-            _search = M10_Profile.getInstance().searchUser("Alonzo").get(0);
+            _search = _profileDao.searchUser("Alonzo").get(0);
             assertEquals(_userProfile, _search);
         }
         catch(IndexOutOfBoundsException e)
@@ -68,3 +71,4 @@ public class M10_ProfileTest {
             assertNull(_search);
         }
     }
+}

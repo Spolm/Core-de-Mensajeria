@@ -14,14 +14,15 @@ import java.util.ArrayList;
 public class M10_ProfileService {
     Gson _gson= new Gson();
     ArrayList<User> _us;
+    private M10_Profile dao;
 
     @Path("/user/{username}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listIntegrator(@PathParam( "username" ) String name) { //Hay que cambiarle el nombre a esto
         try {
-
-            _us = M10_Profile.getInstance().searchUser(name);
+            dao=new M10_Profile();
+            _us = dao.searchUser(name);
         }
         catch(NullPointerException e)
         {
@@ -44,6 +45,8 @@ public class M10_ProfileService {
 
         try{
 
+            dao=new M10_Profile();
+
             //Instanciamos nuestro validador
             EditFormHandler validator = new EditFormHandler(editBody);
 
@@ -51,7 +54,7 @@ public class M10_ProfileService {
             validator.validate();
 
             //Se procede a editar al usuario
-            String success = M10_Profile.getInstance().editProfile( editBody.get_idUser(), editBody.get_emailUser(),
+            String success = dao.editProfile( editBody.get_idUser(), editBody.get_emailUser(),
                     editBody.get_phoneUser(),editBody.get_addressUser() );
             return Response.ok(_gson.toJson(success)).build();
 
@@ -77,7 +80,7 @@ public class M10_ProfileService {
             validator.validate();
 
             //Se procede a editar al usuario
-            String success = M10_Profile.getInstance().addUser(createBody);
+            String success = dao.addUser(createBody);
             return Response.ok(_gson.toJson(success)).build();
 
         }
