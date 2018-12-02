@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 @Path("/profile")
 public class M10_ProfileService {
-    Gson _gson= new Gson();
+    Gson _gson = new Gson();
     ArrayList<User> _us;
     ArrayList<Rol> _rols;
     private M10_Profile dao;
@@ -29,18 +29,14 @@ public class M10_ProfileService {
     @Path("/user/{username}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listIntegrator(@PathParam( "username" ) String name) { //Hay que cambiarle el nombre a esto
+    public Response listIntegrator(@PathParam("username") String name) { //Hay que cambiarle el nombre a esto
         try {
-            dao=new M10_Profile();
+            dao = new M10_Profile();
             _us = dao.searchUser(name);
-        }
-        catch(NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             _us = null;
-            String mess="error al cargar el usuario";
-        }
-        catch (Exception e)
-        {
+            String mess = "error al cargar el usuario";
+        } catch (Exception e) {
             _us = null;
 
         }
@@ -53,9 +49,9 @@ public class M10_ProfileService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response editProfile(EditRequestBody editBody) throws URISyntaxException {
 
-        try{
+        try {
 
-            dao=new M10_Profile();
+            dao = new M10_Profile();
 
             //Instanciamos nuestro validador
             EditFormHandler validator = new EditFormHandler(editBody);
@@ -64,15 +60,13 @@ public class M10_ProfileService {
             validator.validate();
 
             //Se procede a editar al usuario
-            String success = dao.editProfile( editBody.get_idUser(), editBody.get_emailUser(),
-                    editBody.get_phoneUser(),editBody.get_addressUser() );
+            String success = dao.editProfile(editBody.get_idUser(), editBody.get_emailUser(),
+                    editBody.get_phoneUser(), editBody.get_addressUser());
             return Response.ok(_gson.toJson(success)).build();
 
-        }
-        catch (FormErrorException e) {
+        } catch (FormErrorException e) {
             return Response.status(500).entity(e).build();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return Response.status(500).entity(e).build();
         }
     }
@@ -83,7 +77,7 @@ public class M10_ProfileService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(CreateUserRequestBody createBody) throws URISyntaxException {
 
-        try{
+        try {
 
             //Instanciamos nuestro validador
             CreateFormHandler validator = new CreateFormHandler(createBody);
@@ -93,11 +87,9 @@ public class M10_ProfileService {
             String success = dao.addUser(createBody);
             return Response.ok(_gson.toJson(success)).build();
 
-        }
-        catch (FormErrorException e) {
+        } catch (FormErrorException e) {
             return Response.status(500).entity(e).build();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return Response.status(500).entity(e).build();
         }
     }

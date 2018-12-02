@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
 
   handleEdit() {
     console.log(this.Users[0]);
-    if (this.Users[0]._addressUser.length > 0 && this.Users[0]._phoneUser.length > 0 && this.Users[0]._idUser > 0 && this.Users[0]._emailUser.length > 0)
+    if (this.Users[0]._addressUser.length >0 && this.Users[0]._emailUser.length > 0 && this.Users[0]._phoneUser.length > 0 )
       this.edit();
     else
       this.toastr.error('Debe llenar el formulario');
