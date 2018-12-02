@@ -4,7 +4,7 @@
 </h2>
 
 <div class="d-flex flex-row-reverse">
-  <ngbd-modal-select-company [userId]="1"></ngbd-modal-select-company>
+  <ngbd-modal-select-company [userId]="userId"></ngbd-modal-select-company>
 </div>
 
 <div class="card">
@@ -44,7 +44,7 @@
           <div *ngFor="let channel of template.channels; let i = index">
             <hr *ngIf="i > 0">
             <div *ngFor="let integrator of channel.integrators; let i = index">
-              {{integrator.nameIntegrator}} ({{integrator.messageCost}} Bs.S)
+              {{integrator.nameIntegrator}}
             </div>
           </div>
         </td>

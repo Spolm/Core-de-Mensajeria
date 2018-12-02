@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class NgbdModalSelectCompany {
 
-  @Input('userId') userId: number;
+  @Input('userId') userId: string;
 
   message: string;
   activeModal: NgbModalRef;

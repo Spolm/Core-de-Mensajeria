@@ -28,7 +28,7 @@ export class TemplateService {
   }
 
   getTemplates(){
-    return this.http.get(endpoint + 'templates/messages').pipe(
+    return this.http.get(endpoint + 'templates?userId=4').pipe(
       map(this.extractData));
   }
 
@@ -42,7 +42,7 @@ export class TemplateService {
       map(this.extractData));
   }
 
-  getCompanies(userId: number){
+  getCompanies(userId: string){
     return this.http.get(endpoint + 'M02_Companies/GetCompanies?id=' + userId).pipe(
       map(this.extractData));
   }
