@@ -42,6 +42,7 @@ public class M10_ProfileTest {
     }
 
     private void fillRoleList(){
+        _rol = new ArrayList<>();
         Rol r1 = new Rol(1,"Superusuario");
         Rol r2 = new Rol(2,"Administrador");
         Rol r3 = new Rol(3,"Creador");
@@ -92,6 +93,10 @@ public class M10_ProfileTest {
     public void testRoleList(){
         ArrayList<Rol> roltest;
         roltest = _profileDao.getAllRoles();
-        assertEquals(_rol,roltest);
+        assertEquals(_rol.get(1),roltest.get(1));
+        assertEquals(_rol.get(2),roltest.get(2));
+        assertEquals(_rol.get(3),roltest.get(3));
+        assertEquals(_rol.get(4),roltest.get(4));
+        assertEquals(_rol.get(5),roltest.get(5));
     }
 }
