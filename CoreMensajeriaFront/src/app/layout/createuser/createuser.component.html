@@ -3,52 +3,58 @@
         <div class="row">
             <div class="col-md-12">
                 <h3>Modificación de datos personales</h3>
-                <form role="form" (ngSubmit)="onSubmit(Users);" #Users="ngForm">
+                <form role="form">
                     <div class="row">
                         <div class="col-md-4">
                             <label for="Email" class="control-label">E-mail</label>
-                            <input type="email" name="_emailUser" [(ngModel)]="user._emailUser" class="form-control" placeholder="Introduce tu e-mail" required>
+                            <input type="email" name="_emailUser" [(ngModel)]="userData._emailUser" class="form-control" placeholder="Introduce tu e-mail" required>
                         </div>
                         <div class="col-md-4">
                             <label for="Usuario" class="control-label">Usuario</label>
-                            <input type="text" name="_usernameUser" [(ngModel)]="user._usernameUser" class="form-control" placeholder="Introduce tu usuario" required>
+                            <input type="text" name="_usernameUser" [(ngModel)]="userData._usernameUser" class="form-control" placeholder="Introduce tu usuario" required>
                         </div>
                         <div class="col-md-4">
                             <label for="Birtday" class="control-label">Fecha de nacimiento</label>
-                            <input type="date" name="_dateOfBirthUser" [(ngModel)]="user._dateOfBirthUser" class="form-control" placeholder="Introduce tu fecha de nacimiento" required>
+                            <input type="date" name="_birthdateUser" [(ngModel)]="userData._birthdateUser" class="form-control" placeholder="Introduce tu fecha de nacimiento" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
                             <label for="País" class="control-label">País</label>
-                            <input type="text" name="_countryUser" [(ngModel)]="user._countryUser" class="form-control" placeholder="Introduce tu país" required>
+                            <input type="text" name="_countryUser" [(ngModel)]="userData._countryUser" class="form-control" placeholder="Introduce tu país" required>
                         </div>
                         <div class="col-md-4">
                             <label for="Ciudad" class="control-label">Ciudad</label>
-                            <input type="text" name="_cityUser" [(ngModel)]="user._cityUser" class="form-control" placeholder="Introduce tu ciudad" required>
+                            <input type="text" name="_cityUser" [(ngModel)]="userData._cityUser" class="form-control" placeholder="Introduce tu ciudad" required>
                         </div>
                         <div class="col-md-4">
                             <label for="Dirección" class="control-label">Dirección</label>
-                            <input type="text" name="_addressUser" [(ngModel)]="user._addressUser" class="form-control" placeholder="Introduce tu dirección" required>
+                            <input type="text" name="_addressUser" [(ngModel)]="userData._addressUser" class="form-control" placeholder="Introduce tu dirección" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
                             <label for="Teléfono" class="control-label">Teléfono local</label>
-                            <input type="number" name="_phoneUser" [(ngModel)]="user._phoneUser" class="form-control" placeholder="Introduce tu teléfono" required>
+                            <input type="number" name="_phoneUser" [(ngModel)]="userData._phoneUser" class="form-control" placeholder="Introduce tu teléfono" required>
                         </div>
                         <div class="col-md-4">
                             <label for="Sexo">Sexo</label>
-                            <select name="_genderUser" id="_genderUser" class="form-control">
+                            <select name="_genderUser" id="_genderUser" [(ngModel)]="userData._genderUser" class="form-control">
                                 <!--Corregir el value de ambas opciones-->
-                                <option value="_manUser" >Masculino</option>
-                                <option value="_girUser" >Femenino</option>
+                                <option value="M" >Masculino</option>
+                                <option value="F" >Femenino</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="Contraseña" class="control-label">Contraseña</label>
+                            <input type="password" name="_passwordUser" [(ngModel)]="userData._passwordUser" class="form-control" placeholder="Introduce tu teléfono" required>
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        <button class="btn btn-lg btn-success" [disabled]="!Users.form.valid">Crear usuario</button>
+                        <button (click)="handleAdd()" class="btn btn-lg btn-success">Crear usuario</button>
                     </div>
                 </form>
             </div>

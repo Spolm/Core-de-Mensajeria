@@ -102,7 +102,7 @@ public class M10_Profile {
                     "values('"+ user.get_passwordUser() +"', '"+ user.get_usernameUser() +"'," +
                     user.get_typeUser() +" , '"+ user.get_emailUser() +"', '"+ user.get_emailUser() +"'," +
                     "'"+ user.get_countryUser() +"', '"+ user.get_cityUser() +"', '"+ user.get_addressUser() +"', " +
-                    "TO_TIMESTAMP('"+ user.get_birthdateUser() +"','DD/MM/YY'), '"+ user.get_genderUser() +"')";
+                    "TO_TIMESTAMP('"+ user.get_birthdateUser() +"','DD/MM/YYYY'), '"+ user.get_genderUser() +"')";
 
 
 
