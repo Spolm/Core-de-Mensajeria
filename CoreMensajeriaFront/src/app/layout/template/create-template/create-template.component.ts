@@ -23,6 +23,7 @@ export class CreateTemplateComponent {
   constructor(private templateService: TemplateService, private toastr: ToastrService, private router: Router) {
     this.getParameters();
     this.getChannels();
+    this.formMessage = '';
   }
 
   getParameters() {
@@ -107,26 +108,35 @@ export class CreateTemplateComponent {
 
   postTemplate() {
 
-    console.log(this.formMessage);
-    console.log(this.parameters);
-    console.log(this.newParameters);
-    console.log(this.channels_integrators);
-    if  ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
-        if ( this.channels_integrators[0]) {
-            this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
-        } else{
-            this.toastr.warning('Falta llenar un campo', 'Aviso',
-                {
-                    timeOut: 2800,
-                    progressBar: true
-                });
-        }
-    } else{
-        this.toastr.error('Tal vez quiera escribir un mensaje mas largo', 'Error',
-            {
-                timeOut: 2800,
-                progressBar: true
-            });
+      console.log(this.formMessage);
+      console.log(this.parameters);
+      console.log(this.newParameters);
+      console.log(this.channels_integrators);
+      this.formMessage = this.formMessage.trim();
+      if (this.formMessage != '') {
+          if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
+              if (this.channels_integrators[0]) {
+                  this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
+              } else {
+                  this.toastr.warning('Falta llenar un campo', 'Aviso',
+                      {
+                          timeOut: 2800,
+                          progressBar: true
+                      });
+              }
+          } else {
+              this.toastr.warning('Tal vez quiera escribir un mensaje mas largo', 'Aviso',
+                  {
+                      timeOut: 2800,
+                      progressBar: true
+                  });
+          }
+      } else {
+          this.toastr.warning('No puede crear un template sin mensaje!', 'Aviso',
+              {
+                  timeOut: 2800,
+                  progressBar: true
+              });
+      }
     }
-  }
 }
