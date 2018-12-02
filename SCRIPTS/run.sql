@@ -20,5 +20,4 @@
 
 \c CoreMensajeria_StarSchema CoreMensajeria
 \ir SP/m09_update_starschema.sql
-\ir SP/m09_gets.sql
 -- \ir StoreProceduresM_09/FuntionsGet.sql

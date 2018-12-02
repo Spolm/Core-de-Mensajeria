@@ -97,7 +97,7 @@ public class M09_Statistics extends Application {
     @Path("/companies")
     @Produces("application/json")
     public Response getAllCompanies(@QueryParam("userId") Integer userId) {
-        String query = "SELECT m02_getcompanies(1);";
+        String query = "SELECT m02_getcompanies(" + userId + ");";
         try {
             return getCompanies(query);
         } catch(CompanyDoesntExistsException e) {
@@ -539,7 +539,7 @@ public class M09_Statistics extends Application {
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
-                Company company = new Company(result.getInt(1), result.getString(2), "", true);
+                Company company = new Company(result.getInt("com_id"), result.getString("com_name"), "", true);
                 companies.add(company);
             }
         } catch(SQLException e) {

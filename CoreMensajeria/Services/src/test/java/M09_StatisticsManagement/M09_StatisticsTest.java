@@ -120,14 +120,17 @@ public class M09_StatisticsTest {
     void getAllCompaniesTest() throws CompanyDoesntExistsException {
         try {
             M09_Statistics intance = new M09_Statistics();
-            Response salida = intance.getAllCompanies();
+            Response salida = intance.getAllCompanies(1);
             assertEquals( 200, salida.getStatus() );
             assertEquals( salida.getEntity().toString(),
                     "[{\"_idCompany\":1,\"_name\":\"Company 1\",\"_desc\":\"\",\"_status\":true}," +
                             "{\"_idCompany\":2,\"_name\":\"Company 2\",\"_desc\":\"\",\"_status\":true}," +
                             "{\"_idCompany\":3,\"_name\":\"Company 3\",\"_desc\":\"\",\"_status\":true}," +
                             "{\"_idCompany\":4,\"_name\":\"Company 4\",\"_desc\":\"\",\"_status\":true}," +
-                            "{\"_idCompany\":5,\"_name\":\"Company 5\",\"_desc\":\"\",\"_status\":true}]" );
+                            "{\"_idCompany\":5,\"_name\":\"Company 5\",\"_desc\":\"\",\"_status\":true}," +
+                            "{\"_idCompany\":6,\"_name\":\"Company 6\",\"_desc\":\"\",\"_status\":true}," +
+                            "{\"_idCompany\":7,\"_name\":\"Company 7\",\"_desc\":\"\",\"_status\":true}," +
+                            "{\"_idCompany\":8,\"_name\":\"Company 8\",\"_desc\":\"\",\"_status\":true}]" );
         }
         catch( Exception e ) {
             e.printStackTrace();
