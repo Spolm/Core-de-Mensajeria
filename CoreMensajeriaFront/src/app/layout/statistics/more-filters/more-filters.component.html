@@ -56,16 +56,19 @@
             </ng-multiselect-dropdown>
         </div>
 
-        <div class="col-md-3 col-sm-6 dropdown">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="integratorsDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Integrador'"
-                [data]="companiesDropdown"
-                [(ngModel)]="selectedCompanies"
-                [settings]="companiesDropdownSettings"
-                (onSelect)="companySelected($event)"
-                (onDeSelect)="companyDeselected($event)"
-                (onSelectAll)="selectAllCompanies()"
-                (onDeSelectAll)="deselectAllCompanies()"
+                [data]="integratorsDropdown"
+                [(ngModel)]="selectedIntegrators"
+                [settings]="integratorsDropdownSettings"
+                (onSelect)="integratorSelected($event)"
+                (onDeSelect)="integratorDeselected($event)"
+                (onSelectAll)="selectAllIntegrators()"
+                (onDeSelectAll)="deselectAllIntegrators()"
             >
             </ng-multiselect-dropdown>
         </div>
