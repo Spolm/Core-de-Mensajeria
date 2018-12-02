@@ -49,7 +49,6 @@ export class CreateTemplateComponent {
   }
 
   addNewParameter(message: string, parameterName: string) {
-    console.log(parameterName);
     this.addParameter(message, parameterName);
     if (!this.newParameters.find(x => x == parameterName)) {
       this.newParameters.push(parameterName);
@@ -70,7 +69,6 @@ export class CreateTemplateComponent {
 
   showInputCreateParameter() {
     this.showInputCreateParameterState = true;
-    console.log(this.showInputCreateParameterState);
   }
 
   deleteParameter(message: string, parameterName: string) {
