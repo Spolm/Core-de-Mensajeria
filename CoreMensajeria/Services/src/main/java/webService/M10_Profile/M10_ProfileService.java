@@ -14,8 +14,18 @@ import java.util.ArrayList;
 public class M10_ProfileService {
     Gson _gson= new Gson();
     ArrayList<User> _us;
+    ArrayList<Rol> _rols;
     private M10_Profile dao;
 
+
+    @GET
+    @Path("/roles")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listRoles(){
+        dao = new M10_Profile();
+        _rols = dao.getAllRoles();
+        return Response.ok().entity(_rols).build();
+    }
     @Path("/user/{username}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

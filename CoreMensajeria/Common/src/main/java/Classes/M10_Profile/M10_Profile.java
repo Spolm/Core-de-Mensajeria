@@ -118,4 +118,27 @@ public class M10_Profile {
             return "Error al crea usuario";
         }
     }
+
+    public ArrayList<Rol> getAllRoles(){
+        ArrayList<Rol> rols = new ArrayList<>();
+        try {
+            PreparedStatement st = _conn.prepareCall("{call m10_getallroles()}");
+            ResultSet _result = st.executeQuery();
+            int id = _result.getInt("rol_id");
+            String name = _result.getString("rol_name");
+            Rol rol = new Rol(id,name);
+
+            while (_result.next()) {
+                rols.add(rol);
+            }
+            return rols;
+
+        } catch (SQLException e) {
+            System.out.println("Error bd");
+        } finally {
+            Sql.bdClose(_conn);
+        }
+        return rols;
+    }
 }
+
