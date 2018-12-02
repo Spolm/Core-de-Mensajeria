@@ -5,7 +5,6 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { StatisticsComponent } from "./statistics.component";
 import { StatisticsRoutingModule } from "./statistics-routing.module";
-import { PlotlyModule } from "angular-plotly.js";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { MoreFiltersComponent } from "./more-filters/more-filters.component";
 import { MatDialogModule, MatButtonModule } from "@angular/material";
@@ -14,7 +13,6 @@ import { MatDialogModule, MatButtonModule } from "@angular/material";
     imports: [
         CommonModule,
         StatisticsRoutingModule,
-        PlotlyModule,
         FormsModule,
         NgMultiSelectDropDownModule.forRoot(),
         MatDialogModule,

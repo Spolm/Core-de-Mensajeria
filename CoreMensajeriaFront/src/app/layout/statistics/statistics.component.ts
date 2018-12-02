@@ -1,5 +1,4 @@
 import { ProfileComponent } from "./../profile/profile.component";
-import { PlotlyModule, PlotComponent } from "angular-plotly.js";
 import { StatisticsServiceService } from "./statistics-service.service";
 import {
     Component,
@@ -8,8 +7,6 @@ import {
     ViewChild,
     AfterViewInit
 } from "@angular/core";
-import * as Plotly from "plotly.js/dist/plotly.js";
-import { Config, Data, Layout } from "plotly.js/dist/plotly.js";
 import { ToastrService } from "ngx-toastr";
 import { HttpParams } from "@angular/common/http";
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
@@ -326,9 +323,9 @@ export class StatisticsComponent implements OnInit {
         } else this.toastr.error("Debe seleccionar otra opcion");
     }
 
-      capturarDate() {
+    capturarDate() {
         if (
-          this.opcionDateSleccionado != null &&
+            this.opcionDateSleccionado != null &&
             this.opcionDateSleccionado2 != null &&
             this.opcionDateSleccionado < this.opcionDateSleccionado2
         ) {
@@ -350,7 +347,7 @@ export class StatisticsComponent implements OnInit {
             );
             this.statisticsService
                 .getDataLineChartCompany(
-                    // getStatisticsData4 
+                    // getStatisticsData4
                     this.Date1Capturado +
                         "&" +
                         this.Date2Capturado +
@@ -373,7 +370,7 @@ export class StatisticsComponent implements OnInit {
             this.paramType = "paramType=" + this.verSeleccion;
             this.statisticsService
                 .getDataLineChartCompany(
-                    // getStatisticsData4 
+                    // getStatisticsData4
                     this.Date1Capturado +
                         "&" +
                         this.Date2Capturado +
@@ -386,105 +383,6 @@ export class StatisticsComponent implements OnInit {
         } else {
             this.toastr.error("Error en las fechas");
         }
-    }
-
-    piechartCampaign(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("pie-chartCampaign");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Campañas"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    linechartCampaign(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("line-chartCampaign");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Campañas"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    barchartCampaign(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("bar-chartCampaign");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Campañas"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    piechartCompany(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("pie-chartCompany");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Compañias"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    linechartCompany(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("line-chartCompany");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Compañias"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    barchartCompany(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("bar-chartCompany");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Compañias"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    piechartChannels(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("pie-chartChannels");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Canales"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    linechartChannels(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("line-chartChannels");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Canales"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    barchartChannels(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("bar-chartChannels");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Canales"
-        };
-        Plotly.newPlot(linediv, graph, layout);
     }
 
     // Handle company selecction
