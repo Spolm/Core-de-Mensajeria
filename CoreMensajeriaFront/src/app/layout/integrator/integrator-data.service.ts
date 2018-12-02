@@ -19,16 +19,16 @@ export class IntegratorDataService {
     return this.api.getAllIntegrators();
   }
 
-  public getIntegratorsPerChannel(index: number): Observable<Integrator[]>{
-    return this.api.getIntegratorsPerChannel(index);
+  public getIntegratorsPerChannel( index: number ): Observable<Integrator[]>{
+    return this.api.getIntegratorsPerChannel( index );
   }
 
-  public enabledIntegrator(integrator: Integrator): Observable<any>{
-    return this.api.enabledIntegrator(integrator);
+  public enabledIntegrator( integrator: Integrator ): Observable<any>{
+    return this.api.enabledIntegrator( integrator );
   }
 
-  public disabledIntegrator(integrator: Integrator): Observable<any>{
-    return this.api.disabledIntegrator(integrator);
+  public disabledIntegrator( integrator: Integrator ): Observable<any>{
+    return this.api.disabledIntegrator( integrator );
   }
 
 }
