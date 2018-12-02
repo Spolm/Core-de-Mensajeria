@@ -137,16 +137,3 @@ END;
 $$ LANGUAGE plpgsql;
 
 --select * from m01_deleteUser(2);
-
-CREATE OR REPLACE FUNCTION m01_insertUser(IN _userpassword character varying, IN _username character varying, IN _usertype integer, IN _useremail character varying,
-                IN _userphone character varying, IN _usercountry character varying, IN _usercity character varying, IN _useraddress character varying,
-                IN _userdateofbirth timestamp, IN _usergender char, IN _userblocked integer, IN _userremaining integer) RETURNS void AS $$
-BEGIN
-        INSERT INTO public.user(use_password, use_username, use_type, use_email,
-                use_phone, use_country, use_city, use_address,
-                use_date_of_birth, use_gender, use_blocked, use_remaining_attempts)
-        VALUES(_userpassword, _username, _usertype, _useremail, _userphone, _usercountry, _usercity, _useraddress, _userdateofbirth, _usergender, _userblocked, _userremaining);
-      END;
-	  $$ LANGUAGE plpgsql;
-	  
-	  --select * from m01_insertUser('123','pruebainsert', 1, 'alexdgn213@gmail.com', '0414255', 'Ve', 'Mi', 'Sta Fe', '04/05/1995', 'F',0,3);
