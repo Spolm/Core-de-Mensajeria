@@ -4,7 +4,8 @@ import { ToastrService } from "ngx-toastr";
 enum EntityType {
     company = 1,
     campaign,
-    channel
+    channel,
+    integrator
 }
 
 export class DropdownMethods {
@@ -17,6 +18,7 @@ export class DropdownMethods {
         this.setupCompaniesDropdownSettings();
         this.setupCampaignsDropdownSettings();
         this.setupChannelsDropdownSettings();
+        this.setupIntegratorsDropdownSettings();
     }
 
     userId: String;
@@ -44,58 +46,59 @@ export class DropdownMethods {
     selectedIntegratorsIds = [];
     selectedIntegrators = [];
 
-    public setupCompaniesDropdownSettings() {
-        this.companiesDropdownSettings = {
+    protected setupCompaniesDropdownSettings() {
+        this.companiesDropdownSettings = this.setupDropdownSettings(
+            "company_id",
+            "company_name"
+        );
+    }
+
+    protected setupCampaignsDropdownSettings() {
+        this.campaignsDropdownSettings = this.setupDropdownSettings(
+            "campaign_id",
+            "campaign_name"
+        );
+    }
+
+    protected setupChannelsDropdownSettings() {
+        this.channelsDropdownSettings = this.setupDropdownSettings(
+            "channel_id",
+            "channel_name"
+        );
+    }
+
+    protected setupIntegratorsDropdownSettings() {
+        this.integratorsDropdownSettings = this.setupDropdownSettings(
+            "integrator_id",
+            "integrator_name"
+        );
+    }
+
+    protected setupDropdownSettings(idField: string, textField: string) {
+        const dropdownSettings = {
             singleSelection: false,
-            idField: "company_id",
-            textField: "company_name",
+            idField: idField,
+            textField: textField,
             selectAllText: "Seleccionar todos",
             unSelectAllText: "Deseleccionar todos",
             itemsShowLimit: 1,
             allowSearchFilter: true
         };
+        return dropdownSettings;
     }
-
-    public setupCampaignsDropdownSettings() {
-        this.campaignsDropdownSettings = {
-            singleSelection: false,
-            idField: "campaign_id",
-            textField: "campaign_name",
-            selectAllText: "Seleccionar todos",
-            unSelectAllText: "Deseleccionar todos",
-            itemsShowLimit: 1,
-            allowSearchFilter: true
-        };
-    }
-
-    public setupChannelsDropdownSettings() {
-        this.channelsDropdownSettings = {
-            singleSelection: false,
-            idField: "channel_id",
-            textField: "channel_name",
-            selectAllText: "Seleccionar todos",
-            unSelectAllText: "Deseleccionar todos",
-            itemsShowLimit: 1,
-            allowSearchFilter: true
-        };
-    }
-
-    // Handle company selecction
-    companySelected(company: any) {
+    /* ==========================
+        Handle company selection
+       ========================== */
+    protected companySelected(company: any) {
         this.selectedCompaniesIds.push(company["company_id"]);
         this.getCampaignsForCompanies();
     }
 
-    companyDeselected(company: any) {
+    protected companyDeselected(company: any) {
         this.removeItemFromArray(
             company["company_id"],
             this.selectedCompaniesIds
         );
-        // this.removeObjectFromArray(
-        //     company["company_id"],
-        //     this.selectedCompanies,
-        //     "company_id"
-        // );
         if (this.arrayIsEmpty(this.selectedCompaniesIds)) {
             this.getAllCampaigns();
         } else {
@@ -103,87 +106,7 @@ export class DropdownMethods {
         }
     }
 
-    selectAllCompanies() {
-        for (var index in this.companiesDropdown) {
-            this.selectedCompaniesIds.push(
-                this.companiesDropdown[index]["company_id"]
-            );
-            //this.selectedCompanies.push(this.companiesDropdown[index]);
-        }
-        this.getAllCampaigns();
-    }
-
-    deselectAllCompanies() {
-        this.selectedCompaniesIds = [];
-        //this.selectedCompanies = [];
-        this.getAllCampaigns();
-    }
-
-    // Handle campaign selecction
-    campaignSelected(campaign: any) {
-        this.selectedCampaignsIds.push(campaign["campaign_id"]);
-        //this.selectedCampaigns.push(campaign);
-    }
-
-    campaignDeselected(campaign: any) {
-        this.removeItemFromArray(
-            campaign["campaign_id"],
-            this.selectedCampaignsIds
-        );
-        // this.removeObjectFromArray(
-        //     campaign["campaign_id"],
-        //     this.selectedCampaigns,
-        //     "campaign_id"
-        // );
-    }
-
-    selectAllCampaigns() {
-        for (var index in this.campaignsDropdown) {
-            this.selectedCampaignsIds.push(
-                this.campaignsDropdown[index]["campaign_id"]
-            );
-            //this.selectedCampaigns.push(this.campaignsDropdown[index]);
-        }
-    }
-
-    deselectAllCampaigns() {
-        this.selectedCampaignsIds = [];
-        //this.selectedCampaigns = [];
-    }
-
-    // Handle channel selection
-    channelSelected(channel: any) {
-        this.selectedChannelsIds.push(channel["channel_id"]);
-        //this.selectedChannels.push(channel);
-    }
-
-    channelDeselected(channel: any) {
-        this.removeItemFromArray(
-            channel["channel_id"],
-            this.selectedChannelsIds
-        );
-        // this.removeObjectFromArray(
-        //     channel["channel_id"],
-        //     this.selectedChannels,
-        //     "channel_id"
-        // );
-    }
-
-    selectAllChannels() {
-        for (var index in this.channelsDropdown) {
-            this.selectedChannelsIds.push(
-                this.channelsDropdown[index]["channel_id"]
-            );
-            //this.selectedChannels.push(this.channelsDropdown[index]);
-        }
-    }
-
-    deselectAllChannels() {
-        this.selectedChannelsIds = [];
-        //this.selectedChannels = [];
-    }
-
-    getCampaignsForCompanies() {
+    protected getCampaignsForCompanies() {
         this.statisticsService
             .getCampaingsForCompany(this.selectedCompaniesIds)
             .subscribe(data => {
@@ -192,7 +115,123 @@ export class DropdownMethods {
             });
     }
 
-    public insertIntoDropdown(entityType: EntityType, data: Object) {
+    protected selectAllCompanies() {
+        for (var index in this.companiesDropdown) {
+            this.selectedCompaniesIds.push(
+                this.companiesDropdown[index]["company_id"]
+            );
+        }
+        this.getAllCampaigns();
+    }
+
+    protected deselectAllCompanies() {
+        this.selectedCompaniesIds = [];
+        this.getAllCampaigns();
+    }
+
+    protected getAllCampaigns() {
+        this.statisticsService
+            .getCampaingsForCompany(
+                this.getIdsFromDropdown(this.companiesDropdown, "company_id")
+            )
+            .subscribe(
+                data => {
+                    this.insertIntoDropdown(EntityType.campaign, data);
+                },
+                error => {
+                    console.log(error);
+                    this.toastr.error("Error de conexión");
+                }
+            );
+    }
+
+    /* ===========================
+        Handle campaign selection
+       =========================== */
+    protected campaignSelected(campaign: any) {
+        this.selectedCampaignsIds.push(campaign["campaign_id"]);
+    }
+
+    protected campaignDeselected(campaign: any) {
+        this.removeItemFromArray(
+            campaign["campaign_id"],
+            this.selectedCampaignsIds
+        );
+    }
+
+    protected selectAllCampaigns() {
+        for (var index in this.campaignsDropdown) {
+            this.selectedCampaignsIds.push(
+                this.campaignsDropdown[index]["campaign_id"]
+            );
+        }
+    }
+
+    protected deselectAllCampaigns() {
+        this.selectedCampaignsIds = [];
+    }
+
+    /* ==========================
+        Handle channel selection
+       ========================== */
+    protected channelSelected(channel: any) {
+        this.selectedChannelsIds.push(channel["channel_id"]);
+        this.getIntegratorsForChannels();
+    }
+
+    protected channelDeselected(channel: any) {
+        this.removeItemFromArray(
+            channel["channel_id"],
+            this.selectedChannelsIds
+        );
+        if (this.arrayIsEmpty(this.selectedChannels)) {
+            this.getAllIntegrators();
+        } else {
+            this.getIntegratorsForChannels();
+        }
+    }
+
+    protected selectAllChannels() {
+        for (var index in this.channelsDropdown) {
+            this.selectedChannelsIds.push(
+                this.channelsDropdown[index]["channel_id"]
+            );
+        }
+        this.getAllIntegrators();
+    }
+
+    protected deselectAllChannels() {
+        this.selectedChannelsIds = [];
+        this.getAllIntegrators();
+    }
+
+    protected getAllIntegrators() {
+        this.statisticsService
+            .getIntegrators(
+                this.getIdsFromDropdown(this.channelsDropdown, "channel_id")
+            )
+            .subscribe(
+                data => {
+                    this.insertIntoDropdown(EntityType.integrator, data);
+                },
+                error => {
+                    console.log(error);
+                    this.toastr.error("Error de conexión");
+                }
+            );
+    }
+
+    protected getIntegratorsForChannels() {
+        this.statisticsService
+            .getIntegrators(this.selectedChannelsIds)
+            .subscribe(data => {
+                this.integratorsDropdown = [];
+                this.insertIntoDropdown(EntityType.integrator, data);
+                console.log(data);
+            });
+    }
+
+    protected insertIntoDropdown(entityType: EntityType, data: Object) {
         switch (entityType) {
             case EntityType.company:
                 for (var index in data) {
@@ -220,10 +259,19 @@ export class DropdownMethods {
                     });
                 }
                 break;
+            case EntityType.integrator:
+                this.integratorsDropdown = [];
+                for (var index in data) {
+                    this.integratorsDropdown.push({
+                        integrator_id: data[index]["idIntegrator"],
+                        integrator_name: data[index]["nameIntegrator"]
+                    });
+                }
+                break;
         }
     }
 
-    removeItemFromArray(item: Number, array: Number[]) {
+    protected removeItemFromArray(item: Number, array: Number[]) {
         for (var i = 0; i < array.length; i++) {
             if (item == array[i]) {
                 array.splice(i, 1);
@@ -231,7 +279,7 @@ export class DropdownMethods {
         }
     }
 
-    removeObjectFromArray<T>(id: any, array: any[], key: T) {
+    protected removeObjectFromArray<T>(id: any, array: any[], key: T) {
         for (var i = 0; i < array.length; i++) {
             if (id == array[i][key]) {
                 array.splice(i, 1);
@@ -239,27 +287,11 @@ export class DropdownMethods {
         }
     }
 
-    arrayIsEmpty(array) {
+    protected arrayIsEmpty(array) {
         return !Array.isArray(array) || !array.length;
     }
 
-    getAllCampaigns() {
-        this.statisticsService
-            .getCampaingsForCompany(
-                this.getIdsFromDropdown(this.companiesDropdown, "company_id")
-            )
-            .subscribe(
-                data => {
-                    this.insertIntoDropdown(EntityType.campaign, data);
-                },
-                error => {
-                    console.log(error);
-                    this.toastr.error("Error de conexión");
-                }
-            );
-    }
-
-    public getIdsFromDropdown<T>(dropdown: any[], indexName: T) {
+    protected getIdsFromDropdown<T>(dropdown: any[], indexName: T) {
         var ids = [];
         dropdown.forEach(element => {
             ids.push(element[indexName]);
