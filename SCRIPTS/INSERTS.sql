@@ -1,5 +1,5 @@
 
---\c CoreMensajeria CoreMensajeria
+\c CoreMensajeria CoreMensajeria
 
 INSERT INTO public.Privilege (pri_code, pri_action) values ('CUSER','Crear usuario');
 INSERT INTO public.Privilege (pri_code, pri_action) values ('RUSER','Ver usuario');
