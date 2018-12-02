@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { RestService } from '../shared/services/rest.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-change-pass',
@@ -8,18 +9,23 @@ import { RestService } from '../shared/services/rest.service';
   styleUrls: ['./change-pass.component.scss']
 })
 export class ChangePassComponent implements OnInit {
-  @Input() _email;
-  constructor(public router: Router, public rest: RestService) {
+  @Input() _verifCode = ''; _newPass = ''; _newPass1 = '';
+  constructor(public router: Router, public rest: RestService, private toastr: ToastrService) {
 
    }
 
   ngOnInit() {
   }
 
-  handleForgot(){
-    this.rest.getData("request_password?email="+ this._email).subscribe((data:{})=>{
-    }, 
-    (err)=>{})
+  handleVerification(){
+    if (this._verifCode.length > 0 && this._newPass.length > 0 && this._newPass === this._newPass1){
+      this.toastr.success('Lo lograste');
+    }else if (this._verifCode.length == 0 && this._newPass.length == 0 && this._newPass === this._newPass1){
+      this.toastr.error('Los campos no pueden estar vacíos')
+    }else if (this._verifCode.length == 0 ) {
+      this.toastr.error('Debe ingresar un codigo de verificación');
+    }else if (this._newPass != this._newPass1 || this._newPass.length == 0 || this._newPass1.length == 0){
+      this.toastr.error('Las contraseñas no pueden ser vacías y deben coincidir');}
   }
 
 }
