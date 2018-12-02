@@ -7,12 +7,18 @@
           
           <form role="form">
               <div class="form-content">
-                  <p>Ingrese su correo para recuperar su contraseña</p>
+                  <p>Ingrese el código de verificación y su nueva contraseña</p>
                   <div class="form-group">
-                      <input type="text" class="form-control input-underline input-lg" id="" placeholder="Email">
+                      <input type="text" [(ngModel)]="_verifCode" class="form-control input-underline input-lg" id="" placeholder="Código de verificacion">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" [(ngModel)]="_newPass" class="form-control input-underline input-lg" id="" placeholder="Ingrese clave">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" [(ngModel)]="_newPass" class="form-control input-underline input-lg" id="" placeholder="Repita clave">
                   </div>
               </div>
-              <a class="btn rounded-btn" (click)="handleForgot"> Recuperar contraseña </a>&nbsp;
+              <a class="btn rounded-btn" (click)="handleVerification()"> Verificar </a>&nbsp;
               <a class="btn rounded-btn" [routerLink]="['/login']"> Cancelar </a>
           </form>
       </div>

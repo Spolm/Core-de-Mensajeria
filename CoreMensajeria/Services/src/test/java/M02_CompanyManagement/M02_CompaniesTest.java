@@ -27,7 +27,7 @@ public class M02_CompaniesTest {
     /*public M02_CompaniesTest() {
 
     }*/
-
+    /*
     @BeforeEach
     public  void setUpClass() throws SQLException {
         Connection conn = Sql.getConInstance();
@@ -66,6 +66,6 @@ public class M02_CompaniesTest {
         Statement st = conn.createStatement();
         st.executeUpdate(query);
     }
-
+    */
 
 }
