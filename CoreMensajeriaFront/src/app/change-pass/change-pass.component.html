@@ -1,0 +1,20 @@
+<div class="login-page" [@routerTransition]>
+  <div class="row justify-content-md-center">
+      <div class="col-md-4">
+          <img class="user-avatar" src="assets/images/logo.png" width="150px" />
+          <h1>Core de Mensajería</h1>
+          <h5>Universidad Católica Andrés Bello</h5>
+          
+          <form role="form">
+              <div class="form-content">
+                  <p>Ingrese su correo para recuperar su contraseña</p>
+                  <div class="form-group">
+                      <input type="text" class="form-control input-underline input-lg" id="" placeholder="Email">
+                  </div>
+              </div>
+              <a class="btn rounded-btn" (click)="handleForgot"> Recuperar contraseña </a>&nbsp;
+              <a class="btn rounded-btn" [routerLink]="['/login']"> Cancelar </a>
+          </form>
+      </div>
+  </div>
+</div>
