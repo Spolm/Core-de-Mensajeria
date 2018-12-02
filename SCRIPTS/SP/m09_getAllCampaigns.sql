@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION Get_All_Campaign () 
+CREATE OR REPLACE FUNCTION m09_getAllCampaigns () 
  RETURNS TABLE (
  campId   INT,
  campName VARCHAR(200)

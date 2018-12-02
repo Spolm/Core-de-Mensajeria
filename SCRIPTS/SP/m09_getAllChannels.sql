@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION Get_All_Channel () 
+CREATE OR REPLACE FUNCTION m09_getAllChannel() 
  RETURNS TABLE (
  chanId   INT,
  chanName VARCHAR(200)
