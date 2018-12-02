@@ -19,6 +19,9 @@ export class RecoverPassComponent implements OnInit {
 
   handleForgot(){
     if (this._email.length > 0){
+      this.toastr.info("Espere un momento",'Procesando solicitud',{
+        progressBar: true
+      });
       this.rest.getData("request_password?email="+ this._email).subscribe((data:{})=>{
         this.toastr.success('Revisa tu bandeja de entrada donde se envió el código de verificación');
         this.router.navigate(['/change-pass'])

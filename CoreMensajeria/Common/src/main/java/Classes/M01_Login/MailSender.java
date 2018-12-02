@@ -15,7 +15,7 @@ public class MailSender {
     static Session getMailSession;
     static MimeMessage generateMailMessage;
 
-    public static void generateAndSendEmail(String link,String email) throws AddressException, MessagingException {
+    public static void generateAndSendEmail(String code,String email) throws AddressException, MessagingException {
 
         try {
             // Step1
@@ -32,7 +32,7 @@ public class MailSender {
             generateMailMessage = new MimeMessage(getMailSession);
             generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             generateMailMessage.setSubject("Recuperación de contraseña");
-            String emailBody = " Ingresa en el siguiente link para recuperar tu contraseña: " + link + "<br><br> Saludos cordiales, <br>CoreMensajeria Support";
+            String emailBody = " Tu codigo de validacion es: " + code + "<br><br> Saludos cordiales, <br>CoreMensajeria Support";
             generateMailMessage.setContent(emailBody, "text/html");
             System.out.println("Mail Session has been created successfully..");
 
@@ -45,8 +45,7 @@ public class MailSender {
             transport.connect("smtp.gmail.com", "coremensajeria20182", "coremensajeria1234");
             transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
             transport.close();
-        }catch ( Exception e )
-        {
+        }catch ( Exception e ) {
             e.printStackTrace();
         }
     }

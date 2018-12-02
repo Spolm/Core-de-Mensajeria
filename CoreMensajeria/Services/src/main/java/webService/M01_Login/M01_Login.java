@@ -84,9 +84,8 @@ public class M01_Login {
         try {
 
             if(email.matches("^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$")){
-                String url = "http://localhost:4200/";
                 String token = _userDAO.tokenGenerator(email);
-                //MailSender.generateAndSendEmail(url + "change_password?token=" + token,email);
+                MailSender.generateAndSendEmail(token,email);
                 return Response.ok(_gson.toJson("Revisa tu bandeja de entrada donde se envió el código de verificación")).build();
             }else {
                 error = new Error("El Email ingresado no tiene el formato adecuado");
