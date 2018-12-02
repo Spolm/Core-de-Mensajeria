@@ -1,6 +1,7 @@
 package webService.M06_DataOrigin;
 
 import Classes.M06_DataOrigin.AddApplicationData;
+import Classes.M06_DataOrigin.Application;
 import Classes.M06_DataOrigin.ApplicationDAO;
 import com.google.gson.*;
 import Exceptions.ApplicationNotFoundException;
@@ -8,6 +9,7 @@ import Exceptions.DatabaseConnectionProblemException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 
 @Path("/applications")
 public class M06_Application {
@@ -115,8 +117,8 @@ public class M06_Application {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addApplication(AddApplicationData application){
         try {
-            _applicationDAO.addApplication(application);
-            return Response.ok(this.generateSuccessAsJson("Aplicacion creada exitosamente.")).build();
+            return Response.ok(this.generateSuccessAsJson("Aplicacion creada exitosamente.",
+                    _applicationDAO.createApplication(application))).build();
         } catch (DatabaseConnectionProblemException e) {
             return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
@@ -143,6 +145,13 @@ public class M06_Application {
     private String generateSuccessAsJson(String message){
         JsonObject jsonResponse = new JsonObject();
         jsonResponse.addProperty("_message", message);
+        return gson.toJson(jsonResponse);
+    }
+
+    private String generateSuccessAsJson(String message, Application application){
+        JsonObject jsonResponse = new JsonObject();
+        jsonResponse.addProperty("_message", message);
+        jsonResponse.add("application", gson.toJsonTree(application));
         return gson.toJson(jsonResponse);
     }
 

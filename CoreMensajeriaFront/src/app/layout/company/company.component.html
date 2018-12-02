@@ -1,4 +1,10 @@
-<app-page-header [heading]="'Compañias'" [icon]="'fa fa-rebel'"></app-page-header><div class="card">
+<app-page-header [heading]="'Compañias'" [icon]="'fa fa-rebel'"></app-page-header>
+
+<div class="d-flex flex-row-reverse">
+  <button type="button" class="btn btn-dark" routerLink="/company/create">Crear Compañia</button>
+</div>
+
+<div class="card">
   <table class="table table-bordered table-hover">
     <thead class="thead-dark">
       <tr>
@@ -17,6 +23,7 @@
             <th>{{company._idCompany}}</th> 
             <th>{{company._name}}</th> 
             <th>{{company._desc}}</th> 
+            <th>{{company._link}}</th>
             <th *ngIf="!company._status"><span class="badge badge-danger">Inactiva</span></th>
             <th *ngIf="company._status"><span class="badge badge-success">Activa</span></th> 
           </tr>
