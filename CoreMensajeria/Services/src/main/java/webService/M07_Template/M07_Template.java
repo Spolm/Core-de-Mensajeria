@@ -67,4 +67,11 @@ public class M07_Template {
         return templateHandler.postTemplateData(json);
     }
 
+    @PUT
+    @Path("update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean updateTemplate(String json){
+        TemplateHandler templateHandler = new TemplateHandler();
+        return templateHandler.postTemplateData(json);
+    }
 }
