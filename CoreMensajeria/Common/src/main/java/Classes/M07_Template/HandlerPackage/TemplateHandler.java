@@ -8,11 +8,13 @@ import Classes.M06_DataOrigin.ApplicationDAO;
 import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
+import Exceptions.ApplicationNotFoundException;
 import Exceptions.MessageDoesntExistsException;
 import Classes.M05_Channel.Channel;
 import Classes.M05_Channel.ChannelFactory;
 import Classes.M04_Integrator.Integrator;
 import Classes.Sql;
+import Exceptions.ParameterDoesntExistsException;
 import Exceptions.TemplateDoesntExistsException;
 import com.google.gson.*;
 import java.sql.*;
@@ -125,8 +127,12 @@ public class TemplateHandler {
                         (template.getTemplateId()));
             }
 
+        }catch (ParameterDoesntExistsException e) {
+            //logg
         }catch (MessageDoesntExistsException e){
-            e.printStackTrace();
+            //logg
+        }catch (ApplicationNotFoundException e) {
+            //logg
         }catch(SQLException e){
             throw new TemplateDoesntExistsException
                     ("Error: la plantilla " + id + " no existe", e, id);
