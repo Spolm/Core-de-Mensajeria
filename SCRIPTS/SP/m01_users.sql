@@ -57,12 +57,13 @@ COST 100;
 -- Execute
 --select m01_isBlocked('Ronnie');
 
+--DROP FUNCTION m01_getprivileges( integer);
 CREATE OR REPLACE FUNCTION m01_getprivileges( IN _user integer)
-  RETURNS TABLE(pri_code character varying) AS
+  RETURNS TABLE(pri_id integer, pri_code character varying, pri_action character varying) AS
 $BODY$
 BEGIN
   RETURN QUERY
-  SELECT DISTINCT(p.pri_code) FROM
+  SELECT DISTINCT(p.pri_id),p.pri_code, p.pri_action FROM
                                    public.privilege p, public."user" u, public.rol_pri rp, public.role ro, public.responsability re
   WHERE p.pri_id=rp.rol_pri_pri_id AND ro.rol_id=rp.rol_pri_rol_id AND re.res_rol_id=ro.rol_id
     AND u.use_id=re.res_use_id and u.use_id=_user;

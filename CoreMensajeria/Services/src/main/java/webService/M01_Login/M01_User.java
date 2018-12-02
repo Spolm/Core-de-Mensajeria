@@ -1,5 +1,6 @@
 package webService.M01_Login;
 
+import Classes.M01_Login.PrivilegeDao;
 import Classes.M01_Login.User;
 import Classes.M01_Login.UserDAO;
 import com.google.gson.Gson;
@@ -14,10 +15,11 @@ public class M01_User {
 
     Gson _gson = new Gson();
     UserDAO _userDAO = new UserDAO();
+    PrivilegeDao _privilegeDAO = new PrivilegeDao();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetUsers(){
+    public Response GetUsers() {
         Error error;
         try {
             return Response.ok(_gson.toJson(_userDAO.findAll())).build();
@@ -25,14 +27,14 @@ public class M01_User {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
             return Response.status(500).entity(error).build();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             error = new Error("No se consiguio el usuario");
-            error.addError("id","No se encontro el usuario deseado");
+            error.addError("id", "No se encontro el usuario deseado");
             return Response.status(404).entity(error).build();
         } catch (Exception e) {
             e.printStackTrace();
             error = new Error("Error Interno");
-            error.addError("Excepcion",e.getMessage());
+            error.addError("Excepcion", e.getMessage());
             return Response.status(500).entity(error).build();
         }
     }
@@ -40,7 +42,7 @@ public class M01_User {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetUser(@PathParam("id") int id){
+    public Response GetUser(@PathParam("id") int id) {
         Error error;
         try {
             return Response.ok(_gson.toJson(_userDAO.findByUsernameId(id))).build();
@@ -48,14 +50,14 @@ public class M01_User {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
             return Response.status(500).entity(error).build();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             error = new Error("Las credenciales ingresadas son incorrectas");
-            error.addError("credenciales","No se encontro el usuario deseado");
+            error.addError("credenciales", "No se encontro el usuario deseado");
             return Response.status(404).entity(error).build();
         } catch (Exception e) {
             e.printStackTrace();
             error = new Error("Error Interno");
-            error.addError("Excepcion",e.getMessage());
+            error.addError("Excepcion", e.getMessage());
             return Response.status(500).entity(error).build();
         }
     }
@@ -63,7 +65,7 @@ public class M01_User {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postUser(User user){
+    public Response postUser(User user) {
         Error error;
         try {
             _userDAO.saveUser(user);
@@ -75,7 +77,30 @@ public class M01_User {
         } catch (Exception e) {
             e.printStackTrace();
             error = new Error("Error Interno");
-            error.addError("Excepcion",e.getMessage());
+            error.addError("Excepcion", e.getMessage());
+            return Response.status(500).entity(error).build();
+        }
+    }
+
+    @GET
+    @Path("/{id}/privileges")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetUserPrivileges(@PathParam("id") int id) {
+        Error error;
+        try {
+            return Response.ok(_gson.toJson(_privilegeDAO.findPrivilegesByUserId(id))).build();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            error = new Error("Error a nivel de base de datos");
+            return Response.status(500).entity(error).build();
+        } catch (NullPointerException e) {
+            error = new Error("Las credenciales ingresadas son incorrectas");
+            error.addError("credenciales", "No se encontro el usuario deseado");
+            return Response.status(404).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error("Error Interno");
+            error.addError("Excepcion", e.getMessage());
             return Response.status(500).entity(error).build();
         }
     }
