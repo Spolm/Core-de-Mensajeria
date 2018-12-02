@@ -8,6 +8,7 @@ import { PageHeaderModule } from './../../shared';
 import { FormsModule } from '@angular/forms';
 import { NgbdModalSelectCompany } from './modals/modal-select-company/modal-select-company';
 import { TemplatePageComponent } from './template-page/template-page.component';
+import { ModifyTemplateComponent } from './modify-template/modify-template.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { TemplatePageComponent } from './template-page/template-page.component';
     NgbdModalApprove,
     NgbdModalSelectCompany,
     CreateTemplateComponent,
-    TemplatePageComponent
+    TemplatePageComponent,
+    ModifyTemplateComponent
   ]
 })
 export class TemplateModule { }

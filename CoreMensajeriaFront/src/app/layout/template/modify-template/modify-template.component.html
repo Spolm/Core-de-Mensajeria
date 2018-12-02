@@ -1,17 +1,17 @@
 <router-outlet></router-outlet>
-<h2 class="text-capitalize main-title">Crear Plantilla</h2>
+<h2 class="text-capitalize main-title">Modificar Plantilla</h2>
 <hr>
 <form>
   <div class="form-row">
 
     <!-- Textarea for the message of the template -->
-    <div class="form-group col-12 col-md-9">
+    <div class="form-group col-9">
       <label for="formMessage">Mensaje de la plantilla</label>
       <textarea class="form-control" id="formMessage" rows="5" placeholder="Mensaje" [(ngModel)]="formMessage" name="message"></textarea>
     </div>
 
     <!-- Select for the parameters of the template -->
-    <div class="form-group col-12 col-md-3">
+    <div class="form-group col">
       <label for="formParameters">Parametros</label>
       <br>
       <div class="d-flex flex-row-reverse">
@@ -23,7 +23,7 @@
         </select>
       </div>
       <br>
-      <div *ngIf="showInputCreateParameterState" class="col-12">
+      <div *ngIf="showInputCreateParameterState">
         <div class="d-flex flex-row-reverse">
           <button type="button" class="btn btn-success btn-sm m-1" (click)="addNewParameter(formMessage, newParameter.value)">+</button>
           <input type="text" #newParameter>
@@ -95,6 +95,6 @@
 </form>
 
 <div class="d-flex flex-row-reverse">
-  <button type="button" class="btn btn-success m-1" (click)="postTemplate()">Crear</button>
+  <button type="button" class="btn btn-success m-1" (click)="updateTemplate()">Confirmar</button>
   <button type="button" class="btn btn-danger m-1" routerLink="/template">Cancelar</button>
 </div>
