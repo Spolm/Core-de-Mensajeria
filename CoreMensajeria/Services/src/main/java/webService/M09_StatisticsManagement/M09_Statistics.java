@@ -69,7 +69,7 @@ public class M09_Statistics extends Application {
         } catch(CompanyDoesntExistsException e) {
             return Response.serverError().build();
         } finally {
-            Sql.bdClose(connStar);
+            Sql.bdClose(conn);
         }
 
     }
@@ -77,22 +77,8 @@ public class M09_Statistics extends Application {
     @GET
     @Path("/campaigns")
     @Produces("application/json")
-    public Response getAllCampaigns() {
-        String query = "SELECT DISTINCT cam_id, cam_name FROM dim_company_campaign ORDER BY cam_id;";
-        try {
-            return getCampaigns(query);
-        } catch (CampaignDoesntExistsException e) {
-            return Response.serverError().build();
-        } finally {
-            Sql.bdClose(connStar);
-        }
-    }
-
-    @GET
-    @Path("/campaignCompany")
-    @Produces("application/json")
     public Response getCampaignsForCompany(@QueryParam("companyId") List<Integer> companyIds) {
-        String query = "SELECT DISTINCT cam_id, cam_name FROM dim_company_campaign WHERE com_id IN (";
+        String query = "SELECT DISTINCT cam_id, cam_name FROM m09_getAllCampaigns(";
         for (int i = 0; i < companyIds.size() - 1;  i++) {
             query += companyIds.get(i) + ", ";
         }
@@ -349,6 +335,9 @@ public class M09_Statistics extends Application {
                 stats.put("channels", getMessagesParam(companyin, campaignin, channelin, "me.sen_cha_id", "ch.cha_name",
                         "public.dim_channel ch", "ch.cha_id", st));
                 //stats.add();
+            }
+            if (channelIds.isEmpty() && campaignIds.isEmpty() && companyIds.isEmpty()){
+                return Response.status(400).entity("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }").build();
             }
         } catch (SQLException e) {
             e.printStackTrace();
