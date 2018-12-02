@@ -1,50 +1,25 @@
 package Classes.M07_Template.HandlerPackage;
 
 import Classes.M01_Login.UserDAO;
-import Classes.M02_Company.Company;
 import Classes.M03_Campaign.Campaign;
+import Classes.M04_Integrator.IntegratorDAO;
 import Classes.M06_DataOrigin.Application;
 import Classes.M06_DataOrigin.ApplicationDAO;
 import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 import Exceptions.MessageDoesntExistsException;
-//import webService.M03_CampaingManagement.M03_Campaigns;
 import Classes.M05_Channel.Channel;
 import Classes.M05_Channel.ChannelFactory;
 import Classes.M04_Integrator.Integrator;
-import Classes.M04_Integrator.IntegratorService;
-import Classes.M07_Template.StatusPackage.Status;
-import Classes.M07_Template.Template;
 import Classes.Sql;
 import Exceptions.TemplateDoesntExistsException;
 import com.google.gson.*;
-
-
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class TemplateHandler {
     private Sql sql;
-
-    private static final String GET_TEMPLATES_BY_USER =
-      "select t.tem_id, t.tem_creation_date, t.tem_campaign_id, t.tem_application_id, t.tem_user_id, s.sta_id, s.sta_name, ts.ts_user_id\n"
-          + "from public.template t\n"
-          + "inner join public.template_status ts\n"
-          + "on ts.ts_template = t.tem_id \n"
-          + "  inner join \n"
-          + "  (\n"
-          + "  select ts_template, max(ts_id) maxID from public.template_status\n"
-          + "  group by ts_template\n"
-          + "  )ts_ on ts_.ts_template = ts.ts_template\n"
-          + "and ts.ts_id = ts_.maxID\n"
-          + "inner join public.status s\n"
-          + "on ts.ts_status = s.sta_id\n"
-          + "inner join public.campaign c\n"
-          + "on c.cam_id = t.tem_campaign_id\n"
-          + "where c.cam_id = ?\n"
-          + "order by t.tem_id";
 
     private static final String GET_CAMPAIGN_BY_USER_OR_COMPANY =
         "select c.cam_id, c.cam_name, c.cam_description, c.cam_status, c.cam_start_date, c.cam_end_date,  co.com_id, co.com_name, co.com_description, co.com_status\n"
@@ -56,8 +31,10 @@ public class TemplateHandler {
           + "where r.res_use_id = ? OR (r.res_use_id = ? AND r.res_com_id = ?)\n"
           + "order by c.cam_id";
 
-    public ArrayList<Template> getTemplates(int userId,int companyId){
+    private static final String GET_CAMAPIGN_BY_ID =
+            "select* from public.campaign where cam_id = ? ";
 
+    public ArrayList<Template> getTemplates(int userId,int companyId){
         ArrayList<Template> templateArrayList = new ArrayList<>();
         ArrayList<Campaign> campaignArrayList = null;
         Connection connection = Sql.getConInstance();
@@ -65,7 +42,7 @@ public class TemplateHandler {
         try{
             campaignArrayList = getCampaignsByUserOrCompany(userId,companyId);
             for(int x = 0; x < campaignArrayList.size(); x++){
-                PreparedStatement preparedStatement = connection.prepareStatement(GET_TEMPLATES_BY_USER);
+                PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_templates_by_campaign(?)}");
                 preparedStatement.setInt(1,campaignArrayList.get(x).get_idCampaign());
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while(resultSet.next()){
@@ -95,20 +72,10 @@ public class TemplateHandler {
 
     public ArrayList<Template> getTemplates(){
         ArrayList<Template> templateArrayList = new ArrayList<>();
+        Connection connection = Sql.getConInstance();
         try{
-            ResultSet resultSet = sql.sqlConn("select t.tem_id, t.tem_creation_date, s.sta_id, s.sta_name\n" +
-                    "from template t\n" +
-                    "inner join template_status ts\n" +
-                    "on ts.ts_template = t.tem_id\n" +
-                    "\tinner join\n" +
-                    "\t(\n" +
-                    "\t\tselect ts_template, max(ts_id) maxID from template_status \n" +
-                    "\t\tgroup by ts_template\n" +
-                    "\t)ts_ on ts_.ts_template = ts.ts_template\n" +
-                    "\t\tand ts.ts_id = ts_.maxID\n" +
-                    "inner join status s\n" +
-                    "on ts.ts_status = s.sta_id\n" +
-                    "order by t.tem_id");
+            PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_all_templates()}");
+            ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 Template template = new Template();
                 template.setTemplateId(resultSet.getInt("tem_id"));
@@ -132,7 +99,7 @@ public class TemplateHandler {
     }
     public Template getTemplate(int id) throws TemplateDoesntExistsException{
         Template template = new Template();
-        String query = "select tem_id,ts_id,tem_user_id, tem_creation_date, sta_name\n" +
+        String query = "select tem_id,ts_id,tem_user_id,tem_campaign_id, tem_creation_date, sta_name\n" +
                 "from template_status,template,status\n" +
                 "where tem_id = " + id + " and tem_id = ts_template and sta_id = ts_status\n" +
                 "order by ts_id desc limit 1";
@@ -152,7 +119,7 @@ public class TemplateHandler {
 
                 UserDAO userDAO = new UserDAO();
                 template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
-
+                template.setCampaign(getCampaignsById(resultSet.getInt("tem_campaign_id")));
                 ApplicationDAO applicationService = new ApplicationDAO();
                 template.setApplication(applicationService.getApplication
                         (template.getTemplateId()));
@@ -168,6 +135,31 @@ public class TemplateHandler {
         } finally {
             Sql.bdClose(sql.getConn());
             return template;
+        }
+    }
+
+    public Campaign getCampaignsById(int campaignId){
+        Campaign campaign =  new Campaign();
+        Connection connection = Sql.getConInstance();
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_CAMAPIGN_BY_ID);
+            preparedStatement.setInt(1,campaignId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                campaign.set_idCampaign(resultSet.getInt("cam_id"));
+                campaign.set_nameCampaign(resultSet.getString("cam_name"));
+                campaign.set_descCampaign(resultSet.getString("cam_description"));
+                campaign.set_statusCampaign(resultSet.getBoolean("cam_status"));
+                campaign.set_startCampaign(resultSet.getDate("cam_start_date"));
+                campaign.set_endCampaign(resultSet.getDate("cam_end_date"));
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connection);
+            return campaign;
         }
     }
 
@@ -225,8 +217,8 @@ public class TemplateHandler {
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 ArrayList<Integrator> integrators = new ArrayList<>();
-                IntegratorService integratorService = IntegratorService.getInstance();
-                Integrator integrator = integratorService.getConcreteIntegrator(
+                IntegratorDAO integratorDAO = new IntegratorDAO();
+                Integrator integrator = integratorDAO.getConcreteIntegrator(
                         resultSet.getInt("ci_integrator_id")
                 );
                 integrators.add(integrator);
@@ -326,7 +318,7 @@ public class TemplateHandler {
             JsonObject gsonObj = parser.parse(json).getAsJsonObject();
             //hay que extraer campaña y aplicacion, parametros por defecto
             //se crea el template y se retorna su id
-            int templateId = postTemplate(13,2, gsonObj.get("userId").getAsInt());
+            int templateId = postTemplate(gsonObj.get("campaign").getAsInt(),2, gsonObj.get("userId").getAsInt());
             //se establece el template  como no aprobado
             StatusHandler.postTemplateStatusNoAprovado(templateId);
             //insertamos los nuevos parametros

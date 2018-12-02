@@ -38,14 +38,31 @@ export class CreateTemplateComponent {
   }
 
   addParameter(message: string, parameterName: string) {
-    if (!this.parameters.find(x => x == parameterName)) {
-      const myFormMessage = document.getElementById('formMessage');
-      const pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
-      const startMessage = message.slice(0, pointer);
-      const endMessage = message.slice(pointer, message.length);
-      this.parameters.push(parameterName);
-      this.formMessage = startMessage + ' [.$' + parameterName + '$.] ' + endMessage;
-    }
+      parameterName = parameterName.trim();
+      if ((parameterName.valueOf() !== '')) {
+          parameterName = parameterName.toLowerCase();
+          parameterName = parameterName.charAt(0).toUpperCase() + parameterName.slice(1, parameterName.length);
+          if (!this.parameters.find(x => x === parameterName)) {
+              const myFormMessage = document.getElementById('formMessage');
+              const pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
+              const startMessage = message.slice(0, pointer);
+              const endMessage = message.slice(pointer, message.length);
+              this.parameters.push(parameterName);
+              this.formMessage = startMessage + ' [.$' + parameterName + '$.] ' + endMessage;
+          } else {
+              this.toastr.warning('El parametro ya esta registrado', 'Aviso',
+                  {
+                      timeOut: 2800,
+                      progressBar: true
+                  });
+          }
+      } else {
+          this.toastr.warning('No a escrito ningun parametro', 'Aviso',
+              {
+                  timeOut: 2800,
+                  progressBar: true
+              });
+      }
   }
 
   addNewParameter(message: string, parameterName: string) {
@@ -96,7 +113,7 @@ export class CreateTemplateComponent {
         if ( this.channels_integrators[0]) {
             this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
         } else{
-            this.toastr.error('Falta llenar un campo', 'Error',
+            this.toastr.warning('Falta llenar un campo', 'Aviso',
                 {
                     timeOut: 2800,
                     progressBar: true

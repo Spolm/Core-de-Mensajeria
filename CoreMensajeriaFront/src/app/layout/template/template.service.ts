@@ -84,7 +84,10 @@ export class TemplateService {
             'company': company,
             'parameters': parameters,
             'newParameters': newParameters,
-            'channel_integrator': channel_integrator.valueOf()
+            'channel_integrator': channel_integrator.valueOf(),
+            // se coloca una campaña y origen por defecto
+            'applicationId': 2,
+            'campaign': 10
         };
         this.http.post(endpoint + 'templates/add', json).subscribe((res: boolean) => {
             flag = res;
