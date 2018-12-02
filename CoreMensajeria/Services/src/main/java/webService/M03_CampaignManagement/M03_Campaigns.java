@@ -99,6 +99,21 @@ public class M03_Campaigns {
         String select = "SELECT * FROM campaign where cam_company_id = ?";
         ArrayList<Campaign> caList= new ArrayList<>();
 
+        getCampaignList(id, select, caList);
+        return caList;
+    }
+
+    public ArrayList<Campaign> campaignListByUser(int id) throws CampaignDoesntExistsException {
+        String select = "SELECT DISTINCT  ca.* from \"campaign\" ca INNER JOIN " +
+                "\"company\" co ON ca.cam_company_id = co.com_id INNER JOIN \"user\" " +
+                "u ON co.com_user_id = ? ORDER BY  cam_id";
+        ArrayList<Campaign> caList= new ArrayList<>();
+
+        getCampaignList(id, select, caList);
+        return caList;
+    }
+
+    public void getCampaignList(int id, String select, ArrayList<Campaign> caList) throws CampaignDoesntExistsException {
         try {
             PreparedStatement ps = conn.prepareStatement(select);
             ps.setInt(1, id);
@@ -121,8 +136,8 @@ public class M03_Campaigns {
         catch (Exception e) {
             e.printStackTrace();
         }
-        return caList;
     }
+
 
     //endregion
 
@@ -152,6 +167,30 @@ public class M03_Campaigns {
         return rb.build();
     }
     //endregion
+
+
+    @GET
+    @Path("/GetCampaignsByUser")
+    @Produces("application/json")
+
+    public Response getCampaignsByUser(@QueryParam("id") int id) throws CampaignDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+
+        try {
+            ArrayList<Campaign> campaignList = campaignListByUser(id);
+            rb.entity(gson.toJson(campaignList));
+        }
+        catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            Sql.bdClose(conn);
+        }
+        return rb.build();
+    }
 
 
 
