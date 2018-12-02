@@ -76,15 +76,6 @@ WHERE pri_code like 'R%' or pri_code = 'STATISTICS';
 
 INSERT INTO public.Responsability(res_use_id, res_rol_id) values
 (1,1),(2,1),(3,2),(4,3),(5,4),(6,5);
-insert into responsability (res_use_id,res_com_id,res_rol_id) values (1,1,2);
-insert into responsability (res_use_id,res_com_id,res_rol_id) values (4,1,3);
-insert into responsability (res_use_id,res_com_id,res_rol_id) values (5,1,4);
-insert into responsability (res_use_id,res_com_id,res_rol_id) values (6,1,5);
-
-insert into responsability (res_use_id,res_com_id,res_rol_id) values (3,2,2);
-insert into responsability (res_use_id,res_com_id,res_rol_id) values (1,2,2);
-insert into responsability (res_use_id,res_com_id,res_rol_id) values (4,2,3);
-insert into responsability (res_use_id,res_com_id,res_rol_id) values (5,2,4);
 
 INSERT INTO integrator (int_name, int_messageCost, int_threadCapacity,int_tokenApi,int_enabled)
 VALUES ('Movistar', 13.4, 25, 'oqiwueyeiu',TRUE);
