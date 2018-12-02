@@ -28,4 +28,5 @@
 \ir SP/m09_Get_CompanyMessages.sql
 \ir SP/m09_getAllCampaigns.sql
 \ir SP/m09_getAllChannels.sql
+\ir SP/m09_getMessagesParameter.sql
 -- \ir StoreProceduresM_09/FuntionsGet.sql

@@ -301,15 +301,12 @@ public class M09_Statistics extends Application {
         ArrayList<Integer> listNum = new ArrayList<>();
         Statistics gr = new Statistics();
         try {
-            String select = "SELECT count(DISTINCT me.*) as msgs, " + param1 +", "+ param2 +" as name \n"+
-                    "FROM fact_sent_message me, "+ param3 +" \n" +
-                    "WHERE " + param1 + " = " + param4 + " "+ companyIds + " " + campaignIds + "  " + channelIds + " \n" +
-                    "GROUP BY " + param1 + ", "+ param2 +"";
-            System.out.println(select);
+            String select = "SELECT icount, paramName FROM m09_get_MessageParameter('"+ companyIds + "','" + campaignIds + "','" +
+                    channelIds + "','" + param1 + "','" + param2 + "','" + param3 + "','" + param4 + "')";
             ResultSet result = st.executeQuery( select );
             while ( result.next() ) {
-                num = result.getInt("msgs");
-                name = result.getString("name");
+                num = result.getInt("icount");
+                name = result.getString("paramName");
                 listNum.add( num );
                 listName.add( name );
                 gr.x = listName;
