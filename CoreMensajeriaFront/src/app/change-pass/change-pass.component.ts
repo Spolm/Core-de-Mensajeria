@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./change-pass.component.scss']
 })
 export class ChangePassComponent implements OnInit {
-  @Input() _verifCode = ''; _newPass = ''; _newPass1 = '';
+  @Input() _verifCode = ''; _newPass = ''; _newPass1 = ''; _email ='';
   constructor(public router: Router, public rest: RestService, private toastr: ToastrService) {
 
    }
@@ -18,10 +18,22 @@ export class ChangePassComponent implements OnInit {
   }
 
   
+
+  
   handleVerification(){
-    if (this._verifCode.length > 0 && this._newPass.length > 0 && this._newPass === this._newPass1){
-      
-      
+    var user = {_username: this._email,  _newPassword : this._newPass, _token: this._verifCode};
+    if (this._verifCode.length > 0 && this._newPass.length > 0 && this._newPass === this._newPass1){ 
+      this.toastr.info("Espere un momento",'Intentando acceder',{
+        progressBar: true
+      });
+      this.rest.postData('change_password',user).subscribe((result) => {
+        this.toastr.success('Clave cambiada exitosamente');
+        this.router.navigate(['/login']);
+      }, (err) => {
+        console.log(err);
+        if (err.status == 0) this.toastr.error('Problema de conexión');
+        else this.toastr.error(err.error._error);
+      });
     }else if (this._verifCode.length == 0 && this._newPass.length == 0 && this._newPass === this._newPass1){
       this.toastr.error('Los campos no pueden estar vacíos')
     }else if (this._verifCode.length == 0 ) {

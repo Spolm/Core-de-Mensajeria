@@ -3,6 +3,7 @@ package webService.M01_Login;
 import Classes.M01_Login.*;
 import Exceptions.UserBlockedException;
 import com.google.gson.Gson;
+import sun.rmi.runtime.Log;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -19,6 +20,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 
 @Path("/")
@@ -79,13 +81,15 @@ public class M01_Login {
     @GET
     @Path("/request_password")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response RequestPassword(@QueryParam("email") String email){
+    public Response requestPassword(@QueryParam("email") String email){
         Error error;
         try {
 
             if(email.matches("^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$")){
                 String token = _userDAO.tokenGenerator(email);
-                MailSender.generateAndSendEmail(token,email);
+                Logger logger = Logger.getLogger(getClass().getName());
+                logger.info("token: "+token);
+                //MailSender.generateAndSendEmail(token,email);
                 return Response.ok(_gson.toJson("Revisa tu bandeja de entrada donde se envió el código de verificación")).build();
             }else {
                 error = new Error("El Email ingresado no tiene el formato adecuado");
@@ -119,16 +123,25 @@ public class M01_Login {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response login( PasswordChange passwordChange){
+    public Response changePassword( PasswordChange passwordChange){
         Error error;
         User user;
-        int x;
         try {
             user = _userDAO.findByUsernameOrEmail(passwordChange.get_username());
-            if(_userDAO.tokenGenerator(user.get_emailUser()).equals(passwordChange.get_token()))
-                _userDAO.changePassword(user.get_usernameUser(),passwordChange.get_newPassword());
+            if(_userDAO.tokenGenerator(user.get_emailUser()).equals(passwordChange.get_token())){
+                if(true){
+                    _userDAO.changePassword(user.get_usernameUser(),passwordChange.get_newPassword());
+                } else{
+                    error = new Error("La clave no es segura");
+                    error.addError("clave"
+                            ,"la clave ingressada no es válida");
+                    return Response.status(404).entity(error).build();
+                }
+            }
             else {
-
+                error = new Error("El código ingresado no es válido");
+                error.addError("Token","El token no es válido");
+                return Response.status(404).entity(error).build();
             }
         } catch (SQLException e) {
             e.printStackTrace();
