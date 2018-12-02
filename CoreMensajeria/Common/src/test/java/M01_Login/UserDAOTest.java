@@ -31,7 +31,8 @@ public class UserDAOTest {
     private  void createUser(){
         _user = new User();
         _user.set_usernameUser("prueba");
-        //_user.set_passwordUser("Al28*/12");
+        _user.set_emailUser("prueba@gmail.com");
+        _user.set_passwordUser("Al28*/12");
         _user.set_dateOfBirthUser(Date.valueOf("2000-11-01"));
         _user.set_addressUser("kjsaksjd");
         _user.set_cityUser("ksajdl");
