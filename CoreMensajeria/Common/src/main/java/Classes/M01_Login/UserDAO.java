@@ -2,8 +2,13 @@ package Classes.M01_Login;
 
 import Classes.Sql;
 
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class UserDAO {
 
@@ -20,6 +25,7 @@ public class UserDAO {
             " WHERE use_id=?; ";
     final String CALL_SELECT = "{CALL m01_getusers()}";
     final String CALL_LOGIN = "{CALL m01_loguser(?,?)}";
+    final String CALL_CHANGE_PASSWORD = " {CALL m01_changePassword(?,?)}";
     final String QUERY_INSERT = "INSERT INTO public.USER " +
             "(use_password, use_username, use_type, use_email, use_phone, use_country," +
             "use_city, use_address, use_date_of_birth, use_gender) values" +
@@ -30,6 +36,8 @@ public class UserDAO {
     final String QUERY_UPDATE_BLOCKED = "UPDATE public.USER SET"+
             " use_blocked=? "+
             " WHERE use_id=?";
+    final String QUERY_UPDATE_PASSWORD = "UPDATE public.USER SET"+
+            " use_password=? " + " WHERE use_id=?; ";
     final String CALL_IS_BLOCKED = "{CALL m01_isBlocked(?)}";
 
     private Connection _conn;
@@ -149,6 +157,11 @@ public class UserDAO {
         preparedStatement.executeUpdate();
     }
 
+    public void updateUserPassword(User user) throws  SQLException {
+        PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_UPDATE_PASSWORD);
+
+    }
+
     public boolean isBlockedUser(String username) throws SQLException {
         int blocked = 0;
         PreparedStatement preparedStatement = _conn.prepareCall(CALL_IS_BLOCKED);
@@ -171,6 +184,27 @@ public class UserDAO {
             setUserParams(_result, _user);
         }
         return _user;
+    }
+
+    public String tokenGenerator(String email) throws SQLException, NoSuchAlgorithmException {
+        _user = findByUsernameOrEmail(email);
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        String token = String.valueOf(_user.get_idUser());
+        token += _user.get_emailUser();
+        token += format.format(date);
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(token.getBytes());
+        byte[] digest = md.digest();
+        String myhash = DatatypeConverter.printHexBinary(digest).toUpperCase();
+        return  myhash;
+    }
+
+    public void changePassword(String username, String password) throws SQLException {
+        PreparedStatement st = _conn.prepareCall(CALL_CHANGE_PASSWORD);
+        st.setString(1, username);
+        st.setString(2, password);
+        _result = st.executeQuery();
     }
 
 }
