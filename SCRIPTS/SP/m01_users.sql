@@ -110,3 +110,43 @@ LANGUAGE plpgsql VOLATILE
 COST 100;
 
 --
+
+CREATE OR REPLACE FUNCTION m01_findByUsernameId(IN _userid integer)
+  RETURNS TABLE(use_id integer, use_username character varying, use_type integer, use_email character varying,
+                use_phone character varying, use_country character varying, use_city character varying, use_address character varying,
+                use_date_of_birth timestamp, use_gender char, use_blocked integer, use_remaining_attempts integer) AS
+$BODY$
+BEGIN
+  RETURN QUERY
+	select u.use_id, u.use_username, u.use_type, u.use_email, u.use_phone, u.use_country, u.use_city, u.use_address,
+		 u.use_date_of_birth, u.use_gender, u.use_blocked, u.use_remaining_attempts from public.user as u
+		 where _userid = u.use_id;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE
+COST 100
+ROWS 1000;
+
+--select * from m01_findByUsernameId(2);
+
+CREATE OR REPLACE FUNCTION m01_deleteUser(IN _userid integer) RETURNS void AS $$
+DECLARE
+BEGIN
+	EXECUTE format('DELETE from public.USER WHERE use_id= %L', _userid);
+END;
+$$ LANGUAGE plpgsql;
+
+--select * from m01_deleteUser(2);
+
+CREATE OR REPLACE FUNCTION m01_insertUser(IN _userpassword character varying, IN _username character varying, IN _usertype integer, IN _useremail character varying,
+                IN _userphone character varying, IN _usercountry character varying, IN _usercity character varying, IN _useraddress character varying,
+                IN _userdateofbirth timestamp, IN _usergender char, IN _userblocked integer, IN _userremaining integer) RETURNS void AS $$
+BEGIN
+        INSERT INTO public.user(use_password, use_username, use_type, use_email,
+                use_phone, use_country, use_city, use_address,
+                use_date_of_birth, use_gender, use_blocked, use_remaining_attempts)
+        VALUES(_userpassword, _username, _usertype, _useremail, _userphone, _usercountry, _usercity, _useraddress, _userdateofbirth, _usergender, _userblocked, _userremaining);
+      END;
+	  $$ LANGUAGE plpgsql;
+	  
+	  --select * from m01_insertUser('123','pruebainsert', 1, 'alexdgn213@gmail.com', '0414255', 'Ve', 'Mi', 'Sta Fe', '04/05/1995', 'F',0,3);
