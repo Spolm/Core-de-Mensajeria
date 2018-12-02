@@ -1,13 +1,14 @@
 <h2 mat-dialog-title>Más filtros</h2>
-<button mat-raised-button mat-dialog-close class="btn btn-danger close-button">
+<button
+    mat-raised-button
+    (click)="closeMenu()"
+    class="btn btn-danger close-button"
+>
     Cerrar
 </button>
 <div class="container">
     <div class="row">
-        <div
-            class="col-md-3 col-sm-6 dropdown"
-            *ngIf="companiesDropdown.length > 0"
-        >
+        <div class="col-md-3 dropdown" *ngIf="companiesDropdown.length > 0">
             <ng-multiselect-dropdown
                 [placeholder]="'Compañía'"
                 [data]="companiesDropdown"
@@ -157,29 +158,27 @@
             </ng-multiselect-dropdown>
         </div>
     </div>
-       
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="dateOfBirth">Filtro de Fecha desde:</label>
-                    <input
-                        type="date"
-                        class="form-control"
-                        id="myDate"
-                        [(ngModel)]="opcionDateSleccionado"
-                    />
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="dateOfBirth">Filtro de Fecha hasta:</label>
-                    <input
-                        type="date"
-                        class="form-control"
-                        id="myDate2"
-                        [(ngModel)]="opcionDateSleccionado2"
-                    />
-                </div>
-            
 
-
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="dateOfBirth">Filtro de Fecha desde:</label>
+            <input
+                type="date"
+                class="form-control"
+                id="myDate"
+                [(ngModel)]="opcionDateSleccionado"
+            />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="dateOfBirth">Filtro de Fecha hasta:</label>
+            <input
+                type="date"
+                class="form-control"
+                id="myDate2"
+                [(ngModel)]="opcionDateSleccionado2"
+            />
+        </div>
+    </div>
 </div>

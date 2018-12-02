@@ -1,30 +1,15 @@
 import { Component, OnInit, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { StatisticsServiceService } from "../statistics-service.service";
 import { ToastrService } from "ngx-toastr";
+import { DropdownMethods } from "../DropdownMethods";
 
 @Component({
     selector: "app-more-filters",
     templateUrl: "./more-filters.component.html",
     styleUrls: ["./more-filters.component.scss"]
 })
-export class MoreFiltersComponent implements OnInit {
-    companiesDropdown = [];
-    companiesDropdownSettings = {};
-    selectedCompaniesIds = [];
-    selectedCompanies = [];
-
-    campaignsDropdown = [];
-    campaignsDropdownSettings = {};
-    selectedCampaignsIds = [];
-    selectedCampaigns = [];
-
-    channelsDropdown = [];
-    channelsDropdownSettings = {};
-    selectedChannelsIds = [];
-    selectedChannels = [];
-    //--------
-
+export class MoreFiltersComponent extends DropdownMethods implements OnInit {
     opcionSeleccionado: string = "0";
     verSeleccion: string = "";
     Date2Capturado: string = "";
@@ -35,45 +20,49 @@ export class MoreFiltersComponent implements OnInit {
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
-        private statisticsService: StatisticsServiceService,
-        private toastr: ToastrService
+        public statisticsService: StatisticsServiceService,
+        public toastr: ToastrService,
+        private dialogRef: MatDialogRef<MoreFiltersComponent>
     ) {
+        super(statisticsService, toastr);
         this.initializeDataFromMainFilters(data);
     }
 
-    ngOnInit() {
-        this.companiesDropdownSettings = {
-            singleSelection: false,
-            idField: "company_id",
-            textField: "company_name",
-            selectAllText: "Seleccionar todos",
-            unSelectAllText: "Deseleccionar todos",
-            itemsShowLimit: 1,
-            allowSearchFilter: true
-        };
+    ngOnInit() {}
 
-        this.campaignsDropdownSettings = {
-            singleSelection: false,
-            idField: "campaign_id",
-            textField: "campaign_name",
-            selectAllText: "Seleccionar todos",
-            unSelectAllText: "Deseleccionar todos",
-            itemsShowLimit: 1,
-            allowSearchFilter: true
-        };
+    closeMenu() {
+        this.dialogRef.close({
+            companies: this.includeCompaniesDataOnReturn(),
+            campaigns: this.includeCampaignsDataOnReturn(),
+            channels: this.includeChannelsDataOnReturn()
+        });
+    }
 
-        this.channelsDropdownSettings = {
-            singleSelection: false,
-            idField: "channel_id",
-            textField: "channel_name",
-            selectAllText: "Seleccionar todos",
-            unSelectAllText: "Deseleccionar todos",
-            itemsShowLimit: 1,
-            allowSearchFilter: true
+    includeCompaniesDataOnReturn() {
+        return {
+            selectedCompanies: this.selectedCompanies,
+            selectedCompaniesIds: this.selectedCompaniesIds,
+            companiesDropdown: this.companiesDropdown
         };
     }
 
-/*
+    includeCampaignsDataOnReturn() {
+        return {
+            selectedCampaigns: this.selectedCampaigns,
+            selectedCampaignsIds: this.selectedCampaignsIds,
+            campaignsDropdown: this.campaignsDropdown
+        };
+    }
+
+    includeChannelsDataOnReturn() {
+        return {
+            selectedChannels: this.selectedChannels,
+            selectedChannelsIds: this.selectedChannelsIds,
+            channelsDropdown: this.channelsDropdown
+        };
+    }
+
+    /*
   capturarDate() {
         if (
           this.opcionDateSleccionado != null &&

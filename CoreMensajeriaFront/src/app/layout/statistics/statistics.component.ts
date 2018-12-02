@@ -9,12 +9,19 @@ import {
 } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { HttpParams } from "@angular/common/http";
-import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
+import {
+    MatDialog,
+    MatDialogConfig,
+    MatDialogRef,
+    MAT_DIALOG_DATA
+} from "@angular/material";
 import { MoreFiltersComponent } from "./more-filters/more-filters.component";
 import { Chart } from "chart.js";
 import { Point } from "./point";
 import { forEach } from "@angular/router/src/utils/collection";
 import { ChartsComponent } from "../charts/charts.component";
+import { DropdownComponent } from "../bs-component/components";
+import { DropdownMethods } from "./DropdownMethods";
 //import { create } from "domain";
 
 interface myData {
@@ -39,7 +46,7 @@ enum ChartType {
     templateUrl: "./statistics.component.html",
     styleUrls: ["./statistics.component.scss"]
 })
-export class StatisticsComponent implements OnInit {
+export class StatisticsComponent extends DropdownMethods implements OnInit {
     userId: string;
 
     /* =================================
@@ -49,6 +56,7 @@ export class StatisticsComponent implements OnInit {
     @ViewChild("companiesChartElement") companiesChartElement: ElementRef;
     @ViewChild("campaignsChartElement") campaignsChartElement: ElementRef;
     @ViewChild("channelsChartElement") channelsChartElement: ElementRef;
+    @ViewChild("integratorsChartElement") integratorsChartElement: ElementRef;
 
     /* ==============
            Charts
@@ -57,27 +65,8 @@ export class StatisticsComponent implements OnInit {
     companiesChart = [];
     campaignsChart = [];
     channelsChart = [];
+    integratorsChart = [];
 
-    /* ==========================
-           Filter dropdowns
-    ============================= */
-    companiesDropdown = [];
-    companiesDropdownSettings = {};
-    selectedCompaniesIds: Number[] = [];
-    selectedCompanies = [];
-
-    campaignsDropdown = [];
-    campaignsDropdownSettings = {};
-    selectedCampaignsIds = [];
-    selectedCampaigns = [];
-
-    channelsDropdown = [];
-    channelsDropdownSettings = {};
-    selectedChannelsIds = [];
-    selectedChannels = [];
-
-    json2;
-    datos;
     opcionSeleccionado: string = "0";
     verSeleccion: string = "";
     Date2Capturado: string = "";
@@ -87,15 +76,11 @@ export class StatisticsComponent implements OnInit {
     paramType: string;
 
     constructor(
-        private statisticsService: StatisticsServiceService,
-        private toastr: ToastrService,
+        public statisticsService: StatisticsServiceService,
+        public toastr: ToastrService,
         public dialog: MatDialog
     ) {
-        this.datos = [
-            "Cantidad de mensajes enviados por Compañias",
-            "Cantidad de mensajes enviados por Campañas",
-            "Cantidad de mensajes enviados por Canales"
-        ];
+        super(statisticsService, toastr);
     }
 
     ngAfterViewInit() {
@@ -174,12 +159,6 @@ export class StatisticsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userId = localStorage.getItem("userid");
-
-        this.setupCompaniesDropdownSettings();
-        this.setupCampaignsDropdownSettings();
-        this.setupChannelsDropdownSettings();
-
         this.getAllCompanies();
         //this.getAllCampaigns();
         this.getAllChannels();
@@ -218,42 +197,6 @@ export class StatisticsComponent implements OnInit {
             });
     }
 
-    private setupCompaniesDropdownSettings() {
-        this.companiesDropdownSettings = {
-            singleSelection: false,
-            idField: "company_id",
-            textField: "company_name",
-            selectAllText: "Seleccionar todos",
-            unSelectAllText: "Deseleccionar todos",
-            itemsShowLimit: 1,
-            allowSearchFilter: true
-        };
-    }
-
-    private setupCampaignsDropdownSettings() {
-        this.campaignsDropdownSettings = {
-            singleSelection: false,
-            idField: "campaign_id",
-            textField: "campaign_name",
-            selectAllText: "Seleccionar todos",
-            unSelectAllText: "Deseleccionar todos",
-            itemsShowLimit: 1,
-            allowSearchFilter: true
-        };
-    }
-
-    private setupChannelsDropdownSettings() {
-        this.channelsDropdownSettings = {
-            singleSelection: false,
-            idField: "channel_id",
-            textField: "channel_name",
-            selectAllText: "Seleccionar todos",
-            unSelectAllText: "Deseleccionar todos",
-            itemsShowLimit: 1,
-            allowSearchFilter: true
-        };
-    }
-
     private getAllCompanies() {
         this.statisticsService.getAllCompanies(this.userId).subscribe(
             data => {
@@ -266,14 +209,6 @@ export class StatisticsComponent implements OnInit {
                 );
             }
         );
-    }
-
-    private getIdsFromDropdown<T>(dropdown: any[], indexName: T) {
-        var ids = [];
-        dropdown.forEach(element => {
-            ids.push(element[indexName]);
-        });
-        return ids;
     }
 
     getAllCampaigns() {
@@ -296,37 +231,6 @@ export class StatisticsComponent implements OnInit {
         this.statisticsService.getAllChannels().subscribe(data => {
             this.insertIntoDropdown(EntityType.channel, data);
         });
-    }
-
-    private insertIntoDropdown(entityType: EntityType, data: Object) {
-        switch (entityType) {
-            case EntityType.company:
-                for (var index in data) {
-                    this.companiesDropdown.push({
-                        company_id: data[index]["_idCompany"],
-                        company_name: data[index]["_name"]
-                    });
-                }
-                console.log(this.companiesDropdown);
-                break;
-            case EntityType.campaign:
-                this.campaignsDropdown = [];
-                for (var index in data) {
-                    this.campaignsDropdown.push({
-                        campaign_id: data[index]["_idCampaign"],
-                        campaign_name: data[index]["_nameCampaign"]
-                    });
-                }
-                break;
-            case EntityType.channel:
-                for (var index in data) {
-                    this.channelsDropdown.push({
-                        channel_id: data[index]["idChannel"],
-                        channel_name: data[index]["nameChannel"]
-                    });
-                }
-                break;
-        }
     }
 
     capturar() {
@@ -608,14 +512,39 @@ export class StatisticsComponent implements OnInit {
             channelsDropdown: this.channelsDropdown,
             selectedChannels: this.selectedChannels,
             selectedChannelsIds: this.selectedChannelsIds,
-            channelsDropdownSettings: this.channelsDropdownSettings
+            channelsDropdownSettings: this.channelsDropdownSettings,
+            integratorsDropdown: this.integratorsDropdown,
+            selectedIntegrators: this.selectedIntegrators,
+            selectedIntegratorsIds: this.selectedIntegratorsIds,
+            integratorsDropdownSettings: this.integratorsDropdownSettings
         };
         const dialogRef = this.dialog.open(MoreFiltersComponent, dialogConfig);
         dialogRef.updatePosition({ top: "55px", right: "0px", left: "0px" });
         dialogRef.afterClosed().subscribe(result => {
             console.log("Dialog was closed");
+            this.fillCompaniesDropdownsFromMenuData(result);
+            this.fillCampaignsDropdownsFromMenuData(result);
+            this.fillChannelsDropdownsFromMenuData(result);
             console.log(result);
         });
+    }
+
+    fillCompaniesDropdownsFromMenuData(data) {
+        this.selectedCompanies = data["companies"]["selectedCompanies"];
+        this.selectedCompaniesIds = data["companies"]["selectedCompaniesIds"];
+        this.companiesDropdown = data["companies"]["companiesDropdown"];
+    }
+
+    fillCampaignsDropdownsFromMenuData(data) {
+        this.selectedCampaigns = data["campaigns"]["selectedCampaigns"];
+        this.selectedCampaignsIds = data["campaigns"]["selectedCampaignsIds"];
+        this.campaignsDropdown = data["campaigns"]["campaignsDropdown"];
+    }
+
+    fillChannelsDropdownsFromMenuData(data) {
+        this.selectedChannels = data["channels"]["selectedChannels"];
+        this.selectedChannelsIds = data["channels"]["selectedChannelsIds"];
+        this.channelsDropdown = data["channels"]["channelsDropdown"];
     }
 
     getArrayOfRandomColors(length: Number): String[] {
