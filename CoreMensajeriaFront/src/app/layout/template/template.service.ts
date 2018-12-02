@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse,HttpParams } from '@angular/
 import {Observable, of, pipe} from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import {p} from '@angular/core/src/render3';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from "@angular/router";
 
 const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/';
 const httpOptions = {
@@ -16,7 +18,7 @@ const httpOptions = {
 
 export class TemplateService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
 
   }
 
@@ -73,7 +75,9 @@ export class TemplateService {
       this.http.post(endpoint + 'parameters/add', body.toString(), options).subscribe();
   }
 
-    postTemplate(formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[]) {
+    // @ts-ignore
+    postTemplate(formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[]){
+        let flag: boolean;
         const json = {
             'messagge': formMessage.valueOf(),
             'userId': localStorage.getItem('userid'),
@@ -82,7 +86,33 @@ export class TemplateService {
             'newParameters': newParameters,
             'channel_integrator': channel_integrator.valueOf()
         };
-        console.log(json);
-        this.http.post(endpoint + 'templates/add', json).subscribe();
+        this.http.post(endpoint + 'templates/add', json).subscribe((res: boolean) => {
+            flag = res;
+            if (flag) {
+                    this.toastr.success('Plantilla guardada', 'Exito',
+                        {
+                            timeOut: 2800,
+                            progressBar: true
+                        });
+                    this.router.navigate(['/template']);
+                } else {
+                this.toastr.error('No se a podido insertar', 'Error',
+                    {
+                        timeOut: 2800,
+                        progressBar: true
+                    });
+                }
+            },
+            error => {
+                this.toastr.error('Falla en la conexion', 'Error',
+                    {
+                        timeOut: 2800,
+                        progressBar: true
+                    });
+            });
+        }
+
+    templateDetails(id: number) {
+        this.router.navigate(['template', id]);
     }
 }

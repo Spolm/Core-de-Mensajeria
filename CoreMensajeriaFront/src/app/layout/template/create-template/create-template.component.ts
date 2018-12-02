@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { TemplateService } from '../template.service';
 import { ToastrService } from 'ngx-toastr';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create-template',
@@ -17,9 +18,9 @@ export class CreateTemplateComponent {
   parameters: Array<string> = [];
   newParameters: Array<string> = [];
   channels_integrators: any = [];
-  showInputCreateParameterState: boolean = false;
+  showInputCreateParameterState = false;
 
-  constructor(private templateService: TemplateService) {
+  constructor(private templateService: TemplateService, private toastr: ToastrService, private router: Router) {
     this.getParameters();
     this.getChannels();
   }
@@ -38,10 +39,10 @@ export class CreateTemplateComponent {
 
   addParameter(message: string, parameterName: string) {
     if (!this.parameters.find(x => x == parameterName)) {
-      let myFormMessage = document.getElementById('formMessage');
-      let pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
-      let startMessage = message.slice(0, pointer);
-      let endMessage = message.slice(pointer, message.length);
+      const myFormMessage = document.getElementById('formMessage');
+      const pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
+      const startMessage = message.slice(0, pointer);
+      const endMessage = message.slice(pointer, message.length);
       this.parameters.push(parameterName);
       this.formMessage = startMessage + ' [.$' + parameterName + '$.] ' + endMessage;
     }
@@ -59,7 +60,7 @@ export class CreateTemplateComponent {
   addIntegrator(channel: any, integratorId: number) {
     if (!this.channels_integrators.find(x => x.channel.idChannel == channel.idChannel)) {
       if (!this.channels_integrators.find(x => x.integrator.idIntegrator == integratorId)) {
-        let integrator = channel.integrators.find(x => x.idIntegrator == integratorId);
+        const integrator = channel.integrators.find(x => x.idIntegrator == integratorId);
         this.channels_integrators.push(
           { channel, integrator }
         );
@@ -69,13 +70,13 @@ export class CreateTemplateComponent {
 
   showInputCreateParameter() {
     this.showInputCreateParameterState = true;
-    console.log(this.showInputCreateParameterState)
+    console.log(this.showInputCreateParameterState);
   }
 
   deleteParameter(message: string, parameterName: string) {
-    let pointer = message.search(parameterName) - 4;
-    let startMessage = message.slice(0, pointer);
-    let endMessage = message.slice(pointer + parameterName.length + 8, message.length);
+    const pointer = message.search(parameterName) - 4;
+    const startMessage = message.slice(0, pointer);
+    const endMessage = message.slice(pointer + parameterName.length + 8, message.length);
     this.formMessage = startMessage + endMessage;
     this.parameters.splice(this.parameters.indexOf(parameterName), 1);
     if (this.newParameters.find(x => x == parameterName)) {
@@ -88,10 +89,27 @@ export class CreateTemplateComponent {
   }
 
   postTemplate() {
+
     console.log(this.formMessage);
     console.log(this.parameters);
     console.log(this.newParameters);
     console.log(this.channels_integrators);
-    this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1 , this.channels_integrators);
+    if  ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
+        if ( this.channels_integrators[0]) {
+            this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
+        } else{
+            this.toastr.error('Falta llenar un campo', 'Error',
+                {
+                    timeOut: 2800,
+                    progressBar: true
+                });
+        }
+    } else{
+        this.toastr.error('Tal vez quiera escribir un mensaje mas largo', 'Error',
+            {
+                timeOut: 2800,
+                progressBar: true
+            });
+    }
   }
 }

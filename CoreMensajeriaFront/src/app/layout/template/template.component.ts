@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { TemplateService } from './template.service';
-import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-template',
@@ -14,7 +13,7 @@ export class TemplateComponent{
 
   templates: any = [];
 
-  constructor(private templateService: TemplateService , private router: Router) {
+  constructor(private templateService: TemplateService) {
     this.getTemplates();
   }
 
@@ -29,7 +28,7 @@ export class TemplateComponent{
   }
 
     templateDetails(id: number) {
-        this.router.navigate(['template', id]);
+        this.templateService.templateDetails(id);
     }
 
 }
