@@ -92,22 +92,24 @@ ROWS 1000;
 --select * from m01_getusers();
 
 CREATE OR REPLACE FUNCTION m01_changePassword( IN _username character varying, IN _password character varying)
-  RETURNS character varying AS
+  RETURNS integer AS
 $BODY$
 DECLARE
 	_userpassword character varying;
-	_userid
+	_userid integer;
 BEGIN
 	select u.use_id, u.use_password from public.user as u
 	where (u.use_username=_username or u.use_email=_username) into _userid, _userpassword;
 	if _userid > -1 then
-EXECUTE format('UPDATE public.USER SET use_password = %L WHERE use_id= %L', _userpassword, _userid);
+EXECUTE format('UPDATE public.USER SET use_password = MD5(%L) WHERE use_id= %L', _password, _userid);
 	end if;
 RETURN _userid;
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE
 COST 100;
+-- select * from m01_changePassword('Ronnie','55032');
+--select * from public.user;
 
 --
 
