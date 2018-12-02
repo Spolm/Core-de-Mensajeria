@@ -695,6 +695,9 @@ public class M09_Statistics extends Application {
                         "public.dim_channel ch", "ch.cha_id", st));
                 //stats.add();
             }
+            if (channelIds.isEmpty() && campaignIds.isEmpty() && companyIds.isEmpty()){
+                return Response.status(400).entity("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }").build();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
