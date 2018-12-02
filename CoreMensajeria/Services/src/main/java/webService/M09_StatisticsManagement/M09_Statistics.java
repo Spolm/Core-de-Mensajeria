@@ -59,45 +59,45 @@ public class M09_Statistics extends Application {
             Endpoints
     ======================= */
 
-    @GET
-    @Path( "/PruebaParam" )
-    @Produces( "application/json" )
-    public Response test2( @QueryParam( "paramDate1" ) String paramDate1,
-                           @QueryParam( "paramDate2" ) String paramDate2,
-                           @QueryParam( "paramType" ) String paramType ) {
-        Response responseAnswerLine = filterOfTypeStatisticsLine( paramDate1 , paramType );
-        return responseAnswerLine ;
-    }
-
-    @GET
-    @Path( "/PruebaParam2" )
-    @Produces( "application/json" )
-    public Response test1( @QueryParam( "paramDate1" ) String paramDate1,
-                           @QueryParam( "paramDate2" ) String paramDate2,
-                           @QueryParam( "paramType" ) String paramType ) {
-
-        Response responseAnswerPie = filterOfTypeStatisticsPie( paramDate1,paramType );
-
-        return responseAnswerPie ;
-    }
-
-    @GET
-    @Path( "/PruebaParam3" )
-    @Produces( "application/json" )
-    public Response test3( @QueryParam( "paramDate1" ) String paramDate1,
-                           @QueryParam( "paramDate2" ) String paramDate2,
-                           @QueryParam( "paramType" ) String paramType ) {
-
-        Response responseAnswerBar = filterOfTypeStatisticsBar( paramDate1,paramType );
-
-        return responseAnswerBar ;
-    }
+//    @GET
+//    @Path( "/PruebaParam" )
+//    @Produces( "application/json" )
+//    public Response test2( @QueryParam( "paramDate1" ) String paramDate1,
+//                           @QueryParam( "paramDate2" ) String paramDate2,
+//                           @QueryParam( "paramType" ) String paramType ) {
+//        Response responseAnswerLine = filterOfTypeStatisticsLine( paramDate1 , paramType );
+//        return responseAnswerLine ;
+//    }
+//
+//    @GET
+//    @Path( "/PruebaParam2" )
+//    @Produces( "application/json" )
+//    public Response test1( @QueryParam( "paramDate1" ) String paramDate1,
+//                           @QueryParam( "paramDate2" ) String paramDate2,
+//                           @QueryParam( "paramType" ) String paramType ) {
+//
+//        Response responseAnswerPie = filterOfTypeStatisticsPie( paramDate1,paramType );
+//
+//        return responseAnswerPie ;
+//    }
+//
+//    @GET
+//    @Path( "/PruebaParam3" )
+//    @Produces( "application/json" )
+//    public Response test3( @QueryParam( "paramDate1" ) String paramDate1,
+//                           @QueryParam( "paramDate2" ) String paramDate2,
+//                           @QueryParam( "paramType" ) String paramType ) {
+//
+//        Response responseAnswerBar = filterOfTypeStatisticsBar( paramDate1,paramType );
+//
+//        return responseAnswerBar ;
+//    }
 
     @GET
     @Path("/companies")
     @Produces("application/json")
     public Response getAllCompanies(@QueryParam("userId") Integer userId) {
-        String query = "SELECT m02_getcompanies(" + userId + ");";
+        String query = "SELECT com_id, com_name from m02_getcompanies(" + userId + ");";
         try {
             return getCompanies(query);
         } catch(CompanyDoesntExistsException e) {
@@ -222,313 +222,313 @@ public class M09_Statistics extends Application {
     }
 
 
-    public Response getNumberOfCompanysChart() throws SQLException {
-        String aux = "";
-        String select2 = "SELECT icount , companiesName as com_name from public.Get_CompanyName()";
+//    public Response getNumberOfCompanysChart() throws SQLException {
+//        String aux = "";
+//        String select2 = "SELECT icount , companiesName as com_name from public.Get_CompanyName()";
+//
+//        try {
+//            Statistics gr = new Statistics();
+//            ArrayList<Integer> listNum = new ArrayList<>();
+//            ArrayList<String> listCompany = new ArrayList<String>();
+//            int n = 0 ;
+//            int num = 0;
+//            Statement st2 = connStar.createStatement();
+//            ResultSet result2 = st2.executeQuery( select2 );
+//            while ( result2.next() ) {
+//                Company co = new Company();
+//                co.set_name( result2.getString("com_name" ) );
+//                aux = co.get_name();
+//                listCompany.add( aux ) ;
+//                String rs =  result2.getString("icount" );
+//                num = Integer.parseInt( rs );
+//                listNum.add( num );
+//            }
+//
+//            gr.type = "bar";
+//            gr.x = listCompany;
+//            gr.y = listNum;
+//            return Response.ok( gson.toJson( gr ) ).build();
+//        } catch ( SQLException e ) {
+//            e.printStackTrace();
+//            throw new SQLException( select2 );
+//        } finally {
+//            Sql.bdClose(connStar);
+//        }
+//    }
 
-        try {
-            Statistics gr = new Statistics();
-            ArrayList<Integer> listNum = new ArrayList<>();
-            ArrayList<String> listCompany = new ArrayList<String>();
-            int n = 0 ;
-            int num = 0;
-            Statement st2 = connStar.createStatement();
-            ResultSet result2 = st2.executeQuery( select2 );
-            while ( result2.next() ) {
-                Company co = new Company();
-                co.set_name( result2.getString("com_name" ) );
-                aux = co.get_name();
-                listCompany.add( aux ) ;
-                String rs =  result2.getString("icount" );
-                num = Integer.parseInt( rs );
-                listNum.add( num );
-            }
+//    public Response getNumberOfCompanysLine() throws SQLException {
+//        String aux = "";
+//        String select2 = "SELECT icount , companiesName as com_name from public.Get_CompanyName()";
+//        try {
+//            Statistics gr = new Statistics();
+//            ArrayList<Integer> listNum = new ArrayList<>();
+//            ArrayList<String> listCompany = new ArrayList<String>();
+//            int n = 0 ;
+//            int num = 0;
+//            Statement st2 = connStar.createStatement();
+//            ResultSet result2 = st2.executeQuery( select2 );
+//            while ( result2.next() ) {
+//                Company co = new Company();
+//                co.set_name( result2.getString("com_name" ) );
+//                aux = co.get_name();
+//                listCompany.add( aux ) ;
+//                String rs =  result2.getString("icount" );
+//                num = Integer.parseInt( rs );
+//                listNum.add( num );
+//            }
+//            gr.type = "line";
+//            gr.x = listCompany;
+//            gr.y = listNum;
+//            return Response.ok( gson.toJson( gr ) ).build();
+//        } catch ( SQLException e ) {
+//            e.printStackTrace();
+//            throw new SQLException( select2 );
+//        } finally {
+//            Sql.bdClose(connStar);
+//        }
+//    }
+//    @GET
+//    @Path("/messagesCompany")
+//    @Produces("application/json")
+//    public Response getNumberOfCompanysPie() throws SQLException {
+//        String aux = "";
+//        String select2 = "SELECT icount , companiesName as com_name from public.Get_CompanyName()";
+//        try {
+//            PieChart PieC = new PieChart();
+//            ArrayList<Integer> listNum = new ArrayList<Integer>();
+//            ArrayList<String> listlabels = new ArrayList<String>();
+//            int n = 0 ;
+//            int num = 0 ;
+//            Statement st2 = connStar.createStatement();
+//            ResultSet result2 = st2.executeQuery( select2 );
+//            while ( result2.next() ) {
+//                Company co = new Company();
+//                co.set_name( result2.getString("com_name" ) );
+//                aux = co.get_name();
+//                listlabels.add( aux ) ;
+//                String rs =  result2.getString("icount" );
+//                num = Integer.parseInt( rs );
+//                listNum.add( num );
+//            }
+//            PieC.type = "pie";
+//            PieC.labels = listlabels;
+//            PieC.values = listNum;
+//            return Response.ok( gson.toJson( PieC ) ).build();
+//        } catch ( SQLException e ) {
+//            e.printStackTrace();
+//            throw new SQLException( select2 );
+//        } finally {
+//            Sql.bdClose(connStar);
+//        }
+//    }
 
-            gr.type = "bar";
-            gr.x = listCompany;
-            gr.y = listNum;
-            return Response.ok( gson.toJson( gr ) ).build();
-        } catch ( SQLException e ) {
-            e.printStackTrace();
-            throw new SQLException( select2 );
-        } finally {
-            Sql.bdClose(connStar);
-        }
-    }
-
-    public Response getNumberOfCompanysLine() throws SQLException {
-        String aux = "";
-        String select2 = "SELECT icount , companiesName as com_name from public.Get_CompanyName()";
-        try {
-            Statistics gr = new Statistics();
-            ArrayList<Integer> listNum = new ArrayList<>();
-            ArrayList<String> listCompany = new ArrayList<String>();
-            int n = 0 ;
-            int num = 0;
-            Statement st2 = connStar.createStatement();
-            ResultSet result2 = st2.executeQuery( select2 );
-            while ( result2.next() ) {
-                Company co = new Company();
-                co.set_name( result2.getString("com_name" ) );
-                aux = co.get_name();
-                listCompany.add( aux ) ;
-                String rs =  result2.getString("icount" );
-                num = Integer.parseInt( rs );
-                listNum.add( num );
-            }
-            gr.type = "line";
-            gr.x = listCompany;
-            gr.y = listNum;
-            return Response.ok( gson.toJson( gr ) ).build();
-        } catch ( SQLException e ) {
-            e.printStackTrace();
-            throw new SQLException( select2 );
-        } finally {
-            Sql.bdClose(connStar);
-        }
-    }
-    @GET
-    @Path("/messagesCompany")
-    @Produces("application/json")
-    public Response getNumberOfCompanysPie() throws SQLException {
-        String aux = "";
-        String select2 = "SELECT icount , companiesName as com_name from public.Get_CompanyName()";
-        try {
-            PieChart PieC = new PieChart();
-            ArrayList<Integer> listNum = new ArrayList<Integer>();
-            ArrayList<String> listlabels = new ArrayList<String>();
-            int n = 0 ;
-            int num = 0 ;
-            Statement st2 = connStar.createStatement();
-            ResultSet result2 = st2.executeQuery( select2 );
-            while ( result2.next() ) {
-                Company co = new Company();
-                co.set_name( result2.getString("com_name" ) );
-                aux = co.get_name();
-                listlabels.add( aux ) ;
-                String rs =  result2.getString("icount" );
-                num = Integer.parseInt( rs );
-                listNum.add( num );
-            }
-            PieC.type = "pie";
-            PieC.labels = listlabels;
-            PieC.values = listNum;
-            return Response.ok( gson.toJson( PieC ) ).build();
-        } catch ( SQLException e ) {
-            e.printStackTrace();
-            throw new SQLException( select2 );
-        } finally {
-            Sql.bdClose(connStar);
-        }
-    }
-
-    public Response getNumberOfCampaignPie() throws SQLException {
-        String aux = "";
-        String select2 = "SELECT campaignName as cam_name, icount from public.Get_CampaignName()";
-        try {
-            PieChart PieC = new PieChart();
-            ArrayList<Integer> listNum = new ArrayList<Integer>();
-            ArrayList<String> listlabels = new ArrayList<String>();
-            int n = 0 ;
-            int num = 0 ;
-            Statement st2 = connStar.createStatement();
-            ResultSet result2 = st2.executeQuery(select2);
-            while ( result2.next() ) {
-                Campaign ca = new Campaign();
-                ca.set_nameCampaign( result2.getString("cam_name" ) );
-                aux = ca.get_nameCampaign();
-                listlabels.add( aux ) ;
-                String rs =  result2.getString("icount" );
-                num = Integer.parseInt( rs );
-                listNum.add( num );
-            }
-
-            PieC.type = "pie";
-            PieC.labels = listlabels;
-            PieC.values = listNum;
-            return Response.ok( gson.toJson( PieC ) ).build();
-        } catch ( SQLException e ) {
-            e.printStackTrace();
-            throw new SQLException( select2 );
-        } finally {
-            Sql.bdClose(connStar);
-        }
-    }
-    @GET
-    @Path("/CampaignChart")
-    @Produces("application/json")
-    public Response getNumberOfCampaignChart() throws SQLException {
-        String aux = "";
-        String select2 = "SELECT campaignName as cam_name , icount from public.Get_CampaignName()";
-
-        try {
-            Statistics gr = new Statistics();
-            ArrayList<Integer> listNum = new ArrayList<Integer>();
-            ArrayList<String> listCampaign = new ArrayList<String>();
-            int n = 0 ;
-            int num;
-            Statement st2 = connStar.createStatement();
-            ResultSet result2 = st2.executeQuery(select2);
-            while ( result2.next() ) {
-                Campaign co = new Campaign();
-                co.set_nameCampaign( result2.getString("cam_name" ) );
-                aux = co.get_nameCampaign();
-                listCampaign.add( aux ) ;
-                String rs =  result2.getString("icount" );
-                num = Integer.parseInt( rs );
-                listNum.add( num );
-            }
-            gr.type = "bar";
-            gr.x = listCampaign;
-            gr.y = listNum;
-            return Response.ok( gson.toJson( gr ) ).build();
-        } catch ( SQLException e ) {
-            e.printStackTrace();
-            throw new SQLException( select2 );
-        } finally {
-            Sql.bdClose(connStar);
-        }
-    }
+//    public Response getNumberOfCampaignPie() throws SQLException {
+//        String aux = "";
+//        String select2 = "SELECT campaignName as cam_name, icount from public.Get_CampaignName()";
+//        try {
+//            PieChart PieC = new PieChart();
+//            ArrayList<Integer> listNum = new ArrayList<Integer>();
+//            ArrayList<String> listlabels = new ArrayList<String>();
+//            int n = 0 ;
+//            int num = 0 ;
+//            Statement st2 = connStar.createStatement();
+//            ResultSet result2 = st2.executeQuery(select2);
+//            while ( result2.next() ) {
+//                Campaign ca = new Campaign();
+//                ca.set_nameCampaign( result2.getString("cam_name" ) );
+//                aux = ca.get_nameCampaign();
+//                listlabels.add( aux ) ;
+//                String rs =  result2.getString("icount" );
+//                num = Integer.parseInt( rs );
+//                listNum.add( num );
+//            }
+//
+//            PieC.type = "pie";
+//            PieC.labels = listlabels;
+//            PieC.values = listNum;
+//            return Response.ok( gson.toJson( PieC ) ).build();
+//        } catch ( SQLException e ) {
+//            e.printStackTrace();
+//            throw new SQLException( select2 );
+//        } finally {
+//            Sql.bdClose(connStar);
+//        }
+//    }
+//    @GET
+//    @Path("/CampaignChart")
+//    @Produces("application/json")
+//    public Response getNumberOfCampaignChart() throws SQLException {
+//        String aux = "";
+//        String select2 = "SELECT campaignName as cam_name , icount from public.Get_CampaignName()";
+//
+//        try {
+//            Statistics gr = new Statistics();
+//            ArrayList<Integer> listNum = new ArrayList<Integer>();
+//            ArrayList<String> listCampaign = new ArrayList<String>();
+//            int n = 0 ;
+//            int num;
+//            Statement st2 = connStar.createStatement();
+//            ResultSet result2 = st2.executeQuery(select2);
+//            while ( result2.next() ) {
+//                Campaign co = new Campaign();
+//                co.set_nameCampaign( result2.getString("cam_name" ) );
+//                aux = co.get_nameCampaign();
+//                listCampaign.add( aux ) ;
+//                String rs =  result2.getString("icount" );
+//                num = Integer.parseInt( rs );
+//                listNum.add( num );
+//            }
+//            gr.type = "bar";
+//            gr.x = listCampaign;
+//            gr.y = listNum;
+//            return Response.ok( gson.toJson( gr ) ).build();
+//        } catch ( SQLException e ) {
+//            e.printStackTrace();
+//            throw new SQLException( select2 );
+//        } finally {
+//            Sql.bdClose(connStar);
+//        }
+//    }
 
 
-    @GET
-    @Path("/messages")
-    @Produces("application/json")
-    public Response getNumberOfCampaignLine() throws SQLException {
-        String aux = "";
-        String select2 = "SELECT campaignName as cam_name, icount from public.Get_CampaignName()";
-        try {
-            Statistics gr = new Statistics();
-            ArrayList<Integer> listNum = new ArrayList<Integer>();
-            ArrayList<String> listCamp = new ArrayList<String>();
-            int n = 0 ;
-            int num;
-            Statement st2 = connStar.createStatement();
-            ResultSet result2 = st2.executeQuery( select2 );
-            while ( result2.next() ) {
-                Campaign co = new Campaign();
-                co.set_nameCampaign( result2.getString("cam_name" ) );
-                aux = co.get_nameCampaign();
-                listCamp.add( aux ) ;
-                String rs =  result2.getString("icount" );
-                num = Integer.parseInt( rs ) ;
-                listNum.add( num ) ;
-            }
-            gr.type = "line";
-            gr.x = listCamp;
-            gr.y = listNum;
-            return Response.ok( gson.toJson( gr ) ).build();
-        } catch ( SQLException e ) {
-            e.printStackTrace();
-            throw new SQLException( select2 );
-        } finally {
-            Sql.bdClose(connStar);
-        }
-    }
+//    @GET
+//    @Path("/messages")
+//    @Produces("application/json")
+//    public Response getNumberOfCampaignLine() throws SQLException {
+//        String aux = "";
+//        String select2 = "SELECT campaignName as cam_name, icount from public.Get_CampaignName()";
+//        try {
+//            Statistics gr = new Statistics();
+//            ArrayList<Integer> listNum = new ArrayList<Integer>();
+//            ArrayList<String> listCamp = new ArrayList<String>();
+//            int n = 0 ;
+//            int num;
+//            Statement st2 = connStar.createStatement();
+//            ResultSet result2 = st2.executeQuery( select2 );
+//            while ( result2.next() ) {
+//                Campaign co = new Campaign();
+//                co.set_nameCampaign( result2.getString("cam_name" ) );
+//                aux = co.get_nameCampaign();
+//                listCamp.add( aux ) ;
+//                String rs =  result2.getString("icount" );
+//                num = Integer.parseInt( rs ) ;
+//                listNum.add( num ) ;
+//            }
+//            gr.type = "line";
+//            gr.x = listCamp;
+//            gr.y = listNum;
+//            return Response.ok( gson.toJson( gr ) ).build();
+//        } catch ( SQLException e ) {
+//            e.printStackTrace();
+//            throw new SQLException( select2 );
+//        } finally {
+//            Sql.bdClose(connStar);
+//        }
+//    }
 
-    public Response filterOfTypeStatisticsBar( String paramDate, String paramType ){
+//    public Response filterOfTypeStatisticsBar( String paramDate, String paramType ){
+//
+//        if ( paramType.equals( "Cantidad de mensajes enviados por Compañias" ) ){   //&& paramDate.equals(null)
+//            try {
+//
+//                Response responseGraphCompany = getNumberOfCompanysChart();
+//                return responseGraphCompany ;
+//            } catch ( SQLException e ) {
+//                e.printStackTrace();
+//            }
+//        }
+//        else if ( paramType.equals( "Cantidad de mensajes enviados por Campañas" ) ){
+//            try {
+//                Response responseGreaphCampaign = getNumberOfCampaignChart();
+//                return responseGreaphCampaign;
+//            } catch ( SQLException e ) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        else {
+//            if ( paramType.equals( "Cantidad de mensajes enviados por Canales" ) ){
+//                try {
+//                    Response responseGraphChannel = getNumberOfChannelChart();
+//                    return responseGraphChannel;
+//                } catch ( SQLException e ) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//
+//        return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsBar") ).build() ;
+//    }
 
-        if ( paramType.equals( "Cantidad de mensajes enviados por Compañias" ) ){   //&& paramDate.equals(null)
-            try {
+//    public Response filterOfTypeStatisticsLine(String paramDate, String paramType){
+//
+//       // Integer paramMonthRigth  = ( Integer.valueOf( paramDate ) + 1 );  // El getMonth devuelve valor entre 0 y 11
+//       // Integer paramMonth2Rigth = ( Integer.valueOf( paramDate ) + 1 );  // aca sumamos uno para obtener el mes real
+//        if (paramType.equals( "Cantidad de mensajes enviados por Compañias" ) ){
+//            try {
+//
+//                Response responseGraphCompany = getNumberOfCompanysLine(); // anadimos los filtros aca como parametros
+//                return responseGraphCompany ;
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        else if ( paramType.equals( "Cantidad de mensajes enviados por Campañas" ) ){
+//            try {
+//                Response responseGreaphCampaign= getNumberOfCampaignLine();
+//                return responseGreaphCampaign;
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        else {
+//            if ( paramType.equals( "Cantidad de mensajes enviados por Canales" ) ){
+//                try {
+//                    Response responseGraphChannel = getNumberOfChannelLine();
+//                    return responseGraphChannel;
+//                } catch ( SQLException e ) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//
+//        return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsLine") ).build();
+//    }
 
-                Response responseGraphCompany = getNumberOfCompanysChart();
-                return responseGraphCompany ;
-            } catch ( SQLException e ) {
-                e.printStackTrace();
-            }
-        }
-        else if ( paramType.equals( "Cantidad de mensajes enviados por Campañas" ) ){
-            try {
-                Response responseGreaphCampaign = getNumberOfCampaignChart();
-                return responseGreaphCampaign;
-            } catch ( SQLException e ) {
-                e.printStackTrace();
-            }
-        }
-
-        else {
-            if ( paramType.equals( "Cantidad de mensajes enviados por Canales" ) ){
-                try {
-                    Response responseGraphChannel = getNumberOfChannelChart();
-                    return responseGraphChannel;
-                } catch ( SQLException e ) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsBar") ).build() ;
-    }
-
-    public Response filterOfTypeStatisticsLine(String paramDate, String paramType){
-
-       // Integer paramMonthRigth  = ( Integer.valueOf( paramDate ) + 1 );  // El getMonth devuelve valor entre 0 y 11
-       // Integer paramMonth2Rigth = ( Integer.valueOf( paramDate ) + 1 );  // aca sumamos uno para obtener el mes real
-        if (paramType.equals( "Cantidad de mensajes enviados por Compañias" ) ){
-            try {
-
-                Response responseGraphCompany = getNumberOfCompanysLine(); // anadimos los filtros aca como parametros
-                return responseGraphCompany ;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        else if ( paramType.equals( "Cantidad de mensajes enviados por Campañas" ) ){
-            try {
-                Response responseGreaphCampaign= getNumberOfCampaignLine();
-                return responseGreaphCampaign;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        else {
-            if ( paramType.equals( "Cantidad de mensajes enviados por Canales" ) ){
-                try {
-                    Response responseGraphChannel = getNumberOfChannelLine();
-                    return responseGraphChannel;
-                } catch ( SQLException e ) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsLine") ).build();
-    }
-
-    public Response filterOfTypeStatisticsPie( String paramDate, String paramType ){
-
-        if ( paramType.equals( "Cantidad de mensajes enviados por Compañias" ) ){
-            try {
-
-                Response responseGraphCompany = getNumberOfCompanysPie();
-                return responseGraphCompany ;
-            } catch ( SQLException e ) {
-                e.printStackTrace();
-            }
-        }
-        else if ( paramType.equals( "Cantidad de mensajes enviados por Campañas" ) ){
-            try {
-                Response responseGreaphCampaign = getNumberOfCampaignPie();
-                return responseGreaphCampaign;
-            } catch ( SQLException e ) {
-                e.printStackTrace();
-            }
-        }
-
-        else {
-            if ( paramType.equals( "Cantidad de mensajes enviados por Canales" ) ){
-                try {
-                    Response responseGraphChannel = getNumberOfChannelPie();
-                    return responseGraphChannel;
-                } catch ( SQLException e ) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsPie") ).build();
-    }
+//    public Response filterOfTypeStatisticsPie( String paramDate, String paramType ){
+//
+//        if ( paramType.equals( "Cantidad de mensajes enviados por Compañias" ) ){
+//            try {
+//
+//                Response responseGraphCompany = getNumberOfCompanysPie();
+//                return responseGraphCompany ;
+//            } catch ( SQLException e ) {
+//                e.printStackTrace();
+//            }
+//        }
+//        else if ( paramType.equals( "Cantidad de mensajes enviados por Campañas" ) ){
+//            try {
+//                Response responseGreaphCampaign = getNumberOfCampaignPie();
+//                return responseGreaphCampaign;
+//            } catch ( SQLException e ) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        else {
+//            if ( paramType.equals( "Cantidad de mensajes enviados por Canales" ) ){
+//                try {
+//                    Response responseGraphChannel = getNumberOfChannelPie();
+//                    return responseGraphChannel;
+//                } catch ( SQLException e ) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//
+//        return Response.ok( gson.toJson("Pase por filterOfTypeStatisticsPie") ).build();
+//    }
 
 
 
@@ -572,101 +572,101 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(campaigns)).build();
     }
 
-    @GET
-    @Path("/channelLine")
-    @Produces("application/json")
-    public Response getNumberOfChannelLine() throws SQLException {
-        String aux = "";
-        String select2 = "SELECT icount, channelName as cha_name  from public.Get_ChannelName() ";
-        try {
-            Statistics gr = new Statistics();
-            ArrayList<Integer> listNum = new ArrayList<Integer>();
-            ArrayList<String> listChannel = new ArrayList<String>();
-            Statement st2 = connStar.createStatement();
-            ResultSet result2 = st2.executeQuery( select2 );
-            int num;
-            while ( result2.next() ) {
-                ChannelFactory channelFactory = new ChannelFactory();
-                Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
-                aux = channel.getNameChannel();
-                listChannel.add( aux ) ;
-                String rs =  result2.getString("icount" );
-                num = Integer.parseInt( rs ) ;
-                listNum.add( num ) ;
-            }
-            gr.type = "line";
-            gr.x = listChannel;
-            gr.y = listNum;
-            return Response.ok( gson.toJson( gr ) ).build();
-        } catch ( SQLException e ) {
-            e.printStackTrace();
-            throw new SQLException( select2 );
-        } finally {
-            Sql.bdClose(connStar);
-        }
-    }
-
-    public Response getNumberOfChannelChart() throws SQLException {
-        String aux = "";
-        String select2 = "SELECT icount, channelName as cha_name  from public.Get_ChannelName() ";
-        try {
-            Statistics gr = new Statistics();
-            ArrayList<Integer> listNum = new ArrayList<Integer>();
-            ArrayList<String> listChannel = new ArrayList<String>();
-            Statement st2 = connStar.createStatement();
-            ResultSet result2 = st2.executeQuery( select2 );
-            int num;
-            while ( result2.next() ) {
-                ChannelFactory channelFactory = new ChannelFactory();
-                Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
-                aux = channel.getNameChannel();
-                listChannel.add( aux ) ;
-                String rs =  result2.getString("icount" );
-                num = Integer.parseInt( rs ) ;
-                listNum.add( num ) ;
-            }
-            gr.type = "bar";
-            gr.x = listChannel;
-            gr.y = listNum;
-            return Response.ok( gson.toJson( gr ) ).build();
-        } catch ( SQLException e ) {
-            e.printStackTrace();
-            throw new SQLException( select2 );
-        } finally {
-            Sql.bdClose(connStar);
-        }
-    }
-
-    public Response getNumberOfChannelPie() throws SQLException {
-        String aux = "";
-        String select2 = "SELECT icount, channelName as cha_name  from public.Get_ChannelName() ";
-        try {
-            PieChart PieC = new PieChart();
-            ArrayList<Integer> listNum = new ArrayList<Integer>();
-            ArrayList<String> listlabels = new ArrayList<String>();
-            int num ;
-            Statement st2 = connStar.createStatement();
-            ResultSet result2 = st2.executeQuery(select2);
-            while ( result2.next() ) {
-                ChannelFactory channelFactory = new ChannelFactory();
-                Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
-                aux = channel.getNameChannel();
-                listlabels.add( aux ) ;
-                String rs =  result2.getString("icount" );
-                num = Integer.parseInt( rs ) ;
-                listNum.add( num ) ;
-            }
-            PieC.type = "pie";
-            PieC.labels = listlabels;
-            PieC.values = listNum;
-            return Response.ok( gson.toJson( PieC ) ).build();
-        } catch ( SQLException e ) {
-            e.printStackTrace();
-            throw new SQLException( select2 );
-        } finally {
-            Sql.bdClose(connStar);
-        }
-    }
+//    @GET
+//    @Path("/channelLine")
+//    @Produces("application/json")
+//    public Response getNumberOfChannelLine() throws SQLException {
+//        String aux = "";
+//        String select2 = "SELECT icount, channelName as cha_name  from public.Get_ChannelName() ";
+//        try {
+//            Statistics gr = new Statistics();
+//            ArrayList<Integer> listNum = new ArrayList<Integer>();
+//            ArrayList<String> listChannel = new ArrayList<String>();
+//            Statement st2 = connStar.createStatement();
+//            ResultSet result2 = st2.executeQuery( select2 );
+//            int num;
+//            while ( result2.next() ) {
+//                ChannelFactory channelFactory = new ChannelFactory();
+//                Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
+//                aux = channel.getNameChannel();
+//                listChannel.add( aux ) ;
+//                String rs =  result2.getString("icount" );
+//                num = Integer.parseInt( rs ) ;
+//                listNum.add( num ) ;
+//            }
+//            gr.type = "line";
+//            gr.x = listChannel;
+//            gr.y = listNum;
+//            return Response.ok( gson.toJson( gr ) ).build();
+//        } catch ( SQLException e ) {
+//            e.printStackTrace();
+//            throw new SQLException( select2 );
+//        } finally {
+//            Sql.bdClose(connStar);
+//        }
+//    }
+//
+//    public Response getNumberOfChannelChart() throws SQLException {
+//        String aux = "";
+//        String select2 = "SELECT icount, channelName as cha_name  from public.Get_ChannelName() ";
+//        try {
+//            Statistics gr = new Statistics();
+//            ArrayList<Integer> listNum = new ArrayList<Integer>();
+//            ArrayList<String> listChannel = new ArrayList<String>();
+//            Statement st2 = connStar.createStatement();
+//            ResultSet result2 = st2.executeQuery( select2 );
+//            int num;
+//            while ( result2.next() ) {
+//                ChannelFactory channelFactory = new ChannelFactory();
+//                Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
+//                aux = channel.getNameChannel();
+//                listChannel.add( aux ) ;
+//                String rs =  result2.getString("icount" );
+//                num = Integer.parseInt( rs ) ;
+//                listNum.add( num ) ;
+//            }
+//            gr.type = "bar";
+//            gr.x = listChannel;
+//            gr.y = listNum;
+//            return Response.ok( gson.toJson( gr ) ).build();
+//        } catch ( SQLException e ) {
+//            e.printStackTrace();
+//            throw new SQLException( select2 );
+//        } finally {
+//            Sql.bdClose(connStar);
+//        }
+//    }
+//
+//    public Response getNumberOfChannelPie() throws SQLException {
+//        String aux = "";
+//        String select2 = "SELECT icount, channelName as cha_name  from public.Get_ChannelName() ";
+//        try {
+//            PieChart PieC = new PieChart();
+//            ArrayList<Integer> listNum = new ArrayList<Integer>();
+//            ArrayList<String> listlabels = new ArrayList<String>();
+//            int num ;
+//            Statement st2 = connStar.createStatement();
+//            ResultSet result2 = st2.executeQuery(select2);
+//            while ( result2.next() ) {
+//                ChannelFactory channelFactory = new ChannelFactory();
+//                Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
+//                aux = channel.getNameChannel();
+//                listlabels.add( aux ) ;
+//                String rs =  result2.getString("icount" );
+//                num = Integer.parseInt( rs ) ;
+//                listNum.add( num ) ;
+//            }
+//            PieC.type = "pie";
+//            PieC.labels = listlabels;
+//            PieC.values = listNum;
+//            return Response.ok( gson.toJson( PieC ) ).build();
+//        } catch ( SQLException e ) {
+//            e.printStackTrace();
+//            throw new SQLException( select2 );
+//        } finally {
+//            Sql.bdClose(connStar);
+//        }
+//    }
 
     @GET
     @Path("/filters")
