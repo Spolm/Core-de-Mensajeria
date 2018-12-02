@@ -8,24 +8,50 @@ import Exceptions.DatabaseConnectionProblemException;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Clase que nos permite realizar la conexion a la base de datos
+ * con los metodos relacionados a la clase Channel
+ *
+ * @Author Josè Salas
+ * @Author Manuel Espinoza
+ * @Author Josè Cedeño
+ * @see Channel
+ */
+
 public class ChannelDAO {
 
-    final String QUERY_SELECT = "SELECT * FROM CHANNEL";
-    final String QUERY_SELECT_INTEGRATOR_BY_CHANNEL = "SELECT int_id, int_name, int_messageCost, int_threadCapacity, int_tokenApi, int_enabled FROM INTEGRATOR, CHANNEL_INTEGRATOR , CHANNEL WHERE INT_ID = CI_INTEGRATOR_ID AND CI_CHANNEL_ID = CHA_ID AND CHA_ID =?";
     private Connection _conn;
     private ResultSet _result;
     public ArrayList<Integrator> _integratorList;
     public ArrayList<Channel> _channelList;
 
+    /**
+     * Constructor que se encarga de realizar la conexion
+     * a la base de datos
+     *
+     * @see Connection
+     */
+
     public ChannelDAO() {
         _conn = Sql.getConInstance();
     }
 
+    /**
+     * Retorna una lista de integradores por canal
+     * Este metodo retorna una lista de integradores, en caso de no tener
+     * el archivo se encontrara en blanco.
+     *
+     * @return Lista de canales
+     * @see Channel
+     * @see Integrator
+     */
+
     public ArrayList<Integrator> listIntegratorByChannel(int id) throws DatabaseConnectionProblemException, ChannelNotFoundException {
         try {
+            Sql.bdClose(_conn);
             _conn = Sql.getConInstance();
             _integratorList = new ArrayList<>();
-            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_INTEGRATOR_BY_CHANNEL);
+            PreparedStatement preparedStatement = _conn.prepareCall("{call m04_getIntegratorsByChannel(?)}");
             preparedStatement.setInt(1, id);
             _result = preparedStatement.executeQuery();
 
@@ -44,11 +70,20 @@ public class ChannelDAO {
         return _integratorList;
     }
 
+    /**
+     * Retorna una lista de canales
+     * Este metodo retorna una lista de canales, en caso de no tener
+     * el archivo se encontrara en blanco.
+     *
+     * @return Lista de canales
+     * @see Channel
+     */
+
     public ArrayList<Channel> listChannel() throws DatabaseConnectionProblemException {
         try {
             _channelList = new ArrayList<>();
-            Statement st = _conn.createStatement();
-            ResultSet _result = st.executeQuery(QUERY_SELECT);
+            PreparedStatement st = _conn.prepareCall("{call m04_getchannels()}");
+            ResultSet _result = st.executeQuery();
 
             while (_result.next()) {
                 _channelList.add(getChannel(_result));

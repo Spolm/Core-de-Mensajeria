@@ -3,7 +3,7 @@
 create table public.User
 (
     use_id serial primary key,
-    use_password varchar (18),
+    use_password varchar (32),
     use_username varchar(20),
     use_type integer,
     use_email varchar(30),
@@ -50,6 +50,7 @@ CREATE TABLE public.Company
     com_description varchar(1000) NOT NULL,
     com_status boolean NOT NULL,
     com_user_id integer NOT NULL,
+    com_route_link varchar(1000) NOT NULL,
     CONSTRAINT fk_user_id FOREIGN KEY ("com_user_id")
     REFERENCES public.User (use_id) MATCH SIMPLE
     ON UPDATE CASCADE
