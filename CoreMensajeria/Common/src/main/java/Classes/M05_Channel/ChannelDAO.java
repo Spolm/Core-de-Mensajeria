@@ -48,6 +48,7 @@ public class ChannelDAO {
 
     public ArrayList<Integrator> listIntegratorByChannel(int id) throws DatabaseConnectionProblemException, ChannelNotFoundException {
         try {
+            Sql.bdClose(_conn);
             _conn = Sql.getConInstance();
             _integratorList = new ArrayList<>();
             PreparedStatement preparedStatement = _conn.prepareCall("{call m04_getIntegratorsByChannel(?)}");
