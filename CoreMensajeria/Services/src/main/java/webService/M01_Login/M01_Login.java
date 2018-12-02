@@ -18,6 +18,8 @@ import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.HashMap;
+
 
 @Path("/")
 public class M01_Login {
@@ -78,29 +80,43 @@ public class M01_Login {
     @Path("/request_password")
     @Produces(MediaType.APPLICATION_JSON)
     public Response RequestPassword(@QueryParam("email") String email){
-
+        Error error;
         try {
-            String url = "http://localhost:4200/";
-            String token = _userDAO.tokenGenerator(email);
-            MailSender.generateAndSendEmail(url + "change_password?token=" + token,email);
+
+            if(email.matches("^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$")){
+                String url = "http://localhost:4200/";
+                String token = _userDAO.tokenGenerator(email);
+                //MailSender.generateAndSendEmail(url + "change_password?token=" + token,email);
+                return Response.ok(_gson.toJson("Revisa tu bandeja de entrada donde se envió el código de verificación")).build();
+            }else {
+                error = new Error("El Email ingresado no tiene el formato adecuado");
+                error.addError("credenciales"
+                        ,"Los valores no pueden incluir caracteres especiales que no sean: /*_-");
+                return Response.status(404).entity(error).build();
+            }
         } catch (NullPointerException e){
             e.printStackTrace();
-        }
-
-        catch (NoSuchAlgorithmException e) {
+            error = new Error("El correo ingresado no se encontró");
+            error.addError("credenciales","No se encontro el usuario deseado");
+            return Response.status(404).entity(error).build();
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+            error = new Error("Error Interno");
+            error.addError("Excepcion",e.getMessage());
+            return Response.status(500).entity(error).build();
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (AddressException e) {
+            error = new Error("Error a nivel de base de datos");
+            return Response.status(500).entity(error).build();
+        } catch (Exception e){
             e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
+            error = new Error("Error Interno");
+            error.addError("Excepcion",e.getMessage());
+            return Response.status(500).entity(error).build();
         }
-        return Response.ok(_gson.toJson("hola")).build();
-
     }
 
-    @Path("/change")
+    @Path("/change_password")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -115,8 +131,6 @@ public class M01_Login {
             else {
 
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {

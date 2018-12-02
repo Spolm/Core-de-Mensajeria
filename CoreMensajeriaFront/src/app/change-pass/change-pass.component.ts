@@ -17,9 +17,11 @@ export class ChangePassComponent implements OnInit {
   ngOnInit() {
   }
 
+  
   handleVerification(){
     if (this._verifCode.length > 0 && this._newPass.length > 0 && this._newPass === this._newPass1){
-      this.toastr.success('Lo lograste');
+      
+      
     }else if (this._verifCode.length == 0 && this._newPass.length == 0 && this._newPass === this._newPass1){
       this.toastr.error('Los campos no pueden estar vacíos')
     }else if (this._verifCode.length == 0 ) {
