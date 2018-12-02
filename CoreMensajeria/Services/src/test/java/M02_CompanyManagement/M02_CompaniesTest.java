@@ -35,8 +35,8 @@ public class M02_CompaniesTest {
         String query = "INSERT INTO public.user(use_id, use_password, " +
                 "use_username) VALUES (9999,'123456','junit');\n"
                 + "INSERT INTO public.company(com_id, com_name, com_description, " +
-                "com_status, com_user_id) " +
-                "VALUES (99,'Prueba', 'prueba prueba', TRUE, 9999);";
+                "com_status, com_route_link, com_user_id) " +
+                "VALUES (99,'Prueba', 'prueba prueba', TRUE, '', 9999);";
         Statement st = conn.createStatement();
         st.executeUpdate(query);
 
