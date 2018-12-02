@@ -22,6 +22,12 @@ public class PrivilegeDao {
         _conn = Sql.getConInstance();
     }
 
+    /**
+     * This method returns an ArrayList of privileges from an User.
+     * @param id
+     * @return ArrayList<Privilege></Privilege>
+     * @throws SQLException
+     */
     public ArrayList<Privilege> findPrivilegesByUserId(int id) throws SQLException {
         _privilegeList = new ArrayList<>();
         PreparedStatement preparedStatement = _conn.prepareCall(CALL_FIND_PRIVILEGES_BY_USER);

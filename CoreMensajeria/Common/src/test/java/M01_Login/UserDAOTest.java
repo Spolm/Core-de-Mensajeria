@@ -27,13 +27,19 @@ public class UserDAOTest {
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
     java.util.Date date = new java.util.Date();
 
+    /**
+     * This method initializes an Intent, which is a representation of a user that wants to log in.
+     */
     private void createLoginIntent(){
         _loginIntent = new LoginIntent();
         _loginIntent.set_username("prueba");
         _loginIntent.set_password("Al28*/12");
     }
 
-    private  void createUser(){
+    /**
+     * This method initializes an user to make the tests.
+     */
+    private void createUser(){
         _user = new User();
         _user.set_usernameUser("prueba");
         _user.set_emailUser("prueba@gmail.com");
@@ -52,12 +58,18 @@ public class UserDAOTest {
         }
     }
 
+    /**
+     * This calls the initialization methods.
+     */
     @BeforeEach
     public void createTestData(){
         createLoginIntent();
         createUser();
     }
 
+    /**
+     * This deletes the created data during the tests.
+     */
     @AfterEach
     public void deleteTestData(){
         try {
@@ -67,6 +79,9 @@ public class UserDAOTest {
         }
     }
 
+    /**
+     * This method tests findByUsernameOrEmailTest method.
+     */
     @Test
     public void findByUsernameOrEmailTest(){
         try {
@@ -77,6 +92,9 @@ public class UserDAOTest {
         }
     }
 
+    /**
+     * This method tests findAll() method.
+     */
     @Test
     public void findAllTest(){
         try{
@@ -88,6 +106,9 @@ public class UserDAOTest {
         }
     }
 
+    /**
+     * This method tests findByUsernameId() method.
+     */
     @Test
     public void findByUsernameIdTest(){
         try{
@@ -98,6 +119,9 @@ public class UserDAOTest {
         }
     }
 
+    /**
+     * This method tests deleteUser() method.
+     */
     @Test
     public void deleteUserTest(){
         try {
@@ -108,6 +132,9 @@ public class UserDAOTest {
         }
     }
 
+    /**
+     * This method tests saveUser() method.
+     */
     @Test
     public void saveUserTest(){
         try {
@@ -118,6 +145,9 @@ public class UserDAOTest {
         }
     }
 
+    /**
+     * This method tests isBlockedUser() method.
+     */
     @Test
     public void isBlockedUserTest(){
         try {
@@ -132,6 +162,9 @@ public class UserDAOTest {
         }
     }
 
+    /**
+     * This method tests logUser() method.
+     */
     @Test
     public void logUserTest(){
         try{
@@ -141,6 +174,9 @@ public class UserDAOTest {
         }
     }
 
+    /**
+     * This method tests tokenGenerator() method.
+     */
     @Test
     public void tokenGeneratorTest(){
         String token = String.valueOf(_user.get_idUser())+_user.get_emailUser()+format.format(date);

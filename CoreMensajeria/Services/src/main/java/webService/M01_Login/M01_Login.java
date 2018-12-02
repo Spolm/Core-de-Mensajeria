@@ -27,6 +27,11 @@ public class M01_Login {
     Gson _gson = new Gson();
     UserDAO _userDAO = new UserDAO();
 
+    /**
+     * This method is the connection between front-end and back-end. Verifies that the input data matches with the data in the Data Base.
+     * @param loginIntent
+     * @return Response
+     */
     @Path("/login")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -76,6 +81,11 @@ public class M01_Login {
     @Context
     UriInfo uri;
 
+    /**
+     * This method is the connection between front-end and back-end. Allows an user to request a password, and it send and generates an email.
+     * @param email
+     * @return Response
+     */
     @GET
     @Path("/request_password")
     @Produces(MediaType.APPLICATION_JSON)
@@ -115,6 +125,11 @@ public class M01_Login {
         }
     }
 
+    /**
+     * This method is the connection between front-end and back-end. Allows the user to change his password.
+     * @param passwordChange
+     * @return Response
+     */
     @Path("/change_password")
     @POST
     @Produces(MediaType.APPLICATION_JSON)

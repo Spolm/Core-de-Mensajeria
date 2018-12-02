@@ -17,6 +17,10 @@ public class M01_User {
     UserDAO _userDAO = new UserDAO();
     PrivilegeDao _privilegeDAO = new PrivilegeDao();
 
+    /**
+     * This method returns a response from the server when it gets
+     * @return
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response GetUsers() {
@@ -39,6 +43,11 @@ public class M01_User {
         }
     }
 
+    /**
+     * This method returns a response from the server when it gets the user or if it doesn't.
+     * @param id
+     * @return Response
+     */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)

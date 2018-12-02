@@ -54,6 +54,12 @@ public class UserDAO {
         _conn = Sql.getConInstance();
     }
 
+    /**
+     * This method returns an User when typing the username in the method.
+     * @param username
+     * @return
+     * @throws SQLException
+     */
     public User findByUsernameOrEmail(String username) throws SQLException {
         PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_BY_USERNAME_OR_EMAIL);
         preparedStatement.setString(1, username);
@@ -66,21 +72,11 @@ public class UserDAO {
         return _user;
     }
 
-    /*
-    public User findByUsernameId(int id) throws SQLException {
-        PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_BY_ID);
-        preparedStatement.setInt(1, id);
-        _result = preparedStatement.executeQuery();
-        _user = null;
-        while (_result.next()) {
-            _user = new User();
-            setUserParams(_result, _user);
-            _user.set_passwordUser("");
-        }
-
-        return _user;
-    }*/
-
+    /**
+     * This method returns a List of Users. The objective is to get all Users.
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<User> findAll() throws SQLException {
         _user = new User();
         _userList = new ArrayList<>();
@@ -96,6 +92,12 @@ public class UserDAO {
         return _userList;
     }
 
+    /**
+     * This method returns the User who has the typed user id in the method.
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     //Stored Procedure
     public User findByUsernameId(int id) throws SQLException {
         PreparedStatement st = _conn.prepareCall(CALL_FIND_USER);
@@ -110,6 +112,11 @@ public class UserDAO {
         return _user;
     }
 
+    /**
+     * This method searchs the typed user and deletes him from DB
+     * @param user
+     * @throws SQLException
+     */
     //Stored Procedure
     public void deleteUser(User user) throws SQLException {
         PreparedStatement st = _conn.prepareCall(CALL_DELETE);
@@ -133,6 +140,11 @@ public class UserDAO {
         _result = st.executeQuery();
     }
 
+    /**
+     * This methods inserts the given User in the DB
+     * @param user
+     * @throws SQLException
+     */
     public void saveUser(User user) throws SQLException {
         PreparedStatement st = _conn.prepareStatement(QUERY_INSERT,Statement.RETURN_GENERATED_KEYS);
         Timestamp ts= new Timestamp(user.get_dateOfBirthUser().getTime());
@@ -176,6 +188,12 @@ public class UserDAO {
         preparedStatement.execute();
     }*/
 
+    /**
+     * Takes a ResultSet and transforms it in an User
+     * @param result
+     * @param user
+     * @throws SQLException
+     */
     private void setUserParams(ResultSet result, User user) throws SQLException {
         user.set_idUser(result.getInt("use_Id"));
         //user.set_passwordUser(result.getString("use_password"));
@@ -199,6 +217,12 @@ public class UserDAO {
         preparedStatement.executeUpdate();
     }
 
+    /**
+     * This method returns a boolean
+     * @param username
+     * @return true or false
+     * @throws SQLException
+     */
     public boolean isBlockedUser(String username) throws SQLException {
         int blocked = 0;
         PreparedStatement preparedStatement = _conn.prepareCall(CALL_IS_BLOCKED);
@@ -209,6 +233,14 @@ public class UserDAO {
         }
         return blocked==1;
     }
+
+    /**
+     * This method will try to log the user with the given parameters.
+     * @param username
+     * @param password
+     * @return User
+     * @throws SQLException
+     */
 
     public User logUser(String username, String password) throws SQLException {
         PreparedStatement preparedStatement = _conn.prepareCall(CALL_LOGIN);
@@ -223,6 +255,13 @@ public class UserDAO {
         return _user;
     }
 
+    /**
+     * This method creates a token and transforms it with MD5, for encryptation of the passwords.
+     * @param email
+     * @return
+     * @throws SQLException
+     * @throws NoSuchAlgorithmException
+     */
     public String tokenGenerator(String email) throws SQLException, NoSuchAlgorithmException {
         _user = findByUsernameOrEmail(email);
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -237,6 +276,12 @@ public class UserDAO {
         return  myhash;
     }
 
+    /**
+     * This method allows a user to change his password.
+     * @param username
+     * @param password
+     * @throws SQLException
+     */
     public void changePassword(String username, String password) throws SQLException {
         PreparedStatement st = _conn.prepareCall(CALL_CHANGE_PASSWORD);
         st.setString(1, username);
