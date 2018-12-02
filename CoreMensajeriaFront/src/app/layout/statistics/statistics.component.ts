@@ -421,9 +421,9 @@ export class StatisticsComponent implements OnInit {
         } else this.toastr.error("Debe seleccionar otra opcion");
     }
 
-    capturarDate() {
+      capturarDate() {
         if (
-            this.opcionDateSleccionado != null &&
+          this.opcionDateSleccionado != null &&
             this.opcionDateSleccionado2 != null &&
             this.opcionDateSleccionado < this.opcionDateSleccionado2
         ) {
@@ -445,7 +445,7 @@ export class StatisticsComponent implements OnInit {
             );
             this.statisticsService
                 .getDataLineChartCompany(
-                    /* getStatisticsData4 */
+                    // getStatisticsData4 
                     this.Date1Capturado +
                         "&" +
                         this.Date2Capturado +
@@ -468,7 +468,7 @@ export class StatisticsComponent implements OnInit {
             this.paramType = "paramType=" + this.verSeleccion;
             this.statisticsService
                 .getDataLineChartCompany(
-                    /* getStatisticsData4 */
+                    // getStatisticsData4 
                     this.Date1Capturado +
                         "&" +
                         this.Date2Capturado +
