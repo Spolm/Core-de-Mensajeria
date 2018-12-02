@@ -27,6 +27,10 @@ public class PathHandler implements ServletContextListener {
         }
     }*/
 
+    /**
+     *
+     * @param servletContextEvent
+     */
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         String originHome = System.getProperty("user.home") + "/Origin";
@@ -38,11 +42,19 @@ public class PathHandler implements ServletContextListener {
         System.out.println("--------------->Web Start");
     }
 
+    /**
+     *
+     * @param servletContextEvent
+     */
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
 
     }
 
+    /**
+     *
+     * @param path direccion de path
+     */
     private void createDirectory(String path){
         File pathFile = new File(path);
         if (!pathFile.exists()){
@@ -50,6 +62,11 @@ public class PathHandler implements ServletContextListener {
         }
     }
 
+    /**
+     *
+     * @param rootPath direccion raiz de path
+     * @param companies Lista (array) de companias
+     */
     private void createOriginDirectories(String rootPath, ArrayList<Company> companies){
         for (Company company : companies) {
             //------------------->REPLECE THIS FOR COMPANY PATH
@@ -57,6 +74,11 @@ public class PathHandler implements ServletContextListener {
         }
     }
 
+    /**
+     *
+     * @param company objeto compania
+     * @return direccion de path generada para la compania senalada
+     */
     private String generatePath(Company company){
         return company.get_name().replaceAll("\\s","") + "_" + Encrypter.getCurrentTime();
     }

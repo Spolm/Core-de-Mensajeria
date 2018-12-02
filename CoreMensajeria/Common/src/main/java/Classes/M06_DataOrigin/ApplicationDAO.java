@@ -30,6 +30,9 @@ public class ApplicationDAO {
     private Connection _conn;
     private Encrypter _encrypter;
 
+    /**
+     * Constructor para ApplicationDAO
+     */
     public ApplicationDAO() {
         _conn = Sql.getConInstance();
         _encrypter = new Encrypter();
@@ -37,6 +40,12 @@ public class ApplicationDAO {
 
     //          SELECTS
     //Get all applications on the Database
+    /**
+     * SELECTS
+     * @return Lista (array) de Applications (todas)
+     * @throws DatabaseConnectionProblemException si hay problemas en la comunicacion con la Base
+     *         de Datos
+     */
     public ArrayList<Application> getApplications() throws DatabaseConnectionProblemException {
         try {
             ArrayList<Application> applicationList = new ArrayList<>();
@@ -57,6 +66,12 @@ public class ApplicationDAO {
     }
 
     //Get all applications with a given company id
+    /**
+     * SELECTS
+     * @param companyId id de la compania
+     * @return Lista (array) de Application (que esten asociada a la compania senalada)
+     * @throws DatabaseConnectionProblemException si hay un error al obetener la lista de Application deseada
+     */
     public ArrayList<Application> getApplications(int companyId) throws DatabaseConnectionProblemException {
         try {
             ArrayList<Application> applicationList = new ArrayList<>();
@@ -76,6 +91,13 @@ public class ApplicationDAO {
     }
 
     //Get an application with a given application id
+    /**
+     * SELECTS
+     * @param id id de la Application
+     * @return una Application (que posea el id senalado)
+     * @throws ApplicationNotFoundException si la Application con el id senalado no se encuentra/no existe
+     * @throws DatabaseConnectionProblemException si hay problema de comunicacion con la Base de Datos
+     */
     public Application getApplication(int id) throws ApplicationNotFoundException, DatabaseConnectionProblemException {
         try {
             PreparedStatement preparedStatement = _conn.prepareCall(SELECT_BY_ID_APPLICATIONS);
@@ -93,6 +115,13 @@ public class ApplicationDAO {
     }
 
     //Get an application with a given Token
+    /**
+     * SELECTS
+     * @param token token de la Application
+     * @return una Application (que posea el token senalado)
+     * @throws ApplicationNotFoundException si la Application con el token senalado no se encuentra/no existe
+     * @throws DatabaseConnectionProblemException si hay problema de comunicacion con la Base de Datos
+     */
     public Application getApplication(String token) throws ApplicationNotFoundException, DatabaseConnectionProblemException {
         try {
 
@@ -112,6 +141,13 @@ public class ApplicationDAO {
 
     //          UPDATES
     //Update the status of the application with the given application id
+    /**
+     * UPDATES - Actualiza el status de una Application con el id senalado al status senalado
+     * @param id id de la Application
+     * @param status status de la Application
+     * @throws DatabaseConnectionProblemException si hay problema de comunicacion con la Base de Datos
+     * @throws ApplicationNotFoundException si la Application con el id senalado no se encuentra/no existe
+     */
     public void updateApplication(int id, int status) throws DatabaseConnectionProblemException, ApplicationNotFoundException {
         try {
             //Find if application exist
@@ -126,8 +162,16 @@ public class ApplicationDAO {
             throw new DatabaseConnectionProblemException(/*"Error al actualizar aplicacion."*/ e.getMessage(), e);
         }
     }
+
     //          CREATES
     //Create a new application
+    /**
+     * CREATES
+     * @param app objeto AddApplicationData
+     * @return una Application a partir del los datos del AddApplicationData y los datos asociados
+     * @throws DatabaseConnectionProblemException si hay un error con la Base de Datos (no se logra crear
+     *         la Application)
+     */
     public Application createApplication (AddApplicationData app) throws DatabaseConnectionProblemException {
         try {
 
@@ -168,6 +212,12 @@ public class ApplicationDAO {
 
     //          UTILITIES
     //Get the application from the given resultSet
+    /**
+     * UTILITES
+     * @param resultSet fila resultante de un query anetrior
+     * @return una Application con los datos del resultSet
+     * @throws SQLException si ...
+     */
     private Application extractApplication(ResultSet resultSet) throws SQLException {
         Application app = new Application();
 
