@@ -56,6 +56,9 @@ public class TemplateHandler {
           + "where r.res_use_id = ? OR (r.res_use_id = ? AND r.res_com_id = ?)\n"
           + "order by c.cam_id";
 
+    private static final String GET_CAMAPIGN_BY_ID =
+            "select* from public.campaign where cam_id = ? ";
+
     public ArrayList<Template> getTemplates(int userId,int companyId){
 
         ArrayList<Template> templateArrayList = new ArrayList<>();
@@ -132,7 +135,7 @@ public class TemplateHandler {
     }
     public Template getTemplate(int id) throws TemplateDoesntExistsException{
         Template template = new Template();
-        String query = "select tem_id,ts_id,tem_user_id, tem_creation_date, sta_name\n" +
+        String query = "select tem_id,ts_id,tem_user_id,tem_campaign_id, tem_creation_date, sta_name\n" +
                 "from template_status,template,status\n" +
                 "where tem_id = " + id + " and tem_id = ts_template and sta_id = ts_status\n" +
                 "order by ts_id desc limit 1";
@@ -152,7 +155,7 @@ public class TemplateHandler {
 
                 UserDAO userDAO = new UserDAO();
                 template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
-
+                template.setCampaign(getCampaignsById(resultSet.getInt("tem_campaign_id")));
                 ApplicationDAO applicationService = new ApplicationDAO();
                 template.setApplication(applicationService.getApplication
                         (template.getTemplateId()));
@@ -168,6 +171,31 @@ public class TemplateHandler {
         } finally {
             Sql.bdClose(sql.getConn());
             return template;
+        }
+    }
+
+    public Campaign getCampaignsById(int campaignId){
+        Campaign campaign =  new Campaign();
+        Connection connection = Sql.getConInstance();
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_CAMAPIGN_BY_ID);
+            preparedStatement.setInt(1,campaignId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                campaign.set_idCampaign(resultSet.getInt("cam_id"));
+                campaign.set_nameCampaign(resultSet.getString("cam_name"));
+                campaign.set_descCampaign(resultSet.getString("cam_description"));
+                campaign.set_statusCampaign(resultSet.getBoolean("cam_status"));
+                campaign.set_startCampaign(resultSet.getDate("cam_start_date"));
+                campaign.set_endCampaign(resultSet.getDate("cam_end_date"));
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connection);
+            return campaign;
         }
     }
 
@@ -326,7 +354,7 @@ public class TemplateHandler {
             JsonObject gsonObj = parser.parse(json).getAsJsonObject();
             //hay que extraer campaña y aplicacion, parametros por defecto
             //se crea el template y se retorna su id
-            int templateId = postTemplate(13,2, gsonObj.get("userId").getAsInt());
+            int templateId = postTemplate(gsonObj.get("campaign").getAsInt(),2, gsonObj.get("userId").getAsInt());
             //se establece el template  como no aprobado
             StatusHandler.postTemplateStatusNoAprovado(templateId);
             //insertamos los nuevos parametros

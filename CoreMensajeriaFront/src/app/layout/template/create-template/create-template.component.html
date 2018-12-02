@@ -4,13 +4,13 @@
   <div class="form-row">
 
     <!-- Textarea for the message of the template -->
-    <div class="form-group col-9">
+    <div class="form-group col-12 col-md-9">
       <label for="formMessage">Mensaje de la plantilla</label>
       <textarea class="form-control" id="formMessage" rows="5" placeholder="Mensaje" [(ngModel)]="formMessage" name="message"></textarea>
     </div>
 
     <!-- Select for the parameters of the template -->
-    <div class="form-group col">
+    <div class="form-group col-12 col-md-3">
       <label for="formParameters">Parametros</label>
       <br>
       <div class="d-flex flex-row-reverse">
@@ -22,7 +22,7 @@
         </select>
       </div>
       <br>
-      <div *ngIf="showInputCreateParameterState">
+      <div *ngIf="showInputCreateParameterState" class="col-12">
         <div class="d-flex flex-row-reverse">
           <button type="button" class="btn btn-success btn-sm m-1" (click)="addNewParameter(formMessage, newParameter.value)">+</button>
           <input type="text" #newParameter>
