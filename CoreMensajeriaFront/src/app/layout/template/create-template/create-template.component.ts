@@ -97,8 +97,6 @@ export class CreateTemplateComponent {
     if  ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
         if ( this.channels_integrators[0]) {
             this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
-
-            //this.router.navigate(['/template']);
         } else{
             this.toastr.error('Falta llenar un campo', 'Error',
                 {

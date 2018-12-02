@@ -94,6 +94,7 @@ export class TemplateService {
                             timeOut: 2800,
                             progressBar: true
                         });
+                    this.router.navigate(['/template']);
                 } else {
                 this.toastr.error('No se a podido insertar', 'Error',
                     {
