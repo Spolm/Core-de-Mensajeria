@@ -3,26 +3,24 @@ package Classes.M10_Profile;
 import Classes.Sql;
 import Classes.M01_Login.User;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class M10_Profile {
 
-    private static M10_Profile _profileDao = null;
+    private Connection _conn;
 
-    public static M10_Profile getInstance() {
-        if (_profileDao== null)
-            _profileDao = new M10_Profile();
-        return _profileDao;
-
+    public M10_Profile() {
+        _conn = Sql.getConInstance();
     }
 
     /**
      * @param username Nombre de usuario a buscar
      * @return User con todos los datos del usuario
      */
-    public ArrayList<User> searchUser(String username) {
+    public ArrayList<User> searchUserList(String username) {
         String consulta= "SELECT use_id, use_password, use_username, use_type, use_email, use_phone,use_country," +
                 " use_city, use_address, use_date_of_birth, use_gender From public.user " +
                 "WHERE use_username ='" +username+"'";
