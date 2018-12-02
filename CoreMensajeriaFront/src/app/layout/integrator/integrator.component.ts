@@ -42,8 +42,7 @@ export class IntegratorComponent implements OnInit {
       ( integrators ) => {
         this.integrators = integrators;
         this.viewIdChannel = index;
-      },( err => {
-        console.log(err);
+      },( _ => {
         this.toastr.clear();
         this.toastr.error( "Error en la Conexión" );
       })
@@ -56,8 +55,9 @@ export class IntegratorComponent implements OnInit {
     .subscribe(
       ( channels ) => {
         this.channels = channels;
-      }, err => {
-        console.log( err );
+      }, _ => {
+        this.toastr.clear();
+        this.toastr.error( "Error en la Conexión" );
       }
     );
   }
@@ -69,8 +69,7 @@ export class IntegratorComponent implements OnInit {
       ( integrators ) => {
         this.integrators = integrators;
         this.viewIdChannel = 0;
-      }, err => {
-        console.log(err);
+      }, _ => {
         this.toastr.clear();
         this.toastr.error( "Error en la Conexión" );
       }
@@ -84,8 +83,7 @@ export class IntegratorComponent implements OnInit {
         this.updateIntegratorList();
         this.toastr.clear();
         this.toastr.success( "Habilitado con Éxito" );
-      }, err => {
-        console.log( err );
+      }, _ => {
         this.toastr.clear();
         this.toastr.error( "Error Habilitando" );
       }
@@ -99,8 +97,7 @@ export class IntegratorComponent implements OnInit {
         this.updateIntegratorList();
         this.toastr.clear();
         this.toastr.success( "Inhabilitado con Éxito" );
-      }, err => {
-        console.log( err );
+      }, _ => {
         this.toastr.clear();
         this.toastr.error( "Error habilitando" );
       }
@@ -113,101 +110,5 @@ export class IntegratorComponent implements OnInit {
     else
       this.getAllIntegrators();
   }
-
-
-  /*getAllIntegrators() {
-    this.rest.getData("integrators")
-    .subscribe((data: {}) => {
-      this.integrators = data;
-      this.toastr.success( "Lista Recibida" ); 
-    },(err) => {
-      this.toastr.error("Error de Conexion.");
-      console.log(err);
-    });
-  }
-
-  getIntegratorsPerChannel(index: string){
-    this.rest.getData( "channel/i/" + index )
-    .subscribe(( data: {} ) => {
-      this.integrators = data;
-      this.toastr.success( "Lista Recibida" );
-    },( err ) => {
-      this.toastr.error( "Error de Conexion" );
-      console.log(err);
-    })
-  }*/
-
-  /*disableIntegrator(integrator: Integrator){
-    this.rest.putData( "integrators/disabled/" + integrator.idIntegrator, integrator)
-    .subscribe(res => {
-      this.toastr.success( "Inhabilitado con Éxito" );
-      this.getAllIntegrators();
-    }, (err) => {
-      this.toastr.error( "Error Inhabilitando" );
-      console.log(err);
-    });
-  }
-
-  enabledIntegrator(integrator: Integrator){
-    this.rest.putData( "integrators/enabled/" + integrator.idIntegrator, "")
-    .subscribe(res => {
-      this.toastr.success( "Habilitado con Éxito" );
-      this.getAllIntegrators();
-    }, (err) => {
-      this.toastr.error( "Error habilitando" );
-      console.log(err);
-    });
-  }*/
-
-  /*
-
-  integrators: any = [];
-
-  constructor(public rest: ApiService, private toastr: ToastrService) {
-
-    this.getAllIntegrators();
-
-   }
-
-  ngOnInit() {
-    
-  }
-
-  getAllIntegrators() {
-    this.integrators = [];
-    this.rest.getAllIntegrators().
-    subscribe((data: {}) => {
-      this.integrators = data;
-      this.toastr.remove(this.toastr.currentlyActive);
-      this.toastr.success("Lista Recibida");
-      console.log(data);
-    },(err) => {
-      this.toastr.error("Error en la Conexión");
-    })
-  }
-
-  getSMSIntegrators(){
-    this.integrators = [];
-    this.rest.getSMSIntegrators().
-    subscribe((data: {}) => {
-      this.integrators = data;
-      this.toastr.remove(this.toastr.currentlyActive);
-      this.toastr.success("Lista Recibida");
-    },(err) => {
-      this.toastr.error("Error en la Conexión");
-    })
-  }
-
-  getMailIntegrators(){
-    this.integrators = [];
-    this.rest.getMailIntegrators().
-    subscribe((data: {}) => {
-      this.integrators = data;
-      this.toastr.remove(this.toastr.currentlyActive);
-      this.toastr.success("Lista Recibida");
-    },(err) => {
-      this.toastr.error("Error en la Conexión");
-    })
-  }
-  */
+  
 }

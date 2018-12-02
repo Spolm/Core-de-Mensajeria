@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
@@ -25,7 +25,7 @@ export class ApiService {
       return integrators.map( (integrator) => new Integrator(integrator) );
     }))
     .pipe( catchError( err => {
-      this.handleError( err );
+      this.handleError( "Error obteniendo integradores", err );
       return err;
     }));
   }
@@ -38,7 +38,7 @@ export class ApiService {
       return integrators.map( (integrator) => new Integrator(integrator) );
     }))
     .pipe( catchError( err => {
-      this.handleError( err );
+      this.handleError( "Error obteniendo integradores por canales", err );
       return err;
     }));
   }
@@ -48,7 +48,7 @@ export class ApiService {
       .put(API_URL + '/integrators/disabled/' + integrator.idIntegrator, JSON.stringify(integrator))
       .pipe(
         catchError( err => {
-          this.handleError( err );
+          this.handleError( "Error inhabilitando integrador ", err );
           return err;
         })
       );
@@ -59,14 +59,15 @@ export class ApiService {
       .put(API_URL + '/integrators/enabled/' + integrator.idIntegrator, JSON.stringify(integrator))
       .pipe(
         catchError( err => {
-          this.handleError( err );
+          this.handleError( "Error habilitando integrador ", err );
           return err;
         })
       );
   }
 
-  private handleError (error: any) {
-    console.log('ApiService: handleError', error);
+  private handleError ( msg: string, error: Response | any ) {
+    console.error( 'ApiService Error:'+ msg, error );
+    return Observable.throw( error );
   }
 
 }

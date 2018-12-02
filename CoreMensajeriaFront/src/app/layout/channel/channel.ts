@@ -7,6 +7,6 @@ export class Channel {
     integrators: Integrator[];
 
     constructor(values: Object = {}){
-        Object.assign(this,values);
+        Object.assign( this, values );
     }
 }
