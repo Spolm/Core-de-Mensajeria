@@ -42,34 +42,6 @@ public class M09_StatisticsTest {
     }
 
     @Test
-    void getAllCampaignTest() throws CampaignDoesntExistsException {
-        try {
-            M09_Statistics intance = new M09_Statistics();
-            Response salida = intance.getAllCampaigns();
-            assertEquals( 200, salida.getStatus() );
-            assertNotNull( salida.getEntity()/*
-                    "[{\"_idCampaign\":1,\"_nameCampaign\":\"Campaign 1\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":2,\"_nameCampaign\":\"Campaign 2\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":3,\"_nameCampaign\":\"Campaign 3\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":4,\"_nameCampaign\":\"Campaign 4\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":5,\"_nameCampaign\":\"Campaign 5\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":6,\"_nameCampaign\":\"Campaign 6\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":7,\"_nameCampaign\":\"Campaign 7\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":8,\"_nameCampaign\":\"Campaign 8\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":9,\"_nameCampaign\":\"Campaign 9\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":10,\"_nameCampaign\":\"Campaign 10\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":11,\"_nameCampaign\":\"Campaign 11\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":12,\"_nameCampaign\":\"Campaign 12\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":13,\"_nameCampaign\":\"Campaign 13\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":14,\"_nameCampaign\":\"Campaign 14\",\"_statusCampaign\":false}," +
-                            "{\"_idCampaign\":15,\"_nameCampaign\":\"Campaign 15\",\"_statusCampaign\":false}]" */);
-        } catch ( Exception e ) {
-            e.printStackTrace();
-            throw new CampaignDoesntExistsException( e );
-        }
-    }
-
-    @Test
     void getAllChannelsTest()  {
         try {
             M09_Statistics intance = new M09_Statistics();

@@ -181,7 +181,7 @@ export class StatisticsComponent implements OnInit {
         this.setupChannelsDropdownSettings();
 
         this.getAllCompanies();
-        this.getAllCampaigns();
+        //this.getAllCampaigns();
         this.getAllChannels();
 
         this.statisticsService
@@ -258,6 +258,7 @@ export class StatisticsComponent implements OnInit {
         this.statisticsService.getAllCompanies(this.userId).subscribe(
             data => {
                 this.insertIntoDropdown(EntityType.company, data);
+                this.getAllCampaigns();
             },
             error => {
                 console.log(
@@ -267,16 +268,28 @@ export class StatisticsComponent implements OnInit {
         );
     }
 
+    private getIdsFromDropdown<T>(dropdown: any[], indexName: T) {
+        var ids = [];
+        dropdown.forEach(element => {
+            ids.push(element[indexName]);
+        });
+        return ids;
+    }
+
     getAllCampaigns() {
-        this.statisticsService.getAllCampaigns(this.userId).subscribe(
-            data => {
-                this.insertIntoDropdown(EntityType.campaign, data);
-            },
-            error => {
-                console.log(error);
-                this.toastr.error("Error de conexión");
-            }
-        );
+        this.statisticsService
+            .getCampaingsForCompany(
+                this.getIdsFromDropdown(this.companiesDropdown, "company_id")
+            )
+            .subscribe(
+                data => {
+                    this.insertIntoDropdown(EntityType.campaign, data);
+                },
+                error => {
+                    console.log(error);
+                    this.toastr.error("Error de conexión");
+                }
+            );
     }
 
     private getAllChannels() {
@@ -294,6 +307,7 @@ export class StatisticsComponent implements OnInit {
                         company_name: data[index]["_name"]
                     });
                 }
+                console.log(this.companiesDropdown);
                 break;
             case EntityType.campaign:
                 this.campaignsDropdown = [];
@@ -345,18 +359,6 @@ export class StatisticsComponent implements OnInit {
                 new Date(this.opcionDateSleccionado2).getUTCMonth(),
                 new Date(this.opcionDateSleccionado2).getFullYear()
             );
-            this.statisticsService
-                .getDataLineChartCompany(
-                    // getStatisticsData4
-                    this.Date1Capturado +
-                        "&" +
-                        this.Date2Capturado +
-                        "&" +
-                        this.paramType
-                )
-                .subscribe(data => {
-                    console.log(data);
-                });
         } else if (
             (this.opcionDateSleccionado == null &&
                 this.opcionDateSleccionado2 == null) ||
@@ -368,19 +370,6 @@ export class StatisticsComponent implements OnInit {
             this.Date1Capturado = "?paramDate1=";
             this.Date2Capturado = "?paramDate2=";
             this.paramType = "paramType=" + this.verSeleccion;
-            this.statisticsService
-                .getDataLineChartCompany(
-                    // getStatisticsData4
-                    this.Date1Capturado +
-                        "&" +
-                        this.Date2Capturado +
-                        "&" +
-                        this.paramType
-                )
-                .subscribe(data => {
-                    console.log(data);
-                });
-        } else {
             this.toastr.error("Error en las fechas");
         }
     }
