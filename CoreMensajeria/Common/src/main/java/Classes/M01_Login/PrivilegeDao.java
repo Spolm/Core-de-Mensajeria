@@ -38,7 +38,7 @@ public class PrivilegeDao {
 
     private void setPrivilegeParams(ResultSet result, Privilege privilege) throws SQLException {
         privilege.set_idPrivileges(result.getInt("pri_id"));
-        privilege.set_codePrivileges("pri_code");
-        privilege.set_actionPrivileges("pri_action");
+        privilege.set_codePrivileges(result.getString("pri_code"));
+        privilege.set_actionPrivileges(result.getString("pri_action"));
     }
 }

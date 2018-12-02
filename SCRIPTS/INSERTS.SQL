@@ -68,9 +68,9 @@ INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 1, pri_id FROM
 INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 2, pri_id FROM public.Privilege 
 WHERE pri_code!='CADMIN';
 INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 3, pri_id FROM public.Privilege 
-WHERE pri_code like 'R%' or (pri_code like '%TEMPLATE' and pri_code != 'ATEMPLATE');
+WHERE pri_code = 'RUSER' or (pri_code like '%TEMPLATE' and pri_code != 'ATEMPLATE');
 INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 4, pri_id FROM public.Privilege 
-WHERE pri_code like 'R%' or pri_code = 'ATEMPLATE';
+WHERE pri_code = 'RUSER' or pri_code = 'ATEMPLATE'or pri_code = 'UTEMPLATE';
 INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 5, pri_id FROM public.Privilege 
 WHERE pri_code like 'R%' or pri_code = 'STATISTICS';
 
