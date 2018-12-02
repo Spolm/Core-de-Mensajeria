@@ -576,20 +576,25 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         dialogConfig.width = "100%";
         dialogConfig.maxWidth = "100%";
         dialogConfig.height = "80%";
+        dialogConfig.minHeight = "400px";
         dialogConfig.data = {
             id: 1,
+            // Companies
             companiesDropdown: this.companiesDropdown,
             selectedCompanies: this.selectedCompanies,
             selectedCompaniesIds: this.selectedCompaniesIds,
             companiesDropdownSettings: this.companiesDropdownSettings,
+            // Campaigns
             campaignsDropdown: this.campaignsDropdown,
             selectedCampaigns: this.selectedCampaigns,
             selectedCampaignsIds: this.selectedCampaignsIds,
             campaignsDropdownSettings: this.campaignsDropdownSettings,
+            // Channels
             channelsDropdown: this.channelsDropdown,
             selectedChannels: this.selectedChannels,
             selectedChannelsIds: this.selectedChannelsIds,
             channelsDropdownSettings: this.channelsDropdownSettings,
+            // Integrators
             integratorsDropdown: this.integratorsDropdown,
             selectedIntegrators: this.selectedIntegrators,
             selectedIntegratorsIds: this.selectedIntegratorsIds,
@@ -599,29 +604,36 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         dialogRef.updatePosition({ top: "55px", right: "0px", left: "0px" });
         dialogRef.afterClosed().subscribe(result => {
             console.log("Dialog was closed");
-            this.fillCompaniesDropdownsFromMenuData(result);
-            this.fillCampaignsDropdownsFromMenuData(result);
-            this.fillChannelsDropdownsFromMenuData(result);
+            this.fillCompaniesDropdownFromMenuData(result);
+            this.fillCampaignsDropdownFromMenuData(result);
+            this.fillChannelsDropdownFromMenuData(result);
             console.log(result);
         });
     }
 
-    fillCompaniesDropdownsFromMenuData(data) {
+    fillCompaniesDropdownFromMenuData(data) {
         this.selectedCompanies = data["companies"]["selectedCompanies"];
         this.selectedCompaniesIds = data["companies"]["selectedCompaniesIds"];
         this.companiesDropdown = data["companies"]["companiesDropdown"];
     }
 
-    fillCampaignsDropdownsFromMenuData(data) {
+    fillCampaignsDropdownFromMenuData(data) {
         this.selectedCampaigns = data["campaigns"]["selectedCampaigns"];
         this.selectedCampaignsIds = data["campaigns"]["selectedCampaignsIds"];
         this.campaignsDropdown = data["campaigns"]["campaignsDropdown"];
     }
 
-    fillChannelsDropdownsFromMenuData(data) {
+    fillChannelsDropdownFromMenuData(data) {
         this.selectedChannels = data["channels"]["selectedChannels"];
         this.selectedChannelsIds = data["channels"]["selectedChannelsIds"];
         this.channelsDropdown = data["channels"]["channelsDropdown"];
+    }
+
+    fillIntegratorsDropdownFromMenuData(data) {
+        this.selectedIntegrators = data["integrators"]["selectedIntegrators"];
+        this.selectedIntegratorsIds =
+            data["integrators"]["selectedIntegratorsIds"];
+        this.integratorsDropdown = data["integrators"]["integratorsDropdown"];
     }
 
     getArrayOfRandomColors(length: Number): String[] {

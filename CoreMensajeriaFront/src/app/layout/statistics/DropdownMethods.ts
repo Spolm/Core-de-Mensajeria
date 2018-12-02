@@ -231,6 +231,32 @@ export class DropdownMethods {
             });
     }
 
+    /* =============================
+        Handle integrators selection
+       ============================= */
+    protected integratorSelected(integrator: any) {
+        this.selectedIntegratorsIds.push(integrator["integrator_id"]);
+    }
+
+    protected integratorDeselected(integrator: any) {
+        this.removeItemFromArray(
+            integrator["integrator_id"],
+            this.selectedIntegratorsIds
+        );
+    }
+
+    protected selectAllIntegrators() {
+        for (var index in this.integratorsDropdown) {
+            this.selectedIntegratorsIds.push(
+                this.integratorsDropdown[index]["integrator_id"]
+            );
+        }
+    }
+
+    protected deselectAllIntegrators() {
+        this.selectedIntegratorsIds = [];
+    }
+
     protected insertIntoDropdown(entityType: EntityType, data: Object) {
         switch (entityType) {
             case EntityType.company:
