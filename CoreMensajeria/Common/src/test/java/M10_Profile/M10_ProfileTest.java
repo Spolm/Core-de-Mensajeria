@@ -1,4 +1,4 @@
-package Classes.M10_Profile;
+package M10_Profile;
 
 import Classes.M01_Login.User;
 import Classes.M01_Login.UserDAO;
@@ -53,8 +53,8 @@ public class M10_ProfileTest {
 
     @Test
     public void loadCorrectProfile(){
-            _search = M10_Profile.getInstance().searchUser(_userProfile.get_usernameUser()).get(0);
-            assertEquals(_userProfile, _search);
+        _search = M10_Profile.getInstance().searchUser(_userProfile.get_usernameUser()).get(0);
+        assertEquals(_userProfile, _search);
     }
 
     @Test
@@ -68,5 +68,3 @@ public class M10_ProfileTest {
             assertNull(_search);
         }
     }
-
-}
