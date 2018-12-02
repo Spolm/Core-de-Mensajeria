@@ -26,118 +26,28 @@ public class M09_StatisticsTest {
     Gson gson = new Gson();
     private Connection conn = SqlEstrella.getConInstance();
 
-    @Test
-    public void testGetNumberOfCompaniesChartOk() {
-        M09_Statistics instance = new M09_Statistics();
-        try {
-            Response res = instance.getNumberOfCompanysChart();
-            assertEquals(200, res.getStatus());
-            assertNotNull(res.getEntity());
-        }
-        catch (SQLException e){}
-
-    }
-
-
-    @Test
-    void testGetNumberOfCompanysChart()throws SQLException {
-        M09_Statistics instance = new M09_Statistics();
-
-        assertNotNull( instance.getNumberOfCompanysChart() );
-    }
-
-    @Test
-    void testGetNumberOfCompanysLine()throws SQLException {
-        M09_Statistics instance = new M09_Statistics();
-        Response res = instance.getNumberOfCompanysLine();
-        assertEquals(200, res.getStatus());
-        assertNotNull( res.getEntity() );
-    }
-
-    @Test
-    void testGetNumberOfCompanysPie()throws SQLException {
-        M09_Statistics instance = new M09_Statistics();
-        Response res = instance.getNumberOfCompanysPie();
-        assertEquals(200,res.getStatus());
-        assertNotNull( res.getEntity() );
-    }
-
-
-
-
-
-    @Test
-    void testGetNumberOfCampaignLine()throws SQLException {
-        M09_Statistics instance = new M09_Statistics();
-        Response res = instance.getNumberOfCampaignLine();
-        assertEquals( 200, res.getStatus() );
-        assertNotNull( res.getEntity() );
-    }
-
-    @Test
-    void testgetNumberOfCampaignChart()throws SQLException {
-        M09_Statistics instance = new M09_Statistics();
-        Response res = instance.getNumberOfCampaignChart();
-        assertEquals( 200, res.getStatus() );
-        assertNotNull( res.getEntity() );
-    }
-
-    @Test
-    void testGetNumberOfCampaignPie()throws SQLException {
-        M09_Statistics instance = new M09_Statistics();
-        Response res = instance.getNumberOfCampaignPie();
-        assertEquals( 200, res.getStatus() );
-        assertNotNull( res.getEntity() );
-    }
-
-    @Test
-    void testGetNumberOfChannelChart()throws SQLException {
-        M09_Statistics instance = new M09_Statistics();
-        Response res = instance.getNumberOfChannelChart();
-        assertEquals( 200, res.getStatus() );
-        assertNotNull( res.getEntity() );
-    }
-
-    @Test
-    void testGetNumberOfChannelLine()throws SQLException {
-        M09_Statistics instance = new M09_Statistics();
-        Response res = instance.getNumberOfChannelLine();
-        assertEquals( 200, res.getStatus() );
-        assertNotNull( res.getEntity() );
-    }
-
-    @Test
-    void testGetNumberOfChannelPie()throws SQLException {
-        M09_Statistics instance = new M09_Statistics();
-        Response res = instance.getNumberOfChannelPie();
-        assertEquals( 200, res.getStatus() );
-        assertNotNull( res.getEntity() );
-    }
-
-    //-----------
-
-    @Test
-    void getAllCompaniesTest() throws CompanyDoesntExistsException {
-        try {
-            M09_Statistics intance = new M09_Statistics();
-            Response salida = intance.getAllCompanies(1);
-            assertEquals( 200, salida.getStatus() );
-            assertEquals( salida.getEntity().toString(),
-                    "[{\"_idCompany\":1,\"_name\":\"Company 1\",\"_desc\":\"\",\"_status\":true}," +
-                            "{\"_idCompany\":2,\"_name\":\"Company 2\",\"_desc\":\"\",\"_status\":true}," +
-                            "{\"_idCompany\":3,\"_name\":\"Company 3\",\"_desc\":\"\",\"_status\":true}," +
-                            "{\"_idCompany\":4,\"_name\":\"Company 4\",\"_desc\":\"\",\"_status\":true}," +
-                            "{\"_idCompany\":5,\"_name\":\"Company 5\",\"_desc\":\"\",\"_status\":true}," +
-                            "{\"_idCompany\":6,\"_name\":\"Company 6\",\"_desc\":\"\",\"_status\":true}," +
-                            "{\"_idCompany\":7,\"_name\":\"Company 7\",\"_desc\":\"\",\"_status\":true}," +
-                            "{\"_idCompany\":8,\"_name\":\"Company 8\",\"_desc\":\"\",\"_status\":true}]" );
-        }
-        catch( Exception e ) {
-            e.printStackTrace();
-            throw new CompanyDoesntExistsException ( e );
-        }
-
-    }
+//    @Test
+//    void getAllCompaniesTest() throws CompanyDoesntExistsException {
+//        try {
+//            M09_Statistics intance = new M09_Statistics();
+//            Response salida = intance.getAllCompanies(1);
+//            assertEquals( 200, salida.getStatus() );
+//            assertEquals( salida.getEntity().toString(),
+//                    "[{\"_idCompany\":1,\"_name\":\"Company 1\",\"_desc\":\"\",\"_status\":true}," +
+//                            "{\"_idCompany\":2,\"_name\":\"Company 2\",\"_desc\":\"\",\"_status\":true}," +
+//                            "{\"_idCompany\":3,\"_name\":\"Company 3\",\"_desc\":\"\",\"_status\":true}," +
+//                            "{\"_idCompany\":4,\"_name\":\"Company 4\",\"_desc\":\"\",\"_status\":true}," +
+//                            "{\"_idCompany\":5,\"_name\":\"Company 5\",\"_desc\":\"\",\"_status\":true}," +
+//                            "{\"_idCompany\":6,\"_name\":\"Company 6\",\"_desc\":\"\",\"_status\":true}," +
+//                            "{\"_idCompany\":7,\"_name\":\"Company 7\",\"_desc\":\"\",\"_status\":true}," +
+//                            "{\"_idCompany\":8,\"_name\":\"Company 8\",\"_desc\":\"\",\"_status\":true}]" );
+//        }
+//        catch( Exception e ) {
+//            e.printStackTrace();
+//            throw new CompanyDoesntExistsException ( e );
+//        }
+//
+//    }
 
     @Test
     void getAllCampaignTest() throws CampaignDoesntExistsException {
