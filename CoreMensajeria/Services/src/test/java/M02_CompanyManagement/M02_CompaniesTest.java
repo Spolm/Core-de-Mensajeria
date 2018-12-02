@@ -33,10 +33,10 @@ public class M02_CompaniesTest {
         Connection conn = Sql.getConInstance();
 
         String query = "INSERT INTO public.user(use_id, use_password, " +
-                "use_username) VALUES (99,'123456','junit');\n"
+                "use_username) VALUES (9999,'123456','junit');\n"
                 + "INSERT INTO public.company(com_id, com_name, com_description, " +
-                "com_status, com_user_id) " +
-                "VALUES (99,'Prueba', 'prueba prueba', TRUE, 99);";
+                "com_status, com_route_link, com_user_id) " +
+                "VALUES (99,'Prueba', 'prueba prueba', TRUE, '', 9999);";
         Statement st = conn.createStatement();
         st.executeUpdate(query);
 
@@ -61,7 +61,7 @@ public class M02_CompaniesTest {
     public void tearDownClass() throws SQLException {
         Connection conn;
         conn = Sql.getConInstance();
-        String query = "DELETE FROM public.user WHERE use_id = 99;\n"
+        String query = "DELETE FROM public.user WHERE use_id = 9999;\n"
                 + "DELETE FROM public.company WHERE com_id = 99;";
         Statement st = conn.createStatement();
         st.executeUpdate(query);

@@ -17,14 +17,14 @@ public class Encrypter {
     }
 
     //Return a String with encrypted Token
-    public String encrypt(String token){
+    public String encryptToken(String token){
         return Hashing.sha256()
-                .hashString(SITE_KEY + token + this.getCurrentTime(), StandardCharsets.UTF_8)
+                .hashString(SITE_KEY + token, StandardCharsets.UTF_8)
                 .toString();
     }
 
     //Get an string with the current DateTime
-    private String getCurrentTime() {
+    static String getCurrentTime() {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
         return dateFormat.format(date);

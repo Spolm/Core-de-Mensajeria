@@ -1,6 +1,6 @@
 import webService.M03_CampaignManagement.M03_Campaigns;
-import webService.M04_Channel.M05_Channel;
-import webService.M05_Channel.M04_Integrator;
+import webService.M05_Channel.M05_Channel;
+import webService.M04_Integrator.M04_Integrator;
 import webService.M01_Login.M01_Login;
 import webService.M01_Login.M01_User;
 import webService.M02_CompanyManagement.M02_Companies;

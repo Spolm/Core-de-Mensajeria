@@ -1,5 +1,4 @@
 import { ProfileComponent } from "./../profile/profile.component";
-import { PlotlyModule, PlotComponent } from "angular-plotly.js";
 import { StatisticsServiceService } from "./statistics-service.service";
 import {
     Component,
@@ -8,8 +7,6 @@ import {
     ViewChild,
     AfterViewInit
 } from "@angular/core";
-import * as Plotly from "plotly.js/dist/plotly.js";
-import { Config, Data, Layout } from "plotly.js/dist/plotly.js";
 import { ToastrService } from "ngx-toastr";
 import { HttpParams } from "@angular/common/http";
 import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
@@ -43,6 +40,8 @@ enum ChartType {
     styleUrls: ["./statistics.component.scss"]
 })
 export class StatisticsComponent implements OnInit {
+    userId: string;
+
     /* =================================
            Charts elements from html
     ==================================== */
@@ -175,6 +174,8 @@ export class StatisticsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.userId = localStorage.getItem("userid");
+
         this.setupCompaniesDropdownSettings();
         this.setupCampaignsDropdownSettings();
         this.setupChannelsDropdownSettings();
@@ -215,124 +216,6 @@ export class StatisticsComponent implements OnInit {
                     ChartType.doughnut
                 );
             });
-
-        this.statisticsService
-            .getDataLineChartCompany(
-                "?paramDate1=" +
-                    "&" +
-                    "?paramDate2=" +
-                    "&" +
-                    "paramType=Cantidad de mensajes enviados por Compañias"
-            )
-            .subscribe(data => {
-                this.json2 = data;
-                this.linechartCompany(this.json2);
-            });
-
-        this.statisticsService
-            .getDataBarChartCompany(
-                "?paramDate1=" +
-                    "&" +
-                    "?paramDate2=" +
-                    "&" +
-                    "paramType=Cantidad de mensajes enviados por Compañias"
-            )
-            .subscribe(data => {
-                console.log(data);
-                this.json2 = data;
-                this.barchartCompany(this.json2);
-            });
-
-        this.statisticsService
-            .getDataPieChartCompany(
-                "?paramDate1=" +
-                    "&" +
-                    "?paramDate2=" +
-                    "&" +
-                    "paramType=Cantidad de mensajes enviados por Compañias"
-            )
-            .subscribe(data => {
-                this.json2 = data;
-                this.piechartCompany(this.json2);
-            });
-
-        this.statisticsService
-            .getDataLineChartCampaign(
-                "?paramDate1=" +
-                    "&" +
-                    "?paramDate2=" +
-                    "&" +
-                    "paramType=Cantidad de mensajes enviados por Campañas"
-            )
-            .subscribe(data => {
-                this.json2 = data;
-                this.linechartCampaign(this.json2);
-            });
-
-        this.statisticsService
-            .getDataBarChartCampaign(
-                "?paramDate1=" +
-                    "&" +
-                    "?paramDate2=" +
-                    "&" +
-                    "paramType=Cantidad de mensajes enviados por Campañas"
-            )
-            .subscribe(data => {
-                this.json2 = data;
-                this.barchartCampaign(this.json2);
-            });
-
-        this.statisticsService
-            .getDataPieChartCampaign(
-                "?paramDate1=" +
-                    "&" +
-                    "?paramDate2=" +
-                    "&" +
-                    "paramType=Cantidad de mensajes enviados por Campañas"
-            )
-            .subscribe(data => {
-                this.json2 = data;
-                this.piechartCampaign(this.json2);
-            });
-
-        this.statisticsService
-            .getDataLineChartChannels(
-                "?paramDate1=" +
-                    "&" +
-                    "?paramDate2=" +
-                    "&" +
-                    "paramType=Cantidad de mensajes enviados por Canales"
-            )
-            .subscribe(data => {
-                this.json2 = data;
-                this.linechartChannels(this.json2);
-            });
-
-        this.statisticsService
-            .getDataBarChartChannels(
-                "?paramDate1=" +
-                    "&" +
-                    "?paramDate2=" +
-                    "&" +
-                    "paramType=Cantidad de mensajes enviados por Canales"
-            )
-            .subscribe(data => {
-                this.json2 = data;
-                this.barchartChannels(this.json2);
-            });
-
-        this.statisticsService
-            .getDataPieChartChannels(
-                "?paramDate1=" +
-                    "&" +
-                    "?paramDate2=" +
-                    "&" +
-                    "paramType=Cantidad de mensajes enviados por Canales"
-            )
-            .subscribe(data => {
-                this.json2 = data;
-                this.piechartChannels(this.json2);
-            });
     }
 
     private setupCompaniesDropdownSettings() {
@@ -372,9 +255,28 @@ export class StatisticsComponent implements OnInit {
     }
 
     private getAllCompanies() {
-        this.statisticsService.getAllCompanies().subscribe(data => {
-            this.insertIntoDropdown(EntityType.company, data);
-        });
+        this.statisticsService.getAllCompanies(this.userId).subscribe(
+            data => {
+                this.insertIntoDropdown(EntityType.company, data);
+            },
+            error => {
+                console.log(
+                    "Error getting companies: " + JSON.stringify(error)
+                );
+            }
+        );
+    }
+
+    getAllCampaigns() {
+        this.statisticsService.getAllCampaigns(this.userId).subscribe(
+            data => {
+                this.insertIntoDropdown(EntityType.campaign, data);
+            },
+            error => {
+                console.log(error);
+                this.toastr.error("Error de conexión");
+            }
+        );
     }
 
     private getAllChannels() {
@@ -445,7 +347,7 @@ export class StatisticsComponent implements OnInit {
             );
             this.statisticsService
                 .getDataLineChartCompany(
-                    /* getStatisticsData4 */
+                    // getStatisticsData4
                     this.Date1Capturado +
                         "&" +
                         this.Date2Capturado +
@@ -468,7 +370,7 @@ export class StatisticsComponent implements OnInit {
             this.paramType = "paramType=" + this.verSeleccion;
             this.statisticsService
                 .getDataLineChartCompany(
-                    /* getStatisticsData4 */
+                    // getStatisticsData4
                     this.Date1Capturado +
                         "&" +
                         this.Date2Capturado +
@@ -481,116 +383,6 @@ export class StatisticsComponent implements OnInit {
         } else {
             this.toastr.error("Error en las fechas");
         }
-    }
-
-    piechartCampaign(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("pie-chartCampaign");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Campañas"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    linechartCampaign(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("line-chartCampaign");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Campañas"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    barchartCampaign(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("bar-chartCampaign");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Campañas"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    piechartCompany(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("pie-chartCompany");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Compañias"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    linechartCompany(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("line-chartCompany");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Compañias"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    barchartCompany(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("bar-chartCompany");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Compañias"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    piechartChannels(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("pie-chartChannels");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Canales"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    linechartChannels(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("line-chartChannels");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Canales"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    barchartChannels(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("bar-chartChannels");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Canales"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    getAllCampaigns() {
-        this.statisticsService.getAllCampaigns().subscribe(
-            data => {
-                this.insertIntoDropdown(EntityType.campaign, data);
-            },
-            error => {
-                this.toastr.error("Error de conexión");
-            }
-        );
     }
 
     // Handle company selecction

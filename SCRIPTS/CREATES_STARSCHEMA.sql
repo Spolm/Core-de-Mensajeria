@@ -16,7 +16,6 @@ create table public.Dim_Date(
 );
 
 create table public.Dim_Company_Campaign(
-	use_id int not null,
 	com_id int not null,
 	cam_id int not null,
 	com_name varchar(255) not null,

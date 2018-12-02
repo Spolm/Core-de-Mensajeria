@@ -1,6 +1,6 @@
 \c CoreMensajeria_StarSchema CoreMensajeria
 
-CREATE FUNCTION update_starschema() RETURNS void AS $$
+CREATE FUNCTION m09_update_starschema() RETURNS void AS $$
   BEGIN
     DELETE FROM Fact_Sent_Message;
     DELETE FROM Dim_Date;
@@ -10,8 +10,8 @@ CREATE FUNCTION update_starschema() RETURNS void AS $$
     DELETE FROM Dim_Application;
 
     -- Insert data from primary database to StarSchema database.
-    INSERT INTO Dim_Company_Campaign SELECT use_id, com_id, cam_id, com_name, cam_name, cam_description, cam_status, cam_start_date, cam_end_date
-                                   FROM stats.Company, stats.Campaign, stats.User WHERE com_id = cam_company_id AND com_user_id = use_id;
+    INSERT INTO Dim_Company_Campaign SELECT com_id, cam_id, com_name, cam_name, cam_description, cam_status, cam_start_date, cam_end_date
+                                   FROM stats.Company, stats.Campaign WHERE com_id = cam_company_id;
     INSERT INTO Dim_Channel SELECT cha_id, cha_name, cha_description FROM stats.Channel;
     INSERT INTO Dim_Integrator SELECT int_id, int_name, int_messageCost FROM stats.Integrator;
     INSERT INTO Dim_Application SELECT app_id, app_name, app_description, app_date FROM stats.Application;
@@ -28,4 +28,4 @@ CREATE FUNCTION update_starschema() RETURNS void AS $$
   END; $$
   LANGUAGE 'plpgsql';
 
-SELECT update_starschema();
+SELECT m09_update_starschema();
