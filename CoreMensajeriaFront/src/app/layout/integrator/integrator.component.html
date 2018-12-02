@@ -13,8 +13,8 @@
         
     </div>
   </div>
-  
-  <div class="row">
+
+<div class="row">
     <div class="col-sm-4" style="margin: 15px 0px"
       *ngFor="let integrator of integrators">
       <div class="card">
@@ -32,6 +32,20 @@
             <li class="list-group-item">Costo del Mensaje: {{ integrator.messageCost }}</li>
             <li class="list-group-item">API: {{ integrator.apiIntegrator }}</li>
             <li class="list-group-item">Id: <b>{{ integrator.idIntegrator }}</b></li>
+            <li class="list-group-item">
+              <button type="button" class="btn btn-danger"
+                (click)="disabledIntegrator(integrator)" 
+                *ngIf="integrator.enabled; else elseBlock">
+                Inhabilitar
+              </button>
+                
+              <ng-template #elseBlock>
+                <button type="button" class="btn btn-primary"
+                (click)="enabledIntegrator(integrator)" >
+                  Habilitar
+                </button>
+              </ng-template>
+            </li>
           </ul>
           
         </div>
