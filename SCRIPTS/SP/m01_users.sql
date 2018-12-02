@@ -36,7 +36,7 @@ LANGUAGE plpgsql VOLATILE
 COST 100
 ROWS 1000;
 
--- Excecute
+-- Execute
 --select * from m01_loguser('Ronnie','123');
 
 CREATE OR REPLACE FUNCTION m01_isBlocked( IN _username character varying)
@@ -54,10 +54,10 @@ $BODY$
 LANGUAGE plpgsql VOLATILE
 COST 100;
 
--- Excecute
+-- Execute
 --select m01_isBlocked('Ronnie');
 
-CREATE OR REPLACE FUNCTION m01_getpriviledges( IN _user integer)
+CREATE OR REPLACE FUNCTION m01_getprivileges( IN _user integer)
   RETURNS TABLE(pri_code character varying) AS
 $BODY$
 BEGIN
@@ -72,7 +72,7 @@ LANGUAGE plpgsql VOLATILE
 COST 100
 ROWS 1000;
 
---select * from m01_getpriviledges(1);
+--select * from m01_getprivileges(1);
 
 CREATE OR REPLACE FUNCTION m01_getusers()
   RETURNS TABLE(use_id integer, use_username character varying, use_type integer, use_email character varying,
@@ -90,3 +90,23 @@ COST 100
 ROWS 1000;
 
 --select * from m01_getusers();
+
+CREATE OR REPLACE FUNCTION m01_changePassword( IN _username character varying, IN _password character varying)
+  RETURNS character varying AS
+$BODY$
+DECLARE
+	_userpassword character varying;
+	_userid
+BEGIN
+	select u.use_id, u.use_password from public.user as u
+	where (u.use_username=_username or u.use_email=_username) into _userid, _userpassword;
+	if _userid > -1 then
+EXECUTE format('UPDATE public.USER SET use_password = %L WHERE use_id= %L', _userpassword, _userid);
+	end if;
+RETURN _userid;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE
+COST 100;
+
+--
