@@ -81,6 +81,11 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         public dialog: MatDialog
     ) {
         super(statisticsService, toastr);
+        this.datos = [
+            "Grafico de Barras",
+            "Grafico de Linea ",
+            "Grafico de Tortas"
+        ];
     }
 
     ngAfterViewInit() {
@@ -156,6 +161,73 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             chartType,
             chartElement
         );
+    }
+
+    ChartTransformation(){
+
+        this.clearChart(this.campaignsChart);
+        this.clearChart(this.companiesChart);
+        this.clearChart(this.channelsChart);
+
+        if (this.opcionSeleccionado != "0") {
+            // Pasamos el valor seleccionado a la variable verSeleccion
+            this.verSeleccion = this.opcionSeleccionado;
+            console.log("Valor Capturado", this.verSeleccion);
+        } else this.toastr.error("Debe seleccionar otra opcion");
+
+        if (this.verSeleccion == "Grafico de Tortas"){
+            var TypeChosen: ChartType  = ChartType.doughnut ; 
+            console.log("paso por el if" , TypeChosen);
+        }
+        else if( this.verSeleccion == "Grafico de Barras"){
+
+            var TypeChosen: ChartType = ChartType.bar ;
+        }
+
+        else if(this.verSeleccion == "Grafico de Linea") {
+            var TypeChosen: ChartType = ChartType.line ; 
+
+        }
+
+        this.statisticsService
+            .getInitialMessagesForCompanies()
+            .subscribe(data => {
+                this.companiesChart = this.insertInitialDataIntoCharts(
+                    data,
+                    this.companiesChartElement,
+                    "Cantidad de mensajes por compañía",
+                    TypeChosen
+                );
+            });
+
+        this.statisticsService
+            .getInitialMessagesForCampaigns()
+            .subscribe(data => {
+                this.campaignsChart = this.insertInitialDataIntoCharts(
+                    data,
+                    this.campaignsChartElement,
+                    "Cantidad de mensajes por campaña",
+                    TypeChosen
+                );
+            });
+
+        this.statisticsService
+            .getInitialMessagesForChannels()
+            .subscribe(data => {
+                this.channelsChart = this.insertInitialDataIntoCharts(
+                    data,
+                    this.channelsChartElement,
+                    "Cantidad de mensajes por canal",
+                    TypeChosen
+                );
+            });
+
+    }
+
+    clearChart(chart: Chart){
+
+        chart.destroy();
+
     }
 
     ngOnInit() {
@@ -412,6 +484,25 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     }
 
     sendUserRequest() {
+
+            this.verSeleccion = this.opcionSeleccionado;
+            console.log("Valor Capturado", this.verSeleccion);
+       
+
+        if (this.verSeleccion == "Grafico de Tortas"){
+            var TypeChosen: ChartType  = ChartType.doughnut ; 
+            console.log("paso por el if" , TypeChosen);
+        }
+        else if( this.verSeleccion == "Grafico de Barras"){
+
+            var TypeChosen: ChartType = ChartType.bar ;
+        }
+
+        else if(this.verSeleccion == "Grafico de Linea") {
+            var TypeChosen: ChartType = ChartType.line ; 
+
+        }
+
         var params = this.convertSelectedItemsIntoHttpParams();
         this.statisticsService.getStatistics(params).subscribe(
             data => {
