@@ -19,9 +19,4 @@ public class M01_LoginTest {
         _loginIntent.set_password("Al28*/12");
     }
 
-    @Test
-    public void loginTest(){
-        Response response = (Response) _m01_login.login(_loginIntent);
-
-    }
 }
