@@ -213,102 +213,6 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(campaigns)).build();
     }
 
-//    @GET
-//    @Path("/channelLine")
-//    @Produces("application/json")
-//    public Response getNumberOfChannelLine() throws SQLException {
-//        String aux = "";
-//        String select2 = "SELECT icount, channelName as cha_name  from public.Get_ChannelName() ";
-//        try {
-//            Statistics gr = new Statistics();
-//            ArrayList<Integer> listNum = new ArrayList<Integer>();
-//            ArrayList<String> listChannel = new ArrayList<String>();
-//            Statement st2 = connStar.createStatement();
-//            ResultSet result2 = st2.executeQuery( select2 );
-//            int num;
-//            while ( result2.next() ) {
-//                ChannelFactory channelFactory = new ChannelFactory();
-//                Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
-//                aux = channel.getNameChannel();
-//                listChannel.add( aux ) ;
-//                String rs =  result2.getString("icount" );
-//                num = Integer.parseInt( rs ) ;
-//                listNum.add( num ) ;
-//            }
-//            gr.type = "line";
-//            gr.x = listChannel;
-//            gr.y = listNum;
-//            return Response.ok( gson.toJson( gr ) ).build();
-//        } catch ( SQLException e ) {
-//            e.printStackTrace();
-//            throw new SQLException( select2 );
-//        } finally {
-//            Sql.bdClose(connStar);
-//        }
-//    }
-//
-//    public Response getNumberOfChannelChart() throws SQLException {
-//        String aux = "";
-//        String select2 = "SELECT icount, channelName as cha_name  from public.Get_ChannelName() ";
-//        try {
-//            Statistics gr = new Statistics();
-//            ArrayList<Integer> listNum = new ArrayList<Integer>();
-//            ArrayList<String> listChannel = new ArrayList<String>();
-//            Statement st2 = connStar.createStatement();
-//            ResultSet result2 = st2.executeQuery( select2 );
-//            int num;
-//            while ( result2.next() ) {
-//                ChannelFactory channelFactory = new ChannelFactory();
-//                Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
-//                aux = channel.getNameChannel();
-//                listChannel.add( aux ) ;
-//                String rs =  result2.getString("icount" );
-//                num = Integer.parseInt( rs ) ;
-//                listNum.add( num ) ;
-//            }
-//            gr.type = "bar";
-//            gr.x = listChannel;
-//            gr.y = listNum;
-//            return Response.ok( gson.toJson( gr ) ).build();
-//        } catch ( SQLException e ) {
-//            e.printStackTrace();
-//            throw new SQLException( select2 );
-//        } finally {
-//            Sql.bdClose(connStar);
-//        }
-//    }
-//
-//    public Response getNumberOfChannelPie() throws SQLException {
-//        String aux = "";
-//        String select2 = "SELECT icount, channelName as cha_name  from public.Get_ChannelName() ";
-//        try {
-//            PieChart PieC = new PieChart();
-//            ArrayList<Integer> listNum = new ArrayList<Integer>();
-//            ArrayList<String> listlabels = new ArrayList<String>();
-//            int num ;
-//            Statement st2 = connStar.createStatement();
-//            ResultSet result2 = st2.executeQuery(select2);
-//            while ( result2.next() ) {
-//                ChannelFactory channelFactory = new ChannelFactory();
-//                Channel channel = channelFactory.getChannel(0 , result2.getString("cha_name"), null, null);
-//                aux = channel.getNameChannel();
-//                listlabels.add( aux ) ;
-//                String rs =  result2.getString("icount" );
-//                num = Integer.parseInt( rs ) ;
-//                listNum.add( num ) ;
-//            }
-//            PieC.type = "pie";
-//            PieC.labels = listlabels;
-//            PieC.values = listNum;
-//            return Response.ok( gson.toJson( PieC ) ).build();
-//        } catch ( SQLException e ) {
-//            e.printStackTrace();
-//            throw new SQLException( select2 );
-//        } finally {
-//            Sql.bdClose(connStar);
-//        }
-//    }
-
     @GET
     @Path("/filters")
     @Produces("application/json")
@@ -335,6 +239,9 @@ public class M09_Statistics extends Application {
                 stats.put("channels", getMessagesParam(companyin, campaignin, channelin, "me.sen_cha_id", "ch.cha_name",
                         "public.dim_channel ch", "ch.cha_id", st));
                 //stats.add();
+            }
+            if (channelIds.isEmpty() && campaignIds.isEmpty() && companyIds.isEmpty()){
+                return Response.status(400).entity("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }").build();
             }
         } catch (SQLException e) {
             e.printStackTrace();
