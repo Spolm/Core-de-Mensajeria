@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateuserRoutingModule } from './createuser-routing.module';
 import { CreateuserComponent } from './createuser.component';
+import { CreateUser } from './create_user.service';
 import { PageHeaderModule } from './../../shared';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
   imports: [CommonModule,PageHeaderModule,HttpModule, HttpClientModule, FormsModule, NgbAlertModule, NgbModule,CreateuserRoutingModule
   ],
-  declarations: [CreateuserComponent]
+  declarations: [CreateuserComponent],
+  providers: [CreateUser]
 })
 export class CreateuserModule { }
