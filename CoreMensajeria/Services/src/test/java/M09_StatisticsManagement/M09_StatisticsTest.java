@@ -42,19 +42,6 @@ public class M09_StatisticsTest {
     }
 
     @Test
-    void getAllCampaignTest() throws CampaignDoesntExistsException {
-        try {
-            M09_Statistics intance = new M09_Statistics();
-            Response salida = intance.getAllCampaigns();
-            assertEquals( 200, salida.getStatus() );
-            assertNotNull( salida.getEntity());
-        } catch ( Exception e ) {
-            e.printStackTrace();
-            throw new CampaignDoesntExistsException( e );
-        }
-    }
-
-    @Test
     void getAllChannelsTest()  {
         try {
             M09_Statistics intance = new M09_Statistics();
