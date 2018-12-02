@@ -26,9 +26,8 @@ public class M07_Template {
     @GET
     public Response getTemplates(@QueryParam("userId") int userId,
                                  @QueryParam("companyId") int companyId){
-        ArrayList<Template> templateArrayList = null;
         TemplateHandler templateHandler = new TemplateHandler();
-        templateArrayList = templateHandler.getTemplates(userId,companyId);
+         ArrayList templateArrayList = templateHandler.getTemplates(userId,companyId);
         return Response.ok(gson.toJson(templateArrayList)).build();
     }
 
