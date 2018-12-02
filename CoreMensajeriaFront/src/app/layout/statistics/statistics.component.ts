@@ -75,6 +75,8 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     opcionDateSleccionado2: Date;
     paramType: string;
 
+    datos = [];
+
     constructor(
         public statisticsService: StatisticsServiceService,
         public toastr: ToastrService,
@@ -163,8 +165,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         );
     }
 
-    ChartTransformation(){
-
+    ChartTransformation() {
         this.clearChart(this.campaignsChart);
         this.clearChart(this.companiesChart);
         this.clearChart(this.channelsChart);
@@ -175,18 +176,13 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             console.log("Valor Capturado", this.verSeleccion);
         } else this.toastr.error("Debe seleccionar otra opcion");
 
-        if (this.verSeleccion == "Grafico de Tortas"){
-            var TypeChosen: ChartType  = ChartType.doughnut ; 
-            console.log("paso por el if" , TypeChosen);
-        }
-        else if( this.verSeleccion == "Grafico de Barras"){
-
-            var TypeChosen: ChartType = ChartType.bar ;
-        }
-
-        else if(this.verSeleccion == "Grafico de Linea") {
-            var TypeChosen: ChartType = ChartType.line ; 
-
+        if (this.verSeleccion == "Grafico de Tortas") {
+            var TypeChosen: ChartType = ChartType.doughnut;
+            console.log("paso por el if", TypeChosen);
+        } else if (this.verSeleccion == "Grafico de Barras") {
+            var TypeChosen: ChartType = ChartType.bar;
+        } else if (this.verSeleccion == "Grafico de Linea") {
+            var TypeChosen: ChartType = ChartType.line;
         }
 
         this.statisticsService
@@ -221,13 +217,10 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                     TypeChosen
                 );
             });
-
     }
 
-    clearChart(chart: Chart){
-
+    clearChart(chart: Chart) {
         chart.destroy();
-
     }
 
     ngOnInit() {
@@ -484,23 +477,16 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     }
 
     sendUserRequest() {
+        this.verSeleccion = this.opcionSeleccionado;
+        console.log("Valor Capturado", this.verSeleccion);
 
-            this.verSeleccion = this.opcionSeleccionado;
-            console.log("Valor Capturado", this.verSeleccion);
-       
-
-        if (this.verSeleccion == "Grafico de Tortas"){
-            var TypeChosen: ChartType  = ChartType.doughnut ; 
-            console.log("paso por el if" , TypeChosen);
-        }
-        else if( this.verSeleccion == "Grafico de Barras"){
-
-            var TypeChosen: ChartType = ChartType.bar ;
-        }
-
-        else if(this.verSeleccion == "Grafico de Linea") {
-            var TypeChosen: ChartType = ChartType.line ; 
-
+        if (this.verSeleccion == "Grafico de Tortas") {
+            var TypeChosen: ChartType = ChartType.doughnut;
+            console.log("paso por el if", TypeChosen);
+        } else if (this.verSeleccion == "Grafico de Barras") {
+            var TypeChosen: ChartType = ChartType.bar;
+        } else if (this.verSeleccion == "Grafico de Linea") {
+            var TypeChosen: ChartType = ChartType.line;
         }
 
         var params = this.convertSelectedItemsIntoHttpParams();
