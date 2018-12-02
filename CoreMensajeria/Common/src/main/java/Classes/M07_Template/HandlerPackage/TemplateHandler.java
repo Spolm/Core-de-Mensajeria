@@ -1,27 +1,20 @@
 package Classes.M07_Template.HandlerPackage;
 
 import Classes.M01_Login.UserDAO;
-import Classes.M02_Company.Company;
 import Classes.M03_Campaign.Campaign;
+import Classes.M04_Integrator.IntegratorDAO;
 import Classes.M06_DataOrigin.Application;
 import Classes.M06_DataOrigin.ApplicationDAO;
 import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 import Exceptions.MessageDoesntExistsException;
-//import webService.M03_CampaingManagement.M03_Campaigns;
 import Classes.M05_Channel.Channel;
 import Classes.M05_Channel.ChannelFactory;
 import Classes.M04_Integrator.Integrator;
-import Classes.M04_Integrator.IntegratorService;
-import Classes.M07_Template.StatusPackage.Status;
-import Classes.M07_Template.Template;
 import Classes.Sql;
 import Exceptions.TemplateDoesntExistsException;
 import com.google.gson.*;
-
-
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -196,8 +189,8 @@ public class TemplateHandler {
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 ArrayList<Integrator> integrators = new ArrayList<>();
-                IntegratorService integratorService = IntegratorService.getInstance();
-                Integrator integrator = integratorService.getConcreteIntegrator(
+                IntegratorDAO integratorDAO = new IntegratorDAO();
+                Integrator integrator = integratorDAO.getConcreteIntegrator(
                         resultSet.getInt("ci_integrator_id")
                 );
                 integrators.add(integrator);
