@@ -14,6 +14,9 @@
                         <input type="password" [(ngModel)]="userData._password" class="form-control input-underline input-lg" id="" placeholder="Contraseña" name="password">
                     </div>
                 </div>
+                <a [routerLink]="['/change-pass']" style="color:whitesmoke">
+                    <p>Olvidé mi contraseña</p>
+                </a>
                 <a class="btn rounded-btn" (click)="handleLogin()"> Iniciar sesión </a>
             </form>
         </div>
