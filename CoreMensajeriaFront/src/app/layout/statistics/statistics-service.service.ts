@@ -65,12 +65,16 @@ export class StatisticsServiceService {
         return this.http.get(this.ApiURL + "channelsCount");
     }
 
-    getAllCompanies() {
-        return this.http.get(this.ApiURL + "companies");
+    getAllCompanies(userId: string) {
+        let params = new HttpParams();
+        params = params.set("userId", userId);
+        return this.http.get(this.ApiURL + "companies", { params });
     }
 
-    getAllCampaigns() {
-        return this.http.get(this.ApiURL + "campaigns");
+    getAllCampaigns(userId: string) {
+        let params = new HttpParams();
+        params.set("userId", userId);
+        return this.http.get(this.ApiURL + "campaigns", { params });
     }
 
     getAllChannels() {

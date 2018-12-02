@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
-import java.awt.*;
 import java.sql.*;
 import java.util.*;
 import java.util.List;
@@ -53,7 +52,8 @@ enum FilterType {
 public class M09_Statistics extends Application {
 
     Gson gson = new Gson();
-    private Connection conn = SqlEstrella.getConInstance();
+    private Connection connStar = SqlEstrella.getConInstance();
+    private Connection conn = Sql.getConInstance();
 
     /* ====================
             Endpoints
@@ -96,14 +96,14 @@ public class M09_Statistics extends Application {
     @GET
     @Path("/companies")
     @Produces("application/json")
-    public Response getAllCompanies() {
-        String query = "SELECT DISTINCT com_id, com_name FROM dim_company_campaign ORDER BY com_id;";
+    public Response getAllCompanies(@QueryParam("userId") Integer userId) {
+        String query = "SELECT m02_getcompanies(1);";
         try {
             return getCompanies(query);
         } catch(CompanyDoesntExistsException e) {
             return Response.serverError().build();
         } finally {
-            Sql.bdClose(conn);
+            Sql.bdClose(connStar);
         }
 
     }
@@ -118,7 +118,7 @@ public class M09_Statistics extends Application {
         } catch (CampaignDoesntExistsException e) {
             return Response.serverError().build();
         } finally {
-            Sql.bdClose(conn);
+            Sql.bdClose(connStar);
         }
     }
 
@@ -136,7 +136,7 @@ public class M09_Statistics extends Application {
         } catch(CampaignDoesntExistsException e) {
             return Response.serverError().build();
         } finally {
-            Sql.bdClose(conn);
+            Sql.bdClose(connStar);
         }
     }
 
@@ -147,7 +147,7 @@ public class M09_Statistics extends Application {
         String query = "SELECT DISTINCT cha_id, cha_name FROM dim_channel ORDER BY cha_id;";
         ArrayList<Channel> channels = new ArrayList<>();
         try {
-            Statement statement = conn.createStatement();
+            Statement statement = connStar.createStatement();
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
@@ -158,7 +158,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(conn);
+            Sql.bdClose(connStar);
         }
         return Response.ok(gson.toJson(channels)).build();
     }
@@ -188,7 +188,7 @@ public class M09_Statistics extends Application {
         String query = queryForOverallCount(filterType);
         Statistics companies = new Statistics();
         try {
-            Statement statement = conn.createStatement();
+            Statement statement = connStar.createStatement();
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
@@ -198,7 +198,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(conn);
+            Sql.bdClose(connStar);
         }
         return Response.ok(gson.toJson(companies)).build();
     }
@@ -232,7 +232,7 @@ public class M09_Statistics extends Application {
             ArrayList<String> listCompany = new ArrayList<String>();
             int n = 0 ;
             int num = 0;
-            Statement st2 = conn.createStatement();
+            Statement st2 = connStar.createStatement();
             ResultSet result2 = st2.executeQuery( select2 );
             while ( result2.next() ) {
                 Company co = new Company();
@@ -252,7 +252,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
             throw new SQLException( select2 );
         } finally {
-            Sql.bdClose( conn );
+            Sql.bdClose(connStar);
         }
     }
 
@@ -265,7 +265,7 @@ public class M09_Statistics extends Application {
             ArrayList<String> listCompany = new ArrayList<String>();
             int n = 0 ;
             int num = 0;
-            Statement st2 = conn.createStatement();
+            Statement st2 = connStar.createStatement();
             ResultSet result2 = st2.executeQuery( select2 );
             while ( result2.next() ) {
                 Company co = new Company();
@@ -284,7 +284,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
             throw new SQLException( select2 );
         } finally {
-            Sql.bdClose( conn );
+            Sql.bdClose(connStar);
         }
     }
     @GET
@@ -299,7 +299,7 @@ public class M09_Statistics extends Application {
             ArrayList<String> listlabels = new ArrayList<String>();
             int n = 0 ;
             int num = 0 ;
-            Statement st2 = conn.createStatement();
+            Statement st2 = connStar.createStatement();
             ResultSet result2 = st2.executeQuery( select2 );
             while ( result2.next() ) {
                 Company co = new Company();
@@ -318,7 +318,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
             throw new SQLException( select2 );
         } finally {
-            Sql.bdClose( conn );
+            Sql.bdClose(connStar);
         }
     }
 
@@ -331,7 +331,7 @@ public class M09_Statistics extends Application {
             ArrayList<String> listlabels = new ArrayList<String>();
             int n = 0 ;
             int num = 0 ;
-            Statement st2 = conn.createStatement();
+            Statement st2 = connStar.createStatement();
             ResultSet result2 = st2.executeQuery(select2);
             while ( result2.next() ) {
                 Campaign ca = new Campaign();
@@ -351,7 +351,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
             throw new SQLException( select2 );
         } finally {
-            Sql.bdClose( conn );
+            Sql.bdClose(connStar);
         }
     }
     @GET
@@ -367,7 +367,7 @@ public class M09_Statistics extends Application {
             ArrayList<String> listCampaign = new ArrayList<String>();
             int n = 0 ;
             int num;
-            Statement st2 = conn.createStatement();
+            Statement st2 = connStar.createStatement();
             ResultSet result2 = st2.executeQuery(select2);
             while ( result2.next() ) {
                 Campaign co = new Campaign();
@@ -386,7 +386,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
             throw new SQLException( select2 );
         } finally {
-            Sql.bdClose( conn );
+            Sql.bdClose(connStar);
         }
     }
 
@@ -403,7 +403,7 @@ public class M09_Statistics extends Application {
             ArrayList<String> listCamp = new ArrayList<String>();
             int n = 0 ;
             int num;
-            Statement st2 = conn.createStatement();
+            Statement st2 = connStar.createStatement();
             ResultSet result2 = st2.executeQuery( select2 );
             while ( result2.next() ) {
                 Campaign co = new Campaign();
@@ -422,7 +422,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
             throw new SQLException( select2 );
         } finally {
-            Sql.bdClose( conn );
+            Sql.bdClose(connStar);
         }
     }
 
@@ -539,7 +539,7 @@ public class M09_Statistics extends Application {
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
-                Company company = new Company(result.getInt("com_id"), result.getString("com_name"), "", true);
+                Company company = new Company(result.getInt(1), result.getString(2), "", true);
                 companies.add(company);
             }
         } catch(SQLException e) {
@@ -554,7 +554,7 @@ public class M09_Statistics extends Application {
     public Response getCampaigns(String query) throws CampaignDoesntExistsException {
         ArrayList<Campaign> campaigns = new ArrayList<>();
         try {
-            Statement statement = conn.createStatement();
+            Statement statement = connStar.createStatement();
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
@@ -567,7 +567,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
             throw new CampaignDoesntExistsException(e);
         } finally {
-            Sql.bdClose(conn);
+            Sql.bdClose(connStar);
         }
         return Response.ok(gson.toJson(campaigns)).build();
     }
@@ -582,7 +582,7 @@ public class M09_Statistics extends Application {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
             ArrayList<String> listChannel = new ArrayList<String>();
-            Statement st2 = conn.createStatement();
+            Statement st2 = connStar.createStatement();
             ResultSet result2 = st2.executeQuery( select2 );
             int num;
             while ( result2.next() ) {
@@ -602,7 +602,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
             throw new SQLException( select2 );
         } finally {
-            Sql.bdClose( conn );
+            Sql.bdClose(connStar);
         }
     }
 
@@ -613,7 +613,7 @@ public class M09_Statistics extends Application {
             Statistics gr = new Statistics();
             ArrayList<Integer> listNum = new ArrayList<Integer>();
             ArrayList<String> listChannel = new ArrayList<String>();
-            Statement st2 = conn.createStatement();
+            Statement st2 = connStar.createStatement();
             ResultSet result2 = st2.executeQuery( select2 );
             int num;
             while ( result2.next() ) {
@@ -633,7 +633,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
             throw new SQLException( select2 );
         } finally {
-            Sql.bdClose( conn );
+            Sql.bdClose(connStar);
         }
     }
 
@@ -645,7 +645,7 @@ public class M09_Statistics extends Application {
             ArrayList<Integer> listNum = new ArrayList<Integer>();
             ArrayList<String> listlabels = new ArrayList<String>();
             int num ;
-            Statement st2 = conn.createStatement();
+            Statement st2 = connStar.createStatement();
             ResultSet result2 = st2.executeQuery(select2);
             while ( result2.next() ) {
                 ChannelFactory channelFactory = new ChannelFactory();
@@ -664,7 +664,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
             throw new SQLException( select2 );
         } finally {
-            Sql.bdClose( conn );
+            Sql.bdClose(connStar);
         }
     }
 
@@ -679,7 +679,7 @@ public class M09_Statistics extends Application {
         String channelin = setParametersforQuery(channelIds,"and me.sen_cha_id in ");
         Map<String, Statistics> stats = new HashMap<String, Statistics>();
         try {
-            Statement st = conn.createStatement();
+            Statement st = connStar.createStatement();
             if (!companyIds.isEmpty()) {
                 stats.put("companies", getMessagesParam(companyin, campaignin, channelin, "me.sen_com_id", "co.com_name",
                         "public.dim_company_campaign co", "co.com_id", st));
@@ -699,7 +699,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
         }
          finally {
-            Sql.bdClose( conn );
+            Sql.bdClose(connStar);
         }
         return Response.ok(gson.toJson(stats)).build();
     }

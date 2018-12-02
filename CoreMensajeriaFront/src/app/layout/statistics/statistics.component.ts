@@ -43,6 +43,8 @@ enum ChartType {
     styleUrls: ["./statistics.component.scss"]
 })
 export class StatisticsComponent implements OnInit {
+    userId: string;
+
     /* =================================
            Charts elements from html
     ==================================== */
@@ -175,6 +177,8 @@ export class StatisticsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.userId = localStorage.getItem("userid");
+
         this.setupCompaniesDropdownSettings();
         this.setupCampaignsDropdownSettings();
         this.setupChannelsDropdownSettings();
@@ -372,9 +376,28 @@ export class StatisticsComponent implements OnInit {
     }
 
     private getAllCompanies() {
-        this.statisticsService.getAllCompanies().subscribe(data => {
-            this.insertIntoDropdown(EntityType.company, data);
-        });
+        this.statisticsService.getAllCompanies(this.userId).subscribe(
+            data => {
+                this.insertIntoDropdown(EntityType.company, data);
+            },
+            error => {
+                console.log(
+                    "Error getting companies: " + JSON.stringify(error)
+                );
+            }
+        );
+    }
+
+    getAllCampaigns() {
+        this.statisticsService.getAllCampaigns(this.userId).subscribe(
+            data => {
+                this.insertIntoDropdown(EntityType.campaign, data);
+            },
+            error => {
+                console.log(error);
+                this.toastr.error("Error de conexión");
+            }
+        );
     }
 
     private getAllChannels() {
@@ -580,17 +603,6 @@ export class StatisticsComponent implements OnInit {
             title: "Cantidad de mensajes enviados por Canales"
         };
         Plotly.newPlot(linediv, graph, layout);
-    }
-
-    getAllCampaigns() {
-        this.statisticsService.getAllCampaigns().subscribe(
-            data => {
-                this.insertIntoDropdown(EntityType.campaign, data);
-            },
-            error => {
-                this.toastr.error("Error de conexión");
-            }
-        );
     }
 
     // Handle company selecction
