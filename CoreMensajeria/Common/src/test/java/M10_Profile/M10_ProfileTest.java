@@ -3,6 +3,7 @@ package M10_Profile;
 import Classes.M01_Login.User;
 import Classes.M01_Login.UserDAO;
 import Classes.M10_Profile.M10_Profile;
+import Classes.M10_Profile.Rol;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,7 +21,7 @@ public class M10_ProfileTest {
     private M10_Profile _profileDao;
     private UserDAO _userDAO = new UserDAO();
     private User _search;
-
+    private ArrayList<Rol> _rol;
 
     private void newProfile(){
         _userProfile = new User();
@@ -39,9 +41,23 @@ public class M10_ProfileTest {
         }
     }
 
+    private void fillRoleList(){
+        Rol r1 = new Rol(1,"Superusuario");
+        Rol r2 = new Rol(2,"Administrador");
+        Rol r3 = new Rol(3,"Creador");
+        Rol r4 = new Rol(4,"Aprobador");
+        Rol r5 = new Rol(5,"Consultor");
+        _rol.add(r1);
+        _rol.add(r2);
+        _rol.add(r3);
+        _rol.add(r4);
+        _rol.add(r5);
+    }
+
     @BeforeEach
     public void init(){
         newProfile();
+        fillRoleList();
         _profileDao= new M10_Profile();
     }
 
@@ -70,5 +86,12 @@ public class M10_ProfileTest {
         {
             assertNull(_search);
         }
+    }
+
+    @Test
+    public void testRoleList(){
+        ArrayList<Rol> roltest;
+        roltest = _profileDao.getAllRoles();
+        assertEquals(_rol,roltest);
     }
 }
