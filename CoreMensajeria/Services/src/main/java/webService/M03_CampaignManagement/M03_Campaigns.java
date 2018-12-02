@@ -93,7 +93,7 @@ public class M03_Campaigns {
 
     //endregion
 
-    //region API Obtener Campañas
+    //region API Obtener Campañas por compañia
 
     public ArrayList<Campaign> campaignList(int id) throws CampaignDoesntExistsException {
         String select = "SELECT * FROM campaign where cam_company_id = ?";
@@ -102,7 +102,9 @@ public class M03_Campaigns {
         getCampaignList(id, select, caList);
         return caList;
     }
+    //endregion
 
+    //region Campaña por Usuario
     public ArrayList<Campaign> campaignListByUser(int id) throws CampaignDoesntExistsException {
         String select = "SELECT DISTINCT  ca.* from \"campaign\" ca INNER JOIN " +
                 "\"company\" co ON ca.cam_company_id = co.com_id INNER JOIN \"user\" " +
@@ -112,7 +114,9 @@ public class M03_Campaigns {
         getCampaignList(id, select, caList);
         return caList;
     }
+    //endregion
 
+    //region Obtener Lista de Campañas
     public void getCampaignList(int id, String select, ArrayList<Campaign> caList) throws CampaignDoesntExistsException {
         try {
             PreparedStatement ps = conn.prepareStatement(select);
@@ -168,7 +172,7 @@ public class M03_Campaigns {
     }
     //endregion
 
-
+    //region metodo campaigns by user
     @GET
     @Path("/GetCampaignsByUser")
     @Produces("application/json")
@@ -192,7 +196,7 @@ public class M03_Campaigns {
         return rb.build();
     }
 
-
+    //endregion
 
     //region Obtener Campañas
     @GET
