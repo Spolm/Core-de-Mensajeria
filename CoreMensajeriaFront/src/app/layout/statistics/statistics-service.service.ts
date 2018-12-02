@@ -22,23 +22,59 @@ export class StatisticsServiceService {
 
   return this.http.get(this.ApiURL + 'MessageCompanyPie') 
 }*/
-
-    getStatisticsData4(sparam: string) {
+    /* Companias */
+    getDataLineChartCompany(sparam: string) {
         return this.http.get(this.ApiURL + "PruebaParam" + sparam);
     }
-    getStatisticsData5(sparam: string) {
+    getDataBarChartCompany(sparam: string) {
         return this.http.get(this.ApiURL + "PruebaParam2" + sparam);
     }
-    getStatisticsData6(sparam: string) {
+    getDataPieChartCompany(sparam: string) {
+        return this.http.get(this.ApiURL + "PruebaParam3" + sparam);
+    }
+    /*  Campanas  */
+    getDataLineChartCampaign(sparam: string) {
+        return this.http.get(this.ApiURL + "PruebaParam" + sparam);
+    }
+    getDataBarChartCampaign(sparam: string) {
+        return this.http.get(this.ApiURL + "PruebaParam2" + sparam);
+    }
+    getDataPieChartCampaign(sparam: string) {
+        return this.http.get(this.ApiURL + "PruebaParam3" + sparam);
+    }
+    /* Canales   */
+    getDataLineChartChannels(sparam: string) {
+        return this.http.get(this.ApiURL + "PruebaParam" + sparam);
+    }
+    getDataBarChartChannels(sparam: string) {
+        return this.http.get(this.ApiURL + "PruebaParam2" + sparam);
+    }
+    getDataPieChartChannels(sparam: string) {
         return this.http.get(this.ApiURL + "PruebaParam3" + sparam);
     }
 
-    getAllCompanies() {
-        return this.http.get(this.ApiURL + "companies");
+    getInitialMessagesForCompanies() {
+        return this.http.get(this.ApiURL + "companiesCount");
     }
 
-    getAllCampaigns() {
-        return this.http.get(this.ApiURL + "campaigns");
+    getInitialMessagesForCampaigns() {
+        return this.http.get(this.ApiURL + "campaignsCount");
+    }
+
+    getInitialMessagesForChannels() {
+        return this.http.get(this.ApiURL + "channelsCount");
+    }
+
+    getAllCompanies(userId: string) {
+        let params = new HttpParams();
+        params = params.set("userId", userId);
+        return this.http.get(this.ApiURL + "companies", { params });
+    }
+
+    getAllCampaigns(userId: string) {
+        let params = new HttpParams();
+        params.set("userId", userId);
+        return this.http.get(this.ApiURL + "campaigns", { params });
     }
 
     getAllChannels() {
@@ -51,5 +87,9 @@ export class StatisticsServiceService {
             params = params.append("companyId", id.toString());
         });
         return this.http.get(this.ApiURL + "campaignCompany", { params });
+    }
+
+    getStatistics(params: HttpParams) {
+        return this.http.get(this.ApiURL + "filters", { params });
     }
 }

@@ -7,6 +7,8 @@ import { StatisticsComponent } from "./statistics.component";
 import { StatisticsRoutingModule } from "./statistics-routing.module";
 import { PlotlyModule } from "angular-plotly.js";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
+import { MoreFiltersComponent } from "./more-filters/more-filters.component";
+import { MatDialogModule, MatButtonModule } from "@angular/material";
 
 @NgModule({
     imports: [
@@ -14,9 +16,12 @@ import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
         StatisticsRoutingModule,
         PlotlyModule,
         FormsModule,
-        NgMultiSelectDropDownModule.forRoot()
+        NgMultiSelectDropDownModule.forRoot(),
+        MatDialogModule,
+        MatButtonModule
     ],
     providers: [StatisticsServiceService],
-    declarations: [StatisticsComponent]
+    declarations: [StatisticsComponent, MoreFiltersComponent],
+    entryComponents: [MoreFiltersComponent]
 })
 export class StatisticsModule {}

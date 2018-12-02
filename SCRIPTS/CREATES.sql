@@ -1,4 +1,4 @@
---\c CoreMensajeria CoreMensajeria
+\c CoreMensajeria CoreMensajeria
 
 create table public.User
 (
