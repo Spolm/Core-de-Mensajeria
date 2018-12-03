@@ -315,6 +315,26 @@ public class M09_Statistics extends Application {
     }
 
     @GET
+    @Path("/weeksofyearCount")
+    @Produces("application/json")
+    public Response getWeeksofYear(){
+        ArrayList<Integer> weeksofyear = new ArrayList<>();
+        try{
+            Statement statement = connStar.createStatement();
+            String query = "SELECT dat_weekofyear FROM m09_getWeeksofYear()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                weeksofyear.add(result.getInt("dat_weekofyear"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connStar);
+        }
+        return Response.ok(gson.toJson(weeksofyear)).build();
+    }
+
+    @GET
     @Path("/filters")
     @Produces("application/json")
     public Response getStatistics(@QueryParam("companyId") List<Integer> companyIds,
