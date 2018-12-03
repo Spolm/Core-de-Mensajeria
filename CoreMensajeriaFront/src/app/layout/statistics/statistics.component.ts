@@ -263,6 +263,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                 console.log(
                     "Error getting companies: " + JSON.stringify(error)
                 );
+                this.toastr.error("Error obteniendo las compañías.");
             }
         );
     }
@@ -278,7 +279,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                 },
                 error => {
                     console.log(error);
-                    this.toastr.error("Error de conexión");
+                    this.toastr.error("Error obteniendo las campañas.");
                 }
             );
     }
@@ -484,7 +485,6 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         var params = this.convertSelectedItemsIntoHttpParams();
         this.statisticsService.getStatistics(params).subscribe(
             data => {
-                console.log(data);
                 let companiesJson = data["companies"];
                 var companies: Point[] = this.createPointArray(companiesJson);
                 let campaingsJson = data["campaigns"];
@@ -510,7 +510,6 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         params = this.convertselectedCampaignsIdsIntoHttpParams(params);
         params = this.convertselectedChannelsIdsIntoHttpParams(params);
         params = this.convertselectedIntegratorsIdsIntoHttpParams(params);
-        console.log(params.toString());
         return params;
     }
 
@@ -664,7 +663,6 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         type: ChartType,
         element: ElementRef
     ): Chart {
-        console.log(type.valueOf());
         return new Chart(element.nativeElement.getContext("2d"), {
             type: type.valueOf(),
             data: {

@@ -72,8 +72,6 @@ public class M09_Statistics extends Application {
             return getCompanies(query);
         } catch(CompanyDoesntExistsException e) {
             return Response.serverError().build();
-        } finally {
-            Sql.bdClose(conn);
         }
 
     }
@@ -91,8 +89,6 @@ public class M09_Statistics extends Application {
             return getCampaigns(query);
         } catch(CampaignDoesntExistsException e) {
             return Response.serverError().build();
-        } finally {
-            SqlEstrella.bdClose(connStar);
         }
     }
 
@@ -132,8 +128,6 @@ public class M09_Statistics extends Application {
             return getIntegrators(query);
         } catch(ChannelNotFoundException e) {
             return Response.serverError().build();
-        } finally {
-            Sql.bdClose(conn);
         }
     }
 
@@ -297,7 +291,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(years)).build();
     }
@@ -317,7 +311,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(months)).build();
     }
@@ -337,7 +331,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(daysofweek)).build();
     }
@@ -357,7 +351,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(daysofmonth)).build();
     }
@@ -377,7 +371,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(daysofyear)).build();
     }
@@ -397,7 +391,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(weeksofyear)).build();
     }
@@ -417,7 +411,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(quartersofyear)).build();
     }
@@ -437,7 +431,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(hours)).build();
     }
@@ -457,7 +451,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(minutes)).build();
     }
@@ -477,7 +471,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(seconds)).build();
     }
@@ -524,7 +518,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
         }
          finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(stats)).build();
     }
