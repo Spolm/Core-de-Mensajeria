@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class M06_Application {
 
     private Gson gson = new Gson();
-    private ApplicationDAO _applicationDAO = new ApplicationDAO();
+        private ApplicationDAO _applicationDAO = new ApplicationDAO();
 
     //                   GET ENDPOINTS
     //Get all applications endpoint. Path: applications
