@@ -11,8 +11,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class M10_Profile {
+/**
+ * Clase de acceso a datos que nos permite
+ * obtener informacion relacionada al perfil
+ * del usuario.
+ *
+ * @return User con todos los datos del usuario
+ * @Author Alexander De Acevedo.
+ * @Author Sergio Garcia.
+ * @Author Ramiro Vargas.
+ */
 
+public class M10_Profile {
     private Connection _conn;
     private ResultSet _result;
 
@@ -20,23 +30,20 @@ public class M10_Profile {
         _conn = Sql.getConInstance();
     }
 
-
-    public ArrayList<Company> getCompanies(){
-        ArrayList<Company> coList= new ArrayList<>();
+    public ArrayList<Company> getCompanies() {
+        ArrayList<Company> coList = new ArrayList<>();
         try {
             PreparedStatement ps = _conn.prepareCall("{call m10_getallcompanies()}");
             ResultSet result = ps.executeQuery();
-            while(result.next()){
+            while (result.next()) {
                 Company co = new Company();
                 co.set_idCompany(result.getInt("com_id"));
                 co.set_name(result.getString("com_name"));
                 coList.add(co);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return coList;
@@ -113,26 +120,27 @@ public class M10_Profile {
         }
         finally{
             Sql.bdClose(_conn);
+            return coList;
         }
-        return userList;
     }
 
+
     /**
+     * Metodo que permite editar el perfil de un usuario
      *
-     * @param id id del usuario a editar
-     * @param email email del usuario
-     * @param phone telefono del usuario
-     * @param address   direccion
-     * @return  String con mensaje de exito
+     * @param id      id del usuario a editar
+     * @param email   email del usuario
+     * @param phone   telefono del usuario
+     * @param address direccion
+     * @return String con mensaje de exito
      * @throws SQLException
      */
-    public String editProfile( int id, String email, String phone,String address ) {
 
+    public String editProfile(int id, String email, String phone, String address) {
         try {
-
             //Query a realizar
             String query = "UPDATE public.User SET " +
-                    "use_phone=?,use_email=? ,use_address=?"+
+                    "use_phone=?,use_email=? ,use_address=?" +
                     "WHERE use_id = ?";
 
             PreparedStatement preparedStatement = _conn.prepareStatement(query);
@@ -144,12 +152,12 @@ public class M10_Profile {
             //Se realiza query, falta codigo aqui para validar si se realizo correctamente el query
             preparedStatement.executeQuery();
             return "Perfil editado con éxito";
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println(e.getStackTrace());
             return "Error al editar el perfil";
+        } finally {
+            Sql.bdClose(_conn);
         }
-
     }
 
     public String addUser(CreateUserRequestBody user){
@@ -163,7 +171,6 @@ public class M10_Profile {
                     user.get_typeUser() +" , '"+ user.get_emailUser() +"', '"+ user.get_emailUser() +"'," +
                     "'"+ user.get_countryUser() +"', '"+ user.get_cityUser() +"', '"+ user.get_addressUser() +"', " +
                     "TO_TIMESTAMP('"+ user.get_birthdateUser() +"','YYYY-MM-DD'), '"+ user.get_genderUser() +"')";
-
 
 
             //Se crea conexion a la dc
@@ -194,7 +201,7 @@ public class M10_Profile {
             while (_result.next()) {
                 int id = _result.getInt("rol_id");
                 String name = _result.getString("rol_name");
-                Rol rol = new Rol(id,name);
+                Rol rol = new Rol(id, name);
                 rols.add(rol);
             }
             return rols;
@@ -206,5 +213,6 @@ public class M10_Profile {
         }
         return rols;
     }
+
 }
 
