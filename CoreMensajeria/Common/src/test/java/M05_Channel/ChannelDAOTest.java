@@ -1,8 +1,10 @@
-package Classes.M05_Channel;
+package M05_Channel;
 
 import Classes.M04_Integrator.Integrator;
+import Classes.M05_Channel.Channel;
+import Classes.M05_Channel.ChannelDAO;
+import Exceptions.ChannelNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ChannelServiceTest {
+class ChannelDAOTest {
     private static ChannelDAO _channelDAO;
     private static ArrayList<Integrator> _integratorList;
     private static ArrayList<Channel> _channelList;
@@ -22,6 +24,10 @@ class ChannelServiceTest {
         _channelList = new ArrayList<>();
     }
 
+    /**
+     * Prueba que nos permite  saber si la lista de
+     * los integradores por canales es diferente a Null.
+     */
     @Test
     public void TestIntegradorsByChannel() {
         try {
@@ -34,6 +40,12 @@ class ChannelServiceTest {
         }
     }
 
+
+    /**
+     * Prueba que nos permite saber la lista de canales
+     * en el sistema es diferente a Null.
+     */
+
     @Test
     public void listChannel() {
         try {
@@ -43,6 +55,11 @@ class ChannelServiceTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Prueba de la excepción, ejecutando el método de buscar un integrador
+     * cuando no se encuentra un canal.
+     */
 
     @Test
     public void channelNotFoundExceptionTest() {
