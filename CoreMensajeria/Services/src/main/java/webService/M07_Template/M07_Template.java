@@ -1,5 +1,6 @@
 package webService.M07_Template;
 
+import Classes.M01_Login.Privilege;
 import Classes.M07_Template.HandlerPackage.StatusHandler;
 import Classes.M07_Template.HandlerPackage.TemplateHandler;
 import Classes.M07_Template.Template;
@@ -51,7 +52,7 @@ public class M07_Template {
     public Response getTemplatePrivilegesByUser(@QueryParam("userId") int userId,
                                                 @QueryParam("companyId") int companyId){
         TemplateHandler templateHandler = new TemplateHandler();
-        ArrayList<String> privileges = templateHandler.getTemplatePrivilegesByUser(userId,companyId);
+        ArrayList<Privilege> privileges = templateHandler.getTemplatePrivilegesByUser(userId,companyId);
         return Response.ok(gson.toJson(privileges)).build();
     }
 

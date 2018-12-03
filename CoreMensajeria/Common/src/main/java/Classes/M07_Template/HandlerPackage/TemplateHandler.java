@@ -1,5 +1,6 @@
 package Classes.M07_Template.HandlerPackage;
 
+import Classes.M01_Login.Privilege;
 import Classes.M01_Login.UserDAO;
 import Classes.M03_Campaign.Campaign;
 import Classes.M03_Campaign.CampaignDAO;
@@ -319,8 +320,8 @@ public class TemplateHandler {
         }
     }
 
-    public ArrayList<String> getTemplatePrivilegesByUser(int userId, int companyId){
-        ArrayList<String> privileges = new ArrayList<>();
+    public ArrayList<Privilege> getTemplatePrivilegesByUser(int userId, int companyId){
+        ArrayList<Privilege> privileges = new ArrayList<>();
         Connection connection = Sql.getConInstance();
         try {
             PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_privileges_by_user_company(?,?)}");
@@ -328,7 +329,10 @@ public class TemplateHandler {
             preparedStatement.setInt(2,companyId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
-                String privilege = resultSet.getString("pri_code");
+                Privilege privilege = new Privilege();
+                privilege.set_idPrivileges(resultSet.getInt("pri_id"));
+                privilege.set_codePrivileges(resultSet.getString("pri_code"));
+                privilege.set_actionPrivileges(resultSet.getString("pri_action"));
                 privileges.add(privilege);
             }
         } catch (SQLException e) {

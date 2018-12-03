@@ -1,5 +1,4 @@
--- CREATE FUNCTION m07_getTemplatesByCampaign(IN campaign integer -> user's campaign)
--- DROP FUNCTION m07_select_templates_by_campaign(integer);
+DROP FUNCTION m07_select_templates_by_campaign(integer);
 CREATE OR REPLACE FUNCTION m07_select_templates_by_campaign(IN campaignId integer)
 RETURNS TABLE (tem_id integer,tem_creation_date timestamp,tem_campaign_id integer,
 		tem_application_id integer, tem_user_id integer, sta_id integer,
@@ -26,6 +25,7 @@ END;
 $gettemplates$
 LANGUAGE 'plpgsql' VOLATILE;
 
+
 CREATE OR REPLACE FUNCTION m07_select_all_templates()
 RETURNS TABLE (tem_id integer,tem_creation_date timestamp,sta_id integer,sta_name varchar) 
 AS $$
@@ -48,12 +48,13 @@ END;
 $$
 LANGUAGE 'plpgsql' VOLATILE;
 
+DROP FUNCTION m07_select_privileges_by_user_company(integer,integer);
 CREATE OR REPLACE FUNCTION m07_select_privileges_by_user_company(
 	IN userId INTEGER, IN companyId INTEGER)
-RETURNS TABLE (pri_code varchar) AS $$
+RETURNS TABLE (pri_id integer, pri_code varchar, pri_action varchar) AS $$
 BEGIN
 RETURN QUERY
-	SELECT p.pri_code
+	SELECT p.pri_id, p.pri_code, p.pri_action
 	FROM public.responsability r
 	INNER JOIN public.rol_pri rp
 	ON r.res_rol_id = rp.rol_pri_rol_id
