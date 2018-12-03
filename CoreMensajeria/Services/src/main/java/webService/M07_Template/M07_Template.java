@@ -72,6 +72,6 @@ public class M07_Template {
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean updateTemplate(String json){
         TemplateHandler templateHandler = new TemplateHandler();
-        return templateHandler.postTemplateData(json);
+        return templateHandler.updateTemplateData(json);
     }
 }

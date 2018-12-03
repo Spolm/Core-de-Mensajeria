@@ -324,7 +324,7 @@ public class TemplateHandler {
             JsonObject gsonObj = parser.parse(json).getAsJsonObject();
             //hay que extraer campaña y aplicacion, parametros por defecto
             //se crea el template y se retorna su id
-            int templateId = postTemplate(gsonObj.get("campaign").getAsInt(),2, gsonObj.get("userId").getAsInt());
+            int templateId = postTemplate(gsonObj.get("campaign").getAsInt(),gsonObj.get("applicationId").getAsInt(), gsonObj.get("userId").getAsInt());
             //se establece el template  como no aprobado
             StatusHandler.postTemplateStatusNoAprovado(templateId);
             //insertamos los nuevos parametros
@@ -340,8 +340,7 @@ public class TemplateHandler {
             postChannelIntegrator(channelIntegrator,templateId);
 
             return true;
-        }
-        catch (Exception e){
+        } catch (Exception e){
             System.out.println(e);
             return false;
         }
@@ -357,6 +356,7 @@ public class TemplateHandler {
                 channelIntegrator = list.getAsJsonObject();
                 channel = channelIntegrator.get("channel").getAsJsonObject().get("idChannel").getAsInt();
                 integrator = channelIntegrator.get("integrator").getAsJsonObject().get("idIntegrator").getAsInt();
+
                 query = query + "insert into public.template_channel_integrator (tci_template_id,tci_ci_id) " +
                         "values (" + templateId + ",(select ci_id from public.channel_integrator " +
                         "where ci_channel_id = " + channel + " and ci_integrator_id = " + integrator +"));";
@@ -387,6 +387,60 @@ public class TemplateHandler {
         } finally {
             Sql.bdClose(sql.getConn());
             return templateId;
+        }
+    }
+
+    public boolean updateTemplateData(String json){
+        try {
+            Gson gson = new Gson();
+            //recibimos el objeto json
+            JsonParser parser = new JsonParser();
+            JsonObject gsonObj = parser.parse(json).getAsJsonObject();
+            updateTemplate(gsonObj.get("campaign").getAsInt(), gsonObj.get("applicationId").getAsInt(), gsonObj.get("templateId").getAsInt());
+
+            //insertamos los nuevos parametros
+            String[] parameters = gson.fromJson(gsonObj.get("newParameters").getAsJsonArray(),String[].class);
+            ParameterHandler.postParameter(parameters,gsonObj.get("company").getAsInt());
+            //update de mensaje
+            parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
+            String message = gsonObj.get("messagge").getAsString();
+            MessageHandler.updateMessage(gsonObj.get("messagge").getAsString(),gsonObj.get("templateId").getAsInt(),parameters,gsonObj.get("company").getAsInt());
+
+            //update de Channel Integrator
+            JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
+            updateChannelIntegrator(channelIntegrator,gsonObj.get("templateId").getAsInt());
+            return true;
+        } catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    private void updateChannelIntegrator(JsonArray channelIntegratorList, int templateId) {
+        String query = "DELETE FROM public.template_channel_integrator\n" +
+                "WHERE tci_template_id = " + templateId;
+        try{
+            sql.sqlNoReturn(query);
+            postChannelIntegrator(channelIntegratorList,templateId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch(Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+        }
+    }
+
+    private void updateTemplate(int campaign, int applicationId, int templateId) {
+        String query = "UPDATE public.template\n" +
+                "SET tem_campaign_id = " + campaign + ", tem_application_id = " + applicationId + "\n" +
+                "WHERE tem_id = " + templateId;
+        try{
+            sql.sqlConn(query);
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 

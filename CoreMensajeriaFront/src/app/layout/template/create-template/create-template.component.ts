@@ -14,7 +14,7 @@ export class CreateTemplateComponent {
 
   parametersJson: any = [];
   channelsJson: any = [];
-  formMessage: string;
+  formMessage = '';
   parameters: Array<string> = [];
   newParameters: Array<string> = [];
   channels_integrators: any = [];
@@ -23,7 +23,6 @@ export class CreateTemplateComponent {
   constructor(private templateService: TemplateService, private toastr: ToastrService, private router: Router) {
     this.getParameters();
     this.getChannels();
-    this.formMessage = '';
   }
 
   getParameters() {
@@ -39,23 +38,30 @@ export class CreateTemplateComponent {
   }
 
   addParameter(message: string, parameterName: string) {
+          const myFormMessage = document.getElementById('formMessage');
+          const pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
+          const startMessage = message.slice(0, pointer);
+          const endMessage = message.slice(pointer, message.length);
+          this.parameters.push(parameterName);
+          this.formMessage = startMessage + ' [.$' + parameterName + '$.] ' + endMessage;
+  }
+
+  addNewParameter(message: string, parameterName: string) {
       parameterName = parameterName.trim();
       if ((parameterName.valueOf() !== '')) {
           parameterName = parameterName.toLowerCase();
           parameterName = parameterName.charAt(0).toUpperCase() + parameterName.slice(1, parameterName.length);
           if (!this.parameters.find(x => x === parameterName)) {
-              const myFormMessage = document.getElementById('formMessage');
-              const pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
-              const startMessage = message.slice(0, pointer);
-              const endMessage = message.slice(pointer, message.length);
-              this.parameters.push(parameterName);
-              this.formMessage = startMessage + ' [.$' + parameterName + '$.] ' + endMessage;
-          } else {
-              this.toastr.warning('El parametro ya esta registrado', 'Aviso',
-                  {
-                      timeOut: 2800,
-                      progressBar: true
-                  });
+              this.addParameter(message, parameterName);
+              if (!this.newParameters.find(x => x == parameterName)) {
+                  this.newParameters.push(parameterName);
+              } else {
+                  this.toastr.warning('El parametro ya esta registrado', 'Aviso',
+                      {
+                          timeOut: 2800,
+                          progressBar: true
+                      });
+              }
           }
       } else {
           this.toastr.warning('No a escrito ningun parametro', 'Aviso',
@@ -64,13 +70,6 @@ export class CreateTemplateComponent {
                   progressBar: true
               });
       }
-  }
-
-  addNewParameter(message: string, parameterName: string) {
-    this.addParameter(message, parameterName);
-    if (!this.newParameters.find(x => x == parameterName)) {
-      this.newParameters.push(parameterName);
-    }
     this.showInputCreateParameterState = false;
   }
 
