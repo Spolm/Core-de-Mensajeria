@@ -86,7 +86,6 @@ export class ModifyTemplateComponent {
     const endMessage = message.slice(pointer, message.length);
     this.parameters.push(parameterName);
     this.formMessage = startMessage + ' [.$' + parameterName + '$.] ' + endMessage;
-
   }
 
   addNewParameter(message: string, parameterName: string) {
@@ -146,9 +145,7 @@ export class ModifyTemplateComponent {
   }
 
   updateTemplate() {
-    console.log(this.originOption);
-    console.log(this.applicationId);
-   /* this.formMessage = this.formMessage.trim();
+    this.formMessage = this.formMessage.trim();
     if (this.formMessage != '') {
       if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
         if (this.channels_integrators[0]) {
@@ -173,6 +170,6 @@ export class ModifyTemplateComponent {
           timeOut: 2800,
           progressBar: true
         });
-    }*/
+    }
   }
 }
