@@ -34,7 +34,11 @@
         </a>
         <a *ngIf="findPrivilege('RUSER')" [routerLink]="['/profile']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-user-circle"></i>&nbsp;
-            <span>{{ 'Profile' | translate }}</span>
+            <span>{{ 'Perfil' | translate }}</span>
+        </a>
+        <a [routerLink]="['/createuser']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-address-card-o"></i>&nbsp;
+            <span>{{ 'Agregar Usuario' | translate }}</span>
         </a>
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
