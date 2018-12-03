@@ -1,5 +1,6 @@
 package webService.M02_CompanyManagement;
 
+
 import Classes.M02_Company.CompanyDAO;
 import Classes.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
@@ -58,6 +59,27 @@ public class M02_Companies {
         return rb.build();
     }
 
+    @GET
+    @Path("/GetAll")
+    @Produces("application/json")
+
+
+    public Response getAllCompanies() throws  CompanyDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CompanyDAO co = new CompanyDAO();
+        try {
+            _coList = co.companyListAll();
+            rb.entity(gson.toJson(_coList));
+        }
+        catch (CompanyDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
+
     //region Cambiar Status Compañia
     //TODO crear excepcion para este metodo
     @GET
@@ -93,8 +115,8 @@ public class M02_Companies {
     @Produces("application/json")
     public Response editCompany (@FormParam("nameCompany") String name,@FormParam(descriptionCompany) String description,
                                  @FormParam("statusCompany") boolean status, @PathParam("idCompany") int id) {
-        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);        
-        String query = "UPDATE public.company SET com_name=?, " 
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        String query = "UPDATE public.company SET com_name=?, "
             +"com_description=? com_status=? WHERE com_id=?";
         try {
             PreparedStatement ps = conn.prepareStatement(query);

@@ -44,7 +44,7 @@ public class CompanyDAO {
     public ArrayList<Company> companyListAll() throws CompanyDoesntExistsException {
         ArrayList<Company> coList = new ArrayList<>();
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * from company");
+            PreparedStatement ps = conn.prepareCall("{Call m02_getcompaniesall()}");
             ResultSet result = ps.executeQuery();
             while (result.next()) {
                 Company co = new Company();
