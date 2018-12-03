@@ -11,7 +11,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class MailSender {
 
@@ -23,50 +26,31 @@ public class MailSender {
      * This method allows the host to send emails for password recovery
      * @param code
      * @param email
-     * @throws AddressException
-     * @throws MessagingException
      */
     public static void generateAndSendEmail(String code,String email) throws AddressException, MessagingException {
 
         try {
+            File file = new File("emailCoreMensajeria.txt");
 
-            File file = new File("C:/Users/marco/Downloads/testFile1.txt");
 
-//Create the file
-            if (file.createNewFile())
-            {
-                System.out.println("File is created!");
-            } else {
-                System.out.println("File already exists.");
-            }
 
-            try {
-                file.createNewFile();
-                System.out.println(file.getPath());
-                System.out.println(file.getAbsolutePath());
-                System.out.println(file.getCanonicalPath());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-//Write Content
+            //Write Content
             PrintStream fileStream = new PrintStream(file);
             fileStream.println("Subject: Recuperación de contraseña ");
+            fileStream.println("To: "+email);
             fileStream.println(" ");
-            fileStream.println("   Tu código de validación es:" + code);
+            fileStream.println(" ");
+            fileStream.println("    Tu código de validación es:" + code);
+            fileStream.println(" ");
             fileStream.println(" Saludos cordiales,");
             fileStream.println(" CoreMensajeria Support.");
-            System.out.println(file.getAbsolutePath());
+            fileStream.close();
+
+            Logger logger = Logger.getLogger(MailSender.class.getName());
+            logger.info("path: "+file.getAbsolutePath());
+
             /*
-            FileWriter writer = new FileWriter(file);
-            writer.write("Recuperación de contraseña  Tu codigo de validacion es:" + code +"<br><br> Saludos cordiales, <br>CoreMensajeria Support");
-*/
-            //writer.close();
-            /*
-            PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
-            writer.println("The first line");
-            writer.println("The second line");
-            writer.close();*/
+            //ENVIO POR CORREO (No disponible)
             // Step1
             System.out.println("\n 1st ===> setup Mail Server Properties..");
             _mailServerProperties = System.getProperties();
@@ -94,6 +78,7 @@ public class MailSender {
             transport.connect("smtp.gmail.com", "coremensajeria20182", "coremensajeria1234");
             transport.sendMessage(_generateMailMessage, _generateMailMessage.getAllRecipients());
             transport.close();
+            */
         }catch ( Exception e ) {
             e.printStackTrace();
         }
