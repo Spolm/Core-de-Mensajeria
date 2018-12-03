@@ -229,10 +229,12 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
     setupMonthsData(data: any) {
         this.selectedMonths = data.selectedMonths;
         this.selectedMonthsIds = data.selectedMonthsIds;
-        console.log(data);
     }
 
-    setupDaysData(data) {}
+    setupDaysData(data) {
+        this.selectedDays = data.selectedDays;
+        this.selectedDaysIds = data.selectedDaysIds;
+    }
 
     setupWeeksData(data) {}
 
@@ -275,7 +277,16 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         });
     }
 
-    getDays() {}
+    getDays() {
+        this.statisticsService.getDaysOfMonth().subscribe(data => {
+            this.insertIntoDateDropdown(
+                data,
+                this.daysDropdown,
+                "day_id",
+                "day_name"
+            );
+        });
+    }
 
     getWeeks() {}
 
@@ -301,7 +312,7 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         data.forEach(date => {
             var item = {};
             item[idField] = i;
-            item[nameField] = date;
+            item[nameField] = date.toString();
             dateDropdown.push(item);
             i++;
         });

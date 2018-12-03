@@ -485,23 +485,44 @@ export class DropdownMethods {
        ============================= */
     protected monthSelected(month: any) {
         this.selectedMonthsIds.push(month["month_id"]);
-        console.log(this.selectedMonthsIds);
     }
 
     protected monthDeselected(month: any) {
         this.removeItemFromArray(month["month_id"], this.selectedMonthsIds);
-        console.log(this.selectedMonthsIds);
     }
 
     protected selectAllMonths() {
         for (var index in this.monthsDropdown) {
             this.selectedMonthsIds.push(this.monthsDropdown[index]["month_id"]);
         }
-        console.log(this.selectedMonthsIds);
     }
 
     protected deselectAllMonths() {
         this.selectedMonthsIds = [];
-        console.log(this.selectedMonthsIds);
+    }
+
+    /* =============================
+           Handle days selection
+       ============================= */
+    protected daySelected(day: any) {
+        this.selectedDaysIds.push(day["day_id"]);
+        console.log(this.selectedDaysIds);
+    }
+
+    protected dayDeselected(day: any) {
+        this.removeItemFromArray(day["day_id"], this.selectedDaysIds);
+        console.log(this.selectedDaysIds);
+    }
+
+    protected selectAllDays() {
+        for (var index in this.daysDropdown) {
+            this.selectedDaysIds.push(this.daysDropdown[index]["day_id"]);
+        }
+        console.log(this.selectedDaysIds);
+    }
+
+    protected deselectAllDays() {
+        this.selectedDaysIds = [];
+        console.log(this.selectedDaysIds);
     }
 }
