@@ -295,6 +295,26 @@ public class M09_Statistics extends Application {
     }
 
     @GET
+    @Path("/daysofweekCount")
+    @Produces("application/json")
+    public Response getDaysofWeek(){
+        ArrayList<Integer> daysofweek = new ArrayList<>();
+        try{
+            Statement statement = connStar.createStatement();
+            String query = "SELECT dat_dayofweek FROM m09_getDaysofWeek()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                daysofweek.add(result.getInt("dat_dayofweek"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connStar);
+        }
+        return Response.ok(gson.toJson(daysofweek)).build();
+    }
+
+    @GET
     @Path("/filters")
     @Produces("application/json")
     public Response getStatistics(@QueryParam("companyId") List<Integer> companyIds,
