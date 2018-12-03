@@ -29,4 +29,14 @@
 \ir SP/m09_getAllCampaigns.sql
 \ir SP/m09_getAllChannels.sql
 \ir SP/m09_getMessagesParameter.sql
+\ir SP/m09_getDaysofMonth.sql
+\ir SP/m09_getDaysofWeek.sql
+\ir SP/m09_getDaysofYear.sql
+\ir SP/m09_getHours.sql
+\ir SP/m09_getMinutes.sql
+\ir SP/m09_getMonths.sql
+\ir SP/m09_getQuartersofYear.sql
+\ir SP/m09_getSeconds.sql
+\ir SP/m09_getWeeksofYear.sql
+\ir SP/m09_getYears.sql
 -- \ir StoreProceduresM_09/FuntionsGet.sql
