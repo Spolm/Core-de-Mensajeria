@@ -47,49 +47,10 @@ public class M10_Profile {
             e.printStackTrace();
         } finally {
             Sql.bdClose(_conn);
+            return coList;
         }
-        return coList;
     }
 
-    /**
-     * Metodo que permite buscar un usuario
-     *
-     * @param username Nombre de usuario a buscar
-     * @return User con todos los datos del usuario
-     * @see User
-     */
-
-    public ArrayList<User> searchUser(String username) {
-        String consulta = "SELECT use_id, use_password, use_username, use_type, use_email, use_phone,use_country," +
-                " use_city, use_address, use_date_of_birth, use_gender From public.user " +
-                "WHERE use_username =?";
-        ArrayList<User> userList = new ArrayList<>();
-        try {
-            PreparedStatement preparedStatement = _conn.prepareStatement(consulta);
-            preparedStatement.setString(1, username);
-            _result = preparedStatement.executeQuery();
-            while (_result.next()) {
-                User user = new User();
-                user.set_idUser(_result.getInt("use_id"));
-                user.set_passwordUser(_result.getString("use_password"));
-                user.set_usernameUser(_result.getString("use_username"));
-                user.set_typeUser(_result.getInt("use_type"));
-                user.set_emailUser(_result.getString("use_email"));
-                user.set_phoneUser(_result.getString("use_phone"));
-                user.set_countryUser(_result.getString("use_country"));
-                user.set_dateOfBirthUser(_result.getDate("use_date_of_birth"));
-                user.set_cityUser(_result.getString("use_city"));
-                user.set_addressUser(_result.getString("use_address"));
-                user.set_genderUser(_result.getString("use_gender"));
-                userList.add(user);
-            }
-        } catch (SQLException ex) {
-            userList = null;
-        } finally {
-            Sql.bdClose(_conn);
-        }
-        return userList;
-    }
 
     /**
      * Metodo que permite editar el perfil de un usuario

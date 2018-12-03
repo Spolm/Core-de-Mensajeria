@@ -1,6 +1,7 @@
 package webService.M10_Profile;
 
 import Classes.M01_Login.User;
+import Classes.M01_Login.UserDAO;
 import Classes.M02_Company.Company;
 import Classes.M10_Profile.*;
 import com.google.gson.Gson;
@@ -13,28 +14,29 @@ import java.util.ArrayList;
 
 @Path("/profile")
 public class M10_ProfileService {
-    Gson _gson = new Gson();
-    ArrayList<User> _us;
-    ArrayList<Company> _comp;
-    private M10_Profile _dao;
-    ArrayList<Rol> _rols;
+    private Gson _gson = new Gson();
+    private User _us;
+    private ArrayList<Company> _comp;
+    private M10_Profile _daoProfile;
+    private UserDAO _daoUser;
+    private ArrayList<Rol> _rols;
 
 
     @GET
     @Path("/roles")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listRoles(){
-        _dao = new M10_Profile();
-        _rols = _dao.getAllRoles();
+        _daoProfile = new M10_Profile();
+        _rols = _daoProfile.getAllRoles();
         return Response.ok().entity(_rols).build();
     }
-    @Path("/user/{username}")
+    @Path("/user/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listIntegrator(@PathParam("username") String name) { //Hay que cambiarle el nombre a esto
+    public Response listIntegrator(@PathParam("id") int id) { //Hay que cambiarle el nombre a esto
         try {
-            _dao = new M10_Profile();
-            _us = _dao.searchUser(name);
+            _daoUser = new UserDAO();
+            _us = _daoUser.findByUsernameId(id);
         } catch (NullPointerException e) {
             _us = null;
             String mess = "error al cargar el usuario";
@@ -53,7 +55,7 @@ public class M10_ProfileService {
 
         try {
 
-            _dao = new M10_Profile();
+            _daoProfile = new M10_Profile();
 
             //Instanciamos nuestro validador
             EditFormHandler validator = new EditFormHandler(editBody);
@@ -62,7 +64,7 @@ public class M10_ProfileService {
             validator.validate();
 
             //Se procede a editar al usuario
-            String success = _dao.editProfile(editBody.get_idUser(), editBody.get_emailUser(),
+            String success = _daoProfile.editProfile(editBody.get_idUser(), editBody.get_emailUser(),
                     editBody.get_phoneUser(), editBody.get_addressUser());
             return Response.ok(_gson.toJson(success)).build();
 
@@ -86,7 +88,7 @@ public class M10_ProfileService {
             validator.validate();
 
             //Se procede a editar al usuario
-            String success = _dao.addUser(createBody);
+            String success = _daoProfile.addUser(createBody);
             return Response.ok(_gson.toJson(success)).build();
 
         } catch (FormErrorException e) {
@@ -103,8 +105,8 @@ public class M10_ProfileService {
     {
       try
       {
-          _dao= new M10_Profile();
-          _comp= _dao.getCompanies();
+          _daoProfile= new M10_Profile();
+          _comp= _daoProfile.getCompanies();
       } catch (NullPointerException e) {
           _comp = null;
           String mess = "error al cargar el usuario";
