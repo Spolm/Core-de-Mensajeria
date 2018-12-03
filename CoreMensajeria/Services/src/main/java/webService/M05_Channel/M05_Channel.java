@@ -2,7 +2,7 @@ package webService.M05_Channel;
 
 import Classes.M05_Channel.Channel;
 import Classes.M05_Channel.ChannelDAO;
-import Classes.M05_Channel.ChannelNotFoundException;
+import Exceptions.ChannelNotFoundException;
 import Classes.M04_Integrator.Integrator;
 import Exceptions.DatabaseConnectionProblemException;
 
@@ -14,10 +14,26 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
+/**
+ * Clase que implementa los métodos PUT y GET para el funcionamiento
+ * del servicio RESTful referido a los canales del sistema.
+ *
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
+ */
+
 @Path("/channel")
 public class M05_Channel {
 
     private ChannelDAO _channelDAO = new ChannelDAO();
+
+    /**
+     * Método que nos permite obtener una lista de
+     * todos los canales en el sistema en formato Json.
+     *
+     * @see Channel
+     */
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -29,6 +45,13 @@ public class M05_Channel {
             return Response.status(500).entity(e.getMessage()).build();
         }
     }
+
+    /**
+     * Obtiene la lista de integradores según el
+     * id de un canal en formato Json.
+     *
+     * @see Channel
+     */
 
     @GET
     @Path("/i/{id}")

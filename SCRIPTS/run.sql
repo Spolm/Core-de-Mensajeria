@@ -6,16 +6,25 @@
 \ir INSERTS.sql
 
 \c CoreMensajeria CoreMensajeria
+-- Modulo 1
 \ir SP/m01_users.sql
+-- Modulo 2
 \ir SP/m02_getcompanies.sql
+\ir SP/m02_getcompaniesall.sql
 \ir SP/m02_getcompanybyid.sql
+\ir SP/m02_changecompanystatus.sql
+-- Modulo 3
 \ir SP/m03_getcampaigns.sql
-\ir SP/m04_disable_enable_Integrator.sql
-\ir SP/m04_getChannels.sql
-\ir SP/m04_getintegrators.sql
-\ir SP/m04_getConcreteIntegrator.sql
-\ir SP/m04_getIntegrators_by_channel.sql
+\ir SP/m03_getcampaignsall.sql
+\ir SP/m03_getcampaignbyid.sql
+\ir SP/m03_getcampaignsbyuser.sql
+\ir SP/m03_changecampaignstatus.sql
+-- Modulo 4
+\ir SP/m04_channel_integrator.sql
+-- Modulo 6
 \ir SP/m06_origin.sql
+-- Modulo 7 
+\ir SP/m07_template.sql
 \ir SP/m09_getIntegratorsByChannels.sql
 
 \ir 'CREATE DB_STARSCHEMA.sql'

@@ -1,7 +1,16 @@
 package Classes.M04_Integrator;
 
-public interface IIntegrator {
-    void testConection();
 
-    void sendMessage();
+/**
+ * Interfaz que contiene los métodos de utilizarán
+ * todos los integradores en común.
+ *
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
+ * @see IIntegrator
+ */
+public interface IIntegrator {
+
+    MessageIntegrator sendMessage(String msg, String address, String idMsg);
 }

@@ -19,6 +19,18 @@ export class DropdownMethods {
         this.setupCampaignsDropdownSettings();
         this.setupChannelsDropdownSettings();
         this.setupIntegratorsDropdownSettings();
+        this.setupYearsDropdownSettings();
+        this.setupMonthsDropdownSettings();
+        this.setupDaysDropdownSettings();
+        this.setupWeeksDropdownSettings();
+        this.setupDaysOfWeekDropdownSettings();
+        this.setupQuartersOfYearDropdownSettings();
+        this.setupDaysOfYearDropdownSettings();
+        this.setupHoursDropdownSettings();
+        this.setupMinutesDropdownSettings();
+        this.setupSecondsDropdownSettings();
+
+        console.log(this.integratorsDropdown);
     }
 
     userId: String;
@@ -46,6 +58,56 @@ export class DropdownMethods {
     selectedIntegratorsIds = [];
     selectedIntegrators = [];
 
+    yearsDropdown = [];
+    yearsDropdownSettings = {};
+    selectedYearsIds = [];
+    selectedYears = [];
+
+    monthsDropdown = [];
+    monthsDropdownSettings = {};
+    selectedMonthsIds = [];
+    selectedMonths = [];
+
+    daysDropdown = [];
+    daysDropdownSettings = {};
+    selectedDaysIds = [];
+    selectedDays = [];
+
+    weeksDropdown = [];
+    weeksDropdownSettings = {};
+    selectedWeeksIds = [];
+    selectedWeeks = [];
+
+    daysOfWeekDropdown = [];
+    daysOfWeekDropdownSettings = {};
+    selectedDaysOfWeekIds = [];
+    selectedDaysOfWeek = [];
+
+    quartersOfYearDropdown = [];
+    quartersOfYearDropdownSettings = {};
+    selectedQuartersOfYearIds = [];
+    selectedQuartersOfYear = [];
+
+    daysOfYearDropdown = [];
+    daysOfYearDropdownSettings = {};
+    selectedDaysOfYearIds = [];
+    selectedDaysOfYear = [];
+
+    hoursDropdown = [];
+    hoursDropdownSettings = {};
+    selectedHoursIds = [];
+    selectedHours = [];
+
+    minutesDropdown = [];
+    minutesDropdownSettings = {};
+    selectedMinutesIds = [];
+    selectedMinutes = [];
+
+    secondsDropdown = [];
+    secondsDropdownSettings = {};
+    selectedSecondsIds = [];
+    selectedSeconds = [];
+
     protected setupCompaniesDropdownSettings() {
         this.companiesDropdownSettings = this.setupDropdownSettings(
             "company_id",
@@ -71,6 +133,76 @@ export class DropdownMethods {
         this.integratorsDropdownSettings = this.setupDropdownSettings(
             "integrator_id",
             "integrator_name"
+        );
+    }
+
+    protected setupYearsDropdownSettings() {
+        this.yearsDropdownSettings = this.setupDropdownSettings(
+            "year_id",
+            "year_name"
+        );
+    }
+
+    protected setupMonthsDropdownSettings() {
+        this.monthsDropdownSettings = this.setupDropdownSettings(
+            "month_id",
+            "month_name"
+        );
+    }
+
+    protected setupDaysDropdownSettings() {
+        this.daysDropdownSettings = this.setupDropdownSettings(
+            "day_id",
+            "day_name"
+        );
+    }
+
+    protected setupWeeksDropdownSettings() {
+        this.weeksDropdownSettings = this.setupDropdownSettings(
+            "week_id",
+            "week_name"
+        );
+    }
+
+    protected setupDaysOfWeekDropdownSettings() {
+        this.daysOfWeekDropdownSettings = this.setupDropdownSettings(
+            "dayOfWeek_id",
+            "dayOfWeek_name"
+        );
+    }
+
+    protected setupQuartersOfYearDropdownSettings() {
+        this.quartersOfYearDropdownSettings = this.setupDropdownSettings(
+            "quarterOfYear_id",
+            "quarterOfYear_name"
+        );
+    }
+
+    protected setupDaysOfYearDropdownSettings() {
+        this.daysOfYearDropdownSettings = this.setupDropdownSettings(
+            "dayOfYear_id",
+            "dayOfYear_name"
+        );
+    }
+
+    protected setupHoursDropdownSettings() {
+        this.hoursDropdownSettings = this.setupDropdownSettings(
+            "hour_id",
+            "hour_name"
+        );
+    }
+
+    protected setupMinutesDropdownSettings() {
+        this.minutesDropdownSettings = this.setupDropdownSettings(
+            "minute_id",
+            "minute_name"
+        );
+    }
+
+    protected setupSecondsDropdownSettings() {
+        this.secondsDropdownSettings = this.setupDropdownSettings(
+            "second_id",
+            "second_name"
         );
     }
 
@@ -216,7 +348,9 @@ export class DropdownMethods {
                 },
                 error => {
                     console.log(error);
-                    this.toastr.error("Error de conexión");
+                    this.toastr.error(
+                        "No se pudieron obtener los integradores."
+                    );
                 }
             );
     }
