@@ -259,29 +259,36 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getStatistics(@QueryParam("companyId") List<Integer> companyIds,
                                   @QueryParam("campaignId") List<Integer> campaignIds,
-                                  @QueryParam("channelId") List<Integer> channelIds) {
+                                  @QueryParam("channelId") List<Integer> channelIds,
+                                  @QueryParam("integratorId") List<Integer> integratorIds) {
         String companyin = setParametersforQuery(companyIds,"and me.sen_com_id in ");
         String campaignin = setParametersforQuery(campaignIds,"and me.sen_cam_id in ");
         String channelin = setParametersforQuery(channelIds,"and me.sen_cha_id in ");
+        String integratorin = setParametersforQuery(integratorIds, "and me.sen_int_id in");
         Map<String, Statistics> stats = new HashMap<String, Statistics>();
         try {
             Statement st = connStar.createStatement();
             if (!companyIds.isEmpty()) {
-                stats.put("companies", getMessagesParam(companyin, campaignin, channelin, "me.sen_com_id", "co.com_name",
-                        "public.dim_company_campaign co", "co.com_id", st));
+                stats.put("companies", getMessagesParam(companyin, campaignin, channelin, integratorin,"me.sen_com_id",
+                        "co.com_name", "public.dim_company_campaign co", "co.com_id", st));
                 //stats.add();
             }
             if (!campaignIds.isEmpty()) {
-                stats.put("campaigns", getMessagesParam(companyin, campaignin, channelin, "me.sen_cam_id", "ca.cam_name",
-                        "public.dim_company_campaign ca", "ca.cam_id", st));
+                stats.put("campaigns", getMessagesParam(companyin, campaignin, channelin, integratorin, "me.sen_cam_id",
+                        "ca.cam_name", "public.dim_company_campaign ca", "ca.cam_id", st));
                 //stats.add();
             }
             if (!channelIds.isEmpty()) {
-                stats.put("channels", getMessagesParam(companyin, campaignin, channelin, "me.sen_cha_id", "ch.cha_name",
-                        "public.dim_channel ch", "ch.cha_id", st));
+                stats.put("channels", getMessagesParam(companyin, campaignin, channelin, integratorin, "me.sen_cha_id",
+                        "ch.cha_name", "public.dim_channel ch", "ch.cha_id", st));
                 //stats.add();
             }
-            if (channelIds.isEmpty() && campaignIds.isEmpty() && companyIds.isEmpty()){
+            if (!integratorIds.isEmpty()) {
+                stats.put("integrators", getMessagesParam(companyin, campaignin, channelin, integratorin, "me.sen_int_id",
+                        "int.int_name", "public.dim_integrator int", "int.int_id", st));
+                //stats.add();
+            }
+            if (channelIds.isEmpty() && campaignIds.isEmpty() && companyIds.isEmpty() && integratorIds.isEmpty()){
                 return Response.status(400).entity("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }").build();
             }
         } catch (SQLException e) {
@@ -293,8 +300,8 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(stats)).build();
     }
 
-    public Statistics getMessagesParam(String companyIds, String campaignIds, String channelIds, String param1, String param2, String param3,
-                                       String param4, Statement st){
+    public Statistics getMessagesParam(String companyIds, String campaignIds, String channelIds, String integratorIds, String param1, String param2,
+                                       String param3, String param4, Statement st){
         int num;
         String name;
         ArrayList<String> listName = new ArrayList<>();
@@ -302,7 +309,8 @@ public class M09_Statistics extends Application {
         Statistics gr = new Statistics();
         try {
             String select = "SELECT icount, paramName FROM m09_get_MessageParameter('"+ companyIds + "','" + campaignIds + "','" +
-                    channelIds + "','" + param1 + "','" + param2 + "','" + param3 + "','" + param4 + "')";
+                    channelIds + "','" + integratorIds + "','" + param1 + "','" + param2 + "','" + param3 + "','" + param4 + "')";
+            System.out.println(select);
             ResultSet result = st.executeQuery( select );
             while ( result.next() ) {
                 num = result.getInt("icount");

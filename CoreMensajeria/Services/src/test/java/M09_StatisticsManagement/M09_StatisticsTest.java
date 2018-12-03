@@ -111,29 +111,31 @@ public class M09_StatisticsTest {
         }
     }
 
+    
+    @Test
+    void getStatisticsTestOk200()  {
+        try {
+            M09_Statistics intance = new M09_Statistics();
+            ArrayList<Integer> listaCompany  = new ArrayList<>();
+            ArrayList<Integer> listaCampaign = new ArrayList<>();
+            ArrayList<Integer> listaChannels = new ArrayList<>();
+            ArrayList<Integer> listaIntegrators = new ArrayList<>();
+            listaCompany.add(1);
+            listaCampaign.add(1);
+            listaChannels.add(1);
 
-//    @Test
-//    void getStatisticsTestOk200()  {
-//        try {
-//            M09_Statistics intance = new M09_Statistics();
-//            ArrayList<Integer> listaCompany  = new ArrayList<>();
-//            ArrayList<Integer> listaCampaign = new ArrayList<>();
-//            ArrayList<Integer> listaChannels = new ArrayList<>();
-//            listaCompany.add(1);
-//            listaCampaign.add(1);
-//            listaChannels.add(1);
-//            Response salida = intance.getStatistics( listaCompany, listaCampaign, listaChannels );
-//
-//            assertEquals( 200, salida.getStatus() );
-//            assertEquals( salida.getEntity().toString(),
-//                    "{\"companies\":{\"x\":[\"Company 1\"],\"y\":[3]}" +
-//                            ",\"campaigns\":{\"x\":[\"Campaign 1\"],\"y\":[3]}" +
-//                            ",\"channels\":{\"x\":[\"SMS\"],\"y\":[3]}}" );
-//
-//        } catch ( Exception e ) {
-//            e.printStackTrace();
-//        }
-//    }
+            Response salida = intance.getStatistics( listaCompany, listaCampaign, listaChannels, listaIntegrators);
+
+            assertEquals( 200, salida.getStatus() );
+            assertEquals( salida.getEntity().toString(),
+                    "{\"companies\":{\"x\":[\"Company 1\"],\"y\":[3]}" +
+                            ",\"campaigns\":{\"x\":[\"Campaign 1\"],\"y\":[3]}" +
+                            ",\"channels\":{\"x\":[\"SMS\"],\"y\":[3]}}" );
+
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     void getStatisticsTestBadRequest(){
@@ -141,7 +143,8 @@ public class M09_StatisticsTest {
         ArrayList<Integer> listaCompany  = new ArrayList<>();
         ArrayList<Integer> listaCampaign = new ArrayList<>();
         ArrayList<Integer> listaChannels = new ArrayList<>();
-        Response salida = instance.getStatistics(listaCompany, listaChannels, listaCampaign);
+        ArrayList<Integer> listaIntegrators = new ArrayList<>();
+        Response salida = instance.getStatistics(listaCompany, listaChannels, listaCampaign, listaIntegrators);
         assertEquals(400, salida.getStatus());
         assertEquals("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }", salida.getEntity().toString());
     }
