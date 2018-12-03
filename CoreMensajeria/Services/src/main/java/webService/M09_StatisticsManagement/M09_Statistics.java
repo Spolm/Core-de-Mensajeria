@@ -255,6 +255,11 @@ public class M09_Statistics extends Application {
     }
 
     @GET
+    @Path("/yearsCount")
+    @Produces("application/json")
+    public Response getYears()
+
+    @GET
     @Path("/filters")
     @Produces("application/json")
     public Response getStatistics(@QueryParam("companyId") List<Integer> companyIds,
