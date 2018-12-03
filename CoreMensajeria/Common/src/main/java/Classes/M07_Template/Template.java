@@ -5,6 +5,7 @@ import Classes.M03_Campaign.Campaign;
 import Classes.M06_DataOrigin.Application;
 import Classes.M05_Channel.Channel;
 import Classes.M07_Template.MessagePackage.*;
+import Classes.M07_Template.PlanningPackage.Planning;
 import Classes.M07_Template.StatusPackage.*;
 
 import java.util.*;
@@ -45,6 +46,10 @@ public class Template {
      * user creator of the template
      */
     private User user;
+    /**
+     * planning of the template
+     */
+    private Planning planning;
 
     /**
      * empty builder
@@ -197,6 +202,22 @@ public class Template {
      */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    /**
+     * show planning of the template
+     * @return planning of the template
+     */
+    public Planning getPlanning() {
+        return planning;
+    }
+
+    /**
+     * add/modify planning of the template
+     * @param planning new planning
+     */
+    public void setPlanning(Planning planning) {
+        this.planning = planning;
     }
 
     @Override

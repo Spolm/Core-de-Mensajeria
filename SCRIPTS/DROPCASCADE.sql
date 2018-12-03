@@ -64,3 +64,11 @@ drop function m09_update_starschema();
 drop function m07_select_templates_by_campaign(integer);
 
 drop function m07_select_all_templates();
+
+drop function m01_getprivileges(integer);
+
+drop function m01_changepassword(varchar, varchar);
+
+drop function m01_findbyusernameid(integer);
+
+drop function m01_deleteuser(integer);

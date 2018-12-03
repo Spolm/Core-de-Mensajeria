@@ -102,6 +102,7 @@ public class TemplateHandler {
                 ApplicationDAO applicationService = new ApplicationDAO();
                 template.setApplication(applicationService.getApplication
                         (template.getTemplateId()));
+                template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
                 templateArrayList.add(template);
             }
         }catch (SQLException e) {
@@ -147,6 +148,7 @@ public class TemplateHandler {
                 ApplicationDAO applicationService = new ApplicationDAO();
                 template.setApplication(applicationService.getApplication
                         (template.getTemplateId()));
+                template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
             }
 
         }catch (ParameterDoesntExistsException e) {

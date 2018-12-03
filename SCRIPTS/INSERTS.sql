@@ -297,3 +297,14 @@ INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_i
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-11-09', 2, 12, 1, 3, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-04-16', 2, 13, 2, 4, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-07-23', 2, 14, 1, 5, 1);
+
+INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
+VALUES ('2003-02-01','2022-04-04', '08:30', '18:30', 1);
+INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
+VALUES ('2014-10-11','2014-12-05', '07:00', '17:00', 2);
+INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
+VALUES ('2014-10-12','2015-01-29', '10:45', '20:00', 3);
+INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
+VALUES ('2014-11-11','2020-04-11', '9:00', '17:30', 4);
+INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
+VALUES ('2016-07-04','2019-12-01', '12:00', '23:15', 5);

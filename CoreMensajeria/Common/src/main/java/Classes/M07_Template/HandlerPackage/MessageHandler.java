@@ -40,13 +40,9 @@ public class MessageHandler {
      */
     public ArrayList<Template> getMessages(ArrayList<Template> templateArrayList){
         try {
-            Connection connection = Sql.getConInstance();
-            PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_messages(?)}");
             for(int x = 0; x < templateArrayList.size(); x++){
-                preparedStatement.setInt(1, templateArrayList.get(x).getTemplateId());
-                ResultSet resultSet = preparedStatement.executeQuery();
-               /*ResultSet resultSet = sql.sqlConn("SELECT * FROM PUBLIC.MESSAGE WHERE MES_TEMPLATE = " +
-                        templateArrayList.get(x).getTemplateId());*/
+                ResultSet resultSet = sql.sqlConn("SELECT * FROM PUBLIC.MESSAGE WHERE MES_TEMPLATE = " +
+                        templateArrayList.get(x).getTemplateId());
                 resultSet.next();
                 Message message = new Message();
                 message.setMessageId(resultSet.getInt("mes_id"));
@@ -75,12 +71,11 @@ public class MessageHandler {
     public static Message getMessage(int templateId)
             throws MessageDoesntExistsException, ParameterDoesntExistsException{
         //String query = "select mes_id,mes_text from message where mes_template =" + templateId;
+        String query = "select mes_id,mes_text from message where mes_template =" + templateId;
         Message message = new Message();
+        sql = new Sql();
         try {
-            Connection connection = Sql.getConInstance();
-            PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_message(?)}");
-            preparedStatement.setInt(1, templateId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = sql.sqlConn(query);
             if (resultSet.next()){
                 message.setMessageId(resultSet.getInt("mes_id"));
                 message.setMessage(resultSet.getString("mes_text"));
@@ -92,8 +87,8 @@ public class MessageHandler {
                             + templateId,e, templateId);
         }catch (SQLException e) {
             throw new MessageDoesntExistsException
-                ("Error: No existe mensaje para esta plantilla con id:"
-                        + templateId, e, templateId);
+                    ("Error: No existe mensaje para esta plantilla con id:"
+                            + templateId, e, templateId);
         }catch(Exception e){
             e.printStackTrace();
         }finally {
@@ -113,15 +108,12 @@ public class MessageHandler {
      * @param companyId company id
      */
     public static void postMessage(String message, int templateId, String[] parameters,int companyId) {
-        /*String query = "INSERT INTO public.Message(mes_text,mes_template)" +
-                "VALUES ('" + message + "'," + templateId + ") returning mes_id";*/
+        String query = "INSERT INTO public.Message(mes_text,mes_template)" +
+                "VALUES ('" + message + "'," + templateId + ") returning mes_id";
+        sql = new Sql();
         int messageId=0;
         try{
-            Connection connection = Sql.getConInstance();
-            PreparedStatement preparedStatement = connection.prepareCall("{call m07_post_message(?,?)}");
-            preparedStatement.setString(1, message);
-            preparedStatement.setInt(2, templateId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = sql.sqlConn(query);
             if (resultSet.next()) {
                 messageId = resultSet.getInt("mes_id");
                 postParameterOfMessage(messageId,parameters,companyId);
@@ -142,21 +134,15 @@ public class MessageHandler {
      * @param companyId company id
      */
     private static void postParameterOfMessage(int messageId, String[] parameters, int companyId) {
-        //String query = "";
+        sql = new Sql();
+        String query = "";
         try{
-            Connection connection = Sql.getConInstance();
-            PreparedStatement preparedStatement = connection.prepareCall("{call m07_post_parameter_of_message(?,?,?}");
-            for (int i = 0; i < parameters.length; i++) {
-               /* query = query + "insert into public.message_parameter(mp_message,mp_parameter)\n" +
+            for (int i = 0; i < parameters.length; i++)
+                query = query + "insert into public.message_parameter(mp_message,mp_parameter)\n" +
                         "values (" + messageId + ",(select par_id \n" +
                         "from public.parameter\n" +
                         "where par_company_id = " + companyId + "  and par_name = '" + parameters[i] +"'));";
-            sql.sqlNoReturn(query);*/
-                preparedStatement.setInt(1, messageId);
-                preparedStatement.setInt(2, companyId);
-                preparedStatement.setString(3, parameters[i]);
-                ResultSet resultSet = preparedStatement.executeQuery();
-            }
+            sql.sqlNoReturn(query);
         }catch (Exception e){
             e.printStackTrace();
         } finally {
@@ -173,19 +159,15 @@ public class MessageHandler {
      * @param companyId company id
      */
     public static void updateMessage(String message, int templateId, String[] parameters,int companyId) {
-        /*String query = "UPDATE public.message\n" +
-                        "SET mes_text = '" + message + "'\n" +
-                        "WHERE mes_template = " + templateId + "\n" +
-                        "returning mes_id";
-        sql = new Sql();*/
+        String query = "UPDATE public.message\n" +
+                "SET mes_text = '" + message + "'\n" +
+                "WHERE mes_template = " + templateId + "\n" +
+                "returning mes_id";
+        sql = new Sql();
         ResultSet resultSet;
         int messageId;
         try{
-            Connection connection = Sql.getConInstance();
-            PreparedStatement preparedStatement = connection.prepareCall("{call m07_update_message(?,?}");
-            preparedStatement.setString(1, message);
-            preparedStatement.setInt(2, templateId);
-            resultSet = preparedStatement.executeQuery();
+            resultSet = sql.sqlConn(query);
             if (resultSet.next()){
                 messageId = resultSet.getInt("mes_id");
                 updateParameterOfMessage(messageId,parameters,companyId);
@@ -205,15 +187,11 @@ public class MessageHandler {
      * @param companyId company id
      */
     private static void updateParameterOfMessage(int messageId, String[] parameters, int companyId) {
-        /*String query = "delete from public.message_parameter\n" +
+        String query = "delete from public.message_parameter\n" +
                 "WHERE mp_message = " + messageId;
-        Sql sql = new Sql();*/
+        Sql sql = new Sql();
         try{
-            /*sql.sqlNoReturn(query);*/
-            Connection connection = Sql.getConInstance();
-            PreparedStatement preparedStatement = connection.prepareCall("{call m07_delete_parameter_of_message(?}");
-            preparedStatement.setInt(1, messageId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            sql.sqlNoReturn(query);
             postParameterOfMessage(messageId,parameters,companyId);
         } catch (Exception e){
             e.printStackTrace();
