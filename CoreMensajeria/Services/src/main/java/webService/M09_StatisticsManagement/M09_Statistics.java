@@ -257,7 +257,22 @@ public class M09_Statistics extends Application {
     @GET
     @Path("/yearsCount")
     @Produces("application/json")
-    public Response getYears()
+    public Response getYears(){
+        ArrayList<Integer> years = new ArrayList<>();
+        try{
+            Statement statement = connStar.createStatement();
+            String query = "SELECT dat_year FROM m09_getYears()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                years.add(result.getInt("dat_year"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connStar);
+        }
+        return Response.ok(gson.toJson(years)).build();
+    }
 
     @GET
     @Path("/filters")
