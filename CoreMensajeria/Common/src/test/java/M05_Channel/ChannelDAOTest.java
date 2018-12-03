@@ -1,8 +1,10 @@
-package Classes.M05_Channel;
+package M05_Channel;
 
 import Classes.M04_Integrator.Integrator;
+import Classes.M05_Channel.Channel;
+import Classes.M05_Channel.ChannelDAO;
+import Exceptions.ChannelNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ChannelServiceTest {
+class ChannelDAOTest {
     private static ChannelDAO _channelDAO;
     private static ArrayList<Integrator> _integratorList;
     private static ArrayList<Channel> _channelList;

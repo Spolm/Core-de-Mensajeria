@@ -4,6 +4,7 @@ import Classes.M04_Integrator.Integrator;
 import Classes.M04_Integrator.IntegratorDAO;
 import Classes.Sql;
 import Exceptions.DatabaseConnectionProblemException;
+import Exceptions.ChannelNotFoundException;
 
 import java.sql.*;
 import java.util.ArrayList;

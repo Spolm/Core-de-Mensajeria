@@ -1,5 +1,8 @@
-package Classes.M04_Integrator;
+package M04_Integrator;
 
+import Classes.M04_Integrator.Integrator;
+import Classes.M04_Integrator.IntegratorDAO;
+import Classes.M04_Integrator.Movistar;
 import Exceptions.DatabaseConnectionProblemException;
 import Exceptions.IntegratorNotFoundException;
 import org.junit.jupiter.api.BeforeAll;

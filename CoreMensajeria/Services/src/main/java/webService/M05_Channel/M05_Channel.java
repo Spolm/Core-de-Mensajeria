@@ -2,7 +2,7 @@ package webService.M05_Channel;
 
 import Classes.M05_Channel.Channel;
 import Classes.M05_Channel.ChannelDAO;
-import Classes.M05_Channel.ChannelNotFoundException;
+import Exceptions.ChannelNotFoundException;
 import Classes.M04_Integrator.Integrator;
 import Exceptions.DatabaseConnectionProblemException;
 
