@@ -22,6 +22,10 @@ export class StatisticsServiceService {
         return this.http.get(this.ApiURL + "channelsCount");
     }
 
+    getInitialMessagesForIntegrators() {
+        return this.http.get(this.ApiURL + "integratorsCount");
+    }
+
     getAllCompanies(userId: string) {
         let params = new HttpParams();
         params = params.set("userId", userId);

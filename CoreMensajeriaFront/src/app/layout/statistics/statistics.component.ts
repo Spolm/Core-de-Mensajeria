@@ -260,6 +260,17 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                     ChartType.doughnut
                 );
             });
+
+        this.statisticsService
+            .getInitialMessagesForIntegrators()
+            .subscribe(data => {
+                this.integratorsChart = this.insertInitialDataIntoCharts(
+                    data,
+                    this.integratorsChartElement,
+                    "Cantidad de mensajes por integrador",
+                    ChartType.bar
+                );
+            });
     }
 
     private getAllCompanies() {
