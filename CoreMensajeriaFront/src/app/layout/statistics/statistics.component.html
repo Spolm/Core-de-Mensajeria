@@ -50,45 +50,35 @@
             </button>
         </div>
     </div>
-</div>
-
-<div class="Container">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">
-                Tipo de Graficas:
-            </label>
-        </div>
-        <select
-            class="custom-select"
-            id="inputGroupSelect01"
-            [(ngModel)]="opcionSeleccionado"
-        >
-            <!-- (change) = "capturar()" -->
-            <option selected value="0">Elija</option>
-            <option *ngFor="let dato of datos"> {{ dato }} </option>
-        </select>
-    </div>
 
     <!-- capturar(); capturarDate(); DoGraficas() -->
-    <button
-        type="button"
-        class="btn btn-success btn-lg"
-        (click)="ChartTransformation()"
-    >
-        Consultar
-    </button>
+    <div class="text-center">
+        <!--
+            <button
+                type="button"
+                class="btn btn-success"
+                (click)="ChartTransformation()"
+            >
+                Consultar
+            </button>
+        -->
 
-    <button
-        type="button"
-        class="btn btn-success btn-lg"
-        (click)="sendUserRequest()"
-    >
-        Consultar 2
-    </button>
-</div>
+        <button
+            type="button"
+            class="btn btn-primary btn-lg btn-center"
+            (click)="sendUserRequest()"
+        >
+            Consultar
+        </button>
 
-<div class="container">
+        <button
+            class="btn btn-outline-success btn-lg btn-center"
+            (click)="updateStarSchema()"
+        >
+            Actualizar
+        </button>
+    </div>
+
     <div class="row">
         <div *ngIf="timeLineChart" class="col-lg-12">
             <canvas #timeLineChart>{{ timeLineChart }}</canvas>
@@ -97,20 +87,100 @@
     <div class="row">
         <div *ngIf="companiesChart" class="col-lg-6">
             <canvas #companiesChartElement>{{ companiesChart }}</canvas>
+            <div class="input-group chartTypeDropdown">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="companiesChartType">
+                        Tipo de gráfica:
+                    </label>
+                </div>
+                <select
+                    class="custom-select"
+                    id="companiesChartType"
+                    (change)="changeCompaniesChart($event.target.value)"
+                >
+                    <option
+                        *ngFor="let chartType of chartTypes"
+                        value="{{ chartType[0] }}"
+                        [selected]="chartType[0] == 'bar'"
+                    >
+                        {{ chartType[1] }}
+                    </option>
+                </select>
+            </div>
         </div>
 
         <div *ngIf="campaignsChart" class="col-lg-6">
             <canvas #campaignsChartElement>{{ campaignsChart }}</canvas>
+            <div class="input-group chartTypeDropdown">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="campaignsChartType">
+                        Tipo de gráfica:
+                    </label>
+                </div>
+                <select
+                    class="custom-select"
+                    id="campaignsChartType"
+                    (change)="changeCampaignsChart($event.target.value)"
+                >
+                    <option
+                        *ngFor="let chartType of chartTypes"
+                        value="{{ chartType[0] }}"
+                        [selected]="chartType[0] == 'bar'"
+                    >
+                        {{ chartType[1] }}
+                    </option>
+                </select>
+            </div>
         </div>
     </div>
 
     <div class="row">
         <div *ngIf="channelsChart" class="col-lg-6">
             <canvas #channelsChartElement>{{ channelsChart }}</canvas>
+            <div class="input-group chartTypeDropdown">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="channelsChartType">
+                        Tipo de gráfica:
+                    </label>
+                </div>
+                <select
+                    class="custom-select"
+                    id="channelsChartType"
+                    (change)="changeChannelsChart($event.target.value)"
+                >
+                    <option
+                        *ngFor="let chartType of chartTypes"
+                        value="{{ chartType[0] }}"
+                        [selected]="chartType[0] == 'doughnut'"
+                    >
+                        {{ chartType[1] }}
+                    </option>
+                </select>
+            </div>
         </div>
 
         <div *ngIf="integratorsChart" class="col-lg-6">
             <canvas #integratorsChartElement>{{ integratorsChart }}</canvas>
+            <div class="input-group chartTypeDropdown">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="integratorsChartType">
+                        Tipo de gráfica:
+                    </label>
+                </div>
+                <select
+                    class="custom-select"
+                    id="integratorsChartType"
+                    (change)="changeIntegratorsChart($event.target.value)"
+                >
+                    <option
+                        *ngFor="let chartType of chartTypes"
+                        value="{{ chartType[0] }}"
+                        [selected]="chartType[0] == 'bar'"
+                    >
+                        {{ chartType[1] }}
+                    </option>
+                </select>
+            </div>
         </div>
     </div>
 </div>
