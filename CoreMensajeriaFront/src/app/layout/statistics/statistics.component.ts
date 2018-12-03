@@ -1,5 +1,4 @@
 import { ProfileComponent } from "./../profile/profile.component";
-import { PlotlyModule, PlotComponent } from "angular-plotly.js";
 import { StatisticsServiceService } from "./statistics-service.service";
 import {
     Component,
@@ -8,16 +7,21 @@ import {
     ViewChild,
     AfterViewInit
 } from "@angular/core";
-import * as Plotly from "plotly.js/dist/plotly.js";
-import { Config, Data, Layout } from "plotly.js/dist/plotly.js";
 import { ToastrService } from "ngx-toastr";
 import { HttpParams } from "@angular/common/http";
-import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
+import {
+    MatDialog,
+    MatDialogConfig,
+    MatDialogRef,
+    MAT_DIALOG_DATA
+} from "@angular/material";
 import { MoreFiltersComponent } from "./more-filters/more-filters.component";
 import { Chart } from "chart.js";
 import { Point } from "./point";
 import { forEach } from "@angular/router/src/utils/collection";
 import { ChartsComponent } from "../charts/charts.component";
+import { DropdownComponent } from "../bs-component/components";
+import { DropdownMethods } from "./DropdownMethods";
 //import { create } from "domain";
 
 interface myData {
@@ -42,7 +46,7 @@ enum ChartType {
     templateUrl: "./statistics.component.html",
     styleUrls: ["./statistics.component.scss"]
 })
-export class StatisticsComponent implements OnInit {
+export class StatisticsComponent extends DropdownMethods implements OnInit {
     userId: string;
 
     /* =================================
@@ -52,36 +56,17 @@ export class StatisticsComponent implements OnInit {
     @ViewChild("companiesChartElement") companiesChartElement: ElementRef;
     @ViewChild("campaignsChartElement") campaignsChartElement: ElementRef;
     @ViewChild("channelsChartElement") channelsChartElement: ElementRef;
+    @ViewChild("integratorsChartElement") integratorsChartElement: ElementRef;
 
     /* ==============
            Charts
     ================= */
-    timeLineChart = [];
-    companiesChart = [];
-    campaignsChart = [];
-    channelsChart = [];
+    timeLineChart: Chart = [];
+    companiesChart: Chart = [];
+    campaignsChart: Chart = [];
+    channelsChart: Chart = [];
+    integratorsChart: Chart = [];
 
-    /* ==========================
-           Filter dropdowns
-    ============================= */
-    companiesDropdown = [];
-    companiesDropdownSettings = {};
-    selectedCompaniesIds: Number[] = [];
-    selectedCompanies = [];
-
-    campaignsDropdown = [];
-    campaignsDropdownSettings = {};
-    selectedCampaignsIds = [];
-    selectedCampaigns = [];
-
-    channelsDropdown = [];
-    channelsDropdownSettings = {};
-    selectedChannelsIds = [];
-    selectedChannels = [];
-
-    json2;
-    datos;
-    opcionSeleccionado: string = "0";
     verSeleccion: string = "";
     Date2Capturado: string = "";
     Date1Capturado: string = "";
@@ -89,15 +74,18 @@ export class StatisticsComponent implements OnInit {
     opcionDateSleccionado2: Date;
     paramType: string;
 
+    chartTypes = [];
+
     constructor(
-        private statisticsService: StatisticsServiceService,
-        private toastr: ToastrService,
+        public statisticsService: StatisticsServiceService,
+        public toastr: ToastrService,
         public dialog: MatDialog
     ) {
-        this.datos = [
-            "Cantidad de mensajes enviados por Compañias",
-            "Cantidad de mensajes enviados por Campañas",
-            "Cantidad de mensajes enviados por Canales"
+        super(statisticsService, toastr);
+        this.chartTypes = [
+            ["bar", "barras", true],
+            ["line", "línea", false],
+            ["doughnut", "dona", false]
         ];
     }
 
@@ -176,15 +164,48 @@ export class StatisticsComponent implements OnInit {
         );
     }
 
+    changeCompaniesChart(value: string) {
+        this.companiesChart = this.changeChartType(
+            value,
+            this.companiesChart,
+            this.companiesChartElement
+        );
+    }
+
+    changeCampaignsChart(value: string) {
+        this.campaignsChart = this.changeChartType(
+            value,
+            this.campaignsChart,
+            this.campaignsChartElement
+        );
+    }
+
+    changeChannelsChart(value: string) {
+        this.channelsChart = this.changeChartType(
+            value,
+            this.channelsChart,
+            this.channelsChartElement
+        );
+    }
+
+    changeIntegratorsChart(value: string) {
+        this.integratorsChart = this.changeChartType(
+            value,
+            this.integratorsChart,
+            this.integratorsChartElement
+        );
+    }
+
+    changeChartType(value: string, chart: Chart, element: ElementRef): Chart {
+        var config = chart.config;
+        chart.destroy();
+        config.type = value;
+        return new Chart(element.nativeElement.getContext("2d"), config);
+    }
+
     ngOnInit() {
-        this.userId = localStorage.getItem("userid");
-
-        this.setupCompaniesDropdownSettings();
-        this.setupCampaignsDropdownSettings();
-        this.setupChannelsDropdownSettings();
-
         this.getAllCompanies();
-        this.getAllCampaigns();
+        //this.getAllCampaigns();
         this.getAllChannels();
 
         this.statisticsService
@@ -219,116 +240,68 @@ export class StatisticsComponent implements OnInit {
                     ChartType.doughnut
                 );
             });
-    }
 
-    private setupCompaniesDropdownSettings() {
-        this.companiesDropdownSettings = {
-            singleSelection: false,
-            idField: "company_id",
-            textField: "company_name",
-            selectAllText: "Seleccionar todos",
-            unSelectAllText: "Deseleccionar todos",
-            itemsShowLimit: 1,
-            allowSearchFilter: true
-        };
-    }
-
-    private setupCampaignsDropdownSettings() {
-        this.campaignsDropdownSettings = {
-            singleSelection: false,
-            idField: "campaign_id",
-            textField: "campaign_name",
-            selectAllText: "Seleccionar todos",
-            unSelectAllText: "Deseleccionar todos",
-            itemsShowLimit: 1,
-            allowSearchFilter: true
-        };
-    }
-
-    private setupChannelsDropdownSettings() {
-        this.channelsDropdownSettings = {
-            singleSelection: false,
-            idField: "channel_id",
-            textField: "channel_name",
-            selectAllText: "Seleccionar todos",
-            unSelectAllText: "Deseleccionar todos",
-            itemsShowLimit: 1,
-            allowSearchFilter: true
-        };
+        this.statisticsService
+            .getInitialMessagesForIntegrators()
+            .subscribe(data => {
+                this.integratorsChart = this.insertInitialDataIntoCharts(
+                    data,
+                    this.integratorsChartElement,
+                    "Cantidad de mensajes por integrador",
+                    ChartType.bar
+                );
+            });
     }
 
     private getAllCompanies() {
         this.statisticsService.getAllCompanies(this.userId).subscribe(
             data => {
                 this.insertIntoDropdown(EntityType.company, data);
+                this.getAllCampaigns();
             },
             error => {
                 console.log(
                     "Error getting companies: " + JSON.stringify(error)
                 );
+                this.toastr.error("Error obteniendo las compañías.");
             }
         );
     }
 
     getAllCampaigns() {
-        this.statisticsService.getAllCampaigns(this.userId).subscribe(
-            data => {
-                this.insertIntoDropdown(EntityType.campaign, data);
-            },
-            error => {
-                console.log(error);
-                this.toastr.error("Error de conexión");
-            }
-        );
+        this.statisticsService
+            .getCampaingsForCompany(
+                this.getIdsFromDropdown(this.companiesDropdown, "company_id")
+            )
+            .subscribe(
+                data => {
+                    this.insertIntoDropdown(EntityType.campaign, data);
+                },
+                error => {
+                    console.log(error);
+                    this.toastr.error("Error obteniendo las campañas.");
+                }
+            );
     }
 
     private getAllChannels() {
         this.statisticsService.getAllChannels().subscribe(data => {
             this.insertIntoDropdown(EntityType.channel, data);
+            this.getAllIntegrators();
         });
     }
 
-    private insertIntoDropdown(entityType: EntityType, data: Object) {
-        switch (entityType) {
-            case EntityType.company:
-                for (var index in data) {
-                    this.companiesDropdown.push({
-                        company_id: data[index]["_idCompany"],
-                        company_name: data[index]["_name"]
-                    });
-                }
-                break;
-            case EntityType.campaign:
-                this.campaignsDropdown = [];
-                for (var index in data) {
-                    this.campaignsDropdown.push({
-                        campaign_id: data[index]["_idCampaign"],
-                        campaign_name: data[index]["_nameCampaign"]
-                    });
-                }
-                break;
-            case EntityType.channel:
-                for (var index in data) {
-                    this.channelsDropdown.push({
-                        channel_id: data[index]["idChannel"],
-                        channel_name: data[index]["nameChannel"]
-                    });
-                }
-                break;
-        }
-    }
+    // capturar() {
+    //     if (this.opcionSeleccionado != "0") {
+    //         // Pasamos el valor seleccionado a la variable verSeleccion
+    //         this.verSeleccion = this.opcionSeleccionado;
+    //         console.log("Valor Capturado", this.verSeleccion);
+    //     } else this.toastr.error("Debe seleccionar otra opcion");
+    // }
 
-    capturar() {
-        if (this.opcionSeleccionado != "0") {
-            // Pasamos el valor seleccionado a la variable verSeleccion
-            this.verSeleccion = this.opcionSeleccionado;
-            console.log("Valor Capturado", this.verSeleccion);
-        } else this.toastr.error("Debe seleccionar otra opcion");
-    }
-
-      capturarDate() {
+    capturarDate() {
         if (
-          this.opcionDateSleccionado != null &&
+            this.opcionDateSleccionado != null &&
             this.opcionDateSleccionado2 != null &&
             this.opcionDateSleccionado < this.opcionDateSleccionado2
         ) {
@@ -348,18 +321,6 @@ export class StatisticsComponent implements OnInit {
                 new Date(this.opcionDateSleccionado2).getUTCMonth(),
                 new Date(this.opcionDateSleccionado2).getFullYear()
             );
-            this.statisticsService
-                .getDataLineChartCompany(
-                    // getStatisticsData4 
-                    this.Date1Capturado +
-                        "&" +
-                        this.Date2Capturado +
-                        "&" +
-                        this.paramType
-                )
-                .subscribe(data => {
-                    console.log(data);
-                });
         } else if (
             (this.opcionDateSleccionado == null &&
                 this.opcionDateSleccionado2 == null) ||
@@ -371,120 +332,8 @@ export class StatisticsComponent implements OnInit {
             this.Date1Capturado = "?paramDate1=";
             this.Date2Capturado = "?paramDate2=";
             this.paramType = "paramType=" + this.verSeleccion;
-            this.statisticsService
-                .getDataLineChartCompany(
-                    // getStatisticsData4 
-                    this.Date1Capturado +
-                        "&" +
-                        this.Date2Capturado +
-                        "&" +
-                        this.paramType
-                )
-                .subscribe(data => {
-                    console.log(data);
-                });
-        } else {
             this.toastr.error("Error en las fechas");
         }
-    }
-
-    piechartCampaign(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("pie-chartCampaign");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Campañas"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    linechartCampaign(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("line-chartCampaign");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Campañas"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    barchartCampaign(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("bar-chartCampaign");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Campañas"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    piechartCompany(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("pie-chartCompany");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Compañias"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    linechartCompany(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("line-chartCompany");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Compañias"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    barchartCompany(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("bar-chartCompany");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Compañias"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    piechartChannels(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("pie-chartChannels");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Canales"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    linechartChannels(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("line-chartChannels");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Canales"
-        };
-        Plotly.newPlot(linediv, graph, layout);
-    }
-
-    barchartChannels(datos) {
-        const graph = [datos];
-        const linediv = document.getElementById("bar-chartChannels");
-        const layout = {
-            width: 500,
-            height: 300,
-            title: "Cantidad de mensajes enviados por Canales"
-        };
-        Plotly.newPlot(linediv, graph, layout);
     }
 
     // Handle company selecction
@@ -621,6 +470,18 @@ export class StatisticsComponent implements OnInit {
     }
 
     sendUserRequest() {
+        // this.verSeleccion = this.opcionSeleccionado;
+        console.log("Valor Capturado", this.verSeleccion);
+
+        if (this.verSeleccion == "Grafico de Tortas") {
+            var TypeChosen: ChartType = ChartType.doughnut;
+            console.log("paso por el if", TypeChosen);
+        } else if (this.verSeleccion == "Grafico de Barras") {
+            var TypeChosen: ChartType = ChartType.bar;
+        } else if (this.verSeleccion == "Grafico de Linea") {
+            var TypeChosen: ChartType = ChartType.line;
+        }
+
         var params = this.convertSelectedItemsIntoHttpParams();
         this.statisticsService.getStatistics(params).subscribe(
             data => {
@@ -641,6 +502,43 @@ export class StatisticsComponent implements OnInit {
                 console.error(error);
             }
         );
+    }
+
+    convertSelectedItemsIntoHttpParams(): HttpParams {
+        var params = new HttpParams();
+        params = this.convertselectedCompaniesIdsIntoHttpParams(params);
+        params = this.convertselectedCampaignsIdsIntoHttpParams(params);
+        params = this.convertselectedChannelsIdsIntoHttpParams(params);
+        params = this.convertselectedIntegratorsIdsIntoHttpParams(params);
+        return params;
+    }
+
+    convertselectedCompaniesIdsIntoHttpParams(params: HttpParams) {
+        this.selectedCompaniesIds.forEach(companyId => {
+            params = params.append("companyId", companyId.toString());
+        });
+        return params;
+    }
+
+    convertselectedCampaignsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedCampaignsIds.forEach(campaignId => {
+            params = params.append("campaignId", campaignId.toString());
+        });
+        return params;
+    }
+
+    convertselectedChannelsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedChannelsIds.forEach(channelId => {
+            params = params.append("channelId", channelId.toString());
+        });
+        return params;
+    }
+
+    convertselectedIntegratorsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedIntegratorsIds.forEach(integratorId => {
+            params = params.append("integratorId", integratorId.toString());
+        });
+        return params;
     }
 
     updateChartData(chart: Chart, data: Point[], typeOfChart: ChartType) {
@@ -673,62 +571,71 @@ export class StatisticsComponent implements OnInit {
         return points;
     }
 
-    convertSelectedItemsIntoHttpParams(): HttpParams {
-        var params = new HttpParams();
-        params = this.convertselectedCompaniesIdsIntoHttpParams(params);
-        params = this.convertselectedCampaignsIdsIntoHttpParams(params);
-        params = this.convertselectedChannelsIdsIntoHttpParams(params);
-        return params;
-    }
-
-    convertselectedCompaniesIdsIntoHttpParams(params: HttpParams) {
-        this.selectedCompaniesIds.forEach(companyId => {
-            params = params.append("companyId", companyId.toString());
-        });
-        return params;
-    }
-
-    convertselectedCampaignsIdsIntoHttpParams(params: HttpParams) {
-        this.selectedCampaignsIds.forEach(campaignId => {
-            params = params.append("campaignId", campaignId.toString());
-        });
-        return params;
-    }
-
-    convertselectedChannelsIdsIntoHttpParams(params: HttpParams) {
-        this.selectedChannelsIds.forEach(channelId => {
-            params = params.append("channelId", channelId.toString());
-        });
-        return params;
-    }
-
     openFilters() {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = false;
         dialogConfig.width = "100%";
         dialogConfig.maxWidth = "100%";
         dialogConfig.height = "80%";
+        dialogConfig.minHeight = "400px";
         dialogConfig.data = {
             id: 1,
+            // Companies
             companiesDropdown: this.companiesDropdown,
             selectedCompanies: this.selectedCompanies,
             selectedCompaniesIds: this.selectedCompaniesIds,
             companiesDropdownSettings: this.companiesDropdownSettings,
+            // Campaigns
             campaignsDropdown: this.campaignsDropdown,
             selectedCampaigns: this.selectedCampaigns,
             selectedCampaignsIds: this.selectedCampaignsIds,
             campaignsDropdownSettings: this.campaignsDropdownSettings,
+            // Channels
             channelsDropdown: this.channelsDropdown,
             selectedChannels: this.selectedChannels,
             selectedChannelsIds: this.selectedChannelsIds,
-            channelsDropdownSettings: this.channelsDropdownSettings
+            channelsDropdownSettings: this.channelsDropdownSettings,
+            // Integrators
+            integratorsDropdown: this.integratorsDropdown,
+            selectedIntegrators: this.selectedIntegrators,
+            selectedIntegratorsIds: this.selectedIntegratorsIds,
+            integratorsDropdownSettings: this.integratorsDropdownSettings
         };
         const dialogRef = this.dialog.open(MoreFiltersComponent, dialogConfig);
         dialogRef.updatePosition({ top: "55px", right: "0px", left: "0px" });
         dialogRef.afterClosed().subscribe(result => {
             console.log("Dialog was closed");
+            this.fillCompaniesDropdownFromMenuData(result);
+            this.fillCampaignsDropdownFromMenuData(result);
+            this.fillChannelsDropdownFromMenuData(result);
+            this.fillIntegratorsDropdownFromMenuData(result);
             console.log(result);
         });
+    }
+
+    fillCompaniesDropdownFromMenuData(data) {
+        this.selectedCompanies = data["companies"]["selectedCompanies"];
+        this.selectedCompaniesIds = data["companies"]["selectedCompaniesIds"];
+        this.companiesDropdown = data["companies"]["companiesDropdown"];
+    }
+
+    fillCampaignsDropdownFromMenuData(data) {
+        this.selectedCampaigns = data["campaigns"]["selectedCampaigns"];
+        this.selectedCampaignsIds = data["campaigns"]["selectedCampaignsIds"];
+        this.campaignsDropdown = data["campaigns"]["campaignsDropdown"];
+    }
+
+    fillChannelsDropdownFromMenuData(data) {
+        this.selectedChannels = data["channels"]["selectedChannels"];
+        this.selectedChannelsIds = data["channels"]["selectedChannelsIds"];
+        this.channelsDropdown = data["channels"]["channelsDropdown"];
+    }
+
+    fillIntegratorsDropdownFromMenuData(data) {
+        this.selectedIntegrators = data["integrators"]["selectedIntegrators"];
+        this.selectedIntegratorsIds =
+            data["integrators"]["selectedIntegratorsIds"];
+        this.integratorsDropdown = data["integrators"]["integratorsDropdown"];
     }
 
     getArrayOfRandomColors(length: Number): String[] {
@@ -756,7 +663,6 @@ export class StatisticsComponent implements OnInit {
         type: ChartType,
         element: ElementRef
     ): Chart {
-        console.log(type.valueOf());
         return new Chart(element.nativeElement.getContext("2d"), {
             type: type.valueOf(),
             data: {
@@ -807,5 +713,20 @@ export class StatisticsComponent implements OnInit {
         chart.data.datasets[0].backgroundColor = colors;
 
         chart.update();
+    }
+
+    updateStarSchema() {
+        this.statisticsService.updateStarSchema().subscribe(
+            data => {
+                this.toastr.success(
+                    "La base de datos de estadística ha sido actualizada satisfactoriamente."
+                );
+            },
+            error => {
+                this.toastr.error(
+                    "Hubo un error actualizando la base de datos de estadísticas."
+                );
+            }
+        );
     }
 }
