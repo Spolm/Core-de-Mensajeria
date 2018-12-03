@@ -395,6 +395,26 @@ public class M09_Statistics extends Application {
     }
 
     @GET
+    @Path("/hoursCount")
+    @Produces("application/json")
+    public Response getHours(){
+        ArrayList<Integer> hours = new ArrayList<>();
+        try{
+            Statement statement = connStar.createStatement();
+            String query = "SELECT dat_hourofday FROM m09_getHours()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                hours.add(result.getInt("dat_hourofday"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connStar);
+        }
+        return Response.ok(gson.toJson(hours)).build();
+    }
+
+    @GET
     @Path("/filters")
     @Produces("application/json")
     public Response getStatistics(@QueryParam("companyId") List<Integer> companyIds,
