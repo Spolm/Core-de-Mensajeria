@@ -1,0 +1,29 @@
+<div class="login-page" [@routerTransition]>
+  <div class="row justify-content-md-center">
+      <div class="col-md-4">
+          <img class="user-avatar" src="assets/images/logo.png" width="150px" />
+          <h1>Core de Mensajería</h1>
+          <h5>Universidad Católica Andrés Bello</h5>
+          
+          <form role="form">
+              <div class="form-content">
+                  <p>Ingrese el código de verificación, su correo y su nueva contraseña</p>
+                  <div class="form-group">
+                      <input type="text" [(ngModel)]="_verifCode" class="form-control input-underline input-lg" id="" placeholder="Código de verificacion" name="verifCode">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" [(ngModel)]="_email" class="form-control input-underline input-lg" id="" placeholder="Correo o usuario" name="email">
+                  </div>
+                  <div class="form-group">
+                      <input type="password" [(ngModel)]="_newPass" class="form-control input-underline input-lg" id="" placeholder="Ingrese clave" name="newPass">
+                  </div>
+                  <div class="form-group">
+                      <input type="password" [(ngModel)]="_newPass1" class="form-control input-underline input-lg" id="" placeholder="Repita clave" name="_newPass1">
+                  </div>
+              </div>
+              <a class="btn rounded-btn" (click)="handleVerification()"> Verificar </a>&nbsp;
+              <a class="btn rounded-btn" [routerLink]="['/login']"> Cancelar </a>
+          </form>
+      </div>
+  </div>
+</div>

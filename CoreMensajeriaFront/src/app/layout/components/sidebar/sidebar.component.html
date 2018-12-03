@@ -4,35 +4,35 @@
             <i class="fa fa-file-o"></i>&nbsp;
             <span>{{ 'Blank Page' | translate }}</span>
         </a>
-        <a [routerLink]="['/channel']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a *ngIf="findPrivilege('RCHANNEL')" [routerLink]="['/channel']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-filter"></i>&nbsp;
             <span>Canales</span>
         </a>
-        <a [routerLink]="['/integrator']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a *ngIf="findPrivilege('RINTEGRATOR')" [routerLink]="['/integrator']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-reply-all"></i>&nbsp;
             <span>Integradores</span>
         </a>
-        <a [routerLink]="['/statistics']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a *ngIf="findPrivilege('STATISTICS')" [routerLink]="['/statistics']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-bar-chart"></i>&nbsp;
             <span>{{ 'Estadísticas' | translate }}</span>
         </a>
-        <a [routerLink]="['/application']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a *ngIf="findPrivilege('RAPPLICATION')" [routerLink]="['/application']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-file-o"></i>&nbsp;
             <span>{{ 'Origen' | translate }}</span>
         </a>
-        <a [routerLink]="['/campaigns']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a *ngIf="findPrivilege('RCAMPAIGN')" [routerLink]="['/campaigns']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-bullhorn"></i>&nbsp;
             <span>{{ 'Campañas' | translate }}</span>
         </a>
-        <a [routerLink]="['/template']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a *ngIf="findPrivilege('RTEMPLATE')" [routerLink]="['/template']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-sticky-note"></i>&nbsp;
             <span>{{ 'Templates' | translate }}</span>
         </a>
-        <a [routerLink]="['/company']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a *ngIf="findPrivilege('RCOMPANY')" [routerLink]="['/company']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-rebel"></i>&nbsp;
             <span>{{ 'Compañias' | translate }}</span>
         </a>
-        <a [routerLink]="['/profile']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a *ngIf="findPrivilege('RUSER')" [routerLink]="['/profile']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-user-circle"></i>&nbsp;
             <span>{{ 'Profile' | translate }}</span>
         </a>
