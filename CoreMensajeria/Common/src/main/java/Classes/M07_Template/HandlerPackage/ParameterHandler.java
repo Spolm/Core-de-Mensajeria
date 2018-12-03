@@ -2,6 +2,8 @@ package Classes.M07_Template.HandlerPackage;
 
 import Classes.M07_Template.MessagePackage.Parameter;
 import Classes.Sql;
+import Exceptions.DatabaseConnectionProblemException;
+import Exceptions.ParameterDoesntExistsException;
 import com.google.gson.JsonArray;
 
 import java.sql.ResultSet;
@@ -41,22 +43,47 @@ public class ParameterHandler {
 
     }
 
-    public ArrayList<Parameter> getParameters(int companyId) {
+    public ArrayList<Parameter> getParameters(int companyId)
+            throws ParameterDoesntExistsException{
         String query = "select par_id,par_name \n" +
                 "from public.parameter\n" +
                 "where par_company_id =" + companyId +"\n" +
                 "order by par_name";
-        return executeParameterQuery(query);
+        ArrayList<Parameter> parameterList = new ArrayList<>();
+        try{
+            parameterList = executeParameterQuery(query);
+        }catch (ParameterDoesntExistsException e){
+            throw new ParameterDoesntExistsException
+                    ("No existen parametros para la compania con este id: "
+                            + companyId, e, companyId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return parameterList;
+        }
     }
 
-    public static ArrayList<Parameter> getParametersByMessage(int messageId) {
+    public static ArrayList<Parameter> getParametersByMessage(int messageId)
+            throws ParameterDoesntExistsException{
         String query = "select par_id,par_name " +
                 "from parameter,message_parameter " +
                 "where par_id = mp_parameter and mp_message = " + messageId;
-        return executeParameterQuery(query);
+        ArrayList<Parameter> parameterList = new ArrayList<>();
+        try{
+            parameterList = executeParameterQuery(query);
+        }catch (ParameterDoesntExistsException e){
+            throw new ParameterDoesntExistsException
+                    ("No existen parametros para el mensaje con este id: "
+                            + messageId, e, messageId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return parameterList;
+        }
     }
 
-    private static ArrayList<Parameter> executeParameterQuery(String query) {
+    private static ArrayList<Parameter> executeParameterQuery(String query)
+            throws ParameterDoesntExistsException {
         ArrayList<Parameter> parameterList = new ArrayList<>();
         sql = new Sql();
         try {
@@ -68,7 +95,7 @@ public class ParameterHandler {
                 parameterList.add(parameter);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ParameterDoesntExistsException();
         } catch (Exception e){
             e.printStackTrace();
         }finally {
