@@ -458,4 +458,29 @@ export class DropdownMethods {
         });
         return ids;
     }
+
+    /* =============================
+           Handle years selection
+       ============================= */
+    protected yearSelected(year: any) {
+        this.selectedYearsIds.push(year["year_id"]);
+        console.log(this.selectedYearsIds);
+    }
+
+    protected yearDeselected(year: any) {
+        this.removeItemFromArray(year["year_id"], this.selectedYearsIds);
+        console.log(this.selectedYearsIds);
+    }
+
+    protected selectAllYears() {
+        for (var index in this.yearsDropdown) {
+            this.selectedYearsIds.push(this.yearsDropdown[index]["year_id"]);
+        }
+        console.log(this.selectedYearsIds);
+    }
+
+    protected deselectAllYears() {
+        this.selectedYearsIds = [];
+        console.log(this.selectedYearsIds);
+    }
 }

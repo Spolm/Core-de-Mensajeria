@@ -599,7 +599,10 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             integratorsDropdown: this.integratorsDropdown,
             selectedIntegrators: this.selectedIntegrators,
             selectedIntegratorsIds: this.selectedIntegratorsIds,
-            integratorsDropdownSettings: this.integratorsDropdownSettings
+            integratorsDropdownSettings: this.integratorsDropdownSettings,
+            // Years
+            selectedYears: this.selectedYears,
+            selectedYearsIds: this.selectedYearsIds
         };
         const dialogRef = this.dialog.open(MoreFiltersComponent, dialogConfig);
         dialogRef.updatePosition({ top: "55px", right: "0px", left: "0px" });
@@ -609,6 +612,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             this.fillCampaignsDropdownFromMenuData(result);
             this.fillChannelsDropdownFromMenuData(result);
             this.fillIntegratorsDropdownFromMenuData(result);
+            this.fillYearsDropdownFromMenuData(result);
             console.log(result);
         });
     }
@@ -636,6 +640,12 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         this.selectedIntegratorsIds =
             data["integrators"]["selectedIntegratorsIds"];
         this.integratorsDropdown = data["integrators"]["integratorsDropdown"];
+    }
+
+    fillYearsDropdownFromMenuData(data) {
+        this.selectedYears = data["years"]["selectedYears"];
+        this.selectedYearsIds = data["years"]["selectedYearsIds"];
+        console.log(this.selectedYearsIds);
     }
 
     getArrayOfRandomColors(length: Number): String[] {

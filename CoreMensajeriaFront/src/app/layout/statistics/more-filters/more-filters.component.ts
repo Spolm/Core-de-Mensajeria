@@ -37,7 +37,8 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
             companies: this.includeCompaniesDataOnReturn(),
             campaigns: this.includeCampaignsDataOnReturn(),
             channels: this.includeChannelsDataOnReturn(),
-            integrators: this.includeIntegratorsDataOnReturn()
+            integrators: this.includeIntegratorsDataOnReturn(),
+            years: this.includeYearsDataOnReturn()
         });
     }
 
@@ -70,6 +71,13 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
             selectedIntegrators: this.selectedIntegrators,
             selectedIntegratorsIds: this.selectedIntegratorsIds,
             integratorsDropdown: this.integratorsDropdown
+        };
+    }
+
+    includeYearsDataOnReturn() {
+        return {
+            selectedYears: this.selectedYears,
+            selectedYearsIds: this.selectedYearsIds
         };
     }
 
@@ -143,6 +151,16 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         this.setupCampaingsData(data);
         this.setupChannelsData(data);
         this.setupIntegratorsData(data);
+        this.setupYearsData(data);
+        this.setupMonthsData(data);
+        this.setupDaysData(data);
+        this.setupWeeksData(data);
+        this.setupDaysOfWeekData(data);
+        this.setupQuartersOfYearData(data);
+        this.setupDaysOfYearData(data);
+        this.setupHoursData(data);
+        this.setupMinutesData(data);
+        this.setupSecondsData(data);
     }
 
     setupCompaniesData(data: any) {
@@ -173,6 +191,29 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         this.selectedIntegratorsIds = data.selectedIntegratorsIds;
     }
 
+    setupYearsData(data: any) {
+        this.selectedYears = data.selectedYears;
+        this.selectedYearsIds = data.selectedYearsIds;
+    }
+
+    setupMonthsData(data) {}
+
+    setupDaysData(data) {}
+
+    setupWeeksData(data) {}
+
+    setupDaysOfWeekData(data) {}
+
+    setupQuartersOfYearData(data) {}
+
+    setupDaysOfYearData(data) {}
+
+    setupHoursData(data) {}
+
+    setupMinutesData(data) {}
+
+    setupSecondsData(data) {}
+
     getYears() {
         this.statisticsService.getYears().subscribe(data => {
             this.insertIntoDateDropdown(
@@ -181,7 +222,6 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
                 "year_id",
                 "year_name"
             );
-            console.log(this.yearsDropdown);
         });
     }
 
@@ -191,11 +231,13 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         idField: string,
         nameField: string
     ) {
+        var i = 1;
         data.forEach(date => {
             var item = {};
-            item[idField] = date;
+            item[idField] = i;
             item[nameField] = date;
             dateDropdown.push(item);
+            i++;
         });
     }
 }

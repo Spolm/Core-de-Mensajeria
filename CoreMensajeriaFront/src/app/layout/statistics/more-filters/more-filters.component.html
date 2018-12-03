@@ -75,16 +75,19 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3 col-sm-6 dropdown">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="yearsDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Año'"
-                [data]="companiesDropdown"
-                [(ngModel)]="selectedCompanies"
-                [settings]="companiesDropdownSettings"
-                (onSelect)="companySelected($event)"
-                (onDeSelect)="companyDeselected($event)"
-                (onSelectAll)="selectAllCompanies()"
-                (onDeSelectAll)="deselectAllCompanies()"
+                [data]="yearsDropdown"
+                [(ngModel)]="selectedYears"
+                [settings]="yearsDropdownSettings"
+                (onSelect)="yearSelected($event)"
+                (onDeSelect)="yearDeselected($event)"
+                (onSelectAll)="selectAllYears()"
+                (onDeSelectAll)="deselectAllYears()"
             >
             </ng-multiselect-dropdown>
         </div>
