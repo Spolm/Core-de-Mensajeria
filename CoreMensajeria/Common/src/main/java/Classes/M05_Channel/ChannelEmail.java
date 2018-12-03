@@ -7,9 +7,9 @@ import java.util.ArrayList;
 /**
  * Clase ChannelEmail que nos permite crear un canal en concreto.
  *
- * @Author José Salas
- * @Author Manuel Espinoza
- * @Author José Cedeño
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
  * @see Channel
  */
 

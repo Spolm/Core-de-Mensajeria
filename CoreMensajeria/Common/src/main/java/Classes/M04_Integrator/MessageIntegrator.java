@@ -3,12 +3,12 @@ package Classes.M04_Integrator;
 import java.util.Objects;
 
 /**
- * Clase que nos permite realizar el envio de mensajes
+ * Clase que nos permite realizar el envío de mensajes
  * por integrador
  *
- * @Author José Salas
- * @Author Manuel Espinoza
- * @Author José Cedeño
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
  */
 
 public class MessageIntegrator {

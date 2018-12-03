@@ -3,11 +3,11 @@ package Classes.M04_Integrator;
 
 /**
  * Clase concreta de tipo Integrador que nos permite tener
- * acceso a metodos concretos para realizar el envio de mensajes.
+ * acceso a métodos concretos para realizar el envio de mensajes.
  *
- * @Author José Salas
- * @Author Manuel Espinoza
- * @Author José Cedeño
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
  * @see Integrator
  */
 
@@ -30,10 +30,10 @@ public class InfusionSoft extends Integrator {
     }
 
     /**
-     * Metodo que se encarga de enviar el Mensaje
+     * Método que se encarga de enviar el Mensaje
      *
      * @param msg     Mensaje que se va a enviar.
-     * @param address Direccion a la que se va a enviar.
+     * @param address Dirección a la que se va a enviar.
      * @param idMsg   id del mensaje.
      * @see MessageIntegrator
      */

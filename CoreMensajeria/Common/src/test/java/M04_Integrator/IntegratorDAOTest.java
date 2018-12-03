@@ -26,6 +26,7 @@ class IntegratorDAOTest {
     private static MessageIntegrator _messageIntegrator;
     boolean status;
 
+
     @BeforeAll
     public static void before() {
 
@@ -33,7 +34,7 @@ class IntegratorDAOTest {
         _movistar = new Movistar(1, 25, 13.4f,
                 "Movistar", "oqiwueyeiu", true);
         _integrator = null;
-        _messageIntegrator = new MessageIntegrator("TestMsg","TestDir","TestId");
+        _messageIntegrator = new MessageIntegrator("TestMsg", "TestDir", "TestId");
         _messageIntegrator.setSend(true);
 
     }
@@ -43,6 +44,10 @@ class IntegratorDAOTest {
         _integratorDAO = new IntegratorDAO();
     }
 
+    /**
+     * Prueba que nos permite  saber si la lista de
+     * los integradores es diferente a Null.
+     */
     @Test
     public void ListIntegratorTest() {
         try {
@@ -53,6 +58,11 @@ class IntegratorDAOTest {
         }
     }
 
+    /**
+     * Prueba que nos permite  saber si se estan
+     * obteniendo correctamente los atributos de
+     * cada integrador desde la base de datos.
+     */
     @Test
     public void ConcreteIntegratorTest() {
         try {
@@ -70,6 +80,12 @@ class IntegratorDAOTest {
         }
     }
 
+    /**
+     * Prueba a la Excepcion de Integrador no encontrado
+     * realizando una consulta a la base de datos a un id
+     * no existente.
+     */
+
     @Test
     public void IntegratorNotFoundExceptionTest() {
         assertThrows(IntegratorNotFoundException.class, () -> {
@@ -77,6 +93,10 @@ class IntegratorDAOTest {
         });
     }
 
+    /**
+     * Prueba que nos permite verificar que un integrador
+     * se encuentre en estado deshabilitado.
+     */
     @Test
     public void IntegratorDisabledTest() {
         try {
@@ -97,6 +117,11 @@ class IntegratorDAOTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Prueba que nos permite verificar que un integrador
+     * se encuentre en estado habilitado.
+     */
 
     @Test
     public void IntegratorEnableTest() {
@@ -119,10 +144,14 @@ class IntegratorDAOTest {
         }
     }
 
-    @Test
-    public void sendMessageTest(){
-        MessageIntegrator testMessage = _movistar.sendMessage("TestMsg","TestDir","TestId");
-        assertEquals(_messageIntegrator,testMessage);
+    /**
+     * Prueba que nos permite verificar que un integrador
+     * este realizando el envio de los mensajes correctamente.
+     */
 
+    @Test
+    public void sendMessageTest() {
+        MessageIntegrator testMessage = _movistar.sendMessage("TestMsg", "TestDir", "TestId");
+        assertEquals(_messageIntegrator, testMessage);
     }
 }

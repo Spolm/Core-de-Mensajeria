@@ -8,9 +8,9 @@ import java.util.ArrayList;
  * Clase abstracta Channel que nos proporciona los metodos
  * para trabajar con los canales en concreto.
  *
- * @Author José Salas
- * @Author Manuel Espinoza
- * @Author José Cedeño
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
  */
 
 public abstract class Channel {

@@ -18,9 +18,9 @@ import java.util.ArrayList;
  * Clase que implementa los métodos PUT y GET para el funcionamiento
  * del servicio RESTful referido a los canales del sistema.
  *
- * @Author José Salas
- * @Author Manuel Espinoza
- * @Author José Cedeño
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
  */
 
 @Path("/channel")
@@ -29,8 +29,8 @@ public class M05_Channel {
     private ChannelDAO _channelDAO = new ChannelDAO();
 
     /**
-     * Metodo que nos permite obtener una lista de
-     * todos los canales en el sistema en formato Json
+     * Método que nos permite obtener una lista de
+     * todos los canales en el sistema en formato Json.
      *
      * @see Channel
      */

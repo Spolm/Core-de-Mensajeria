@@ -3,11 +3,11 @@ package Classes.M04_Integrator;
 
 /**
  * Clase abstracta Integrador que implementa la interfaz IIntegrador
- * que nos proporciona los metodos para trabajar con los integradores en concreto.
+ * que nos proporciona los métodos para trabajar con los integradores en concreto.
  *
- * @Author José Salas
- * @Author Manuel Espinoza
- * @Author José Cedeño
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
  * @see IIntegrator
  */
 

@@ -3,24 +3,24 @@ package Classes.M04_Integrator;
 /**
  * Clase que se encarga de la creacion de los Integradores
  *
- * @Author José Salas
- * @Author Manuel Espinoza
- * @Author José Cedeño
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
  */
 
 public class IntegratorFactory {
 
     /**
-     * Metodo que se encarga de crear un integrador en concreto
-     * La creacion de este tipo de integrador dependera del integratorType
+     * Método que se encarga de crear un integrador en concreto
+     * La creación de este tipo de integrador dependera del integratorType
      * que es recibido por parametro
      *
-     * @param integratorType el tipo de integrador, del cual dependera la creacion del objeto
+     * @param integratorType el tipo de integrador, del cual dependera la creación del objeto
      * @param idIntegrator   el id del integrador a crear
      * @param nameIntegrator nombre del integrador
      * @param messageCost    costo por mensaje del integrador
-     * @param threadCapacity capacidad de hilos que es capaz de soportar el integrador
-     * @param apiIntegrator  un codigo de seguridad que se requiere para validar que
+     * @param threadCapacity capacidad de hilos que soportar el integrador
+     * @param apiIntegrator  un código de seguridad que se requiere para validar que
      *                       el integrador sea el correcto
      * @param enabled        Que nos indica cual es el estado del integrador
      * @return Un objeto integrador con las caracteristicas enviadas por parametro

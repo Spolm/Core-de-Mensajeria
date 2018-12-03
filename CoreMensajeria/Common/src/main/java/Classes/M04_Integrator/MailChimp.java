@@ -2,11 +2,11 @@ package Classes.M04_Integrator;
 
 /**
  * Clase concreta de tipo Integrador que nos permite tener
- * acceso a metodos concretos para realizar el envio de mensajes.
+ * acceso a métodos concretos para realizar el envío de mensajes.
  *
- * @Author José Salas
- * @Author Manuel Espinoza
- * @Author José Cedeño
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
  * @see Integrator
  */
 

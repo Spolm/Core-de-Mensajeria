@@ -26,7 +26,7 @@ class ChannelDAOTest {
 
     /**
      * Prueba que nos permite  saber si la lista de
-     * los integradores por canales es no nula
+     * los integradores por canales es diferente a Null.
      */
     @Test
     public void TestIntegradorsByChannel() {
@@ -43,7 +43,7 @@ class ChannelDAOTest {
 
     /**
      * Prueba que nos permite saber la lista de canales
-     * en el sistema no sea nula.
+     * en el sistema es diferente a Null.
      */
 
     @Test
@@ -57,8 +57,8 @@ class ChannelDAOTest {
     }
 
     /**
-     * Prueba de la excepcion, ejecutando el metodo de buscar un integrador
-     * cuando no se encuentra un canal
+     * Prueba de la excepción, ejecutando el método de buscar un integrador
+     * cuando no se encuentra un canal.
      */
 
     @Test

@@ -2,12 +2,12 @@ package Classes.M04_Integrator;
 
 
 /**
- * Interfaz que contiene los metodos de utilizaran
- * todos los integradores en comun.
+ * Interfaz que contiene los métodos de utilizarán
+ * todos los integradores en común.
  *
- * @Author José Salas
- * @Author Manuel Espinoza
- * @Author José Cedeño
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
  * @see IIntegrator
  */
 public interface IIntegrator {

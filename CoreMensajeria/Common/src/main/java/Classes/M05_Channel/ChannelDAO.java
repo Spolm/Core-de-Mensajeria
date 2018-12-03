@@ -10,12 +10,12 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * Clase que nos permite realizar la conexion a la base de datos
- * con los metodos relacionados a la clase Channel
+ * Clase que nos permite realizar la conexión a la base de datos
+ * con los métodos relacionados a la clase Channel
  *
- * @Author Josè Salas
- * @Author Manuel Espinoza
- * @Author Josè Cedeño
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
  * @see Channel
  */
 
@@ -27,8 +27,8 @@ public class ChannelDAO {
     public ArrayList<Channel> _channelList;
 
     /**
-     * Constructor que se encarga de realizar la conexion
-     * a la base de datos
+     * Constructor que se encarga de realizar la conexión
+     * a la base de datos.
      *
      * @see Connection
      */
@@ -38,8 +38,8 @@ public class ChannelDAO {
     }
 
     /**
-     * Retorna una lista de integradores por canal
-     * Este metodo retorna una lista de integradores, en caso de no tener
+     * Retorna una lista de integradores por canal.
+     * Este método retorna una lista de integradores, en caso de no tener
      * el archivo se encontrara en blanco.
      *
      * @return Lista de canales
@@ -72,9 +72,9 @@ public class ChannelDAO {
     }
 
     /**
-     * Retorna una lista de canales
-     * Este metodo retorna una lista de canales, en caso de no tener
-     * el archivo se encontrara en blanco.
+     * Retorna una lista de canales.
+     * Este método retorna una lista de canales, en caso de no tener
+     * el archivo se encontrará en blanco.
      *
      * @return Lista de canales
      * @see Channel
