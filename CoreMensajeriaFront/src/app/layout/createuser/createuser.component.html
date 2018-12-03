@@ -15,28 +15,11 @@
                     </div>
                     <div class="col-md-4">
                         <label for="Rol">Rol del usuario</label>
-                        <select name="_rolUser" [(ngModel)]="user._rolUser" class="form-control">
-                            <div *ngIf="{{usuario.roUser}} == 'usuario'; then superusuario; {{usuario.roUser}} == 'administrador'; then administrador; 
-                            {{usuario.roUser}} == 'creador'; then creador; else aprobador">
-                                <div #superusuario>
-                                    <option value="administrador" >Administrador</option>
-                                    <option value="creador" >Creador</option>
-                                    <option value="_probador" >Aprobador</option>
-                                    <option value="consultor" >Consultor</option>
-                                </div>
-                                <div #administrador>
-                                    <option value="creador" >Creador</option>
-                                    <option value="aprobador" >Aprobador</option>
-                                    <option value="consultor" >Consultor</option>
-                                </div>
-                                <div #creador>
-                                    <option value="aprobador" >Aprobador</option>
-                                    <option value="consultor" >Consultor</option>
-                                </div>
-                                <div #aprobador>
-                                    <option value="consultor" >Consultor</option>
-                                </div>
-                            </div>
+                        <select name="_typeUser" [(ngModel)]="user._typeUser" class="form-control">
+                            <option value="1">Superusuario</option>
+                            <option value="2">Administrador</option>
+                            <option value="3">Creador</option>
+                            <option value="4">Consultor</option>
                         </select>
                     </div>
                 </div>
