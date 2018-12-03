@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-    public class ApplicationDAOTest {
+public class ApplicationDAOTest {
     private Application _application;
     private AddApplicationData _addApplicationData;
     private ApplicationDAO _applicationDAO = new ApplicationDAO();

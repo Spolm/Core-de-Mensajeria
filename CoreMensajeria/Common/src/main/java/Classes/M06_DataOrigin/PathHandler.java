@@ -28,8 +28,8 @@ public class PathHandler implements ServletContextListener {
     }*/
 
     /**
-     *
-     * @param servletContextEvent
+     * Metodo que corre cuando se inicializa el servidor (debido a un Listener)
+     * @param servletContextEvent el ServletContextEvent que esta siendo manejado
      */
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -43,8 +43,8 @@ public class PathHandler implements ServletContextListener {
     }
 
     /**
-     *
-     * @param servletContextEvent
+     * Metodo que corre cuando se inicializa el servidor (debido a un Listener)
+     * @param servletContextEvent el ServletContextEvent que esta siendo manejado
      */
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
