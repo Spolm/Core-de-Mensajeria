@@ -43,6 +43,38 @@ BEGIN
   COST 100
   ROWS 1000;
 
+CREATE FUNCTION m06_select_by_company_id_application(IN app_company_v integer) 
+RETURNS table (app_id integer, app_name character varying, app_description character varying, 
+			   app_token character varying, app_date timestamp without time zone,
+			   app_status integer, app_user_creator integer, app_company integer) AS $selectapplicationbycompanyid$
+BEGIN
+	RETURN QUERY
+	SELECT app.app_id , app.app_name, app.app_description, 
+	app.app_token, app.app_date , app.app_status, app.app_user_creator , app.app_company  
+	FROM public.application as app
+	WHERE app.app_company = app_company_v;
+  END; 
+  $selectapplicationbycompanyid$
+  LANGUAGE 'plpgsql' VOLATILE
+  COST 100
+  ROWS 1000;
+
+CREATE FUNCTION m06_select_by_id_application(IN app_id_v integer) 
+RETURNS table (app_id integer, app_name character varying, app_description character varying, 
+			   app_token character varying, app_date timestamp without time zone,
+			   app_status integer, app_user_creator integer, app_company integer) AS $selectapplicationbyid$
+BEGIN
+	RETURN QUERY
+	SELECT app.app_id , app.app_name, app.app_description, 
+	app.app_token, app.app_date , app.app_status, app.app_user_creator , app.app_company  
+	FROM public.application as app
+	WHERE app.app_id = app_id_v;
+  END; 
+  $selectapplicationbyid$
+  LANGUAGE 'plpgsql' VOLATILE
+  COST 100
+  ROWS 1000;
+
 --UPDATE APPLICATION
 CREATE OR REPLACE FUNCTION m06_update_application_status(IN app_status_v integer, IN app_id_v integer ) 
 RETURNS void AS
