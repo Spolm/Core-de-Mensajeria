@@ -1,140 +1,149 @@
 <router-outlet></router-outlet>
-<h2 class="text-capitalize main-title">Crear Plantilla</h2>
-<hr>
-<form>
-  <div class="form-row">
+<div *ngIf="CTEMPLATE; else elseBlock">
+  <h2 class="text-capitalize main-title">Crear Plantilla</h2>
+  <hr>
+  <form>
+    <div class="form-row">
 
-    <!-- Textarea for the message of the template -->
-    <div class="form-group col-12 col-md-9">
-      <label for="formMessage">Mensaje de la plantilla</label>
-      <textarea class="form-control" id="formMessage" rows="5" placeholder="Mensaje" [(ngModel)]="formMessage" name="message"></textarea>
-    </div>
-
-    <!-- Select for the parameters of the template -->
-    <div class="form-group col-12 col-md-3">
-      <label for="formParameters">Parametros</label>
-      <br>
-      <div class="d-flex flex-row-reverse">
-        <button type="button" class="btn btn-primary btn-sm m-1" (click)="showInputCreateParameter()">+</button>
-        <select class="form-control" id="formParameters" [(ngModel)]="formParameters" name="param" (change)="addParameter(formMessage, formParameters)">
-          <option *ngFor="let parameter of parametersJson">
-            {{parameter.name}}
-          </option>
-        </select>
+      <!-- Textarea for the message of the template -->
+      <div class="form-group col-12 col-md-9">
+        <label for="formMessage">Mensaje de la plantilla</label>
+        <textarea class="form-control" id="formMessage" rows="5" placeholder="Mensaje" [(ngModel)]="formMessage" name="message"></textarea>
       </div>
-      <br>
-      <div *ngIf="showInputCreateParameterState" class="col-12">
+
+      <!-- Select for the parameters of the template -->
+      <div class="form-group col-12 col-md-3">
+        <label for="formParameters">Parametros</label>
+        <br>
         <div class="d-flex flex-row-reverse">
-          <button type="button" class="btn btn-success btn-sm m-1" (click)="addNewParameter(formMessage, newParameter.value)">+</button>
-          <input type="text" #newParameter>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Buttons for the control of the parameters -->
-  <div class="row">
-    <div *ngFor="let parameter of parameters">
-      <button type="button" class="btn btn-danger m-1" (click)="deleteParameter(formMessage, parameter)">
-        {{parameter}}
-      </button>
-    </div>
-  </div>
-  <br>
-
-  <div class="row">
-    <div class="col-2">
-      Canales
-    </div>
-    <div class="col-4">
-      Integradores
-    </div>
-  </div>
-
-  <!-- Select for the channels and integrators of the template -->
-  <div>
-    <hr>
-    <div class="form-row m-6" *ngFor="let channel of channelsJson; let i = index">
-
-      <div class="form-group col-2" id="{{channel.idChannel}}">
-        {{channel.nameChannel}}
-      </div>
-
-      <div class="form-group col-4">
-        <div class="form-check">
-          <select class="form-control" id="integratorInput" name="integratorInput" [(ngModel)]="channel.descriptionChannel"
-            (change)="addIntegrator(channel, channel.descriptionChannel)">
-
-            <option *ngFor="let integrator of channel.integrators" [value]="integrator.idIntegrator">
-              <p *ngIf="integrator.enabled">
-                {{integrator.nameIntegrator}} | {{integrator.messageCost}} (bs.S)
-              </p>
+          <button type="button" class="btn btn-primary btn-sm m-1" (click)="showInputCreateParameter()">+</button>
+          <select class="form-control" id="formParameters" [(ngModel)]="formParameters" name="param" (change)="addParameter(formMessage, formParameters)">
+            <option *ngFor="let parameter of parametersJson">
+              {{parameter.name}}
             </option>
-
           </select>
-        </div>
-      </div>
-    </div>
-    <hr>
-  </div>
-
-  <!-- Buttons for the control of the channel and integrator -->
-  <div class="row">
-    <div *ngFor="let channel_integrator of channels_integrators">
-      <button type="button" class="btn btn-danger m-1" (click)="deleteChannel_Integrator(channel_integrator)">
-        {{channel_integrator.channel.nameChannel}} | {{channel_integrator.integrator.nameIntegrator}}
-      </button>
-    </div>
-  </div>
-  <br>
-
-  <div class="row">
-    <div class="col-2">
-      Origen
-    </div>
-  </div>
-
-  <!-- Input for the Origin -->
-  <div>
-    <hr>
-    <div class="form-row m-6">
-
-      <div class="form-group col-2 m-6">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="origin" id="originApp" value="app" checked (click)="originOption = 'app'">
-          <label class="form-check-label" for="originApp">
-            Aplicación
-          </label>
         </div>
         <br>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="origin" id="originTxt" value="txt" (click)="originOption = 'txt'">
-          <label class="form-check-label" for="originTxt">
-            Archivo
-          </label>
+        <div *ngIf="showInputCreateParameterState" class="col-12">
+          <div class="d-flex flex-row-reverse">
+            <button type="button" class="btn btn-success btn-sm m-1" (click)="addNewParameter(formMessage, newParameter.value)">+</button>
+            <input type="text" #newParameter>
+          </div>
         </div>
       </div>
 
-      <div class="form-group col-4" *ngIf="originOption == 'app'">
-        <div class="form-check">
-          <select class="form-control" id="application" name="application" [(ngModel)]="applicationId">
+    </div>
 
-            <option *ngFor="let application of applicationsJson" [value]="application._idApplication">
-              <p *ngIf="application._statusApplication == 1">
-                {{application._nameApplication}} | {{application._descriptionApplication}}
-              </p>
-            </option>
+    <!-- Buttons for the control of the parameters -->
+    <div class="row">
+      <div *ngFor="let parameter of parameters">
+        <button type="button" class="btn btn-danger m-1" (click)="deleteParameter(formMessage, parameter)">
+          {{parameter}}
+        </button>
+      </div>
+    </div>
+    <br>
 
-          </select>
+    <div class="row">
+      <div class="col-2">
+        Canales
+      </div>
+      <div class="col-4">
+        Integradores
+      </div>
+    </div>
+
+    <!-- Select for the channels and integrators of the template -->
+    <div>
+      <hr>
+      <div class="form-row m-6" *ngFor="let channel of channelsJson; let i = index">
+
+        <div class="form-group col-2" id="{{channel.idChannel}}">
+          {{channel.nameChannel}}
+        </div>
+
+        <div class="form-group col-4">
+          <div class="form-check">
+            <select class="form-control" id="integratorInput" name="integratorInput" [(ngModel)]="channel.descriptionChannel"
+              (change)="addIntegrator(channel, channel.descriptionChannel)">
+
+              <option *ngFor="let integrator of channel.integrators" [value]="integrator.idIntegrator">
+                <p *ngIf="integrator.enabled">
+                  {{integrator.nameIntegrator}} | {{integrator.messageCost}} (bs.S)
+                </p>
+              </option>
+
+            </select>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+
+    <!-- Buttons for the control of the channel and integrator -->
+    <div class="row">
+      <div *ngFor="let channel_integrator of channels_integrators">
+        <button type="button" class="btn btn-danger m-1" (click)="deleteChannel_Integrator(channel_integrator)">
+          {{channel_integrator.channel.nameChannel}} | {{channel_integrator.integrator.nameIntegrator}}
+        </button>
+      </div>
+    </div>
+    <br>
+
+    <div class="row">
+      <div class="col-2">
+        Origen
+      </div>
+    </div>
+
+    <!-- Input for the Origin -->
+    <div>
+      <hr>
+      <div class="form-row m-6">
+
+        <div class="form-group col-2 m-6">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="origin" id="originApp" value="app" checked (click)="originOption = 'app'">
+            <label class="form-check-label" for="originApp">
+              Aplicación
+            </label>
+          </div>
+          <br>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="origin" id="originTxt" value="txt" (click)="originOption = 'txt'">
+            <label class="form-check-label" for="originTxt">
+              Archivo
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group col-4" *ngIf="originOption == 'app'">
+          <div class="form-check">
+            <select class="form-control" id="application" name="application" [(ngModel)]="applicationId">
+
+              <option *ngFor="let application of applicationsJson" [value]="application._idApplication">
+                <p *ngIf="application._statusApplication == 1">
+                  {{application._nameApplication}} | {{application._descriptionApplication}}
+                </p>
+              </option>
+
+            </select>
+          </div>
         </div>
       </div>
     </div>
+
+  </form>
+
+  <div class="d-flex flex-row-reverse">
+    <button type="button" class="btn btn-success m-1" (click)="postTemplate()">Crear</button>
+    <button type="button" class="btn btn-danger m-1" routerLink="/template">Cancelar</button>
   </div>
-
-</form>
-
-<div class="d-flex flex-row-reverse">
-  <button type="button" class="btn btn-success m-1" (click)="postTemplate()">Crear</button>
-  <button type="button" class="btn btn-danger m-1" routerLink="/template">Cancelar</button>
 </div>
+
+<ng-template #elseBlock>
+    <h1>No tienes permisos</h1>
+  <div class="d-flex flex-row-reverse">    
+    <button type="button" class="btn btn-danger m-1" routerLink="/template">Regresar</button>    
+  </div>
+</ng-template>

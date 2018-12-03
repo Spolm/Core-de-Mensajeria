@@ -11,6 +11,14 @@ import { delay } from 'q';
 })
 export class ModifyTemplateComponent {
 
+  userId: string = localStorage.getItem("userid");
+  privilegesJson: any = [];
+  CTEMPLATE = false;
+  RTEMPLATE = false;
+  UTEMPLATE = false;
+  DTEMPLATE = false;
+  ATEMPLATE = false;
+
   templateId: any;
   sub: any;
   templateJson: any = [];
@@ -32,7 +40,35 @@ export class ModifyTemplateComponent {
     this.getParameters();
     this.getChannels();
     this.getApplications(2);
-    this.getTemplate();
+    this.getTemplate();    this.getPrivileges(this.userId, 2);
+  }
+
+  async getPrivileges(userId: string, companyId: number) {
+    this.templateService.getPrivilegesByUserAndCompany(userId, companyId).subscribe(data => {
+      this.privilegesJson = data;
+    });
+    await delay(1000);
+    this.assignPrivileges(this.privilegesJson);
+  }
+
+  assignPrivileges(privileges: Array<any>) {
+    privileges.forEach((privilege) => {
+      if(privilege._codePrivileges == 'CTEMPLATE'){
+        this.CTEMPLATE = true;
+      }
+      else if(privilege._codePrivileges == 'RTEMPLATE'){
+        this.RTEMPLATE = true
+      }
+      else if(privilege._codePrivileges == 'UTEMPLATE'){
+        this.UTEMPLATE = true
+      }
+      else if(privilege._codePrivileges == 'DTEMPLATE'){
+        this.DTEMPLATE = true
+      }
+      else if(privilege._codePrivileges == 'ATEMPLATE'){
+        this.ATEMPLATE = true
+      }
+    })
   }
 
   getParameters() {
