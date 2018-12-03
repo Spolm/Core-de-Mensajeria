@@ -479,10 +479,32 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                 var campaigns: Point[] = this.createPointArray(campaingsJson);
                 let channelsJson = data["channels"];
                 var channels: Point[] = this.createPointArray(channelsJson);
+                let integratorsJson = data["integrators"];
+                var integrators: Point[] = this.createPointArray(
+                    integratorsJson
+                );
 
                 this.updateChartData(
                     this.companiesChart,
                     companies,
+                    ChartType.bar
+                );
+
+                this.updateChartData(
+                    this.campaignsChart,
+                    campaigns,
+                    ChartType.bar
+                );
+
+                this.updateChartData(
+                    this.channelsChart,
+                    channels,
+                    ChartType.doughnut
+                );
+
+                this.updateChartData(
+                    this.integratorsChart,
+                    integrators,
                     ChartType.bar
                 );
             },
