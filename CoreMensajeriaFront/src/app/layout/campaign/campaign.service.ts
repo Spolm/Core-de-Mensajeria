@@ -24,9 +24,15 @@ export class CampaignService {
   }
 
   getCampaigns(): Observable<any> {
-    return this.http.get(endpoint + 'GetCampaigns?id=1').pipe(
+    return this.http.get(endpoint + 'GetCampaigns?id=1'/*+ localStorage.getItem('companyId')*/).pipe(
       map(this.extractData));
   }
+
+  getCampaignsByCompany(): Observable<any> {
+    return this.http.get(endpoint + 'GetCampaignsByUser?id='+localStorage.getItem('userid')).pipe(
+      map(this.extractData));
+  }
+  
   
   addCampaign (campaign): Observable<any> {
     return this.http.post<any>(endpoint + 'M03_Campaign/AddCampaign', JSON.stringify(campaign), httpOptions).pipe(

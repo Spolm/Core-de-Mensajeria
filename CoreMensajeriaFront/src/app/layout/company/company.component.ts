@@ -19,6 +19,7 @@ export class CompanyComponent implements OnInit {
               public rest: CompanyService, private toastr: ToastrService) { }
 
   private companyList = Array<Company>();
+  private company: Company;
   private vacio: boolean;
 
   ngOnInit() {
@@ -32,7 +33,13 @@ export class CompanyComponent implements OnInit {
     }, (err) => {
    console.log(err);
     })
+
+    
   }
+
+  
+
+
 
   /*getCompanies() {
     this.toastr.info("Espere un momento",'Intentando acceder',{

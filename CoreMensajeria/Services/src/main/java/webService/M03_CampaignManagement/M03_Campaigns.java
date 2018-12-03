@@ -164,6 +164,29 @@ public class M03_Campaigns {
     }
     //endregion
 
+    //region Campañas por compañia y usuario
+    @GET
+    @Path("/GetCampaignsByCompany")
+    @Produces("application/json")
+
+    public Response getCampaignsByCompanyUser(@QueryParam("idCompany") int idCompany, @QueryParam("idUser") int idUser) throws CampaignDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CampaignDAO caList = new CampaignDAO();
+        try {
+            _caList = caList.campaignListByUserCompany(idCompany,idUser);
+            rb.entity(gson.toJson(_caList));
+        }
+        catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
+
+    //endregion
+
     //endregion
 
     //region Modificar Campaña
