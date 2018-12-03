@@ -28,9 +28,10 @@ export class CompanyService {
       map(this.extractData));
   }
   
-  addCompany (company): Observable<any> {
-    return this.http.post<any>(endpoint + 'M02_Company/AddCompany', JSON.stringify(company), httpOptions).pipe(
-      tap((company) => console.log(`Company added w/ ${company._name}`)),
-    );
+  addCompany (company): Promise<any> {
+    return this.http.post<any>(endpoint + 'M02_Company/AddCompany', company).toPromise()
+      .then(res =>{
+        return res
+      })
   }
 }

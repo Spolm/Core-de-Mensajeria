@@ -32,7 +32,17 @@ export class CompanyComponent implements OnInit {
     }, (err) => {
    console.log(err);
     })
+
+    this.AgregarCompany(null)
   }
+
+  async AgregarCompany(company:Company){
+    let mensaje = null;
+    mensaje = await this.rest.addCompany(company);
+    console.log(" asds")
+  }
+
+
 
   /*getCompanies() {
     this.toastr.info("Espere un momento",'Intentando acceder',{
