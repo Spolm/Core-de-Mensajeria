@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class M02_CompaniesTest {
-
+/*
     Gson gson = new Gson();
     private ArrayList<Company> _coList;
     private Company _co;
@@ -27,7 +27,7 @@ public class M02_CompaniesTest {
     /*public M02_CompaniesTest() {
 
     }*/
-
+/*
     @BeforeEach
     public  void setUpClass() throws SQLException {
         Connection conn = Sql.getConInstance();
@@ -67,5 +67,5 @@ public class M02_CompaniesTest {
         st.executeUpdate(query);
     }
 
-
+*/
 }
