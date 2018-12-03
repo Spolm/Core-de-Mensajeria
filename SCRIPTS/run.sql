@@ -1,9 +1,9 @@
-\ir DROPCASCADE.sql
+/*\ir DROPCASCADE.sql
 \ir DROPS.sql
 \ir 'CREATE USER.sql'
 \ir 'CREATE DB.sql'
 \ir CREATES.sql
-\ir INSERTS.sql
+\ir INSERTS.sql*/
 
 \c CoreMensajeria CoreMensajeria
 \ir SP/m01_users.sql
