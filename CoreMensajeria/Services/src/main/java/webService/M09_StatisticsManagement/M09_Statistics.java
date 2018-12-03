@@ -335,6 +335,26 @@ public class M09_Statistics extends Application {
     }
 
     @GET
+    @Path("/daysofyearCount")
+    @Produces("application/json")
+    public Response getDaysofYear(){
+        ArrayList<Integer> daysofyear = new ArrayList<>();
+        try{
+            Statement statement = connStar.createStatement();
+            String query = "SELECT dat_dayofyear FROM m09_getDaysofYear()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                daysofyear.add(result.getInt("dat_dayofyear"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connStar);
+        }
+        return Response.ok(gson.toJson(daysofyear)).build();
+    }
+
+    @GET
     @Path("/weeksofyearCount")
     @Produces("application/json")
     public Response getWeeksofYear(){
