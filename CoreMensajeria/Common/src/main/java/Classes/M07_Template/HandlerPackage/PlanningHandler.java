@@ -33,15 +33,16 @@ public class PlanningHandler {
             PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_Planning(?)}");
             preparedStatement.setInt(1, templateId);
             ResultSet resultSet = preparedStatement.executeQuery();
-            planning.setStartDate(resultSet.getString("pla_start_date"));
-            planning.setStartTime(resultSet.getString("pla_start_time"));
-            planning.setEndDate(resultSet.getString("pla_end_date"));
-            planning.setEndTime(resultSet.getString("pla_end_time"));
-            planning.setIdPlanning(resultSet.getInt("pla_id"));
+            resultSet.next();
+            planning.setStartDate(resultSet.getString("panningStartDate"));
+            planning.setStartTime(resultSet.getString("planningStartTime"));
+            planning.setEndDate(resultSet.getString("planningEndDate"));
+            planning.setEndTime(resultSet.getString("planningEndTime"));
+            planning.setIdPlanning(resultSet.getInt("planningId"));
         }catch (SQLException e){
-
+            e.fillInStackTrace();
         }catch (Exception e){
-
+            e.fillInStackTrace();
         }finally {
             return planning;
         }
