@@ -40,6 +40,9 @@ public class CampaignDAO {
         catch (Exception e) {
             e.printStackTrace();
         }
+        finally {
+            Sql.bdClose(conn);
+        }
         return ca;
     }
 
@@ -68,6 +71,9 @@ public class CampaignDAO {
         }
         catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            Sql.bdClose(conn);
         }
     }
 
@@ -109,7 +115,6 @@ public class CampaignDAO {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1,id);
             ps.executeUpdate();
-
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -117,6 +122,9 @@ public class CampaignDAO {
         }
         catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            Sql.bdClose(conn);
         }
         return ca.is_statusCampaign();
     }
