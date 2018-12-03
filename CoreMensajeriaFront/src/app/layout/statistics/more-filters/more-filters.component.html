@@ -123,16 +123,19 @@
             </ng-multiselect-dropdown>
         </div>
 
-        <div class="col-md-3 col-sm-6 dropdown">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="weeksDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Semana'"
-                [data]="companiesDropdown"
-                [(ngModel)]="selectedCompanies"
-                [settings]="companiesDropdownSettings"
-                (onSelect)="companySelected($event)"
-                (onDeSelect)="companyDeselected($event)"
-                (onSelectAll)="selectAllCompanies()"
-                (onDeSelectAll)="deselectAllCompanies()"
+                [data]="weeksDropdown"
+                [(ngModel)]="selectedWeeks"
+                [settings]="weeksDropdownSettings"
+                (onSelect)="weekSelected($event)"
+                (onDeSelect)="weekDeselected($event)"
+                (onSelectAll)="selectAllWeeks()"
+                (onDeSelectAll)="deselectAllWeeks()"
             >
             </ng-multiselect-dropdown>
         </div>

@@ -525,4 +525,29 @@ export class DropdownMethods {
         this.selectedDaysIds = [];
         console.log(this.selectedDaysIds);
     }
+
+    /* =============================
+           Handle weeks selection
+       ============================= */
+    protected weekSelected(week: any) {
+        this.selectedDaysIds.push(week["week_id"]);
+        console.log(this.selectedDaysIds);
+    }
+
+    protected weekDeselected(week: any) {
+        this.removeItemFromArray(week["week_id"], this.selectedWeeksIds);
+        console.log(this.selectedWeeksIds);
+    }
+
+    protected selectAllWeeks() {
+        for (var index in this.weeksDropdown) {
+            this.selectedWeeksIds.push(this.weeksDropdown[index]["week_id"]);
+        }
+        console.log(this.selectedDaysIds);
+    }
+
+    protected deselectAllWeeks() {
+        this.selectedWeeksIds = [];
+        console.log(this.selectedWeeksIds);
+    }
 }

@@ -25,27 +25,13 @@
 \ir SP/m06_origin.sql
 -- Modulo 7 
 \ir SP/m07_template.sql
-\ir SP/m09_getIntegratorsByChannels.sql
+-- Modulo 9
+\ir SP/m09_coremensajeria.sql
 
 \ir 'CREATE DB_STARSCHEMA.sql'
 \ir CREATES_STARSCHEMA.sql
 
 \c CoreMensajeria_StarSchema CoreMensajeria
-\ir SP/m09_update_starschema.sql
-\ir SP/m09_Get_CampaignMessages.sql
-\ir SP/m09_Get_ChannelMessages.sql
-\ir SP/m09_Get_CompanyMessages.sql
-\ir SP/m09_getAllCampaigns.sql
-\ir SP/m09_getAllChannels.sql
 \ir SP/m09_getMessagesParameter.sql
-\ir SP/m09_getDaysofMonth.sql
-\ir SP/m09_getDaysofWeek.sql
-\ir SP/m09_getDaysofYear.sql
-\ir SP/m09_getHours.sql
-\ir SP/m09_getMinutes.sql
-\ir SP/m09_getMonths.sql
-\ir SP/m09_getQuartersofYear.sql
-\ir SP/m09_getSeconds.sql
-\ir SP/m09_getWeeksofYear.sql
-\ir SP/m09_getYears.sql
+\ir SP/m09_coremensajeria_starschema.sql
 -- \ir StoreProceduresM_09/FuntionsGet.sql

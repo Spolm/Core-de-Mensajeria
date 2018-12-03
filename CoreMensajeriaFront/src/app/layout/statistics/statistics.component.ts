@@ -596,7 +596,10 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             selectedMonthsIds: this.selectedMonthsIds,
             // Days
             selectedDays: this.selectedDays,
-            selectedDaysIds: this.selectedDaysIds
+            selectedDaysIds: this.selectedDaysIds,
+            // Weeks
+            selectedWeeks: this.selectedWeeks,
+            selectedWeeksIds: this.selectedWeeksIds
         };
         const dialogRef = this.dialog.open(MoreFiltersComponent, dialogConfig);
         dialogRef.updatePosition({ top: "55px", right: "0px", left: "0px" });
@@ -659,7 +662,10 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         this.selectedDaysIds = data["days"]["selectedDaysIds"];
     }
 
-    fillWeeksDropdownFromMenuData(data) {}
+    fillWeeksDropdownFromMenuData(data) {
+        this.selectedWeeks = data["weeks"]["selectedWeeks"];
+        this.selectedWeeksIds = data["weeks"]["selectedWeeksIds"];
+    }
 
     fillDaysOfWeekDropdownFromMenuData(data) {}
 
