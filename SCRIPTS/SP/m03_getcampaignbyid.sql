@@ -2,7 +2,7 @@
 
 --DROP FUNCTION m03_getcampaignbyid(integer);
 
-CREATE OR REPLACE FUNCTION m03_getcampaigns ( IN _campaign integer)
+CREATE OR REPLACE FUNCTION m03_getcampaignbyid ( IN _campaign integer)
     RETURNS TABLE(cam_id integer, cam_name character varying, cam_description character varying, cam_start_date TimeStamp, cam_end_date TimeStamp,
                 cam_status boolean) AS
 $BODY$

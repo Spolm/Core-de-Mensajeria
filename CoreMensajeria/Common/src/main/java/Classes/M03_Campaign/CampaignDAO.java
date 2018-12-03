@@ -51,7 +51,7 @@ public class CampaignDAO {
     //region Obtener Lista de Campañas
     public void getCampaignList(int id, String select, ArrayList<Campaign> caList) throws CampaignDoesntExistsException {
         try {
-            PreparedStatement ps = conn.prepareStatement(select);
+            PreparedStatement ps = conn.prepareCall(select);
             ps.setInt(1, id);
             ResultSet result = ps.executeQuery();
             while(result.next()){
@@ -83,7 +83,7 @@ public class CampaignDAO {
     //region API Obtener Campañas por compañia
 
     public ArrayList<Campaign> campaignList(int id) throws CampaignDoesntExistsException {
-        String select = "SELECT * FROM campaign where cam_company_id = ?";
+        String select = "{call m03_getcampaigns(?)}";
         ArrayList<Campaign> caList= new ArrayList<>();
         getCampaignList(id, select, caList);
         return caList;
@@ -92,9 +92,17 @@ public class CampaignDAO {
 
     //region Campaña por Usuario
     public ArrayList<Campaign> campaignListByUser(int id) throws CampaignDoesntExistsException {
-        String select = "SELECT DISTINCT  ca.* from \"campaign\" ca INNER JOIN " +
-                "\"company\" co ON ca.cam_company_id = co.com_id INNER JOIN \"user\" " +
-                "u ON co.com_user_id = ? ORDER BY  cam_id";
+        String select = "{call m03_getcampaignsbyuser(?)}";
+        ArrayList<Campaign> caList= new ArrayList<>();
+
+        getCampaignList(id, select, caList);
+        return caList;
+    }
+    //endregion
+
+    //region Todas Las Campañas
+    public ArrayList<Campaign> campaignListAll(int id) throws CampaignDoesntExistsException {
+        String select = "{call m03_getcampaignall()}";
         ArrayList<Campaign> caList= new ArrayList<>();
 
         getCampaignList(id, select, caList);
@@ -103,17 +111,15 @@ public class CampaignDAO {
     //endregion
 
     public boolean changeStatusCampaign (int id) throws CampaignDoesntExistsException {
-
         Campaign ca = new Campaign();
-
+        boolean flag;
         try {
             ca = getDetails(id);
             ca.set_statusCampaign(!ca.is_statusCampaign());
-            String query = "UPDATE public.campaign SET" +
-                    " cam_status ="+ca.is_statusCampaign()+
-                    " WHERE cam_id =?";
-            PreparedStatement ps = conn.prepareStatement(query);
+            flag = ca.is_statusCampaign();
+            PreparedStatement ps = conn.prepareCall("{call m03_changecampaignstatus(?,?)}");
             ps.setInt(1,id);
+            ps.setBoolean(2,flag);
             ps.executeUpdate();
         }
         catch (SQLException e) {
