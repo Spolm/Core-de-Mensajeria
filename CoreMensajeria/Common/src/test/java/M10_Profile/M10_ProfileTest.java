@@ -20,7 +20,6 @@ public class M10_ProfileTest {
     private User _userProfile;
     private M10_Profile _profileDao;
     private UserDAO _userDAO = new UserDAO();
-    private User _search;
     private ArrayList<Rol> _rol;
 
     private void newProfile(){
@@ -68,24 +67,6 @@ public class M10_ProfileTest {
             _userDAO.deleteUser(_userProfile);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void loadCorrectProfile() throws SQLException {
-        _search = _profileDao.searchUser(_userProfile.get_usernameUser()).get(0);
-        assertEquals(_userProfile, _search);
-    }
-
-    @Test
-    public void loadCorrectProfileError(){
-        try {
-            _search = _profileDao.searchUser("Alonzo").get(0);
-            assertEquals(_userProfile, _search);
-        }
-        catch(IndexOutOfBoundsException e)
-        {
-            assertNull(_search);
         }
     }
 
