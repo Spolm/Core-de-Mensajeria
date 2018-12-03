@@ -5,7 +5,7 @@ _typeUser: number;
 _passwordUser:string;
 _emailUser:string;
 _phoneUser:string;
-_dateOfBirthUser:string;
+_birthdateUser:string;
 _countryUser:string;
 _addressUser:string;
 _genderUser:string;
