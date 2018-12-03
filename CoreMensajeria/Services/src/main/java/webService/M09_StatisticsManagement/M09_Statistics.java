@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.*;
 import java.util.List;
@@ -161,6 +162,24 @@ public class M09_Statistics extends Application {
     @Path("/integratorsCount")
     @Produces("application/json")
     public Response getIntegratosCount() { return getOverallCountFor(FilterType.integrator); }
+
+    @GET
+    @Path("/update")
+    @Produces("application/json")
+    public Response updateStarSchema() {
+        String query = "SELECT m09_update_starschema();";
+        try {
+            Statement st = connStar.createStatement();
+            ResultSet result = st.executeQuery(query);
+            return Response.ok().build();
+        } catch(SQLException e) {
+            return Response.serverError().build();
+        } catch(Exception e) {
+            return Response.serverError().build();
+        } finally {
+            SqlEstrella.bdClose(connStar);
+        }
+    }
 
     public Response getOverallCountFor(FilterType filterType) {
         String query = queryForOverallCount(filterType);
