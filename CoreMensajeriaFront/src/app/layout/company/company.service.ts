@@ -24,9 +24,17 @@ export class CompanyService {
   }
 
   getCompanies(): Observable<any> {
-    return this.http.get(endpoint + 'GetCompanies?id=1').pipe(
+    return this.http.get(endpoint + 'GetCompanies?id='+localStorage.getItem('userid')).pipe(
       map(this.extractData));
+      
   }
+
+  getCompaniesByUser(): Observable<any> {
+    return this.http.get(endpoint + 'GetCompaniesByUser?id='+localStorage.getItem('userid')).pipe(
+      map(this.extractData));
+      
+  }
+
   
   addCompany (company): Promise<any> {
     return this.http.post<any>(endpoint + 'M02_Company/AddCompany', company).toPromise()

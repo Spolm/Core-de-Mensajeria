@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { CampaignService } from './campaign.service';
 import { ToastrService } from 'ngx-toastr';
 import { Campaign } from '../../../model/campaign-model';
+import { CompanyService } from '../company/company.service'
+import { Company } from '../../../model/company-model';
 
 @Component({
   selector: 'app-campaign',
@@ -15,8 +17,10 @@ import { Campaign } from '../../../model/campaign-model';
 export class CampaignComponent implements OnInit {
 
   campaigns: any = [];
+  companyList: any;
+  companies: any [];
 
-  constructor(public router: Router, private http: HttpClient, 
+  constructor(public companyService: CompanyService, public router: Router, private http: HttpClient, 
     public campaignService: CampaignService, private toastr: ToastrService) { 
       campaignService.getCampaigns().subscribe(data => {
         this.campaigns = data;
@@ -28,7 +32,17 @@ private vacio: boolean;
 private lastCampaignId: number;
 ngOnInit() {
 
-this.campaignService.getCampaigns().subscribe((data) => {
+  this.companyService.getCompanies().subscribe((data) => {
+    this.vacio = true;
+    this.companyList = data;
+    localStorage.setItem('companyid', data._idCompany);
+    if (this.companyList.length > 0) {
+    this.vacio = false;
+    }
+    }, (err) => {
+    console.log(err);
+    })
+this.campaignService.getCampaignsByCompany().subscribe((data) => {
 this.vacio = true;
 this.campaignList = data;
 if (this.campaignList.length > 0) {

@@ -19,6 +19,7 @@ export class CompanyComponent implements OnInit {
               public rest: CompanyService, private toastr: ToastrService) { }
 
   private companyList = Array<Company>();
+  private company: Company;
   private vacio: boolean;
 
   ngOnInit() {
@@ -33,14 +34,10 @@ export class CompanyComponent implements OnInit {
    console.log(err);
     })
 
-    this.AgregarCompany(null)
+    
   }
 
-  async AgregarCompany(company:Company){
-    let mensaje = null;
-    mensaje = await this.rest.addCompany(company);
-    console.log(" asds")
-  }
+  
 
 
 
