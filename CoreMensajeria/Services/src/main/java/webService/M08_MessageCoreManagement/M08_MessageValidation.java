@@ -6,6 +6,7 @@ import Classes.M08_Validation.ValidationTemplate;
 import Classes.M07_Template.HandlerPackage.TemplateHandler;
 import Classes.M07_Template.Template;
 import Exceptions.MessageDoesntExistsException;
+import Exceptions.ParameterDoesntExistsException;
 import Exceptions.TemplateDoesntExistsException;
 import com.google.gson.Gson;
 
@@ -73,7 +74,14 @@ public class M08_MessageValidation {
                 }
             }
 
-            return newMessage + "..........."+parameters.getTemplate_id();
+            for (int i = 0; i < template2.getChannels().size(); i++){
+                if ((template2.getChannels().get(i).getNameChannel().equals("SMS"))&&(newMessage.length()>160)){
+                    return "El sms supera los 160 caracteres";
+                }
+                ///envio mensaje
+            }
+
+            return newMessage ;
         } catch (TemplateDoesntExistsException e) {
             e.printStackTrace();
             return "template no existe";
@@ -81,6 +89,9 @@ public class M08_MessageValidation {
         catch (MessageDoesntExistsException e) {
             e.printStackTrace();
             return "mensaje no existe";
+        } catch (ParameterDoesntExistsException e) {
+            e.printStackTrace();
+            return "parametro no existe";
         }
 
     }
