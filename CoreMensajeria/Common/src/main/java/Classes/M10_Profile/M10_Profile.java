@@ -1,7 +1,9 @@
 package Classes.M10_Profile;
 
+import Classes.M02_Company.Company;
 import Classes.Sql;
 import Classes.M01_Login.User;
+import Exceptions.CompanyDoesntExistsException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,10 +20,35 @@ public class M10_Profile {
         _conn = Sql.getConInstance();
     }
 
+
+    public ArrayList<Company> getCompanies(){
+        ArrayList<Company> coList= new ArrayList<>();
+        try {
+            PreparedStatement ps = _conn.prepareCall("{call m10_getallcompanies()}");
+            ResultSet result = ps.executeQuery();
+            while(result.next()){
+                Company co = new Company();
+                co.set_idCompany(result.getInt("com_id"));
+                co.set_name(result.getString("com_name"));
+                coList.add(co);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return coList;
+    }
+
     /**
      * @param username Nombre de usuario a buscar
      * @return User con todos los datos del usuario
      */
+
+
+
     public ArrayList<User> searchUser(String username) {
         String consulta= "SELECT use_id, use_password, use_username, use_type, use_email, use_phone,use_country," +
                 " use_city, use_address, use_date_of_birth, use_gender From public.user " +
