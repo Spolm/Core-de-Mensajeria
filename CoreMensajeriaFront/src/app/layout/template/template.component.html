@@ -50,9 +50,9 @@
         </td>
         <td class="text-center">Banesco online</td>
         <td class="">
-            <div class="d-flex justify-content-around align-items-center">
+            <div class="d-flex justify-content-around align-items-center ">
                 <i class="fa fa-info-circle clickable" aria-hidden="true" (click)="templateDetails(template.templateId)" title="Detalles"></i>
-                <i class="fa fa-edit" aria-hidden="true"></i>
+                <i *ngIf="template.status.statusName == 'No Aprobado'" class="fa fa-edit clickable" aria-hidden="true" routerLink="/template/modify/{{template.templateId}}" title="Modificar"></i>
             </div>
         </td>
       </tr>

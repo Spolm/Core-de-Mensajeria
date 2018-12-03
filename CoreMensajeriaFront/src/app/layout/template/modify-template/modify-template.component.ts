@@ -16,7 +16,7 @@ export class ModifyTemplateComponent {
   templateJson: any = [];
   parametersJson: any = [];
   channelsJson: any = [];
-  formMessage: string;
+  formMessage = '';
   parameters: Array<string> = [];
   newParameters: Array<string> = [];
   channels_integrators: any = [];
@@ -53,39 +53,56 @@ export class ModifyTemplateComponent {
     this.assignChannelsIntegrators(this.channels_integrators, this.templateJson.channels);
   }
 
-  assignParameter(place: Array<any>, data: Array<any>){
+  assignParameter(place: Array<any>, data: Array<any>) {
     data.forEach( (value) => {
       place.push(value.name);
-    })
+    });
   }
 
-  assignChannelsIntegrators(place: Array<any>, data: Array<any>){
-    data.forEach( (channel) => {      
-      channel.integrators.forEach( (integrator) =>{
+  assignChannelsIntegrators(place: Array<any>, data: Array<any>) {
+    data.forEach( (channel) => {
+      channel.integrators.forEach( (integrator) => {
         place.push(
           { channel, integrator}
           );
-      })
-    })
+      });
+    });
   }
 
   addParameter(message: string, parameterName: string) {
-    if (!this.parameters.find(x => x == parameterName)) {
-      const myFormMessage = document.getElementById('formMessage');
-      const pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
-      const startMessage = message.slice(0, pointer);
-      const endMessage = message.slice(pointer, message.length);
-      this.parameters.push(parameterName);
-      this.formMessage = startMessage + ' [.$' + parameterName + '$.] ' + endMessage;
-    }
+          const myFormMessage = document.getElementById('formMessage');
+          const pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
+          const startMessage = message.slice(0, pointer);
+          const endMessage = message.slice(pointer, message.length);
+          this.parameters.push(parameterName);
+          this.formMessage = startMessage + ' [.$' + parameterName + '$.] ' + endMessage;
+
   }
 
   addNewParameter(message: string, parameterName: string) {
-    this.addParameter(message, parameterName);
-    if (!this.newParameters.find(x => x == parameterName)) {
-      this.newParameters.push(parameterName);
-    }
-    this.showInputCreateParameterState = false;
+    parameterName = parameterName.trim();
+    if ((parameterName.valueOf() !== '')) {
+        parameterName = parameterName.toLowerCase();
+        parameterName = parameterName.charAt(0).toUpperCase() + parameterName.slice(1, parameterName.length);
+        if (!this.parameters.find(x => x === parameterName)) {
+            this.addParameter(message, parameterName);
+            if (!this.newParameters.find(x => x == parameterName)) {
+                this.newParameters.push(parameterName);
+            } else {
+                this.toastr.warning('El parametro ya esta registrado', 'Aviso',
+                    {
+                        timeOut: 2800,
+                        progressBar: true
+                    });
+                }
+            }
+        } else {
+            this.toastr.warning('No a escrito ningun parametro', 'Aviso',
+            {
+                timeOut: 2800,
+                progressBar: true
+            });
+        }
   }
 
   addIntegrator(channel: any, integratorId: number) {
@@ -118,28 +135,32 @@ export class ModifyTemplateComponent {
     this.channels_integrators.splice(this.channels_integrators.indexOf(channel_integrator), 1);
   }
 
-  postTemplate() {
-
-    console.log(this.formMessage);
-    console.log(this.parameters);
-    console.log(this.newParameters);
-    console.log(this.channels_integrators);
-    if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
-      if (this.channels_integrators[0]) {
-        this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
+  updateTemplate() {
+      this.formMessage = this.formMessage.trim();
+      if (this.formMessage != '') {
+          if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
+              if (this.channels_integrators[0]) {
+                  this.templateService.updateTemplate(this.templateId, this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
+              } else {
+                  this.toastr.error('Falta llenar un campo', 'Error',
+                      {
+                          timeOut: 2800,
+                          progressBar: true
+                      });
+              }
+          } else {
+              this.toastr.error('Tal vez quiera escribir un mensaje mas largo', 'Error',
+                  {
+                      timeOut: 2800,
+                      progressBar: true
+                  });
+          }
       } else {
-        this.toastr.error('Falta llenar un campo', 'Error',
-          {
-            timeOut: 2800,
-            progressBar: true
-          });
+          this.toastr.warning('No puede crear un template sin mensaje!', 'Aviso',
+              {
+                  timeOut: 2800,
+                  progressBar: true
+              });
       }
-    } else {
-      this.toastr.error('Tal vez quiera escribir un mensaje mas largo', 'Error',
-        {
-          timeOut: 2800,
-          progressBar: true
-        });
-    }
   }
 }

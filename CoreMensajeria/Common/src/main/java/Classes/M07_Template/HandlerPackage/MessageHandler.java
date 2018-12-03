@@ -100,4 +100,39 @@ public class MessageHandler {
             Sql.bdClose(sql.getConn());
         }
     }
+
+    public static void updateMessage(String message, int templateId, String[] parameters,int companyId) {
+        String query = "UPDATE public.message\n" +
+                        "SET mes_text = '" + message + "'\n" +
+                        "WHERE mes_template = " + templateId + "\n" +
+                        "returning mes_id";
+        sql = new Sql();
+        ResultSet resultSet;
+        int messageId;
+        try{
+            resultSet = sql.sqlConn(query);
+            if (resultSet.next()){
+                messageId = resultSet.getInt("mes_id");
+                updateParameterOfMessage(messageId,parameters,companyId);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+        }
+    }
+
+    private static void updateParameterOfMessage(int messageId, String[] parameters, int companyId) {
+        String query = "delete from public.message_parameter\n" +
+                "WHERE mp_message = " + messageId;
+        Sql sql = new Sql();
+        try{
+            sql.sqlNoReturn(query);
+            postParameterOfMessage(messageId,parameters,companyId);
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+        }
+    }
 }
