@@ -295,6 +295,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     private getAllChannels() {
         this.statisticsService.getAllChannels().subscribe(data => {
             this.insertIntoDropdown(EntityType.channel, data);
+            this.getAllIntegrators();
         });
     }
 

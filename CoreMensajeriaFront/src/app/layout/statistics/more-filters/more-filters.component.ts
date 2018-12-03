@@ -140,12 +140,6 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         this.setupCompaniesData(data);
         this.setupCampaingsData(data);
         this.setupChannelsData(data);
-
-        if (this.arrayIsEmpty(this.selectedChannels)) {
-            this.getAllIntegrators();
-        } else {
-            this.getIntegratorsForChannels();
-        }
     }
 
     setupCompaniesData(data: any) {
