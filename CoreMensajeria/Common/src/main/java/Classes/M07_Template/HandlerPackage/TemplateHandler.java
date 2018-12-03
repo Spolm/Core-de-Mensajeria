@@ -23,7 +23,14 @@ import com.google.gson.*;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * TemplateHanlder class used for the management of information
+ * search in the database.
+ */
 public class TemplateHandler {
+    /**
+     * connection to the database
+     */
     private Sql sql;
 
     private static final String GET_CAMPAIGN_BY_USER_OR_COMPANY =
@@ -39,6 +46,14 @@ public class TemplateHandler {
     private static final String GET_CAMAPIGN_BY_ID =
             "select* from public.campaign where cam_id = ? ";
 
+
+    /**
+     * this method returns all the templates filtering by the company to which
+     * a user belongs.
+     * @param userId user id
+     * @param companyId company id
+     * @return ArrayList of templates
+     */
     public ArrayList<Template> getTemplates(int userId,int companyId){
         ArrayList<Template> templateArrayList = new ArrayList<>();
         ArrayList<Campaign> campaignArrayList = null;
@@ -75,6 +90,10 @@ public class TemplateHandler {
         }
     }
 
+    /**
+     * this method returns all templates without any type of filtering.
+     * @return ArrayList of templates
+     */
     public ArrayList<Template> getTemplates(){
         ArrayList<Template> templateArrayList = new ArrayList<>();
         Connection connection = Sql.getConInstance();
@@ -104,6 +123,14 @@ public class TemplateHandler {
             return templateArrayList;
         }
     }
+
+    /**
+     * this method returns a template filtering
+     * by the id of the template that is desired.
+     * @param id template id
+     * @return template
+     * @throws TemplateDoesntExistsException
+     */
     public Template getTemplate(int id) throws TemplateDoesntExistsException{
         Template template = new Template();
         String query = "select tem_id,ts_id,tem_user_id,tem_campaign_id, tem_creation_date, sta_name\n" +
@@ -174,6 +201,13 @@ public class TemplateHandler {
         }
     }
 
+    /**
+     * This method returns the campaigns filtering
+     * by the company to which the user belongs.
+     * @param userId user id
+     * @param companyId company id
+     * @return ArrayList of campaings
+     */
     public ArrayList<Campaign> getCampaignsByUserOrCompany(int userId, int companyId){
         ArrayList<Campaign> campaignArrayList = new ArrayList<>();
         Connection connection = Sql.getConInstance();
@@ -211,6 +245,12 @@ public class TemplateHandler {
         }
     }
 
+    /**
+     * This method returns the channels and integrators associated
+     * with a specific template.
+     * @param templateId template id
+     * @return ArrayList of channels
+     */
     public ArrayList<Channel> getChannelsByTemplate(int templateId){
         ArrayList<Channel> channels = new ArrayList<>();
         Connection connection = Sql.getConInstance();
@@ -253,11 +293,10 @@ public class TemplateHandler {
     }
 
     /**
-     *
-     * @param templateId
+     * This method returns the campaign that is associated
+     * with a template in specifies.
+     * @param templateId template id
      * @return campaign
-     *
-     * Retorna una campana que tiene asociada la plantilla con el id = templateId
      */
     public Campaign getCampaingByTemplate(int templateId){
         Campaign campaign = new Campaign();
@@ -289,11 +328,10 @@ public class TemplateHandler {
     }
 
     /**
-     *
-     * @param templateId
+     * This method returns the origin by application that is associated
+     * with a template in specifies.
+     * @param templateId template id
      * @return application
-     *
-     * Retornar una aplicacion que tiene asociada la plantilla con el id = templateId
      */
     public Application getApplicationByTemplate(int templateId){
         Application application = new Application();
@@ -320,6 +358,13 @@ public class TemplateHandler {
         }
     }
 
+    /**
+     * This method returns the privileges that a specific user has in a
+     * specific company.
+     * @param userId user id
+     * @param companyId company id
+     * @return ArrayList of privileges
+     */
     public ArrayList<Privilege> getTemplatePrivilegesByUser(int userId, int companyId){
         ArrayList<Privilege> privileges = new ArrayList<>();
         Connection connection = Sql.getConInstance();
@@ -341,7 +386,12 @@ public class TemplateHandler {
         return privileges;
     }
 
-
+    /**
+     * This method is responsible for saving a template in specific.
+     * @param json string json with information
+     * @return If the template was saved successfully it returns true,
+     * otherwise it returns false.
+     */
     public boolean postTemplateData(String json){
         try {
             Gson gson = new Gson();
@@ -416,6 +466,12 @@ public class TemplateHandler {
         }
     }
 
+    /**
+     * This method is responsible for modifying a specific template.
+     * @param json string json with information
+     * @return If the template was saved successfully it returns true,
+     * otherwise it returns false.
+     */
     public boolean updateTemplateData(String json){
         try {
             Gson gson = new Gson();
