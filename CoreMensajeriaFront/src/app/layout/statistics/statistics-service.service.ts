@@ -22,6 +22,10 @@ export class StatisticsServiceService {
         return this.http.get(this.ApiURL + "channelsCount");
     }
 
+    getInitialMessagesForIntegrators() {
+        return this.http.get(this.ApiURL + "integratorsCount");
+    }
+
     getAllCompanies(userId: string) {
         let params = new HttpParams();
         params = params.set("userId", userId);
@@ -50,5 +54,9 @@ export class StatisticsServiceService {
 
     getStatistics(params: HttpParams) {
         return this.http.get(this.ApiURL + "filters", { params });
+    }
+
+    updateStarSchema() {
+        return this.http.get(this.ApiURL + "update");
     }
 }

@@ -61,13 +61,12 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     /* ==============
            Charts
     ================= */
-    timeLineChart = [];
-    companiesChart = [];
-    campaignsChart = [];
-    channelsChart = [];
-    integratorsChart = [];
+    timeLineChart: Chart = [];
+    companiesChart: Chart = [];
+    campaignsChart: Chart = [];
+    channelsChart: Chart = [];
+    integratorsChart: Chart = [];
 
-    opcionSeleccionado: string = "0";
     verSeleccion: string = "";
     Date2Capturado: string = "";
     Date1Capturado: string = "";
@@ -75,7 +74,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     opcionDateSleccionado2: Date;
     paramType: string;
 
-    datos = [];
+    chartTypes = [];
 
     constructor(
         public statisticsService: StatisticsServiceService,
@@ -83,10 +82,10 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         public dialog: MatDialog
     ) {
         super(statisticsService, toastr);
-        this.datos = [
-            "Grafico de Barras",
-            "Grafico de Linea ",
-            "Grafico de Tortas"
+        this.chartTypes = [
+            ["bar", "barras", true],
+            ["line", "línea", false],
+            ["doughnut", "dona", false]
         ];
     }
 
@@ -165,62 +164,43 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         );
     }
 
-    ChartTransformation() {
-        this.clearChart(this.campaignsChart);
-        this.clearChart(this.companiesChart);
-        this.clearChart(this.channelsChart);
-
-        if (this.opcionSeleccionado != "0") {
-            // Pasamos el valor seleccionado a la variable verSeleccion
-            this.verSeleccion = this.opcionSeleccionado;
-            console.log("Valor Capturado", this.verSeleccion);
-        } else this.toastr.error("Debe seleccionar otra opcion");
-
-        if (this.verSeleccion == "Grafico de Tortas") {
-            var TypeChosen: ChartType = ChartType.doughnut;
-            console.log("paso por el if", TypeChosen);
-        } else if (this.verSeleccion == "Grafico de Barras") {
-            var TypeChosen: ChartType = ChartType.bar;
-        } else if (this.verSeleccion == "Grafico de Linea") {
-            var TypeChosen: ChartType = ChartType.line;
-        }
-
-        this.statisticsService
-            .getInitialMessagesForCompanies()
-            .subscribe(data => {
-                this.companiesChart = this.insertInitialDataIntoCharts(
-                    data,
-                    this.companiesChartElement,
-                    "Cantidad de mensajes por compañía",
-                    TypeChosen
-                );
-            });
-
-        this.statisticsService
-            .getInitialMessagesForCampaigns()
-            .subscribe(data => {
-                this.campaignsChart = this.insertInitialDataIntoCharts(
-                    data,
-                    this.campaignsChartElement,
-                    "Cantidad de mensajes por campaña",
-                    TypeChosen
-                );
-            });
-
-        this.statisticsService
-            .getInitialMessagesForChannels()
-            .subscribe(data => {
-                this.channelsChart = this.insertInitialDataIntoCharts(
-                    data,
-                    this.channelsChartElement,
-                    "Cantidad de mensajes por canal",
-                    TypeChosen
-                );
-            });
+    changeCompaniesChart(value: string) {
+        this.companiesChart = this.changeChartType(
+            value,
+            this.companiesChart,
+            this.companiesChartElement
+        );
     }
 
-    clearChart(chart: Chart) {
+    changeCampaignsChart(value: string) {
+        this.campaignsChart = this.changeChartType(
+            value,
+            this.campaignsChart,
+            this.campaignsChartElement
+        );
+    }
+
+    changeChannelsChart(value: string) {
+        this.channelsChart = this.changeChartType(
+            value,
+            this.channelsChart,
+            this.channelsChartElement
+        );
+    }
+
+    changeIntegratorsChart(value: string) {
+        this.integratorsChart = this.changeChartType(
+            value,
+            this.integratorsChart,
+            this.integratorsChartElement
+        );
+    }
+
+    changeChartType(value: string, chart: Chart, element: ElementRef): Chart {
+        var config = chart.config;
         chart.destroy();
+        config.type = value;
+        return new Chart(element.nativeElement.getContext("2d"), config);
     }
 
     ngOnInit() {
@@ -260,6 +240,17 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                     ChartType.doughnut
                 );
             });
+
+        this.statisticsService
+            .getInitialMessagesForIntegrators()
+            .subscribe(data => {
+                this.integratorsChart = this.insertInitialDataIntoCharts(
+                    data,
+                    this.integratorsChartElement,
+                    "Cantidad de mensajes por integrador",
+                    ChartType.bar
+                );
+            });
     }
 
     private getAllCompanies() {
@@ -295,16 +286,17 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     private getAllChannels() {
         this.statisticsService.getAllChannels().subscribe(data => {
             this.insertIntoDropdown(EntityType.channel, data);
+            this.getAllIntegrators();
         });
     }
 
-    capturar() {
-        if (this.opcionSeleccionado != "0") {
-            // Pasamos el valor seleccionado a la variable verSeleccion
-            this.verSeleccion = this.opcionSeleccionado;
-            console.log("Valor Capturado", this.verSeleccion);
-        } else this.toastr.error("Debe seleccionar otra opcion");
-    }
+    // capturar() {
+    //     if (this.opcionSeleccionado != "0") {
+    //         // Pasamos el valor seleccionado a la variable verSeleccion
+    //         this.verSeleccion = this.opcionSeleccionado;
+    //         console.log("Valor Capturado", this.verSeleccion);
+    //     } else this.toastr.error("Debe seleccionar otra opcion");
+    // }
 
     capturarDate() {
         if (
@@ -477,7 +469,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     }
 
     sendUserRequest() {
-        this.verSeleccion = this.opcionSeleccionado;
+        // this.verSeleccion = this.opcionSeleccionado;
         console.log("Valor Capturado", this.verSeleccion);
 
         if (this.verSeleccion == "Grafico de Tortas") {
@@ -492,6 +484,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         var params = this.convertSelectedItemsIntoHttpParams();
         this.statisticsService.getStatistics(params).subscribe(
             data => {
+                console.log(data);
                 let companiesJson = data["companies"];
                 var companies: Point[] = this.createPointArray(companiesJson);
                 let campaingsJson = data["campaigns"];
@@ -509,6 +502,44 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                 console.error(error);
             }
         );
+    }
+
+    convertSelectedItemsIntoHttpParams(): HttpParams {
+        var params = new HttpParams();
+        params = this.convertselectedCompaniesIdsIntoHttpParams(params);
+        params = this.convertselectedCampaignsIdsIntoHttpParams(params);
+        params = this.convertselectedChannelsIdsIntoHttpParams(params);
+        params = this.convertselectedIntegratorsIdsIntoHttpParams(params);
+        console.log(params.toString());
+        return params;
+    }
+
+    convertselectedCompaniesIdsIntoHttpParams(params: HttpParams) {
+        this.selectedCompaniesIds.forEach(companyId => {
+            params = params.append("companyId", companyId.toString());
+        });
+        return params;
+    }
+
+    convertselectedCampaignsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedCampaignsIds.forEach(campaignId => {
+            params = params.append("campaignId", campaignId.toString());
+        });
+        return params;
+    }
+
+    convertselectedChannelsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedChannelsIds.forEach(channelId => {
+            params = params.append("channelId", channelId.toString());
+        });
+        return params;
+    }
+
+    convertselectedIntegratorsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedIntegratorsIds.forEach(integratorId => {
+            params = params.append("integratorId", integratorId.toString());
+        });
+        return params;
     }
 
     updateChartData(chart: Chart, data: Point[], typeOfChart: ChartType) {
@@ -539,35 +570,6 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             }
         }
         return points;
-    }
-
-    convertSelectedItemsIntoHttpParams(): HttpParams {
-        var params = new HttpParams();
-        params = this.convertselectedCompaniesIdsIntoHttpParams(params);
-        params = this.convertselectedCampaignsIdsIntoHttpParams(params);
-        params = this.convertselectedChannelsIdsIntoHttpParams(params);
-        return params;
-    }
-
-    convertselectedCompaniesIdsIntoHttpParams(params: HttpParams) {
-        this.selectedCompaniesIds.forEach(companyId => {
-            params = params.append("companyId", companyId.toString());
-        });
-        return params;
-    }
-
-    convertselectedCampaignsIdsIntoHttpParams(params: HttpParams) {
-        this.selectedCampaignsIds.forEach(campaignId => {
-            params = params.append("campaignId", campaignId.toString());
-        });
-        return params;
-    }
-
-    convertselectedChannelsIdsIntoHttpParams(params: HttpParams) {
-        this.selectedChannelsIds.forEach(channelId => {
-            params = params.append("channelId", channelId.toString());
-        });
-        return params;
     }
 
     openFilters() {
@@ -607,6 +609,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             this.fillCompaniesDropdownFromMenuData(result);
             this.fillCampaignsDropdownFromMenuData(result);
             this.fillChannelsDropdownFromMenuData(result);
+            this.fillIntegratorsDropdownFromMenuData(result);
             console.log(result);
         });
     }
@@ -712,5 +715,20 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         chart.data.datasets[0].backgroundColor = colors;
 
         chart.update();
+    }
+
+    updateStarSchema() {
+        this.statisticsService.updateStarSchema().subscribe(
+            data => {
+                this.toastr.success(
+                    "La base de datos de estadística ha sido actualizada satisfactoriamente."
+                );
+            },
+            error => {
+                this.toastr.error(
+                    "Hubo un error actualizando la base de datos de estadísticas."
+                );
+            }
+        );
     }
 }

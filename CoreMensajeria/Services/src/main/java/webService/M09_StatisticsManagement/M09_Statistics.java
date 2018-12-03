@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.*;
 import java.util.List;
@@ -44,7 +45,7 @@ enum FilterType {
     integrator {
         @Override
         public String value() {
-            return "com_name";
+            return "int_name";
         }
     };
 
@@ -157,6 +158,29 @@ public class M09_Statistics extends Application {
         return getOverallCountFor(FilterType.channel);
     }
 
+    @GET
+    @Path("/integratorsCount")
+    @Produces("application/json")
+    public Response getIntegratosCount() { return getOverallCountFor(FilterType.integrator); }
+
+    @GET
+    @Path("/update")
+    @Produces("application/json")
+    public Response updateStarSchema() {
+        String query = "SELECT m09_update_starschema();";
+        try {
+            Statement st = connStar.createStatement();
+            ResultSet result = st.executeQuery(query);
+            return Response.ok().build();
+        } catch(SQLException e) {
+            return Response.serverError().build();
+        } catch(Exception e) {
+            return Response.serverError().build();
+        } finally {
+            SqlEstrella.bdClose(connStar);
+        }
+    }
+
     public Response getOverallCountFor(FilterType filterType) {
         String query = queryForOverallCount(filterType);
         Statistics companies = new Statistics();
@@ -190,6 +214,10 @@ public class M09_Statistics extends Application {
                 return "SELECT DISTINCT c.cha_id, c.cha_name, messages from dim_channel c, " +
                         "(select sen_cha_id, count(*) as messages from fact_sent_message " +
                         "group by sen_cha_id) as m where c.cha_id = m.sen_cha_id ORDER BY c.cha_id ASC;";
+            case integrator:
+                return "SELECT DISTINCT i.int_id, i.int_name, messages from dim_integrator i, " +
+                    "(select sen_int_id, count(*) as messages from fact_sent_message " +
+                    "group by sen_int_id) as m where i.int_id = m.sen_int_id ORDER BY i.int_id ASC;";
             default: return "";
         }
     }
@@ -496,7 +524,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
         }
          finally {
-            SqlEstrella.bdClose(connStar);
+            Sql.bdClose(connStar);
         }
         return Response.ok(gson.toJson(stats)).build();
     }
