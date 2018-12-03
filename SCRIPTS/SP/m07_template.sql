@@ -104,3 +104,69 @@ ON tci.tci_ci_id = ci.ci_id
  END;
  $$
  LANGUAGE 'plpgsql' VOLATILE;
+
+ -- DROP FUNCTION m07_select_messages(integer);
+ CREATE OR REPLACE FUNCTION m07_select_messages(IN templateId INTEGER)
+ RETURN TABLE (mes_id INTEGER, mes_text VARCHAR) AS $$
+ BEGIN
+ RETURN QUERY
+ SELECT * 
+ FROM PUBLIC.MESSAGE 
+ WHERE MES_TEMPLATE = templateId;
+ END;
+ $$
+ LANGUAGE 'plpgsql' VOLATILE;
+
+
+ -- DROP FUNCTION m07_select_message(integer);
+ CREATE OR REPLACE FUNCTION m07_select_message(IN templateId INTEGER)
+ RETURN TABLE (mes_id INTEGER, mes_text VARCHAR) AS $$
+ BEGIN
+ RETURN QUERY
+ SELECT mes_id,mes_text 
+ FROM message 
+ WHERE mes_template = templateId;
+ END;
+ $$
+ LANGUAGE 'plpgsql' VOLATILE;
+
+ -- DROP FUNCTION m07_post_message(varchar, integer);
+ CREATE OR REPLACE FUNCTION m07_post_message(INT message VARCHAR, INT templateId INTEGER) 
+ RETURN TABLE (mes_id INTEGER) AS $$
+ BEGIN
+ INSERT INTO public.Message(mes_text,mes_template)
+ VALUES (message, tem_id) returning mes_id;
+ END;
+ $$
+ LANGUAGE 'plpgsql' VOLATILE;
+
+  -- DROP FUNCTION m07_post_message(varchar, integer);
+ CREATE OR REPLACE FUNCTION m07_post_parameter_of_message(INT messageId INTEGER, INT companyId INTEGER, INT parameterName VARCHAR) 
+ RETURN void AS $$
+ BEGIN
+ INSERT INTO public.message_parameter(mp_message,mp_parameter)
+ VALUES (messageId, 
+ (select par_id from public.parameter
+ where par_company_id = companyId and par_name = parameterName));
+ END;
+ $$
+ LANGUAGE 'plpgsql' VOLATILE;
+
+ CREATE OR REPLACE FUNCTION m07_update_message(INT message VARCHAR, INT templateId INTEGER)
+ RETURN TABLE (mes_id INTEGER) AS $$
+ BEGIN
+ UPDATE public.message
+ SET mes_text = message
+ WHERE mes_template = templateId returning mes_id;
+ END;
+ $$
+ LANGUAGE 'plpgsql' VOLATILE;
+
+ CREATE OR REPLACE FUNCTION m07_delete_parameter_of_message(INT messageId INTEGER)
+ RETURN TABLE (mes_id INTEGER) AS $$
+ BEGIN
+ DELETE FROM public.message_parameter
+ WHERE mp_message = messageIdl
+ END;
+ $$
+ LANGUAGE 'plpgsql' VOLATILE;
