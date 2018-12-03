@@ -11,11 +11,14 @@ public class CreateUserRequestBody {
     private String _cityUser;
     private String _addressUser;
     private String _genderUser;
+    private int _companyUser;
 
     public CreateUserRequestBody() {
     }
 
-    public CreateUserRequestBody(String _usernameUser, String _emailUser, String _birthdateUser, int _typeUser, String _passwordUser, String _phoneUser, String _countryUser, String _cityUser, String _addressUser, String _genderUser) {
+    public CreateUserRequestBody(String _usernameUser, String _emailUser, String _birthdateUser, int _typeUser,
+                                 String _passwordUser, String _phoneUser, String _countryUser, String _cityUser,
+                                 String _addressUser, String _genderUser, int _companyUser) {
         this._usernameUser = _usernameUser;
         this._emailUser = _emailUser;
         this._birthdateUser = _birthdateUser;
@@ -26,6 +29,7 @@ public class CreateUserRequestBody {
         this._cityUser = _cityUser;
         this._addressUser = _addressUser;
         this._genderUser = _genderUser;
+        this._companyUser = _companyUser;
     }
 
     public String get_usernameUser() {
@@ -48,8 +52,8 @@ public class CreateUserRequestBody {
         return _birthdateUser;
     }
 
-    public void set_birthdateUser(String _burthdateUser) {
-        this._birthdateUser = _burthdateUser;
+    public void set_birthdateUser(String _birthdateUser) {
+        this._birthdateUser = _birthdateUser;
     }
 
     public int get_typeUser() {
@@ -106,5 +110,13 @@ public class CreateUserRequestBody {
 
     public void set_genderUser(String _genderUser) {
         this._genderUser = _genderUser;
+    }
+
+    public int get_companyUser() {
+        return _companyUser;
+    }
+
+    public void set_companyUser(int _companyUser) {
+        this._companyUser = _companyUser;
     }
 }

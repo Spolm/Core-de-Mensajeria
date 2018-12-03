@@ -1,12 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { Router } from '@angular/router';
-import { Users } from './models/users';
-import { Company } from './models/companies';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Http } from '@angular/http';
-import { CreateUser } from './create_user.service';
 import { ToastrService } from 'ngx-toastr';
+import { RestService } from '../../shared/services/rest.service';
 
 @Component({
   selector: 'app-createuser',
@@ -16,28 +13,47 @@ import { ToastrService } from 'ngx-toastr';
 export class CreateuserComponent implements OnInit {
 
   @Input() userData = { _emailUser: '', _usernameUser: '', _birthdateUser: '', _countryUser: '',
-  _cityUser: '', _addressUser: '', _phoneUser:'', _genderUser:'', _typeUser: 1, _passwordUser: ''};
+  _cityUser: '', _addressUser: '', _phoneUser:'', _genderUser:'', _typeUser: 1, _passwordUser: '', _companyUser:0};
 
-  companies : Array<Company>;
+  companies : any = [];
+  user : any;
 
-  constructor(public router: Router, private http: Http, public rest: CreateUser, private toastr: ToastrService){
-    this.http.get('http://localhost:8080/CoreMensajeria_war_exploded/profile/listcompanies').subscribe(resp=>this.companies = resp.json());
+  constructor(public router: Router, private http: Http, public rest: RestService, private toastr: ToastrService){
+    
   }
-  users: Array<Users>;
 
   ngOnInit() {
-    this.rest.getUsers()
-      .subscribe( data => {
-        this.users = data;
-      });
+    this.initCompany();
+    this.initUser();
+  }
+
+  initCompany(){
+    this.rest.getData("profile/listcompanies").subscribe((data: {}) => {
+      this.companies = data;
+    },
+    (err) => {
+      this.toastr.error("Error de Conexion.");
+      console.log(err);
+    });
+  }
+
+  initUser(){
+    this.rest.getData("profile/user/"+localStorage.userid).subscribe((data: {}) => {
+      this.user = data[0];
+    },
+    (err) => {
+      this.toastr.error("Error de Conexion.");
+      console.log(err);
+    });
   }
 
   add() {
     this.toastr.info("Espere un momento",'Intentando acceder',{
       progressBar: true
     });
-    this.rest.createUser(this.userData).subscribe((result) => {
+    this.rest.postData('profile/add',this.userData).subscribe((result) => {
       this.toastr.success('Creado con éxito');
+      console.log(result);
       this.router.navigate(['/createuser']);
     }, (err) => {
       // console.log(err);
@@ -50,8 +66,8 @@ export class CreateuserComponent implements OnInit {
   }
 
   handleAdd() {
-    console.log(this.companies);
     this.add();
+    console.log(this.companies);
   }
 
 }

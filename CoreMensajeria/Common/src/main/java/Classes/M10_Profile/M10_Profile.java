@@ -42,6 +42,38 @@ public class M10_Profile {
         return coList;
     }
 
+    public ArrayList<User> getUsers(){
+
+        ArrayList<User> userList = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = _conn.prepareCall("{call m01_getusers()}");
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                User user = new User();
+                user.set_idUser(result.getInt("use_id"));
+                user.set_passwordUser(result.getString("use_password"));
+                user.set_usernameUser(result.getString("use_username"));
+                user.set_typeUser(result.getInt("use_type"));
+                user.set_emailUser(result.getString("use_email"));
+                user.set_phoneUser(result.getString("use_phone"));
+                user.set_countryUser(result.getString("use_country"));
+                user.set_dateOfBirthUser(result.getDate("use_date_of_birth"));
+                user.set_cityUser(result.getString("use_city"));
+                user.set_addressUser(result.getString("use_address"));
+                user.set_genderUser(result.getString("use_gender"));
+                userList.add(user);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
     /**
      * @param username Nombre de usuario a buscar
      * @return User con todos los datos del usuario
@@ -49,14 +81,14 @@ public class M10_Profile {
 
 
 
-    public ArrayList<User> searchUser(String username) {
+    public ArrayList<User> searchUser(int id) {
         String consulta= "SELECT use_id, use_password, use_username, use_type, use_email, use_phone,use_country," +
                 " use_city, use_address, use_date_of_birth, use_gender From public.user " +
-                "WHERE use_username =?";
+                "WHERE use_id =?";
         ArrayList<User> userList = new ArrayList<>();
         try {
         PreparedStatement preparedStatement = _conn.prepareStatement(consulta);
-        preparedStatement.setString(1, username);
+        preparedStatement.setInt(1, id);
         _result = preparedStatement.executeQuery();
 
 
@@ -127,18 +159,24 @@ public class M10_Profile {
             String query = "INSERT INTO public.USER " +
                     "(use_password, use_username, use_type, use_email, use_phone, use_country, use_city, use_address," +
                     " use_date_of_birth, use_gender) " +
-                    "values('"+ user.get_passwordUser() +"', '"+ user.get_usernameUser() +"'," +
+                    "values(MD5('"+ user.get_passwordUser() +"'), '"+ user.get_usernameUser() +"'," +
                     user.get_typeUser() +" , '"+ user.get_emailUser() +"', '"+ user.get_emailUser() +"'," +
                     "'"+ user.get_countryUser() +"', '"+ user.get_cityUser() +"', '"+ user.get_addressUser() +"', " +
-                    "TO_TIMESTAMP('"+ user.get_birthdateUser() +"','DD/MM/YYYY'), '"+ user.get_genderUser() +"')";
+                    "TO_TIMESTAMP('"+ user.get_birthdateUser() +"','YYYY-MM-DD'), '"+ user.get_genderUser() +"')";
 
 
 
             //Se crea conexion a la dc
             Sql db = new Sql();
 
-            //Se realiza query, falta codigo aqui para validar si se realizo correctamente el query
             db.sqlConn(query);
+
+            query  = "INSERT INTO public.responsability" +
+                    "(res_use_id, res_com_id, res_rol_id)" +
+                    "values( ( SELECT currval('user_use_id_seq') ), "+ user.get_companyUser() + ", "+ user.get_typeUser() +")";
+
+            db.sqlConn(query);
+
             return "Usuario creado con éxito";
         }
         catch (SQLException e) {

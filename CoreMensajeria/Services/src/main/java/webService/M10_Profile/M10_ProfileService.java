@@ -28,13 +28,13 @@ public class M10_ProfileService {
         _rols = _dao.getAllRoles();
         return Response.ok().entity(_rols).build();
     }
-    @Path("/user/{username}")
+    @Path("/user/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listIntegrator(@PathParam("username") String name) { //Hay que cambiarle el nombre a esto
+    public Response getUser(@PathParam("id") int id) { //Hay que cambiarle el nombre a esto
         try {
             _dao = new M10_Profile();
-            _us = _dao.searchUser(name);
+            _us = _dao.searchUser(id);
         } catch (NullPointerException e) {
             _us = null;
             String mess = "error al cargar el usuario";
@@ -81,6 +81,8 @@ public class M10_ProfileService {
 
         try {
 
+            _dao = new M10_Profile();
+
             //Instanciamos nuestro validador
             CreateFormHandler validator = new CreateFormHandler(createBody);
             validator.validate();
@@ -114,5 +116,25 @@ public class M10_ProfileService {
       finally {
           return Response.ok(_gson.toJson(_comp)).build();
       }
+    }
+
+    @Path("/listusers")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listUsers()
+    {
+        try
+        {
+            _dao= new M10_Profile();
+            _us= _dao.getUsers();
+        } catch (NullPointerException e) {
+            _us = null;
+            return Response.status(500).entity(e).build();
+        } catch (Exception e) {
+            return Response.status(500).entity(e).build();
+        }
+        finally {
+            return Response.ok(_gson.toJson(_us)).build();
+        }
     }
 }

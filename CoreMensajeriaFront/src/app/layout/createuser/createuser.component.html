@@ -16,10 +16,11 @@
                     <div class="col-md-4">
                         <label for="Rol">Rol del usuario</label>
                         <select name="_typeUser" [(ngModel)]="userData._typeUser" class="form-control">
-                            <option value="1">Superusuario</option>
-                            <option value="2">Administrador</option>
+                            <option *ngIf="user._typeUser == 1; then hide else show" value="1">Superusuario</option>
+                            <option *ngIf="user._typeUser == 1; then hide else show" value="2">Administrador</option>
                             <option value="3">Creador</option>
-                            <option value="4">Consultor</option>
+                            <option value="4">Aprobador</option>
+                            <option value="5">Consultor</option>
                         </select>
                     </div>
                 </div>
@@ -45,10 +46,10 @@
                     </div>
                     <div class="col-md-4">
                         <label for="Sexo">Sexo</label>
-                        <select name="_genderUser" id="_genderUser" class="form-control">
+                        <select name="_genderUser" [(ngModel)]="userData._genderUser" class="form-control">
                             <!--Corregir el value de ambas opciones-->
-                            <option value="_manUser" >Masculino</option>
-                            <option value="_girUser" >Femenino</option>
+                            <option value="M" >Masculino</option>
+                            <option value="F" >Femenino</option>
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -56,10 +57,22 @@
                         <input type="text" name="_addressUser" [(ngModel)]="userData._addressUser" class="form-control" placeholder="Introduce tu dirección" required>
                     </div>
                 </div>
+                <div class="row">
+                        <div class="col-md-6">
+                                <label for="Contraseña" class="control'label">Contraseña</label>
+                                <input type="password" name="userData._passwordUser" [(ngModel)]="userData._passwordUser" class="form-control">
+                            </div>
+                    <div class="col-md-6">
+                        <label for="Compañia" class="control-label">Compañía</label>
+                        <select class="form-control" name="userData._companyUser" [(ngModel)]="userData._companyUser">
+                            <option *ngFor=" let company of companies " value="{{ company._idCompany }}">{{ company._name }}</option>
+                        </select>
+                    </div>
+                </div>
                 <br>
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-lg btn-success" style="float:right;">Crear usuario</button>
+                        <button class="btn btn-lg btn-success" (click)="handleAdd()" style="float:right;">Crear usuario</button>
                     </div>
                 </div>
             </form>
