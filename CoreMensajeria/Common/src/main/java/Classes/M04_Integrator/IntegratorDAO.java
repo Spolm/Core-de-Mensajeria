@@ -8,12 +8,12 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * Clase que nos permite realizar la conexion a la base de datos
- * con los metodos relacionados a la clase integrador
+ * Clase que nos permite realizar la conexión a la base de datos
+ * con los métodos relacionados a la clase integrador
  *
- * @Author Josè Salas
- * @Author Manuel Espinoza
- * @Author Josè Cedeño
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
  * @see Integrator
  */
 
@@ -25,7 +25,7 @@ public class IntegratorDAO {
     private ResultSet _result;
 
     /**
-     * Constructor que se encarga de realizar la conexion
+     * Constructor que se encarga de realizar la conexión
      * a la base de datos
      *
      * @see Connection
@@ -37,7 +37,7 @@ public class IntegratorDAO {
 
     /**
      * Retorna una lista de Integradores
-     * Este metodo retorna una lista de integradores, en caso de no existir
+     * Este método retorna una lista de integradores, en caso de no existir
      * el archivo se encontrara en blanco.
      *
      * @return Lista de Integradores
@@ -63,7 +63,7 @@ public class IntegratorDAO {
 
     /**
      * Retorna un solo integrador
-     * Este metodo retorna un integrador en concreto
+     * Este método retorna un integrador en concreto
      * en caso de no existir
      *
      * @param id del integrador a buscar en la base de datos
@@ -94,7 +94,7 @@ public class IntegratorDAO {
     }
 
     /**
-     * Metodo que nos permite deshabilitar integrador
+     * Método que nos permite deshabilitar integrador
      * permite cambiar el estado del integrador
      *
      * @param id del integrador a buscar en la base de datos
@@ -117,7 +117,7 @@ public class IntegratorDAO {
     }
 
     /**
-     * Metodo que nos permite habilitar integrador
+     * Método que nos permite habilitar integrador
      * permite cambiar el estado del integrador
      *
      * @param id del integrador a buscar en la base de datos
