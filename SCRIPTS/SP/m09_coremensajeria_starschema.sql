@@ -167,7 +167,6 @@ END; $$
 Language 'plpgsql';
 
 
-
 CREATE OR REPLACE FUNCTION m09_getYears()
  RETURNS TABLE (
  dat_year INT
@@ -175,6 +174,17 @@ CREATE OR REPLACE FUNCTION m09_getYears()
 AS $$
 BEGIN
 	RETURN QUERY  SELECT DISTINCT d.dat_year FROM dim_date d ORDER BY d.dat_year;
+END; $$
+Language 'plpgsql';
+
+
+CREATE OR REPLACE FUNCTION m09_getDates()
+ RETURNS TABLE (
+ dat_id TIMESTAMP
+)
+AS $$
+BEGIN
+	RETURN QUERY  SELECT DISTINCT d.dat_id FROM dim_date d ORDER BY d.dat_id;
 END; $$
 Language 'plpgsql';
 
