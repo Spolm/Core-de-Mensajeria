@@ -75,7 +75,7 @@ public class ApplicationDAOTest {
             assertNotNull(application);
         } catch (DatabaseConnectionProblemException e) {
             e.printStackTrace();
-        }catch (ApplicationNotFoundException e) {
+        } catch (ApplicationNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -104,6 +104,18 @@ public class ApplicationDAOTest {
         } catch (DatabaseConnectionProblemException e) {
             e.printStackTrace();
         }catch (ApplicationNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    private void updateApplicationByIdTest() {
+        try {
+            Application application = _applicationDAO.updateApplication(_application.get_idApplication(),0);
+            assertEquals(0, application.get_statusApplication());
+        } catch (DatabaseConnectionProblemException e) {
+            e.printStackTrace();
+        } catch (ApplicationNotFoundException e) {
             e.printStackTrace();
         }
     }

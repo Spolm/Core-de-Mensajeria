@@ -28,7 +28,7 @@ public class PathHandler implements ServletContextListener {
     }*/
 
     /**
-     * Metodo que corre cuando se inicializa el servidor (debido a un Listener)
+     * Metodo que corre cuando se inicializa el servidor (crea los correspondientes directorios)
      * @param servletContextEvent el ServletContextEvent que esta siendo manejado
      */
     @Override
