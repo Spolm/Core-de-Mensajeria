@@ -144,7 +144,7 @@ public class M01_Login {
         try {
             user = _userDAO.findByUsernameOrEmail(passwordChange.get_username());
             if(_userDAO.tokenGenerator(user.get_emailUser()).equals(passwordChange.get_token())){
-                if(true){
+                if(passwordChange.get_newPassword().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$){8,}$")){
                     _userDAO.changePassword(user.get_usernameUser(),passwordChange.get_newPassword());
                 } else{
                     error = new Error("La clave no es segura");
