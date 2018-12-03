@@ -24,8 +24,8 @@ public class M10_ProfileService {
     @Path("/roles")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listRoles(){
-        dao = new M10_Profile();
-        _rols = dao.getAllRoles();
+        _dao = new M10_Profile();
+        _rols = _dao.getAllRoles();
         return Response.ok().entity(_rols).build();
     }
     @Path("/user/{username}")

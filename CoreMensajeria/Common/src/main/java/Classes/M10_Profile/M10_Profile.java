@@ -152,11 +152,11 @@ public class M10_Profile {
         try {
             PreparedStatement st = _conn.prepareCall("{call m10_getallroles()}");
             ResultSet _result = st.executeQuery();
-            int id = _result.getInt("rol_id");
-            String name = _result.getString("rol_name");
-            Rol rol = new Rol(id,name);
 
             while (_result.next()) {
+                int id = _result.getInt("rol_id");
+                String name = _result.getString("rol_name");
+                Rol rol = new Rol(id,name);
                 rols.add(rol);
             }
             return rols;
