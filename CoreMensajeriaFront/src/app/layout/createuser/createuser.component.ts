@@ -85,5 +85,31 @@ export class CreateuserComponent implements OnInit {
   editUser(id){
     this.router.navigate(['/profile', {id: id }]);
   }
+
+  checkRole(type){
+    if ( ( !( type == 2 || type == 1 ) && this.user._typeUser == 2) || (this.user._typeUser == 1) ){
+      return true;
+    }
+    return false;
+  }
+
+  stringType(type){
+
+    if(type == 1){
+      return 'Superusuario'
+    }
+    else if(type == 2){
+      return 'Administrador'
+    }
+    else if(type == 3){
+      return 'Creador'
+    }
+    else if(type == 4){
+      return 'Aprobador'
+    }
+    else{
+      return 'Consultor'
+    }
+  }
   
 }

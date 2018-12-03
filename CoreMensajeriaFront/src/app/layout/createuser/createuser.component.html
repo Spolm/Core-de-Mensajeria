@@ -108,16 +108,16 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let User of users">
-                            <td *ngIf="(User._typeUser != 2 && user._typeUser == 2) || (user._typeUser == 1)">{{ User._emailUser }}</td>
-                            <td *ngIf="(User._typeUser != 2 && user._typeUser == 2) || (user._typeUser == 1)">{{ User._usernameUser }}</td>
-                            <td *ngIf="(User._typeUser != 2 && user._typeUser == 2) || (user._typeUser == 1)">{{ User._typeUser }}</td>
-                            <td *ngIf="(User._typeUser != 2 && user._typeUser == 2) || (user._typeUser == 1)">{{ User._genderUser }}</td>
-                            <td *ngIf="(User._typeUser != 2 && user._typeUser == 2) || (user._typeUser == 1)">{{ User._phoneUser }}</td>
-                            <td *ngIf="(User._typeUser != 2 && user._typeUser == 2) || (user._typeUser == 1)">{{ User._dateOfBirthUser }}</td>
-                            <td *ngIf="(User._typeUser != 2 && user._typeUser == 2) || (user._typeUser == 1)">{{ User._countryUser }}</td>
-                            <td *ngIf="(User._typeUser != 2 && user._typeUser == 2) || (user._typeUser == 1)">{{ User._cityUser }}</td>
-                            <td *ngIf="(User._typeUser != 2 && user._typeUser == 2) || (user._typeUser == 1)">{{ User._addressUser }}</td>
-                            <td *ngIf="(User._typeUser != 2 && user._typeUser == 2) || (user._typeUser == 1)"><button class="btn btn-primary" (click)="editUser(User._idUser)">Editar</button></td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._emailUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._usernameUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ stringType(User._typeUser) }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._genderUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._phoneUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._dateOfBirthUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._countryUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._cityUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._addressUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)"><button class="btn btn-primary" (click)="editUser(User._idUser)">Editar</button></td>
                         </tr>
                     </tbody>
                 </table>
