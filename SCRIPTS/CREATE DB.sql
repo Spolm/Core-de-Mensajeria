@@ -3,7 +3,7 @@
 -- DROP DATABASE "CoreMensajeria";
 
 CREATE DATABASE "CoreMensajeria"
-    WITH 
+    WITH
     OWNER = "CoreMensajeria"
     ENCODING = 'UTF8'
     --LC_COLLATE = 'English_United States.1252'

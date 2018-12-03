@@ -1,5 +1,5 @@
 
---\c CoreMensajeria CoreMensajeria
+\c CoreMensajeria CoreMensajeria
 
 INSERT INTO public.Privilege (pri_code, pri_action) values ('CUSER','Crear usuario');
 INSERT INTO public.Privilege (pri_code, pri_action) values ('RUSER','Ver usuario');
@@ -41,7 +41,7 @@ INSERT INTO public.Privilege (pri_code, pri_action) values ('SEND','Envia');
 
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
-					(MD5('1234'), 'Ronnie', 1, 'ronnie@gmail.com', '0414255', 'Ve', 'Mi', 'Sta Fe', '04/05/1995', 'F');
+					(MD5('1234'), 'Ronnie', 1, 'alexdgn213@gmail.com', '0414255', 'Ve', 'Mi', 'Sta Fe', '04/05/1995', 'F');
 INSERT INTO public.USER (use_password, use_username, use_type, use_email, use_phone, use_country,
 					use_city, use_address, use_date_of_birth, use_gender) values
 					(MD5('1234'), 'superusuario', 1, 'superusuario@gmail.com', '0414255', 'Ve', 'Mi', 'Caracas', '04/08/1991', 'F');
@@ -68,9 +68,9 @@ INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 1, pri_id FROM
 INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 2, pri_id FROM public.Privilege 
 WHERE pri_code!='CADMIN';
 INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 3, pri_id FROM public.Privilege 
-WHERE pri_code like 'R%' or (pri_code like '%TEMPLATE' and pri_code != 'ATEMPLATE');
+WHERE pri_code = 'RUSER' or (pri_code like '%TEMPLATE' and pri_code != 'ATEMPLATE');
 INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 4, pri_id FROM public.Privilege 
-WHERE pri_code like 'R%' or pri_code = 'ATEMPLATE';
+WHERE pri_code = 'RUSER' or pri_code = 'ATEMPLATE'or pri_code = 'RTEMPLATE';
 INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 5, pri_id FROM public.Privilege 
 WHERE pri_code like 'R%' or pri_code = 'STATISTICS';
 

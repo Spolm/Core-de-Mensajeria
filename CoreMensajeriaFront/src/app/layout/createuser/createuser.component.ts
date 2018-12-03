@@ -23,8 +23,13 @@ export class CreateuserComponent implements OnInit {
   constructor(public router: Router, private http: Http, public rest: CreateUser, private toastr: ToastrService){
     this.http.get('http://localhost:8080/CoreMensajeria_war_exploded/profile/listcompanies').subscribe(resp=>this.companies = resp.json());
   }
+  users: Array<Users>;
 
   ngOnInit() {
+    this.rest.getUsers()
+      .subscribe( data => {
+        this.users = data;
+      });
   }
 
   add() {
