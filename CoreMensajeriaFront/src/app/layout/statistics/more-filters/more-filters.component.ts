@@ -28,7 +28,9 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         this.initializeDataFromMainFilters(data);
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.getYears();
+    }
 
     closeMenu() {
         this.dialogRef.close({
@@ -140,6 +142,7 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         this.setupCompaniesData(data);
         this.setupCampaingsData(data);
         this.setupChannelsData(data);
+        this.setupIntegratorsData(data);
     }
 
     setupCompaniesData(data: any) {
@@ -168,5 +171,31 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         this.integratorsDropdownSettings = data.integratorsDropdownSettings;
         this.selectedIntegrators = data.selectedIntegrators;
         this.selectedIntegratorsIds = data.selectedIntegratorsIds;
+    }
+
+    getYears() {
+        this.statisticsService.getYears().subscribe(data => {
+            this.insertIntoDateDropdown(
+                data,
+                this.yearsDropdown,
+                "year_id",
+                "year_name"
+            );
+            console.log(this.yearsDropdown);
+        });
+    }
+
+    insertIntoDateDropdown(
+        data: any,
+        dateDropdown: any[],
+        idField: string,
+        nameField: string
+    ) {
+        data.forEach(date => {
+            var item = {};
+            item[idField] = date;
+            item[nameField] = date;
+            dateDropdown.push(item);
+        });
     }
 }

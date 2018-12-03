@@ -1,16 +1,18 @@
 package webService.M02_CompanyManagement;
 
-
 import Classes.M02_Company.CompanyDAO;
 import Classes.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
+import Exceptions.DatabaseConnectionProblemException;
+import Exceptions.ParameterCantBeNullException;
 import com.google.gson.Gson;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
-
+/**
+ * Clase encargada de enviar la informacion al frontend de la aplicacion
+ */
 @Path( "/M02_Companies" )
 public class M02_Companies {
 
@@ -21,6 +23,11 @@ public class M02_Companies {
     @Path("/CompanyDetails")
     @Produces("application/json")
 
+    /**
+     * Metodo que recibe el id de una compañia y devuelve todos los detalles de la misma
+     * @param id el id de la compañia
+     * @return Response con status ok al encontrar la informacion solicitada
+     */
     public Response getCompanyDetails(@QueryParam("id") int id) throws CompanyDoesntExistsException {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
         CompanyDAO co = new CompanyDAO();
@@ -42,7 +49,11 @@ public class M02_Companies {
     @Path("/GetCompanies")
     @Produces("application/json")
 
-
+    /**
+     * Metodo que recibe el id de un usuario y devuelve las compañias en las que es administrador
+     * @param id el id del usuario
+     * @return Response con status ok al encontrar la informacion solicitada
+     */
     public Response getCompanies(@QueryParam("id") int id) throws  CompanyDoesntExistsException {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
         CompanyDAO co = new CompanyDAO();
@@ -63,7 +74,10 @@ public class M02_Companies {
     @Path("/GetAll")
     @Produces("application/json")
 
-
+    /**
+     * Metodo Response que devuelve todas las compañias registradas en el sistema
+     * @return Response con status ok al encontrar la informacion solicitada
+     */
     public Response getAllCompanies() throws  CompanyDoesntExistsException {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
         CompanyDAO co = new CompanyDAO();
@@ -80,6 +94,12 @@ public class M02_Companies {
         return rb.build();
     }
 
+    /**
+     * Metodo que recibe el id de una compañia y la activa o desactiva
+     * @param id id de la compañia que se va a activar/desactivar
+     * @return Response con sttus ok al cambiar con exito el status de la compañia
+     * @throws CompanyDoesntExistsException
+     */
     //region Cambiar Status Compañia
     //TODO crear excepcion para este metodo
     @GET
@@ -109,6 +129,28 @@ public class M02_Companies {
 
     //region Agregar/Editar Compañia
 
+    @POST
+    @Path("/CreateCompany")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response addCompany(Company _company){
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CompanyDAO _companyDAO = new CompanyDAO();
+
+        try {
+            _companyDAO.createCompany(_company);
+        } catch (CompanyDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (ParameterCantBeNullException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
+    
     /*@POST
     @Path("/EditCompany/{idCompany}")
     @Consumes("application/json")

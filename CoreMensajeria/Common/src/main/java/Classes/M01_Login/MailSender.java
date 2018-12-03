@@ -7,7 +7,14 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class MailSender {
 
@@ -19,12 +26,31 @@ public class MailSender {
      * This method allows the host to send emails for password recovery
      * @param code
      * @param email
-     * @throws AddressException
-     * @throws MessagingException
      */
     public static void generateAndSendEmail(String code,String email) throws AddressException, MessagingException {
 
         try {
+            File file = new File("emailCoreMensajeria.txt");
+
+
+
+            //Write Content
+            PrintStream fileStream = new PrintStream(file);
+            fileStream.println("Subject: Recuperación de contraseña ");
+            fileStream.println("To: "+email);
+            fileStream.println(" ");
+            fileStream.println(" ");
+            fileStream.println("    Tu código de validación es:" + code);
+            fileStream.println(" ");
+            fileStream.println(" Saludos cordiales,");
+            fileStream.println(" CoreMensajeria Support.");
+            fileStream.close();
+
+            Logger logger = Logger.getLogger(MailSender.class.getName());
+            logger.info("path: "+file.getAbsolutePath());
+
+            /*
+            //ENVIO POR CORREO (No disponible)
             // Step1
             System.out.println("\n 1st ===> setup Mail Server Properties..");
             _mailServerProperties = System.getProperties();
@@ -52,6 +78,7 @@ public class MailSender {
             transport.connect("smtp.gmail.com", "coremensajeria20182", "coremensajeria1234");
             transport.sendMessage(_generateMailMessage, _generateMailMessage.getAllRecipients());
             transport.close();
+            */
         }catch ( Exception e ) {
             e.printStackTrace();
         }

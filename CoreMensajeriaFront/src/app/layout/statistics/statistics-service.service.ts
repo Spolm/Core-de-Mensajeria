@@ -56,6 +56,46 @@ export class StatisticsServiceService {
         return this.http.get(this.ApiURL + "filters", { params });
     }
 
+    getYears() {
+        return this.http.get(this.ApiURL + "yearsCount");
+    }
+
+    getMonths() {
+        return this.http.get(this.ApiURL + "monthsCount");
+    }
+
+    getDaysOfMonth() {
+        return this.http.get(this.ApiURL + "daysofmonthCount");
+    }
+
+    getDaysOfWeek() {
+        return this.http.get(this.ApiURL + "daysofweekCount");
+    }
+
+    getDaysOfYear() {
+        return this.http.get(this.ApiURL + "daysofyearCount");
+    }
+
+    weeksOfYear() {
+        return this.http.get(this.ApiURL + "weeksofyearCount");
+    }
+
+    quartersOfYear() {
+        return this.http.get(this.ApiURL + "quartersofyearCount");
+    }
+
+    hours() {
+        return this.http.get(this.ApiURL + "hoursCount");
+    }
+
+    minutes() {
+        return this.http.get(this.ApiURL + "minutesCount");
+    }
+
+    seconds() {
+        return this.http.get(this.ApiURL + "secondsCount");
+    }
+
     updateStarSchema() {
         return this.http.get(this.ApiURL + "update");
     }
