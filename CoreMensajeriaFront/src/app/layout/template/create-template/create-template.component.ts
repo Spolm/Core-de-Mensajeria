@@ -14,6 +14,7 @@ export class CreateTemplateComponent {
 
   parametersJson: any = [];
   channelsJson: any = [];
+  originOption = 'app';
   formMessage = '';
   parameters: Array<string> = [];
   newParameters: Array<string> = [];
