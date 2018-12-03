@@ -275,6 +275,26 @@ public class M09_Statistics extends Application {
     }
 
     @GET
+    @Path("/monthsCount")
+    @Produces("application/json")
+    public Response getMonths(){
+        ArrayList<Integer> months = new ArrayList<>();
+        try{
+            Statement statement = connStar.createStatement();
+            String query = "SELECT dat_month FROM m09_getMonths()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                months.add(result.getInt("dat_month"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connStar);
+        }
+        return Response.ok(gson.toJson(months)).build();
+    }
+
+    @GET
     @Path("/filters")
     @Produces("application/json")
     public Response getStatistics(@QueryParam("companyId") List<Integer> companyIds,
