@@ -59,7 +59,7 @@ RETURN QUERY
 	ON r.res_rol_id = rp.rol_pri_rol_id
 	INNER JOIN public.privilege p
 	ON rp.rol_pri_pri_id = p.pri_id
-	WHERE r.res_use_id = ? AND r.res_com_id = ?
+	WHERE r.res_use_id = userId AND r.res_com_id = companyId
 	AND SUBSTRING(p.pri_code from 2 for LENGTH(p.pri_code)) IS NOT DISTINCT FROM 'TEMPLATE';
 	END;
 $$
