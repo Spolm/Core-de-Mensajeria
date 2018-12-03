@@ -16,6 +16,7 @@
 \ir SP/m04_getConcreteIntegrator.sql
 \ir SP/m04_getIntegrators_by_channel.sql
 \ir SP/m06_origin.sql
+\ir SP/m09_getIntegratorsByChannels.sql
 
 \ir 'CREATE DB_STARSCHEMA.sql'
 \ir CREATES_STARSCHEMA.sql
@@ -27,4 +28,15 @@
 \ir SP/m09_Get_CompanyMessages.sql
 \ir SP/m09_getAllCampaigns.sql
 \ir SP/m09_getAllChannels.sql
+\ir SP/m09_getMessagesParameter.sql
+\ir SP/m09_getDaysofMonth.sql
+\ir SP/m09_getDaysofWeek.sql
+\ir SP/m09_getDaysofYear.sql
+\ir SP/m09_getHours.sql
+\ir SP/m09_getMinutes.sql
+\ir SP/m09_getMonths.sql
+\ir SP/m09_getQuartersofYear.sql
+\ir SP/m09_getSeconds.sql
+\ir SP/m09_getWeeksofYear.sql
+\ir SP/m09_getYears.sql
 -- \ir StoreProceduresM_09/FuntionsGet.sql

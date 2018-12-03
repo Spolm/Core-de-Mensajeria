@@ -47,7 +47,7 @@ public class M02_Companies {
         CompanyDAO co = new CompanyDAO();
         try {
             _coList = co.companyList(id);
-            rb.entity(gson.toJson(_co));
+            rb.entity(gson.toJson(_coList));
         }
         catch (CompanyDoesntExistsException e) {
             e.printStackTrace();

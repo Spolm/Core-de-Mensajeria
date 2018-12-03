@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { TemplateService } from '../template.service';
-import { Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create-template',
@@ -12,57 +12,129 @@ import { DOCUMENT } from '@angular/common';
 
 export class CreateTemplateComponent {
 
-  parameters: any = [];
-  formMessage: string;
-  channels: any = [];
-  parametersOrder: any = [];
-  channel_integrator: any = [];
+  parametersJson: any = [];
+  channelsJson: any = [];
+  originOption = 'app';
+  formMessage = '';
+  parameters: Array<string> = [];
+  newParameters: Array<string> = [];
+  channels_integrators: any = [];
+  showInputCreateParameterState = false;
 
-  constructor(private templateService: TemplateService, @Inject(DOCUMENT) document) {
+  constructor(private templateService: TemplateService, private toastr: ToastrService, private router: Router) {
     this.getParameters();
     this.getChannels();
   }
 
   getParameters() {
     this.templateService.getParameters(1).subscribe(data => {
-      this.parameters = data;
+      this.parametersJson = data;
     });
   }
 
   getChannels() {
     this.templateService.getChannels().subscribe(data => {
-      this.channels = data;
+      this.channelsJson = data;
     });
   }
 
-  addParameter(message: string, parameter: string) {
-    let myFormMessage = document.getElementById('formMessage');
-    let pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
-    let startMessage = message.slice(0, pointer);
-    let endMessage = message.slice(pointer, message.length);
-    this.parametersOrder.push(parameter);
-    this.formMessage = startMessage + ' [.$' + parameter + '$.] ' + endMessage;
+  addParameter(message: string, parameterName: string) {
+          const myFormMessage = document.getElementById('formMessage');
+          const pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
+          const startMessage = message.slice(0, pointer);
+          const endMessage = message.slice(pointer, message.length);
+          this.parameters.push(parameterName);
+          this.formMessage = startMessage + ' [.$' + parameterName + '$.] ' + endMessage;
   }
 
-  addIntegrator(channel: number, integrator: number) {
-    console.log('channel: ' + channel);
-    console.log( integrator);
-    let integratorNumber = Number(integrator);
-    this.channel_integrator.push(
-      { channel, integratorNumber }
-    );
-    console.log(this.channel_integrator);
+  addNewParameter(message: string, parameterName: string) {
+      parameterName = parameterName.trim();
+      if ((parameterName.valueOf() !== '')) {
+          parameterName = parameterName.toLowerCase();
+          parameterName = parameterName.charAt(0).toUpperCase() + parameterName.slice(1, parameterName.length);
+          if (!this.parameters.find(x => x === parameterName)) {
+              this.addParameter(message, parameterName);
+              if (!this.newParameters.find(x => x == parameterName)) {
+                  this.newParameters.push(parameterName);
+              } else {
+                  this.toastr.warning('El parametro ya esta registrado', 'Aviso',
+                      {
+                          timeOut: 2800,
+                          progressBar: true
+                      });
+              }
+          }
+      } else {
+          this.toastr.warning('No a escrito ningun parametro', 'Aviso',
+              {
+                  timeOut: 2800,
+                  progressBar: true
+              });
+      }
+    this.showInputCreateParameterState = false;
   }
 
-  deleteParameter(message: string, parameter: string) {
-    let pointer = message.search(parameter) - 4;
-    let startMessage = message.slice(0, pointer);
-    let endMessage = message.slice(pointer + parameter.length + 8, message.length);
+  addIntegrator(channel: any, integratorId: number) {
+    if (!this.channels_integrators.find(x => x.channel.idChannel == channel.idChannel)) {
+      if (!this.channels_integrators.find(x => x.integrator.idIntegrator == integratorId)) {
+        const integrator = channel.integrators.find(x => x.idIntegrator == integratorId);
+        this.channels_integrators.push(
+          { channel, integrator }
+        );
+      }
+    }
+  }
+
+  showInputCreateParameter() {
+    this.showInputCreateParameterState = true;
+  }
+
+  deleteParameter(message: string, parameterName: string) {
+    const pointer = message.search(parameterName) - 4;
+    const startMessage = message.slice(0, pointer);
+    const endMessage = message.slice(pointer + parameterName.length + 8, message.length);
     this.formMessage = startMessage + endMessage;
-    this.parametersOrder.splice(this.parametersOrder.indexOf(parameter), 1);
+    this.parameters.splice(this.parameters.indexOf(parameterName), 1);
+    if (this.newParameters.find(x => x == parameterName)) {
+      this.newParameters.splice(this.newParameters.indexOf(parameterName), 1);
+    }
+  }
+
+  deleteChannel_Integrator(channel_integrator) {
+    this.channels_integrators.splice(this.channels_integrators.indexOf(channel_integrator), 1);
   }
 
   postTemplate() {
-      this.templateService.postTemplate(this.formMessage,this.channel_integrator)
-  }
+
+      console.log(this.formMessage);
+      console.log(this.parameters);
+      console.log(this.newParameters);
+      console.log(this.channels_integrators);
+      this.formMessage = this.formMessage.trim();
+      if (this.formMessage != '') {
+          if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
+              if (this.channels_integrators[0]) {
+                  this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
+              } else {
+                  this.toastr.warning('Falta llenar un campo', 'Aviso',
+                      {
+                          timeOut: 2800,
+                          progressBar: true
+                      });
+              }
+          } else {
+              this.toastr.warning('Tal vez quiera escribir un mensaje mas largo', 'Aviso',
+                  {
+                      timeOut: 2800,
+                      progressBar: true
+                  });
+          }
+      } else {
+          this.toastr.warning('No puede crear un template sin mensaje!', 'Aviso',
+              {
+                  timeOut: 2800,
+                  progressBar: true
+              });
+      }
+    }
 }

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class M10_ProfileService {
     private Gson _gson = new Gson();
     private User _us;
+    private ArrayList<User> _users;
     private ArrayList<Company> _comp;
     private M10_Profile _daoProfile;
     private UserDAO _daoUser;
@@ -128,15 +129,15 @@ public class M10_ProfileService {
         try
         {
             _daoProfile= new M10_Profile();
-            _us= _daoProfile.getUsers();
+            _users= _daoProfile.getUsers();
         } catch (NullPointerException e) {
-            _us = null;
+            _users = null;
             return Response.status(500).entity(e).build();
         } catch (Exception e) {
             return Response.status(500).entity(e).build();
         }
         finally {
-            return Response.ok(_gson.toJson(_us)).build();
+            return Response.ok(_gson.toJson(_users)).build();
         }
     }*/
 }
