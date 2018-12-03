@@ -17,6 +17,20 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
     opcionDateSleccionado: Date;
     opcionDateSleccionado2: Date;
     paramType: string;
+    months = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+    ];
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -30,6 +44,15 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
 
     ngOnInit() {
         this.getYears();
+        this.getMonths();
+        this.getDays();
+        this.getWeeks();
+        this.getDaysOfWeek();
+        this.getQuartersOfYear();
+        this.getDaysOfYear();
+        this.getHours();
+        this.getMinutes();
+        this.getSeconds();
     }
 
     closeMenu() {
@@ -38,7 +61,16 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
             campaigns: this.includeCampaignsDataOnReturn(),
             channels: this.includeChannelsDataOnReturn(),
             integrators: this.includeIntegratorsDataOnReturn(),
-            years: this.includeYearsDataOnReturn()
+            years: this.includeYearsDataOnReturn(),
+            months: this.includeMonthsDataOnReturn(),
+            days: this.includeDaysDataOnReturn(),
+            weeks: this.includeWeeksDataOnReturn(),
+            daysOfWeek: this.includeDaysOfWeekDataOnReturn(),
+            quartersOfYear: this.includeQuartersOfYearDataOnReturn(),
+            daysOfYear: this.includeDaysOfYearDataOnReturn(),
+            hours: this.includeHoursDataOnReturn(),
+            minutes: this.includeMinutesDataOnReturn(),
+            seconds: this.includeSecondsDataOnReturn()
         });
     }
 
@@ -81,70 +113,68 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         };
     }
 
-    /*
-  capturarDate() {
-        if (
-          this.opcionDateSleccionado != null &&
-            this.opcionDateSleccionado2 != null &&
-            this.opcionDateSleccionado < this.opcionDateSleccionado2
-        ) {
-            this.Date1Capturado =
-                "?paramDate1=" + this.opcionDateSleccionado.toString();
-            this.Date2Capturado =
-                "?paramDate2=" + this.opcionDateSleccionado2.toString();
-            this.paramType = "paramType=" + this.verSeleccion;
-            console.log(
-                "FechaCapturada",
-                "Dates1: " + this.Date1Capturado,
-                "Dates2: " + this.Date2Capturado,
-                +" " + new Date(this.opcionDateSleccionado).getUTCDate(),
-                new Date(this.opcionDateSleccionado).getUTCMonth(),
-                new Date(this.opcionDateSleccionado).getFullYear(),
-                new Date(this.opcionDateSleccionado2).getUTCDate(),
-                new Date(this.opcionDateSleccionado2).getUTCMonth(),
-                new Date(this.opcionDateSleccionado2).getFullYear()
-            );
-            this.statisticsService
-                .getDataLineChartCompany(
-                    // getStatisticsData4 
-                    this.Date1Capturado +
-                        "&" +
-                        this.Date2Capturado +
-                        "&" +
-                        this.paramType
-                )
-                .subscribe(data => {
-                    console.log(data);
-                });
-        } else if (
-            (this.opcionDateSleccionado == null &&
-                this.opcionDateSleccionado2 == null) ||
-            (this.opcionDateSleccionado.toString().length == 0 &&
-                this.opcionDateSleccionado2.toString().length == 0)
-        ) {
-            console.log("hols" + this.opcionDateSleccionado.toString().length);
-
-            this.Date1Capturado = "?paramDate1=";
-            this.Date2Capturado = "?paramDate2=";
-            this.paramType = "paramType=" + this.verSeleccion;
-            this.statisticsService
-                .getDataLineChartCompany(
-                    // getStatisticsData4 
-                    this.Date1Capturado +
-                        "&" +
-                        this.Date2Capturado +
-                        "&" +
-                        this.paramType
-                )
-                .subscribe(data => {
-                    console.log(data);
-                });
-        } else {
-            this.toastr.error("Error en las fechas");
-        }
+    includeMonthsDataOnReturn() {
+        return {
+            selectedMonths: this.selectedMonths,
+            selectedMonthsIds: this.selectedMonthsIds
+        };
     }
 
-*/
+    includeDaysDataOnReturn() {
+        return {
+            selectedDays: this.selectedDays,
+            selectedDaysIds: this.selectedDaysIds
+        };
+    }
+
+    includeWeeksDataOnReturn() {
+        return {
+            selectedWeeks: this.selectedWeeks,
+            selectedWeeksIds: this.selectedWeeksIds
+        };
+    }
+
+    includeDaysOfWeekDataOnReturn() {
+        return {
+            selectedDaysOfWeek: this.selectedDaysOfWeek,
+            selectedDaysOfWeekIds: this.selectedDaysOfWeekIds
+        };
+    }
+
+    includeQuartersOfYearDataOnReturn() {
+        return {
+            selectedQuartersOfYear: this.selectedQuartersOfYear,
+            selectedQuartersOfYearIds: this.selectedQuartersOfYearIds
+        };
+    }
+
+    includeDaysOfYearDataOnReturn() {
+        return {
+            selectedDaysOfYear: this.selectedDaysOfYear,
+            selectedDaysOfYearIds: this.selectedDaysOfYearIds
+        };
+    }
+
+    includeHoursDataOnReturn() {
+        return {
+            selectedHours: this.selectedHours,
+            selectedHoursIds: this.selectedHoursIds
+        };
+    }
+
+    includeMinutesDataOnReturn() {
+        return {
+            selectedMinutes: this.selectedMinutes,
+            selectedMinutesIds: this.selectedMinutesIds
+        };
+    }
+
+    includeSecondsDataOnReturn() {
+        return {
+            selectedSeconds: this.selectedSeconds,
+            selectedSecondsIds: this.selectedSecondsIds
+        };
+    }
 
     initializeDataFromMainFilters(data: any) {
         this.setupCompaniesData(data);
@@ -196,7 +226,11 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         this.selectedYearsIds = data.selectedYearsIds;
     }
 
-    setupMonthsData(data) {}
+    setupMonthsData(data: any) {
+        this.selectedMonths = data.selectedMonths;
+        this.selectedMonthsIds = data.selectedMonthsIds;
+        console.log(data);
+    }
 
     setupDaysData(data) {}
 
@@ -224,6 +258,38 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
             );
         });
     }
+
+    getMonths() {
+        this.statisticsService.getMonths().subscribe(data => {
+            let anyData: any = data;
+            let monthString = [];
+            anyData.forEach(month => {
+                monthString.push(this.months[month - 1]);
+            });
+            this.insertIntoDateDropdown(
+                monthString,
+                this.monthsDropdown,
+                "month_id",
+                "month_name"
+            );
+        });
+    }
+
+    getDays() {}
+
+    getWeeks() {}
+
+    getDaysOfWeek() {}
+
+    getQuartersOfYear() {}
+
+    getDaysOfYear() {}
+
+    getHours() {}
+
+    getMinutes() {}
+
+    getSeconds() {}
 
     insertIntoDateDropdown(
         data: any,

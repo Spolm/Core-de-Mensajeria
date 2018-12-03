@@ -464,23 +464,44 @@ export class DropdownMethods {
        ============================= */
     protected yearSelected(year: any) {
         this.selectedYearsIds.push(year["year_id"]);
-        console.log(this.selectedYearsIds);
     }
 
     protected yearDeselected(year: any) {
         this.removeItemFromArray(year["year_id"], this.selectedYearsIds);
-        console.log(this.selectedYearsIds);
     }
 
     protected selectAllYears() {
         for (var index in this.yearsDropdown) {
             this.selectedYearsIds.push(this.yearsDropdown[index]["year_id"]);
         }
-        console.log(this.selectedYearsIds);
     }
 
     protected deselectAllYears() {
         this.selectedYearsIds = [];
-        console.log(this.selectedYearsIds);
+    }
+
+    /* =============================
+           Handle months selection
+       ============================= */
+    protected monthSelected(month: any) {
+        this.selectedMonthsIds.push(month["month_id"]);
+        console.log(this.selectedMonthsIds);
+    }
+
+    protected monthDeselected(month: any) {
+        this.removeItemFromArray(month["month_id"], this.selectedMonthsIds);
+        console.log(this.selectedMonthsIds);
+    }
+
+    protected selectAllMonths() {
+        for (var index in this.monthsDropdown) {
+            this.selectedMonthsIds.push(this.monthsDropdown[index]["month_id"]);
+        }
+        console.log(this.selectedMonthsIds);
+    }
+
+    protected deselectAllMonths() {
+        this.selectedMonthsIds = [];
+        console.log(this.selectedMonthsIds);
     }
 }

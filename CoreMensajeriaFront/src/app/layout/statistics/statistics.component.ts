@@ -470,18 +470,6 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     }
 
     sendUserRequest() {
-        // this.verSeleccion = this.opcionSeleccionado;
-        console.log("Valor Capturado", this.verSeleccion);
-
-        if (this.verSeleccion == "Grafico de Tortas") {
-            var TypeChosen: ChartType = ChartType.doughnut;
-            console.log("paso por el if", TypeChosen);
-        } else if (this.verSeleccion == "Grafico de Barras") {
-            var TypeChosen: ChartType = ChartType.bar;
-        } else if (this.verSeleccion == "Grafico de Linea") {
-            var TypeChosen: ChartType = ChartType.line;
-        }
-
         var params = this.convertSelectedItemsIntoHttpParams();
         this.statisticsService.getStatistics(params).subscribe(
             data => {
@@ -602,7 +590,10 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             integratorsDropdownSettings: this.integratorsDropdownSettings,
             // Years
             selectedYears: this.selectedYears,
-            selectedYearsIds: this.selectedYearsIds
+            selectedYearsIds: this.selectedYearsIds,
+            // Months
+            selectedMonths: this.selectedMonths,
+            selectedMonthsIds: this.selectedMonthsIds
         };
         const dialogRef = this.dialog.open(MoreFiltersComponent, dialogConfig);
         dialogRef.updatePosition({ top: "55px", right: "0px", left: "0px" });
@@ -613,7 +604,15 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             this.fillChannelsDropdownFromMenuData(result);
             this.fillIntegratorsDropdownFromMenuData(result);
             this.fillYearsDropdownFromMenuData(result);
-            console.log(result);
+            this.fillMonthsDropdownFromMenuData(result);
+            this.fillDaysDropdownFromMenuData(result);
+            this.fillWeeksDropdownFromMenuData(result);
+            this.fillDaysOfWeekDropdownFromMenuData(result);
+            this.fillQuartersOfYearDropdownFromMenuData(result);
+            this.fillDaysOfYearDropdownFromMenuData(result);
+            this.fillHoursDropdownFromMenuData(result);
+            this.fillMinutesDropdownFromMenuData(result);
+            this.fillSecondsDropdownFromMenuData(result);
         });
     }
 
@@ -645,8 +644,28 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     fillYearsDropdownFromMenuData(data) {
         this.selectedYears = data["years"]["selectedYears"];
         this.selectedYearsIds = data["years"]["selectedYearsIds"];
-        console.log(this.selectedYearsIds);
     }
+
+    fillMonthsDropdownFromMenuData(data) {
+        this.selectedMonths = data["months"]["selectedMonths"];
+        this.selectedMonthsIds = data["months"]["selectedMonthsIds"];
+    }
+
+    fillDaysDropdownFromMenuData(data) {}
+
+    fillWeeksDropdownFromMenuData(data) {}
+
+    fillDaysOfWeekDropdownFromMenuData(data) {}
+
+    fillQuartersOfYearDropdownFromMenuData(data) {}
+
+    fillDaysOfYearDropdownFromMenuData(data) {}
+
+    fillHoursDropdownFromMenuData(data) {}
+
+    fillMinutesDropdownFromMenuData(data) {}
+
+    fillSecondsDropdownFromMenuData(data) {}
 
     getArrayOfRandomColors(length: Number): String[] {
         var colors = [];
