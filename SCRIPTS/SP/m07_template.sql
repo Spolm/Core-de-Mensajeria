@@ -1,6 +1,5 @@
 -- CREATE FUNCTION m07_getTemplatesByCampaign(IN campaign integer -> user's campaign)
 -- DROP FUNCTION m07_select_templates_by_campaign(integer);
-
 CREATE OR REPLACE FUNCTION m07_select_templates_by_campaign(IN campaignId integer)
 RETURNS TABLE (tem_id integer,tem_creation_date timestamp,tem_campaign_id integer,
 		tem_application_id integer, tem_user_id integer, sta_id integer,
@@ -46,5 +45,22 @@ select t.tem_id, t.tem_creation_date, s.sta_id, s.sta_name
                     on ts.ts_status = s.sta_id
                     order by t.tem_id;
 END;
+$$
+LANGUAGE 'plpgsql' VOLATILE;
+
+CREATE OR REPLACE FUNCTION m07_select_privileges_by_user_company(
+	IN userId INTEGER, IN companyId INTEGER)
+RETURNS TABLE (pri_code varchar) AS $$
+BEGIN
+RETURN QUERY
+	SELECT p.pri_code
+	FROM public.responsability r
+	INNER JOIN public.rol_pri rp
+	ON r.res_rol_id = rp.rol_pri_rol_id
+	INNER JOIN public.privilege p
+	ON rp.rol_pri_pri_id = p.pri_id
+	WHERE r.res_use_id = ? AND r.res_com_id = ?
+	AND SUBSTRING(p.pri_code from 2 for LENGTH(p.pri_code)) IS NOT DISTINCT FROM 'TEMPLATE';
+	END;
 $$
 LANGUAGE 'plpgsql' VOLATILE;
