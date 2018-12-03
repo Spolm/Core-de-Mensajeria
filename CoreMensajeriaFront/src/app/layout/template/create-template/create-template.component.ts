@@ -30,6 +30,10 @@ export class CreateTemplateComponent {
   parameters: Array<string> = [];
   newParameters: Array<string> = [];
   channels_integrators: any = [];
+  dateIni: string;
+  dateEnd: string;
+  timeIni: string;
+  timeEnd: string;
   showInputCreateParameterState = false;
 
   constructor(private templateService: TemplateService, private toastr: ToastrService, private router: Router) {
@@ -49,19 +53,19 @@ export class CreateTemplateComponent {
 
   assignPrivileges(privileges: Array<any>) {
     privileges.forEach((privilege) => {
-      if(privilege._codePrivileges == 'CTEMPLATE'){
+      if (privilege._codePrivileges == 'CTEMPLATE') {
         this.CTEMPLATE = true;
       }
-      else if(privilege._codePrivileges == 'RTEMPLATE'){
+      else if (privilege._codePrivileges == 'RTEMPLATE') {
         this.RTEMPLATE = true
       }
-      else if(privilege._codePrivileges == 'UTEMPLATE'){
+      else if (privilege._codePrivileges == 'UTEMPLATE') {
         this.UTEMPLATE = true
       }
-      else if(privilege._codePrivileges == 'DTEMPLATE'){
+      else if (privilege._codePrivileges == 'DTEMPLATE') {
         this.DTEMPLATE = true
       }
-      else if(privilege._codePrivileges == 'ATEMPLATE'){
+      else if (privilege._codePrivileges == 'ATEMPLATE') {
         this.ATEMPLATE = true
       }
     })
@@ -158,8 +162,11 @@ export class CreateTemplateComponent {
     console.log(this.newParameters);
     console.log(this.channels_integrators);
     console.log(this.originOption);
-    console.log(this.applicationId);
-    this.formMessage = this.formMessage.trim();
+    console.log(this.dateIni);
+    console.log(this.dateEnd);
+    console.log(this.timeIni);
+    console.log(this.timeEnd)
+    /*this.formMessage = this.formMessage.trim();
     if (this.formMessage != '') {
       if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
         if (this.channels_integrators[0]) {
@@ -184,6 +191,6 @@ export class CreateTemplateComponent {
           timeOut: 2800,
           progressBar: true
         });
-    }
+    }*/
   }
 }

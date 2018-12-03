@@ -31,6 +31,10 @@ export class ModifyTemplateComponent {
   parameters: Array<string> = [];
   newParameters: Array<string> = [];
   channels_integrators: any = [];
+  dateIni: string;
+  dateEnd: string;
+  timeIni: string;
+  timeEnd: string;
   showInputCreateParameterState = false;
 
   constructor(private templateService: TemplateService, private toastr: ToastrService, private route: ActivatedRoute) {
