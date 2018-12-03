@@ -84,7 +84,7 @@ public class ApplicationDAO {
             }
             return applicationList;
         } catch (SQLException e) {
-            throw new DatabaseConnectionProblemException("Error al obtener aplicaion.", e);
+            throw new DatabaseConnectionProblemException("Error al obtener aplicacion.", e);
         } finally {
             Sql.bdClose(_conn);
         }

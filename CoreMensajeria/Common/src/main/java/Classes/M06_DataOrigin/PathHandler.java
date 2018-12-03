@@ -1,6 +1,7 @@
 package Classes.M06_DataOrigin;
 
 import Classes.M02_Company.Company;
+import Classes.M02_Company.CompanyDAO;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -14,21 +15,9 @@ public class PathHandler implements ServletContextListener {
     private static String ORIGIN_HOME = System.getProperty("user.home") + "/Origin";
     private static String ORIGIN_HOME_INBOX = ORIGIN_HOME + "/Inbox";
     private static String ORIGIN_HOME_TRASH = ORIGIN_HOME + "/Trash";
-    /*public void FileChooser(){
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        try {
-            fileChooser.setCurrentDirectory(new File(/*System.getProperty("user.home")"C:/"));
-            fileChooser.setDialogTitle("Seleccione un directorio.");
-            int result = fileChooser.showOpenDialog(new JPanel());
-            if (result == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-                System.out.println("Selected path: " + selectedFile.getAbsolutePath());
-            }
-        } catch (HeadlessException e) {
-            e.printStackTrace();
-        }
-    }*/
+
+    public PathHandler() {
+    }
 
     /**
      * Metodo que corre cuando se inicializa el servidor (crea los correspondientes directorios)
@@ -36,9 +25,14 @@ public class PathHandler implements ServletContextListener {
      */
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
+        CompanyDAO companyDAO = new CompanyDAO();
+
         this.createDirectory(ORIGIN_HOME);
         this.createDirectory(ORIGIN_HOME_INBOX);
         this.createDirectory(ORIGIN_HOME_TRASH);
+
+        //this.createOriginDirectories(ORIGIN_HOME_INBOX,companyDAO.companyList(1));
+        //this.createOriginDirectories(ORIGIN_HOME_TRASH,companyDAO.companyList(1));
         System.out.println("--------------->PATHS CREATED");
     }
 
