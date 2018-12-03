@@ -1,12 +1,12 @@
 package Classes.M04_Integrator;
 
-public class Message {
+public class MessageIntegrator {
     private String msg;
     private String address;
     private String acknowledge;
     private boolean send;
 
-    public Message (String msg, String address, String idMsg) {
+    public MessageIntegrator(String msg, String address, String idMsg) {
         this.msg = msg;
         this.address = address;
         this.acknowledge = idMsg;
