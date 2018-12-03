@@ -6,6 +6,12 @@ public class Message {
     private String acknowledge;
     private boolean send;
 
+    public Message (String msg, String address, String idMsg) {
+        this.msg = msg;
+        this.address = address;
+        this.acknowledge = idMsg;
+    }
+
     public boolean isSend() {
         return send;
     }

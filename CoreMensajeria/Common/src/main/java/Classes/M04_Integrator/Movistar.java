@@ -12,14 +12,11 @@ public class Movistar extends Integrator {
     }
 
     @Override
-    public Message sendMessage(String msg, String address) {
+    public Message sendMessage(String msg, String address, String idMsg) {
         if(this.isEnabled()) {
             try {
                 Thread.sleep(2000);
-                Message message = new Message();
-                message.setAddress(address);
-                message.setMsg(msg);
-                message.setAcknowledge("");
+                Message message = new Message(msg, address, idMsg);
                 message.setSend(true);
                 return message;
             } catch (InterruptedException e) {
@@ -27,10 +24,7 @@ public class Movistar extends Integrator {
             }
 
         }else{
-            Message message = new Message();
-            message.setAddress("");
-            message.setMsg("");
-            message.setAcknowledge("");
+            Message message = new Message(msg, address, idMsg);
             message.setSend(false);
             return message;
         }
