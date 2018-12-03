@@ -12,17 +12,25 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
+/**
+ * M07_Parameter class is an API that is responsible for requesting information
+ * about the templates
+ */
+
 @Path("/templates")
 @Produces(MediaType.APPLICATION_JSON)
 public class M07_Template {
 
+    /**
+     * serialization and deserialization between Java objects
+     */
     public Gson gson = new Gson();
 
     /**
-     *
-     * @param userId
-     * @param companyId
-     * @return
+     * Method that returns all the templates filtered by a user and his company.
+     * @param userId id of the user
+     * @param companyId id of the company
+     * @return ArrayList of templates
      */
     @GET
     public Response getTemplates(@QueryParam("userId") int userId,
@@ -32,6 +40,11 @@ public class M07_Template {
         return Response.ok(gson.toJson(templateArrayList)).build();
     }
 
+    /**
+     * this method returns a specific template
+     * @param id id of the template requested.
+     * @return template
+     */
     @GET
     @Path("/{templateId}")//Subsequent Path
     public Response getTemplate(@PathParam("templateId") int id){
@@ -47,6 +60,13 @@ public class M07_Template {
         }
     }
 
+    /**
+     *
+     this method returns the privileges that a user has over the templates.
+     * @param userId id of the user
+     * @param companyId id of the company
+     * @return
+     */
     @GET
     @Path("/privileges")
     public Response getTemplatePrivilegesByUser(@QueryParam("userId") int userId,
@@ -61,6 +81,15 @@ public class M07_Template {
         return new M07_Message();
     }
 
+    /**
+     *
+     This method is responsible for updating the status
+     of a template in specific.
+     * @param templateId id of the template
+     * @param userId id of the user
+     * @return If the template was saved successfully it returns true,
+     * otherwise it returns false.
+     */
     @POST
     @Path("/update/{templateId}")//Subsequent Path
     public Boolean postTemplateStatus(@PathParam("templateId") int templateId, String userId){

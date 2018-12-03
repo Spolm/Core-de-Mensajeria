@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 /**
  * TemplateHanlder class used for the management of information
- * search in the database.
+ * search in the database with respect to templates.
  */
 public class TemplateHandler {
     /**
@@ -526,10 +526,18 @@ public class TemplateHandler {
         }
     }
 
+    /**
+     * constructor without receiving parameters that instantiates
+     * the sql attribute of the ParameterHandler class.
+     */
     public TemplateHandler() {
         sql = new Sql();
     }
 
+    /**
+     * get of the connection of the database
+     * @return
+     */
     public Sql getSql() {
         return sql;
     }

@@ -12,13 +12,30 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * MessageHandler class used for the management of information
+ * search in the database with respect to Message.
+ */
 public class MessageHandler {
+    /**
+     * connection to the database
+     */
     public static Sql sql;
 
+    /**
+     * constructor without receiving parameters that instantiates
+     * the sql attribute of the MessageHandler class.
+     */
     public MessageHandler() {
         sql = new Sql();
     }
 
+    /**
+     * this method returns a list of templates where each contains
+     * its message and associated parameters.
+     * @param templateArrayList arrayList of template without message
+     * @return arrayList of template with message
+     */
     public ArrayList<Template> getMessages(ArrayList<Template> templateArrayList){
         try {
             for(int x = 0; x < templateArrayList.size(); x++){
@@ -41,6 +58,14 @@ public class MessageHandler {
         }
     }
 
+    /**
+     * this method returns the message that is associated
+     * with the specified template.
+     * @param templateId template id
+     * @return message template message specified
+     * @throws MessageDoesntExistsException the specified template has no associated message
+     * @throws ParameterDoesntExistsException the specified message has no associated parameters
+     */
     public static Message getMessage(int templateId)
             throws MessageDoesntExistsException, ParameterDoesntExistsException{
         String query = "select mes_id,mes_text from message where mes_template =" + templateId;
@@ -71,6 +96,14 @@ public class MessageHandler {
         }
     }
 
+    /**
+     * this method is responsible for storing the message of a template
+     * and all its attributes.
+     * @param message string message with the parameters included
+     * @param templateId template id
+     * @param parameters list of associated parameters
+     * @param companyId company id
+     */
     public static void postMessage(String message, int templateId, String[] parameters,int companyId) {
         String query = "INSERT INTO public.Message(mes_text,mes_template)" +
                 "VALUES ('" + message + "'," + templateId + ") returning mes_id";
@@ -90,6 +123,13 @@ public class MessageHandler {
         }
     }
 
+    /**
+     * this method is responsible for storing the parameters associated
+     * with a specific message.
+     * @param messageId message id
+     * @param parameters list of associated parameters
+     * @param companyId company id
+     */
     private static void postParameterOfMessage(int messageId, String[] parameters, int companyId) {
         sql = new Sql();
         String query = "";
@@ -107,6 +147,14 @@ public class MessageHandler {
         }
     }
 
+    /**
+     * this method is responsible for modify the message of a template
+     * and all its attributes.
+     * @param message string message with the parameters included
+     * @param templateId template id
+     * @param parameters list of associated parameters
+     * @param companyId company id
+     */
     public static void updateMessage(String message, int templateId, String[] parameters,int companyId) {
         String query = "UPDATE public.message\n" +
                         "SET mes_text = '" + message + "'\n" +
@@ -128,6 +176,13 @@ public class MessageHandler {
         }
     }
 
+    /**
+     * his method is responsible for modifying the parameters associated
+     * with a specific message.
+     * @param messageId message id
+     * @param parameters list of associated parameters
+     * @param companyId company id
+     */
     private static void updateParameterOfMessage(int messageId, String[] parameters, int companyId) {
         String query = "delete from public.message_parameter\n" +
                 "WHERE mp_message = " + messageId;
