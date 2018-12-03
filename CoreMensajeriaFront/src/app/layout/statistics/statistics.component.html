@@ -56,7 +56,7 @@
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">
-                Estadistcas de:
+                Tipo de Graficas:
             </label>
         </div>
         <select
@@ -69,43 +69,12 @@
             <option *ngFor="let dato of datos"> {{ dato }} </option>
         </select>
     </div>
-    <div class="alert alert-info" role="alert">
-        <p>
-            NOTA! : Si no proporciona algunos de los filtros el sistema mostrara
-            los resultados globales de la estadística que se selecciono a
-            consultar.
-        </p>
-    </div>
 
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="dateOfBirth">Filtro de Tiempo</label>
-            <input
-                type="date"
-                class="form-control"
-                id="myDate"
-                [(ngModel)]="opcionDateSleccionado"
-            />
-            <!-- (change) = "capturarDate()" -->
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="dateOfBirth">Filtro de Tiempo</label>
-            <input
-                type="date"
-                class="form-control"
-                id="myDate2"
-                [(ngModel)]="opcionDateSleccionado2"
-            />
-            <!-- (change) = "capturarDate()" -->
-        </div>
-    </div>
-
+    <!-- capturar(); capturarDate(); DoGraficas() -->
     <button
         type="button"
         class="btn btn-success btn-lg"
-        (click)="capturar(); capturarDate(); DoGraficas()"
+        (click)="ChartTransformation()"
     >
         Consultar
     </button>
@@ -113,14 +82,10 @@
     <button
         type="button"
         class="btn btn-success btn-lg"
-        (click)="sendUserRequest()"
+        (click)="ChartTransformation(); sendUserRequest()"
     >
         Consultar 2
     </button>
-
-    <p [hidden]="opcionSeleccionado == '0'">
-        Haz seleccionado la Consulta acerca : {{ verSeleccion }}
-    </p>
 </div>
 
 <div class="container">

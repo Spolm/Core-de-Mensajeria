@@ -56,16 +56,19 @@
             </ng-multiselect-dropdown>
         </div>
 
-        <div class="col-md-3 col-sm-6 dropdown">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="integratorsDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Integrador'"
-                [data]="companiesDropdown"
-                [(ngModel)]="selectedCompanies"
-                [settings]="companiesDropdownSettings"
-                (onSelect)="companySelected($event)"
-                (onDeSelect)="companyDeselected($event)"
-                (onSelectAll)="selectAllCompanies()"
-                (onDeSelectAll)="deselectAllCompanies()"
+                [data]="integratorsDropdown"
+                [(ngModel)]="selectedIntegrators"
+                [settings]="integratorsDropdownSettings"
+                (onSelect)="integratorSelected($event)"
+                (onDeSelect)="integratorDeselected($event)"
+                (onSelectAll)="selectAllIntegrators()"
+                (onDeSelectAll)="deselectAllIntegrators()"
             >
             </ng-multiselect-dropdown>
         </div>
@@ -157,11 +160,69 @@
             >
             </ng-multiselect-dropdown>
         </div>
+
+        <div class="col-md-3 col-sm-6 dropdown">
+            <ng-multiselect-dropdown
+                [placeholder]="'Día del año'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-md-3 col-sm-6 dropdown">
+            <ng-multiselect-dropdown
+                [placeholder]="'Hora'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
     </div>
 
-    <div class="form-row">
+    <div class="row">
+        <div class="col-md-3 col-sm-6 dropdown">
+            <ng-multiselect-dropdown
+                [placeholder]="'Minuto'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-md-3 col-sm-6 dropdown">
+            <ng-multiselect-dropdown
+                [placeholder]="'Segundo'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="form-group col-md-6">
-            <label for="dateOfBirth">Filtro de Fecha desde:</label>
+            <label for="dateOfBirth">Desde:</label>
             <input
                 type="date"
                 class="form-control"
@@ -169,10 +230,8 @@
                 [(ngModel)]="opcionDateSleccionado"
             />
         </div>
-    </div>
-    <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="dateOfBirth">Filtro de Fecha hasta:</label>
+            <label for="dateOfBirth">Hasta:</label>
             <input
                 type="date"
                 class="form-control"

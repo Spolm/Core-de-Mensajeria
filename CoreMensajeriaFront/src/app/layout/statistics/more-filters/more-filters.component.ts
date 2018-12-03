@@ -34,7 +34,8 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         this.dialogRef.close({
             companies: this.includeCompaniesDataOnReturn(),
             campaigns: this.includeCampaignsDataOnReturn(),
-            channels: this.includeChannelsDataOnReturn()
+            channels: this.includeChannelsDataOnReturn(),
+            integrators: this.includeIntegratorsDataOnReturn()
         });
     }
 
@@ -59,6 +60,14 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
             selectedChannels: this.selectedChannels,
             selectedChannelsIds: this.selectedChannelsIds,
             channelsDropdown: this.channelsDropdown
+        };
+    }
+
+    includeIntegratorsDataOnReturn() {
+        return {
+            selectedIntegrators: this.selectedIntegrators,
+            selectedIntegratorsIds: this.selectedIntegratorsIds,
+            integratorsDropdown: this.integratorsDropdown
         };
     }
 
@@ -128,17 +137,42 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
 */
 
     initializeDataFromMainFilters(data: any) {
+        this.setupCompaniesData(data);
+        this.setupCampaingsData(data);
+        this.setupChannelsData(data);
+
+        if (this.arrayIsEmpty(this.selectedChannels)) {
+            this.getAllIntegrators();
+        } else {
+            this.getIntegratorsForChannels();
+        }
+    }
+
+    setupCompaniesData(data: any) {
         this.companiesDropdown = data.companiesDropdown;
         this.companiesDropdownSettings = data.companiesDropdownSettings;
         this.selectedCompanies = data.selectedCompanies;
         this.selectedCompaniesIds = data.selectedCompaniesIds;
+    }
+
+    setupCampaingsData(data: any) {
         this.campaignsDropdown = data.campaignsDropdown;
         this.campaignsDropdownSettings = data.campaignsDropdownSettings;
         this.selectedCampaigns = data.selectedCampaigns;
         this.selectedCampaignsIds = data.selectedCampaignsIds;
+    }
+
+    setupChannelsData(data: any) {
         this.channelsDropdown = data.channelsDropdown;
         this.channelsDropdownSettings = data.channelsDropdownSettings;
         this.selectedChannels = data.selectedChannels;
         this.selectedChannelsIds = data.selectedChannelsIds;
+    }
+
+    setupIntegratorsData(data: any) {
+        this.integratorsDropdown = data.integratorsDropdown;
+        this.integratorsDropdownSettings = data.integratorsDropdownSettings;
+        this.selectedIntegrators = data.selectedIntegrators;
+        this.selectedIntegratorsIds = data.selectedIntegratorsIds;
     }
 }

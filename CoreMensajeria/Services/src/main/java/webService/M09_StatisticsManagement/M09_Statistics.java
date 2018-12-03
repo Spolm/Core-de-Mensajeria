@@ -4,11 +4,14 @@ import Classes.M02_Company.Company;
 import Classes.M03_Campaign.Campaign;
 import Classes.M05_Channel.Channel;
 import Classes.M05_Channel.ChannelFactory;
+import Classes.M04_Integrator.IntegratorFactory;
+import Classes.M04_Integrator.Integrator;
 import Classes.M09_Statistics.PieChart;
 import Classes.M09_Statistics.SqlEstrella;
 import Classes.M09_Statistics.Statistics;
 import Classes.Sql;
 import Exceptions.CampaignDoesntExistsException;
+import Exceptions.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
 import com.google.gson.Gson;
 
@@ -88,7 +91,7 @@ public class M09_Statistics extends Application {
         } catch(CampaignDoesntExistsException e) {
             return Response.serverError().build();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
     }
 
@@ -110,9 +113,27 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(channels)).build();
+    }
+
+    @GET
+    @Path("/integrators")
+    @Produces("application/json")
+    public Response getIntegratorsForChannel(@QueryParam("channelId") List<Integer> channelIds) {
+        String query = "select int_id, int_name from m09_getIntegratorsByChannels(";
+        for (int i = 0; i < channelIds.size() - 1;  i++) {
+            query += channelIds.get(i) + ", ";
+        }
+        query += channelIds.get(channelIds.size() - 1) + ") ORDER BY int_id;";
+        try {
+            return getIntegrators(query);
+        } catch(ChannelNotFoundException e) {
+            return Response.serverError().build();
+        } finally {
+            Sql.bdClose(conn);
+        }
     }
 
     @GET
@@ -150,7 +171,7 @@ public class M09_Statistics extends Application {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(companies)).build();
     }
@@ -208,9 +229,29 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
             throw new CampaignDoesntExistsException(e);
         } finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(campaigns)).build();
+    }
+
+    public Response getIntegrators(String query) throws ChannelNotFoundException {
+        ArrayList<Integrator> integrators = new ArrayList<>();
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                Integrator integrator = IntegratorFactory.getIntegrator(result.getString("int_name"), result.getInt("int_id"),
+                        result.getString("int_name"), 0, 0, "", true);
+                integrators.add(integrator);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            throw new ChannelNotFoundException(e);
+        } finally {
+            Sql.bdClose(conn);
+        }
+        return Response.ok(gson.toJson(integrators)).build();
     }
 
     @GET
@@ -254,7 +295,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
         }
          finally {
-            Sql.bdClose(connStar);
+            SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(stats)).build();
     }
@@ -283,6 +324,8 @@ public class M09_Statistics extends Application {
         catch ( SQLException e ) {
             e.printStackTrace();
             // throw new SQLException();
+        } finally {
+            SqlEstrella.bdClose(connStar);
         }
         return gr;
     }

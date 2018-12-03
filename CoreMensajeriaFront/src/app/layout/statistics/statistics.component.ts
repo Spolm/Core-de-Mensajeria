@@ -75,12 +75,19 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     opcionDateSleccionado2: Date;
     paramType: string;
 
+    datos = [];
+
     constructor(
         public statisticsService: StatisticsServiceService,
         public toastr: ToastrService,
         public dialog: MatDialog
     ) {
         super(statisticsService, toastr);
+        this.datos = [
+            "Grafico de Barras",
+            "Grafico de Linea ",
+            "Grafico de Tortas"
+        ];
     }
 
     ngAfterViewInit() {
@@ -156,6 +163,64 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             chartType,
             chartElement
         );
+    }
+
+    ChartTransformation() {
+        this.clearChart(this.campaignsChart);
+        this.clearChart(this.companiesChart);
+        this.clearChart(this.channelsChart);
+
+        if (this.opcionSeleccionado != "0") {
+            // Pasamos el valor seleccionado a la variable verSeleccion
+            this.verSeleccion = this.opcionSeleccionado;
+            console.log("Valor Capturado", this.verSeleccion);
+        } else this.toastr.error("Debe seleccionar otra opcion");
+
+        if (this.verSeleccion == "Grafico de Tortas") {
+            var TypeChosen: ChartType = ChartType.doughnut;
+            console.log("paso por el if", TypeChosen);
+        } else if (this.verSeleccion == "Grafico de Barras") {
+            var TypeChosen: ChartType = ChartType.bar;
+        } else if (this.verSeleccion == "Grafico de Linea") {
+            var TypeChosen: ChartType = ChartType.line;
+        }
+
+        this.statisticsService
+            .getInitialMessagesForCompanies()
+            .subscribe(data => {
+                this.companiesChart = this.insertInitialDataIntoCharts(
+                    data,
+                    this.companiesChartElement,
+                    "Cantidad de mensajes por compañía",
+                    TypeChosen
+                );
+            });
+
+        this.statisticsService
+            .getInitialMessagesForCampaigns()
+            .subscribe(data => {
+                this.campaignsChart = this.insertInitialDataIntoCharts(
+                    data,
+                    this.campaignsChartElement,
+                    "Cantidad de mensajes por campaña",
+                    TypeChosen
+                );
+            });
+
+        this.statisticsService
+            .getInitialMessagesForChannels()
+            .subscribe(data => {
+                this.channelsChart = this.insertInitialDataIntoCharts(
+                    data,
+                    this.channelsChartElement,
+                    "Cantidad de mensajes por canal",
+                    TypeChosen
+                );
+            });
+    }
+
+    clearChart(chart: Chart) {
+        chart.destroy();
     }
 
     ngOnInit() {
@@ -412,6 +477,18 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     }
 
     sendUserRequest() {
+        this.verSeleccion = this.opcionSeleccionado;
+        console.log("Valor Capturado", this.verSeleccion);
+
+        if (this.verSeleccion == "Grafico de Tortas") {
+            var TypeChosen: ChartType = ChartType.doughnut;
+            console.log("paso por el if", TypeChosen);
+        } else if (this.verSeleccion == "Grafico de Barras") {
+            var TypeChosen: ChartType = ChartType.bar;
+        } else if (this.verSeleccion == "Grafico de Linea") {
+            var TypeChosen: ChartType = ChartType.line;
+        }
+
         var params = this.convertSelectedItemsIntoHttpParams();
         this.statisticsService.getStatistics(params).subscribe(
             data => {
@@ -499,20 +576,25 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         dialogConfig.width = "100%";
         dialogConfig.maxWidth = "100%";
         dialogConfig.height = "80%";
+        dialogConfig.minHeight = "400px";
         dialogConfig.data = {
             id: 1,
+            // Companies
             companiesDropdown: this.companiesDropdown,
             selectedCompanies: this.selectedCompanies,
             selectedCompaniesIds: this.selectedCompaniesIds,
             companiesDropdownSettings: this.companiesDropdownSettings,
+            // Campaigns
             campaignsDropdown: this.campaignsDropdown,
             selectedCampaigns: this.selectedCampaigns,
             selectedCampaignsIds: this.selectedCampaignsIds,
             campaignsDropdownSettings: this.campaignsDropdownSettings,
+            // Channels
             channelsDropdown: this.channelsDropdown,
             selectedChannels: this.selectedChannels,
             selectedChannelsIds: this.selectedChannelsIds,
             channelsDropdownSettings: this.channelsDropdownSettings,
+            // Integrators
             integratorsDropdown: this.integratorsDropdown,
             selectedIntegrators: this.selectedIntegrators,
             selectedIntegratorsIds: this.selectedIntegratorsIds,
@@ -522,29 +604,36 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         dialogRef.updatePosition({ top: "55px", right: "0px", left: "0px" });
         dialogRef.afterClosed().subscribe(result => {
             console.log("Dialog was closed");
-            this.fillCompaniesDropdownsFromMenuData(result);
-            this.fillCampaignsDropdownsFromMenuData(result);
-            this.fillChannelsDropdownsFromMenuData(result);
+            this.fillCompaniesDropdownFromMenuData(result);
+            this.fillCampaignsDropdownFromMenuData(result);
+            this.fillChannelsDropdownFromMenuData(result);
             console.log(result);
         });
     }
 
-    fillCompaniesDropdownsFromMenuData(data) {
+    fillCompaniesDropdownFromMenuData(data) {
         this.selectedCompanies = data["companies"]["selectedCompanies"];
         this.selectedCompaniesIds = data["companies"]["selectedCompaniesIds"];
         this.companiesDropdown = data["companies"]["companiesDropdown"];
     }
 
-    fillCampaignsDropdownsFromMenuData(data) {
+    fillCampaignsDropdownFromMenuData(data) {
         this.selectedCampaigns = data["campaigns"]["selectedCampaigns"];
         this.selectedCampaignsIds = data["campaigns"]["selectedCampaignsIds"];
         this.campaignsDropdown = data["campaigns"]["campaignsDropdown"];
     }
 
-    fillChannelsDropdownsFromMenuData(data) {
+    fillChannelsDropdownFromMenuData(data) {
         this.selectedChannels = data["channels"]["selectedChannels"];
         this.selectedChannelsIds = data["channels"]["selectedChannelsIds"];
         this.channelsDropdown = data["channels"]["channelsDropdown"];
+    }
+
+    fillIntegratorsDropdownFromMenuData(data) {
+        this.selectedIntegrators = data["integrators"]["selectedIntegrators"];
+        this.selectedIntegratorsIds =
+            data["integrators"]["selectedIntegratorsIds"];
+        this.integratorsDropdown = data["integrators"]["integratorsDropdown"];
     }
 
     getArrayOfRandomColors(length: Number): String[] {

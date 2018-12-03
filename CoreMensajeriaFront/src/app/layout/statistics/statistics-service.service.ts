@@ -32,6 +32,14 @@ export class StatisticsServiceService {
         return this.http.get(this.ApiURL + "channels");
     }
 
+    getIntegrators(channelIds: number[]) {
+        let params = new HttpParams();
+        channelIds.forEach(id => {
+            params = params.append("channelId", id.toString());
+        });
+        return this.http.get(this.ApiURL + "integrators", { params });
+    }
+
     getCampaingsForCompany(companyIds: Number[]) {
         var params = new HttpParams();
         companyIds.forEach(id => {

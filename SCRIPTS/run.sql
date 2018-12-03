@@ -16,6 +16,7 @@
 \ir SP/m04_getConcreteIntegrator.sql
 \ir SP/m04_getIntegrators_by_channel.sql
 \ir SP/m06_origin.sql
+\ir SP/m09_getIntegratorsByChannels.sql
 
 \ir 'CREATE DB_STARSCHEMA.sql'
 \ir CREATES_STARSCHEMA.sql
