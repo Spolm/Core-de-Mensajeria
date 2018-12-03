@@ -415,6 +415,47 @@ public class M09_Statistics extends Application {
     }
 
     @GET
+    @Path("/minutesCount")
+    @Produces("application/json")
+    public Response getMinutes(){
+        ArrayList<Integer> minutes = new ArrayList<>();
+        try{
+            Statement statement = connStar.createStatement();
+            String query = "SELECT dat_minuteofhour FROM m09_getMinutes()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                minutes.add(result.getInt("dat_minuteofhour"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connStar);
+        }
+        return Response.ok(gson.toJson(minutes)).build();
+    }
+
+    @GET
+    @Path("/secondsCount")
+    @Produces("application/json")
+    public Response getSeconds(){
+        ArrayList<Integer> seconds = new ArrayList<>();
+        try{
+            Statement statement = connStar.createStatement();
+            String query = "SELECT dat_secondofminute FROM m09_getSeconds()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                seconds.add(result.getInt("dat_secondofminute"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connStar);
+        }
+        return Response.ok(gson.toJson(seconds)).build();
+    }
+
+
+    @GET
     @Path("/filters")
     @Produces("application/json")
     public Response getStatistics(@QueryParam("companyId") List<Integer> companyIds,
