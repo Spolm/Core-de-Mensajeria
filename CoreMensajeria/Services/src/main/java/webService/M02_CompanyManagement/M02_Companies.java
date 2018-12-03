@@ -70,6 +70,27 @@ public class M02_Companies {
         return rb.build();
     }
 
+
+    @GET
+    @Path("/GetCompaniesByResponsible")
+    @Produces("application/json")
+    public Response getCompaniesByResponsible(@QueryParam("id") int id) throws  CompanyDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CompanyDAO co = new CompanyDAO();
+        try {
+            _coList = co.companyListResponsible(id);
+            rb.entity(gson.toJson(_coList));
+        }
+        catch (CompanyDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
+
+
     @GET
     @Path("/GetAll")
     @Produces("application/json")
@@ -130,7 +151,7 @@ public class M02_Companies {
     //region Agregar/Editar Compañia
 
     @POST
-    @Path("/CreateCompany")
+    @Path("/AddCompany")
     @Produces("application/json")
     @Consumes("application/json")
     public Response addCompany(Company _company){

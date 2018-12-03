@@ -30,5 +30,6 @@ export class CompanyModule implements OnInit {
 
   onSelect(company: Company): void {
     this.selectedCompany = company;
+    localStorage.setItem('idCompany', JSON.stringify(company._idCompany));
   }
 }
