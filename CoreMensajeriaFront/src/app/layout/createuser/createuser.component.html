@@ -1,62 +1,123 @@
 <div [@routerTransition]>
-        <app-page-header [heading]="'Creación de usuario'" [icon]="'fa-user'"></app-page-header>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Modificación de datos personales</h3>
-                <form role="form">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="Email" class="control-label">E-mail</label>
-                            <input type="email" name="_emailUser" [(ngModel)]="userData._emailUser" class="form-control" placeholder="Introduce tu e-mail" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="Usuario" class="control-label">Usuario</label>
-                            <input type="text" name="_usernameUser" [(ngModel)]="userData._usernameUser" class="form-control" placeholder="Introduce tu usuario" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="Birtday" class="control-label">Fecha de nacimiento</label>
-                            <input type="date" name="_birthdateUser" [(ngModel)]="userData._birthdateUser" class="form-control" placeholder="Introduce tu fecha de nacimiento" required>
-                        </div>
+    <app-page-header [heading]="'Creación de usuario'" [icon]="'fa-user'"></app-page-header>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Usuarios</h3>
+            <form role="form" (ngSubmit)="onSubmit(Users);" #Users="ngForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="Email" class="control-label">E-mail</label>
+                        <input type="email" name="_emailUser" [(ngModel)]="user._emailUser" class="form-control" placeholder="Introduce tu e-mail" required>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="País" class="control-label">País</label>
-                            <input type="text" name="_countryUser" [(ngModel)]="userData._countryUser" class="form-control" placeholder="Introduce tu país" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="Ciudad" class="control-label">Ciudad</label>
-                            <input type="text" name="_cityUser" [(ngModel)]="userData._cityUser" class="form-control" placeholder="Introduce tu ciudad" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="Dirección" class="control-label">Dirección</label>
-                            <input type="text" name="_addressUser" [(ngModel)]="userData._addressUser" class="form-control" placeholder="Introduce tu dirección" required>
-                        </div>
+                    <div class="col-md-4">
+                        <label for="Usuario" class="control-label">Usuario</label>
+                        <input type="text" name="_usernameUser" [(ngModel)]="user._usernameUser" class="form-control" placeholder="Introduce tu usuario" required>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="Teléfono" class="control-label">Teléfono local</label>
-                            <input type="number" name="_phoneUser" [(ngModel)]="userData._phoneUser" class="form-control" placeholder="Introduce tu teléfono" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="Sexo">Sexo</label>
-                            <select name="_genderUser" id="_genderUser" [(ngModel)]="userData._genderUser" class="form-control">
-                                <!--Corregir el value de ambas opciones-->
-                                <option value="M" >Masculino</option>
-                                <option value="F" >Femenino</option>
-                            </select>
-                        </div>
+                    <div class="col-md-4">
+                        <label for="Rol">Rol del usuario</label>
+                        <select name="_rolUser" [(ngModel)]="user._rolUser" class="form-control">
+                            <div *ngIf="{{usuario.roUser}} == 'usuario'; then superusuario; {{usuario.roUser}} == 'administrador'; then administrador; 
+                            {{usuario.roUser}} == 'creador'; then creador; else aprobador">
+                                <div #superusuario>
+                                    <option value="administrador" >Administrador</option>
+                                    <option value="creador" >Creador</option>
+                                    <option value="_probador" >Aprobador</option>
+                                    <option value="consultor" >Consultor</option>
+                                </div>
+                                <div #administrador>
+                                    <option value="creador" >Creador</option>
+                                    <option value="aprobador" >Aprobador</option>
+                                    <option value="consultor" >Consultor</option>
+                                </div>
+                                <div #creador>
+                                    <option value="aprobador" >Aprobador</option>
+                                    <option value="consultor" >Consultor</option>
+                                </div>
+                                <div #aprobador>
+                                    <option value="consultor" >Consultor</option>
+                                </div>
+                            </div>
+                        </select>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label for="Contraseña" class="control-label">Contraseña</label>
-                            <input type="password" name="_passwordUser" [(ngModel)]="userData._passwordUser" class="form-control" placeholder="Introduce tu teléfono" required>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="Birtday" class="control-label">Fecha de nacimiento</label>
+                        <input type="date" name="_dateOfBirthUser" [(ngModel)]="user._dateOfBirthUser" class="form-control" placeholder="Introduce tu fecha de nacimiento" required>
                     </div>
-                    <br>
-                    <div class="row">
-                        <button (click)="handleAdd()" class="btn btn-lg btn-success">Crear usuario</button>
+                    <div class="col-md-4">
+                        <label for="País" class="control-label">País</label>
+                        <input type="text" name="_countryUser" [(ngModel)]="user._countryUser" class="form-control" placeholder="Introduce tu país" required>
                     </div>
-                </form>
+                    <div class="col-md-4">
+                        <label for="Ciudad" class="control-label">Ciudad</label>
+                        <input type="text" name="_cityUser" [(ngModel)]="user._cityUser" class="form-control" placeholder="Introduce tu ciudad" required>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="Teléfono" class="control-label">Teléfono local</label>
+                        <input type="number" name="_phoneUser" [(ngModel)]="user._phoneUser" class="form-control" placeholder="Introduce tu teléfono" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Sexo">Sexo</label>
+                        <select name="_genderUser" id="_genderUser" class="form-control">
+                            <!--Corregir el value de ambas opciones-->
+                            <option value="_manUser" >Masculino</option>
+                            <option value="_girUser" >Femenino</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Dirección" class="control-label">Dirección</label>
+                        <input type="text" name="_addressUser" [(ngModel)]="user._addressUser" class="form-control" placeholder="Introduce tu dirección" required>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-lg btn-success" [disabled]="!Users.form.valid" style="float:right;">Crear usuario</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-body table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Rol</th>
+                        <th>Sexo</th>
+                        <th>Télefono</th>
+                        <th>Fecha de nacimiento</th>
+                        <th>País</th>
+                        <th>Ciudad</th>
+                        <th>Dirección</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>

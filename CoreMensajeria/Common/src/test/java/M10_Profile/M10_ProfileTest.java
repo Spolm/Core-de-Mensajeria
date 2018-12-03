@@ -93,10 +93,10 @@ public class M10_ProfileTest {
     public void testRoleList(){
         ArrayList<Rol> roltest;
         roltest = _profileDao.getAllRoles();
+        assertEquals(_rol.get(0),roltest.get(0));
         assertEquals(_rol.get(1),roltest.get(1));
         assertEquals(_rol.get(2),roltest.get(2));
         assertEquals(_rol.get(3),roltest.get(3));
         assertEquals(_rol.get(4),roltest.get(4));
-        assertEquals(_rol.get(5),roltest.get(5));
     }
 }
