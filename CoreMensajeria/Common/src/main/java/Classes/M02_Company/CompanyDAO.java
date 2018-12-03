@@ -26,6 +26,7 @@ public class CompanyDAO {
                 co.set_name(result.getString("com_name"));
                 co.set_desc(result.getString("com_description"));
                 co.set_status(result.getBoolean("com_status"));
+                co.set_link(result.getString("com_route_link"));
                 coList.add(co);
             }
         }
@@ -52,6 +53,7 @@ public class CompanyDAO {
                 co.set_name(result.getString("com_name"));
                 co.set_desc(result.getString("com_description"));
                 co.set_status(result.getBoolean("com_status"));
+                co.set_link(result.getString("com_route_link"));
                 coList.add(co);
             }
         }
@@ -78,6 +80,7 @@ public class CompanyDAO {
                 co.set_name(result.getString("com_name"));
                 co.set_desc(result.getString("com_description"));
                 co.set_status(result.getBoolean("com_status"));
+                co.set_link(result.getString("com_route_link"));
             }
         }
         catch (SQLException e) {

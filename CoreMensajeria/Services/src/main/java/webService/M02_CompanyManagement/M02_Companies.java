@@ -1,11 +1,9 @@
 package webService.M02_CompanyManagement;
 
-
 import Classes.M02_Company.CompanyDAO;
 import Classes.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
 import com.google.gson.Gson;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
