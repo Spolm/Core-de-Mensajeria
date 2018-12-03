@@ -121,7 +121,7 @@ public class M10_ProfileService {
       }
     }
 
-    /*@Path("/listusers")
+    @Path("/listusers")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listUsers()
@@ -139,5 +139,5 @@ public class M10_ProfileService {
         finally {
             return Response.ok(_gson.toJson(_users)).build();
         }
-    }*/
+    }
 }

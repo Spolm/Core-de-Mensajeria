@@ -20,25 +20,23 @@ export class ProfileComponent implements OnInit {
   private sub: any;
 
   constructor(private route: ActivatedRoute, public router: Router, private http: Http, public rest: EditProfile, private toastr: ToastrService){
-    this.sub = this.route.params.subscribe(params => {
-      this.id = +params['id']; // (+) converts string 'id' to a number
-
-      // In a real app: dispatch action to load the details here.
-   });
-   if( this.id ){
-    this.http.get('http://localhost:8080/CoreMensajeria_war_exploded/profile/user/'+ this.id ).subscribe(resp=>{
-      this.Users = [resp.json()]; 
-    });
-   }
-   else{
-    this.http.get('http://localhost:8080/CoreMensajeria_war_exploded/profile/user/'+ localStorage.userid ).subscribe(resp=>{
-      this.Users = [resp.json()]; 
-    });
-  }
     
-}
+  }
 
   ngOnInit() {
+    this.sub = this.route.params.subscribe(params => {
+      this.id = +params['id'];
+    if( this.id ){
+      this.http.get('http://localhost:8080/CoreMensajeria_war_exploded/profile/user/'+ this.id ).subscribe(resp=>{
+        this.Users = [resp.json()]; 
+      });
+    }
+    else{
+      this.http.get('http://localhost:8080/CoreMensajeria_war_exploded/profile/user/'+ localStorage.userid ).subscribe(resp=>{
+        this.Users = [resp.json()]; 
+      });
+    }
+   });
   }
 
   edit() {
