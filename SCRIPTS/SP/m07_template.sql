@@ -104,3 +104,27 @@ ON tci.tci_ci_id = ci.ci_id
  END;
  $$
  LANGUAGE 'plpgsql' VOLATILE;
+ 
+-- DROP FUNCTION m07_select_messages(integer);
+CREATE OR REPLACE FUNCTION m07_select_messages(IN templateId INTEGER)
+RETURNS TABLE (messageId INTEGER, messageText VARCHAR, messageTemplateId INTEGER) AS $$
+BEGIN
+RETURN QUERY
+SELECT * 
+FROM PUBLIC.MESSAGE 
+WHERE MES_TEMPLATE = templateId;
+END;
+$$
+LANGUAGE 'plpgsql' VOLATILE;
+
+-- DROP FUNCTION m07_select_message(integer);
+CREATE OR REPLACE FUNCTION m07_select_message(IN templateId INTEGER)
+RETURNS TABLE (messageId INTEGER, messageText VARCHAR) AS $$
+BEGIN
+RETURN QUERY
+SELECT m.mes_id,m.mes_text
+FROM message m 
+WHERE m.mes_template = templateId;
+END;
+$$
+LANGUAGE 'plpgsql' VOLATILE;
