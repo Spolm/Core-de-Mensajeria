@@ -31,6 +31,15 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         "Noviembre",
         "Diciembre"
     ];
+    daysOfWeek = [
+        "Lunes",
+        "Martes",
+        "Miércoles",
+        "Jueves",
+        "Viernes",
+        "Sábado",
+        "Domingo"
+    ];
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -241,13 +250,25 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         this.selectedWeeksIds = data.selectedWeeksIds;
     }
 
-    setupDaysOfWeekData(data) {}
+    setupDaysOfWeekData(data) {
+        this.selectedDaysOfWeek = data.selectedDaysOfWeek;
+        this.selectedDaysOfWeekIds = data.selectedDaysOfWeekIds;
+    }
 
-    setupQuartersOfYearData(data) {}
+    setupQuartersOfYearData(data) {
+        this.selectedQuartersOfYear = data.selectedQuartersOfYear;
+        this.selectedQuartersOfYearIds = data.selectedQuartersOfYear;
+    }
 
-    setupDaysOfYearData(data) {}
+    setupDaysOfYearData(data) {
+        this.selectedDaysOfYear = data.selectedDaysOfYear;
+        this.selectedDaysOfYearIds = data.selectedDaysOfYearIds;
+    }
 
-    setupHoursData(data) {}
+    setupHoursData(data) {
+        this.selectedHours = data.selectedHours;
+        this.selectedHoursIds = data.selectedHoursIds;
+    }
 
     setupMinutesData(data) {}
 
@@ -303,13 +324,54 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         });
     }
 
-    getDaysOfWeek() {}
+    getDaysOfWeek() {
+        this.statisticsService.getDaysOfWeek().subscribe(data => {
+            let anyData: any = data;
+            let daysString = [];
+            anyData.forEach(day => {
+                daysString.push(this.daysOfWeek[day - 1]);
+            });
+            this.insertIntoDateDropdown(
+                daysString,
+                this.daysOfWeekDropdown,
+                "dayOfWeek_id",
+                "dayOfWeek_name"
+            );
+        });
+    }
 
-    getQuartersOfYear() {}
+    getQuartersOfYear() {
+        this.statisticsService.getQuartersOfYear().subscribe(data => {
+            this.insertIntoDateDropdown(
+                data,
+                this.quartersOfYearDropdown,
+                "quarterOfYear_id",
+                "quarterOfYear_name"
+            );
+        });
+    }
 
-    getDaysOfYear() {}
+    getDaysOfYear() {
+        this.statisticsService.getDaysOfYear().subscribe(data => {
+            this.insertIntoDateDropdown(
+                data,
+                this.daysOfYearDropdown,
+                "dayOfYear_id",
+                "dayOfYear_name"
+            );
+        });
+    }
 
-    getHours() {}
+    getHours() {
+        this.statisticsService.getHours().subscribe(data => {
+            this.insertIntoDateDropdown(
+                data,
+                this.hoursDropdown,
+                "hour_id",
+                "hour_name"
+            );
+        });
+    }
 
     getMinutes() {}
 
@@ -325,7 +387,7 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         data.forEach(date => {
             var item = {};
             item[idField] = i;
-            item[nameField] = date;
+            item[nameField] = date.toString();
             dateDropdown.push(item);
             i++;
         });

@@ -599,7 +599,19 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             selectedDaysIds: this.selectedDaysIds,
             // Weeks
             selectedWeeks: this.selectedWeeks,
-            selectedWeeksIds: this.selectedWeeksIds
+            selectedWeeksIds: this.selectedWeeksIds,
+            // Days of week
+            selectedDaysOfWeek: this.selectedDaysOfWeek,
+            selectedDaysOfWeekIds: this.selectedDaysOfWeekIds,
+            // Quarters of year
+            selectedQuartersOfYear: this.selectedQuartersOfYear,
+            selectedQuartersOfYearIds: this.selectedQuartersOfYear,
+            // Days of year
+            selectedDaysOfYear: this.selectedDaysOfYear,
+            selectedDaysOfYearIds: this.selectedDaysOfYearIds,
+            // Hours
+            selectedHours: this.selectedHours,
+            selectedHoursIds: this.selectedHoursIds
         };
         const dialogRef = this.dialog.open(MoreFiltersComponent, dialogConfig);
         dialogRef.updatePosition({ top: "55px", right: "0px", left: "0px" });
@@ -667,13 +679,29 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         this.selectedWeeksIds = data["weeks"]["selectedWeeksIds"];
     }
 
-    fillDaysOfWeekDropdownFromMenuData(data) {}
+    fillDaysOfWeekDropdownFromMenuData(data) {
+        this.selectedDaysOfWeek = data["daysOfWeek"]["selectedDaysOfWeek"];
+        this.selectedDaysOfWeekIds =
+            data["daysOfWeek"]["selectedDaysOfWeekIds"];
+    }
 
-    fillQuartersOfYearDropdownFromMenuData(data) {}
+    fillQuartersOfYearDropdownFromMenuData(data) {
+        this.selectedQuartersOfYear =
+            data["quartersOfYear"]["selectedQuartersOfYear"];
+        this.selectedQuartersOfYearIds =
+            data["quartersOfYear"]["selectedQuartersOfYearIds"];
+    }
 
-    fillDaysOfYearDropdownFromMenuData(data) {}
+    fillDaysOfYearDropdownFromMenuData(data) {
+        this.selectedDaysOfYear = data["daysOfYear"]["selectedDaysOfYear"];
+        this.selectedDaysOfYearIds =
+            data["daysOfYear"]["selectedDaysOfYearIds"];
+    }
 
-    fillHoursDropdownFromMenuData(data) {}
+    fillHoursDropdownFromMenuData(data) {
+        this.selectedHours = data["hours"]["selectedHours"];
+        this.selectedHoursIds = data["hours"]["selectedHoursIds"];
+    }
 
     fillMinutesDropdownFromMenuData(data) {}
 

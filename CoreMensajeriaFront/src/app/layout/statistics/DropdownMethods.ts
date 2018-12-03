@@ -506,24 +506,20 @@ export class DropdownMethods {
        ============================= */
     protected daySelected(day: any) {
         this.selectedDaysIds.push(day["day_id"]);
-        console.log(this.selectedDaysIds);
     }
 
     protected dayDeselected(day: any) {
         this.removeItemFromArray(day["day_id"], this.selectedDaysIds);
-        console.log(this.selectedDaysIds);
     }
 
     protected selectAllDays() {
         for (var index in this.daysDropdown) {
             this.selectedDaysIds.push(this.daysDropdown[index]["day_id"]);
         }
-        console.log(this.selectedDaysIds);
     }
 
     protected deselectAllDays() {
         this.selectedDaysIds = [];
-        console.log(this.selectedDaysIds);
     }
 
     /* =============================
@@ -536,18 +532,118 @@ export class DropdownMethods {
 
     protected weekDeselected(week: any) {
         this.removeItemFromArray(week["week_id"], this.selectedWeeksIds);
-        console.log(this.selectedWeeksIds);
     }
 
     protected selectAllWeeks() {
         for (var index in this.weeksDropdown) {
             this.selectedWeeksIds.push(this.weeksDropdown[index]["week_id"]);
         }
-        console.log(this.selectedDaysIds);
     }
 
     protected deselectAllWeeks() {
         this.selectedWeeksIds = [];
-        console.log(this.selectedWeeksIds);
+    }
+
+    /* ===================================
+           Handle days of weeks selection
+       =================================== */
+    protected dayOfWeekSelected(dayOfWeek: any) {
+        this.selectedDaysIds.push(dayOfWeek["dayOfWeek_id"]);
+    }
+
+    protected dayOfWeekDeselected(dayOfWeek: any) {
+        this.removeItemFromArray(
+            dayOfWeek["dayOfWeek_id"],
+            this.selectedDaysOfWeekIds
+        );
+    }
+
+    protected selectAllDaysOfWeek() {
+        for (var index in this.daysOfWeekDropdown) {
+            this.selectedDaysOfWeekIds.push(
+                this.daysOfWeekDropdown[index]["dayOfWeek_id"]
+            );
+        }
+    }
+
+    protected deselectAllDaysOfWeek() {
+        this.selectedDaysOfWeekIds = [];
+    }
+
+    /* ======================================
+           Handle quarters of year selection
+       ====================================== */
+    protected quarterOfYearSelected(quarterOfYear: any) {
+        this.selectedQuartersOfYearIds.push(quarterOfYear["quarterOfYear_id"]);
+    }
+
+    protected quarterOfYearDeselected(quarterOfYear: any) {
+        this.removeItemFromArray(
+            quarterOfYear["quarterOfYear_id"],
+            this.selectedQuartersOfYearIds
+        );
+    }
+
+    protected selectAllQuartersOfYear() {
+        for (var index in this.quartersOfYearDropdown) {
+            this.selectedQuartersOfYearIds.push(
+                this.quartersOfYearDropdown[index]["quarterOfYear_id"]
+            );
+        }
+    }
+
+    protected deselectAllQuartersOfYear() {
+        this.selectedQuartersOfYearIds = [];
+    }
+
+    /* ======================================
+           Handle days of year selection
+       ====================================== */
+    protected dayOfYearSelected(dayOfYear: any) {
+        this.selectedDaysOfYearIds.push(dayOfYear["dayOfYear_id"]);
+    }
+
+    protected dayOfYearDeselected(dayOfYear: any) {
+        this.removeItemFromArray(
+            dayOfYear["dayOfYear_id"],
+            this.selectedDaysOfYearIds
+        );
+    }
+
+    protected selectAllDaysOfYear() {
+        for (var index in this.daysOfYearDropdown) {
+            this.selectedDaysOfYearIds.push(
+                this.daysOfYearDropdown[index]["dayOfYear_id"]
+            );
+        }
+    }
+
+    protected deselectAllDaysOfYear() {
+        this.selectedDaysOfYearIds = [];
+    }
+
+    /* ======================================
+           Handle days of year selection
+       ====================================== */
+    protected hourSelected(hour: any) {
+        this.selectedHoursIds.push(hour["hour_id"]);
+        console.log(this.selectedHoursIds);
+    }
+
+    protected hourDeselected(hour: any) {
+        this.removeItemFromArray(hour["hour_id"], this.selectedHoursIds);
+        console.log(this.selectedHoursIds);
+    }
+
+    protected selectAllHours() {
+        for (var index in this.hoursDropdown) {
+            this.selectedHoursIds.push(this.hoursDropdown[index]["hour_id"]);
+        }
+        console.log(this.selectedHoursIds);
+    }
+
+    protected deselectAllHours() {
+        this.selectedDaysOfYearIds = [];
+        console.log(this.selectedHoursIds);
     }
 }

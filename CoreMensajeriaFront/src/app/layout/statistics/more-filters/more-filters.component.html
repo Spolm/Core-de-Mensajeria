@@ -142,58 +142,70 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3 col-sm-6 dropdown">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="daysOfWeekDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Día de semana'"
-                [data]="companiesDropdown"
-                [(ngModel)]="selectedCompanies"
-                [settings]="companiesDropdownSettings"
-                (onSelect)="companySelected($event)"
-                (onDeSelect)="companyDeselected($event)"
-                (onSelectAll)="selectAllCompanies()"
-                (onDeSelectAll)="deselectAllCompanies()"
+                [data]="daysOfWeekDropdown"
+                [(ngModel)]="selectedDaysOfWeek"
+                [settings]="daysOfWeekDropdownSettings"
+                (onSelect)="dayOfWeekSelected($event)"
+                (onDeSelect)="dayOfWeekDeselected($event)"
+                (onSelectAll)="selectAllDaysOfWeek()"
+                (onDeSelectAll)="deselectAllDaysOfWeek()"
             >
             </ng-multiselect-dropdown>
         </div>
 
-        <div class="col-md-3 col-sm-6 dropdown">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="quartersOfYearDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Cuarto de año'"
-                [data]="companiesDropdown"
-                [(ngModel)]="selectedCompanies"
-                [settings]="companiesDropdownSettings"
-                (onSelect)="companySelected($event)"
-                (onDeSelect)="companyDeselected($event)"
-                (onSelectAll)="selectAllCompanies()"
-                (onDeSelectAll)="deselectAllCompanies()"
+                [data]="quartersOfYearDropdown"
+                [(ngModel)]="selectedQuartersOfYear"
+                [settings]="quartersOfYearDropdownSettings"
+                (onSelect)="quarterOfYearSelected($event)"
+                (onDeSelect)="quarterOfYearDeselected($event)"
+                (onSelectAll)="selectAllQuartersOfYear()"
+                (onDeSelectAll)="deselectAllQuartersOfYear()"
             >
             </ng-multiselect-dropdown>
         </div>
 
-        <div class="col-md-3 col-sm-6 dropdown">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="daysOfYearDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Día del año'"
-                [data]="companiesDropdown"
-                [(ngModel)]="selectedCompanies"
-                [settings]="companiesDropdownSettings"
-                (onSelect)="companySelected($event)"
-                (onDeSelect)="companyDeselected($event)"
-                (onSelectAll)="selectAllCompanies()"
-                (onDeSelectAll)="deselectAllCompanies()"
+                [data]="daysOfYearDropdown"
+                [(ngModel)]="selectedDaysOfYear"
+                [settings]="daysOfYearDropdownSettings"
+                (onSelect)="dayOfYearSelected($event)"
+                (onDeSelect)="dayOfYearDeselected($event)"
+                (onSelectAll)="selectAllDaysOfYear()"
+                (onDeSelectAll)="deselectAllDaysOfYear()"
             >
             </ng-multiselect-dropdown>
         </div>
 
-        <div class="col-md-3 col-sm-6 dropdown">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="hoursDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Hora'"
-                [data]="companiesDropdown"
-                [(ngModel)]="selectedCompanies"
-                [settings]="companiesDropdownSettings"
-                (onSelect)="companySelected($event)"
-                (onDeSelect)="companyDeselected($event)"
-                (onSelectAll)="selectAllCompanies()"
-                (onDeSelectAll)="deselectAllCompanies()"
+                [data]="hoursDropdown"
+                [(ngModel)]="selectedHours"
+                [settings]="hoursDropdownSettings"
+                (onSelect)="hourSelected($event)"
+                (onDeSelect)="hourDeselected($event)"
+                (onSelectAll)="selectAllHours()"
+                (onDeSelectAll)="deselectAllHours()"
             >
             </ng-multiselect-dropdown>
         </div>
