@@ -2,6 +2,7 @@ package Classes.M07_Template.HandlerPackage;
 
 import Classes.M01_Login.UserDAO;
 import Classes.M03_Campaign.Campaign;
+import Classes.M03_Campaign.CampaignDAO;
 import Classes.M04_Integrator.IntegratorDAO;
 import Classes.M06_DataOrigin.Application;
 import Classes.M06_DataOrigin.ApplicationDAO;
@@ -9,6 +10,7 @@ import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 import Exceptions.ApplicationNotFoundException;
+import Exceptions.CampaignDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Classes.M05_Channel.Channel;
 import Classes.M05_Channel.ChannelFactory;
@@ -87,7 +89,9 @@ public class TemplateHandler {
                 template.setStatus(status);
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
                 template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
-                template.setApplication(getApplicationByTemplate(template.getTemplateId()));
+                ApplicationDAO applicationService = new ApplicationDAO();
+                template.setApplication(applicationService.getApplication
+                        (template.getTemplateId()));
                 templateArrayList.add(template);
             }
         }catch (SQLException e) {
@@ -121,7 +125,7 @@ public class TemplateHandler {
 
                 UserDAO userDAO = new UserDAO();
                 template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
-                template.setCampaign(getCampaignsById(resultSet.getInt("tem_campaign_id")));
+                //template.setCampaign(getCampaignsById(resultSet.getInt("tem_campaign_id")));
                 ApplicationDAO applicationService = new ApplicationDAO();
                 template.setApplication(applicationService.getApplication
                         (template.getTemplateId()));
@@ -263,16 +267,16 @@ public class TemplateHandler {
                             + "FROM Template\n"
                             + "WHERE tem_id = " + templateId + ";");
             //instanciando el api de campana
-            /* M03_Campaigns campaignsService = new M03_Campaigns();
+            CampaignDAO campaignsService = new CampaignDAO();
             //obtener objeto campana con el id de campana del query anterior
             campaign = campaignsService.getDetails
-                    (resultSet.getInt("tem_campaign_id"));*/
+                    (resultSet.getInt("tem_campaign_id"));
         } catch (SQLException e){
             e.printStackTrace();
             throw new TemplateDoesntExistsException
                     ("Error: la plantilla " + templateId + " no existe", e, templateId);
-       /* } catch (CampaignDoesntExistsException e) {
-            */
+        } catch (CampaignDoesntExistsException e) {
+            //logg
         }catch (Exception e){
             e.printStackTrace();
         } finally {
