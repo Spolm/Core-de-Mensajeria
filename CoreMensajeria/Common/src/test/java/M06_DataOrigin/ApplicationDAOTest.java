@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-    public class ApplicationDAOTest {
+public class ApplicationDAOTest {
     private Application _application;
     private AddApplicationData _addApplicationData;
     private ApplicationDAO _applicationDAO = new ApplicationDAO();
@@ -75,7 +75,7 @@ import static org.junit.jupiter.api.Assertions.*;
             assertNotNull(application);
         } catch (DatabaseConnectionProblemException e) {
             e.printStackTrace();
-        }catch (ApplicationNotFoundException e) {
+        } catch (ApplicationNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -104,6 +104,18 @@ import static org.junit.jupiter.api.Assertions.*;
         } catch (DatabaseConnectionProblemException e) {
             e.printStackTrace();
         }catch (ApplicationNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    private void updateApplicationByIdTest() {
+        try {
+            Application application = _applicationDAO.updateApplication(_application.get_idApplication(),0);
+            assertEquals(0, application.get_statusApplication());
+        } catch (DatabaseConnectionProblemException e) {
+            e.printStackTrace();
+        } catch (ApplicationNotFoundException e) {
             e.printStackTrace();
         }
     }

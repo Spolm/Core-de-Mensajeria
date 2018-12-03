@@ -3,6 +3,7 @@ package webService.M07_Template;
 
 import Classes.M07_Template.HandlerPackage.ParameterHandler;
 import Classes.M07_Template.MessagePackage.Parameter;
+import Exceptions.ParameterDoesntExistsException;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -26,8 +27,13 @@ public class M07_Parameter {
     @Path("get")
     public Response getParameters(@QueryParam("companyId") int companyId){
         ParameterHandler parameterHandler = new ParameterHandler();
-        ArrayList<Parameter> parameterList = parameterHandler.getParameters(companyId);
-        return Response.ok(gson.toJson(parameterList)).build();
+        ArrayList<Parameter> parameterList = new ArrayList<Parameter>();
+        try {
+            parameterList = parameterHandler.getParameters(companyId);
+        }catch (ParameterDoesntExistsException e){
+            //logg
+        }
+            return Response.ok(gson.toJson(parameterList)).build();
     }
 
 }

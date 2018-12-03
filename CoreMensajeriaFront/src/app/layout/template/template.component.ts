@@ -11,6 +11,7 @@ import { TemplateService } from './template.service';
 
 export class TemplateComponent{
 
+  userId: string = localStorage.getItem("userid");
   templates: any = [];
 
   constructor(private templateService: TemplateService) {
@@ -26,4 +27,9 @@ export class TemplateComponent{
   approveTemplates(){
     this.getTemplates();
   }
+
+    templateDetails(id: number) {
+        this.templateService.templateDetails(id);
+    }
+
 }

@@ -6,6 +6,7 @@
     </button>
   </div>
   <div class="modal-body">
+    <h3>ID del User: {{userId}}</h3>
     <div class="form-check" *ngFor="let company of companies">
       <div *ngIf="company._status">
         <input class="form-check-input" type="radio" name="company" id="company._idCompany">

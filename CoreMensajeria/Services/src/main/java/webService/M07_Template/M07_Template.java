@@ -26,12 +26,9 @@ public class M07_Template {
     @GET
     public Response getTemplates(@QueryParam("userId") int userId,
                                  @QueryParam("companyId") int companyId){
-        ArrayList<Template> templateArrayList = null;
         TemplateHandler templateHandler = new TemplateHandler();
-        templateArrayList = templateHandler.getTemplates(userId,companyId);
-
-        return Response.ok(gson.toJson("userId: " + userId + " companyId: " + companyId)).build();
-        //return Response.ok(gson.toJson(templateArrayList)).build();
+         ArrayList templateArrayList = templateHandler.getTemplates(userId,companyId);
+        return Response.ok(gson.toJson(templateArrayList)).build();
     }
 
     @GET
@@ -47,6 +44,15 @@ public class M07_Template {
         finally {
             return Response.ok(gson.toJson(template)).build();
         }
+    }
+
+    @GET
+    @Path("/privileges")
+    public Response getTemplatePrivilegesByUser(@QueryParam("userId") int userId,
+                                                @QueryParam("companyId") int companyId){
+        TemplateHandler templateHandler = new TemplateHandler();
+        ArrayList<String> privileges = templateHandler.getTemplatePrivilegesByUser(userId,companyId);
+        return Response.ok(gson.toJson(privileges)).build();
     }
 
     @Path("/messages")
@@ -70,4 +76,11 @@ public class M07_Template {
         return templateHandler.postTemplateData(json);
     }
 
+    @PUT
+    @Path("update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean updateTemplate(String json){
+        TemplateHandler templateHandler = new TemplateHandler();
+        return templateHandler.updateTemplateData(json);
+    }
 }
