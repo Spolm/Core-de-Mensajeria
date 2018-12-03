@@ -55,4 +55,8 @@ export class StatisticsServiceService {
     getStatistics(params: HttpParams) {
         return this.http.get(this.ApiURL + "filters", { params });
     }
+
+    updateStarSchema() {
+        return this.http.get(this.ApiURL + "update");
+    }
 }
