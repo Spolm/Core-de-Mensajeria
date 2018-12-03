@@ -14,7 +14,9 @@ export class CreateTemplateComponent {
 
   parametersJson: any = [];
   channelsJson: any = [];
+  applicationsJson: any = [];
   originOption = 'app';
+  applicationId: number;
   formMessage = '';
   parameters: Array<string> = [];
   newParameters: Array<string> = [];
@@ -24,6 +26,7 @@ export class CreateTemplateComponent {
   constructor(private templateService: TemplateService, private toastr: ToastrService, private router: Router) {
     this.getParameters();
     this.getChannels();
+    this.getApplications(2);
   }
 
   getParameters() {
@@ -36,6 +39,12 @@ export class CreateTemplateComponent {
     this.templateService.getChannels().subscribe(data => {
       this.channelsJson = data;
     });
+  }
+
+  getApplications(company: number){
+    this.templateService.getApplicationsByCompany(company).subscribe(data => {
+        this.applicationsJson = data;
+      });
   }
 
   addParameter(message: string, parameterName: string) {
@@ -110,6 +119,8 @@ export class CreateTemplateComponent {
       console.log(this.parameters);
       console.log(this.newParameters);
       console.log(this.channels_integrators);
+      console.log(this.originOption);
+      console.log(this.applicationId);
       this.formMessage = this.formMessage.trim();
       if (this.formMessage != '') {
           if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
