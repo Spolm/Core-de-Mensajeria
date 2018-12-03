@@ -111,7 +111,6 @@ public class M09_StatisticsTest {
         }
     }
 
-    
     /*@Test
     void getStatisticsTestOk200()  {
         try {

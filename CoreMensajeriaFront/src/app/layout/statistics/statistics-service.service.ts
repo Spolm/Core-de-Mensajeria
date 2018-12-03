@@ -76,23 +76,23 @@ export class StatisticsServiceService {
         return this.http.get(this.ApiURL + "daysofyearCount");
     }
 
-    weeksOfYear() {
+    getWeeksOfYear() {
         return this.http.get(this.ApiURL + "weeksofyearCount");
     }
 
-    quartersOfYear() {
+    getQuartersOfYear() {
         return this.http.get(this.ApiURL + "quartersofyearCount");
     }
 
-    hours() {
+    getHours() {
         return this.http.get(this.ApiURL + "hoursCount");
     }
 
-    minutes() {
+    getMinutes() {
         return this.http.get(this.ApiURL + "minutesCount");
     }
 
-    seconds() {
+    getSeconds() {
         return this.http.get(this.ApiURL + "secondsCount");
     }
 
