@@ -7,11 +7,6 @@ public class Aweber extends Integrator {
     }
 
     @Override
-    public void testConection() {
-
-    }
-
-    @Override
     public MessageIntegrator sendMessage(String msg, String address, String idMsg) {
         if(this.isEnabled()) {
             try {
