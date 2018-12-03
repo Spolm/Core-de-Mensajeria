@@ -611,7 +611,13 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             selectedDaysOfYearIds: this.selectedDaysOfYearIds,
             // Hours
             selectedHours: this.selectedHours,
-            selectedHoursIds: this.selectedHoursIds
+            selectedHoursIds: this.selectedHoursIds,
+            // Minutes
+            selectedMinutes: this.selectedMinutes,
+            selectedMinutesIds: this.selectedMinutesIds,
+            // Seconds
+            selectedSeconds: this.selectedSeconds,
+            selectedSecondsIds: this.selectedSecondsIds
         };
         const dialogRef = this.dialog.open(MoreFiltersComponent, dialogConfig);
         dialogRef.updatePosition({ top: "55px", right: "0px", left: "0px" });
@@ -703,9 +709,15 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         this.selectedHoursIds = data["hours"]["selectedHoursIds"];
     }
 
-    fillMinutesDropdownFromMenuData(data) {}
+    fillMinutesDropdownFromMenuData(data) {
+        this.selectedMinutes = data["minutes"]["selectedMinutes"];
+        this.selectedMinutesIds = data["minutes"]["selectedMinutesIds"];
+    }
 
-    fillSecondsDropdownFromMenuData(data) {}
+    fillSecondsDropdownFromMenuData(data) {
+        this.selectedSeconds = data["seconds"]["selectedSeconds"];
+        this.selectedSecondsIds = data["seconds"]["selectedSecondsIds"];
+    }
 
     getArrayOfRandomColors(length: Number): String[] {
         var colors = [];

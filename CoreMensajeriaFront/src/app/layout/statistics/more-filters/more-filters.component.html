@@ -212,36 +212,42 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3 col-sm-6 dropdown">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="minutesDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Minuto'"
-                [data]="companiesDropdown"
-                [(ngModel)]="selectedCompanies"
-                [settings]="companiesDropdownSettings"
-                (onSelect)="companySelected($event)"
-                (onDeSelect)="companyDeselected($event)"
-                (onSelectAll)="selectAllCompanies()"
-                (onDeSelectAll)="deselectAllCompanies()"
+                [data]="minutesDropdown"
+                [(ngModel)]="selectedMinutes"
+                [settings]="minutesDropdownSettings"
+                (onSelect)="minuteSelected($event)"
+                (onDeSelect)="minuteDeselected($event)"
+                (onSelectAll)="selectAllMinutes()"
+                (onDeSelectAll)="deselectAllMinutes()"
             >
             </ng-multiselect-dropdown>
         </div>
 
-        <div class="col-md-3 col-sm-6 dropdown">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="secondsDropdown.length > 0"
+        >
             <ng-multiselect-dropdown
                 [placeholder]="'Segundo'"
-                [data]="companiesDropdown"
-                [(ngModel)]="selectedCompanies"
-                [settings]="companiesDropdownSettings"
-                (onSelect)="companySelected($event)"
-                (onDeSelect)="companyDeselected($event)"
-                (onSelectAll)="selectAllCompanies()"
-                (onDeSelectAll)="deselectAllCompanies()"
+                [data]="secondsDropdown"
+                [(ngModel)]="selectedSeconds"
+                [settings]="secondsDropdownSettings"
+                (onSelect)="secondSelected($event)"
+                (onDeSelect)="secondsDeselected($event)"
+                (onSelectAll)="selectAllSeconds()"
+                (onDeSelectAll)="deselectAllSeconds()"
             >
             </ng-multiselect-dropdown>
         </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="form-group col-md-6">
             <label for="dateOfBirth">Desde:</label>
             <input
@@ -260,5 +266,5 @@
                 [(ngModel)]="opcionDateSleccionado2"
             />
         </div>
-    </div>
+    </div> -->
 </div>

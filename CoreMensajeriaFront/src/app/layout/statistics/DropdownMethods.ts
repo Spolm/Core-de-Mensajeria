@@ -622,9 +622,9 @@ export class DropdownMethods {
         this.selectedDaysOfYearIds = [];
     }
 
-    /* ======================================
-           Handle days of year selection
-       ====================================== */
+    /* =============================
+           Handle hours selection
+       ============================= */
     protected hourSelected(hour: any) {
         this.selectedHoursIds.push(hour["hour_id"]);
         console.log(this.selectedHoursIds);
@@ -643,7 +643,61 @@ export class DropdownMethods {
     }
 
     protected deselectAllHours() {
-        this.selectedDaysOfYearIds = [];
+        this.selectedHoursIds = [];
         console.log(this.selectedHoursIds);
+    }
+
+    /* ===============================
+           Handle minutes selection
+       =============================== */
+    protected minuteSelected(minute: any) {
+        this.selectedMinutesIds.push(minute["minute_id"]);
+        console.log(this.selectedMinutesIds);
+    }
+
+    protected minuteDeselected(minute: any) {
+        this.removeItemFromArray(minute["minute_id"], this.selectedMinutesIds);
+        console.log(this.selectedMinutesIds);
+    }
+
+    protected selectAllMinutes() {
+        for (var index in this.minutesDropdown) {
+            this.selectedMinutesIds.push(
+                this.minutesDropdown[index]["minute_id"]
+            );
+        }
+        console.log(this.selectedMinutesIds);
+    }
+
+    protected deselectAllMinutes() {
+        this.selectedMinutesIds = [];
+        console.log(this.selectedMinutesIds);
+    }
+
+    /* ===============================
+           Handle seconds selection
+       =============================== */
+    protected secondSelected(second: any) {
+        this.selectedSecondsIds.push(second["second_id"]);
+        console.log(this.selectedSecondsIds);
+    }
+
+    protected secondDeselected(second: any) {
+        this.removeItemFromArray(second["second_id"], this.selectedSecondsIds);
+        console.log(this.selectedSecondsIds);
+    }
+
+    protected selectAllSeconds() {
+        for (var index in this.secondsDropdown) {
+            this.selectedSecondsIds.push(
+                this.secondsDropdown[index]["second_id"]
+            );
+        }
+        console.log(this.selectedSecondsIds);
+    }
+
+    protected deselectAllSeconds() {
+        this.selectedSecondsIds = [];
+        console.log(this.selectedSecondsIds);
     }
 }

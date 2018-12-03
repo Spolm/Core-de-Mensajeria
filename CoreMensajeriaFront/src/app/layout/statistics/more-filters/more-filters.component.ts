@@ -270,9 +270,15 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         this.selectedHoursIds = data.selectedHoursIds;
     }
 
-    setupMinutesData(data) {}
+    setupMinutesData(data) {
+        this.selectedMinutes = data.selectedMinutes;
+        this.selectedMinutesIds = data.selectedMinutesIds;
+    }
 
-    setupSecondsData(data) {}
+    setupSecondsData(data) {
+        this.selectedSeconds = data.selectedSeconds;
+        this.selectedSecondsIds = data.selectedSecondsIds;
+    }
 
     getYears() {
         this.statisticsService.getYears().subscribe(data => {
@@ -373,9 +379,27 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         });
     }
 
-    getMinutes() {}
+    getMinutes() {
+        this.statisticsService.getMinutes().subscribe(data => {
+            this.insertIntoDateDropdown(
+                data,
+                this.minutesDropdown,
+                "minute_id",
+                "minute_name"
+            );
+        });
+    }
 
-    getSeconds() {}
+    getSeconds() {
+        this.statisticsService.getSeconds().subscribe(data => {
+            this.insertIntoDateDropdown(
+                data,
+                this.secondsDropdown,
+                "second_id",
+                "second_name"
+            );
+        });
+    }
 
     insertIntoDateDropdown(
         data: any,
