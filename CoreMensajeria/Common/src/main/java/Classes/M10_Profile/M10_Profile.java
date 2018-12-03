@@ -11,8 +11,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class M10_Profile {
+/**
+ * Clase de acceso a datos que nos permite
+ * obtener informacion relacionada al perfil
+ * del usuario.
+ *
+ * @return User con todos los datos del usuario
+ * @Author Alexander De Acevedo.
+ * @Author Sergio Garcia.
+ * @Author Ramiro Vargas.
+ */
 
+public class M10_Profile {
     private Connection _conn;
     private ResultSet _result;
 
@@ -20,47 +30,44 @@ public class M10_Profile {
         _conn = Sql.getConInstance();
     }
 
-
-    public ArrayList<Company> getCompanies(){
-        ArrayList<Company> coList= new ArrayList<>();
+    public ArrayList<Company> getCompanies() {
+        ArrayList<Company> coList = new ArrayList<>();
         try {
             PreparedStatement ps = _conn.prepareCall("{call m10_getallcompanies()}");
             ResultSet result = ps.executeQuery();
-            while(result.next()){
+            while (result.next()) {
                 Company co = new Company();
                 co.set_idCompany(result.getInt("com_id"));
                 co.set_name(result.getString("com_name"));
                 coList.add(co);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            Sql.bdClose(_conn);
         }
         return coList;
     }
 
     /**
+     * Metodo que permite buscar un usuario
+     *
      * @param username Nombre de usuario a buscar
      * @return User con todos los datos del usuario
+     * @see User
      */
 
-
-
     public ArrayList<User> searchUser(String username) {
-        String consulta= "SELECT use_id, use_password, use_username, use_type, use_email, use_phone,use_country," +
+        String consulta = "SELECT use_id, use_password, use_username, use_type, use_email, use_phone,use_country," +
                 " use_city, use_address, use_date_of_birth, use_gender From public.user " +
                 "WHERE use_username =?";
         ArrayList<User> userList = new ArrayList<>();
         try {
-        PreparedStatement preparedStatement = _conn.prepareStatement(consulta);
-        preparedStatement.setString(1, username);
-        _result = preparedStatement.executeQuery();
-
-
-
+            PreparedStatement preparedStatement = _conn.prepareStatement(consulta);
+            preparedStatement.setString(1, username);
+            _result = preparedStatement.executeQuery();
             while (_result.next()) {
                 User user = new User();
                 user.set_idUser(_result.getInt("use_id"));
@@ -77,30 +84,29 @@ public class M10_Profile {
                 userList.add(user);
             }
         } catch (SQLException ex) {
-            userList=null;
-        }
-        finally{
+            userList = null;
+        } finally {
             Sql.bdClose(_conn);
         }
         return userList;
     }
 
     /**
+     * Metodo que permite editar el perfil de un usuario
      *
-     * @param id id del usuario a editar
-     * @param email email del usuario
-     * @param phone telefono del usuario
-     * @param address   direccion
-     * @return  String con mensaje de exito
+     * @param id      id del usuario a editar
+     * @param email   email del usuario
+     * @param phone   telefono del usuario
+     * @param address direccion
+     * @return String con mensaje de exito
      * @throws SQLException
      */
-    public String editProfile( int id, String email, String phone,String address ) {
 
+    public String editProfile(int id, String email, String phone, String address) {
         try {
-
             //Query a realizar
             String query = "UPDATE public.User SET " +
-                    "use_phone=?,use_email=? ,use_address=?"+
+                    "use_phone=?,use_email=? ,use_address=?" +
                     "WHERE use_id = ?";
 
             PreparedStatement preparedStatement = _conn.prepareStatement(query);
@@ -112,42 +118,25 @@ public class M10_Profile {
             //Se realiza query, falta codigo aqui para validar si se realizo correctamente el query
             preparedStatement.executeQuery();
             return "Perfil editado con éxito";
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println(e.getStackTrace());
             return "Error al editar el perfil";
-        }
-
-    }
-
-    public String addUser(CreateUserRequestBody user){
-        try {
-
-            //Query a realizar
-            String query = "INSERT INTO public.USER " +
-                    "(use_password, use_username, use_type, use_email, use_phone, use_country, use_city, use_address," +
-                    " use_date_of_birth, use_gender) " +
-                    "values('"+ user.get_passwordUser() +"', '"+ user.get_usernameUser() +"'," +
-                    user.get_typeUser() +" , '"+ user.get_emailUser() +"', '"+ user.get_emailUser() +"'," +
-                    "'"+ user.get_countryUser() +"', '"+ user.get_cityUser() +"', '"+ user.get_addressUser() +"', " +
-                    "TO_TIMESTAMP('"+ user.get_birthdateUser() +"','DD/MM/YYYY'), '"+ user.get_genderUser() +"')";
-
-
-
-            //Se crea conexion a la dc
-            Sql db = new Sql();
-
-            //Se realiza query, falta codigo aqui para validar si se realizo correctamente el query
-            db.sqlConn(query);
-            return "Usuario creado con éxito";
-        }
-        catch (SQLException e) {
-            System.err.println(e.getStackTrace());
-            return "Error al crea usuario";
+        } finally {
+            Sql.bdClose(_conn);
         }
     }
 
-    public ArrayList<Rol> getAllRoles(){
+
+    /**
+     * Metodo que nos permite obtener los roles
+     * de los usuarios que se encuentran en el sistema.
+     *
+     * @return Lista de los Roles que estan almacenados en el sistema
+     * @throws SQLException en caso de que exista un error de comunicacion a la base de datos.
+     * @see Rol
+     */
+
+    public ArrayList<Rol> getAllRoles() {
         ArrayList<Rol> rols = new ArrayList<>();
         try {
             PreparedStatement st = _conn.prepareCall("{call m10_getallroles()}");
@@ -156,7 +145,7 @@ public class M10_Profile {
             while (_result.next()) {
                 int id = _result.getInt("rol_id");
                 String name = _result.getString("rol_name");
-                Rol rol = new Rol(id,name);
+                Rol rol = new Rol(id, name);
                 rols.add(rol);
             }
             return rols;
@@ -168,5 +157,30 @@ public class M10_Profile {
         }
         return rols;
     }
+
+    public String addUser(CreateUserRequestBody user) {
+        try {
+            //Query a realizar
+            String query = "INSERT INTO public.USER " +
+                    "(use_password, use_username, use_type, use_email, use_phone, use_country, use_city, use_address," +
+                    " use_date_of_birth, use_gender) " +
+                    "values('" + user.get_passwordUser() + "', '" + user.get_usernameUser() + "'," +
+                    user.get_typeUser() + " , '" + user.get_emailUser() + "', '" + user.get_emailUser() + "'," +
+                    "'" + user.get_countryUser() + "', '" + user.get_cityUser() + "', '" + user.get_addressUser() + "', " +
+                    "TO_TIMESTAMP('" + user.get_birthdateUser() + "','DD/MM/YYYY'), '" + user.get_genderUser() + "')";
+            //Se crea conexion a la dc
+            Sql db = new Sql();
+
+            //Se realiza query, falta codigo aqui para validar si se realizo correctamente el query
+            db.sqlConn(query);
+            return "Usuario creado con éxito";
+        } catch (SQLException e) {
+            System.err.println(e.getStackTrace());
+            return "Error al crea usuario";
+        } finally {
+            Sql.bdClose(_conn);
+        }
+    }
+
 }
 
