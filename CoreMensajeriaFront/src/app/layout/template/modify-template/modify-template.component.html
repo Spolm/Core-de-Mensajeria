@@ -1,5 +1,5 @@
 <router-outlet></router-outlet>
-<h2 class="text-capitalize main-title">Crear Plantilla</h2>
+<h2 class="text-capitalize main-title">Modificar Plantilla</h2>
 <hr>
 <form>
   <div class="form-row">
@@ -11,7 +11,7 @@
     </div>
 
     <!-- Select for the parameters of the template -->
-    <div class="form-group col-12 col-md-3">
+    <div class="form-group col">
       <label for="formParameters">Parametros</label>
       <br>
       <div class="d-flex flex-row-reverse">
@@ -23,7 +23,7 @@
         </select>
       </div>
       <br>
-      <div *ngIf="showInputCreateParameterState" class="col-12">
+      <div *ngIf="showInputCreateParameterState">
         <div class="d-flex flex-row-reverse">
           <button type="button" class="btn btn-success btn-sm m-1" (click)="addNewParameter(formMessage, newParameter.value)">+</button>
           <input type="text" #newParameter>
@@ -52,7 +52,7 @@
     </div>
   </div>
 
-  <!-- Select for the channels and integrators of the template -->
+  <!-- Select for the  channels and integrators of the template -->
   <div>
     <hr>
     <div class="form-row m-6" *ngFor="let channel of channelsJson; let i = index">
@@ -61,7 +61,7 @@
         {{channel.nameChannel}}
       </div>
 
-      <div class="form-group col-4">
+      <div class="form-grup col-4">
         <div class="form-check">
           <select class="form-control" id="integratorInput" name="integratorInput" [(ngModel)]="channel.descriptionChannel"
             (change)="addIntegrator(channel, channel.descriptionChannel)">
@@ -89,46 +89,12 @@
   </div>
   <br>
 
-  <div class="row">
-    <div class="col-2">
-      Origen
-    </div>
-  </div>
-
-  <!-- Input for the Origin -->
   <div>
-    <hr>
-    <div class="form-row m-6">
-
-
-      <div class="form-group col-2 m-6">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="origin" id="originApp" value="app" checked (click)="originOption = 'app'">
-          <label class="form-check-label" for="originApp">
-            Aplicación
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="origin" id="originTxt" value="txt" (click)="originOption = 'txt'">
-          <label class="form-check-label" for="originTxt">
-            Archivo
-          </label>
-        </div>
-      </div>
-
-      <div class="form-group col-4" *ngIf="originOption == 'app'">
-        <select name="applicationId" id="applicationId">
-          <option value="1">1</option>
-          <option value="2">2</option>
-        </select>
-      </div>
-
-    </div>
+    planification
   </div>
-
 </form>
 
 <div class="d-flex flex-row-reverse">
-  <button type="button" class="btn btn-success m-1" (click)="postTemplate()">Crear</button>
+  <button type="button" class="btn btn-success m-1" (click)="updateTemplate()">Confirmar</button>
   <button type="button" class="btn btn-danger m-1" routerLink="/template">Cancelar</button>
 </div>

@@ -1,29 +1,34 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { TemplateService } from '../template.service';
 import { ToastrService } from 'ngx-toastr';
-import {Router} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { delay } from 'q';
 
 @Component({
-  selector: 'app-create-template',
-  templateUrl: './create-template.component.html',
-  styleUrls: ['./create-template.component.scss']
+  selector: 'app-modify-template',
+  templateUrl: './modify-template.component.html',
+  styleUrls: ['./modify-template.component.scss']
 })
+export class ModifyTemplateComponent {
 
-
-export class CreateTemplateComponent {
-
+  templateId: any;
+  sub: any;
+  templateJson: any = [];
   parametersJson: any = [];
   channelsJson: any = [];
-  originOption = 'app';
   formMessage = '';
   parameters: Array<string> = [];
   newParameters: Array<string> = [];
   channels_integrators: any = [];
   showInputCreateParameterState = false;
 
-  constructor(private templateService: TemplateService, private toastr: ToastrService, private router: Router) {
+  constructor(private templateService: TemplateService, private toastr: ToastrService, private route: ActivatedRoute) {
+    this.sub = this.route.params.subscribe(params => {
+      this.templateId = +params['id'];
+    });
     this.getParameters();
     this.getChannels();
+    this.getTemplate();
   }
 
   getParameters() {
@@ -38,6 +43,32 @@ export class CreateTemplateComponent {
     });
   }
 
+  async getTemplate() {
+    this.templateService.getTemplate(this.templateId).subscribe(data => {
+      this.templateJson = data;
+    });
+    await delay(1000);
+    this.formMessage = this.templateJson.message.message;
+    this.assignParameter(this.parameters , this.templateJson.message.parameterArrayList);
+    this.assignChannelsIntegrators(this.channels_integrators, this.templateJson.channels);
+  }
+
+  assignParameter(place: Array<any>, data: Array<any>) {
+    data.forEach( (value) => {
+      place.push(value.name);
+    });
+  }
+
+  assignChannelsIntegrators(place: Array<any>, data: Array<any>) {
+    data.forEach( (channel) => {
+      channel.integrators.forEach( (integrator) => {
+        place.push(
+          { channel, integrator}
+          );
+      });
+    });
+  }
+
   addParameter(message: string, parameterName: string) {
           const myFormMessage = document.getElementById('formMessage');
           const pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
@@ -45,33 +76,33 @@ export class CreateTemplateComponent {
           const endMessage = message.slice(pointer, message.length);
           this.parameters.push(parameterName);
           this.formMessage = startMessage + ' [.$' + parameterName + '$.] ' + endMessage;
+
   }
 
   addNewParameter(message: string, parameterName: string) {
-      parameterName = parameterName.trim();
-      if ((parameterName.valueOf() !== '')) {
-          parameterName = parameterName.toLowerCase();
-          parameterName = parameterName.charAt(0).toUpperCase() + parameterName.slice(1, parameterName.length);
-          if (!this.parameters.find(x => x === parameterName)) {
-              this.addParameter(message, parameterName);
-              if (!this.newParameters.find(x => x == parameterName)) {
-                  this.newParameters.push(parameterName);
-              } else {
-                  this.toastr.warning('El parametro ya esta registrado', 'Aviso',
-                      {
-                          timeOut: 2800,
-                          progressBar: true
-                      });
-              }
-          }
-      } else {
-          this.toastr.warning('No a escrito ningun parametro', 'Aviso',
-              {
-                  timeOut: 2800,
-                  progressBar: true
-              });
-      }
-    this.showInputCreateParameterState = false;
+    parameterName = parameterName.trim();
+    if ((parameterName.valueOf() !== '')) {
+        parameterName = parameterName.toLowerCase();
+        parameterName = parameterName.charAt(0).toUpperCase() + parameterName.slice(1, parameterName.length);
+        if (!this.parameters.find(x => x === parameterName)) {
+            this.addParameter(message, parameterName);
+            if (!this.newParameters.find(x => x == parameterName)) {
+                this.newParameters.push(parameterName);
+            } else {
+                this.toastr.warning('El parametro ya esta registrado', 'Aviso',
+                    {
+                        timeOut: 2800,
+                        progressBar: true
+                    });
+                }
+            }
+        } else {
+            this.toastr.warning('No a escrito ningun parametro', 'Aviso',
+            {
+                timeOut: 2800,
+                progressBar: true
+            });
+        }
   }
 
   addIntegrator(channel: any, integratorId: number) {
@@ -104,26 +135,21 @@ export class CreateTemplateComponent {
     this.channels_integrators.splice(this.channels_integrators.indexOf(channel_integrator), 1);
   }
 
-  postTemplate() {
-
-      console.log(this.formMessage);
-      console.log(this.parameters);
-      console.log(this.newParameters);
-      console.log(this.channels_integrators);
+  updateTemplate() {
       this.formMessage = this.formMessage.trim();
       if (this.formMessage != '') {
           if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
               if (this.channels_integrators[0]) {
-                  this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
+                  this.templateService.updateTemplate(this.templateId, this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
               } else {
-                  this.toastr.warning('Falta llenar un campo', 'Aviso',
+                  this.toastr.error('Falta llenar un campo', 'Error',
                       {
                           timeOut: 2800,
                           progressBar: true
                       });
               }
           } else {
-              this.toastr.warning('Tal vez quiera escribir un mensaje mas largo', 'Aviso',
+              this.toastr.error('Tal vez quiera escribir un mensaje mas largo', 'Error',
                   {
                       timeOut: 2800,
                       progressBar: true
@@ -136,5 +162,5 @@ export class CreateTemplateComponent {
                   progressBar: true
               });
       }
-    }
+  }
 }

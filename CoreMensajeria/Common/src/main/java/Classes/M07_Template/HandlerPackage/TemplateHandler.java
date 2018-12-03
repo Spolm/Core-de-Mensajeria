@@ -1,39 +1,32 @@
 package Classes.M07_Template.HandlerPackage;
 
 import Classes.M01_Login.UserDAO;
-import Classes.M02_Company.Company;
 import Classes.M03_Campaign.Campaign;
+import Classes.M03_Campaign.CampaignDAO;
+import Classes.M04_Integrator.IntegratorDAO;
 import Classes.M06_DataOrigin.Application;
 import Classes.M06_DataOrigin.ApplicationDAO;
 import Classes.M07_Template.StatusPackage.Status;
 import Classes.M07_Template.Template;
 import Classes.Sql;
+import Exceptions.ApplicationNotFoundException;
+import Exceptions.CampaignDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
-//import webService.M03_CampaingManagement.M03_Campaigns;
 import Classes.M05_Channel.Channel;
 import Classes.M05_Channel.ChannelFactory;
 import Classes.M04_Integrator.Integrator;
-import Classes.M04_Integrator.IntegratorService;
-import Classes.M07_Template.StatusPackage.Status;
-import Classes.M07_Template.Template;
 import Classes.Sql;
+import Exceptions.ParameterDoesntExistsException;
 import Exceptions.TemplateDoesntExistsException;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import javax.xml.transform.Result;
+import com.google.gson.*;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class TemplateHandler {
     private Sql sql;
 
-    private static final String GET_TEMPLATES_BY_USER = "";
-
-  private static final String GET_CAMPAIGN_BY_USER_OR_COMPANY =
-      "select c.cam_id, c.cam_name, c.cam_description, c.cam_status, c.cam_start_date, c.cam_end_date,  co.com_id, co.com_name, co.com_description, co.com_status\n"
+    private static final String GET_CAMPAIGN_BY_USER_OR_COMPANY =
+        "select c.cam_id, c.cam_name, c.cam_description, c.cam_status, c.cam_start_date, c.cam_end_date,  co.com_id, co.com_name, co.com_description, co.com_status\n"
           + "from public.campaign c\n"
           + "inner join public.responsability r\n"
           + "on c.cam_company_id = r.res_com_id\n"
@@ -42,13 +35,35 @@ public class TemplateHandler {
           + "where r.res_use_id = ? OR (r.res_use_id = ? AND r.res_com_id = ?)\n"
           + "order by c.cam_id";
 
+    private static final String GET_CAMAPIGN_BY_ID =
+            "select* from public.campaign where cam_id = ? ";
+
     public ArrayList<Template> getTemplates(int userId,int companyId){
         ArrayList<Template> templateArrayList = new ArrayList<>();
         ArrayList<Campaign> campaignArrayList = null;
         Connection connection = Sql.getConInstance();
+        UserDAO userDAO = new UserDAO();
         try{
             campaignArrayList = getCampaignsByUserOrCompany(userId,companyId);
-            PreparedStatement preparedStatement = connection.prepareStatement(GET_TEMPLATES_BY_USER);
+            for(int x = 0; x < campaignArrayList.size(); x++){
+                PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_templates_by_campaign(?)}");
+                preparedStatement.setInt(1,campaignArrayList.get(x).get_idCampaign());
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while(resultSet.next()){
+                    Template template = new Template();
+                    template.setTemplateId(resultSet.getInt("tem_id"));
+                    template.setCreationDate(resultSet.getString("tem_creation_date"));
+                    Status status = Status.createStatus(resultSet.getInt("sta_id"),
+                            resultSet.getString("sta_name"));
+                    template.setStatus(status);
+                    template.setChannels(getChannelsByTemplate(template.getTemplateId()));
+                    template.setCampaign(campaignArrayList.get(x));
+                    template.setApplication(getApplicationByTemplate(template.getTemplateId()));
+                    template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
+                    template.setMessage(MessageHandler.getMessage(template.getTemplateId()));
+                    templateArrayList.add(template);
+                }
+            }
         }catch (SQLException e) {
             e.printStackTrace();
         }catch (Exception e){
@@ -61,20 +76,10 @@ public class TemplateHandler {
 
     public ArrayList<Template> getTemplates(){
         ArrayList<Template> templateArrayList = new ArrayList<>();
+        Connection connection = Sql.getConInstance();
         try{
-            ResultSet resultSet = sql.sqlConn("select t.tem_id, t.tem_creation_date, s.sta_id, s.sta_name\n" +
-                    "from template t\n" +
-                    "inner join template_status ts\n" +
-                    "on ts.ts_template = t.tem_id\n" +
-                    "\tinner join\n" +
-                    "\t(\n" +
-                    "\t\tselect ts_template, max(ts_id) maxID from template_status \n" +
-                    "\t\tgroup by ts_template\n" +
-                    "\t)ts_ on ts_.ts_template = ts.ts_template\n" +
-                    "\t\tand ts.ts_id = ts_.maxID\n" +
-                    "inner join status s\n" +
-                    "on ts.ts_status = s.sta_id\n" +
-                    "order by t.tem_id");
+            PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_all_templates()}");
+            ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 Template template = new Template();
                 template.setTemplateId(resultSet.getInt("tem_id"));
@@ -84,7 +89,9 @@ public class TemplateHandler {
                 template.setStatus(status);
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
                 template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
-                template.setApplication(getApplicationByTemplate(template.getTemplateId()));
+                ApplicationDAO applicationService = new ApplicationDAO();
+                template.setApplication(applicationService.getApplication
+                        (template.getTemplateId()));
                 templateArrayList.add(template);
             }
         }catch (SQLException e) {
@@ -98,7 +105,7 @@ public class TemplateHandler {
     }
     public Template getTemplate(int id) throws TemplateDoesntExistsException{
         Template template = new Template();
-        String query = "select tem_id,ts_id,tem_user_id, tem_creation_date, sta_name\n" +
+        String query = "select tem_id,ts_id,tem_user_id,tem_campaign_id, tem_creation_date, sta_name\n" +
                 "from template_status,template,status\n" +
                 "where tem_id = " + id + " and tem_id = ts_template and sta_id = ts_status\n" +
                 "order by ts_id desc limit 1";
@@ -108,24 +115,28 @@ public class TemplateHandler {
                 //asignamos los datos basicos del propio template
                 template.setTemplateId(resultSet.getInt("tem_id"));
                 template.setCreationDate(resultSet.getString("tem_creation_date"));
-
                 //asignamos el mensaje y status del template
                 template.setMessage(MessageHandler.getMessage(template.getTemplateId()));
                 template.setStatus(Status.createStatus(resultSet.getInt("ts_id"),
                         resultSet.getString("sta_name")));
-
                 //asignamos canales, campaña y aplicacion
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
                 template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
-                template.setApplication(getApplicationByTemplate(template.getTemplateId()));
 
-                //usuario creador
                 UserDAO userDAO = new UserDAO();
                 template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
+                //template.setCampaign(getCampaignsById(resultSet.getInt("tem_campaign_id")));
+                ApplicationDAO applicationService = new ApplicationDAO();
+                template.setApplication(applicationService.getApplication
+                        (template.getTemplateId()));
             }
 
+        }catch (ParameterDoesntExistsException e) {
+            //logg
         }catch (MessageDoesntExistsException e){
-            e.printStackTrace();
+            //logg
+        }catch (ApplicationNotFoundException e) {
+            //logg
         }catch(SQLException e){
             throw new TemplateDoesntExistsException
                     ("Error: la plantilla " + id + " no existe", e, id);
@@ -134,6 +145,31 @@ public class TemplateHandler {
         } finally {
             Sql.bdClose(sql.getConn());
             return template;
+        }
+    }
+
+    public Campaign getCampaignsById(int campaignId){
+        Campaign campaign =  new Campaign();
+        Connection connection = Sql.getConInstance();
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_CAMAPIGN_BY_ID);
+            preparedStatement.setInt(1,campaignId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                campaign.set_idCampaign(resultSet.getInt("cam_id"));
+                campaign.set_nameCampaign(resultSet.getString("cam_name"));
+                campaign.set_descCampaign(resultSet.getString("cam_description"));
+                campaign.set_statusCampaign(resultSet.getBoolean("cam_status"));
+                campaign.set_startCampaign(resultSet.getDate("cam_start_date"));
+                campaign.set_endCampaign(resultSet.getDate("cam_end_date"));
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connection);
+            return campaign;
         }
     }
 
@@ -191,8 +227,8 @@ public class TemplateHandler {
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 ArrayList<Integrator> integrators = new ArrayList<>();
-                IntegratorService integratorService = IntegratorService.getInstance();
-                Integrator integrator = integratorService.getConcreteIntegrator(
+                IntegratorDAO integratorDAO = new IntegratorDAO();
+                Integrator integrator = integratorDAO.getConcreteIntegrator(
                         resultSet.getInt("ci_integrator_id")
                 );
                 integrators.add(integrator);
@@ -227,20 +263,20 @@ public class TemplateHandler {
         try{
             //query que obtiene el id de la campana que tiene asociada la plantilla
             ResultSet resultSet = sql.sqlConn(
-                    "SELECT tem_campaign_id \n"
+                    "SELECT tem_campaign_id\n"
                             + "FROM Template\n"
                             + "WHERE tem_id = " + templateId + ";");
             //instanciando el api de campana
-            /* M03_Campaigns campaignsService = new M03_Campaigns();
+            CampaignDAO campaignsService = new CampaignDAO();
             //obtener objeto campana con el id de campana del query anterior
             campaign = campaignsService.getDetails
-                    (resultSet.getInt("tem_campaign_id"));*/
+                    (resultSet.getInt("tem_campaign_id"));
         } catch (SQLException e){
             e.printStackTrace();
             throw new TemplateDoesntExistsException
                     ("Error: la plantilla " + templateId + " no existe", e, templateId);
-       /* } catch (CampaignDoesntExistsException e) {
-            */
+        } catch (CampaignDoesntExistsException e) {
+            //logg
         }catch (Exception e){
             e.printStackTrace();
         } finally {
@@ -263,8 +299,8 @@ public class TemplateHandler {
         try {
             //query que obtiene el id de la aplicacion que tiene asociada la plantilla
             ResultSet resultSet = sql.sqlConn(
-                    "SELECT tem_application_id \n" +
-                            "FROM Template" +
+                    "SELECT tem_application_id\n" +
+                            "FROM Template\n" +
                             "WHERE tem_id = " + templateId + ";");
             //instanciado el api ApplicationDAO
             ApplicationDAO applicationService = new ApplicationDAO();
@@ -283,28 +319,50 @@ public class TemplateHandler {
         }
     }
 
+    public ArrayList<String> getTemplatePrivilegesByUser(int userId, int companyId){
+        ArrayList<String> privileges = new ArrayList<>();
+        Connection connection = Sql.getConInstance();
+        try {
+            PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_privileges_by_user_company(?,?)}");
+            preparedStatement.setInt(1,userId);
+            preparedStatement.setInt(2,companyId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                String privilege = resultSet.getString("pri_code");
+                privileges.add(privilege);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return privileges;
+    }
+
 
     public boolean postTemplateData(String json){
         try {
+            Gson gson = new Gson();
             //recibimos el objeto json
             JsonParser parser = new JsonParser();
             JsonObject gsonObj = parser.parse(json).getAsJsonObject();
             //hay que extraer campaña y aplicacion, parametros por defecto
             //se crea el template y se retorna su id
-            int templateId = postTemplate(13,2, gsonObj.get("userId").getAsInt());
+            int templateId = postTemplate(gsonObj.get("campaign").getAsInt(),gsonObj.get("applicationId").getAsInt(), gsonObj.get("userId").getAsInt());
             //se establece el template  como no aprobado
             StatusHandler.postTemplateStatusNoAprovado(templateId);
-            //obtenemos el valor del mensaje, a falta de id's de parametros
+            //insertamos los nuevos parametros
+            String[] parameters = gson.fromJson(gsonObj.get("newParameters").getAsJsonArray(),String[].class);
+            ParameterHandler.postParameter(parameters,gsonObj.get("company").getAsInt());
+            //obtenemos el valor del mensaje,y parametros
+            parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
             String message = gsonObj.get("messagge").getAsString();
-            MessageHandler.postMessage(message,templateId);
+            MessageHandler.postMessage(message,templateId,parameters,gsonObj.get("company").getAsInt());
 
             //obtenemos los valores de los canales e integradores
             JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
             postChannelIntegrator(channelIntegrator,templateId);
 
             return true;
-        }
-        catch (Exception e){
+        } catch (Exception e){
             System.out.println(e);
             return false;
         }
@@ -318,8 +376,9 @@ public class TemplateHandler {
         try {
             for (JsonElement list : channelIntegratorList){
                 channelIntegrator = list.getAsJsonObject();
-                channel = channelIntegrator.get("channel").getAsInt();
-                integrator = channelIntegrator.get("integratorNumber").getAsInt();
+                channel = channelIntegrator.get("channel").getAsJsonObject().get("idChannel").getAsInt();
+                integrator = channelIntegrator.get("integrator").getAsJsonObject().get("idIntegrator").getAsInt();
+
                 query = query + "insert into public.template_channel_integrator (tci_template_id,tci_ci_id) " +
                         "values (" + templateId + ",(select ci_id from public.channel_integrator " +
                         "where ci_channel_id = " + channel + " and ci_integrator_id = " + integrator +"));";
@@ -350,6 +409,60 @@ public class TemplateHandler {
         } finally {
             Sql.bdClose(sql.getConn());
             return templateId;
+        }
+    }
+
+    public boolean updateTemplateData(String json){
+        try {
+            Gson gson = new Gson();
+            //recibimos el objeto json
+            JsonParser parser = new JsonParser();
+            JsonObject gsonObj = parser.parse(json).getAsJsonObject();
+            updateTemplate(gsonObj.get("campaign").getAsInt(), gsonObj.get("applicationId").getAsInt(), gsonObj.get("templateId").getAsInt());
+
+            //insertamos los nuevos parametros
+            String[] parameters = gson.fromJson(gsonObj.get("newParameters").getAsJsonArray(),String[].class);
+            ParameterHandler.postParameter(parameters,gsonObj.get("company").getAsInt());
+            //update de mensaje
+            parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
+            String message = gsonObj.get("messagge").getAsString();
+            MessageHandler.updateMessage(gsonObj.get("messagge").getAsString(),gsonObj.get("templateId").getAsInt(),parameters,gsonObj.get("company").getAsInt());
+
+            //update de Channel Integrator
+            JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
+            updateChannelIntegrator(channelIntegrator,gsonObj.get("templateId").getAsInt());
+            return true;
+        } catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    private void updateChannelIntegrator(JsonArray channelIntegratorList, int templateId) {
+        String query = "DELETE FROM public.template_channel_integrator\n" +
+                "WHERE tci_template_id = " + templateId;
+        try{
+            sql.sqlNoReturn(query);
+            postChannelIntegrator(channelIntegratorList,templateId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch(Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+        }
+    }
+
+    private void updateTemplate(int campaign, int applicationId, int templateId) {
+        String query = "UPDATE public.template\n" +
+                "SET tem_campaign_id = " + campaign + ", tem_application_id = " + applicationId + "\n" +
+                "WHERE tem_id = " + templateId;
+        try{
+            sql.sqlConn(query);
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 
