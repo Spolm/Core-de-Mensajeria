@@ -17,7 +17,17 @@ public class M10_ProfileService {
     ArrayList<User> _us;
     ArrayList<Company> _comp;
     private M10_Profile _dao;
+    ArrayList<Rol> _rols;
 
+
+    @GET
+    @Path("/roles")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listRoles(){
+        dao = new M10_Profile();
+        _rols = dao.getAllRoles();
+        return Response.ok().entity(_rols).build();
+    }
     @Path("/user/{username}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
