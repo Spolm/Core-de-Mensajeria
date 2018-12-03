@@ -2,7 +2,9 @@ package M04_Integrator;
 
 import Classes.M04_Integrator.Integrator;
 import Classes.M04_Integrator.IntegratorDAO;
+import Classes.M04_Integrator.MessageIntegrator;
 import Classes.M04_Integrator.Movistar;
+import Classes.M07_Template.MessagePackage.Message;
 import Exceptions.DatabaseConnectionProblemException;
 import Exceptions.IntegratorNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,6 +23,7 @@ class IntegratorDAOTest {
     private static ArrayList<Integrator> _integratorList;
     private static Movistar _movistar;
     private static Integrator _integrator;
+    private static MessageIntegrator _messageIntegrator;
     boolean status;
 
     @BeforeAll
@@ -30,6 +33,8 @@ class IntegratorDAOTest {
         _movistar = new Movistar(1, 25, 13.4f,
                 "Movistar", "oqiwueyeiu", true);
         _integrator = null;
+        _messageIntegrator = new MessageIntegrator("TestMsg","TestDir","TestId");
+        _messageIntegrator.setSend(true);
 
     }
 
@@ -112,5 +117,12 @@ class IntegratorDAOTest {
         } catch (IntegratorNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void sendMessageTest(){
+        MessageIntegrator testMessage = _movistar.sendMessage("TestMsg","TestDir","TestId");
+        assertEquals(_messageIntegrator,testMessage);
+
     }
 }

@@ -19,6 +19,17 @@ public abstract class Integrator implements IIntegrator {
     private String apiIntegrator;
     private boolean enabled;
 
+    /**
+     * Constructor de la clase Integrator
+     *
+     * @param idIntegrator   Id del Integrador.
+     * @param threadCapacity Capacidad de Hilos que soporta el integrador
+     * @param messageCost    Costo por mensaje
+     * @param nameIntegrator Nombre del integrador
+     * @param apiIntegrator  Token del Integrador
+     * @param enabled        Permite saber el estado en el que se encuentra el integrador
+     * @see Integrator
+     */
 
     public Integrator(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator, boolean enabled) {
         this.idIntegrator = idIntegrator;
@@ -69,6 +80,12 @@ public abstract class Integrator implements IIntegrator {
         this.apiIntegrator = apiIntegrator;
     }
 
+    /**
+     * Nos retorna el estado en el que se encuentra el integrador
+     *
+     * @return Boolean
+     * @see MessageIntegrator
+     */
     public boolean isEnabled() {
         return enabled;
     }

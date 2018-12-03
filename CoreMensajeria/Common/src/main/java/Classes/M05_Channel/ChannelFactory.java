@@ -5,6 +5,14 @@ import Classes.M04_Integrator.Integrator;
 import java.util.ArrayList;
 
 
+/**
+ * Clase que se encarga de la creacion de los canales
+ *
+ * @Author José Salas
+ * @Author Manuel Espinoza
+ * @Author José Cedeño
+ */
+
 public class ChannelFactory {
 
     /**
@@ -19,6 +27,7 @@ public class ChannelFactory {
      * @return Un objeto Channel con las caracteristicas enviadas por parametro
      * @see Channel
      */
+
     public static Channel getChannel(int idChannel, String nameChannel, String descriptionChannel, ArrayList<Integrator> integrators) {
         if (nameChannel == null)
             return null;
@@ -28,4 +37,5 @@ public class ChannelFactory {
             return new ChannelEmail(idChannel, nameChannel, descriptionChannel, integrators);
         return null;
     }
+
 }

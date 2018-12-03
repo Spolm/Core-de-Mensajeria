@@ -14,6 +14,7 @@ import java.util.ArrayList;
 /**
  * Clase que implementa los métodos PUT y GET para el funcionamiento
  * del servicio RESTful referido a los integradores del sistema.
+ *
  * @Author José Salas
  * @Author Manuel Espinoza
  * @Author José Cedeño
@@ -25,9 +26,11 @@ public class M04_Integrator {
     private IntegratorDAO _integratorDAO = new IntegratorDAO();
 
     /**
-     * Obtiene la lista de integradores en formato Json.
-     * @return #### FALTA ####
-     * @see         Integrator
+     * Metodo que nos permite obtener la lista de todos
+     * los integradores en el sistema y transformarlo a formato json
+     *
+     * @return Lista de integradores
+     * @see Integrator
      */
 
     @GET
@@ -42,9 +45,11 @@ public class M04_Integrator {
     }
 
     /**
-     * Obtiene un integrador en concreto en formato Json.
-     * @return #### FALTA ####
-     * @see         Integrator
+     * Metodo que nos permite obtener un integrador en concreto
+     *
+     * @param id Id del integrador
+     * @return Integrador buscado por id
+     * @see Integrator
      */
 
     @GET
@@ -62,9 +67,11 @@ public class M04_Integrator {
     }
 
     /**
-     * Inhabilita un integrador en especifico según su Id.
-     * @return #### FALTA ####
-     * @see         Integrator
+     * Metodo que nos permite deshabilitar un integrador
+     *
+     * @param id Id del integrador
+     * @return Lista de integradores
+     * @see Integrator
      */
 
     @PUT
@@ -82,9 +89,11 @@ public class M04_Integrator {
     }
 
     /**
-     * Habilita un integrador en especifico según su Id.
-     * @return #### FALTA ####
-     * @see         Integrator
+     * Metodo que nos permite habilitar un integrador
+     *
+     * @param id Id del integrador
+     * @return Lista de integradores
+     * @see Integrator
      */
 
     @PUT

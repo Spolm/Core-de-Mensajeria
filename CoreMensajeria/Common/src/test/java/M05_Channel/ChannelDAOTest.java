@@ -24,6 +24,10 @@ class ChannelDAOTest {
         _channelList = new ArrayList<>();
     }
 
+    /**
+     * Prueba que nos permite  saber si la lista de
+     * los integradores por canales es no nula
+     */
     @Test
     public void TestIntegradorsByChannel() {
         try {
@@ -36,6 +40,12 @@ class ChannelDAOTest {
         }
     }
 
+
+    /**
+     * Prueba que nos permite saber la lista de canales
+     * en el sistema no sea nula.
+     */
+
     @Test
     public void listChannel() {
         try {
@@ -45,6 +55,11 @@ class ChannelDAOTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Prueba de la excepcion, ejecutando el metodo de buscar un integrador
+     * cuando no se encuentra un canal
+     */
 
     @Test
     public void channelNotFoundExceptionTest() {
