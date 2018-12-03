@@ -73,7 +73,7 @@ public class PathHandler implements ServletContextListener {
      * @param company objeto compania
      * @return direccion de path generada para la compania senalada
      */
-    private String generatePath(Company company){
+    public String generatePath(Company company){
         return company.get_name().replaceAll("\\s","") + "_" + Encrypter.getCurrentTime();
     }
 
