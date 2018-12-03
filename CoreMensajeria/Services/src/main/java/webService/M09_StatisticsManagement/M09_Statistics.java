@@ -315,6 +315,26 @@ public class M09_Statistics extends Application {
     }
 
     @GET
+    @Path("/daysofmonthCount")
+    @Produces("application/json")
+    public Response getDaysofMonth(){
+        ArrayList<Integer> daysofmonth = new ArrayList<>();
+        try{
+            Statement statement = connStar.createStatement();
+            String query = "SELECT dat_dayofmonth FROM m09_getDaysofMonth()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                daysofmonth.add(result.getInt("dat_dayofmonth"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connStar);
+        }
+        return Response.ok(gson.toJson(daysofmonth)).build();
+    }
+
+    @GET
     @Path("/weeksofyearCount")
     @Produces("application/json")
     public Response getWeeksofYear(){
