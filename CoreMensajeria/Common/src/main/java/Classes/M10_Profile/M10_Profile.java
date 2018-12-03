@@ -80,6 +80,7 @@ public class M10_Profile {
             preparedStatement.setString(1, phone);
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, address);
+            preparedStatement.setInt(4, id);
 
             //Se realiza query, falta codigo aqui para validar si se realizo correctamente el query
             preparedStatement.executeQuery();
