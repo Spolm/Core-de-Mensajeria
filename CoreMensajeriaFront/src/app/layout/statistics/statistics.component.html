@@ -1,128 +1,84 @@
 <h2 class="text-center text-capitalize main-title">Estadísticas</h2>
 
 <div class="container">
-    <form>
-        <div class="row">
-            <div class="col-md-3 dropdown" *ngIf="companiesDropdown.length > 0">
-                <ng-multiselect-dropdown
-                    [placeholder]="'Compañía'"
-                    [data]="companiesDropdown"
-                    [settings]="companiesDropdownSettings"
-                    (onSelect)="companySelected($event)"
-                    (onDeSelect)="companyDeselected($event)"
-                    (onSelectAll)="selectAllCompanies()"
-                    (onDeSelectAll)="deselectAllCompanies()"
-                >
-                </ng-multiselect-dropdown>
-            </div>
-
-            <div class="col-md-3 dropdown" *ngIf="campaignsDropdown.length > 0">
-                <ng-multiselect-dropdown
-                    [placeholder]="'Campaña'"
-                    [data]="campaignsDropdown"
-                    [settings]="campaignsDropdownSettings"
-                    (onSelect)="campaignSelected($event)"
-                    (onDeSelect)="campaignDeselected($event)"
-                    (onSelectAll)="selectAllCampaigns()"
-                    (onDeSelectAll)="deselectAllCampaigns()"
-                >
-                </ng-multiselect-dropdown>
-            </div>
-
-            <div class="col-md-3 dropdown" *ngIf="channelsDropdown.length > 0">
-                <ng-multiselect-dropdown
-                    [placeholder]="'Canal'"
-                    [data]="channelsDropdown"
-                    [settings]="channelsDropdownSettings"
-                    (onSelect)="channelSelected($event)"
-                    (onDeSelect)="channelDeselected($event)"
-                    (onSelectAll)="selectAllChannels()"
-                    (onDeSelectAll)="deselectAllChannels()"
-                >
-                </ng-multiselect-dropdown>
-            </div>
-
-            <div class="col-md-3 text-center">
-                <button class="btn btn-link" (click)="openFilters()">
-                    Más filtros
-                </button>
-            </div>
+    <div class="row">
+        <div class="col-md-3 dropdown" *ngIf="companiesDropdown.length > 0">
+            <ng-multiselect-dropdown
+                [placeholder]="'Compañía'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
+            >
+            </ng-multiselect-dropdown>
         </div>
-    </form>
-</div>
 
-<div class="Container">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">
-                Estadistcas de:
-            </label>
+        <div class="col-md-3 dropdown" *ngIf="campaignsDropdown.length > 0">
+            <ng-multiselect-dropdown
+                [placeholder]="'Campaña'"
+                [data]="campaignsDropdown"
+                [(ngModel)]="selectedCampaigns"
+                [settings]="campaignsDropdownSettings"
+                (onSelect)="campaignSelected($event)"
+                (onDeSelect)="campaignDeselected($event)"
+                (onSelectAll)="selectAllCampaigns()"
+                (onDeSelectAll)="deselectAllCampaigns()"
+            >
+            </ng-multiselect-dropdown>
         </div>
-        <select
-            class="custom-select"
-            id="inputGroupSelect01"
-            [(ngModel)]="opcionSeleccionado"
+
+        <div class="col-md-3 dropdown" *ngIf="channelsDropdown.length > 0">
+            <ng-multiselect-dropdown
+                [placeholder]="'Canal'"
+                [data]="channelsDropdown"
+                [(ngModel)]="selectedChannels"
+                [settings]="channelsDropdownSettings"
+                (onSelect)="channelSelected($event)"
+                (onDeSelect)="channelDeselected($event)"
+                (onSelectAll)="selectAllChannels()"
+                (onDeSelectAll)="deselectAllChannels()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-md-3 text-center">
+            <button class="btn btn-link" (click)="openFilters()">
+                Más filtros
+            </button>
+        </div>
+    </div>
+
+    <!-- capturar(); capturarDate(); DoGraficas() -->
+    <div class="text-center">
+        <!--
+            <button
+                type="button"
+                class="btn btn-success"
+                (click)="ChartTransformation()"
+            >
+                Consultar
+            </button>
+        -->
+
+        <button
+            type="button"
+            class="btn btn-primary btn-lg btn-center"
+            (click)="sendUserRequest()"
         >
-            <!-- (change) = "capturar()" -->
-            <option selected value="0">Elija</option>
-            <option *ngFor="let dato of datos"> {{ dato }} </option>
-        </select>
-    </div>
-    <div class="alert alert-info" role="alert">
-        <p>
-            NOTA! : Si no proporciona algunos de los filtros el sistema mostrara
-            los resultados globales de la estadística que se selecciono a
-            consultar.
-        </p>
+            Consultar
+        </button>
+
+        <button
+            class="btn btn-outline-success btn-lg btn-center"
+            (click)="updateStarSchema()"
+        >
+            Actualizar
+        </button>
     </div>
 
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="dateOfBirth">Filtro de Tiempo</label>
-            <input
-                type="date"
-                class="form-control"
-                id="myDate"
-                [(ngModel)]="opcionDateSleccionado"
-            />
-            <!-- (change) = "capturarDate()" -->
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="dateOfBirth">Filtro de Tiempo</label>
-            <input
-                type="date"
-                class="form-control"
-                id="myDate2"
-                [(ngModel)]="opcionDateSleccionado2"
-            />
-            <!-- (change) = "capturarDate()" -->
-        </div>
-    </div>
-
-    <button
-        type="button"
-        class="btn btn-success btn-lg"
-        (click)="capturar(); capturarDate(); DoGraficas()"
-    >
-        Consultar
-    </button>
-
-    <button
-        type="button"
-        class="btn btn-success btn-lg"
-        (click)="sendUserRequest()"
-    >
-        Consultar 2
-    </button>
-
-    <p [hidden]="opcionSeleccionado == '0'">
-        Haz seleccionado la Consulta acerca : {{ verSeleccion }}
-    </p>
-</div>
-
-<div class="container">
     <div class="row">
         <div *ngIf="timeLineChart" class="col-lg-12">
             <canvas #timeLineChart>{{ timeLineChart }}</canvas>
@@ -131,16 +87,100 @@
     <div class="row">
         <div *ngIf="companiesChart" class="col-lg-6">
             <canvas #companiesChartElement>{{ companiesChart }}</canvas>
+            <div class="input-group chartTypeDropdown">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="companiesChartType">
+                        Tipo de gráfica:
+                    </label>
+                </div>
+                <select
+                    class="custom-select"
+                    id="companiesChartType"
+                    (change)="changeCompaniesChart($event.target.value)"
+                >
+                    <option
+                        *ngFor="let chartType of chartTypes"
+                        value="{{ chartType[0] }}"
+                        [selected]="chartType[0] == 'bar'"
+                    >
+                        {{ chartType[1] }}
+                    </option>
+                </select>
+            </div>
         </div>
 
         <div *ngIf="campaignsChart" class="col-lg-6">
             <canvas #campaignsChartElement>{{ campaignsChart }}</canvas>
+            <div class="input-group chartTypeDropdown">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="campaignsChartType">
+                        Tipo de gráfica:
+                    </label>
+                </div>
+                <select
+                    class="custom-select"
+                    id="campaignsChartType"
+                    (change)="changeCampaignsChart($event.target.value)"
+                >
+                    <option
+                        *ngFor="let chartType of chartTypes"
+                        value="{{ chartType[0] }}"
+                        [selected]="chartType[0] == 'bar'"
+                    >
+                        {{ chartType[1] }}
+                    </option>
+                </select>
+            </div>
         </div>
     </div>
 
     <div class="row">
         <div *ngIf="channelsChart" class="col-lg-6">
             <canvas #channelsChartElement>{{ channelsChart }}</canvas>
+            <div class="input-group chartTypeDropdown">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="channelsChartType">
+                        Tipo de gráfica:
+                    </label>
+                </div>
+                <select
+                    class="custom-select"
+                    id="channelsChartType"
+                    (change)="changeChannelsChart($event.target.value)"
+                >
+                    <option
+                        *ngFor="let chartType of chartTypes"
+                        value="{{ chartType[0] }}"
+                        [selected]="chartType[0] == 'doughnut'"
+                    >
+                        {{ chartType[1] }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div *ngIf="integratorsChart" class="col-lg-6">
+            <canvas #integratorsChartElement>{{ integratorsChart }}</canvas>
+            <div class="input-group chartTypeDropdown">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="integratorsChartType">
+                        Tipo de gráfica:
+                    </label>
+                </div>
+                <select
+                    class="custom-select"
+                    id="integratorsChartType"
+                    (change)="changeIntegratorsChart($event.target.value)"
+                >
+                    <option
+                        *ngFor="let chartType of chartTypes"
+                        value="{{ chartType[0] }}"
+                        [selected]="chartType[0] == 'bar'"
+                    >
+                        {{ chartType[1] }}
+                    </option>
+                </select>
+            </div>
         </div>
     </div>
 </div>

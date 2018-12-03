@@ -4,7 +4,7 @@
 </h2>
 
 <div class="d-flex flex-row-reverse">
-  <ngbd-modal-select-company [userId]="1"></ngbd-modal-select-company>
+  <button type="button" class="btn btn-dark" routerLink="/template/create">Crear Plantilla</button>
 </div>
 
 <div class="card">
@@ -13,14 +13,14 @@
       <tr>
         <th scope="col">Codigo</th>
         <th scope="col">Mensaje</th>
-        <th scope="col">Parametros</th>
         <th scope="col">Canal</th>
         <th scope="col">Integrador</th>
         <th scope="col">Origen</th>
+        <th scope="col">Opciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr scope="row" *ngFor="let template of templates; let i = index">
+      <tr *ngFor="let template of templates; let i = index">
         <td class="text-center" *ngIf="template.status.statusName == 'Aprobado'; else elseBlock">
           {{template.templateId}}
           <br>
@@ -34,11 +34,6 @@
           </td>
         </ng-template>
         <td class="message">{{template.message.message}}</td>
-        <td class="parameters">
-          <li *ngFor="let parameter of template.message.parameterArrayList">
-            {{parameter.name}}
-          </li>
-        </td>
         <td class="text-center">
           <div *ngFor="let channel of template.channels; let i = index">
             <hr *ngIf="i > 0">
@@ -49,11 +44,19 @@
           <div *ngFor="let channel of template.channels; let i = index">
             <hr *ngIf="i > 0">
             <div *ngFor="let integrator of channel.integrators; let i = index">
-              {{integrator.nameIntegrator}} ({{integrator.messageCost}} Bs.S)
+              {{integrator.nameIntegrator}}
             </div>
           </div>
         </td>
         <td class="text-center">Banesco online</td>
+        <td class="">
+          <div class="d-flex justify-content-around align-items-center">
+            <i class="fa fa-info-circle clickable" aria-hidden="true" (click)="templateDetails(template.templateId)"
+              title="Detalles"></i>
+            <i class="fa fa-edit clickable" aria-hidden="true" *ngIf="template.status.statusName == 'No Aprobado'"
+              title="Editar" routerLink="/template/modify/{{template.templateId}}"></i>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>

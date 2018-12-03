@@ -7,12 +7,22 @@ public class InfusionSoft extends Integrator {
     }
 
     @Override
-    public void testConection() {
+    public MessageIntegrator sendMessage(String msg, String address, String idMsg) {
+        if(this.isEnabled()) {
+            try {
+                Thread.sleep(1900);
+                MessageIntegrator message = new MessageIntegrator(msg, address, idMsg);
+                message.setSend(true);
+                return message;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-    }
-
-    @Override
-    public void sendMessage() {
-
+        }else{
+            MessageIntegrator message = new MessageIntegrator(msg, address, idMsg);
+            message.setSend(false);
+            return message;
+        }
+        return null;
     }
 }
