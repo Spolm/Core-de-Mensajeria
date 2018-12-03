@@ -276,6 +276,7 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(integrators)).build();
     }
 
+    //Endpoint que Devuelve Todos los Años donde ha habido envío de mensajes
     @GET
     @Path("/yearsCount")
     @Produces("application/json")
@@ -296,6 +297,7 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(years)).build();
     }
 
+    //Endpoint que Devuelve Todos los Meses donde ha habido envío de mensajes
     @GET
     @Path("/monthsCount")
     @Produces("application/json")
@@ -316,6 +318,7 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(months)).build();
     }
 
+    //Endpoint que Devuelve Todos los días de la semana donde ha habido envío de mensajes
     @GET
     @Path("/daysofweekCount")
     @Produces("application/json")
@@ -336,6 +339,7 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(daysofweek)).build();
     }
 
+    //Endpoint que Devuelve Todos los días del mes donde ha habido envío de mensajes
     @GET
     @Path("/daysofmonthCount")
     @Produces("application/json")
@@ -356,6 +360,7 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(daysofmonth)).build();
     }
 
+    //Endpoint que Devuelve Todos los días del año donde ha habido envío de mensajes
     @GET
     @Path("/daysofyearCount")
     @Produces("application/json")
@@ -376,6 +381,7 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(daysofyear)).build();
     }
 
+    //Endpoint que Devuelve Todas las semanas del año donde ha habido envío de mensajes
     @GET
     @Path("/weeksofyearCount")
     @Produces("application/json")
@@ -396,6 +402,7 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(weeksofyear)).build();
     }
 
+    //Endpoint que devuelve los cuartos del año
     @GET
     @Path("/quartersofyearCount")
     @Produces("application/json")
@@ -416,6 +423,7 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(quartersofyear)).build();
     }
 
+    //Endpoint que devuelve las horas del día donde se han enviado mensaje
     @GET
     @Path("/hoursCount")
     @Produces("application/json")
@@ -436,6 +444,7 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(hours)).build();
     }
 
+    //Endpoint que devuelve los minutos donde se han enviado mensaje
     @GET
     @Path("/minutesCount")
     @Produces("application/json")
@@ -456,6 +465,7 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(minutes)).build();
     }
 
+    //Endpoint que devuelve los segundos donde se han enviado mensaje
     @GET
     @Path("/secondsCount")
     @Produces("application/json")
@@ -476,7 +486,7 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(seconds)).build();
     }
 
-
+    //Endpoint que devuelve la cantidad de Mensajes según los filtros enviados(compañia, campaña, canal, integrador, tiempo)
     @GET
     @Path("/filters")
     @Produces("application/json")
@@ -517,12 +527,13 @@ public class M09_Statistics extends Application {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-         finally {
-            SqlEstrella.bdClose(connStar);
+        finally {
+            Sql.bdClose(connStar);
         }
         return Response.ok(gson.toJson(stats)).build();
     }
 
+    //Método que devuelve la consulta de mensajes enviados, agrupada por los filtros enviados
     public Statistics getMessagesParam(String companyIds, String campaignIds, String channelIds, String integratorIds, String param1, String param2,
                                        String param3, String param4, Statement st){
         int num;
@@ -547,12 +558,11 @@ public class M09_Statistics extends Application {
         catch ( SQLException e ) {
             e.printStackTrace();
             // throw new SQLException();
-        } finally {
-            SqlEstrella.bdClose(connStar);
         }
         return gr;
     }
 
+    //Método que arma las condiciones para la consulta de mensajes enviados
     public String setParametersforQuery(List<Integer> ids, String params){
         if (ids.isEmpty()) {
             return "";
