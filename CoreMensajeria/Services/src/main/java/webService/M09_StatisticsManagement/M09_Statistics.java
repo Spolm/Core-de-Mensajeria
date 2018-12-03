@@ -533,6 +533,28 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(stats)).build();
     }
 
+
+    @GET
+    @Path("/dates")
+    @Produces("aplication/json")
+    public Response getDates() {
+        ArrayList<Timestamp> dates = new ArrayList<>();
+        try{
+            Statement statement = connStar.createStatement();
+            String query = "SELECT dat_id FROM m09_getDates()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                dates.add(result.getTimestamp("dat_id"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            Response.serverError().build();
+        } finally {
+            SqlEstrella.bdClose(connStar);
+        }
+        return Response.ok(gson.toJson(dates)).build();
+    }
+
     //Método que devuelve la consulta de mensajes enviados, agrupada por los filtros enviados
     public Statistics getMessagesParam(String companyIds, String campaignIds, String channelIds, String integratorIds, String param1, String param2,
                                        String param3, String param4, Statement st){

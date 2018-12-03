@@ -470,18 +470,6 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     }
 
     sendUserRequest() {
-        // this.verSeleccion = this.opcionSeleccionado;
-        console.log("Valor Capturado", this.verSeleccion);
-
-        if (this.verSeleccion == "Grafico de Tortas") {
-            var TypeChosen: ChartType = ChartType.doughnut;
-            console.log("paso por el if", TypeChosen);
-        } else if (this.verSeleccion == "Grafico de Barras") {
-            var TypeChosen: ChartType = ChartType.bar;
-        } else if (this.verSeleccion == "Grafico de Linea") {
-            var TypeChosen: ChartType = ChartType.line;
-        }
-
         var params = this.convertSelectedItemsIntoHttpParams();
         this.statisticsService.getStatistics(params).subscribe(
             data => {
@@ -491,10 +479,32 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                 var campaigns: Point[] = this.createPointArray(campaingsJson);
                 let channelsJson = data["channels"];
                 var channels: Point[] = this.createPointArray(channelsJson);
+                let integratorsJson = data["integrators"];
+                var integrators: Point[] = this.createPointArray(
+                    integratorsJson
+                );
 
                 this.updateChartData(
                     this.companiesChart,
                     companies,
+                    ChartType.bar
+                );
+
+                this.updateChartData(
+                    this.campaignsChart,
+                    campaigns,
+                    ChartType.bar
+                );
+
+                this.updateChartData(
+                    this.channelsChart,
+                    channels,
+                    ChartType.doughnut
+                );
+
+                this.updateChartData(
+                    this.integratorsChart,
+                    integrators,
                     ChartType.bar
                 );
             },
@@ -599,7 +609,37 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             integratorsDropdown: this.integratorsDropdown,
             selectedIntegrators: this.selectedIntegrators,
             selectedIntegratorsIds: this.selectedIntegratorsIds,
-            integratorsDropdownSettings: this.integratorsDropdownSettings
+            integratorsDropdownSettings: this.integratorsDropdownSettings,
+            // Years
+            selectedYears: this.selectedYears,
+            selectedYearsIds: this.selectedYearsIds,
+            // Months
+            selectedMonths: this.selectedMonths,
+            selectedMonthsIds: this.selectedMonthsIds,
+            // Days
+            selectedDays: this.selectedDays,
+            selectedDaysIds: this.selectedDaysIds,
+            // Weeks
+            selectedWeeks: this.selectedWeeks,
+            selectedWeeksIds: this.selectedWeeksIds,
+            // Days of week
+            selectedDaysOfWeek: this.selectedDaysOfWeek,
+            selectedDaysOfWeekIds: this.selectedDaysOfWeekIds,
+            // Quarters of year
+            selectedQuartersOfYear: this.selectedQuartersOfYear,
+            selectedQuartersOfYearIds: this.selectedQuartersOfYear,
+            // Days of year
+            selectedDaysOfYear: this.selectedDaysOfYear,
+            selectedDaysOfYearIds: this.selectedDaysOfYearIds,
+            // Hours
+            selectedHours: this.selectedHours,
+            selectedHoursIds: this.selectedHoursIds,
+            // Minutes
+            selectedMinutes: this.selectedMinutes,
+            selectedMinutesIds: this.selectedMinutesIds,
+            // Seconds
+            selectedSeconds: this.selectedSeconds,
+            selectedSecondsIds: this.selectedSecondsIds
         };
         const dialogRef = this.dialog.open(MoreFiltersComponent, dialogConfig);
         dialogRef.updatePosition({ top: "55px", right: "0px", left: "0px" });
@@ -609,7 +649,16 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             this.fillCampaignsDropdownFromMenuData(result);
             this.fillChannelsDropdownFromMenuData(result);
             this.fillIntegratorsDropdownFromMenuData(result);
-            console.log(result);
+            this.fillYearsDropdownFromMenuData(result);
+            this.fillMonthsDropdownFromMenuData(result);
+            this.fillDaysDropdownFromMenuData(result);
+            this.fillWeeksDropdownFromMenuData(result);
+            this.fillDaysOfWeekDropdownFromMenuData(result);
+            this.fillQuartersOfYearDropdownFromMenuData(result);
+            this.fillDaysOfYearDropdownFromMenuData(result);
+            this.fillHoursDropdownFromMenuData(result);
+            this.fillMinutesDropdownFromMenuData(result);
+            this.fillSecondsDropdownFromMenuData(result);
         });
     }
 
@@ -636,6 +685,60 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         this.selectedIntegratorsIds =
             data["integrators"]["selectedIntegratorsIds"];
         this.integratorsDropdown = data["integrators"]["integratorsDropdown"];
+    }
+
+    fillYearsDropdownFromMenuData(data) {
+        this.selectedYears = data["years"]["selectedYears"];
+        this.selectedYearsIds = data["years"]["selectedYearsIds"];
+    }
+
+    fillMonthsDropdownFromMenuData(data) {
+        this.selectedMonths = data["months"]["selectedMonths"];
+        this.selectedMonthsIds = data["months"]["selectedMonthsIds"];
+    }
+
+    fillDaysDropdownFromMenuData(data) {
+        this.selectedDays = data["days"]["selectedDays"];
+        this.selectedDaysIds = data["days"]["selectedDaysIds"];
+    }
+
+    fillWeeksDropdownFromMenuData(data) {
+        this.selectedWeeks = data["weeks"]["selectedWeeks"];
+        this.selectedWeeksIds = data["weeks"]["selectedWeeksIds"];
+    }
+
+    fillDaysOfWeekDropdownFromMenuData(data) {
+        this.selectedDaysOfWeek = data["daysOfWeek"]["selectedDaysOfWeek"];
+        this.selectedDaysOfWeekIds =
+            data["daysOfWeek"]["selectedDaysOfWeekIds"];
+    }
+
+    fillQuartersOfYearDropdownFromMenuData(data) {
+        this.selectedQuartersOfYear =
+            data["quartersOfYear"]["selectedQuartersOfYear"];
+        this.selectedQuartersOfYearIds =
+            data["quartersOfYear"]["selectedQuartersOfYearIds"];
+    }
+
+    fillDaysOfYearDropdownFromMenuData(data) {
+        this.selectedDaysOfYear = data["daysOfYear"]["selectedDaysOfYear"];
+        this.selectedDaysOfYearIds =
+            data["daysOfYear"]["selectedDaysOfYearIds"];
+    }
+
+    fillHoursDropdownFromMenuData(data) {
+        this.selectedHours = data["hours"]["selectedHours"];
+        this.selectedHoursIds = data["hours"]["selectedHoursIds"];
+    }
+
+    fillMinutesDropdownFromMenuData(data) {
+        this.selectedMinutes = data["minutes"]["selectedMinutes"];
+        this.selectedMinutesIds = data["minutes"]["selectedMinutesIds"];
+    }
+
+    fillSecondsDropdownFromMenuData(data) {
+        this.selectedSeconds = data["seconds"]["selectedSeconds"];
+        this.selectedSecondsIds = data["seconds"]["selectedSecondsIds"];
     }
 
     getArrayOfRandomColors(length: Number): String[] {
