@@ -319,6 +319,24 @@ public class TemplateHandler {
         }
     }
 
+    public ArrayList<String> getTemplatePrivilegesByUser(int userId, int companyId){
+        ArrayList<String> privileges = new ArrayList<>();
+        Connection connection = Sql.getConInstance();
+        try {
+            PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_privileges_by_user_company(?,?)}");
+            preparedStatement.setInt(1,userId);
+            preparedStatement.setInt(2,companyId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                String privilege = resultSet.getString("pri_code");
+                privileges.add(privilege);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return privileges;
+    }
+
 
     public boolean postTemplateData(String json){
         try {

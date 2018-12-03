@@ -46,6 +46,15 @@ public class M07_Template {
         }
     }
 
+    @GET
+    @Path("/privileges")
+    public Response getTemplatePrivilegesByUser(@QueryParam("userId") int userId,
+                                                @QueryParam("companyId") int companyId){
+        TemplateHandler templateHandler = new TemplateHandler();
+        ArrayList<String> privileges = templateHandler.getTemplatePrivilegesByUser(userId,companyId);
+        return Response.ok(gson.toJson(privileges)).build();
+    }
+
     @Path("/messages")
     public M07_Message getMessages(){
         return new M07_Message();
