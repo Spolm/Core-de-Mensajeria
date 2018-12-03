@@ -2,8 +2,6 @@ package Classes.M02_Company;
 
 import Classes.Sql;
 import Exceptions.CompanyDoesntExistsException;
-import com.google.gson.Gson;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,11 +12,12 @@ public class CompanyDAO {
 
     private Connection conn = Sql.getConInstance();
 
+    //region API Obtener Compañias por usuario
+
     public ArrayList<Company> companyList(int id) throws CompanyDoesntExistsException {
         ArrayList<Company> coList= new ArrayList<>();
-
         try {
-            PreparedStatement ps = conn.prepareCall("{call m02_getcompanies(?)}");
+            PreparedStatement ps = conn.prepareCall("{Call m02_getcompanies(?)}");
             ps.setInt(1, id);
             ResultSet result = ps.executeQuery();
             while(result.next()){
@@ -36,10 +35,33 @@ public class CompanyDAO {
         }
         catch (Exception e) {
             e.printStackTrace();
+        }return coList;
+    }
+    //endregion
+
+
+    //region Todas Las Campañas
+    public ArrayList<Company> companyListAll() throws CompanyDoesntExistsException {
+        ArrayList<Company> coList = new ArrayList<>();
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * from company");
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                Company co = new Company();
+                co.set_idCompany(result.getInt("com_id"));
+                co.set_name(result.getString("com_name"));
+                co.set_desc(result.getString("com_description"));
+                co.set_status(result.getBoolean("com_status"));
+                coList.add(co);
+            }
         }
+            catch (SQLException e) {
+                e.printStackTrace();
+                throw new CompanyDoesntExistsException(e);
+            }
         return coList;
     }
-
+    //endregion
 
     //region API Detalles Compañia
 

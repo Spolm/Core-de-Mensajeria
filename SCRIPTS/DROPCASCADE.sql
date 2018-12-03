@@ -19,3 +19,48 @@ DROP TABLE public.role CASCADE;
 DROP TABLE public.user CASCADE;
 DROP FUNCTION m02_getcompanies(integer);
 DROP FUNCTION m03_getcampaigns(integer);
+drop function m01_loguser(varchar, varchar);
+
+drop function m01_isblocked(varchar);
+
+drop function m01_getpriviledges(integer);
+
+drop function m01_getusers();
+
+drop function m02_getcompanybyid(integer);
+
+drop function m04_enableintegrator(integer);
+
+drop function m04_disableintegrator(integer);
+
+drop function m04_getchannels();
+
+drop function m04_getconcreteintegrator(integer);
+
+drop function m04_getintegrators();
+
+drop function m04_getintegratorsbychannel(integer);
+
+drop function m06_add_application(varchar, varchar, varchar, integer, integer);
+
+drop function m06_select_all_application();
+
+drop function m06_select_by_token_application(varchar);
+
+drop function m06_update_application_status(integer, integer);
+
+drop function get_campaignmessages();
+
+drop function get_channelmessages();
+
+drop function get_companymessages();
+
+drop function m09_getallcampaigns();
+
+drop function m09_getallchannel();
+
+drop function m09_update_starschema();
+
+drop function m07_select_templates_by_campaign(integer);
+
+drop function m07_select_all_templates();
