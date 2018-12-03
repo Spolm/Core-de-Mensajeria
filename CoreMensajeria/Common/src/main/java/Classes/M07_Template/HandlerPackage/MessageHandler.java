@@ -5,6 +5,7 @@ import Classes.M07_Template.MessagePackage.Parameter;
 import Classes.M07_Template.Template;
 import Classes.Sql;
 import Exceptions.MessageDoesntExistsException;
+import Exceptions.ParameterDoesntExistsException;
 import com.google.gson.JsonArray;
 
 import java.sql.ResultSet;
@@ -40,7 +41,8 @@ public class MessageHandler {
         }
     }
 
-    public static Message getMessage(int templateId) throws MessageDoesntExistsException{
+    public static Message getMessage(int templateId)
+            throws MessageDoesntExistsException, ParameterDoesntExistsException{
         String query = "select mes_id,mes_text from message where mes_template =" + templateId;
         Message message = new Message();
         sql = new Sql();
@@ -51,10 +53,14 @@ public class MessageHandler {
                 message.setMessage(resultSet.getString("mes_text"));
                 message.setParameters(ParameterHandler.getParametersByMessage(message.getMessageId()));
             }
+        }catch (ParameterDoesntExistsException e) {
+            throw new ParameterDoesntExistsException
+                    ("No hay parametros para template con id:"
+                            + templateId,e, templateId);
         }catch (SQLException e) {
-            e.printStackTrace();
             throw new MessageDoesntExistsException
-                ("Error: No existe mensaje para esta plantilla.", e, templateId);
+                ("Error: No existe mensaje para esta plantilla con id:"
+                        + templateId, e, templateId);
         }catch(Exception e){
             e.printStackTrace();
         }finally {
@@ -95,6 +101,41 @@ public class MessageHandler {
                         "where par_company_id = " + companyId + "  and par_name = '" + parameters[i] +"'));";
             sql.sqlNoReturn(query);
         }catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+        }
+    }
+
+    public static void updateMessage(String message, int templateId, String[] parameters,int companyId) {
+        String query = "UPDATE public.message\n" +
+                        "SET mes_text = '" + message + "'\n" +
+                        "WHERE mes_template = " + templateId + "\n" +
+                        "returning mes_id";
+        sql = new Sql();
+        ResultSet resultSet;
+        int messageId;
+        try{
+            resultSet = sql.sqlConn(query);
+            if (resultSet.next()){
+                messageId = resultSet.getInt("mes_id");
+                updateParameterOfMessage(messageId,parameters,companyId);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+        }
+    }
+
+    private static void updateParameterOfMessage(int messageId, String[] parameters, int companyId) {
+        String query = "delete from public.message_parameter\n" +
+                "WHERE mp_message = " + messageId;
+        Sql sql = new Sql();
+        try{
+            sql.sqlNoReturn(query);
+            postParameterOfMessage(messageId,parameters,companyId);
+        } catch (Exception e){
             e.printStackTrace();
         } finally {
             Sql.bdClose(sql.getConn());

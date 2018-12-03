@@ -5,6 +5,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 import {p} from '@angular/core/src/render3';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from "@angular/router";
+import { delay } from 'q';
 
 const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/';
 const httpOptions = {
@@ -89,7 +90,6 @@ export class TemplateService {
             'applicationId': 2,
             'campaign': 10
         };
-        console.log(json);
         this.http.post(endpoint + 'templates/add', json).subscribe((res: boolean) => {
             flag = res;
             if (flag) {
@@ -118,5 +118,45 @@ export class TemplateService {
 
     templateDetails(id: number) {
         this.router.navigate(['template', id]);
+    }
+
+    async updateTemplate(templateId: number, formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[]){
+        let flag: boolean;
+        const json = {
+            'messagge': formMessage.valueOf(),
+            'templateId': templateId,
+            'company': company,
+            'parameters': parameters,
+            'newParameters': newParameters,
+            'channel_integrator': channel_integrator.valueOf(),
+            // se coloca una campaña y origen por defecto
+            'applicationId': 2,
+            'campaign': 10
+        };
+        this.http.put(endpoint + 'templates/update', json).subscribe(async (res: boolean) => {
+                flag = res;
+                if (flag) {
+                    this.toastr.success('Plantilla actualizada', 'Exito',
+                        {
+                            timeOut: 2800,
+                            progressBar: true
+                        });
+                    await delay(1000);
+                    this.router.navigate(['template', templateId]);
+                } else {
+                    this.toastr.error('No se a podido insertar', 'Error',
+                        {
+                            timeOut: 2800,
+                            progressBar: true
+                        });
+                }
+            },
+            error => {
+                this.toastr.error('Falla en la conexion', 'Error',
+                    {
+                        timeOut: 2800,
+                        progressBar: true
+                    });
+            });
     }
 }
