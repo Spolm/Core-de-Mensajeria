@@ -355,6 +355,26 @@ public class M09_Statistics extends Application {
     }
 
     @GET
+    @Path("/quartersofyearCount")
+    @Produces("application/json")
+    public Response getQuartersofYear(){
+        ArrayList<Integer> quartersofyear = new ArrayList<>();
+        try{
+            Statement statement = connStar.createStatement();
+            String query = "SELECT dat_quarterofyear FROM m09_getQuartersofYear()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                quartersofyear.add(result.getInt("dat_quarterofyear"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connStar);
+        }
+        return Response.ok(gson.toJson(quartersofyear)).build();
+    }
+
+    @GET
     @Path("/filters")
     @Produces("application/json")
     public Response getStatistics(@QueryParam("companyId") List<Integer> companyIds,
