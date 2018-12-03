@@ -7,12 +7,15 @@ import { TranslateService } from '@ngx-translate/core';
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss']
 })
+
+
+
 export class SidebarComponent {
     isActive: boolean = false;
     collapsed: boolean = false;
     showMenu: string = '';
     pushRightClass: string = 'push-right';
-
+    privileges = JSON.parse(localStorage.getItem("privileges"));
     @Output() collapsedEvent = new EventEmitter<boolean>();
     
     constructor(private translate: TranslateService, public router: Router) {
@@ -29,6 +32,7 @@ export class SidebarComponent {
             ) {
                 this.toggleSidebar();
             }
+
         });
     }
 
@@ -71,4 +75,14 @@ export class SidebarComponent {
     onLoggedout() {
         localStorage.removeItem('isLoggedin');
     }
+
+    findPrivilege(code : String){
+        var privilege = this.privileges.filter(function(item) {
+            return item._codePrivileges === code;
+          })[0];
+        if (privilege)
+          return true;
+        return false;
+    }
+    
 }
