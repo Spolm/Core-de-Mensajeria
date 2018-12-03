@@ -1,4 +1,4 @@
-DROP FUNCTION m07_select_templates_by_campaign(integer);
+-- DROP FUNCTION m07_select_templates_by_campaign(integer);
 CREATE OR REPLACE FUNCTION m07_select_templates_by_campaign(IN campaignId integer)
 RETURNS TABLE (tem_id integer,tem_creation_date timestamp,tem_campaign_id integer,
 		tem_application_id integer, tem_user_id integer, sta_id integer,
@@ -25,7 +25,7 @@ END;
 $gettemplates$
 LANGUAGE 'plpgsql' VOLATILE;
 
-
+-- DROP FUNCTION m07_select_all_templates();
 CREATE OR REPLACE FUNCTION m07_select_all_templates()
 RETURNS TABLE (tem_id integer,tem_creation_date timestamp,sta_id integer,sta_name varchar) 
 AS $$
@@ -48,7 +48,7 @@ END;
 $$
 LANGUAGE 'plpgsql' VOLATILE;
 
-DROP FUNCTION m07_select_privileges_by_user_company(integer,integer);
+-- DROP FUNCTION m07_select_privileges_by_user_company(integer,integer);
 CREATE OR REPLACE FUNCTION m07_select_privileges_by_user_company(
 	IN userId INTEGER, IN companyId INTEGER)
 RETURNS TABLE (pri_id integer, pri_code varchar, pri_action varchar) AS $$
@@ -65,3 +65,42 @@ RETURN QUERY
 	END;
 $$
 LANGUAGE 'plpgsql' VOLATILE;
+
+-- DROP FUNCTION m07_select_campaign_by_user_company(integer,integer,integer);
+CREATE OR REPLACE FUNCTION m07_select_campaign_by_user_company(IN one INTEGER, IN two INTEGER, IN three INTEGER)
+RETURNS TABLE (cam_id integer, cam_name varchar, cam_description varchar,
+		cam_status boolean, cam_start_date timestamp,cam_end_date timestamp,
+		com_id integer, com_name varchar, com_description varchar,
+		com_status boolean) AS $$
+BEGIN
+RETURN QUERY
+SELECT c.cam_id, c.cam_name, c.cam_description, c.cam_status, c.cam_start_date, c.cam_end_date,  co.com_id, co.com_name, co.com_description, co.com_status
+          FROM public.campaign c
+          INNER JOIN public.responsability r
+          ON c.cam_company_id = r.res_com_id
+          INNER JOIN public.company co
+          ON c.cam_company_id = co.com_id
+          WHERE r.res_use_id = one OR (r.res_use_id = two AND r.res_com_id = three)
+          ORDER BY c.cam_id;
+	END;
+        $$
+        LANGUAGE 'plpgsql' VOLATILE;
+
+-- DROP FUNCTION m07_select_channels_by_template(integer);
+CREATE OR REPLACE FUNCTION m07_select_channels_by_template(IN templateId INTEGER)
+RETURNS TABLE (tci_template_id INTEGER, ci_channel_id INTEGER, ci_integrator_id INTEGER,
+		cha_name VARCHAR, cha_description VARCHAR) AS $$
+BEGIN
+RETURN QUERY
+SELECT tci.tci_template_id, ci.ci_channel_id, ci.ci_integrator_id, 
+       c.cha_name, c.cha_description
+FROM channel_integrator ci
+INNER JOIN template_channel_integrator tci
+ON tci.tci_ci_id = ci.ci_id
+ INNER JOIN channel c
+ ON c.cha_id = ci.ci_channel_id
+ WHERE tci.tci_template_id = templateId
+ ORDER BY ci.ci_channel_id;
+ END;
+ $$
+ LANGUAGE 'plpgsql' VOLATILE;

@@ -33,16 +33,6 @@ public class TemplateHandler {
      */
     private Sql sql;
 
-    private static final String GET_CAMPAIGN_BY_USER_OR_COMPANY =
-        "select c.cam_id, c.cam_name, c.cam_description, c.cam_status, c.cam_start_date, c.cam_end_date,  co.com_id, co.com_name, co.com_description, co.com_status\n"
-          + "from public.campaign c\n"
-          + "inner join public.responsability r\n"
-          + "on c.cam_company_id = r.res_com_id\n"
-          + "inner join public.company co\n"
-          + "on c.cam_company_id = co.com_id\n"
-          + "where r.res_use_id = ? OR (r.res_use_id = ? AND r.res_com_id = ?)\n"
-          + "order by c.cam_id";
-
     private static final String GET_CAMAPIGN_BY_ID =
             "select* from public.campaign where cam_id = ? ";
 
@@ -212,7 +202,7 @@ public class TemplateHandler {
         ArrayList<Campaign> campaignArrayList = new ArrayList<>();
         Connection connection = Sql.getConInstance();
         try{
-            PreparedStatement preparedStatement = connection.prepareStatement(GET_CAMPAIGN_BY_USER_OR_COMPANY);
+            PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_campaign_by_user_company(?,?,?)}");
             if((userId!=0)&&(companyId!=0)){
                 preparedStatement.setInt(1,0);
                 preparedStatement.setInt(2,userId);
@@ -255,16 +245,8 @@ public class TemplateHandler {
         ArrayList<Channel> channels = new ArrayList<>();
         Connection connection = Sql.getConInstance();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement
-                    ("select tci.tci_template_id, ci.ci_channel_id, ci.ci_integrator_id, \n"
-                                    + "c.cha_name, cha_description\n"
-                                    + "from channel_integrator ci\n"
-                                    + "inner join template_channel_integrator tci\n"
-                                    + "on tci.tci_ci_id = ci.ci_id\n"
-                                    + "inner join channel c\n"
-                                    + "on c.cha_id = ci.ci_channel_id\n"
-                                    + "where tci.tci_template_id = " + templateId + "\n"
-                                    + "order by ci.ci_channel_id;");
+            PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_channels_by_template(?)}");
+            preparedStatement.setInt(1,templateId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 ArrayList<Integrator> integrators = new ArrayList<>();
