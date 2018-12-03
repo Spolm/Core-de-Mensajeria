@@ -20,19 +20,19 @@ export class ApiService {
 
   public getAllChannels(): Observable<Channel[]>{
     return this.http
-    .get(API_URL+'/channel')
+    .get( API_URL + '/channel' )
     .pipe( map( response => {
       const channels = response.json();
-      return channels.map( (channel) => new Channel(channel) );
+      return channels.map( ( channel ) => new Channel( channel ) );
     }))
     .pipe( catchError( err => {
-      this.handleError( err );
-      return null;
+      this.handleError( "Error obteniendo canales" ,err );
+      return err;
     }));
   }
 
-  private handleError (error: Response | any) {
-    console.error('ApiService::handleError', error);
-    return Observable.throw(error);
+  private handleError ( msg: string, error: Response | any ) {
+    console.error( 'ApiService Error:' + msg, error );
+    return Observable.throw( error );
   }
 }

@@ -21,18 +21,25 @@
           <div class="card-body">
             <h5 class="card-title text-center">
               <b>{{ integrator.nameIntegrator }}</b>
-              <span *ngIf="!integrator.enabled" 
-                  class="badge badge-danger">
-                  Inhabilitado
-                </span>
             </h5>
+            <p class="text-center status-integrator">
+              <span *ngIf="!integrator.enabled; else elseBlockEnabled" 
+                class="badge badge-danger">
+                Inhabilitado
+              </span>
+              <ng-template #elseBlockEnabled>
+                <span class="badge badge-primary ">
+                  Habilitado
+                </span>
+              </ng-template>
+            </p>
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Capacidad de Hilos: {{ integrator.threadCapacity }}</li>
             <li class="list-group-item">Costo del Mensaje: {{ integrator.messageCost }}</li>
             <li class="list-group-item">API: {{ integrator.apiIntegrator }}</li>
             <li class="list-group-item">Id: <b>{{ integrator.idIntegrator }}</b></li>
-            <li class="list-group-item">
+            <li class="list-group-item text-center">
               <button type="button" class="btn btn-danger"
                 (click)="disabledIntegrator(integrator)" 
                 *ngIf="integrator.enabled; else elseBlock">

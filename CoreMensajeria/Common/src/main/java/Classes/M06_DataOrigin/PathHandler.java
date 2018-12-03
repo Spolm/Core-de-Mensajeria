@@ -11,6 +11,9 @@ import java.util.ArrayList;
 @WebListener
 public class PathHandler implements ServletContextListener {
 
+    private static String ORIGIN_HOME = System.getProperty("user.home") + "/Origin";
+    private static String ORIGIN_HOME_INBOX = ORIGIN_HOME + "/Inbox";
+    private static String ORIGIN_HOME_TRASH = ORIGIN_HOME + "/Trash";
     /*public void FileChooser(){
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -33,13 +36,10 @@ public class PathHandler implements ServletContextListener {
      */
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        String originHome = System.getProperty("user.home") + "/Origin";
-        String inboxHome = originHome + "/Inbox";
-        String trashHome = originHome + "/Trash";
-        this.createDirectory(originHome);
-        this.createDirectory(inboxHome);
-        this.createDirectory(trashHome);
-        System.out.println("--------------->Web Start");
+        this.createDirectory(ORIGIN_HOME);
+        this.createDirectory(ORIGIN_HOME_INBOX);
+        this.createDirectory(ORIGIN_HOME_TRASH);
+        System.out.println("--------------->PATHS CREATED");
     }
 
     /**
@@ -81,5 +81,13 @@ public class PathHandler implements ServletContextListener {
      */
     private String generatePath(Company company){
         return company.get_name().replaceAll("\\s","") + "_" + Encrypter.getCurrentTime();
+    }
+
+    public static String getInboxPath(){
+        return ORIGIN_HOME_INBOX;
+    }
+
+    public static String getTrashPath(){
+        return ORIGIN_HOME_TRASH;
     }
 }
