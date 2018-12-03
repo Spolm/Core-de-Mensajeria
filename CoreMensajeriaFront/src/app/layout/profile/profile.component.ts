@@ -20,7 +20,9 @@ export class ProfileComponent implements OnInit {
 
   constructor(public router: Router, private http: Http, public rest: EditProfile, private toastr: ToastrService){
     console.log(localStorage);
-    this.http.get('http://localhost:8080/CoreMensajeria_war_exploded/profile/user/'+ localStorage.userid ).subscribe(resp=>this.Users = resp.json());
+    this.http.get('http://localhost:8080/CoreMensajeria_war_exploded/profile/user/'+ localStorage.userid ).subscribe(resp=>{
+      this.Users = [resp.json()]; 
+    });
   }
 
   ngOnInit() {

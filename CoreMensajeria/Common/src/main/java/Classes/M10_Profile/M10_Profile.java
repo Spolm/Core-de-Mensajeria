@@ -82,7 +82,7 @@ public class M10_Profile {
     }
 
     /**
-     * @param username Nombre de usuario a buscar
+     * @param id Nombre de usuario a buscar
      * @return User con todos los datos del usuario
      */
 
@@ -120,7 +120,7 @@ public class M10_Profile {
         }
         finally{
             Sql.bdClose(_conn);
-            return coList;
+            return userList;
         }
     }
 

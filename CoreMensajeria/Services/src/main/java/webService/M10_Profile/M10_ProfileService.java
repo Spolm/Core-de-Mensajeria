@@ -120,15 +120,15 @@ public class M10_ProfileService {
       }
     }
 
-    @Path("/listusers")
+    /*@Path("/listusers")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listUsers()
     {
         try
         {
-            _dao= new M10_Profile();
-            _us= _dao.getUsers();
+            _daoProfile= new M10_Profile();
+            _us= _daoProfile.getUsers();
         } catch (NullPointerException e) {
             _us = null;
             return Response.status(500).entity(e).build();
@@ -138,5 +138,5 @@ public class M10_ProfileService {
         finally {
             return Response.ok(_gson.toJson(_us)).build();
         }
-    }
+    }*/
 }

@@ -39,7 +39,7 @@ export class CreateuserComponent implements OnInit {
 
   initUser(){
     this.rest.getData("profile/user/"+localStorage.userid).subscribe((data: {}) => {
-      this.user = data[0];
+      this.user = data;
     },
     (err) => {
       this.toastr.error("Error de Conexion.");
