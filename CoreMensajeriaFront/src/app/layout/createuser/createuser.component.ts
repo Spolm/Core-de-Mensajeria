@@ -19,8 +19,13 @@ export class CreateuserComponent implements OnInit {
 
   constructor(public router: Router, private http: Http, public rest: CreateUser, private toastr: ToastrService){
   }
+  users: Array<Users>;
 
   ngOnInit() {
+    this.rest.getUsers()
+      .subscribe( data => {
+        this.users = data;
+      });
   }
 
   add() {
