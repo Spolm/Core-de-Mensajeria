@@ -13,7 +13,7 @@ import { delay } from 'q';
 
 export class CreateTemplateComponent {
 
-  userId: string = localStorage.getItem("userid");
+  userId: string = localStorage.getItem('userid');
   privilegesJson: any = [];
   CTEMPLATE = false;
   RTEMPLATE = false;
@@ -55,20 +55,16 @@ export class CreateTemplateComponent {
     privileges.forEach((privilege) => {
       if (privilege._codePrivileges == 'CTEMPLATE') {
         this.CTEMPLATE = true;
+      } else if (privilege._codePrivileges == 'RTEMPLATE') {
+        this.RTEMPLATE = true;
+      } else if (privilege._codePrivileges == 'UTEMPLATE') {
+        this.UTEMPLATE = true;
+      } else if (privilege._codePrivileges == 'DTEMPLATE') {
+        this.DTEMPLATE = true;
+      } else if (privilege._codePrivileges == 'ATEMPLATE') {
+        this.ATEMPLATE = true;
       }
-      else if (privilege._codePrivileges == 'RTEMPLATE') {
-        this.RTEMPLATE = true
-      }
-      else if (privilege._codePrivileges == 'UTEMPLATE') {
-        this.UTEMPLATE = true
-      }
-      else if (privilege._codePrivileges == 'DTEMPLATE') {
-        this.DTEMPLATE = true
-      }
-      else if (privilege._codePrivileges == 'ATEMPLATE') {
-        this.ATEMPLATE = true
-      }
-    })
+    });
   }
 
   getParameters() {
@@ -165,12 +161,16 @@ export class CreateTemplateComponent {
     console.log(this.dateIni);
     console.log(this.dateEnd);
     console.log(this.timeIni);
-    console.log(this.timeEnd)
-    /*this.formMessage = this.formMessage.trim();
+    console.log(this.timeEnd);
+
+    if (this.originOption !== 'app'){
+        this.applicationId = 0;
+    }
+    this.formMessage = this.formMessage.trim();
     if (this.formMessage != '') {
       if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
         if (this.channels_integrators[0]) {
-          this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
+          this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators,this.applicationId);
         } else {
           this.toastr.warning('Falta llenar un campo', 'Aviso',
             {
@@ -191,6 +191,6 @@ export class CreateTemplateComponent {
           timeOut: 2800,
           progressBar: true
         });
-    }*/
+    }
   }
 }

@@ -88,7 +88,7 @@ export class TemplateService {
   }
 
   // @ts-ignore
-  postTemplate(formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[]) {
+  postTemplate(formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[],applicationId : number) {
     let flag: boolean;
     const json = {
       'messagge': formMessage.valueOf(),
@@ -98,7 +98,7 @@ export class TemplateService {
       'newParameters': newParameters,
       'channel_integrator': channel_integrator.valueOf(),
       // se coloca una campaña y origen por defecto
-      'applicationId': 2,
+      'applicationId': applicationId,
       'campaign': 10
     };
     this.http.post(endpoint + 'templates/add', json).subscribe((res: boolean) => {
