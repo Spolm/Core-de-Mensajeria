@@ -12,7 +12,22 @@ public class Movilnet extends Integrator {
     }
 
     @Override
-    public void sendMessage() {
+    public Message sendMessage(String msg, String address, String idMsg) {
+        if(this.isEnabled()) {
+            try {
+                Thread.sleep(2200);
+                Message message = new Message(msg, address, idMsg);
+                message.setSend(true);
+                return message;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
+        }else{
+            Message message = new Message(msg, address, idMsg);
+            message.setSend(false);
+            return message;
+        }
+        return null;
     }
 }
