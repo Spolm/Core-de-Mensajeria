@@ -2,8 +2,6 @@ package Classes.M02_Company;
 
 import Classes.Sql;
 import Exceptions.CompanyDoesntExistsException;
-import com.google.gson.Gson;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
