@@ -492,6 +492,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         var params = this.convertSelectedItemsIntoHttpParams();
         this.statisticsService.getStatistics(params).subscribe(
             data => {
+                console.log(data);
                 let companiesJson = data["companies"];
                 var companies: Point[] = this.createPointArray(companiesJson);
                 let campaingsJson = data["campaigns"];
@@ -509,6 +510,44 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                 console.error(error);
             }
         );
+    }
+
+    convertSelectedItemsIntoHttpParams(): HttpParams {
+        var params = new HttpParams();
+        params = this.convertselectedCompaniesIdsIntoHttpParams(params);
+        params = this.convertselectedCampaignsIdsIntoHttpParams(params);
+        params = this.convertselectedChannelsIdsIntoHttpParams(params);
+        params = this.convertselectedIntegratorsIdsIntoHttpParams(params);
+        console.log(params.toString());
+        return params;
+    }
+
+    convertselectedCompaniesIdsIntoHttpParams(params: HttpParams) {
+        this.selectedCompaniesIds.forEach(companyId => {
+            params = params.append("companyId", companyId.toString());
+        });
+        return params;
+    }
+
+    convertselectedCampaignsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedCampaignsIds.forEach(campaignId => {
+            params = params.append("campaignId", campaignId.toString());
+        });
+        return params;
+    }
+
+    convertselectedChannelsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedChannelsIds.forEach(channelId => {
+            params = params.append("channelId", channelId.toString());
+        });
+        return params;
+    }
+
+    convertselectedIntegratorsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedIntegratorsIds.forEach(integratorId => {
+            params = params.append("integratorId", integratorId.toString());
+        });
+        return params;
     }
 
     updateChartData(chart: Chart, data: Point[], typeOfChart: ChartType) {
@@ -539,35 +578,6 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             }
         }
         return points;
-    }
-
-    convertSelectedItemsIntoHttpParams(): HttpParams {
-        var params = new HttpParams();
-        params = this.convertselectedCompaniesIdsIntoHttpParams(params);
-        params = this.convertselectedCampaignsIdsIntoHttpParams(params);
-        params = this.convertselectedChannelsIdsIntoHttpParams(params);
-        return params;
-    }
-
-    convertselectedCompaniesIdsIntoHttpParams(params: HttpParams) {
-        this.selectedCompaniesIds.forEach(companyId => {
-            params = params.append("companyId", companyId.toString());
-        });
-        return params;
-    }
-
-    convertselectedCampaignsIdsIntoHttpParams(params: HttpParams) {
-        this.selectedCampaignsIds.forEach(campaignId => {
-            params = params.append("campaignId", campaignId.toString());
-        });
-        return params;
-    }
-
-    convertselectedChannelsIdsIntoHttpParams(params: HttpParams) {
-        this.selectedChannelsIds.forEach(channelId => {
-            params = params.append("channelId", channelId.toString());
-        });
-        return params;
     }
 
     openFilters() {
@@ -607,6 +617,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             this.fillCompaniesDropdownFromMenuData(result);
             this.fillCampaignsDropdownFromMenuData(result);
             this.fillChannelsDropdownFromMenuData(result);
+            this.fillIntegratorsDropdownFromMenuData(result);
             console.log(result);
         });
     }

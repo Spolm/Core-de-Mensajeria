@@ -288,7 +288,7 @@ public class M09_Statistics extends Application {
             e.printStackTrace();
         }
          finally {
-            SqlEstrella.bdClose(connStar);
+            Sql.bdClose(connStar);
         }
         return Response.ok(gson.toJson(stats)).build();
     }
