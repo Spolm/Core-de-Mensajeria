@@ -10,39 +10,38 @@ export class StatisticsServiceService {
 
     constructor(private http: HttpClient) {}
 
-    /*getStatisticsData1(){
-
-    getStatisticsData2() {
-          return this.http.get(this.ApiURL + 'MessageCompanyLine');
+    getInitialMessagesForCompanies() {
+        return this.http.get(this.ApiURL + "companiesCount");
     }
 
-    getStatisticsData3() {
-          return this.http.get(this.ApiURL + 'MessageCompanyPie');
+    getInitialMessagesForCampaigns() {
+        return this.http.get(this.ApiURL + "campaignsCount");
     }
 
-  return this.http.get(this.ApiURL + 'MessageCompanyPie') 
-}*/
-
-    getStatisticsData4(sparam: string) {
-        return this.http.get(this.ApiURL + "PruebaParam" + sparam);
-    }
-    getStatisticsData5(sparam: string) {
-        return this.http.get(this.ApiURL + "PruebaParam2" + sparam);
-    }
-    getStatisticsData6(sparam: string) {
-        return this.http.get(this.ApiURL + "PruebaParam3" + sparam);
+    getInitialMessagesForChannels() {
+        return this.http.get(this.ApiURL + "channelsCount");
     }
 
-    getAllCompanies() {
-        return this.http.get(this.ApiURL + "companies");
+    getInitialMessagesForIntegrators() {
+        return this.http.get(this.ApiURL + "integratorsCount");
     }
 
-    getAllCampaigns() {
-        return this.http.get(this.ApiURL + "campaigns");
+    getAllCompanies(userId: string) {
+        let params = new HttpParams();
+        params = params.set("userId", userId);
+        return this.http.get(this.ApiURL + "companies", { params });
     }
 
     getAllChannels() {
         return this.http.get(this.ApiURL + "channels");
+    }
+
+    getIntegrators(channelIds: number[]) {
+        let params = new HttpParams();
+        channelIds.forEach(id => {
+            params = params.append("channelId", id.toString());
+        });
+        return this.http.get(this.ApiURL + "integrators", { params });
     }
 
     getCampaingsForCompany(companyIds: Number[]) {
@@ -50,6 +49,14 @@ export class StatisticsServiceService {
         companyIds.forEach(id => {
             params = params.append("companyId", id.toString());
         });
-        return this.http.get(this.ApiURL + "campaignCompany", { params });
+        return this.http.get(this.ApiURL + "campaigns", { params });
+    }
+
+    getStatistics(params: HttpParams) {
+        return this.http.get(this.ApiURL + "filters", { params });
+    }
+
+    updateStarSchema() {
+        return this.http.get(this.ApiURL + "update");
     }
 }

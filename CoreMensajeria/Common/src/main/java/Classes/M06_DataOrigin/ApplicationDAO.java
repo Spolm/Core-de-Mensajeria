@@ -9,6 +9,14 @@ import java.util.ArrayList;
 
 public class ApplicationDAO {
 
+
+    final String SELECT_ALL_APPLICATIONS = "{CALL m06_select_all_application()}";
+    final String ADD_APPLICATION = "{CALL m06_add_application(?,?,?,?,?)}";
+    final String UPDATE_APPLICATION_STATUS = "{CALL m06_update_application_status(?,?)}";
+    final String SELECT_BY_TOKEN_APPLICATIONS = "{CALL m06_select_by_token_application(?)}";
+    final String SELECT_BY_ID_APPLICATIONS = "{CALL m06_select_by_id_application(?)}";
+    final String SELECT_BY_COMPANY_ID_APPLICATIONS = "{CALL m06_select_by_company_id_application(?)}";
+/*
     final String QUERY_SELECT_ALL_APPLICATIONS = "SELECT * FROM public.application ORDER BY app_name";
     final String QUERY_SELECT_APPLICATIONS_BY_COMPANY = "SELECT * FROM public.application WHERE app_company=? ORDER BY app_name";
     final String QUERY_SELECT_APPLICATION_BY_ID = "SELECT * FROM public.application where app_id= ?";
@@ -18,10 +26,13 @@ public class ApplicationDAO {
                                     "values(?, ?, ?, ?, ?, 1, now() );";
     final String QUERY_UPDATE_APPLICATION_STATUS = "UPDATE public.application SET app_status=? WHERE app_id=? ;";
     //final String QUERY_DELETE_APPLICATION = "DELETE FROM public.application WHERE app_id= ?";
-
+    */
     private Connection _conn;
     private Encrypter _encrypter;
 
+    /**
+     * Constructor para ApplicationDAO
+     */
     public ApplicationDAO() {
         _conn = Sql.getConInstance();
         _encrypter = new Encrypter();
@@ -29,11 +40,19 @@ public class ApplicationDAO {
 
     //          SELECTS
     //Get all applications on the Database
+    /**
+     * SELECTS
+     * @return Lista (array) de Applications (todas)
+     * @throws DatabaseConnectionProblemException si hay problemas en la comunicacion con la Base
+     *         de Datos
+     */
     public ArrayList<Application> getApplications() throws DatabaseConnectionProblemException {
         try {
             ArrayList<Application> applicationList = new ArrayList<>();
-            Statement st = _conn.createStatement();
-            ResultSet result = st.executeQuery(QUERY_SELECT_ALL_APPLICATIONS);
+
+            PreparedStatement preparedStatement = _conn.prepareCall(SELECT_ALL_APPLICATIONS);
+
+            ResultSet result = preparedStatement.executeQuery();
 
             while (result.next()) {
                 applicationList.add(this.extractApplication(result));
@@ -47,10 +66,16 @@ public class ApplicationDAO {
     }
 
     //Get all applications with a given company id
+    /**
+     * SELECTS
+     * @param companyId id de la compania
+     * @return Lista (array) de Application (que esten asociada a la compania senalada)
+     * @throws DatabaseConnectionProblemException si hay un error al obetener la lista de Application deseada
+     */
     public ArrayList<Application> getApplications(int companyId) throws DatabaseConnectionProblemException {
         try {
             ArrayList<Application> applicationList = new ArrayList<>();
-            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_APPLICATIONS_BY_COMPANY);
+            PreparedStatement preparedStatement = _conn.prepareCall(SELECT_BY_COMPANY_ID_APPLICATIONS);
             preparedStatement.setInt(1, companyId);
             ResultSet result = preparedStatement.executeQuery();
 
@@ -59,16 +84,23 @@ public class ApplicationDAO {
             }
             return applicationList;
         } catch (SQLException e) {
-            throw new DatabaseConnectionProblemException("Error al obtener aplicaion.", e);
+            throw new DatabaseConnectionProblemException("Error al obtener aplicacion.", e);
         } finally {
             Sql.bdClose(_conn);
         }
     }
 
     //Get an application with a given application id
+    /**
+     * SELECTS
+     * @param id id de la Application
+     * @return una Application (que posea el id senalado)
+     * @throws ApplicationNotFoundException si la Application con el id senalado no se encuentra/no existe
+     * @throws DatabaseConnectionProblemException si hay problema de comunicacion con la Base de Datos
+     */
     public Application getApplication(int id) throws ApplicationNotFoundException, DatabaseConnectionProblemException {
         try {
-            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_APPLICATION_BY_ID);
+            PreparedStatement preparedStatement = _conn.prepareCall(SELECT_BY_ID_APPLICATIONS);
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if(result.next())
@@ -83,12 +115,19 @@ public class ApplicationDAO {
     }
 
     //Get an application with a given Token
+    /**
+     * SELECTS
+     * @param token token de la Application
+     * @return una Application (que posea el token senalado)
+     * @throws ApplicationNotFoundException si la Application con el token senalado no se encuentra/no existe
+     * @throws DatabaseConnectionProblemException si hay problema de comunicacion con la Base de Datos
+     */
     public Application getApplication(String token) throws ApplicationNotFoundException, DatabaseConnectionProblemException {
         try {
-            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_APPLICATION_BY_TOKEN);
+
+            PreparedStatement  preparedStatement = _conn.prepareCall(SELECT_BY_TOKEN_APPLICATIONS);
             preparedStatement.setString(1, token);
             ResultSet result = preparedStatement.executeQuery();
-            result.next();
             if(result.next())
                 return this.extractApplication(result);
             else
@@ -102,37 +141,57 @@ public class ApplicationDAO {
 
     //          UPDATES
     //Update the status of the application with the given application id
-    public void updateApplication(int id, int status) throws DatabaseConnectionProblemException, ApplicationNotFoundException {
+    /**
+     * UPDATES - Actualiza el status de una Application con el id senalado al status senalado
+     * @param id id de la Application
+     * @param status status de la Application
+     * @throws DatabaseConnectionProblemException si hay problema de comunicacion con la Base de Datos
+     * @throws ApplicationNotFoundException si la Application con el id senalado no se encuentra/no existe
+     */
+    public Application updateApplication(int id, int status) throws DatabaseConnectionProblemException, ApplicationNotFoundException {
         try {
             //Find if application exist
             this.getApplication(id);
             //Restart DB instance
             _conn = Sql.getConInstance();
-            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_UPDATE_APPLICATION_STATUS);
+            PreparedStatement preparedStatement = _conn.prepareCall(UPDATE_APPLICATION_STATUS);
             preparedStatement.setInt(1, status);
             preparedStatement.setInt(2, id);
             preparedStatement.execute();
+
+            return this.getApplication(id);
         }catch (SQLException e){
-            throw new DatabaseConnectionProblemException("Error al actualizar aplicacion.", e);
+            throw new DatabaseConnectionProblemException(/*"Error al actualizar aplicacion."*/ e.getMessage(), e);
         }
     }
+
     //          CREATES
     //Create a new application
-    public void addApplication (AddApplicationData app) throws DatabaseConnectionProblemException {
+    /**
+     * CREATES
+     * @param app objeto AddApplicationData
+     * @return una Application a partir del los datos del AddApplicationData y los datos asociados
+     * @throws DatabaseConnectionProblemException si hay un error con la Base de Datos (no se logra crear
+     *         la Application)
+     */
+    public Application createApplication (AddApplicationData app) throws DatabaseConnectionProblemException {
         try {
-            PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_INSERT_APPLICATION);
 
+            String token = this._encrypter.encryptToken(app.get_userId() + app.get_companyId() +
+                    app.get_nameApplication() + Encrypter.getCurrentTime());
+            PreparedStatement preparedStatement = _conn.prepareCall(ADD_APPLICATION);
             preparedStatement.setString(1, app.get_nameApplication());
             preparedStatement.setString(2, app.get_descriptionApplication());
-            preparedStatement.setString(3, this._encrypter.encrypt(
-                    app.get_userId() + app.get_companyId() + app.get_nameApplication()
-            ));
+            preparedStatement.setString(3, token);
             preparedStatement.setInt(4, app.get_userId());
             preparedStatement.setInt(5, app.get_companyId());
 
             preparedStatement.execute();
+            return this.getApplication(token);
         }catch (SQLException e){
             throw new DatabaseConnectionProblemException("Error al crear aplicacion.", e);
+        }catch (ApplicationNotFoundException e){
+            throw new DatabaseConnectionProblemException("Error al obtener aplicacion.", e);
         }
     }
 
@@ -155,6 +214,12 @@ public class ApplicationDAO {
 
     //          UTILITIES
     //Get the application from the given resultSet
+    /**
+     * UTILITES
+     * @param resultSet fila resultante de un query anetrior
+     * @return una Application con los datos del resultSet
+     * @throws SQLException si ...
+     */
     private Application extractApplication(ResultSet resultSet) throws SQLException {
         Application app = new Application();
 

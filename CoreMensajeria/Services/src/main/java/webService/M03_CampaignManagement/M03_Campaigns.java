@@ -1,6 +1,7 @@
 package webService.M03_CampaignManagement;
 
 import Classes.M03_Campaign.Campaign;
+import Classes.M03_Campaign.CampaignDAO;
 import Classes.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import com.google.gson.Gson;
@@ -22,7 +23,9 @@ import java.util.Date;
 public class M03_Campaigns {
 
     Gson gson = new Gson();
-    private Connection conn = Sql.getConInstance();
+    Campaign _ca = new Campaign();
+    ArrayList<Campaign> _caList = new ArrayList<>();
+
 
     //region Agregar Campaña
     /*
@@ -60,72 +63,6 @@ public class M03_Campaigns {
 
     //endregion
 
-
-    //region API detalle Campaña
-
-    public Campaign getDetails (int id) throws CampaignDoesntExistsException {
-
-        String select = "SELECT * FROM campaign where cam_id = ?";
-        Campaign ca = new Campaign();
-        try {
-
-            PreparedStatement ps = conn.prepareStatement(select);
-            ps.setInt(1, id);
-            ResultSet result = ps.executeQuery();
-            while (result.next()) {
-                ca.set_idCampaign(result.getInt("cam_id"));
-                ca.set_nameCampaign(result.getString("cam_name"));
-                ca.set_descCampaign(result.getString("cam_description"));
-                ca.set_startCampaign(result.getDate("cam_start_date"));
-                ca.set_endCampaign(result.getDate("cam_end_date"));
-                ca.set_statusCampaign(result.getBoolean("cam_status"));
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            throw new CampaignDoesntExistsException(e);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return ca;
-    }
-
-    //endregion
-
-    //region API Obtener Campañas
-
-    public ArrayList<Campaign> campaignList(int id) throws CampaignDoesntExistsException {
-        String select = "SELECT * FROM campaign where cam_company_id = ?";
-        ArrayList<Campaign> caList= new ArrayList<>();
-
-        try {
-            PreparedStatement ps = conn.prepareStatement(select);
-            ps.setInt(1, id);
-            ResultSet result = ps.executeQuery();
-            while(result.next()){
-                Campaign ca = new Campaign();
-                ca.set_idCampaign(result.getInt("cam_id"));
-                ca.set_nameCampaign(result.getString("cam_name"));
-                ca.set_descCampaign(result.getString("cam_description"));
-                ca.set_startCampaign(result.getDate("cam_start_date"));
-                ca.set_endCampaign(result.getDate("cam_end_date"));
-                ca.set_statusCampaign(result.getBoolean("cam_status"));
-                caList.add(ca);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            throw new CampaignDoesntExistsException(e);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return caList;
-    }
-
-    //endregion
-
     //region Detalle Campaña
 
     /**
@@ -139,9 +76,10 @@ public class M03_Campaigns {
 
     public Response getCampaignDetails(@QueryParam("id") int id) {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CampaignDAO ca = new CampaignDAO();
         try {
-            Campaign ca = getDetails(id);
-            rb.entity(gson.toJson(ca));
+            _ca = ca.getDetails(id);
+            rb.entity(gson.toJson(_ca));
         }
         catch (CampaignDoesntExistsException e) {
             e.printStackTrace();
@@ -154,31 +92,6 @@ public class M03_Campaigns {
     //endregion
 
 
-
-    //region Obtener Campañas
-    @GET
-    @Path("/GetCampaigns")
-    @Produces("application/json")
-
-    public Response getCampaigns(@QueryParam("id") int id) throws CampaignDoesntExistsException {
-        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-
-        try {
-            ArrayList<Campaign> campaignList = campaignList(id);
-            rb.entity(gson.toJson(campaignList));
-        }
-        catch (CampaignDoesntExistsException e) {
-            e.printStackTrace();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            Sql.bdClose(conn);
-        }
-        return rb.build();
-    }
-    //endregion
 
     //Work in Progress
     //TODO fix this one
@@ -187,19 +100,12 @@ public class M03_Campaigns {
     @Path("/update/{campaignId}")
     //@Consumes("application/json")
     @Produces("text/plain")
-    public Response changeCampaignStatus(@PathParam("campaignId") int id) throws CampaignDoesntExistsException {
+    public Response changeCampaignStatus(@PathParam("campaignId") int id) {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
         Boolean flag;
+        CampaignDAO ca = new CampaignDAO();
         try {
-            Campaign ca = getDetails(id);
-            ca.set_statusCampaign(!ca.is_statusCampaign());
-            String query = "UPDATE public.campaign SET" +
-                    " cam_status ="+ca.is_statusCampaign()+
-                    " WHERE cam_id =?";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1,id);
-            ps.executeUpdate();
-            flag = ca.is_statusCampaign();
+            flag = ca.changeStatusCampaign(id);
             rb.header("Campaign Edited", "Success");
             rb.tag("application/json");
             rb.entity(gson.toJson(flag));
@@ -207,16 +113,61 @@ public class M03_Campaigns {
         } catch (CampaignDoesntExistsException e) {
             e.printStackTrace();
         }
-        catch (SQLException e) {
+        catch (Exception e) {
             e.printStackTrace();
-            throw new CampaignDoesntExistsException(e);
+        }
+        return rb.build();
+    }
+
+    //region metodo campaigns by user
+    @GET
+    @Path("/GetCampaignsByUser")
+    @Produces("application/json")
+
+    public Response getCampaignsByUser(@QueryParam("id") int id) throws CampaignDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CampaignDAO caList = new CampaignDAO();
+        try {
+            _caList = caList.campaignListByUser(id);
+            rb.entity(gson.toJson(_caList));
+        }
+        catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
         return rb.build();
     }
 
     //endregion
 
+    //region Obtener Campañas
+    @GET
+    @Path("/GetCampaigns")
+    @Produces("application/json")
+
+    public Response getCampaigns(@QueryParam("id") int id) throws CampaignDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CampaignDAO caList = new CampaignDAO();
+        try {
+            _caList = caList.campaignList(id);
+            rb.entity(gson.toJson(_caList));
+        }
+        catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
+    //endregion
+
+    //endregion
+
     //region Modificar Campaña
+    /*
     @PUT
     @Path("/EditCampaign")
     @Produces("application/json")
@@ -250,7 +201,7 @@ public class M03_Campaigns {
             e.printStackTrace();
         }
         return rb.build();
-    }
+    }*/
 
 
     //endregion

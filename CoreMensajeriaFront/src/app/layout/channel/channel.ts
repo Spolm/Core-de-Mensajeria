@@ -4,9 +4,9 @@ export class Channel {
     nameChannel: string;
     descriptionChannel: string;
     idChannel: string;
-    integrators: Integrator;
+    integrators: Integrator[];
 
     constructor(values: Object = {}){
-        Object.assign(this,values);
+        Object.assign( this, values );
     }
 }
