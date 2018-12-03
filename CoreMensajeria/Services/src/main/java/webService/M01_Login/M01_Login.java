@@ -99,7 +99,7 @@ public class M01_Login {
                 String token = _userDAO.tokenGenerator(email);
                 Logger logger = Logger.getLogger(getClass().getName());
                 logger.info("token: "+token);
-                //MailSender.generateAndSendEmail(token,email);
+                MailSender.generateAndSendEmail(token,email);
                 return Response.ok(_gson.toJson("Revisa tu bandeja de entrada donde se envió el código de verificación")).build();
             }else {
                 error = new Error("El Email ingresado no tiene el formato adecuado");
