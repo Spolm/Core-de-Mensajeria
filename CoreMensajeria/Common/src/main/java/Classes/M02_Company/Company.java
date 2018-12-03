@@ -5,6 +5,7 @@ public class Company {
     private String _name;
     private String _desc;
     private boolean _status;
+    private String _link;
 
     public int get_idCompany () {
         return _idCompany;
@@ -38,6 +39,14 @@ public class Company {
         _status = status;
     }
 
+    public String get_link() {
+        return _link;
+    }
+
+    public void set_link ( String link ) {
+        _link = link;
+    }
+
     public Company() {
 
     }
@@ -57,6 +66,16 @@ public class Company {
         _name = name;
         _desc = desc;
         _status = status;
+
+    }
+
+    public Company ( int id, String name, String desc, boolean status, String link ) {
+
+        _idCompany = id;
+        _name = name;
+        _desc = desc;
+        _status = status;
+        _link = link;
 
     }
 }
