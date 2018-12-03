@@ -4,6 +4,6 @@ CREATE OR REPLACE FUNCTION m09_getYears()
 )
 AS $$
 BEGIN
-	RETURN QUERY  SELECT DISTINCT d.dat_year FROM dim_date d ORDER BY d.dat_yer;
+	RETURN QUERY  SELECT DISTINCT d.dat_year FROM dim_date d ORDER BY d.dat_year;
 END; $$
 Language 'plpgsql';
