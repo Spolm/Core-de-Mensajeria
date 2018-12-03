@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION m09_get_MessageParameter (IN companyIds varchar, IN campaignIds varchar,
-  IN channelIds varchar, IN integratorIds, IN param1 varchar, IN param2 varchar, IN param3 varchar, IN param4 varchar)
+  IN channelIds varchar, IN integratorIds varchar, IN param1 varchar, IN param2 varchar, IN param3 varchar, IN param4 varchar)
  RETURNS TABLE (
  icount BIGINT,
  paramId integer,
