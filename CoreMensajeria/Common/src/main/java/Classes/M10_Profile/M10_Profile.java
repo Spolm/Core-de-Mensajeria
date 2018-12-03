@@ -51,34 +51,37 @@ public class M10_Profile {
 
     public ArrayList<User> getUsers(){
 
+        String consulta= "SELECT use_id, use_password, use_username, use_type, use_email, use_phone,use_country," +
+                " use_city, use_address, use_date_of_birth, use_gender From public.user ";
         ArrayList<User> userList = new ArrayList<>();
-
         try {
-            PreparedStatement ps = _conn.prepareCall("{call m01_getusers()}");
-            ResultSet result = ps.executeQuery();
-            while (result.next()) {
+            PreparedStatement preparedStatement = _conn.prepareStatement(consulta);
+            _result = preparedStatement.executeQuery();
+
+
+
+            while (_result.next()) {
                 User user = new User();
-                user.set_idUser(result.getInt("use_id"));
-                user.set_passwordUser(result.getString("use_password"));
-                user.set_usernameUser(result.getString("use_username"));
-                user.set_typeUser(result.getInt("use_type"));
-                user.set_emailUser(result.getString("use_email"));
-                user.set_phoneUser(result.getString("use_phone"));
-                user.set_countryUser(result.getString("use_country"));
-                user.set_dateOfBirthUser(result.getDate("use_date_of_birth"));
-                user.set_cityUser(result.getString("use_city"));
-                user.set_addressUser(result.getString("use_address"));
-                user.set_genderUser(result.getString("use_gender"));
+                user.set_idUser(_result.getInt("use_id"));
+                user.set_passwordUser(_result.getString("use_password"));
+                user.set_usernameUser(_result.getString("use_username"));
+                user.set_typeUser(_result.getInt("use_type"));
+                user.set_emailUser(_result.getString("use_email"));
+                user.set_phoneUser(_result.getString("use_phone"));
+                user.set_countryUser(_result.getString("use_country"));
+                user.set_dateOfBirthUser(_result.getDate("use_date_of_birth"));
+                user.set_cityUser(_result.getString("use_city"));
+                user.set_addressUser(_result.getString("use_address"));
+                user.set_genderUser(_result.getString("use_gender"));
                 userList.add(user);
             }
+        } catch (SQLException ex) {
+            userList=null;
         }
-        catch (SQLException e) {
-            e.printStackTrace();
+        finally{
+            Sql.bdClose(_conn);
+            return userList;
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return userList;
     }
 
     /**

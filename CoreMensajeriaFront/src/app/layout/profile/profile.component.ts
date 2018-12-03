@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { routerTransition } from '../../router.animations';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Users } from './models/users';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Http } from '@angular/http';
@@ -16,14 +16,27 @@ import { ToastrService } from 'ngx-toastr';
 export class ProfileComponent implements OnInit {
 
   Users : Array<Users>;
+  id : number;
+  private sub: any;
 
+  constructor(private route: ActivatedRoute, public router: Router, private http: Http, public rest: EditProfile, private toastr: ToastrService){
+    this.sub = this.route.params.subscribe(params => {
+      this.id = +params['id']; // (+) converts string 'id' to a number
 
-  constructor(public router: Router, private http: Http, public rest: EditProfile, private toastr: ToastrService){
-    console.log(localStorage);
+      // In a real app: dispatch action to load the details here.
+   });
+   if( this.id ){
+    this.http.get('http://localhost:8080/CoreMensajeria_war_exploded/profile/user/'+ this.id ).subscribe(resp=>{
+      this.Users = [resp.json()]; 
+    });
+   }
+   else{
     this.http.get('http://localhost:8080/CoreMensajeria_war_exploded/profile/user/'+ localStorage.userid ).subscribe(resp=>{
       this.Users = [resp.json()]; 
     });
   }
+    
+}
 
   ngOnInit() {
   }
@@ -34,7 +47,7 @@ export class ProfileComponent implements OnInit {
     });
     this.rest.editProfile(this.Users[0]).subscribe((result) => {
       this.toastr.success('Editado con éxito');
-      this.router.navigate(['/profile']);
+      this.router.navigate(['/createuser']);
     }, (err) => {
       // console.log(err);
       if (err.status == 0) this.toastr.error('Problema de conexión'); //Aqui poner mensaje de la excepcion
@@ -44,7 +57,7 @@ export class ProfileComponent implements OnInit {
 
   handleEdit() {
     console.log(this.Users[0]);
-    if (this.Users[0]._addressUser.length >0 && this.Users[0]._emailUser.length > 0 && this.Users[0]._phoneUser.length > 0 )
+    if (this.Users[0]._addressUser.length >0 && this.Users[0]._emailUser.length > 0 && this.Users[0]._phoneUser )
       this.edit();
     else
       this.toastr.error('Debe llenar el formulario');

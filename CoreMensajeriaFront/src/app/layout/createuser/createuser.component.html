@@ -89,6 +89,7 @@
                         <th>Email</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
+                        <th>User</th>
                         <th>Rol</th>
                         <th>Sexo</th>
                         <th>Télefono</th>
@@ -99,18 +100,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let user of users">
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                        <td>Lorem ipsum dolor sit amet.</td>
-                    </tr>
+                        <tr *ngFor="let User of users">
+                            <div>
+                                <td>{{ User._emailUser }}</td>
+                                <td>{{ User._usernameUser }}</td>
+                                <td>{{ User._typeUser }}</td>
+                                <td>{{ User._genderUser }}</td>
+                                <td>{{ User._phoneUser }}</td>
+                                <td>{{ User._dateOfBirthUser }}</td>
+                                <td>{{ User._countryUser }}</td>
+                                <td>{{ User._cityUser }}</td>
+                                <td>{{ User._addressUser }}</td>
+                                <td><button class="btn btn-primary" (click)="editUser(user._idUser)">Editar</button></td>
+                            </div>
+                        </tr>
                     </tbody>
                 </table>
             </div>

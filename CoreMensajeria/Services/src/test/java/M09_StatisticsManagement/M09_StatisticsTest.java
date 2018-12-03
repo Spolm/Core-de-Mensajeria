@@ -137,7 +137,7 @@ public class M09_StatisticsTest {
 //        }
 //    }
 
-    @Test
+   /* @Test
     void getStatisticsTestBadRequest(){
         M09_Statistics instance = new M09_Statistics();
         ArrayList<Integer> listaCompany  = new ArrayList<>();
@@ -148,7 +148,7 @@ public class M09_StatisticsTest {
         assertEquals(400, salida.getStatus());
         assertEquals("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }", salida.getEntity().toString());
     }
-
+*/
 
 
 

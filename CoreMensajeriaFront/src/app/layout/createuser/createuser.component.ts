@@ -17,6 +17,7 @@ export class CreateuserComponent implements OnInit {
 
   companies : any = [];
   user : any;
+  users:any =[];
 
   constructor(public router: Router, private http: Http, public rest: RestService, private toastr: ToastrService){
     
@@ -25,11 +26,22 @@ export class CreateuserComponent implements OnInit {
   ngOnInit() {
     this.initCompany();
     this.initUser();
+    this.initUsers();
   }
 
   initCompany(){
     this.rest.getData("profile/listcompanies").subscribe((data: {}) => {
       this.companies = data;
+    },
+    (err) => {
+      this.toastr.error("Error de Conexion.");
+      console.log(err);
+    });
+  }
+
+  initUsers(){
+    this.rest.getData("profile/listusers").subscribe((data: {}) => {
+      this.users = data;
     },
     (err) => {
       this.toastr.error("Error de Conexion.");
@@ -70,4 +82,8 @@ export class CreateuserComponent implements OnInit {
     console.log(this.companies);
   }
 
+  editUser(id){
+    this.router.navigate(['/profile', {id: id }]);
+  }
+  
 }
