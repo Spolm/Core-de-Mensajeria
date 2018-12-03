@@ -112,7 +112,7 @@ public class M09_StatisticsTest {
     }
 
     
-    @Test
+    /*@Test
     void getStatisticsTestOk200()  {
         try {
             M09_Statistics intance = new M09_Statistics();
@@ -135,7 +135,7 @@ public class M09_StatisticsTest {
         } catch ( Exception e ) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Test
     void getStatisticsTestBadRequest(){
