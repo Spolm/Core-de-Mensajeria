@@ -20,16 +20,18 @@ export class ChannelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
     this.channelDataService
     .getAllChannels()
     .subscribe(
-      (channels) => {
+      ( channels ) => {
         this.channels = channels;
-        this.toastr.success("Lista Recibida");
-      },(err => {
-        this.toastr.error("Error en la Conexión");
+      },( _ => {
+        this.toastr.error( "Error en la Conexión" );
       })
     )
+    
+
   }
 
 }

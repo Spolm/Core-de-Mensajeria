@@ -1,6 +1,6 @@
 \c CoreMensajeria_StarSchema CoreMensajeria
 
-CREATE FUNCTION update_starschema() RETURNS void AS $$
+CREATE FUNCTION m09_update_starschema() RETURNS void AS $$
   BEGIN
     DELETE FROM Fact_Sent_Message;
     DELETE FROM Dim_Date;
@@ -28,4 +28,4 @@ CREATE FUNCTION update_starschema() RETURNS void AS $$
   END; $$
   LANGUAGE 'plpgsql';
 
-SELECT update_starschema();
+SELECT m09_update_starschema();
