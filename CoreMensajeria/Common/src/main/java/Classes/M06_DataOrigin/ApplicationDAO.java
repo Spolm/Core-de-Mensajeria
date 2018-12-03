@@ -148,7 +148,7 @@ public class ApplicationDAO {
      * @throws DatabaseConnectionProblemException si hay problema de comunicacion con la Base de Datos
      * @throws ApplicationNotFoundException si la Application con el id senalado no se encuentra/no existe
      */
-    public void updateApplication(int id, int status) throws DatabaseConnectionProblemException, ApplicationNotFoundException {
+    public Application updateApplication(int id, int status) throws DatabaseConnectionProblemException, ApplicationNotFoundException {
         try {
             //Find if application exist
             this.getApplication(id);
@@ -158,6 +158,8 @@ public class ApplicationDAO {
             preparedStatement.setInt(1, status);
             preparedStatement.setInt(2, id);
             preparedStatement.execute();
+
+            return this.getApplication(id);
         }catch (SQLException e){
             throw new DatabaseConnectionProblemException(/*"Error al actualizar aplicacion."*/ e.getMessage(), e);
         }

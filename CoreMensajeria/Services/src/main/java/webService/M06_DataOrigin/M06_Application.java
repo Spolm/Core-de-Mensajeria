@@ -109,8 +109,8 @@ public class M06_Application {
     @Produces(MediaType.APPLICATION_JSON)
     public Response activeApplication(@PathParam("id") int id) {
         try {
-            _applicationDAO.updateApplication(id,1);
-            return Response.ok(generateSuccessAsJson("Aplicacion activada exitosamente.")).build();
+            return Response.ok(generateSuccessAsJson("Aplicacion activada exitosamente.",
+                    _applicationDAO.updateApplication(id,1))).build();
         } catch (DatabaseConnectionProblemException e) {
             return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }catch (ApplicationNotFoundException e){
@@ -129,8 +129,8 @@ public class M06_Application {
     @Produces(MediaType.APPLICATION_JSON)
     public Response inactiveApplication(@PathParam("id") int id) {
         try {
-            _applicationDAO.updateApplication(id, 0);
-            return Response.ok(this.generateSuccessAsJson("Aplicacion pausada exitosamente.")).build();
+            return Response.ok(this.generateSuccessAsJson("Aplicacion pausada exitosamente.",
+                    _applicationDAO.updateApplication(id, 0))).build();
         } catch (DatabaseConnectionProblemException e) {
             return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }catch (ApplicationNotFoundException e){
