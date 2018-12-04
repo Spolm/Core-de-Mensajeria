@@ -24,6 +24,7 @@ const routes: Routes = [
             { path: 'template', loadChildren: './template/template.module#TemplateModule' },
             { path: 'company', loadChildren: './company/company.module#CompanyModule' },
             { path: 'campaigns', loadChildren: './campaign/campaign.module#CampaignModule' },
+            { path: 'createuser', loadChildren: './createuser/createuser.module#CreateuserModule'},
         ]
     }
 ];
