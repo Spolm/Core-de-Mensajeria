@@ -132,7 +132,7 @@ export class TemplateService {
     this.router.navigate(['template', id]);
   }
 
-  async updateTemplate(templateId: number, formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[]) {
+  async updateTemplate(templateId: number, formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[], applicationId: number, planning: any[]) {
     let flag: boolean;
     const json = {
       'messagge': formMessage.valueOf(),
@@ -142,8 +142,9 @@ export class TemplateService {
       'newParameters': newParameters,
       'channel_integrator': channel_integrator.valueOf(),
       // se coloca una campaña y origen por defecto
-      'applicationId': 2,
-      'campaign': 10
+      'applicationId': applicationId,
+      'campaign': 10,
+      'planning': planning
     };
     this.http.put(endpoint + 'templates/update', json).subscribe(async (res: boolean) => {
       flag = res;

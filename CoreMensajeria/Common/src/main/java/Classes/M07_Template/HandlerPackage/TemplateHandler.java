@@ -479,6 +479,10 @@ public class TemplateHandler {
             //update de Channel Integrator
             JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
             updateChannelIntegrator(channelIntegrator,gsonObj.get("templateId").getAsInt());
+            //planning
+            String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
+            PlanningHandler.updatePlanning(planning,gsonObj.get("templateId").getAsInt());
+
             return true;
         } catch (Exception e){
             System.out.println(e);
@@ -502,9 +506,16 @@ public class TemplateHandler {
     }
 
     private void updateTemplate(int campaign, int applicationId, int templateId) {
-        String query = "UPDATE public.template\n" +
-                "SET tem_campaign_id = " + campaign + ", tem_application_id = " + applicationId + "\n" +
-                "WHERE tem_id = " + templateId;
+        String query = "";
+        if (applicationId > 0) {
+            query = "UPDATE public.template\n" +
+                    "SET tem_campaign_id = " + campaign + ", tem_application_id = " + applicationId + "\n" +
+                    "WHERE tem_id = " + templateId;
+        } else {
+            query = "UPDATE public.template\n" +
+                    "SET tem_campaign_id = " + campaign + ", tem_application_id = null" +
+                    "WHERE tem_id = " + templateId;
+        }
         try{
             sql.sqlConn(query);
         }catch (SQLException e) {

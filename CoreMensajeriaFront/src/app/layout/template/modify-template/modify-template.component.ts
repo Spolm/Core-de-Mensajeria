@@ -100,6 +100,11 @@ export class ModifyTemplateComponent {
     });
     await delay(1000);
     this.formMessage = this.templateJson.message.message;
+    this.dateIni = this.templateJson.planning.startDate;
+    this.dateEnd = this.templateJson.planning.endDate;
+    this.timeIni = this.templateJson.planning.startTime;
+    this.timeEnd = this.templateJson.planning.endTime;
+    this.applicationId = this.templateJson.application._idApplication;
     this.assignParameter(this.parameters, this.templateJson.message.parameterArrayList);
     this.assignChannelsIntegrators(this.channels_integrators, this.templateJson.channels);
   }
@@ -186,31 +191,44 @@ export class ModifyTemplateComponent {
   }
 
   updateTemplate() {
-    this.formMessage = this.formMessage.trim();
-    if (this.formMessage != '') {
-      if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
-        if (this.channels_integrators[0]) {
-          this.templateService.updateTemplate(this.templateId, this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
-        } else {
-          this.toastr.error('Falta llenar un campo', 'Error',
-            {
-              timeOut: 2800,
-              progressBar: true
-            });
-        }
-      } else {
-        this.toastr.error('Tal vez quiera escribir un mensaje mas largo', 'Error',
-          {
-            timeOut: 2800,
-            progressBar: true
-          });
+      const planning: any = [];
+      if (this.originOption !== 'app'){
+          this.applicationId = 0;
       }
-    } else {
-      this.toastr.warning('No puede crear un template sin mensaje!', 'Aviso',
-        {
-          timeOut: 2800,
-          progressBar: true
-        });
-    }
+      if (this.dateIni < this.dateEnd) {
+          planning.push(this.dateIni, this.dateEnd, this.timeIni, this.timeEnd);
+          this.formMessage = this.formMessage.trim();
+          if (this.formMessage != '') {
+              if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
+                  if (this.channels_integrators[0]) {
+                      this.templateService.updateTemplate(this.templateId, this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators,this.applicationId, planning);
+                  } else {
+                      this.toastr.error('Falta llenar un campo', 'Error',
+                          {
+                              timeOut: 2800,
+                              progressBar: true
+                          });
+                  }
+              } else {
+                  this.toastr.error('Tal vez quiera escribir un mensaje mas largo', 'Error',
+                      {
+                          timeOut: 2800,
+                          progressBar: true
+                      });
+              }
+          } else {
+              this.toastr.warning('No puede crear un template sin mensaje!', 'Aviso',
+                  {
+                      timeOut: 2800,
+                      progressBar: true
+                  });
+          }
+      } else {
+          this.toastr.warning('La fecha inicial no puede ser superior a la final', 'Aviso',
+              {
+                  timeOut: 2800,
+                  progressBar: true
+              });
+      }
   }
 }

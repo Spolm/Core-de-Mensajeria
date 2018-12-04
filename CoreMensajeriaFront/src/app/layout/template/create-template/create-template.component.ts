@@ -153,8 +153,6 @@ export class CreateTemplateComponent {
   }
 
   postTemplate() {
-
-
       const planning: any = [];
       if (this.dateIni <= this.dateEnd) {
           planning.push(this.dateIni, this.dateEnd, this.timeIni, this.timeEnd);
