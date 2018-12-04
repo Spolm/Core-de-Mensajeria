@@ -47,12 +47,13 @@ public class PlanningHandler {
         }
     }
 
-    public static void postTemplate(String startDate, String startTime, String endDate, String endTime, int templateId){
-        /*
+    public static void postPlanning(String[] planning, int templateId){
+
+        Sql sql = new Sql();
         String query = "INSERT INTO public.Planning" +
-                "(pla_start_date, pla_start_time, pla_end_date, pla_end_time, pla_id) " +
-                "VALUES ('" + startDate + "','" + startTime +
-                "','" + endDate + "','" + endTime + "'," + templateId + ")";
+                "(pla_start_date, pla_start_time, pla_end_date, pla_end_time, pla_template_id) " +
+                "VALUES ('" + planning[0] + "','" + planning[2] +
+                "','" + planning[1] + "','" + planning[3] + "'," + templateId + ")";
         try{
             sql.sqlNoReturn(query);
         }catch (SQLException e) {
@@ -62,6 +63,8 @@ public class PlanningHandler {
         } finally {
             Sql.bdClose(sql.getConn());
         }
-        */
+
     }
+
+
 }

@@ -36,6 +36,7 @@ export class CreateTemplateComponent {
   timeEnd: string;
   showInputCreateParameterState = false;
 
+
   constructor(private templateService: TemplateService, private toastr: ToastrService, private router: Router) {
     this.getParameters();
     this.getChannels();
@@ -153,24 +154,20 @@ export class CreateTemplateComponent {
 
   postTemplate() {
 
-    console.log(this.formMessage);
-    console.log(this.parameters);
-    console.log(this.newParameters);
-    console.log(this.channels_integrators);
-    console.log(this.originOption);
-    console.log(this.dateIni);
-    console.log(this.dateEnd);
-    console.log(this.timeIni);
-    console.log(this.timeEnd);
 
-    if (this.originOption !== 'app'){
+    const planning: any = [];
+    planning.push(this.dateIni, this.dateEnd, this.timeIni, this.timeEnd);
+
+    console.log(planning);
+
+    if (this.originOption !== 'app') {
         this.applicationId = 0;
     }
     this.formMessage = this.formMessage.trim();
     if (this.formMessage != '') {
       if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
-        if (this.channels_integrators[0]) {
-          this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators,this.applicationId);
+        if (this.channels_integrators[0] && (this.applicationId !== undefined) && this.dateIni !== undefined && this.dateEnd !== undefined && this.timeIni !== undefined && this.timeEnd !== undefined) {
+          this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators, this.applicationId, planning);
         } else {
           this.toastr.warning('Falta llenar un campo', 'Aviso',
             {

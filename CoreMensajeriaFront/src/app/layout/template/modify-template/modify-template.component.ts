@@ -44,7 +44,8 @@ export class ModifyTemplateComponent {
     this.getParameters();
     this.getChannels();
     this.getApplications(2);
-    this.getTemplate();    this.getPrivileges(this.userId, 2);
+    this.getTemplate();
+    this.getPrivileges(this.userId, 2);
   }
 
   async getPrivileges(userId: string, companyId: number) {

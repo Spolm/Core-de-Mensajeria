@@ -397,6 +397,10 @@ public class TemplateHandler {
             JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
             postChannelIntegrator(channelIntegrator,templateId);
 
+            //planning
+            String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
+            PlanningHandler.postPlanning(planning,templateId);
+
             return true;
         } catch (Exception e){
             System.out.println(e);
