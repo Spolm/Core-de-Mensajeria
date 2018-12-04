@@ -5,8 +5,19 @@
 
 <div class="d-flex flex-row-reverse">
   <button type="button" class="btn btn-dark" routerLink="/template/create" *ngIf="CTEMPLATE">Crear Plantilla</button>
-</div>
+  <select class="form-control" id="company" name="company" [(ngModel)]="companyId" (change)="changeCompany(companyId)">
 
+    <ng-container *ngFor="let company of companiesJson">
+      <option *ngIf="company._status" [value]="company._idCompany">
+        <p>
+          {{company._name}}
+        </p>
+      </option>
+    </ng-container>
+
+  </select>
+  Seleccione una compañia
+</div>
 <div class="card">
   <table class="table table-bordered table-hover">
     <thead class="thead-dark">
@@ -30,7 +41,7 @@
           <td class="text-center">
             {{template.templateId}}
             <br>
-            <ngbd-modal-approve [templateId]="template.templateId" (spread)="getTemplates()"></ngbd-modal-approve>
+            <ngbd-modal-approve [templateId]="template.templateId" (spread)="regetTemplates()"></ngbd-modal-approve>
           </td>
         </ng-template>
         <td class="message">{{template.message.message}}</td>
