@@ -4,7 +4,15 @@ import Classes.M04_Integrator.Integrator;
 
 import java.util.ArrayList;
 
-//Clase abstracta que guarda los canales del sistema y define los atributos y metodos, los canales en concreto defien los metodos abstractos
+/**
+ * Clase abstracta Channel que nos proporciona los metodos
+ * para trabajar con los canales en concreto.
+ *
+ * @author José Salas
+ * @author Manuel Espinoza
+ * @author José Cedeño
+ */
+
 public abstract class Channel {
     private int idChannel;
     private String nameChannel;
