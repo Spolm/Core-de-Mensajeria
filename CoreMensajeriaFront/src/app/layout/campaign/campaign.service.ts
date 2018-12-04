@@ -6,6 +6,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/M03_Campaigns/';
 const httpOptions = {
   headers: new HttpHeaders({
+    'Access-Control-Allow-Origin':'*',
     'Content-Type':  'application/json'
   })};
 
