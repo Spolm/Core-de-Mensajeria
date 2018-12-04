@@ -12,6 +12,7 @@ import { delay } from 'q';
 export class ModifyTemplateComponent {
 
   userId: string = localStorage.getItem("userid");
+  companyId: string = localStorage.getItem("companyId");
   privilegesJson: any = [];
   CTEMPLATE = false;
   RTEMPLATE = false;
@@ -43,8 +44,9 @@ export class ModifyTemplateComponent {
     });
     this.getParameters();
     this.getChannels();
-    this.getApplications(2);
-    this.getTemplate();    this.getPrivileges(this.userId, 2);
+    this.getApplications(Number(this.companyId));
+    this.getTemplate();    
+    this.getPrivileges(this.userId, Number(this.companyId));
   }
 
   async getPrivileges(userId: string, companyId: number) {
