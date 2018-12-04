@@ -6,28 +6,21 @@
     <div class="col-4">
       <div class="form-group">
         <label for="formMessage">Nombre de la Compañia</label>
-        <input class="form-control" placeholder="Nombre">
+        <input class="form-control" name="nombre" [(ngModel)]="newCompany._name" required placeholder="Nombre">
       </div>
       <div class="form-group">
         <label for="formMessage">Descripción de la Compañia</label>
-        <input class="form-control" placeholder="Descripción">
+        <input class="form-control" name="descripcion" [(ngModel)]="newCompany._desc" required placeholder="Descripción">
       </div>
       <div class="form-group">
           <label for="formMessage">Administrador de la Compañia</label>
-          <input class="form-control" placeholder="Administrador" disabled>
+          <input class="form-control" name="admin" [(ngModel)]="newCompany._userId" required placeholder="Administrador" disabled>
         </div>
     </div>
   </div>
-  <div id="test" class="form-group">
-    testing this
-  </div>
-
-  <div>
-    test 1
-  </div>
 </form>
 <div class="d-flex flex-row-reverse">
-  <button type="button" class="btn btn-success m-1 col-3" onclick="addCompany()">Crear</button>
+  <button type="button" class="btn btn-success m-1 col-3" (click)="addCompany()">Crear</button>
   <button type="button" class="btn btn-danger m-1 col-3" routerLink="/company">Cancelar</button>
 </div>
 </div>

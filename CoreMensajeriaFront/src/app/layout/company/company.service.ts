@@ -6,6 +6,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/M02_Companies/';
 const httpOptions = {
   headers: new HttpHeaders({
+    'Access-Control-Allow-Origin':'*',
     'Content-Type':  'application/json'
   })};
 
@@ -37,11 +38,17 @@ export class CompanyService {
   }
 
   
-  addCompany (company): Promise<any> {
+  /*addCompany (company): Promise<any> {
     return this.http.post<any>(endpoint + 'M02_Company/AddCompany', company).toPromise()
       .then(res =>{
         return res
       })
+  }*/
+
+  addCompany (company): Observable<any> {
+    return this.http.post<any>(endpoint + 'M02_Company/AddCompany', company, httpOptions).pipe(
+      tap((company) => console.log(`company added w/ ${company._name}`)),
+    );
   }
 
   activateCompany(_idCompany: Number){

@@ -38,7 +38,7 @@ public class PlanningHandler {
             planning.setStartTime(resultSet.getString("planningStartTime"));
             planning.setEndDate(resultSet.getString("planningEndDate"));
             planning.setEndTime(resultSet.getString("planningEndTime"));
-            planning.setIdPlanning(resultSet.getInt("planningId"));
+            planning.setIdPlanning(resultSet.getInt("(planningId"));
         }catch (SQLException e){
             e.fillInStackTrace();
         }catch (Exception e){
@@ -48,12 +48,13 @@ public class PlanningHandler {
         }
     }
 
-    public static void postTemplate(String startDate, String startTime, String endDate, String endTime, int templateId){
-        /*
+    public static void postPlanning(String[] planning, int templateId){
+
+        Sql sql = new Sql();
         String query = "INSERT INTO public.Planning" +
-                "(pla_start_date, pla_start_time, pla_end_date, pla_end_time, pla_id) " +
-                "VALUES ('" + startDate + "','" + startTime +
-                "','" + endDate + "','" + endTime + "'," + templateId + ")";
+                "(pla_start_date, pla_start_time, pla_end_date, pla_end_time, pla_template_id) " +
+                "VALUES ('" + planning[0] + "','" + planning[2] +
+                "','" + planning[1] + "','" + planning[3] + "'," + templateId + ")";
         try{
             sql.sqlNoReturn(query);
         }catch (SQLException e) {
@@ -63,6 +64,23 @@ public class PlanningHandler {
         } finally {
             Sql.bdClose(sql.getConn());
         }
-        */
+
+    }
+
+
+    public static void updatePlanning(String[] planning, int templateId) {
+        Sql sql = new Sql();
+        String query = "update public.Planning \n" +
+                "set pla_start_date = '" + planning[0] + "',pla_start_time = '" + planning[2] + "', pla_end_date = '" + planning[1] + "', pla_end_time = '" + planning[3] + "'" +
+                "where pla_template_id = " + templateId;
+        try{
+            sql.sqlNoReturn(query);
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+        }
     }
 }

@@ -11,6 +11,7 @@ import { delay } from 'q';
 export class TemplatePageComponent implements OnInit {
 
   userId: string = localStorage.getItem("userid");
+  companyId: string = localStorage.getItem("companyId");
   privilegesJson: any = [];
   CTEMPLATE = false;
   RTEMPLATE = false;
@@ -27,7 +28,7 @@ export class TemplatePageComponent implements OnInit {
       this.id = +params['id'];
     });
     this.getTemplate();
-    this.getPrivileges(this.userId, 2);
+    this.getPrivileges(this.userId, Number(this.companyId));
   }
 
   async getPrivileges(userId: string, companyId: number) {
