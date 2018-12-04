@@ -110,7 +110,7 @@ public class M09_StatisticsTest {
             e.printStackTrace();
         }
     }
-/*
+
    @Test
    void getStatisticsTestOk200()  {
        try {
@@ -119,11 +119,21 @@ public class M09_StatisticsTest {
            ArrayList<Integer> listaCampaign = new ArrayList<>();
            ArrayList<Integer> listaChannels = new ArrayList<>();
            ArrayList<Integer> listaIntegrators = new ArrayList<>();
+           ArrayList<Integer> listaYear = new ArrayList<>();
+           ArrayList<Integer> listaMonth = new ArrayList<>();
+           ArrayList<Integer> listaDayOfWeek = new ArrayList<>();
+           ArrayList<Integer> listaWeekOfYear = new ArrayList<>();
+           ArrayList<Integer> listaDayOfMonth = new ArrayList<>();
+           ArrayList<Integer> listaDayOfYear = new ArrayList<>();
+           ArrayList<Integer> listaHour = new ArrayList<>();
+           ArrayList<Integer> listaMinute = new ArrayList<>();
+           ArrayList<Integer> listaSecond = new ArrayList<>();
+           ArrayList<Integer> listaQuarter = new ArrayList<>();
            listaCompany.add(1);
            listaCampaign.add(1);
            listaChannels.add(1);
-
-           Response salida = intance.getStatistics( listaCompany, listaCampaign, listaChannels, listaIntegrators);
+           Response salida = intance.getStatistics( listaCompany, listaCampaign, listaChannels, listaIntegrators, listaYear, listaMonth,
+           listaDayOfWeek, listaDayOfMonth, listaDayOfYear, listaHour, listaMinute, listaSecond, listaQuarter);
 
            assertEquals( 200, salida.getStatus() );
            assertNotNull( salida.getEntity());
@@ -140,10 +150,21 @@ public class M09_StatisticsTest {
         ArrayList<Integer> listaCampaign = new ArrayList<>();
         ArrayList<Integer> listaChannels = new ArrayList<>();
         ArrayList<Integer> listaIntegrators = new ArrayList<>();
-        Response salida = instance.getStatistics(listaCompany, listaChannels, listaCampaign, listaIntegrators);
+        ArrayList<Integer> listaYear = new ArrayList<>();
+        ArrayList<Integer> listaMonth = new ArrayList<>();
+        ArrayList<Integer> listaDayOfWeek = new ArrayList<>();
+        ArrayList<Integer> listaWeekOfYear = new ArrayList<>();
+        ArrayList<Integer> listaDayOfMonth = new ArrayList<>();
+        ArrayList<Integer> listaDayOfYear = new ArrayList<>();
+        ArrayList<Integer> listaHour = new ArrayList<>();
+        ArrayList<Integer> listaMinute = new ArrayList<>();
+        ArrayList<Integer> listaSecond = new ArrayList<>();
+        ArrayList<Integer> listaQuarter = new ArrayList<>();
+        Response salida = intance.getStatistics( listaCompany, listaCampaign, listaChannels, listaIntegrators, listaYear, listaMonth,
+           listaDayOfWeek, listaDayOfMonth, listaDayOfYear, listaHour, listaMinute, listaSecond, listaQuarter);
         assertEquals(400, salida.getStatus());
         assertEquals("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }", salida.getEntity().toString());
-    }*/
+    }
 
 
 
