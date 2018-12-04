@@ -38,7 +38,7 @@ public class PlanningHandler {
             planning.setStartTime(resultSet.getString("planningStartTime"));
             planning.setEndDate(resultSet.getString("planningEndDate"));
             planning.setEndTime(resultSet.getString("planningEndTime"));
-            planning.setIdPlanning(resultSet.getInt("planningId"));
+            planning.setIdPlanning(resultSet.getInt("(planningId"));
         }catch (SQLException e){
             e.fillInStackTrace();
         }catch (Exception e){
