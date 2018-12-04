@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -19,8 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class M10_ProfileTest {
     private User _userProfile;
     private M10_Profile _profileDao;
-    private UserDAO _userDAO = new UserDAO();
+    private UserDAO _userDAO;
     private ArrayList<Rol> _rol;
+    private String _result;
+    private User _search;
+    private ArrayList<User> _users;
+    private ArrayList _companies;
 
     private void newProfile(){
         _userProfile = new User();
@@ -56,9 +61,11 @@ public class M10_ProfileTest {
 
     @BeforeEach
     public void init(){
+        _userDAO = new UserDAO();
+        _profileDao= new M10_Profile();
         newProfile();
         fillRoleList();
-        _profileDao= new M10_Profile();
+
     }
 
     @AfterEach
@@ -79,5 +86,23 @@ public class M10_ProfileTest {
         assertEquals(_rol.get(2),roltest.get(2));
         assertEquals(_rol.get(3),roltest.get(3));
         assertEquals(_rol.get(4),roltest.get(4));
+    }
+
+    @Test
+    public void editProfileTest(){
+        _result=_profileDao.editProfile(1,"alexdgn213@gmail.com","0414255","Sta Fe");
+        assertEquals("Perfil editado con éxito",_result);
+    }
+
+    @Test
+    public void getUsersTest(){
+        _users = _profileDao.getUsers();
+        assertNotNull(_users);
+    }
+
+    @Test
+    public void getCompanies(){
+        _companies = _profileDao.getCompanies();
+        assertNotNull(_companies);
     }
 }

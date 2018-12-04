@@ -3,10 +3,7 @@ package Classes.M03_Campaign;
 import Classes.Sql;
 import Exceptions.CampaignDoesntExistsException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class CampaignDAO {
@@ -149,14 +146,15 @@ public class CampaignDAO {
 
     public boolean changeStatusCampaign (int id) throws CampaignDoesntExistsException {
         Campaign ca = new Campaign();
-        boolean flag;
+        
         try {
             ca = getDetails(id);
             ca.set_statusCampaign(!ca.is_statusCampaign());
-            flag = ca.is_statusCampaign();
-            PreparedStatement ps = conn.prepareCall("{call m03_changecampaignstatus(?,?)}");
+            String query = "UPDATE public.campaign SET" +
+                    " cam_status ="+ca.is_statusCampaign()+
+                    " WHERE cam_id =?";
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1,id);
-            ps.setBoolean(2,flag);
             ps.executeUpdate();
         }
         catch (SQLException e) {
@@ -170,6 +168,26 @@ public class CampaignDAO {
             Sql.bdClose(conn);
         }
         return ca.is_statusCampaign();
+    }
+
+    public Campaign createCampaign(Campaign ca) throws  CampaignDoesntExistsException {
+        try {
+
+            PreparedStatement preparedStatement = conn.prepareCall("{Call m02_addcampaign}");
+            preparedStatement.setInt(1, ca.get_idCampaign());
+            preparedStatement.setString(2, ca.get_nameCampaign());
+            preparedStatement.setString(3, ca.get_descCampaign());
+            preparedStatement.setBoolean(4, ca.is_statusCampaign());
+            preparedStatement.setDate(5, (Date) ca.get_startCampaign());
+            preparedStatement.setDate(6, (Date) ca.get_endCampaign());
+
+            preparedStatement.execute();
+        }catch (SQLException e){
+            throw new CampaignDoesntExistsException(e);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ca;
     }
 
 }
