@@ -207,7 +207,7 @@ ADD CONSTRAINT fk_campaign_id FOREIGN KEY ("tem_campaign_id")
 REFERENCES public.Campaign(cam_id);
 
 ALTER TABLE public.Template
-ADD COLUMN tem_application_id integer NOT NULL,
+ADD COLUMN tem_application_id integer,
 ADD CONSTRAINT fk_application_id FOREIGN KEY ("tem_application_id")
 REFERENCES public.Application(app_id);
 
