@@ -1,4 +1,5 @@
 import { Component, NgModule, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CompanyComponent } from './company.component';
 import { CompanyRoutingModule } from './company-routing.module';
@@ -10,7 +11,8 @@ import { CreateCompanyComponent } from './create-company/create-company.componen
   imports: [
     CommonModule,
     CompanyRoutingModule,
-    PageHeaderModule
+    PageHeaderModule,
+    FormsModule
   ],
   exports: [CompanyComponent],
   declarations: [CompanyComponent, CreateCompanyComponent]
