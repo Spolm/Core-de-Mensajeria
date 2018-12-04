@@ -199,9 +199,6 @@ public class M03_Campaigns {
         } catch (CampaignDoesntExistsException e) {
             e.printStackTrace();
         }
-        catch (ParameterCantBeNullException e) {
-            e.printStackTrace();
-        }
         catch (Exception e) {
             e.printStackTrace();
         }

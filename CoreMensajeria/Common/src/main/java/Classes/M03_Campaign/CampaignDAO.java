@@ -170,7 +170,7 @@ public class CampaignDAO {
         return ca.is_statusCampaign();
     }
 
-    public void createCampaign(Campaign ca) throws  CampaignDoesntExistsException {
+    public Campaign createCampaign(Campaign ca) throws  CampaignDoesntExistsException {
         try {
 
             PreparedStatement preparedStatement = conn.prepareCall("{Call m02_addcampaign}");
@@ -190,5 +190,4 @@ public class CampaignDAO {
         return ca;
     }
 
-}
 }

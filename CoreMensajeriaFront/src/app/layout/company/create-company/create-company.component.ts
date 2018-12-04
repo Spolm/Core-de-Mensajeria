@@ -9,22 +9,19 @@ import { CompanyService } from '../company.service';
   styleUrls: ['./create-company.component.scss']
 })
 export class CreateCompanyComponent implements OnInit {
-  
 
-  constructor(public rest: CompanyService) { }
 
-  private company: Company;
+  constructor(public companyService: CompanyService) { }
+
+  newCompany: Company = new Company();
   ngOnInit() {
-    this.addCompany(this.company);
   }
 
 
 
-  async addCompany(company:Company){
-    try{
-      await this.rest.addCompany(company);
-    }catch(error){
-
-    }
+  addCompany() {
+    this.companyService.addCompany(this.newCompany).toPromise().then(res => {
+      //manejo de la respuesta del servicio
+    });
   }
 }
