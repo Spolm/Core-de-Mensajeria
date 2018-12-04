@@ -475,6 +475,17 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         params = this.convertselectedCampaignsIdsIntoHttpParams(params);
         params = this.convertselectedChannelsIdsIntoHttpParams(params);
         params = this.convertselectedIntegratorsIdsIntoHttpParams(params);
+        params = this.convertselectedDaysIdsIntoHttpParams(params);
+        params = this.convertselectedDaysOfWeekIdsIntoHttpParams(params);
+        params = this.convertselectedDaysOfYearIdsIntoHttpParams(params);
+        params = this.convertselectedHoursIdsIntoHttpParams(params);
+        params = this.convertselectedMinutesIdsIntoHttpParams(params);
+        params = this.convertselectedMonthsIdsIntoHttpParams(params);
+        params = this.convertselectedQuartersIdsIntoHttpParams(params);
+        params = this.convertselectedSecondsIdsIntoHttpParams(params);
+        params = this.convertselectedWeeksOfYearIdsIntoHttpParams(params);
+        params = this.convertselectedYearsIdsIntoHttpParams(params);
+        console.log(params.toString());
         return params;
     }
 
@@ -502,6 +513,77 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     convertselectedIntegratorsIdsIntoHttpParams(params: HttpParams) {
         this.selectedIntegratorsIds.forEach(integratorId => {
             params = params.append("integratorId", integratorId.toString());
+        });
+        return params;
+    }
+
+    convertselectedYearsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedYearsIds.forEach(yearId => {
+            params = params.append("yearId", yearId.toString());
+        });
+        return params;
+    }
+
+    convertselectedMonthsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedMonthsIds.forEach(monthId => {
+            params = params.append("monthId", monthId.toString());
+        });
+        return params;
+    }
+
+    convertselectedDaysOfWeekIdsIntoHttpParams(params: HttpParams) {
+        this.selectedDaysOfWeek.forEach(dayOfWeekId => {
+            params = params.append("dayofweekId", dayOfWeekId.toString());
+        });
+        return params;
+    }
+
+    convertselectedWeeksOfYearIdsIntoHttpParams(params: HttpParams) {
+        this.selectedWeeksIds.forEach(weekofyearId => {
+            params = params.append("weekofyearId", weekofyearId.toString());
+        });
+        return params;
+    }
+
+    convertselectedDaysIdsIntoHttpParams(params: HttpParams) {
+        this.selectedDaysIds.forEach(dayofmonthId => {
+            console.log(dayofmonthId);
+            params = params.append("dayofmonthId", dayofmonthId.toString());
+        });
+        return params;
+    }
+
+    convertselectedDaysOfYearIdsIntoHttpParams(params: HttpParams) {
+        this.selectedDaysOfYearIds.forEach(dayofyearId => {
+            params = params.append("dayofyearId", dayofyearId.toString());
+        });
+        return params;
+    }
+
+    convertselectedHoursIdsIntoHttpParams(params: HttpParams) {
+        this.selectedHoursIds.forEach(hourId => {
+            params = params.append("hourId", hourId.toString());
+        });
+        return params;
+    }
+
+    convertselectedMinutesIdsIntoHttpParams(params: HttpParams) {
+        this.selectedMinutesIds.forEach(minuteId => {
+            params = params.append("minuteId", minuteId.toString());
+        });
+        return params;
+    }
+
+    convertselectedSecondsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedSecondsIds.forEach(secondId => {
+            params = params.append("secondId", secondId.toString());
+        });
+        return params;
+    }
+
+    convertselectedQuartersIdsIntoHttpParams(params: HttpParams) {
+        this.selectedQuartersOfYearIds.forEach(quarterId => {
+            params = params.append("quarterId", quarterId.toString());
         });
         return params;
     }
