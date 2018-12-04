@@ -208,49 +208,69 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         //this.getAllCampaigns();
         this.getAllChannels();
 
-        this.statisticsService
-            .getInitialMessagesForCompanies()
-            .subscribe(data => {
+        this.statisticsService.getInitialMessagesForCompanies().subscribe(
+            data => {
                 this.companiesChart = this.insertInitialDataIntoCharts(
                     data,
                     this.companiesChartElement,
                     "Cantidad de mensajes por compañía",
                     ChartType.bar
                 );
-            });
+            },
+            error => {
+                this.toastr.error(
+                    "Hubo un error obteniendo la cantidad de mensajes por compañía"
+                );
+            }
+        );
 
-        this.statisticsService
-            .getInitialMessagesForCampaigns()
-            .subscribe(data => {
+        this.statisticsService.getInitialMessagesForCampaigns().subscribe(
+            data => {
                 this.campaignsChart = this.insertInitialDataIntoCharts(
                     data,
                     this.campaignsChartElement,
                     "Cantidad de mensajes por campaña",
                     ChartType.bar
                 );
-            });
+            },
+            error => {
+                this.toastr.error(
+                    "Hubo un error obteniendo la cantidad de mensajes por campaña"
+                );
+            }
+        );
 
-        this.statisticsService
-            .getInitialMessagesForChannels()
-            .subscribe(data => {
+        this.statisticsService.getInitialMessagesForChannels().subscribe(
+            data => {
                 this.channelsChart = this.insertInitialDataIntoCharts(
                     data,
                     this.channelsChartElement,
                     "Cantidad de mensajes por canal",
                     ChartType.doughnut
                 );
-            });
+            },
+            error => {
+                this.toastr.error(
+                    "Hubo un error obteniendo la cantidad de mensajes por canales."
+                );
+            }
+        );
 
-        this.statisticsService
-            .getInitialMessagesForIntegrators()
-            .subscribe(data => {
+        this.statisticsService.getInitialMessagesForIntegrators().subscribe(
+            data => {
                 this.integratorsChart = this.insertInitialDataIntoCharts(
                     data,
                     this.integratorsChartElement,
                     "Cantidad de mensajes por integrador",
                     ChartType.bar
                 );
-            });
+            },
+            error => {
+                this.toastr.error(
+                    "Hubo un error obteniendo la cantidad de mensajes por integradores."
+                );
+            }
+        );
     }
 
     private getAllCompanies() {
@@ -464,7 +484,11 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                 );
             },
             error => {
-                console.error(error);
+                if (error["status"] == 400) {
+                    this.toastr.warning(
+                        "Es necesario seleccionar una compañía, campaña, canal o integrador para poder hacer consultas"
+                    );
+                }
             }
         );
     }
