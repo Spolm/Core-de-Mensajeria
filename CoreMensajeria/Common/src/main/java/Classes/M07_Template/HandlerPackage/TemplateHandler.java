@@ -124,8 +124,9 @@ public class TemplateHandler {
      * @throws TemplateDoesntExistsException
      */
     public Template getTemplate(int id) throws TemplateDoesntExistsException{
+        CampaignDAO campaignsService = new CampaignDAO();
         Template template = new Template();
-        String query = "select tem_id,ts_id,tem_user_id,tem_campaign_id, tem_creation_date, sta_name\n" +
+        String query = "select tem_id,ts_id,tem_user_id,tem_application_id,tem_campaign_id, tem_creation_date, sta_name\n" +
                 "from template_status,template,status\n" +
                 "where tem_id = " + id + " and tem_id = ts_template and sta_id = ts_status\n" +
                 "order by ts_id desc limit 1";
@@ -141,14 +142,12 @@ public class TemplateHandler {
                         resultSet.getString("sta_name")));
                 //asignamos canales, campaña y aplicacion
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
-                template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
+                template.setCampaign(campaignsService.getDetails(resultSet.getInt("tem_campaign_id")));
 
                 UserDAO userDAO = new UserDAO();
                 template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
                 //template.setCampaign(getCampaignsById(resultSet.getInt("tem_campaign_id")));
-                ApplicationDAO applicationService = new ApplicationDAO();
-                template.setApplication(applicationService.getApplication
-                        (template.getTemplateId()));
+                template.setApplication(getApplicationByTemplate(template.getTemplateId()));
                 template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
             }
 
@@ -156,9 +155,7 @@ public class TemplateHandler {
             //logg
         }catch (MessageDoesntExistsException e){
             //logg
-        }catch (ApplicationNotFoundException e) {
-            //logg
-        }catch(SQLException e){
+        } catch(SQLException e){
             throw new TemplateDoesntExistsException
                     ("Error: la plantilla " + id + " no existe", e, id);
         } catch (Exception e){
@@ -396,6 +393,10 @@ public class TemplateHandler {
             JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
             postChannelIntegrator(channelIntegrator,templateId);
 
+            //planning
+            String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
+            PlanningHandler.postPlanning(planning,templateId);
+
             return true;
         } catch (Exception e){
             System.out.println(e);
@@ -429,8 +430,14 @@ public class TemplateHandler {
     }
 
     public int postTemplate(int campaignId,int applicationId, int userId){
-        String query = "INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) \n" +
-                "VALUES (CURRENT_DATE," + campaignId + "," + applicationId + "," + userId + ") RETURNING tem_id";
+        String query = "";
+        if (applicationId != 0) {
+            query = "INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) \n" +
+                    "VALUES (CURRENT_DATE," + campaignId + "," + applicationId + "," + userId + ") RETURNING tem_id";
+        } else {
+            query = "INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_user_id) \n" +
+                    "VALUES (CURRENT_DATE," + campaignId + "," + userId + ") RETURNING tem_id";
+        }
         int templateId=0;
         try{
             ResultSet resultSet = sql.sqlConn(query);
@@ -472,6 +479,10 @@ public class TemplateHandler {
             //update de Channel Integrator
             JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
             updateChannelIntegrator(channelIntegrator,gsonObj.get("templateId").getAsInt());
+            //planning
+            String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
+            PlanningHandler.updatePlanning(planning,gsonObj.get("templateId").getAsInt());
+
             return true;
         } catch (Exception e){
             System.out.println(e);
@@ -495,9 +506,16 @@ public class TemplateHandler {
     }
 
     private void updateTemplate(int campaign, int applicationId, int templateId) {
-        String query = "UPDATE public.template\n" +
-                "SET tem_campaign_id = " + campaign + ", tem_application_id = " + applicationId + "\n" +
-                "WHERE tem_id = " + templateId;
+        String query = "";
+        if (applicationId > 0) {
+            query = "UPDATE public.template\n" +
+                    "SET tem_campaign_id = " + campaign + ", tem_application_id = " + applicationId + "\n" +
+                    "WHERE tem_id = " + templateId;
+        } else {
+            query = "UPDATE public.template\n" +
+                    "SET tem_campaign_id = " + campaign + ", tem_application_id = null" +
+                    "WHERE tem_id = " + templateId;
+        }
         try{
             sql.sqlConn(query);
         }catch (SQLException e) {

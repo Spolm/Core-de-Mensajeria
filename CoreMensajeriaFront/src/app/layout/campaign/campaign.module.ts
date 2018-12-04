@@ -1,4 +1,5 @@
 import { Component, NgModule, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CampaignRoutingModule } from './campaign-routing.module';
 import { CampaignComponent } from './campaign.component';
@@ -10,7 +11,8 @@ import { CreateCampaignComponent } from './create-campaign/create-campaign.compo
   imports: [
     CommonModule,
     CampaignRoutingModule,
-    PageHeaderModule
+    PageHeaderModule, 
+    FormsModule
   ],
   declarations: [CampaignComponent, CreateCampaignComponent]
 })

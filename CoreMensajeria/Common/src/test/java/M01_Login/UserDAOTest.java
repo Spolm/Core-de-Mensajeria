@@ -80,7 +80,7 @@ public class UserDAOTest {
     }
 
     /**
-     * This method tests findByUsernameOrEmail method.
+     * This method tests findByUsernameOrEmailTest method.
      */
     @Test
     public void findByUsernameOrEmailTest(){

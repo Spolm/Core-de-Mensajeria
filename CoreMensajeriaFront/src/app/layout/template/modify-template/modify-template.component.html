@@ -66,13 +66,13 @@
           <div class="form-check">
             <select class="form-control" id="integratorInput" name="integratorInput" [(ngModel)]="channel.descriptionChannel"
               (change)="addIntegrator(channel, channel.descriptionChannel)">
-
-              <option *ngFor="let integrator of channel.integrators" [value]="integrator.idIntegrator">
-                <p *ngIf="integrator.enabled">
-                  {{integrator.nameIntegrator}} | {{integrator.messageCost}} (bs.S)
-                </p>
-              </option>
-
+              <ng-container *ngFor="let integrator of channel.integrators">
+                <option *ngIf="integrator.enabled" [value]="integrator.idIntegrator">
+                  <p>
+                    {{integrator.nameIntegrator}} | {{integrator.messageCost}} (bs.S)
+                  </p>
+                </option>
+              </ng-container>
             </select>
           </div>
         </div>
@@ -120,13 +120,13 @@
         <div class="form-group col-4" *ngIf="originOption == 'app'">
           <div class="form-check">
             <select class="form-control" id="application" name="application" [(ngModel)]="applicationId">
-
-              <option *ngFor="let application of applicationsJson" [value]="application._idApplication">
-                <p *ngIf="application._statusApplication == 1">
+              <ng-container *ngFor="let application of applicationsJson">
+              <option *ngIf="application._statusApplication == 1" [value]="application._idApplication">
+                <p>
                   {{application._nameApplication}} | {{application._descriptionApplication}}
                 </p>
               </option>
-
+            </ng-container>
             </select>
           </div>
         </div>

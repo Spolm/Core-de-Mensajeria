@@ -5,7 +5,7 @@ import Classes.M08_Validation.ValidationTemplate;
 
 import java.util.Date;
 
-public class Validation {
+public class Validations {
 
     //Funcion para validar fecha de la plantilla a enviar
     public boolean Validate_sendDate(String templateDate){
