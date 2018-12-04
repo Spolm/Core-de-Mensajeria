@@ -128,3 +128,29 @@ WHERE m.mes_template = templateId;
 END;
 $$
 LANGUAGE 'plpgsql' VOLATILE;
+
+-- DROP FUNCTION m07_select_Planning(integer);
+CREATE OR REPLACE FUNCTION m07_select_Planning(IN templateId INTEGER)
+RETURNS TABLE (planningId INTEGER, panningStartDate TIMESTAMP, planningEndDate TIMESTAMP,
+		planningStartTime VARCHAR, planningEndTime VARCHAR, planningTemplateId INTEGER) 
+		AS $$
+BEGIN 
+RETURN QUERY
+SELECT * FROM public.planning
+WHERE pla_template_id = templateId;
+END;
+$$
+LANGUAGE 'plpgsql' VOLATILE;
+
+select * from planning;
+
+-- DROP FUNCTION  m07_select_applicantion_by_template(integer);
+CREATE OR REPLACE FUNCTION m07_select_applicantion_by_template(IN templateId INTEGER)
+RETURNS TABLE (applicationId integer) AS $$
+BEGIN
+RETURN QUERY 
+SELECT tem_application_id
+FROM public.Template WHERE tem_id = templateId;
+END;
+$$
+LANGUAGE 'plpgsql' VOLATILE;

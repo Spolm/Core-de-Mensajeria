@@ -67,6 +67,7 @@ public class TemplateHandler {
                     template.setApplication(getApplicationByTemplate(template.getTemplateId()));
                     template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
                     template.setMessage(MessageHandler.getMessage(template.getTemplateId()));
+                    template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
                     templateArrayList.add(template);
                 }
             }
@@ -316,26 +317,21 @@ public class TemplateHandler {
      */
     public Application getApplicationByTemplate(int templateId){
         Application application = new Application();
+        Connection connection = Sql.getConInstance();
         try {
-            //query que obtiene el id de la aplicacion que tiene asociada la plantilla
-            ResultSet resultSet = sql.sqlConn(
-                    "SELECT tem_application_id\n" +
-                            "FROM Template\n" +
-                            "WHERE tem_id = " + templateId + ";");
-            //instanciado el api ApplicationDAO
+            PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_applicantion_by_template(?)}");
+            preparedStatement.setInt(1,templateId);
+            ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             ApplicationDAO applicationService = new ApplicationDAO();
-            //Obtener objeto aplicacion con el id de aplicacion del query anterior
             application = applicationService.getApplication
-                    (resultSet.getInt("tem_application_id"));
+                    (resultSet.getInt("applicationId"));
         } catch (SQLException e){
             e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
         } finally {
-            if (sql.getConn() != null) {
-                Sql.bdClose(sql.getConn());
-            }
+            Sql.bdClose(connection);
             return application;
         }
     }
