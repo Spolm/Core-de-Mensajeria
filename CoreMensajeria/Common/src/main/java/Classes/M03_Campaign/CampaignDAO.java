@@ -149,14 +149,15 @@ public class CampaignDAO {
 
     public boolean changeStatusCampaign (int id) throws CampaignDoesntExistsException {
         Campaign ca = new Campaign();
-        boolean flag;
+        
         try {
             ca = getDetails(id);
             ca.set_statusCampaign(!ca.is_statusCampaign());
-            flag = ca.is_statusCampaign();
-            PreparedStatement ps = conn.prepareCall("{call m03_changecampaignstatus(?,?)}");
+            String query = "UPDATE public.campaign SET" +
+                    " cam_status ="+ca.is_statusCampaign()+
+                    " WHERE cam_id =?";
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1,id);
-            ps.setBoolean(2,flag);
             ps.executeUpdate();
         }
         catch (SQLException e) {

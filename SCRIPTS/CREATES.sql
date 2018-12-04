@@ -226,4 +226,14 @@ ADD COLUMN ts_user_id integer,
 ADD CONSTRAINT fk_Template_Status_user_id FOREIGN KEY ("ts_user_id") 
 REFERENCES public.User(use_id);
 
-
+CREATE TABLE public.Planning
+(
+    pla_id serial PRIMARY KEY,
+    pla_start_date timestamp NOT NULL,
+    pla_end_date timestamp NOT NULL,
+    pla_start_time varchar(5) NOT NULL,
+    pla_end_time varchar(5) NOT NULL,
+    pla_template_id integer NOT NULL,
+    CONSTRAINT fk_template_id FOREIGN KEY ("pla_template_id")
+    REFERENCES public.Template(tem_id)
+);
