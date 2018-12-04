@@ -178,17 +178,6 @@ END; $$
 Language 'plpgsql';
 
 
-CREATE OR REPLACE FUNCTION m09_getDates()
- RETURNS TABLE (
- dat_id TIMESTAMP
-)
-AS $$
-BEGIN
-	RETURN QUERY  SELECT DISTINCT d.dat_id FROM dim_date d ORDER BY d.dat_id;
-END; $$
-Language 'plpgsql';
-
-
 CREATE FUNCTION m09_update_starschema() RETURNS void AS $$
   BEGIN
     DELETE FROM Fact_Sent_Message;

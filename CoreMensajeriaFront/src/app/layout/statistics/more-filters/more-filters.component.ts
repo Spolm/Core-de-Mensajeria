@@ -282,7 +282,7 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
 
     getYears() {
         this.statisticsService.getYears().subscribe(data => {
-            this.insertIntoDateDropdown(
+            this.insertNumberIntoDateDropdown(
                 data,
                 this.yearsDropdown,
                 "year_id",
@@ -293,24 +293,19 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
 
     getMonths() {
         this.statisticsService.getMonths().subscribe(data => {
-            let anyData: any = data;
-            let monthString = [];
-            anyData.forEach(month => {
-                monthString.push(this.months[month - 1]);
-            });
-            this.insertIntoDateDropdown(
-                monthString,
+            this.insertStringIntoDateDropdown(
+                data,
                 this.monthsDropdown,
                 "month_id",
-                "month_name"
+                "month_name",
+                this.months
             );
-            console.log(monthString);
         });
     }
 
     getDays() {
         this.statisticsService.getDaysOfMonth().subscribe(data => {
-            this.insertIntoDateDropdown(
+            this.insertNumberIntoDateDropdown(
                 data,
                 this.daysDropdown,
                 "day_id",
@@ -321,7 +316,7 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
 
     getWeeks() {
         this.statisticsService.getWeeksOfYear().subscribe(data => {
-            this.insertIntoDateDropdown(
+            this.insertNumberIntoDateDropdown(
                 data,
                 this.weeksDropdown,
                 "week_id",
@@ -332,23 +327,19 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
 
     getDaysOfWeek() {
         this.statisticsService.getDaysOfWeek().subscribe(data => {
-            let anyData: any = data;
-            let daysString = [];
-            anyData.forEach(day => {
-                daysString.push(this.daysOfWeek[day - 1]);
-            });
-            this.insertIntoDateDropdown(
-                daysString,
+            this.insertStringIntoDateDropdown(
+                data,
                 this.daysOfWeekDropdown,
                 "dayOfWeek_id",
-                "dayOfWeek_name"
+                "dayOfWeek_name",
+                this.daysOfWeek
             );
         });
     }
 
     getQuartersOfYear() {
         this.statisticsService.getQuartersOfYear().subscribe(data => {
-            this.insertIntoDateDropdown(
+            this.insertNumberIntoDateDropdown(
                 data,
                 this.quartersOfYearDropdown,
                 "quarterOfYear_id",
@@ -359,7 +350,7 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
 
     getDaysOfYear() {
         this.statisticsService.getDaysOfYear().subscribe(data => {
-            this.insertIntoDateDropdown(
+            this.insertNumberIntoDateDropdown(
                 data,
                 this.daysOfYearDropdown,
                 "dayOfYear_id",
@@ -370,7 +361,7 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
 
     getHours() {
         this.statisticsService.getHours().subscribe(data => {
-            this.insertIntoDateDropdown(
+            this.insertNumberIntoDateDropdown(
                 data,
                 this.hoursDropdown,
                 "hour_id",
@@ -381,7 +372,7 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
 
     getMinutes() {
         this.statisticsService.getMinutes().subscribe(data => {
-            this.insertIntoDateDropdown(
+            this.insertNumberIntoDateDropdown(
                 data,
                 this.minutesDropdown,
                 "minute_id",
@@ -392,7 +383,7 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
 
     getSeconds() {
         this.statisticsService.getSeconds().subscribe(data => {
-            this.insertIntoDateDropdown(
+            this.insertNumberIntoDateDropdown(
                 data,
                 this.secondsDropdown,
                 "second_id",
@@ -401,19 +392,32 @@ export class MoreFiltersComponent extends DropdownMethods implements OnInit {
         });
     }
 
-    insertIntoDateDropdown(
+    insertNumberIntoDateDropdown(
         data: any,
         dateDropdown: any[],
         idField: string,
         nameField: string
     ) {
-        var i = 1;
         data.forEach(date => {
             var item = {};
-            item[idField] = i;
+            item[idField] = date;
             item[nameField] = date.toString();
             dateDropdown.push(item);
-            i++;
+        });
+    }
+
+    insertStringIntoDateDropdown(
+        data: any,
+        dateDropdown: any[],
+        idField: string,
+        nameField: string,
+        array: string[]
+    ) {
+        data.forEach(date => {
+            var item = {};
+            item[idField] = date;
+            item[nameField] = array[date - 1];
+            dateDropdown.push(item);
         });
     }
 }
