@@ -133,7 +133,7 @@ public class M09_StatisticsTest {
            listaCampaign.add(1);
            listaChannels.add(1);
            Response salida = intance.getStatistics( listaCompany, listaCampaign, listaChannels, listaIntegrators, listaYear, listaMonth,
-           listaDayOfWeek, listaDayOfMonth, listaDayOfYear, listaHour, listaMinute, listaSecond, listaQuarter);
+                   listaWeekOfYear, listaDayOfWeek, listaDayOfMonth, listaDayOfYear, listaHour, listaMinute, listaSecond, listaQuarter);
 
            assertEquals( 200, salida.getStatus() );
            assertNotNull( salida.getEntity());
@@ -160,8 +160,8 @@ public class M09_StatisticsTest {
         ArrayList<Integer> listaMinute = new ArrayList<>();
         ArrayList<Integer> listaSecond = new ArrayList<>();
         ArrayList<Integer> listaQuarter = new ArrayList<>();
-        Response salida = intance.getStatistics( listaCompany, listaCampaign, listaChannels, listaIntegrators, listaYear, listaMonth,
-           listaDayOfWeek, listaDayOfMonth, listaDayOfYear, listaHour, listaMinute, listaSecond, listaQuarter);
+        Response salida = instance.getStatistics( listaCompany, listaCampaign, listaChannels, listaIntegrators, listaYear, listaMonth,
+                listaWeekOfYear, listaDayOfWeek, listaDayOfMonth, listaDayOfYear, listaHour, listaMinute, listaSecond, listaQuarter);
         assertEquals(400, salida.getStatus());
         assertEquals("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }", salida.getEntity().toString());
     }
