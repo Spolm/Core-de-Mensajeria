@@ -8,26 +8,47 @@ import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import com.google.gson.JsonArray;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * MessageHandler class used for the management of information
+ * search in the database with respect to Message.
+ */
 public class MessageHandler {
+    /**
+     * connection to the database
+     */
     public static Sql sql;
 
+    /**
+     * constructor without receiving parameters that instantiates
+     * the sql attribute of the MessageHandler class.
+     */
     public MessageHandler() {
         sql = new Sql();
     }
 
+    /**
+     * this method returns a list of templates where each contains
+     * its message and associated parameters.
+     * @param templateArrayList arrayList of template without message
+     * @return arrayList of template with message
+     */
     public ArrayList<Template> getMessages(ArrayList<Template> templateArrayList){
         try {
+            Connection connection = Sql.getConInstance();
+            PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_messages(?)}");
             for(int x = 0; x < templateArrayList.size(); x++){
-                ResultSet resultSet = sql.sqlConn("SELECT * FROM PUBLIC.MESSAGE WHERE MES_TEMPLATE = " +
-                        templateArrayList.get(x).getTemplateId());
+                preparedStatement.setInt(1, templateArrayList.get(x).getTemplateId());
+                ResultSet resultSet = preparedStatement.executeQuery();
                 resultSet.next();
                 Message message = new Message();
-                message.setMessageId(resultSet.getInt("mes_id"));
-                message.setMessage(resultSet.getString("mes_text"));
+                message.setMessageId(resultSet.getInt("messageId"));
+                message.setMessage(resultSet.getString("messageText"));
                 message.setParameters(ParameterHandler.getParametersByMessage(message.getMessageId()));
                 templateArrayList.get(x).setMessage(message);
             }
@@ -41,16 +62,25 @@ public class MessageHandler {
         }
     }
 
+    /**
+     * this method returns the message that is associated
+     * with the specified template.
+     * @param templateId template id
+     * @return message template message specified
+     * @throws MessageDoesntExistsException the specified template has no associated message
+     * @throws ParameterDoesntExistsException the specified message has no associated parameters
+     */
     public static Message getMessage(int templateId)
             throws MessageDoesntExistsException, ParameterDoesntExistsException{
-        String query = "select mes_id,mes_text from message where mes_template =" + templateId;
         Message message = new Message();
-        sql = new Sql();
+        Connection connection = Sql.getConInstance();
         try {
-            ResultSet resultSet = sql.sqlConn(query);
+            PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_message(?)}");
+            preparedStatement.setInt(1, templateId);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
-                message.setMessageId(resultSet.getInt("mes_id"));
-                message.setMessage(resultSet.getString("mes_text"));
+                message.setMessageId(resultSet.getInt("messageId"));
+                message.setMessage(resultSet.getString("messageText"));
                 message.setParameters(ParameterHandler.getParametersByMessage(message.getMessageId()));
             }
         }catch (ParameterDoesntExistsException e) {
@@ -59,18 +89,24 @@ public class MessageHandler {
                             + templateId,e, templateId);
         }catch (SQLException e) {
             throw new MessageDoesntExistsException
-                ("Error: No existe mensaje para esta plantilla con id:"
-                        + templateId, e, templateId);
+                    ("Error: No existe mensaje para esta plantilla con id:"
+                            + templateId, e, templateId);
         }catch(Exception e){
             e.printStackTrace();
         }finally {
-            if (sql.getConn() != null) {
-                Sql.bdClose(sql.getConn());
-            }
+            Sql.bdClose(connection);
             return message;
         }
     }
 
+    /**
+     * this method is responsible for storing the message of a template
+     * and all its attributes.
+     * @param message string message with the parameters included
+     * @param templateId template id
+     * @param parameters list of associated parameters
+     * @param companyId company id
+     */
     public static void postMessage(String message, int templateId, String[] parameters,int companyId) {
         String query = "INSERT INTO public.Message(mes_text,mes_template)" +
                 "VALUES ('" + message + "'," + templateId + ") returning mes_id";
@@ -90,6 +126,13 @@ public class MessageHandler {
         }
     }
 
+    /**
+     * this method is responsible for storing the parameters associated
+     * with a specific message.
+     * @param messageId message id
+     * @param parameters list of associated parameters
+     * @param companyId company id
+     */
     private static void postParameterOfMessage(int messageId, String[] parameters, int companyId) {
         sql = new Sql();
         String query = "";
@@ -107,11 +150,19 @@ public class MessageHandler {
         }
     }
 
+    /**
+     * this method is responsible for modify the message of a template
+     * and all its attributes.
+     * @param message string message with the parameters included
+     * @param templateId template id
+     * @param parameters list of associated parameters
+     * @param companyId company id
+     */
     public static void updateMessage(String message, int templateId, String[] parameters,int companyId) {
         String query = "UPDATE public.message\n" +
-                        "SET mes_text = '" + message + "'\n" +
-                        "WHERE mes_template = " + templateId + "\n" +
-                        "returning mes_id";
+                "SET mes_text = '" + message + "'\n" +
+                "WHERE mes_template = " + templateId + "\n" +
+                "returning mes_id";
         sql = new Sql();
         ResultSet resultSet;
         int messageId;
@@ -128,6 +179,13 @@ public class MessageHandler {
         }
     }
 
+    /**
+     * his method is responsible for modifying the parameters associated
+     * with a specific message.
+     * @param messageId message id
+     * @param parameters list of associated parameters
+     * @param companyId company id
+     */
     private static void updateParameterOfMessage(int messageId, String[] parameters, int companyId) {
         String query = "delete from public.message_parameter\n" +
                 "WHERE mp_message = " + messageId;

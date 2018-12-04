@@ -46,4 +46,10 @@ public class Encrypter {
         DateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
         return dateFormat.format(date);
     }
+
+    static String getCurrentDatePathFormat() {
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("ddMyyyyHHmmss");
+        return dateFormat.format(date);
+    }
 }

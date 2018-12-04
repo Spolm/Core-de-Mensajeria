@@ -64,6 +64,11 @@ export class TemplateService {
       map(this.extractData));
   }
 
+  getPrivilegesByUserAndCompany(userId: string, companyId: number){
+    return this.http.get(endpoint + 'templates/privileges?userId=' + userId + '&companyId=' + companyId).pipe(
+      map(this.extractData));
+  }
+
   approveTemplate(templateId: Number) {
     let userId = localStorage.getItem('userid');
     return this.http.post(endpoint + 'templates/update/' + templateId, userId).subscribe();
