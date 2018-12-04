@@ -136,12 +136,12 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getCompaniesCount(@QueryParam("filter") String filter) {
         String filterAux = filter.toLowerCase();
-        switch (filter) {
+        switch (filterAux) {
             case "companies": return getOverallCountFor(filterType.company);
             case "campaigns": return getOverallCountFor(filterType.campaign);
             case "channels": return getOverallCountFor(filterType.channel);
             case "integrators": return getOverallCountFor(filterType.integrator);
-            default: return Response.status(400).entity("{ \"Mensaje\": \"No se envió ningun parametro o el parametro es incorrecto\" }");
+            default: return Response.status(400).entity("{ \"Mensaje\": \"No se envió ningun parametro o el parametro es incorrecto\" }").build();
         }
     }
 
