@@ -35,7 +35,7 @@ export class CampaignService {
   
   
   addCampaign (campaign): Observable<any> {
-    return this.http.post<any>(endpoint + 'M03_Campaign/AddCampaign', JSON.stringify(campaign), httpOptions).pipe(
+    return this.http.post<any>(endpoint + 'AddCampaign', JSON.stringify(campaign), httpOptions).pipe(
       tap((campaign) => console.log(`Campaign added w/ ${campaign._name}`)),
     );
   }
