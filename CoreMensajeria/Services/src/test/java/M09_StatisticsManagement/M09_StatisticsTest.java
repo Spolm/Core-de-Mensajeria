@@ -110,7 +110,7 @@ public class M09_StatisticsTest {
             e.printStackTrace();
         }
     }
-
+/*
    @Test
    void getStatisticsTestOk200()  {
        try {
@@ -143,7 +143,7 @@ public class M09_StatisticsTest {
         Response salida = instance.getStatistics(listaCompany, listaChannels, listaCampaign, listaIntegrators);
         assertEquals(400, salida.getStatus());
         assertEquals("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }", salida.getEntity().toString());
-    }
+    }*/
 
 
 
