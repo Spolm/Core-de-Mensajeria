@@ -9,6 +9,7 @@
 -- Modulo 1
 \ir SP/m01_users.sql
 -- Modulo 2
+\ir SP/m02_addcompany.sql
 \ir SP/m02_getcompanies.sql
 \ir SP/m02_getcompaniesall.sql
 \ir SP/m02_getcompanybyid.sql
@@ -37,6 +38,5 @@
 \ir CREATES_STARSCHEMA.sql
 
 \c CoreMensajeria_StarSchema CoreMensajeria
-\ir SP/m09_getMessagesParameter.sql
 \ir SP/m09_coremensajeria_starschema.sql
 -- \ir StoreProceduresM_09/FuntionsGet.sql
