@@ -178,13 +178,47 @@ END; $$
 Language 'plpgsql';
 
 
-CREATE OR REPLACE FUNCTION m09_getDates()
+CREATE OR REPLACE FUNCTION m09_get_MessageParameter (IN companyIds varchar, IN campaignIds varchar,
+  IN channelIds varchar, IN integratorIds varchar, IN yearsIds varchar, IN monthsIds varchar,
+  IN daysofweekIds varchar, IN weeksofyearIds varchar, IN daysofmonthIds varchar, IN daysofyearIds varchar,
+  IN hourIds varchar, IN minutesIds varchar, IN secondsIds varchar, IN quartersofyearIds varchar,
+  IN param1 varchar, IN param2 varchar, IN param3 varchar, IN param4 varchar, IN param5 varchar, IN param6 varchar)
  RETURNS TABLE (
- dat_id TIMESTAMP
+ icount BIGINT,
+ paramId int,
+ paramName VARCHAR(200)
 )
 AS $$
 BEGIN
-	RETURN QUERY  SELECT DISTINCT d.dat_id FROM dim_date d ORDER BY d.dat_id;
+	RETURN QUERY EXECUTE('SELECT count(DISTINCT me.*) as msgs, ' || param1 || ', ' || param2 || ' as name ' ||
+                  'FROM fact_sent_message me ' || param3 ||  param5 || ' ' ||
+                  'WHERE ' || param1 || ' = ' || param4  || param6 ||  companyIds || campaignIds || channelIds ||
+                  integratorIds ||  yearsIds || monthsIds || daysofweekIds || weeksofyearIds ||
+                  daysofmonthIds || daysofyearIds || hourIds || minutesIds || secondsIds ||
+                  quartersofyearIds ||
+                  ' GROUP BY ' || param1 || ', '|| param2);
+END; $$
+Language 'plpgsql';
+
+
+CREATE OR REPLACE FUNCTION m09_get_MessagesTime (IN companyIds varchar, IN campaignIds varchar,
+  IN channelIds varchar, IN integratorIds varchar, IN yearsIds varchar, IN monthsIds varchar,
+  IN daysofweekIds varchar, IN weeksofyearIds varchar, IN daysofmonthIds varchar, IN daysofyearIds varchar,
+  IN hourIds varchar, IN minutesIds varchar, IN secondsIds varchar, IN quartersofyearIds varchar,
+  IN param1 varchar, IN param2 varchar, IN param3 varchar, IN param4 varchar)
+ RETURNS TABLE (
+ icount BIGINT,
+ paramName int
+)
+AS $$
+BEGIN
+	RETURN QUERY EXECUTE('SELECT count(DISTINCT me.*) as msgs, ' || param1 || ', ' || param2 || ' as name ' ||
+                  'FROM fact_sent_message me ' || param3 || ' ' ||
+                  'WHERE ' || param1 || ' = ' || param4  || companyIds || campaignIds || channelIds ||
+                  integratorIds ||  yearsIds || monthsIds || daysofweekIds || weeksofyearIds ||
+                  daysofmonthIds || daysofyearIds || hourIds || minutesIds || secondsIds ||
+                  quartersofyearIds ||
+                  ' GROUP BY ' || param1 || ', '|| param2);
 END; $$
 Language 'plpgsql';
 

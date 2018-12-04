@@ -36,7 +36,7 @@
             <i class="fa fa-user-circle"></i>&nbsp;
             <span>{{ 'Perfil' | translate }}</span>
         </a>
-        <a [routerLink]="['/createuser']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a *ngIf="findPrivilege('CUSER')" [routerLink]="['/createuser']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-address-card-o"></i>&nbsp;
             <span>{{ 'Agregar Usuario' | translate }}</span>
         </a>
