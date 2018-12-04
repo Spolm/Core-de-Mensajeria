@@ -1,15 +1,15 @@
 package webService.M08_MessageCoreManagement;
 
+
 import Classes.M07_Template.HandlerPackage.MessageHandler;
 import Classes.M08_Validation.ValidationReciveParameter;
 import Classes.M08_Validation.ValidationTemplate;
 import Classes.M07_Template.HandlerPackage.TemplateHandler;
 import Classes.M07_Template.Template;
-import Exceptions.MessageDoesntExistsException;
-import Exceptions.ParameterDoesntExistsException;
-import Exceptions.TemplateDoesntExistsException;
+import Classes.M04_Integrator.*;
+import Exceptions.*;
 import com.google.gson.Gson;
-
+import java.util.Random;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -40,7 +40,9 @@ public class M08_MessageValidation {
 
         int[] posicion;
         int j =0;
-        
+        String correo="";
+        String telefono="";
+        Random rnd = new Random();
         try { 
            
          Gson g = new Gson();
@@ -49,7 +51,8 @@ public class M08_MessageValidation {
          List<ValidationReciveParameter.Data> parametersArray = parameters.getData();
          TemplateHandler template = new TemplateHandler();
          Template template2=template.getTemplate( parameters.getTemplate_id());
-
+         IntegratorDAO _integratorDAO =new IntegratorDAO();
+         MessageIntegrator respuestaIntegrador = null;
 
         char[] characters = String.valueOf(MessageHandler.getMessage(template2.getTemplateId()).getMessage()).toCharArray();
         posicion= new int[characters.length];
@@ -70,6 +73,12 @@ public class M08_MessageValidation {
             if((j /parametersArray.size())==2){
                 newMessage = MessageHandler.getMessage(template2.getTemplateId()).getMessage();
                 for (int i = 0; i <  parametersArray.size(); i++){
+                    if(parametersArray.get(i).getParameter().getName().equals("Correo")){
+                        correo = parametersArray.get(i).getParameter().getValue();
+                    }
+                    if(parametersArray.get(i).getParameter().getName().equals("Telefono")){
+                        telefono = parametersArray.get(i).getParameter().getValue();
+                    }
                     newMessage = newMessage.replace("[.$"+parametersArray.get(i).getParameter().getName()+"$.]", parametersArray.get(i).getParameter().getValue());
                 }
             }
@@ -79,9 +88,62 @@ public class M08_MessageValidation {
                     return "El sms supera los 160 caracteres";
                 }
                 ///envio mensaje
+                for (int k = 0; i <  template2.getChannels().get(i).getIntegrators().size(); i++){
+
+                    if(template2.getChannels().get(i).getIntegrators().get(i).getNameIntegrator().equals("Movistar")){
+                        respuestaIntegrador = _integratorDAO.getConcreteIntegrator( template2.getChannels().get(i).getIntegrators().get(k).getIdIntegrator()).sendMessage(newMessage,telefono,Integer.toString(rnd.nextInt()));
+                       if(respuestaIntegrador.isSend()){
+                           return "Mensaje enviado:: "+respuestaIntegrador.getAcknowledge();
+                       }else{
+                           return "Mensaje no enviado:: "+respuestaIntegrador.getMsg();
+                       }
+                    }
+                    if(template2.getChannels().get(i).getIntegrators().get(k).getNameIntegrator().equals("Digitel")){
+                        respuestaIntegrador = _integratorDAO.getConcreteIntegrator( template2.getChannels().get(i).getIntegrators().get(k).getIdIntegrator()).sendMessage(newMessage,telefono,Integer.toString(rnd.nextInt()));
+                        if(respuestaIntegrador.isSend()){
+                            return "Mensaje enviado:: "+respuestaIntegrador.getAcknowledge();
+                        }else{
+                            return "Mensaje no enviado:: "+respuestaIntegrador.getMsg();
+                        }
+                    }
+                    if(template2.getChannels().get(i).getIntegrators().get(k).getNameIntegrator().equals("Movilnet")){
+                        respuestaIntegrador = _integratorDAO.getConcreteIntegrator( template2.getChannels().get(i).getIntegrators().get(k).getIdIntegrator()).sendMessage(newMessage,telefono,Integer.toString(rnd.nextInt()));
+                        if(respuestaIntegrador.isSend()){
+                            return "Mensaje enviado:: "+respuestaIntegrador.getAcknowledge();
+                        }else{
+                            return "Mensaje no enviado:: "+respuestaIntegrador.getMsg();
+                        }
+                    }
+                    if(template2.getChannels().get(i).getIntegrators().get(k).getNameIntegrator().equals("MailChimp")){
+                        respuestaIntegrador = _integratorDAO.getConcreteIntegrator( template2.getChannels().get(i).getIntegrators().get(k).getIdIntegrator()).sendMessage(newMessage,correo,Integer.toString(rnd.nextInt()));
+                        if(respuestaIntegrador.isSend()){
+                            return "Mensaje enviado:: "+respuestaIntegrador.getAcknowledge();
+                        }else{
+                            return "Mensaje no enviado:: "+respuestaIntegrador.getMsg();
+                        }
+                    }
+                    if(template2.getChannels().get(i).getIntegrators().get(k).getNameIntegrator().equals("Aweber")){
+                        respuestaIntegrador = _integratorDAO.getConcreteIntegrator( template2.getChannels().get(i).getIntegrators().get(k).getIdIntegrator()).sendMessage(newMessage,correo,Integer.toString(rnd.nextInt()));
+                        if(respuestaIntegrador.isSend()){
+                            return "Mensaje enviado:: "+respuestaIntegrador.getAcknowledge();
+                        }else{
+                            return "Mensaje no enviado:: "+respuestaIntegrador.getMsg();
+                        }
+                    }
+                    if(template2.getChannels().get(i).getIntegrators().get(k).getNameIntegrator().equals("Infusionsoft")){
+                        respuestaIntegrador = _integratorDAO.getConcreteIntegrator( template2.getChannels().get(i).getIntegrators().get(k).getIdIntegrator()).sendMessage(newMessage,correo,Integer.toString(rnd.nextInt()));
+                        if(respuestaIntegrador.isSend()){
+                            return "Mensaje enviado:: "+respuestaIntegrador.getAcknowledge();
+                        }else{
+                            return "Mensaje no enviado:: "+respuestaIntegrador.getMsg();
+                        }
+                    }
+                }
+
             }
 
-            return newMessage ;
+            return "Fin del metodo" ;
+
         } catch (TemplateDoesntExistsException e) {
             e.printStackTrace();
             return "template no existe";
@@ -92,6 +154,12 @@ public class M08_MessageValidation {
         } catch (ParameterDoesntExistsException e) {
             e.printStackTrace();
             return "parametro no existe";
+        } catch (IntegratorNotFoundException e) {
+            e.printStackTrace();
+            return "integrador no existe";
+        } catch (DatabaseConnectionProblemException e) {
+            e.printStackTrace();
+            return "Error al conectarse a la base de datos";
         }
 
     }
