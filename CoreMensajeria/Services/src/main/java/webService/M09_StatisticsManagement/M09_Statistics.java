@@ -67,7 +67,7 @@ public class M09_Statistics extends Application {
     @Path("/companies")
     @Produces("application/json")
     public Response getAllCompanies(@QueryParam("userId") Integer userId) {
-        String query = "SELECT com_id, com_name from m02_getcompanies(" + userId + ") ORDER BY com_id;";
+        String query = "SELECT com_id, com_name from m02_getcompaniesbyresponsible(" + userId + ") ORDER BY com_id;";
         try {
             return getCompanies(query);
         } catch(CompanyDoesntExistsException e) {
@@ -128,6 +128,20 @@ public class M09_Statistics extends Application {
             return getIntegrators(query);
         } catch(ChannelNotFoundException e) {
             return Response.serverError().build();
+        }
+    }
+
+    @GET
+    @Path("/count")
+    @Produces("application/json")
+    public Response getCompaniesCount(@QueryParam("filter") String filter) {
+        String filterAux = filter.toLowerCase();
+        switch (filter) {
+            case "companies": return getOverallCountFor(FilterType.company);
+            case "campaigns": return getOverallCountFor(FilterType.campaign);
+            case "channels": return getOverallCountFor(FilterType.channel);
+            case "integrators": return getOverallCountFor(FilterType.integrator);
+            default: return Response.status(400).entity("{ \"Mensaje\": \"No se envió ningun parametro o el parametro es incorrecto\" }").build();
         }
     }
 

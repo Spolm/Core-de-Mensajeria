@@ -64,3 +64,25 @@ drop function m09_update_starschema();
 drop function m07_select_templates_by_campaign(integer);
 
 drop function m07_select_all_templates();
+
+drop function m07_select_privileges_by_user_company(integer,integer);
+
+drop function m07_select_campaign_by_user_company(integer,integer,integer);
+
+drop function m07_select_channels_by_template(integer);
+
+drop function m07_select_messages(integer);
+
+drop function m07_select_message(integer);
+
+drop function m07_select_Planning(integer);
+
+drop function m07_select_applicantion_by_template(integer);
+
+drop function m01_getprivileges(integer);
+
+drop function m01_changepassword(varchar, varchar);
+
+drop function m01_findbyusernameid(integer);
+
+drop function m01_deleteuser(integer);

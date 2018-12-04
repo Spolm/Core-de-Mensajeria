@@ -464,6 +464,7 @@ export class DropdownMethods {
        ============================= */
     protected yearSelected(year: any) {
         this.selectedYearsIds.push(year["year_id"]);
+        console.log(this.selectedYearsIds);
     }
 
     protected yearDeselected(year: any) {
@@ -485,6 +486,7 @@ export class DropdownMethods {
        ============================= */
     protected monthSelected(month: any) {
         this.selectedMonthsIds.push(month["month_id"]);
+        console.log(this.selectedMonthsIds);
     }
 
     protected monthDeselected(month: any) {
@@ -506,6 +508,7 @@ export class DropdownMethods {
        ============================= */
     protected daySelected(day: any) {
         this.selectedDaysIds.push(day["day_id"]);
+        console.log(this.selectedDaysIds);
     }
 
     protected dayDeselected(day: any) {
@@ -526,8 +529,8 @@ export class DropdownMethods {
            Handle weeks selection
        ============================= */
     protected weekSelected(week: any) {
-        this.selectedDaysIds.push(week["week_id"]);
-        console.log(this.selectedDaysIds);
+        this.selectedWeeksIds.push(week["week_id"]);
+        console.log(this.selectedWeeksIds);
     }
 
     protected weekDeselected(week: any) {
@@ -548,7 +551,8 @@ export class DropdownMethods {
            Handle days of weeks selection
        =================================== */
     protected dayOfWeekSelected(dayOfWeek: any) {
-        this.selectedDaysIds.push(dayOfWeek["dayOfWeek_id"]);
+        this.selectedDaysOfWeekIds.push(dayOfWeek["dayOfWeek_id"]);
+        console.log(this.selectedDaysOfWeekIds);
     }
 
     protected dayOfWeekDeselected(dayOfWeek: any) {
@@ -575,6 +579,7 @@ export class DropdownMethods {
        ====================================== */
     protected quarterOfYearSelected(quarterOfYear: any) {
         this.selectedQuartersOfYearIds.push(quarterOfYear["quarterOfYear_id"]);
+        console.log(this.selectedQuartersOfYearIds);
     }
 
     protected quarterOfYearDeselected(quarterOfYear: any) {
@@ -601,6 +606,7 @@ export class DropdownMethods {
        ====================================== */
     protected dayOfYearSelected(dayOfYear: any) {
         this.selectedDaysOfYearIds.push(dayOfYear["dayOfYear_id"]);
+        console.log(this.selectedDaysOfYearIds);
     }
 
     protected dayOfYearDeselected(dayOfYear: any) {
@@ -632,19 +638,16 @@ export class DropdownMethods {
 
     protected hourDeselected(hour: any) {
         this.removeItemFromArray(hour["hour_id"], this.selectedHoursIds);
-        console.log(this.selectedHoursIds);
     }
 
     protected selectAllHours() {
         for (var index in this.hoursDropdown) {
             this.selectedHoursIds.push(this.hoursDropdown[index]["hour_id"]);
         }
-        console.log(this.selectedHoursIds);
     }
 
     protected deselectAllHours() {
         this.selectedHoursIds = [];
-        console.log(this.selectedHoursIds);
     }
 
     /* ===============================
@@ -657,7 +660,6 @@ export class DropdownMethods {
 
     protected minuteDeselected(minute: any) {
         this.removeItemFromArray(minute["minute_id"], this.selectedMinutesIds);
-        console.log(this.selectedMinutesIds);
     }
 
     protected selectAllMinutes() {
@@ -666,12 +668,10 @@ export class DropdownMethods {
                 this.minutesDropdown[index]["minute_id"]
             );
         }
-        console.log(this.selectedMinutesIds);
     }
 
     protected deselectAllMinutes() {
         this.selectedMinutesIds = [];
-        console.log(this.selectedMinutesIds);
     }
 
     /* ===============================
@@ -684,7 +684,6 @@ export class DropdownMethods {
 
     protected secondDeselected(second: any) {
         this.removeItemFromArray(second["second_id"], this.selectedSecondsIds);
-        console.log(this.selectedSecondsIds);
     }
 
     protected selectAllSeconds() {
@@ -693,11 +692,9 @@ export class DropdownMethods {
                 this.secondsDropdown[index]["second_id"]
             );
         }
-        console.log(this.selectedSecondsIds);
     }
 
     protected deselectAllSeconds() {
         this.selectedSecondsIds = [];
-        console.log(this.selectedSecondsIds);
     }
 }
