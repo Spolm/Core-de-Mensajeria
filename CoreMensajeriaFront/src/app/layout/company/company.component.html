@@ -1,14 +1,18 @@
-<h2 class="text-center text-capitalize main-title">
-  Compa&ntilde;ias
-</h2>
+<app-page-header [heading]="'Compañias'" [icon]="'fa fa-rebel'"></app-page-header>
+
+<div class="d-flex flex-row-reverse">
+  <button type="button" class="btn btn-dark" routerLink="/company/create">Crear Compañia</button>
+</div>
+
 <div class="card">
-  <table class="table">
-    <thead>
+  <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
       <tr>
-        <th class="col-3">Id</th>
-        <th class="col-4">Nombre</th>
-        <th class="col-4 text-center">Descripci&oacute;n</th>
-        <th class="col-4 text-center">Estado</th>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Link</th>
+        <th>Estado</th>
       </tr>
     </thead>
     <tbody>
@@ -20,8 +24,9 @@
             <th>{{company._idCompany}}</th> 
             <th>{{company._name}}</th> 
             <th>{{company._desc}}</th> 
-            <th *ngIf="!company._status"><span class="badge badge-danger">Inactiva</span></th>
-            <th *ngIf="company._status"><span class="badge badge-success">Activa</span></th> 
+            <th>{{company._link}}</th>
+            <th *ngIf="!company._status"><span class="badge badge-danger" (click)="activateCompany(company._idCompany)">Inactiva</span></th>
+            <th *ngIf="company._status"><span class="badge badge-success" (click)="deactivateCompany(company._idCompany)">Activa</span></th> 
           </tr>
           
      <!-- </tr>-->

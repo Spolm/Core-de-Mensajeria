@@ -3,7 +3,7 @@
 create table public.User
 (
     use_id serial primary key,
-    use_password varchar (18),    
+    use_password varchar (32),
     use_username varchar(20),
     use_type integer,
     use_email varchar(30),
@@ -15,6 +15,34 @@ create table public.User
     use_gender char
 );
 
+
+ALTER TABLE public.User
+ADD COLUMN use_blocked integer DEFAULT 0 NOT NULL,
+ADD CoLUMN use_remaining_attempts integer DEFAULT 3 NOT NULL;
+
+create table public.Role
+(
+    rol_id serial primary key,
+    rol_name varchar (18)
+);
+
+create table public.Privilege
+(
+    pri_id serial primary key,
+    pri_code varchar (18) not null,
+    pri_action varchar(50)
+);
+
+create table public.Rol_Pri(
+	rol_pri_id serial primary key,
+	rol_pri_pri_id integer not NULL,
+	rol_pri_rol_id integer not NULL,
+	CONSTRAINT fk_pri_id FOREIGN KEY (rol_pri_pri_id)
+	REFERENCES Privilege(pri_id),
+	CONSTRAINT fk_ro_id FOREIGN KEY (rol_pri_rol_id)
+	REFERENCES Role(rol_id)
+);
+
 CREATE TABLE public.Company
 (
     com_id serial primary key,
@@ -22,12 +50,25 @@ CREATE TABLE public.Company
     com_description varchar(1000) NOT NULL,
     com_status boolean NOT NULL,
     com_user_id integer NOT NULL,
+    com_route_link varchar(1000) NOT NULL,
     CONSTRAINT fk_user_id FOREIGN KEY ("com_user_id")
     REFERENCES public.User (use_id) MATCH SIMPLE
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
 
+create table public.Responsability(
+	res_id serial primary key,
+	res_use_id integer not NULL,
+	res_com_id integer,
+	res_rol_id integer not NULL,
+	CONSTRAINT fk_use_id FOREIGN KEY (res_use_id)
+	REFERENCES public.User(use_id),
+	CONSTRAINT fk_com_id FOREIGN KEY (res_com_id)
+	REFERENCES Company(com_id),
+	CONSTRAINT fk_rol_id FOREIGN KEY (res_rol_id)
+	REFERENCES Role(rol_id)
+);
 
 CREATE TABLE public.Campaign
 (
@@ -44,8 +85,7 @@ CREATE TABLE public.Campaign
         ON DELETE CASCADE
 );
 
-create table public.Application
-(
+create table public.Application(
     app_id serial not null,
     app_name varchar(32) not null,
     app_description varchar(500),
@@ -53,21 +93,25 @@ create table public.Application
     app_date timestamp not null,
     app_status integer not null,
     app_user_creator integer not null,
-	CONSTRAINT pk_aplication primary key (app_id),
-	CONSTRAINT fk_user_aplication foreign key ("app_user_creator") 
-	REFERENCES public.User(use_id) 
+    app_company integer not null,
+    CONSTRAINT pk_aplication primary key (app_id),
+    CONSTRAINT fk_user_aplication foreign key ("app_user_creator")
+    REFERENCES public.User(use_id),
+    CONSTRAINT fk_company_aplication foreign key ("app_company")
+    REFERENCES public.Company(com_id)
 );
 
 CREATE TABLE integrator(
-	int_id serial PRIMARY KEY,	
+	int_id serial PRIMARY KEY,
 	int_name varchar(250) not null,
 	int_messageCost float not null,
 	int_threadCapacity int not null,
-	int_tokenApi varchar(250) not null
+	int_tokenApi varchar(250) not null,
+	int_enabled boolean not null
 );
 
 CREATE TABLE channel(
-	cha_id serial PRIMARY KEY,	
+	cha_id serial PRIMARY KEY,
 	cha_name varchar(250) not null,
 	cha_description varchar(250) not null
 );
@@ -79,11 +123,11 @@ CREATE TABLE channel_integrator(
 );
 
 ALTER TABLE channel_integrator
-ADD CONSTRAINT fk_channel_id FOREIGN KEY (ci_channel_id) 
+ADD CONSTRAINT fk_channel_id FOREIGN KEY (ci_channel_id)
 REFERENCES channel (cha_id);
 
 ALTER TABLE channel_integrator
-ADD CONSTRAINT fk_integrator_id FOREIGN KEY (ci_integrator_id) 
+ADD CONSTRAINT fk_integrator_id FOREIGN KEY (ci_integrator_id)
 REFERENCES integrator (int_id);
 
 create table public.Template
@@ -132,3 +176,64 @@ create table public.Template_Status
     CONSTRAINT fk_Status_id FOREIGN KEY ("ts_status") REFERENCES public.Status (sta_id)
 );
 
+create table public.Sent_Message
+(
+    sen_id serial PRIMARY KEY,
+    sen_time timestamp,
+    sen_message integer NOT NULL,
+    sen_campaign integer NOT NULL,
+    sen_channel integer NOT NULL,
+    sen_integrator integer NOT NULL,
+    sen_application integer NOT NULL,
+    CONSTRAINT fk_message_id FOREIGN KEY ("sen_message") REFERENCES public.Message (mes_id),
+    CONSTRAINT fk_campaign_id FOREIGN KEY ("sen_campaign") REFERENCES public.Campaign (cam_id),
+    CONSTRAINT fk_channel_id FOREIGN KEY ("sen_channel") REFERENCES channel (cha_id),
+    CONSTRAINT fk_integrator_id FOREIGN KEY ("sen_integrator") REFERENCES integrator (int_id),
+    CONSTRAINT fk_application_id FOREIGN KEY ("sen_application") REFERENCES public.Application (app_id)
+);
+
+create table public.TEMPLATE_CHANNEL_INTEGRATOR
+ (
+ 	tci_id serial PRIMARY KEY,
+ 	tci_template_id integer NOT NULL,
+ 	tci_ci_id integer NOT NULL,
+ 	CONSTRAINT fk_template_id FOREIGN KEY("tci_template_id") REFERENCES public.Template(tem_id),
+ 	CONSTRAINT fk_ci_id FOREIGN KEY("tci_ci_id") REFERENCES public.CHANNEL_INTEGRATOR(ci_id)
+ );
+
+ALTER TABLE public.Template
+ADD COLUMN tem_campaign_id integer NOT NULL,
+ADD CONSTRAINT fk_campaign_id FOREIGN KEY ("tem_campaign_id") 
+REFERENCES public.Campaign(cam_id);
+
+ALTER TABLE public.Template
+ADD COLUMN tem_application_id integer,
+ADD CONSTRAINT fk_application_id FOREIGN KEY ("tem_application_id")
+REFERENCES public.Application(app_id);
+
+ALTER TABLE public.Template
+ADD COLUMN tem_user_id integer NOT NULL,
+ADD CONSTRAINT fk_template_user_id FOREIGN KEY ("tem_user_id")
+REFERENCES public.User(use_id);
+
+ALTER TABLE public.Parameter
+ADD COLUMN par_company_id integer NOT NULL,
+ADD CONSTRAINT fk_par_company_id FOREIGN KEY ("par_company_id") 
+REFERENCES public.Company (com_id);
+
+ALTER TABLE public.Template_Status
+ADD COLUMN ts_user_id integer,
+ADD CONSTRAINT fk_Template_Status_user_id FOREIGN KEY ("ts_user_id") 
+REFERENCES public.User(use_id);
+
+CREATE TABLE public.Planning
+(
+    pla_id serial PRIMARY KEY,
+    pla_start_date timestamp NOT NULL,
+    pla_end_date timestamp NOT NULL,
+    pla_start_time varchar(5) NOT NULL,
+    pla_end_time varchar(5) NOT NULL,
+    pla_template_id integer NOT NULL,
+    CONSTRAINT fk_template_id FOREIGN KEY ("pla_template_id")
+    REFERENCES public.Template(tem_id)
+);

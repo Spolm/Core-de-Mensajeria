@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { TemplateService } from './template.service';
-import { ToastrService } from 'ngx-toastr';
-import { timeout } from 'q';
+import { delay } from 'q';
 
 @Component({
   selector: 'app-template',
@@ -11,45 +10,80 @@ import { timeout } from 'q';
   animations: [routerTransition()]
 })
 
-export class TemplateComponent implements OnInit {
+export class TemplateComponent {
 
+  userId: string = localStorage.getItem("userid");
   templates: any = [];
-  status = false;
-  counter: number = 0;
-  lastTemplateId: number;
+  privilegesJson: any = [];
+  companiesJson: any = [];
+  CTEMPLATE = false;
+  RTEMPLATE = false;
+  UTEMPLATE = false;
+  DTEMPLATE = false;
+  ATEMPLATE = false;
 
-  constructor(private templateService: TemplateService, private toastr: ToastrService) {
-    templateService.getTemplates().subscribe(data => {
+  constructor(private templateService: TemplateService) {
+    this.getCompanies(this.userId);
+  }
+
+  regetTemplates(){
+    this.getTemplates(this.userId, localStorage.getItem('companyId'));
+  }
+
+  getTemplates(userId: string, companyId: string) {
+    this.templateService.getTemplatesByCompany(userId, companyId).subscribe(data => {
       this.templates = data;
     });
   }
 
-  ngOnInit() {
-    this.templateService.getTemplates().subscribe(data => {
-      this.templates = data;
-    });
-    console.log("Cargue de nuevo");
+  approveTemplates() {
+    console.log(this.userId)
+    console.log(localStorage.getItem('companyId'));
+    this.getTemplates(this.userId, localStorage.getItem('companyId'));
   }
 
-  approveTemplate(templateId: number){
-    this.toastr.info("Para confirmar realice doble click de nuevo", "Aprobar la plantilla id: "+templateId,
-    {
-      timeOut: 2800,
-      progressBar: true
+  getCompanies(userId: string) {
+    this.templateService.getCompanies(userId).subscribe(data => {
+      this.companiesJson = data;
     });
-    this.counter++;
-    if(this.counter == 2 && this.lastTemplateId == templateId){
-      this.templateService.approveTemplate(templateId);
-      this.toastr.success("Aprobada", "Plantilla id: "+templateId,
-      {
-        timeOut: 2800,
-        progressBar: true
-      });
-      this.counter = 0;
-      this.ngOnInit();
-    }
-    if(this.counter >= 2) this.counter = 0;
-    this.lastTemplateId = templateId;
+  }
+
+  async getPrivileges(userId: string, companyId: number) {
+    this.templateService.getPrivilegesByUserAndCompany(userId, companyId).subscribe(data => {
+      this.privilegesJson = data;
+    });
+    await delay(1000);
+    this.assignPrivileges(this.privilegesJson);
+  }
+
+  assignPrivileges(privileges: Array<any>) {
+    privileges.forEach((privilege) => {
+      if (privilege._codePrivileges == 'CTEMPLATE') {
+        this.CTEMPLATE = true;
+      }
+      else if (privilege._codePrivileges == 'RTEMPLATE') {
+        this.RTEMPLATE = true
+      }
+      else if (privilege._codePrivileges == 'UTEMPLATE') {
+        this.UTEMPLATE = true
+      }
+      else if (privilege._codePrivileges == 'DTEMPLATE') {
+        this.DTEMPLATE = true
+      }
+      else if (privilege._codePrivileges == 'ATEMPLATE') {
+        this.ATEMPLATE = true
+      }
+    })
+  }
+
+  changeCompany(companyId: string){
+    localStorage.setItem('companyId', companyId);
+    this.getTemplates(this.userId, companyId);
+    this.getPrivileges(this.userId, Number(companyId));
+  }
+
+  templateDetails(id: number) {
+    this.templateService.templateDetails(id);
   }
 
 }

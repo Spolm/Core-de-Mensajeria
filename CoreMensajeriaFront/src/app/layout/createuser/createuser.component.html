@@ -1,0 +1,127 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Creación de usuario'" [icon]="'fa-user'"></app-page-header>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Usuarios</h3>
+            <form role="form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="Email" class="control-label">E-mail</label>
+                        <input type="email" name="userData._emailUser" [(ngModel)]="userData._emailUser" class="form-control"
+                            placeholder="Introduce tu e-mail" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Usuario" class="control-label">Usuario</label>
+                        <input type="text" name="userData._usernameUser" [(ngModel)]="userData._usernameUser" class="form-control"
+                            placeholder="Introduce tu usuario" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Rol">Rol del usuario</label>
+                        <select name="userData._typeUser" [(ngModel)]="userData._typeUser" class="form-control">
+                            <option *ngIf="user._typeUser == 1; then hide else show" value="1">Superusuario</option>
+                            <option *ngIf="user._typeUser == 1; then hide else show" value="2">Administrador</option>
+                            <option value="3">Creador</option>
+                            <option value="4">Aprobador</option>
+                            <option value="5">Consultor</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="Birtday" class="control-label">Fecha de nacimiento</label>
+                        <input type="date" name="userData._birthdateUser" [(ngModel)]="userData._birthdateUser" class="form-control"
+                            placeholder="Introduce tu fecha de nacimiento" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="País" class="control-label">País</label>
+                        <input type="text" name="userData._countryUser" [(ngModel)]="userData._countryUser" class="form-control"
+                            placeholder="Introduce tu país" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Ciudad" class="control-label">Ciudad</label>
+                        <input type="text" name="userData._cityUser" [(ngModel)]="userData._cityUser" class="form-control"
+                            placeholder="Introduce tu ciudad" required>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="Teléfono" class="control-label">Teléfono local</label>
+                        <input type="number" name="userData._phoneUser" [(ngModel)]="userData._phoneUser" class="form-control"
+                            placeholder="Introduce tu teléfono" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Sexo">Sexo</label>
+                        <select name="userData._genderUser" [(ngModel)]="userData._genderUser" class="form-control">
+                            <!--Corregir el value de ambas opciones-->
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="Dirección" class="control-label">Dirección</label>
+                        <input type="text" name="userData._addressUser" [(ngModel)]="userData._addressUser" class="form-control"
+                            placeholder="Introduce tu dirección" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="Contraseña" class="control'label">Contraseña</label>
+                        <input type="password" name="userData._passwordUser" [(ngModel)]="userData._passwordUser" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Compañia" class="control-label">Compañía</label>
+                        <select class="form-control" name="userData._companyUser" [(ngModel)]="userData._companyUser">
+                            <option *ngFor=" let company of companies " value="{{ company._idCompany }}">{{
+                                company._name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-lg btn-success" (click)="handleAdd()" style="float:right;">Crear usuario</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-body table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>User</th>
+                            <th>Rol</th>
+                            <th>Sexo</th>
+                            <th>Télefono</th>
+                            <th>Fecha de nacimiento</th>
+                            <th>País</th>
+                            <th>Ciudad</th>
+                            <th>Dirección</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let User of users">
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._emailUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._usernameUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ stringType(User._typeUser) }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._genderUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._phoneUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._dateOfBirthUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._countryUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._cityUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)">{{ User._addressUser }}</td>
+                            <td *ngIf="checkRole(User._typeUser)"><button class="btn btn-primary" (click)="editUser(User._idUser)">Editar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

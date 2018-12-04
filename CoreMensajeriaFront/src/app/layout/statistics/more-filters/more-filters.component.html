@@ -1,0 +1,270 @@
+<h2 mat-dialog-title>Más filtros</h2>
+<button
+    mat-raised-button
+    (click)="closeMenu()"
+    class="btn btn-danger close-button"
+>
+    Cerrar
+</button>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 dropdown" *ngIf="companiesDropdown.length > 0">
+            <ng-multiselect-dropdown
+                [placeholder]="'Compañía'"
+                [data]="companiesDropdown"
+                [(ngModel)]="selectedCompanies"
+                [settings]="companiesDropdownSettings"
+                (onSelect)="companySelected($event)"
+                (onDeSelect)="companyDeselected($event)"
+                (onSelectAll)="selectAllCompanies()"
+                (onDeSelectAll)="deselectAllCompanies()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="campaignsDropdown.length > 0"
+        >
+            <ng-multiselect-dropdown
+                [placeholder]="'Campaña'"
+                [data]="campaignsDropdown"
+                [(ngModel)]="selectedCampaigns"
+                [settings]="campaignsDropdownSettings"
+                (onSelect)="campaignSelected($event)"
+                (onDeSelect)="campaignDeselected($event)"
+                (onSelectAll)="selectAllCampaigns()"
+                (onDeSelectAll)="deselectAllCampaigns()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="channelsDropdown.length > 0"
+        >
+            <ng-multiselect-dropdown
+                [placeholder]="'Canal'"
+                [data]="channelsDropdown"
+                [(ngModel)]="selectedChannels"
+                [settings]="channelsDropdownSettings"
+                (onSelect)="channelSelected($event)"
+                (onDeSelect)="channelDeselected($event)"
+                (onSelectAll)="selectAllChannels()"
+                (onDeSelectAll)="deselectAllChannels()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="integratorsDropdown.length > 0"
+        >
+            <ng-multiselect-dropdown
+                [placeholder]="'Integrador'"
+                [data]="integratorsDropdown"
+                [(ngModel)]="selectedIntegrators"
+                [settings]="integratorsDropdownSettings"
+                (onSelect)="integratorSelected($event)"
+                (onDeSelect)="integratorDeselected($event)"
+                (onSelectAll)="selectAllIntegrators()"
+                (onDeSelectAll)="deselectAllIntegrators()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+    </div>
+
+    <div class="row">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="yearsDropdown.length > 0"
+        >
+            <ng-multiselect-dropdown
+                [placeholder]="'Año'"
+                [data]="yearsDropdown"
+                [(ngModel)]="selectedYears"
+                [settings]="yearsDropdownSettings"
+                (onSelect)="yearSelected($event)"
+                (onDeSelect)="yearDeselected($event)"
+                (onSelectAll)="selectAllYears()"
+                (onDeSelectAll)="deselectAllYears()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="monthsDropdown.length > 0"
+        >
+            <ng-multiselect-dropdown
+                [placeholder]="'Mes'"
+                [data]="monthsDropdown"
+                [(ngModel)]="selectedMonths"
+                [settings]="monthsDropdownSettings"
+                (onSelect)="monthSelected($event)"
+                (onDeSelect)="monthDeselected($event)"
+                (onSelectAll)="selectAllMonths()"
+                (onDeSelectAll)="deselectAllMonths()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div class="col-md-3 col-sm-6 dropdown" *ngIf="daysDropdown.length > 0">
+            <ng-multiselect-dropdown
+                [placeholder]="'Día'"
+                [data]="daysDropdown"
+                [(ngModel)]="selectedDays"
+                [settings]="daysDropdownSettings"
+                (onSelect)="daySelected($event)"
+                (onDeSelect)="dayDeselected($event)"
+                (onSelectAll)="selectAllDays()"
+                (onDeSelectAll)="deselectAllDays()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="weeksDropdown.length > 0"
+        >
+            <ng-multiselect-dropdown
+                [placeholder]="'Semana'"
+                [data]="weeksDropdown"
+                [(ngModel)]="selectedWeeks"
+                [settings]="weeksDropdownSettings"
+                (onSelect)="weekSelected($event)"
+                (onDeSelect)="weekDeselected($event)"
+                (onSelectAll)="selectAllWeeks()"
+                (onDeSelectAll)="deselectAllWeeks()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+    </div>
+
+    <div class="row">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="daysOfWeekDropdown.length > 0"
+        >
+            <ng-multiselect-dropdown
+                [placeholder]="'Día de semana'"
+                [data]="daysOfWeekDropdown"
+                [(ngModel)]="selectedDaysOfWeek"
+                [settings]="daysOfWeekDropdownSettings"
+                (onSelect)="dayOfWeekSelected($event)"
+                (onDeSelect)="dayOfWeekDeselected($event)"
+                (onSelectAll)="selectAllDaysOfWeek()"
+                (onDeSelectAll)="deselectAllDaysOfWeek()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="quartersOfYearDropdown.length > 0"
+        >
+            <ng-multiselect-dropdown
+                [placeholder]="'Cuarto de año'"
+                [data]="quartersOfYearDropdown"
+                [(ngModel)]="selectedQuartersOfYear"
+                [settings]="quartersOfYearDropdownSettings"
+                (onSelect)="quarterOfYearSelected($event)"
+                (onDeSelect)="quarterOfYearDeselected($event)"
+                (onSelectAll)="selectAllQuartersOfYear()"
+                (onDeSelectAll)="deselectAllQuartersOfYear()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="daysOfYearDropdown.length > 0"
+        >
+            <ng-multiselect-dropdown
+                [placeholder]="'Día del año'"
+                [data]="daysOfYearDropdown"
+                [(ngModel)]="selectedDaysOfYear"
+                [settings]="daysOfYearDropdownSettings"
+                (onSelect)="dayOfYearSelected($event)"
+                (onDeSelect)="dayOfYearDeselected($event)"
+                (onSelectAll)="selectAllDaysOfYear()"
+                (onDeSelectAll)="deselectAllDaysOfYear()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="hoursDropdown.length > 0"
+        >
+            <ng-multiselect-dropdown
+                [placeholder]="'Hora'"
+                [data]="hoursDropdown"
+                [(ngModel)]="selectedHours"
+                [settings]="hoursDropdownSettings"
+                (onSelect)="hourSelected($event)"
+                (onDeSelect)="hourDeselected($event)"
+                (onSelectAll)="selectAllHours()"
+                (onDeSelectAll)="deselectAllHours()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+    </div>
+
+    <div class="row">
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="minutesDropdown.length > 0"
+        >
+            <ng-multiselect-dropdown
+                [placeholder]="'Minuto'"
+                [data]="minutesDropdown"
+                [(ngModel)]="selectedMinutes"
+                [settings]="minutesDropdownSettings"
+                (onSelect)="minuteSelected($event)"
+                (onDeSelect)="minuteDeselected($event)"
+                (onSelectAll)="selectAllMinutes()"
+                (onDeSelectAll)="deselectAllMinutes()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+
+        <div
+            class="col-md-3 col-sm-6 dropdown"
+            *ngIf="secondsDropdown.length > 0"
+        >
+            <ng-multiselect-dropdown
+                [placeholder]="'Segundo'"
+                [data]="secondsDropdown"
+                [(ngModel)]="selectedSeconds"
+                [settings]="secondsDropdownSettings"
+                (onSelect)="secondSelected($event)"
+                (onDeSelect)="secondsDeselected($event)"
+                (onSelectAll)="selectAllSeconds()"
+                (onDeSelectAll)="deselectAllSeconds()"
+            >
+            </ng-multiselect-dropdown>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <div class="form-group col-md-6">
+            <label for="dateOfBirth">Desde:</label>
+            <input
+                type="date"
+                class="form-control"
+                id="myDate"
+                [(ngModel)]="opcionDateSleccionado"
+            />
+        </div>
+        <div class="form-group col-md-6">
+            <label for="dateOfBirth">Hasta:</label>
+            <input
+                type="date"
+                class="form-control"
+                id="myDate2"
+                [(ngModel)]="opcionDateSleccionado2"
+            />
+        </div>
+    </div> -->
+</div>

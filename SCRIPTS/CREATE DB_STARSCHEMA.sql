@@ -1,5 +1,5 @@
 CREATE DATABASE "CoreMensajeria_StarSchema"
-    WITH 
+    WITH
     OWNER = "CoreMensajeria"
     ENCODING = 'UTF8'
     -- LC_COLLATE = 'English_United States.1252'
@@ -19,5 +19,4 @@ CREATE USER MAPPING FOR "CoreMensajeria" SERVER statistics_server OPTIONS (user 
 
 CREATE SCHEMA stats;
 
-IMPORT FOREIGN SCHEMA public LIMIT TO (Message, Company, Campaign) FROM SERVER statistics_server INTO stats;
-
+IMPORT FOREIGN SCHEMA public LIMIT TO (Sent_Message, Company, Campaign, Channel, Integrator, Application) FROM SERVER statistics_server INTO stats;

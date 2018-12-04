@@ -1,41 +1,73 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
+import { environment } from '../../../environments/environment';
+import { Integrator } from './integrator';
 
-const apiRestUrl = 'http://localhost:8080/CoreMensajeria_war_exploded/';
-
+const API_URL = environment.apiUrl;
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor( private http: HttpClient){
+  constructor(
+    private http: Http,
+  ) { }
 
+  public getAllIntegrators(): Observable<Integrator[]>{
+    return this.http
+    .get(API_URL+'/integrators')
+    .pipe( map( response => {
+      const integrators = response.json();
+      return integrators.map( (integrator) => new Integrator(integrator) );
+    }))
+    .pipe( catchError( err => {
+      this.handleError( "Error obteniendo integradores", err );
+      return err;
+    }));
   }
 
-  private extractData(res: Response) {
-    let body = res;
-    return body || { };
+  public getIntegratorsPerChannel(index: number): Observable<Integrator[]>{
+    return this.http
+    .get(API_URL + '/channel/i/' + index)
+    .pipe( map( response => {
+      const integrators = response.json();
+      return integrators.map( (integrator) => new Integrator(integrator) );
+    }))
+    .pipe( catchError( err => {
+      this.handleError( "Error obteniendo integradores por canales", err );
+      return err;
+    }));
   }
 
-  public getAllIntegrators(): Observable<any>{
-     
-    return this.http.get( apiRestUrl + 'integrators' ).
-      pipe( map( this.extractData ) );
-  
+  public disabledIntegrator(integrator: Integrator): Observable<any>{
+    return this.http
+      .put(API_URL + '/integrators/disabled/' + integrator.idIntegrator, JSON.stringify(integrator))
+      .pipe(
+        catchError( err => {
+          this.handleError( "Error inhabilitando integrador ", err );
+          return err;
+        })
+      );
   }
 
-  public getSMSIntegrators(): Observable<any>{
-    return this.http.get( apiRestUrl + 'channel/i/1' ).
-      pipe( map( this.extractData ) );
+  public enabledIntegrator(integrator: Integrator): Observable<any>{
+    return this.http
+      .put(API_URL + '/integrators/enabled/' + integrator.idIntegrator, JSON.stringify(integrator))
+      .pipe(
+        catchError( err => {
+          this.handleError( "Error habilitando integrador ", err );
+          return err;
+        })
+      );
   }
 
-  public getMailIntegrators(): Observable<any>{
-    return this.http.get( apiRestUrl + 'channel/i/2' ).
-      pipe( map( this.extractData ) );
+  private handleError ( msg: string, error: Response | any ) {
+    console.error( 'ApiService Error:'+ msg, error );
+    return Observable.throw( error );
   }
-  
+
 }

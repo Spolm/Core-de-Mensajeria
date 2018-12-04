@@ -10,7 +10,8 @@ import { Company } from '../../../model/company-model';
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
-  styleUrls: ['./company.component.scss']
+  styleUrls: ['./company.component.scss'],
+  animations: [routerTransition()]
 })
 export class CompanyComponent implements OnInit {
 
@@ -18,7 +19,10 @@ export class CompanyComponent implements OnInit {
               public rest: CompanyService, private toastr: ToastrService) { }
 
   private companyList = Array<Company>();
+  private company: Company;
   private vacio: boolean;
+  private counter: number = 0;
+  private lastCompanyId: number;
 
   ngOnInit() {
 
@@ -31,7 +35,53 @@ export class CompanyComponent implements OnInit {
     }, (err) => {
    console.log(err);
     })
+
+    
   }
+
+  
+  activateCompany(_idCompany: number){
+    this.toastr.info("Para confirmar realice doble click de nuevo", "Activar la compañia id: "+ _idCompany,
+    {
+      timeOut: 2800,
+      progressBar: true
+    });
+    this.counter++;
+    if(this.counter == 2 && this.lastCompanyId == _idCompany){
+      this.rest.activateCompany(_idCompany);
+      this.toastr.success("Compañia activada", "Company id: "+ _idCompany,
+      {
+        timeOut: 2800,
+        progressBar: true
+      });
+      this.counter = 0;
+      this.ngOnInit();
+    }
+    if(this.counter >= 2) this.counter = 0;
+    this.lastCompanyId = _idCompany;
+  }
+  
+  deactivateCompany(_idCompany: number){
+    this.toastr.info("Para confirmar realice doble click de nuevo", "Desactivar la compañia id: "+ _idCompany,
+    {
+      timeOut: 2800,
+      progressBar: true
+    });
+    this.counter++;
+    if(this.counter == 2 && this.lastCompanyId == _idCompany){
+      this.rest.activateCompany(_idCompany);
+      this.toastr.success("Compañia desactivada", "Company id: "+ _idCompany,
+      {
+        timeOut: 2800,
+        progressBar: true
+      });
+      this.counter = 0;
+      this.ngOnInit();
+    }
+    if(this.counter >= 2) this.counter = 0;
+    this.lastCompanyId = _idCompany;
+  }
+
 
   /*getCompanies() {
     this.toastr.info("Espere un momento",'Intentando acceder',{
