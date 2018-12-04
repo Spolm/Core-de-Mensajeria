@@ -510,10 +510,10 @@ public class TemplateHandler {
         if (applicationId > 0) {
             query = "UPDATE public.template\n" +
                     "SET tem_campaign_id = " + campaign + ", tem_application_id = " + applicationId + "\n" +
-                    "WHERE tem_id = " + templateId;
+                    " WHERE tem_id = " + templateId;
         } else {
             query = "UPDATE public.template\n" +
-                    "SET tem_campaign_id = " + campaign + ", tem_application_id = null" +
+                    "SET tem_campaign_id = " + campaign + ", tem_application_id = null " +
                     "WHERE tem_id = " + templateId;
         }
         try{
