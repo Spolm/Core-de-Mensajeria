@@ -153,7 +153,7 @@ public class M10_Profile {
             preparedStatement.setInt(4, id);
 
             //Se realiza query, falta codigo aqui para validar si se realizo correctamente el query
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             return "Perfil editado con éxito";
         } catch (SQLException e) {
             System.err.println(e.getStackTrace());
