@@ -40,6 +40,24 @@ export class CampaignService {
     );
   }
 
+  addCompany (company): Observable<any> {
+    return this.http.post<any>(endpoint + 'M03_Campaign/AddCampaign', JSON.stringify(company), httpOptions).pipe(
+      tap((campaign) => console.log(`Campaign added w/ ${company._name}`)),
+    );
+  }
+
+  editCampaign (campaign): Observable<any> {
+    return this.http.post<any>(endpoint + 'M03_Campaign/AddCampaign', JSON.stringify(campaign), httpOptions).pipe(
+      tap((campaign) => console.log(`Campaign added w/ ${campaign._name}`)),
+    );
+  }
+
+  editCompany (company): Observable<any> {
+    return this.http.post<any>(endpoint + 'M03_Campaign/AddCampaign', JSON.stringify(company), httpOptions).pipe(
+      tap((campaign) => console.log(`Campaign added w/ ${company._name}`)),
+    );
+  }
+
   activateCampaign(_idCampaign: Number){
     return this.http.get(endpoint+'update/'+_idCampaign).subscribe();
   }
