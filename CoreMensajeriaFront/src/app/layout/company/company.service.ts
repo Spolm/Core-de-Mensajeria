@@ -24,8 +24,9 @@ export class CompanyService {
   }
 
   getCompanies(): Observable<any> {
-    return this.http.get(endpoint + 'GetCompanies?id='+localStorage.getItem('userid')).pipe(
-      map(this.extractData));
+   
+      return this.http.get(endpoint + 'GetCompanies?id='+localStorage.getItem('userid')).pipe(
+        map(this.extractData));
       
   }
 
@@ -41,5 +42,9 @@ export class CompanyService {
       .then(res =>{
         return res
       })
+  }
+
+  activateCompany(_idCompany: Number){
+    return this.http.get(endpoint+'update/'+_idCompany).subscribe();
   }
 }
