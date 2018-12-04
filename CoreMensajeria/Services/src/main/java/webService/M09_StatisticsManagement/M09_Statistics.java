@@ -136,7 +136,7 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getCompaniesCount(@QueryParam("filter") String filter) {
         String filterAux = filter.toLowerCase();
-        switch (filter) {
+        switch (filterAux) {
             case "companies": return getOverallCountFor(FilterType.company);
             case "campaigns": return getOverallCountFor(FilterType.campaign);
             case "channels": return getOverallCountFor(FilterType.channel);
