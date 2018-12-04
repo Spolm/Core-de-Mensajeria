@@ -29,8 +29,13 @@ export class TemplateService {
     return body || {};
   }
 
-  getTemplates() {
-    return this.http.get(endpoint + 'templates?userId=4').pipe(
+  getTemplates(userId: string) {
+    return this.http.get(endpoint + 'templates?userId=' + userId).pipe(
+      map(this.extractData));
+  }
+
+  getTemplatesByCompany(userId: string, companyId: string) {
+    return this.http.get(endpoint + 'templates?userId=' + userId + '&companyId=' + companyId).pipe(
       map(this.extractData));
   }
 
@@ -45,7 +50,7 @@ export class TemplateService {
   }
 
   getCompanies(userId: string) {
-    return this.http.get(endpoint + 'M02_Companies/GetCompanies?id=' + userId).pipe(
+    return this.http.get(endpoint + 'M02_Companies/GetCompaniesByResponsible?id=' + userId).pipe(
       map(this.extractData));
   }
 
