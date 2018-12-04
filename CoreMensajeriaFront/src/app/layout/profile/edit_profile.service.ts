@@ -14,7 +14,7 @@ export class EditProfile {
   constructor(private http: HttpClient) { }
 
   editProfile (user): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/CoreMensajeria_war_exploded/profile/edit', JSON.stringify(user), httpOptions).pipe(
+    return this.http.put<any>('http://localhost:8080/CoreMensajeria_war_exploded/profile/edit', JSON.stringify(user), httpOptions).pipe(
     tap((user) => console.log(`User edited`)),
     );
   }

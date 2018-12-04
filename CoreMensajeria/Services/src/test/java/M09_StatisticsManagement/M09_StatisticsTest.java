@@ -120,7 +120,6 @@ public class M09_StatisticsTest {
     */
     }
 
-    
 //    @Test
 //    void getStatisticsTestOk200()  {
 //        try {
@@ -136,17 +135,14 @@ public class M09_StatisticsTest {
 //            Response salida = intance.getStatistics( listaCompany, listaCampaign, listaChannels, listaIntegrators);
 //
 //            assertEquals( 200, salida.getStatus() );
-//            assertEquals( salida.getEntity().toString(),
-//                    "{\"companies\":{\"x\":[\"Company 1\"],\"y\":[3]}" +
-//                            ",\"campaigns\":{\"x\":[\"Campaign 1\"],\"y\":[3]}" +
-//                            ",\"channels\":{\"x\":[\"SMS\"],\"y\":[3]}}" );
+//            assertNotNull( salida.getEntity());
 //
 //        } catch ( Exception e ) {
 //            e.printStackTrace();
 //        }
 //    }
 
-    @Test
+   /* @Test
     void getStatisticsTestBadRequest(){
       /*
         M09_Statistics instance = new M09_Statistics();
@@ -159,7 +155,7 @@ public class M09_StatisticsTest {
         assertEquals("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }", salida.getEntity().toString());
     */
     }
-
+*/
 
 
 

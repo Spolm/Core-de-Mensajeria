@@ -10,17 +10,41 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * ParameterHandler class used for the management of information
+ * search in the database with respect to Parameter.
+ */
 public class ParameterHandler {
+    /**
+     * connection to the database
+     */
     public static Sql sql;
 
+    /**
+     * constructor without receiving parameters that instantiates
+     * the sql attribute of the ParameterHandler class.
+     */
     public ParameterHandler() {
         sql = new Sql();
     }
 
+    /**
+     * this method is responsible for storing the parameters
+     * associated with a specific company.
+     * @param parameters list of parameters
+     * @param companyId company id
+     */
     public static void postParameter(String[] parameters, int companyId){
         for (int i = 0; i < parameters.length;i++)
             postParameter(parameters[i],companyId);
     }
+
+    /**
+     * this method is responsible for modifying a parameter
+     * associated with a specific company.
+     * @param name list of parameters
+     * @param companyId company id
+     */
     public static void postParameter(String name, int companyId) {
         Sql sql = new Sql();
         String query = "select par_id \n" +
@@ -43,6 +67,12 @@ public class ParameterHandler {
 
     }
 
+    /**
+     * this method returns a list of parameters filtering by company
+     * @param companyId company id
+     * @return ArrayList of parameters
+     * @throws ParameterDoesntExistsException
+     */
     public ArrayList<Parameter> getParameters(int companyId)
             throws ParameterDoesntExistsException{
         String query = "select par_id,par_name \n" +
@@ -63,6 +93,12 @@ public class ParameterHandler {
         }
     }
 
+    /**
+     * this method returns a list of parameters filtering by message
+     * @param messageId company id
+     * @return ArrayList of parameters
+     * @throws ParameterDoesntExistsException
+     */
     public static ArrayList<Parameter> getParametersByMessage(int messageId)
             throws ParameterDoesntExistsException{
         String query = "select par_id,par_name " +
@@ -82,6 +118,14 @@ public class ParameterHandler {
         }
     }
 
+    /**
+     * This method is responsible for making queries to obtain
+     * the list of parameters, either by filtering by company
+     * or filtering by message.
+     * @param query string with the query
+     * @return ArrayList of parameters
+     * @throws ParameterDoesntExistsException
+     */
     private static ArrayList<Parameter> executeParameterQuery(String query)
             throws ParameterDoesntExistsException {
         ArrayList<Parameter> parameterList = new ArrayList<>();

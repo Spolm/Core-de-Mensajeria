@@ -6,13 +6,32 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * StatusHandler class used for the management of information
+ * search in the database with respect to Status.
+ */
 public class StatusHandler {
+    /**
+     * connection to the database
+     */
     private Sql sql;
 
+    /**
+     * constructor without receiving parameters that instantiates
+     * the sql attribute of the ParameterHandler class.
+     */
     public Sql getSql() {
         return sql;
     }
 
+    /**
+     * method that is responsible for saving the approval of a template,
+     * specifying user and template.
+     * @param templateId template id
+     * @param userId user id
+     * @return If the template was saved successfully it returns true,
+     * therwise it returns false.
+     */
     public static Boolean postTemplateStatusAprovado(int templateId,int userId){
         Boolean flag=false;
         Connection con = Sql.getConInstance();
@@ -20,6 +39,13 @@ public class StatusHandler {
         return postTemplateStatus(flag, con, query);
     }
 
+    /**
+     * method that is responsible for saving the disapproval of a template,
+     * specifying template.
+     * @param templateId template id
+     * @return If the template was saved successfully it returns true,
+     * therwise it returns false.
+     */
     public static Boolean postTemplateStatusNoAprovado(int templateId){
         Boolean flag=false;
         Connection con = Sql.getConInstance();
@@ -27,6 +53,14 @@ public class StatusHandler {
         return postTemplateStatus(flag, con, query);
     }
 
+    /**
+     * method that is responsible for saving the state of a specified template.
+     * @param flag storage confirmation flag
+     * @param con connection to the database
+     * @param query string with the query
+     * @return If the template was saved successfully it returns true,
+     * herwise it returns false.
+     */
     private static Boolean postTemplateStatus(Boolean flag, Connection con, String query) {
         try {
             PreparedStatement ps = con.prepareStatement(query);

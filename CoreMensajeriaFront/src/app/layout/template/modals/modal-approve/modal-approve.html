@@ -13,6 +13,13 @@
   </div>
 </ng-template>
 
-<span class="badge badge-danger clickable" (click)="open(content)">
-  No Aprobado
-</span>
+<div *ngIf="ATEMPLATE; else elseBlock">
+  <span class="badge badge-danger clickable" (click)="open(content)">
+    No Aprobado
+  </span>
+</div>
+<ng-template #elseBlock>
+  <span class="badge badge-danger notclickable">
+    No Aprobado
+  </span>
+</ng-template>

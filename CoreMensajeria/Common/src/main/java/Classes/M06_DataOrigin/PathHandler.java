@@ -2,6 +2,7 @@ package Classes.M06_DataOrigin;
 
 import Classes.M02_Company.Company;
 import Classes.M02_Company.CompanyDAO;
+import Exceptions.CompanyDoesntExistsException;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 @WebListener
 public class PathHandler implements ServletContextListener {
 
-    private static String ORIGIN_HOME = System.getProperty("user.home") + "/Origin";
+    private static String ORIGIN_HOME = System.getProperty("user.home") + "/CoreMensajeria";
     private static String ORIGIN_HOME_INBOX = ORIGIN_HOME + "/Inbox";
     private static String ORIGIN_HOME_TRASH = ORIGIN_HOME + "/Trash";
 
@@ -31,9 +32,13 @@ public class PathHandler implements ServletContextListener {
         this.createDirectory(ORIGIN_HOME_INBOX);
         this.createDirectory(ORIGIN_HOME_TRASH);
 
-        //this.createOriginDirectories(ORIGIN_HOME_INBOX,companyDAO.companyList(1));
-        //this.createOriginDirectories(ORIGIN_HOME_TRASH,companyDAO.companyList(1));
-        System.out.println("--------------->PATHS CREATED");
+        try {
+            this.createOriginDirectories(ORIGIN_HOME_INBOX,companyDAO.companyListAll());
+            this.createOriginDirectories(ORIGIN_HOME_TRASH,companyDAO.companyListAll());
+            System.out.println("--------------->PATHS CREATED");
+        } catch (CompanyDoesntExistsException e) {
+            System.out.println("Error creating paths");
+        }
     }
 
     /**
@@ -41,9 +46,7 @@ public class PathHandler implements ServletContextListener {
      * @param servletContextEvent el ServletContextEvent que esta siendo manejado
      */
     @Override
-    public void contextDestroyed(ServletContextEvent servletContextEvent) {
-
-    }
+    public void contextDestroyed(ServletContextEvent servletContextEvent) { }
 
     /**
      *
@@ -63,8 +66,7 @@ public class PathHandler implements ServletContextListener {
      */
     private void createOriginDirectories(String rootPath, ArrayList<Company> companies){
         for (Company company : companies) {
-            //------------------->REPLECE THIS FOR COMPANY PATH
-            this.createDirectory(rootPath + "/" + company.get_name());
+            this.createDirectory(rootPath + "/" + company.get_link());
         }
     }
 
@@ -73,8 +75,8 @@ public class PathHandler implements ServletContextListener {
      * @param company objeto compania
      * @return direccion de path generada para la compania senalada
      */
-    private String generatePath(Company company){
-        return company.get_name().replaceAll("\\s","") + "_" + Encrypter.getCurrentTime();
+    public String generatePath(Company company){
+        return company.get_name().replaceAll("\\s","") + "_" + Encrypter.getCurrentDatePathFormat();
     }
 
     public static String getInboxPath(){

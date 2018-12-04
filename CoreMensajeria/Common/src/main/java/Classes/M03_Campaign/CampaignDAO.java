@@ -77,24 +77,61 @@ public class CampaignDAO {
         }
     }
 
+    public void getCampaignList2(int idCompany, int idUser, String select, ArrayList<Campaign> caList) throws CampaignDoesntExistsException {
+        try {
+            PreparedStatement ps = conn.prepareCall(select);
+            ps.setInt(1, idCompany);
+            ps.setInt(2, idUser);
+            ResultSet result = ps.executeQuery();
+            while(result.next()){
+                Campaign ca = new Campaign();
+                ca.set_idCampaign(result.getInt("cam_id"));
+                ca.set_nameCampaign(result.getString("cam_name"));
+                ca.set_descCampaign(result.getString("cam_description"));
+                ca.set_startCampaign(result.getDate("cam_start_date"));
+                ca.set_endCampaign(result.getDate("cam_end_date"));
+                ca.set_statusCampaign(result.getBoolean("cam_status"));
+                caList.add(ca);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new CampaignDoesntExistsException(e);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            Sql.bdClose(conn);
+        }
+    }
+
 
     //endregion
 
     //region API Obtener Campañas por compañia
 
     public ArrayList<Campaign> campaignList(int id) throws CampaignDoesntExistsException {
-        String select = "{call m03_getcampaigns(?)}";
+        String select = "{Call m03_getcampaigns(?)}";
         ArrayList<Campaign> caList= new ArrayList<>();
         getCampaignList(id, select, caList);
         return caList;
     }
     //endregion
 
+    //region Obtener Campañas por compañia y usuario
+
+    public ArrayList<Campaign> campaignListByUserCompany(int idCompany, int idUser) throws CampaignDoesntExistsException {
+        String select = "{Call m03_getcampaignsbycompany(?,?)}";
+        ArrayList<Campaign> caList= new ArrayList<>();
+        getCampaignList2(idCompany, idUser, select, caList);
+        return caList;
+    }
+
     //region Campaña por Usuario
     public ArrayList<Campaign> campaignListByUser(int id) throws CampaignDoesntExistsException {
-        String select = "{call m03_getcampaignsbyuser(?)}";
+        String select = "{Call m03_getcampaignsbyuser(?)}";
         ArrayList<Campaign> caList= new ArrayList<>();
-
         getCampaignList(id, select, caList);
         return caList;
     }
@@ -112,14 +149,15 @@ public class CampaignDAO {
 
     public boolean changeStatusCampaign (int id) throws CampaignDoesntExistsException {
         Campaign ca = new Campaign();
-        boolean flag;
+        
         try {
             ca = getDetails(id);
             ca.set_statusCampaign(!ca.is_statusCampaign());
-            flag = ca.is_statusCampaign();
-            PreparedStatement ps = conn.prepareCall("{call m03_changecampaignstatus(?,?)}");
+            String query = "UPDATE public.campaign SET" +
+                    " cam_status ="+ca.is_statusCampaign()+
+                    " WHERE cam_id =?";
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1,id);
-            ps.setBoolean(2,flag);
             ps.executeUpdate();
         }
         catch (SQLException e) {

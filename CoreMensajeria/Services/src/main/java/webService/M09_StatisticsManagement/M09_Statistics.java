@@ -67,7 +67,7 @@ public class M09_Statistics extends Application {
     @Path("/companies")
     @Produces("application/json")
     public Response getAllCompanies(@QueryParam("userId") Integer userId) {
-        String query = "SELECT com_id, com_name from m02_getcompanies(" + userId + ") ORDER BY com_id;";
+        String query = "SELECT com_id, com_name from m02_getcompaniesbyresponsible(" + userId + ") ORDER BY com_id;";
         try {
             return getCompanies(query);
         } catch(CompanyDoesntExistsException e) {
@@ -128,6 +128,20 @@ public class M09_Statistics extends Application {
             return getIntegrators(query);
         } catch(ChannelNotFoundException e) {
             return Response.serverError().build();
+        }
+    }
+
+    @GET
+    @Path("/count")
+    @Produces("application/json")
+    public Response getCompaniesCount(@QueryParam("filter") String filter) {
+        String filterAux = filter.toLowerCase();
+        switch (filterAux) {
+            case "companies": return getOverallCountFor(FilterType.company);
+            case "campaigns": return getOverallCountFor(FilterType.campaign);
+            case "channels": return getOverallCountFor(FilterType.channel);
+            case "integrators": return getOverallCountFor(FilterType.integrator);
+            default: return Response.status(400).entity("{ \"Mensaje\": \"No se envió ningun parametro o el parametro es incorrecto\" }").build();
         }
     }
 
@@ -493,32 +507,61 @@ public class M09_Statistics extends Application {
     public Response getStatistics(@QueryParam("companyId") List<Integer> companyIds,
                                   @QueryParam("campaignId") List<Integer> campaignIds,
                                   @QueryParam("channelId") List<Integer> channelIds,
-                                  @QueryParam("integratorId") List<Integer> integratorIds) {
+                                  @QueryParam("integratorId") List<Integer> integratorIds,
+                                  @QueryParam("yearId") List<Integer> yearIds,
+                                  @QueryParam("monthId") List<Integer> monthIds,
+                                  @QueryParam("dayofweekId") List<Integer> dayofweekIds,
+                                  @QueryParam("weekofyearId") List<Integer> weekofyearIds,
+                                  @QueryParam("dayofmonthId") List<Integer> dayofmonthIds,
+                                  @QueryParam("dayofyearId") List<Integer> dayofyearIds,
+                                  @QueryParam("hourId") List<Integer> hourofdayIds,
+                                  @QueryParam("minuteId") List<Integer> minuteofhourIds,
+                                  @QueryParam("secondId") List<Integer> secondofminuteIds,
+                                  @QueryParam("quarterId") List<Integer> quarterIds)
+    {
         String companyin = setParametersforQuery(companyIds,"and me.sen_com_id in ");
         String campaignin = setParametersforQuery(campaignIds,"and me.sen_cam_id in ");
         String channelin = setParametersforQuery(channelIds,"and me.sen_cha_id in ");
         String integratorin = setParametersforQuery(integratorIds, "and me.sen_int_id in");
+        String yearin = setParametersforQuery(yearIds, "and da.dat_year in");
+        String monthin = setParametersforQuery(monthIds, "and da.dat_month in");
+        String dayofweekin = setParametersforQuery(dayofweekIds,"and da.dat_dayofweek in");
+        String weekofyearin = setParametersforQuery(weekofyearIds, "and da.dat_weekofyear in");
+        String dayofmonthin = setParametersforQuery(dayofmonthIds, "and da.dat_dayofmonth in");
+        String dayofyearin = setParametersforQuery(dayofyearIds, "and da.dat_dayofyear in");
+        String hourin = setParametersforQuery(hourofdayIds, "and da.dat_hourofday in");
+        String minutein = setParametersforQuery(minuteofhourIds, "and da.dat_minuteofhour in");
+        String secondin = setParametersforQuery(secondofminuteIds, "and da.dat_secondofminute in");
+        String quarterin = setParametersforQuery(quarterIds, "and da.dat_quarterofyear in");
         Map<String, Statistics> stats = new HashMap<String, Statistics>();
         try {
             Statement st = connStar.createStatement();
             if (!companyIds.isEmpty()) {
-                stats.put("companies", getMessagesParam(companyin, campaignin, channelin, integratorin,"me.sen_com_id",
-                        "co.com_name", "public.dim_company_campaign co", "co.com_id", st));
+                stats.put("companies", getMessagesParam(companyin, campaignin, channelin, integratorin, yearin, monthin, dayofweekin,
+                        weekofyearin, dayofmonthin, dayofyearin, hourin, minutein, secondin, quarterin,"me.sen_com_id", "co.com_name",
+                        ", public.dim_company_campaign co", "co.com_id",", public.dim_date da",
+                        " and da.dat_id = me.sen_dat_id ",st));
                 //stats.add();
             }
             if (!campaignIds.isEmpty()) {
-                stats.put("campaigns", getMessagesParam(companyin, campaignin, channelin, integratorin, "me.sen_cam_id",
-                        "ca.cam_name", "public.dim_company_campaign ca", "ca.cam_id", st));
+                stats.put("campaigns", getMessagesParam(companyin, campaignin, channelin, integratorin, yearin, monthin, dayofweekin,
+                        weekofyearin, dayofmonthin, dayofyearin, hourin, minutein, secondin, quarterin, "me.sen_cam_id",
+                        "ca.cam_name", ", public.dim_company_campaign ca", "ca.cam_id",", public.dim_date da",
+                        " and da.dat_id = me.sen_dat_id ", st));
                 //stats.add();
             }
             if (!channelIds.isEmpty()) {
-                stats.put("channels", getMessagesParam(companyin, campaignin, channelin, integratorin, "me.sen_cha_id",
-                        "ch.cha_name", "public.dim_channel ch", "ch.cha_id", st));
+                stats.put("channels", getMessagesParam(companyin, campaignin, channelin, integratorin, yearin, monthin, dayofweekin,
+                        weekofyearin, dayofmonthin, dayofyearin, hourin, minutein, secondin, quarterin, "me.sen_cha_id",
+                        "ch.cha_name", ", public.dim_channel ch", "ch.cha_id", ", public.dim_date da",
+                        " and da.dat_id = me.sen_dat_id ", st));
                 //stats.add();
             }
             if (!integratorIds.isEmpty()) {
-                stats.put("integrators", getMessagesParam(companyin, campaignin, channelin, integratorin, "me.sen_int_id",
-                        "int.int_name", "public.dim_integrator int", "int.int_id", st));
+                stats.put("integrators", getMessagesParam(companyin, campaignin, channelin, integratorin, yearin, monthin, dayofweekin,
+                        weekofyearin, dayofmonthin, dayofyearin, hourin, minutein, secondin, quarterin,"me.sen_int_id",
+                        "int.int_name", ", public.dim_integrator int", "int.int_id",", public.dim_date da",
+                        " and da.dat_id = me.sen_dat_id ",st));
                 //stats.add();
             }
             if (channelIds.isEmpty() && campaignIds.isEmpty() && companyIds.isEmpty() && integratorIds.isEmpty()){
@@ -533,9 +576,12 @@ public class M09_Statistics extends Application {
         return Response.ok(gson.toJson(stats)).build();
     }
 
+
     //Método que devuelve la consulta de mensajes enviados, agrupada por los filtros enviados
-    public Statistics getMessagesParam(String companyIds, String campaignIds, String channelIds, String integratorIds, String param1, String param2,
-                                       String param3, String param4, Statement st){
+    public Statistics getMessagesParam(String companyIds, String campaignIds, String channelIds, String integratorIds, String yearIds,
+                                       String monthIds, String dayofweekIds, String weekofyearIds, String dayofmonthIds, String dayofyearIds,
+                                       String hourIds, String minuteIds, String secondIds, String quarterIds ,String param1, String param2,
+                                       String param3, String param4, String param5, String param6, Statement st){
         int num;
         String name;
         ArrayList<String> listName = new ArrayList<>();
@@ -543,7 +589,10 @@ public class M09_Statistics extends Application {
         Statistics gr = new Statistics();
         try {
             String select = "SELECT icount, paramName FROM m09_get_MessageParameter('"+ companyIds + "','" + campaignIds + "','" +
-                    channelIds + "','" + integratorIds + "','" + param1 + "','" + param2 + "','" + param3 + "','" + param4 + "')";
+                    channelIds + "','" + integratorIds + "','" + yearIds + "','" + monthIds + "','" + dayofweekIds + "','" +
+                    weekofyearIds + "','" + dayofmonthIds + "','" + dayofyearIds + "','" + hourIds + "','" + minuteIds + "','" +
+                    secondIds + "','" + quarterIds + "','" + param1 + "','" + param2 + "','" + param3 + "','" + param4 + "','" +
+                    param5 + "','" + param6 + "')";
             System.out.println(select);
             ResultSet result = st.executeQuery( select );
             while ( result.next() ) {

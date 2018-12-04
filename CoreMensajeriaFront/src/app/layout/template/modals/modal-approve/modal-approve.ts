@@ -16,11 +16,18 @@ export class NgbdModalApprove {
   @Input('templateId') templateId: number;
   @Output() spread = new EventEmitter<string>();
 
+  userId: string = localStorage.getItem("userid");
   message: string;
   activeModal: NgbModalRef;
+  privilegesJson: any = [];
+  CTEMPLATE = false;
+  RTEMPLATE = false;
+  UTEMPLATE = false;
+  DTEMPLATE = false;
+  ATEMPLATE = false;
 
   constructor(private modalService: NgbModal, private templateService: TemplateService, private toastr: ToastrService) {
-
+    this.getPrivileges(this.userId, 2);
   }
 
   open(content) {
@@ -29,6 +36,34 @@ export class NgbdModalApprove {
 
   closeModal() { 
     this.activeModal.close();
+  }
+
+  async getPrivileges(userId: string, companyId: number) {
+    this.templateService.getPrivilegesByUserAndCompany(userId, companyId).subscribe(data => {
+      this.privilegesJson = data;
+    });
+    await delay(1000);
+    this.assignPrivileges(this.privilegesJson);
+  }
+
+  assignPrivileges(privileges: Array<any>) {
+    privileges.forEach((privilege) => {
+      if(privilege._codePrivileges == 'CTEMPLATE'){
+        this.CTEMPLATE = true;
+      }
+      else if(privilege._codePrivileges == 'RTEMPLATE'){
+        this.RTEMPLATE = true
+      }
+      else if(privilege._codePrivileges == 'UTEMPLATE'){
+        this.UTEMPLATE = true
+      }
+      else if(privilege._codePrivileges == 'DTEMPLATE'){
+        this.DTEMPLATE = true
+      }
+      else if(privilege._codePrivileges == 'ATEMPLATE'){
+        this.ATEMPLATE = true
+      }
+    })
   }
 
   async approveTemplate(templateId: number) {

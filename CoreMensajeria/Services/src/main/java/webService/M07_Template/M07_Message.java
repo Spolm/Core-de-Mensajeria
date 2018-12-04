@@ -10,11 +10,23 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
+/**
+ * M07_Message class is an API that is responsible for requesting information
+ * about template messages
+ */
 @Path("/")
 public class M07_Message {
 
+    /**
+     * serialization and deserialization between Java objects
+     */
     public Gson gson = new Gson();
 
+    /**
+     * this method returns all the templates and each one with
+     * its message and associated parameters.
+     * @return ArrayList of template with messages and parameters
+     */
     @GET
     public Response getMessages(){
         TemplateHandler templateHandler = new TemplateHandler();
