@@ -105,14 +105,14 @@ INSERT INTO channel_integrator (ci_channel_id, ci_integrator_id) VALUES
 (1,3), (2,4),
 (2,5), (2,6);
 
-INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 1', 'Description', true, '', 1);
-INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 2', 'Description', true, '', 1);
-INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 3', 'Description', false, '', 1);
-INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 4', 'Description', true, '', 1);
-INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 5', 'Description', false, '', 1);
-INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 6', 'Description', true, '', 1);
-INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 7', 'Description', true, '', 1);
-INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 8', 'Description', true, '', 1);
+INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 1', 'Description', true, 'Company1_03122018204456', 1);
+INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 2', 'Description', true, 'Company2_03122018204456', 1);
+INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 3', 'Description', false, 'Company3_03122018204456', 1);
+INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 4', 'Description', true, 'Company4_03122018204456', 1);
+INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 5', 'Description', false, 'Company5_03122018204456', 1);
+INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 6', 'Description', true, 'Company6_03122018204456', 1);
+INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 7', 'Description', true, 'Company7_03122018204456', 1);
+INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 8', 'Description', true, 'Company8_03122018204456', 1);
 
 INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 1', 'Description', true, TIMESTAMP '2017-07-20 15:36:38', TIMESTAMP '2018-07-23 15:36:38', 1);
 INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 2', 'Description', true, TIMESTAMP '2017-07-21 15:36:38', TIMESTAMP '2018-07-23 15:36:38', 1);
@@ -297,3 +297,14 @@ INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_i
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-11-09', 2, 12, 1, 3, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-04-16', 2, 13, 2, 4, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-07-23', 2, 14, 1, 5, 1);
+
+INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
+VALUES ('2003-02-01','2022-04-04', '08:30', '18:30', 1);
+INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
+VALUES ('2014-10-11','2014-12-05', '07:00', '17:00', 2);
+INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
+VALUES ('2014-10-12','2015-01-29', '10:45', '20:00', 3);
+INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
+VALUES ('2014-11-11','2020-04-11', '9:00', '17:30', 4);
+INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
+VALUES ('2016-07-04','2019-12-01', '12:00', '23:15', 5);

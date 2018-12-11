@@ -4,7 +4,7 @@ import { Observable, of, pipe } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { p } from '@angular/core/src/render3';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { delay } from 'q';
 
 const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/';
@@ -25,12 +25,17 @@ export class TemplateService {
   }
 
   private extractData(res: Response) {
-    let body = res;
+    const body = res;
     return body || {};
   }
 
-  getTemplates() {
-    return this.http.get(endpoint + 'templates?userId=4').pipe(
+  getTemplates(userId: string) {
+    return this.http.get(endpoint + 'templates?userId=' + userId).pipe(
+      map(this.extractData));
+  }
+
+  getTemplatesByCompany(userId: string, companyId: string) {
+    return this.http.get(endpoint + 'templates?userId=' + userId + '&companyId=' + companyId).pipe(
       map(this.extractData));
   }
 
@@ -45,7 +50,7 @@ export class TemplateService {
   }
 
   getCompanies(userId: string) {
-    return this.http.get(endpoint + 'M02_Companies/GetCompanies?id=' + userId).pipe(
+    return this.http.get(endpoint + 'M02_Companies/GetCompaniesByResponsible?id=' + userId).pipe(
       map(this.extractData));
   }
 
@@ -64,8 +69,13 @@ export class TemplateService {
       map(this.extractData));
   }
 
+  getPrivilegesByUserAndCompany(userId: string, companyId: number) {
+    return this.http.get(endpoint + 'templates/privileges?userId=' + userId + '&companyId=' + companyId).pipe(
+      map(this.extractData));
+  }
+
   approveTemplate(templateId: Number) {
-    let userId = localStorage.getItem('userid');
+    const userId = localStorage.getItem('userid');
     return this.http.post(endpoint + 'templates/update/' + templateId, userId).subscribe();
   }
 
@@ -83,7 +93,7 @@ export class TemplateService {
   }
 
   // @ts-ignore
-  postTemplate(formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[]) {
+  postTemplate(formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[], applicationId: number, planning: any[]) {
     let flag: boolean;
     const json = {
       'messagge': formMessage.valueOf(),
@@ -93,8 +103,9 @@ export class TemplateService {
       'newParameters': newParameters,
       'channel_integrator': channel_integrator.valueOf(),
       // se coloca una campaña y origen por defecto
-      'applicationId': 2,
-      'campaign': 10
+      'applicationId': applicationId,
+      'campaign': 10,
+      'planning': planning
     };
     this.http.post(endpoint + 'templates/add', json).subscribe((res: boolean) => {
       flag = res;
@@ -126,7 +137,7 @@ export class TemplateService {
     this.router.navigate(['template', id]);
   }
 
-  async updateTemplate(templateId: number, formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[]) {
+  async updateTemplate(templateId: number, formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[], applicationId: number, planning: any[]) {
     let flag: boolean;
     const json = {
       'messagge': formMessage.valueOf(),
@@ -136,8 +147,9 @@ export class TemplateService {
       'newParameters': newParameters,
       'channel_integrator': channel_integrator.valueOf(),
       // se coloca una campaña y origen por defecto
-      'applicationId': 2,
-      'campaign': 10
+      'applicationId': applicationId,
+      'campaign': 10,
+      'planning': planning
     };
     this.http.put(endpoint + 'templates/update', json).subscribe(async (res: boolean) => {
       flag = res;

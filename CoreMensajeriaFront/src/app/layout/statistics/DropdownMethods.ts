@@ -458,4 +458,243 @@ export class DropdownMethods {
         });
         return ids;
     }
+
+    /* =============================
+           Handle years selection
+       ============================= */
+    protected yearSelected(year: any) {
+        this.selectedYearsIds.push(year["year_id"]);
+        console.log(this.selectedYearsIds);
+    }
+
+    protected yearDeselected(year: any) {
+        this.removeItemFromArray(year["year_id"], this.selectedYearsIds);
+    }
+
+    protected selectAllYears() {
+        for (var index in this.yearsDropdown) {
+            this.selectedYearsIds.push(this.yearsDropdown[index]["year_id"]);
+        }
+    }
+
+    protected deselectAllYears() {
+        this.selectedYearsIds = [];
+    }
+
+    /* =============================
+           Handle months selection
+       ============================= */
+    protected monthSelected(month: any) {
+        this.selectedMonthsIds.push(month["month_id"]);
+        console.log(this.selectedMonthsIds);
+    }
+
+    protected monthDeselected(month: any) {
+        this.removeItemFromArray(month["month_id"], this.selectedMonthsIds);
+    }
+
+    protected selectAllMonths() {
+        for (var index in this.monthsDropdown) {
+            this.selectedMonthsIds.push(this.monthsDropdown[index]["month_id"]);
+        }
+    }
+
+    protected deselectAllMonths() {
+        this.selectedMonthsIds = [];
+    }
+
+    /* =============================
+           Handle days selection
+       ============================= */
+    protected daySelected(day: any) {
+        this.selectedDaysIds.push(day["day_id"]);
+        console.log(this.selectedDaysIds);
+    }
+
+    protected dayDeselected(day: any) {
+        this.removeItemFromArray(day["day_id"], this.selectedDaysIds);
+    }
+
+    protected selectAllDays() {
+        for (var index in this.daysDropdown) {
+            this.selectedDaysIds.push(this.daysDropdown[index]["day_id"]);
+        }
+    }
+
+    protected deselectAllDays() {
+        this.selectedDaysIds = [];
+    }
+
+    /* =============================
+           Handle weeks selection
+       ============================= */
+    protected weekSelected(week: any) {
+        this.selectedWeeksIds.push(week["week_id"]);
+        console.log(this.selectedWeeksIds);
+    }
+
+    protected weekDeselected(week: any) {
+        this.removeItemFromArray(week["week_id"], this.selectedWeeksIds);
+    }
+
+    protected selectAllWeeks() {
+        for (var index in this.weeksDropdown) {
+            this.selectedWeeksIds.push(this.weeksDropdown[index]["week_id"]);
+        }
+    }
+
+    protected deselectAllWeeks() {
+        this.selectedWeeksIds = [];
+    }
+
+    /* ===================================
+           Handle days of weeks selection
+       =================================== */
+    protected dayOfWeekSelected(dayOfWeek: any) {
+        this.selectedDaysOfWeekIds.push(dayOfWeek["dayOfWeek_id"]);
+        console.log(this.selectedDaysOfWeekIds);
+    }
+
+    protected dayOfWeekDeselected(dayOfWeek: any) {
+        this.removeItemFromArray(
+            dayOfWeek["dayOfWeek_id"],
+            this.selectedDaysOfWeekIds
+        );
+    }
+
+    protected selectAllDaysOfWeek() {
+        for (var index in this.daysOfWeekDropdown) {
+            this.selectedDaysOfWeekIds.push(
+                this.daysOfWeekDropdown[index]["dayOfWeek_id"]
+            );
+        }
+    }
+
+    protected deselectAllDaysOfWeek() {
+        this.selectedDaysOfWeekIds = [];
+    }
+
+    /* ======================================
+           Handle quarters of year selection
+       ====================================== */
+    protected quarterOfYearSelected(quarterOfYear: any) {
+        this.selectedQuartersOfYearIds.push(quarterOfYear["quarterOfYear_id"]);
+        console.log(this.selectedQuartersOfYearIds);
+    }
+
+    protected quarterOfYearDeselected(quarterOfYear: any) {
+        this.removeItemFromArray(
+            quarterOfYear["quarterOfYear_id"],
+            this.selectedQuartersOfYearIds
+        );
+    }
+
+    protected selectAllQuartersOfYear() {
+        for (var index in this.quartersOfYearDropdown) {
+            this.selectedQuartersOfYearIds.push(
+                this.quartersOfYearDropdown[index]["quarterOfYear_id"]
+            );
+        }
+    }
+
+    protected deselectAllQuartersOfYear() {
+        this.selectedQuartersOfYearIds = [];
+    }
+
+    /* ======================================
+           Handle days of year selection
+       ====================================== */
+    protected dayOfYearSelected(dayOfYear: any) {
+        this.selectedDaysOfYearIds.push(dayOfYear["dayOfYear_id"]);
+        console.log(this.selectedDaysOfYearIds);
+    }
+
+    protected dayOfYearDeselected(dayOfYear: any) {
+        this.removeItemFromArray(
+            dayOfYear["dayOfYear_id"],
+            this.selectedDaysOfYearIds
+        );
+    }
+
+    protected selectAllDaysOfYear() {
+        for (var index in this.daysOfYearDropdown) {
+            this.selectedDaysOfYearIds.push(
+                this.daysOfYearDropdown[index]["dayOfYear_id"]
+            );
+        }
+    }
+
+    protected deselectAllDaysOfYear() {
+        this.selectedDaysOfYearIds = [];
+    }
+
+    /* =============================
+           Handle hours selection
+       ============================= */
+    protected hourSelected(hour: any) {
+        this.selectedHoursIds.push(hour["hour_id"]);
+        console.log(this.selectedHoursIds);
+    }
+
+    protected hourDeselected(hour: any) {
+        this.removeItemFromArray(hour["hour_id"], this.selectedHoursIds);
+    }
+
+    protected selectAllHours() {
+        for (var index in this.hoursDropdown) {
+            this.selectedHoursIds.push(this.hoursDropdown[index]["hour_id"]);
+        }
+    }
+
+    protected deselectAllHours() {
+        this.selectedHoursIds = [];
+    }
+
+    /* ===============================
+           Handle minutes selection
+       =============================== */
+    protected minuteSelected(minute: any) {
+        this.selectedMinutesIds.push(minute["minute_id"]);
+        console.log(this.selectedMinutesIds);
+    }
+
+    protected minuteDeselected(minute: any) {
+        this.removeItemFromArray(minute["minute_id"], this.selectedMinutesIds);
+    }
+
+    protected selectAllMinutes() {
+        for (var index in this.minutesDropdown) {
+            this.selectedMinutesIds.push(
+                this.minutesDropdown[index]["minute_id"]
+            );
+        }
+    }
+
+    protected deselectAllMinutes() {
+        this.selectedMinutesIds = [];
+    }
+
+    /* ===============================
+           Handle seconds selection
+       =============================== */
+    protected secondSelected(second: any) {
+        this.selectedSecondsIds.push(second["second_id"]);
+        console.log(this.selectedSecondsIds);
+    }
+
+    protected secondDeselected(second: any) {
+        this.removeItemFromArray(second["second_id"], this.selectedSecondsIds);
+    }
+
+    protected selectAllSeconds() {
+        for (var index in this.secondsDropdown) {
+            this.selectedSecondsIds.push(
+                this.secondsDropdown[index]["second_id"]
+            );
+        }
+    }
+
+    protected deselectAllSeconds() {
+        this.selectedSecondsIds = [];
+    }
 }

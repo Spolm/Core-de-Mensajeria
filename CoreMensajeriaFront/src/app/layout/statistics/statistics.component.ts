@@ -208,49 +208,69 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         //this.getAllCampaigns();
         this.getAllChannels();
 
-        this.statisticsService
-            .getInitialMessagesForCompanies()
-            .subscribe(data => {
+        this.statisticsService.getInitialMessagesForCompanies().subscribe(
+            data => {
                 this.companiesChart = this.insertInitialDataIntoCharts(
                     data,
                     this.companiesChartElement,
                     "Cantidad de mensajes por compañía",
                     ChartType.bar
                 );
-            });
+            },
+            error => {
+                this.toastr.error(
+                    "Hubo un error obteniendo la cantidad de mensajes por compañía"
+                );
+            }
+        );
 
-        this.statisticsService
-            .getInitialMessagesForCampaigns()
-            .subscribe(data => {
+        this.statisticsService.getInitialMessagesForCampaigns().subscribe(
+            data => {
                 this.campaignsChart = this.insertInitialDataIntoCharts(
                     data,
                     this.campaignsChartElement,
                     "Cantidad de mensajes por campaña",
                     ChartType.bar
                 );
-            });
+            },
+            error => {
+                this.toastr.error(
+                    "Hubo un error obteniendo la cantidad de mensajes por campaña"
+                );
+            }
+        );
 
-        this.statisticsService
-            .getInitialMessagesForChannels()
-            .subscribe(data => {
+        this.statisticsService.getInitialMessagesForChannels().subscribe(
+            data => {
                 this.channelsChart = this.insertInitialDataIntoCharts(
                     data,
                     this.channelsChartElement,
                     "Cantidad de mensajes por canal",
                     ChartType.doughnut
                 );
-            });
+            },
+            error => {
+                this.toastr.error(
+                    "Hubo un error obteniendo la cantidad de mensajes por canales."
+                );
+            }
+        );
 
-        this.statisticsService
-            .getInitialMessagesForIntegrators()
-            .subscribe(data => {
+        this.statisticsService.getInitialMessagesForIntegrators().subscribe(
+            data => {
                 this.integratorsChart = this.insertInitialDataIntoCharts(
                     data,
                     this.integratorsChartElement,
                     "Cantidad de mensajes por integrador",
                     ChartType.bar
                 );
-            });
+            },
+            error => {
+                this.toastr.error(
+                    "Hubo un error obteniendo la cantidad de mensajes por integradores."
+                );
+            }
+        );
     }
 
     private getAllCompanies() {
@@ -289,51 +309,6 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             this.insertIntoDropdown(EntityType.channel, data);
             this.getAllIntegrators();
         });
-    }
-
-    // capturar() {
-    //     if (this.opcionSeleccionado != "0") {
-    //         // Pasamos el valor seleccionado a la variable verSeleccion
-    //         this.verSeleccion = this.opcionSeleccionado;
-    //         console.log("Valor Capturado", this.verSeleccion);
-    //     } else this.toastr.error("Debe seleccionar otra opcion");
-    // }
-
-    capturarDate() {
-        if (
-            this.opcionDateSleccionado != null &&
-            this.opcionDateSleccionado2 != null &&
-            this.opcionDateSleccionado < this.opcionDateSleccionado2
-        ) {
-            this.Date1Capturado =
-                "?paramDate1=" + this.opcionDateSleccionado.toString();
-            this.Date2Capturado =
-                "?paramDate2=" + this.opcionDateSleccionado2.toString();
-            this.paramType = "paramType=" + this.verSeleccion;
-            console.log(
-                "FechaCapturada",
-                "Dates1: " + this.Date1Capturado,
-                "Dates2: " + this.Date2Capturado,
-                +" " + new Date(this.opcionDateSleccionado).getUTCDate(),
-                new Date(this.opcionDateSleccionado).getUTCMonth(),
-                new Date(this.opcionDateSleccionado).getFullYear(),
-                new Date(this.opcionDateSleccionado2).getUTCDate(),
-                new Date(this.opcionDateSleccionado2).getUTCMonth(),
-                new Date(this.opcionDateSleccionado2).getFullYear()
-            );
-        } else if (
-            (this.opcionDateSleccionado == null &&
-                this.opcionDateSleccionado2 == null) ||
-            (this.opcionDateSleccionado.toString().length == 0 &&
-                this.opcionDateSleccionado2.toString().length == 0)
-        ) {
-            console.log("hols" + this.opcionDateSleccionado.toString().length);
-
-            this.Date1Capturado = "?paramDate1=";
-            this.Date2Capturado = "?paramDate2=";
-            this.paramType = "paramType=" + this.verSeleccion;
-            this.toastr.error("Error en las fechas");
-        }
     }
 
     // Handle company selecction
@@ -470,18 +445,6 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     }
 
     sendUserRequest() {
-        // this.verSeleccion = this.opcionSeleccionado;
-        console.log("Valor Capturado", this.verSeleccion);
-
-        if (this.verSeleccion == "Grafico de Tortas") {
-            var TypeChosen: ChartType = ChartType.doughnut;
-            console.log("paso por el if", TypeChosen);
-        } else if (this.verSeleccion == "Grafico de Barras") {
-            var TypeChosen: ChartType = ChartType.bar;
-        } else if (this.verSeleccion == "Grafico de Linea") {
-            var TypeChosen: ChartType = ChartType.line;
-        }
-
         var params = this.convertSelectedItemsIntoHttpParams();
         this.statisticsService.getStatistics(params).subscribe(
             data => {
@@ -491,15 +454,41 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                 var campaigns: Point[] = this.createPointArray(campaingsJson);
                 let channelsJson = data["channels"];
                 var channels: Point[] = this.createPointArray(channelsJson);
+                let integratorsJson = data["integrators"];
+                var integrators: Point[] = this.createPointArray(
+                    integratorsJson
+                );
 
                 this.updateChartData(
                     this.companiesChart,
                     companies,
                     ChartType.bar
                 );
+
+                this.updateChartData(
+                    this.campaignsChart,
+                    campaigns,
+                    ChartType.bar
+                );
+
+                this.updateChartData(
+                    this.channelsChart,
+                    channels,
+                    ChartType.doughnut
+                );
+
+                this.updateChartData(
+                    this.integratorsChart,
+                    integrators,
+                    ChartType.bar
+                );
             },
             error => {
-                console.error(error);
+                if (error["status"] == 400) {
+                    this.toastr.warning(
+                        "Es necesario seleccionar una compañía, campaña, canal o integrador para poder hacer consultas"
+                    );
+                }
             }
         );
     }
@@ -510,6 +499,17 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         params = this.convertselectedCampaignsIdsIntoHttpParams(params);
         params = this.convertselectedChannelsIdsIntoHttpParams(params);
         params = this.convertselectedIntegratorsIdsIntoHttpParams(params);
+        params = this.convertselectedDaysIdsIntoHttpParams(params);
+        params = this.convertselectedDaysOfWeekIdsIntoHttpParams(params);
+        params = this.convertselectedDaysOfYearIdsIntoHttpParams(params);
+        params = this.convertselectedHoursIdsIntoHttpParams(params);
+        params = this.convertselectedMinutesIdsIntoHttpParams(params);
+        params = this.convertselectedMonthsIdsIntoHttpParams(params);
+        params = this.convertselectedQuartersIdsIntoHttpParams(params);
+        params = this.convertselectedSecondsIdsIntoHttpParams(params);
+        params = this.convertselectedWeeksOfYearIdsIntoHttpParams(params);
+        params = this.convertselectedYearsIdsIntoHttpParams(params);
+        console.log(params.toString());
         return params;
     }
 
@@ -537,6 +537,77 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
     convertselectedIntegratorsIdsIntoHttpParams(params: HttpParams) {
         this.selectedIntegratorsIds.forEach(integratorId => {
             params = params.append("integratorId", integratorId.toString());
+        });
+        return params;
+    }
+
+    convertselectedYearsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedYearsIds.forEach(yearId => {
+            params = params.append("yearId", yearId.toString());
+        });
+        return params;
+    }
+
+    convertselectedMonthsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedMonthsIds.forEach(monthId => {
+            params = params.append("monthId", monthId.toString());
+        });
+        return params;
+    }
+
+    convertselectedDaysOfWeekIdsIntoHttpParams(params: HttpParams) {
+        this.selectedDaysOfWeek.forEach(dayOfWeekId => {
+            params = params.append("dayofweekId", dayOfWeekId.toString());
+        });
+        return params;
+    }
+
+    convertselectedWeeksOfYearIdsIntoHttpParams(params: HttpParams) {
+        this.selectedWeeksIds.forEach(weekofyearId => {
+            params = params.append("weekofyearId", weekofyearId.toString());
+        });
+        return params;
+    }
+
+    convertselectedDaysIdsIntoHttpParams(params: HttpParams) {
+        this.selectedDaysIds.forEach(dayofmonthId => {
+            console.log(dayofmonthId);
+            params = params.append("dayofmonthId", dayofmonthId.toString());
+        });
+        return params;
+    }
+
+    convertselectedDaysOfYearIdsIntoHttpParams(params: HttpParams) {
+        this.selectedDaysOfYearIds.forEach(dayofyearId => {
+            params = params.append("dayofyearId", dayofyearId.toString());
+        });
+        return params;
+    }
+
+    convertselectedHoursIdsIntoHttpParams(params: HttpParams) {
+        this.selectedHoursIds.forEach(hourId => {
+            params = params.append("hourId", hourId.toString());
+        });
+        return params;
+    }
+
+    convertselectedMinutesIdsIntoHttpParams(params: HttpParams) {
+        this.selectedMinutesIds.forEach(minuteId => {
+            params = params.append("minuteId", minuteId.toString());
+        });
+        return params;
+    }
+
+    convertselectedSecondsIdsIntoHttpParams(params: HttpParams) {
+        this.selectedSecondsIds.forEach(secondId => {
+            params = params.append("secondId", secondId.toString());
+        });
+        return params;
+    }
+
+    convertselectedQuartersIdsIntoHttpParams(params: HttpParams) {
+        this.selectedQuartersOfYearIds.forEach(quarterId => {
+            params = params.append("quarterId", quarterId.toString());
         });
         return params;
     }
@@ -599,7 +670,37 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             integratorsDropdown: this.integratorsDropdown,
             selectedIntegrators: this.selectedIntegrators,
             selectedIntegratorsIds: this.selectedIntegratorsIds,
-            integratorsDropdownSettings: this.integratorsDropdownSettings
+            integratorsDropdownSettings: this.integratorsDropdownSettings,
+            // Years
+            selectedYears: this.selectedYears,
+            selectedYearsIds: this.selectedYearsIds,
+            // Months
+            selectedMonths: this.selectedMonths,
+            selectedMonthsIds: this.selectedMonthsIds,
+            // Days
+            selectedDays: this.selectedDays,
+            selectedDaysIds: this.selectedDaysIds,
+            // Weeks
+            selectedWeeks: this.selectedWeeks,
+            selectedWeeksIds: this.selectedWeeksIds,
+            // Days of week
+            selectedDaysOfWeek: this.selectedDaysOfWeek,
+            selectedDaysOfWeekIds: this.selectedDaysOfWeekIds,
+            // Quarters of year
+            selectedQuartersOfYear: this.selectedQuartersOfYear,
+            selectedQuartersOfYearIds: this.selectedQuartersOfYear,
+            // Days of year
+            selectedDaysOfYear: this.selectedDaysOfYear,
+            selectedDaysOfYearIds: this.selectedDaysOfYearIds,
+            // Hours
+            selectedHours: this.selectedHours,
+            selectedHoursIds: this.selectedHoursIds,
+            // Minutes
+            selectedMinutes: this.selectedMinutes,
+            selectedMinutesIds: this.selectedMinutesIds,
+            // Seconds
+            selectedSeconds: this.selectedSeconds,
+            selectedSecondsIds: this.selectedSecondsIds
         };
         const dialogRef = this.dialog.open(MoreFiltersComponent, dialogConfig);
         dialogRef.updatePosition({ top: "55px", right: "0px", left: "0px" });
@@ -609,7 +710,16 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
             this.fillCampaignsDropdownFromMenuData(result);
             this.fillChannelsDropdownFromMenuData(result);
             this.fillIntegratorsDropdownFromMenuData(result);
-            console.log(result);
+            this.fillYearsDropdownFromMenuData(result);
+            this.fillMonthsDropdownFromMenuData(result);
+            this.fillDaysDropdownFromMenuData(result);
+            this.fillWeeksDropdownFromMenuData(result);
+            this.fillDaysOfWeekDropdownFromMenuData(result);
+            this.fillQuartersOfYearDropdownFromMenuData(result);
+            this.fillDaysOfYearDropdownFromMenuData(result);
+            this.fillHoursDropdownFromMenuData(result);
+            this.fillMinutesDropdownFromMenuData(result);
+            this.fillSecondsDropdownFromMenuData(result);
         });
     }
 
@@ -636,6 +746,60 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         this.selectedIntegratorsIds =
             data["integrators"]["selectedIntegratorsIds"];
         this.integratorsDropdown = data["integrators"]["integratorsDropdown"];
+    }
+
+    fillYearsDropdownFromMenuData(data) {
+        this.selectedYears = data["years"]["selectedYears"];
+        this.selectedYearsIds = data["years"]["selectedYearsIds"];
+    }
+
+    fillMonthsDropdownFromMenuData(data) {
+        this.selectedMonths = data["months"]["selectedMonths"];
+        this.selectedMonthsIds = data["months"]["selectedMonthsIds"];
+    }
+
+    fillDaysDropdownFromMenuData(data) {
+        this.selectedDays = data["days"]["selectedDays"];
+        this.selectedDaysIds = data["days"]["selectedDaysIds"];
+    }
+
+    fillWeeksDropdownFromMenuData(data) {
+        this.selectedWeeks = data["weeks"]["selectedWeeks"];
+        this.selectedWeeksIds = data["weeks"]["selectedWeeksIds"];
+    }
+
+    fillDaysOfWeekDropdownFromMenuData(data) {
+        this.selectedDaysOfWeek = data["daysOfWeek"]["selectedDaysOfWeek"];
+        this.selectedDaysOfWeekIds =
+            data["daysOfWeek"]["selectedDaysOfWeekIds"];
+    }
+
+    fillQuartersOfYearDropdownFromMenuData(data) {
+        this.selectedQuartersOfYear =
+            data["quartersOfYear"]["selectedQuartersOfYear"];
+        this.selectedQuartersOfYearIds =
+            data["quartersOfYear"]["selectedQuartersOfYearIds"];
+    }
+
+    fillDaysOfYearDropdownFromMenuData(data) {
+        this.selectedDaysOfYear = data["daysOfYear"]["selectedDaysOfYear"];
+        this.selectedDaysOfYearIds =
+            data["daysOfYear"]["selectedDaysOfYearIds"];
+    }
+
+    fillHoursDropdownFromMenuData(data) {
+        this.selectedHours = data["hours"]["selectedHours"];
+        this.selectedHoursIds = data["hours"]["selectedHoursIds"];
+    }
+
+    fillMinutesDropdownFromMenuData(data) {
+        this.selectedMinutes = data["minutes"]["selectedMinutes"];
+        this.selectedMinutesIds = data["minutes"]["selectedMinutesIds"];
+    }
+
+    fillSecondsDropdownFromMenuData(data) {
+        this.selectedSeconds = data["seconds"]["selectedSeconds"];
+        this.selectedSecondsIds = data["seconds"]["selectedSecondsIds"];
     }
 
     getArrayOfRandomColors(length: Number): String[] {

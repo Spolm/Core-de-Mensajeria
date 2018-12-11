@@ -11,15 +11,31 @@ import { delay } from 'q';
 })
 export class ModifyTemplateComponent {
 
+  userId: string = localStorage.getItem("userid");
+  companyId: string = localStorage.getItem("companyId");
+  privilegesJson: any = [];
+  CTEMPLATE = false;
+  RTEMPLATE = false;
+  UTEMPLATE = false;
+  DTEMPLATE = false;
+  ATEMPLATE = false;
+
   templateId: any;
   sub: any;
   templateJson: any = [];
   parametersJson: any = [];
   channelsJson: any = [];
+  applicationsJson: any = [];
+  originOption = 'app';
+  applicationId: number;
   formMessage = '';
   parameters: Array<string> = [];
   newParameters: Array<string> = [];
   channels_integrators: any = [];
+  dateIni: string;
+  dateEnd: string;
+  timeIni: string;
+  timeEnd: string;
   showInputCreateParameterState = false;
 
   constructor(private templateService: TemplateService, private toastr: ToastrService, private route: ActivatedRoute) {
@@ -28,11 +44,41 @@ export class ModifyTemplateComponent {
     });
     this.getParameters();
     this.getChannels();
-    this.getTemplate();
+    this.getApplications(Number(this.companyId));
+    this.getTemplate();    
+    this.getPrivileges(this.userId, Number(this.companyId));
+  }
+
+  async getPrivileges(userId: string, companyId: number) {
+    this.templateService.getPrivilegesByUserAndCompany(userId, companyId).subscribe(data => {
+      this.privilegesJson = data;
+    });
+    await delay(1000);
+    this.assignPrivileges(this.privilegesJson);
+  }
+
+  assignPrivileges(privileges: Array<any>) {
+    privileges.forEach((privilege) => {
+      if(privilege._codePrivileges == 'CTEMPLATE'){
+        this.CTEMPLATE = true;
+      }
+      else if(privilege._codePrivileges == 'RTEMPLATE'){
+        this.RTEMPLATE = true
+      }
+      else if(privilege._codePrivileges == 'UTEMPLATE'){
+        this.UTEMPLATE = true
+      }
+      else if(privilege._codePrivileges == 'DTEMPLATE'){
+        this.DTEMPLATE = true
+      }
+      else if(privilege._codePrivileges == 'ATEMPLATE'){
+        this.ATEMPLATE = true
+      }
+    })
   }
 
   getParameters() {
-    this.templateService.getParameters(1).subscribe(data => {
+    this.templateService.getParameters(Number(this.companyId)).subscribe(data => {
       this.parametersJson = data;
     });
   }
@@ -43,66 +89,76 @@ export class ModifyTemplateComponent {
     });
   }
 
+  getApplications(company: number) {
+    this.templateService.getApplicationsByCompany(company).subscribe(data => {
+      this.applicationsJson = data;
+    });
+  }
+
   async getTemplate() {
     this.templateService.getTemplate(this.templateId).subscribe(data => {
       this.templateJson = data;
     });
     await delay(1000);
     this.formMessage = this.templateJson.message.message;
-    this.assignParameter(this.parameters , this.templateJson.message.parameterArrayList);
+    this.dateIni = this.templateJson.planning.startDate;
+    this.dateEnd = this.templateJson.planning.endDate;
+    this.timeIni = this.templateJson.planning.startTime;
+    this.timeEnd = this.templateJson.planning.endTime;
+    this.applicationId = this.templateJson.application._idApplication;
+    this.assignParameter(this.parameters, this.templateJson.message.parameterArrayList);
     this.assignChannelsIntegrators(this.channels_integrators, this.templateJson.channels);
   }
 
   assignParameter(place: Array<any>, data: Array<any>) {
-    data.forEach( (value) => {
+    data.forEach((value) => {
       place.push(value.name);
     });
   }
 
   assignChannelsIntegrators(place: Array<any>, data: Array<any>) {
-    data.forEach( (channel) => {
-      channel.integrators.forEach( (integrator) => {
+    data.forEach((channel) => {
+      channel.integrators.forEach((integrator) => {
         place.push(
-          { channel, integrator}
-          );
+          { channel, integrator }
+        );
       });
     });
   }
 
   addParameter(message: string, parameterName: string) {
-          const myFormMessage = document.getElementById('formMessage');
-          const pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
-          const startMessage = message.slice(0, pointer);
-          const endMessage = message.slice(pointer, message.length);
-          this.parameters.push(parameterName);
-          this.formMessage = startMessage + ' [.$' + parameterName + '$.] ' + endMessage;
-
+    const myFormMessage = document.getElementById('formMessage');
+    const pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
+    const startMessage = message.slice(0, pointer);
+    const endMessage = message.slice(pointer, message.length);
+    this.parameters.push(parameterName);
+    this.formMessage = startMessage + ' [.$' + parameterName + '$.] ' + endMessage;
   }
 
   addNewParameter(message: string, parameterName: string) {
     parameterName = parameterName.trim();
     if ((parameterName.valueOf() !== '')) {
-        parameterName = parameterName.toLowerCase();
-        parameterName = parameterName.charAt(0).toUpperCase() + parameterName.slice(1, parameterName.length);
-        if (!this.parameters.find(x => x === parameterName)) {
-            this.addParameter(message, parameterName);
-            if (!this.newParameters.find(x => x == parameterName)) {
-                this.newParameters.push(parameterName);
-            } else {
-                this.toastr.warning('El parametro ya esta registrado', 'Aviso',
-                    {
-                        timeOut: 2800,
-                        progressBar: true
-                    });
-                }
-            }
+      parameterName = parameterName.toLowerCase();
+      parameterName = parameterName.charAt(0).toUpperCase() + parameterName.slice(1, parameterName.length);
+      if (!this.parameters.find(x => x === parameterName)) {
+        this.addParameter(message, parameterName);
+        if (!this.newParameters.find(x => x == parameterName)) {
+          this.newParameters.push(parameterName);
         } else {
-            this.toastr.warning('No a escrito ningun parametro', 'Aviso',
+          this.toastr.warning('El parametro ya esta registrado', 'Aviso',
             {
-                timeOut: 2800,
-                progressBar: true
+              timeOut: 2800,
+              progressBar: true
             });
         }
+      }
+    } else {
+      this.toastr.warning('No a escrito ningun parametro', 'Aviso',
+        {
+          timeOut: 2800,
+          progressBar: true
+        });
+    }
   }
 
   addIntegrator(channel: any, integratorId: number) {
@@ -136,27 +192,40 @@ export class ModifyTemplateComponent {
   }
 
   updateTemplate() {
-      this.formMessage = this.formMessage.trim();
-      if (this.formMessage != '') {
-          if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
-              if (this.channels_integrators[0]) {
-                  this.templateService.updateTemplate(this.templateId, this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
+      const planning: any = [];
+      if (this.originOption !== 'app'){
+          this.applicationId = 0;
+      }
+      if (this.dateIni < this.dateEnd) {
+          planning.push(this.dateIni, this.dateEnd, this.timeIni, this.timeEnd);
+          this.formMessage = this.formMessage.trim();
+          if (this.formMessage != '') {
+              if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
+                  if (this.channels_integrators[0]) {
+                      this.templateService.updateTemplate(this.templateId, this.formMessage, this.parameters, this.newParameters, Number(this.companyId), this.channels_integrators,this.applicationId, planning);
+                  } else {
+                      this.toastr.error('Falta llenar un campo', 'Error',
+                          {
+                              timeOut: 2800,
+                              progressBar: true
+                          });
+                  }
               } else {
-                  this.toastr.error('Falta llenar un campo', 'Error',
+                  this.toastr.error('Tal vez quiera escribir un mensaje mas largo', 'Error',
                       {
                           timeOut: 2800,
                           progressBar: true
                       });
               }
           } else {
-              this.toastr.error('Tal vez quiera escribir un mensaje mas largo', 'Error',
+              this.toastr.warning('No puede crear un template sin mensaje!', 'Aviso',
                   {
                       timeOut: 2800,
                       progressBar: true
                   });
           }
       } else {
-          this.toastr.warning('No puede crear un template sin mensaje!', 'Aviso',
+          this.toastr.warning('La fecha inicial no puede ser superior a la final', 'Aviso',
               {
                   timeOut: 2800,
                   progressBar: true

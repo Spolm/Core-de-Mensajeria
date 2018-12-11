@@ -4,6 +4,7 @@ import Classes.M03_Campaign.Campaign;
 import Classes.M03_Campaign.CampaignDAO;
 import Classes.Sql;
 import Exceptions.CampaignDoesntExistsException;
+import Exceptions.ParameterCantBeNullException;
 import com.google.gson.Gson;
 import org.junit.FixMethodOrder;
 
@@ -177,6 +178,25 @@ public class M03_Campaigns {
             rb.entity(gson.toJson(_caList));
         }
         catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
+
+    @POST
+    @Path("/AddCampaign")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response addCampaign(Campaign _campaign){
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CampaignDAO _campaignDAO = new CampaignDAO();
+
+        try {
+            _campaignDAO.createCampaign(_campaign);
+        } catch (CampaignDoesntExistsException e) {
             e.printStackTrace();
         }
         catch (Exception e) {
