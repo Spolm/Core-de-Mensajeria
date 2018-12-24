@@ -1,8 +1,8 @@
 package webService.M01_Login;
 
-import Classes.M01_Login.PrivilegeDao;
-import Classes.M01_Login.User;
-import Classes.M01_Login.UserDAO;
+import Entities.M01_Login.PrivilegeDao;
+import Entities.M01_Login.User;
+import Entities.M01_Login.UserDAO;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;

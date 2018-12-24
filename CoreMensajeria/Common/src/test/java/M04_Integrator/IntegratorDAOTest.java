@@ -1,7 +1,6 @@
 package M04_Integrator;
 
-import Classes.M04_Integrator.*;
-import Classes.M07_Template.MessagePackage.Message;
+import Entities.M04_Integrator.*;
 import Exceptions.DatabaseConnectionProblemException;
 import Exceptions.IntegratorNotFoundException;
 import org.junit.jupiter.api.BeforeAll;

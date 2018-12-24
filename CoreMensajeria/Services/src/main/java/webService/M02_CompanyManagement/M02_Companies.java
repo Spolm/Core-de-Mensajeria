@@ -1,9 +1,8 @@
 package webService.M02_CompanyManagement;
 
-import Classes.M02_Company.CompanyDAO;
-import Classes.M02_Company.Company;
+import Entities.M02_Company.CompanyDAO;
+import Entities.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
-import Exceptions.DatabaseConnectionProblemException;
 import Exceptions.ParameterCantBeNullException;
 import com.google.gson.Gson;
 import javax.ws.rs.*;
