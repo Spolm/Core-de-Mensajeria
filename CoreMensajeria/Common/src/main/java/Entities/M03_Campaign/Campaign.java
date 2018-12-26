@@ -1,10 +1,11 @@
 package Entities.M03_Campaign;
 
+import Entities.Entity;
 import Entities.M02_Company.Company;
 
 import java.util.Date;
 
-public class Campaign {
+public class Campaign extends Entity {
 
     private int _idCampaign;
     private String _nameCampaign;

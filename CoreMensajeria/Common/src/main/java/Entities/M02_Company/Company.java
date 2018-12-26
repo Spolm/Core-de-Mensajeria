@@ -1,6 +1,8 @@
 package Entities.M02_Company;
 
-public class Company {
+import Entities.Entity;
+
+public class Company extends Entity {
     private int _idCompany;
     private String _name;
     private String _desc;
