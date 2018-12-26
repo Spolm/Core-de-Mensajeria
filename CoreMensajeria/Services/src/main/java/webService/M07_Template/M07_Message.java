@@ -1,8 +1,8 @@
 package webService.M07_Template;
 
-import Classes.M07_Template.HandlerPackage.MessageHandler;
-import Classes.M07_Template.HandlerPackage.TemplateHandler;
-import Classes.M07_Template.Template;
+import Entities.M07_Template.HandlerPackage.MessageHandler;
+import Entities.M07_Template.HandlerPackage.TemplateHandler;
+import Entities.M07_Template.Template;
 import com.google.gson.Gson;
 
 import javax.ws.rs.GET;

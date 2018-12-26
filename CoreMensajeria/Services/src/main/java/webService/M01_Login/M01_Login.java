@@ -1,25 +1,16 @@
 package webService.M01_Login;
 
-import Classes.M01_Login.*;
+import Entities.M01_Login.*;
 import Exceptions.UserBlockedException;
 import com.google.gson.Gson;
-import sun.rmi.runtime.Log;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import javax.xml.bind.DatatypeConverter;
-import java.net.InetAddress;
-import java.net.URI;
-import java.net.UnknownHostException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 

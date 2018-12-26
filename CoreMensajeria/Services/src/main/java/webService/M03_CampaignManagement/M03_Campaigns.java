@@ -1,21 +1,13 @@
 package webService.M03_CampaignManagement;
 
-import Classes.M03_Campaign.Campaign;
-import Classes.M03_Campaign.CampaignDAO;
-import Classes.Sql;
+import Entities.M03_Campaign.Campaign;
+import Entities.M03_Campaign.CampaignDAO;
 import Exceptions.CampaignDoesntExistsException;
-import Exceptions.ParameterCantBeNullException;
 import com.google.gson.Gson;
-import org.junit.FixMethodOrder;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 @Path( "/M03_Campaigns" )
 /**

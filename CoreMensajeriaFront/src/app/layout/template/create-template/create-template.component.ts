@@ -14,6 +14,7 @@ import { delay } from 'q';
 export class CreateTemplateComponent {
 
   userId: string = localStorage.getItem("userid");
+  companyId: string = localStorage.getItem("companyId");
   privilegesJson: any = [];
   CTEMPLATE = false;
   RTEMPLATE = false;
@@ -36,11 +37,12 @@ export class CreateTemplateComponent {
   timeEnd: string;
   showInputCreateParameterState = false;
 
+
   constructor(private templateService: TemplateService, private toastr: ToastrService, private router: Router) {
     this.getParameters();
     this.getChannels();
-    this.getApplications(2);
-    this.getPrivileges(this.userId, 2);
+    this.getApplications(Number(this.companyId));
+    this.getPrivileges(this.userId, Number(this.companyId));
   }
 
   async getPrivileges(userId: string, companyId: number) {
@@ -55,24 +57,20 @@ export class CreateTemplateComponent {
     privileges.forEach((privilege) => {
       if (privilege._codePrivileges == 'CTEMPLATE') {
         this.CTEMPLATE = true;
+      } else if (privilege._codePrivileges == 'RTEMPLATE') {
+        this.RTEMPLATE = true;
+      } else if (privilege._codePrivileges == 'UTEMPLATE') {
+        this.UTEMPLATE = true;
+      } else if (privilege._codePrivileges == 'DTEMPLATE') {
+        this.DTEMPLATE = true;
+      } else if (privilege._codePrivileges == 'ATEMPLATE') {
+        this.ATEMPLATE = true;
       }
-      else if (privilege._codePrivileges == 'RTEMPLATE') {
-        this.RTEMPLATE = true
-      }
-      else if (privilege._codePrivileges == 'UTEMPLATE') {
-        this.UTEMPLATE = true
-      }
-      else if (privilege._codePrivileges == 'DTEMPLATE') {
-        this.DTEMPLATE = true
-      }
-      else if (privilege._codePrivileges == 'ATEMPLATE') {
-        this.ATEMPLATE = true
-      }
-    })
+    });
   }
 
   getParameters() {
-    this.templateService.getParameters(1).subscribe(data => {
+    this.templateService.getParameters(Number(this.companyId)).subscribe(data => {
       this.parametersJson = data;
     });
   }
@@ -156,41 +154,47 @@ export class CreateTemplateComponent {
   }
 
   postTemplate() {
+      const planning: any = [];
+      if (this.dateIni <= this.dateEnd) {
+          planning.push(this.dateIni, this.dateEnd, this.timeIni, this.timeEnd);
 
-    console.log(this.formMessage);
-    console.log(this.parameters);
-    console.log(this.newParameters);
-    console.log(this.channels_integrators);
-    console.log(this.originOption);
-    console.log(this.dateIni);
-    console.log(this.dateEnd);
-    console.log(this.timeIni);
-    console.log(this.timeEnd)
-    /*this.formMessage = this.formMessage.trim();
-    if (this.formMessage != '') {
-      if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
-        if (this.channels_integrators[0]) {
-          this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators);
-        } else {
-          this.toastr.warning('Falta llenar un campo', 'Aviso',
-            {
-              timeOut: 2800,
-              progressBar: true
-            });
-        }
+          console.log(planning);
+
+          if (this.originOption !== 'app') {
+              this.applicationId = 0;
+          }
+          this.formMessage = this.formMessage.trim();
+          if (this.formMessage != '') {
+              if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
+                  if (this.channels_integrators[0] && (this.applicationId !== undefined) && this.dateIni !== undefined && this.dateEnd !== undefined && this.timeIni !== undefined && this.timeEnd !== undefined) {
+                      this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, Number(this.companyId), this.channels_integrators, this.applicationId, planning);
+                  } else {
+                      this.toastr.warning('Falta llenar un campo', 'Aviso',
+                          {
+                              timeOut: 2800,
+                              progressBar: true
+                          });
+                  }
+              } else {
+                  this.toastr.warning('Tal vez quiera escribir un mensaje mas largo', 'Aviso',
+                      {
+                          timeOut: 2800,
+                          progressBar: true
+                      });
+              }
+          } else {
+              this.toastr.warning('No puede crear un template sin mensaje!', 'Aviso',
+                  {
+                      timeOut: 2800,
+                      progressBar: true
+                  });
+          }
       } else {
-        this.toastr.warning('Tal vez quiera escribir un mensaje mas largo', 'Aviso',
-          {
-            timeOut: 2800,
-            progressBar: true
-          });
+          this.toastr.warning('La fecha inicial no puede ser superior a la final', 'Aviso',
+              {
+                  timeOut: 2800,
+                  progressBar: true
+              });
       }
-    } else {
-      this.toastr.warning('No puede crear un template sin mensaje!', 'Aviso',
-        {
-          timeOut: 2800,
-          progressBar: true
-        });
-    }*/
   }
 }

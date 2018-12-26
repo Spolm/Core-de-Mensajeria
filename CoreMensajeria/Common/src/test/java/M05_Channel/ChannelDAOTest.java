@@ -1,8 +1,8 @@
 package M05_Channel;
 
-import Classes.M04_Integrator.Integrator;
-import Classes.M05_Channel.Channel;
-import Classes.M05_Channel.ChannelDAO;
+import Entities.M04_Integrator.Integrator;
+import Entities.M05_Channel.Channel;
+import Entities.M05_Channel.ChannelDAO;
 import Exceptions.ChannelNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
 import org.junit.jupiter.api.BeforeEach;

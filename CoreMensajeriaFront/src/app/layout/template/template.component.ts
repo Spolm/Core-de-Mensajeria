@@ -15,6 +15,7 @@ export class TemplateComponent {
   userId: string = localStorage.getItem("userid");
   templates: any = [];
   privilegesJson: any = [];
+  companiesJson: any = [];
   CTEMPLATE = false;
   RTEMPLATE = false;
   UTEMPLATE = false;
@@ -22,18 +23,29 @@ export class TemplateComponent {
   ATEMPLATE = false;
 
   constructor(private templateService: TemplateService) {
-    this.getTemplates();
-    this.getPrivileges(this.userId, 2);
+    this.getCompanies(this.userId);
   }
 
-  getTemplates() {
-    this.templateService.getTemplates().subscribe(data => {
+  regetTemplates(){
+    this.getTemplates(this.userId, localStorage.getItem('companyId'));
+  }
+
+  getTemplates(userId: string, companyId: string) {
+    this.templateService.getTemplatesByCompany(userId, companyId).subscribe(data => {
       this.templates = data;
     });
   }
 
   approveTemplates() {
-    this.getTemplates();
+    console.log(this.userId)
+    console.log(localStorage.getItem('companyId'));
+    this.getTemplates(this.userId, localStorage.getItem('companyId'));
+  }
+
+  getCompanies(userId: string) {
+    this.templateService.getCompanies(userId).subscribe(data => {
+      this.companiesJson = data;
+    });
   }
 
   async getPrivileges(userId: string, companyId: number) {
@@ -46,22 +58,28 @@ export class TemplateComponent {
 
   assignPrivileges(privileges: Array<any>) {
     privileges.forEach((privilege) => {
-      if(privilege._codePrivileges == 'CTEMPLATE'){
+      if (privilege._codePrivileges == 'CTEMPLATE') {
         this.CTEMPLATE = true;
       }
-      else if(privilege._codePrivileges == 'RTEMPLATE'){
+      else if (privilege._codePrivileges == 'RTEMPLATE') {
         this.RTEMPLATE = true
       }
-      else if(privilege._codePrivileges == 'UTEMPLATE'){
+      else if (privilege._codePrivileges == 'UTEMPLATE') {
         this.UTEMPLATE = true
       }
-      else if(privilege._codePrivileges == 'DTEMPLATE'){
+      else if (privilege._codePrivileges == 'DTEMPLATE') {
         this.DTEMPLATE = true
       }
-      else if(privilege._codePrivileges == 'ATEMPLATE'){
+      else if (privilege._codePrivileges == 'ATEMPLATE') {
         this.ATEMPLATE = true
       }
     })
+  }
+
+  changeCompany(companyId: string){
+    localStorage.setItem('companyId', companyId);
+    this.getTemplates(this.userId, companyId);
+    this.getPrivileges(this.userId, Number(companyId));
   }
 
   templateDetails(id: number) {

@@ -24,11 +24,34 @@
 
 </div>
 <div class="row">
-  <div class="col-12">
+  <div class="col-6">
     <p>Esta plantilla forma parte de la campaña
       <Strong>{{template.campaign._nameCampaign}}</Strong>
     </p>
-  </div>
+    <p *ngIf="template.application._idApplication > 0">Se origino a partir de la aplicacion de
+        <Strong>{{template.application._nameApplication}}</Strong>
+    </p>
+    </div>
+
+</div>
+<h3>Planificacion</h3>
+<div class="row">
+    <div class="col-4">
+        <p><Strong>Fecha de inicio: </Strong>
+            {{template.planning.startDate | date : date : 'YYYY'}}
+        </p>
+        <p><Strong>Hora de inicio: </Strong>
+            {{template.planning.startTime  }}
+        </p>
+    </div>
+    <div class="col-4">
+        <p><Strong>Fecha de fin: </Strong>
+            {{template.planning.endDate | date : date : 'YYYY'}}
+        </p>
+        <p><Strong>Hora de fin: </Strong>
+            {{template.planning.endTime }}
+        </p>
+    </div>
 </div>
 <h3>Canales e Integradores</h3>
 <div class="row">
