@@ -1,4 +1,6 @@
-package DTO;
+package DTO.M02_DTO;
+
+import DTO.DTO;
 
 /**
  * Clase encargada de definir los DTO que seran utilizados por Company
@@ -51,10 +53,20 @@ public class DTOCompany {
         _link = link;
     }
 
+
+    /**
+     * Constructor Vacio
+     */
     public DTOCompany() {
 
     }
 
+    /**
+     * Constructor para Company sin id
+     * @param name nombre para una campaña recien creada
+     * @param desc descripcion de la campaña
+     * @param status el estatus de la campaña, puede ser activada o desactivada
+     */
 
     public DTOCompany(String name, String desc, boolean status) {
 
@@ -63,6 +75,14 @@ public class DTOCompany {
         _status = status;
 
     }
+
+    /**
+     * Constructor para Company con id
+     * @param id id para una campaña
+     * @param name nombre para una campaña recien creada
+     * @param desc descripcion de la campaña
+     * @param status el estatus de la campaña, puede ser activada o desactivada
+     */
 
     public DTOCompany(int id, String name, String desc, boolean status) {
 
@@ -73,6 +93,15 @@ public class DTOCompany {
 
     }
 
+
+    /**
+     * Constructor para Company con id
+     * @param id id para una campaña
+     * @param name nombre para una campaña recien creada
+     * @param desc descripcion de la campaña
+     * @param status el estatus de la campaña, puede ser activada o desactivada
+     * @param link
+     */
     public DTOCompany ( int id, String name, String desc, boolean status, String link ) {
 
         _idCompany = id;

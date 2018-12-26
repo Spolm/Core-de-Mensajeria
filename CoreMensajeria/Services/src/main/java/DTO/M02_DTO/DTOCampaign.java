@@ -1,5 +1,6 @@
-package DTO;
+package DTO.M02_DTO;
 
+import DTO.DTO;
 import Entities.M02_Company.Company;
 
 import java.util.Date;
