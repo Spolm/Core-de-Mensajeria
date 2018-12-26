@@ -1,5 +1,8 @@
 package DTO;
 
+/**
+ * Clase encargada de definir los DTO que seran utilizados por Company
+ */
 public class DTOCompany {
 
     private int _idCompany;

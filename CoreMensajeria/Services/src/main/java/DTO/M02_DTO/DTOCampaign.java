@@ -4,6 +4,9 @@ import Entities.M02_Company.Company;
 
 import java.util.Date;
 
+/**
+ * Clase encargada de definir los DTO que seran utilizados por Campaign
+ */
 public class DTOCampaign {
     private int _idCampaign;
     private String _nameCampaign;
