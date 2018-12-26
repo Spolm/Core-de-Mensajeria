@@ -48,9 +48,18 @@ public class Company {
     }
 
     public Company() {
-
+        /**
+         * Constructor Vacio
+         */
     }
 
+
+    /**
+     * Constructor para Companias sin _id ni _link
+     * @param name nombre para una compania recien creada
+     * @param desc descripcion de la compania
+     * @param status el estatus de la compania, puede ser activada o desactivada
+     */
 
     public Company(String name, String desc, boolean status) {
 
@@ -60,6 +69,13 @@ public class Company {
 
     }
 
+    /**
+     * Constructor para Companias sin _link
+     * @param id id de la compania
+     * @param name nombre para una compania recien creada
+     * @param desc descripcion de la compania
+     * @param status el estatus de la compania, puede ser activada o desactivada
+     */
     public Company(int id, String name, String desc, boolean status) {
 
         _idCompany = id;
@@ -69,6 +85,15 @@ public class Company {
 
     }
 
+
+    /**
+     * Constructor para Companias
+     * @param id id de la compania
+     * @param name nombre para una compania recien creada
+     * @param desc descripcion de la compania
+     * @param status el estatus de la compania, puede ser activada o desactivada
+     * @param link
+     */
     public Company ( int id, String name, String desc, boolean status, String link ) {
 
         _idCompany = id;

@@ -62,7 +62,7 @@ public class DTOCompany {
     }
 
     /**
-     * Constructor para Company sin id
+     * DTO para Company sin id y sin link
      * @param name nombre para una campaña recien creada
      * @param desc descripcion de la campaña
      * @param status el estatus de la campaña, puede ser activada o desactivada
@@ -77,7 +77,7 @@ public class DTOCompany {
     }
 
     /**
-     * Constructor para Company con id
+     * DTO para Company con id sin link
      * @param id id para una campaña
      * @param name nombre para una campaña recien creada
      * @param desc descripcion de la campaña
@@ -95,7 +95,7 @@ public class DTOCompany {
 
 
     /**
-     * Constructor para Company con id
+     * DTO para Company con todos los atributos de la clase
      * @param id id para una campaña
      * @param name nombre para una campaña recien creada
      * @param desc descripcion de la campaña

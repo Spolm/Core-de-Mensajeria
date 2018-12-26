@@ -69,7 +69,7 @@ public class Campaign {
     }
 
     /**
-     * Constructor para campañas sin id
+     * Constructor para campañas sin id y sin Company
      * @param nameCampaign nombre para una campaña recien creada
      * @param descCampaign descripcion de la campaña
      * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
@@ -85,15 +85,16 @@ public class Campaign {
     }
 
     /**
-     *
-     * @param idCampaign
-     * @param nameCampaign
-     * @param descCampaign
-     * @param statusCampaign
-     * @param startCampaign
-     * @param endCampaign
+     * Constructor para campañas sin Company
+     * @param idCampaign   id de la campaña
+     * @param nameCampaign nombre para una campaña recien creada
+     * @param descCampaign descripcion de la campaña
+     * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
+     * @param startCampaign fecha de inicio de la campaña
+     * @param endCampaign fecha de finalización de la campaña
      */
-    public Campaign(int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign, Date startCampaign, Date endCampaign) {
+    public Campaign(int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign,
+                    Date startCampaign, Date endCampaign) {
         _idCampaign = idCampaign;
         _nameCampaign = nameCampaign;
         _descCampaign = descCampaign;
@@ -103,14 +104,14 @@ public class Campaign {
     }
 
     /**
-     *
-     * @param idCampaign
-     * @param nameCampaign
-     * @param descCampaign
-     * @param statusCampaign
-     * @param startCampaign
-     * @param endCampaign
-     * @param company
+     * Constructor para campañas
+     * @param idCampaign   id de la campaña
+     * @param nameCampaign nombre para una campaña recien creada
+     * @param descCampaign descripcion de la campaña
+     * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
+     * @param startCampaign fecha de inicio de la campaña
+     * @param endCampaign fecha de finalización de la campaña
+     * @param company objeto del tipo compania
      */
     public Campaign (int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign, Date startCampaign, Date endCampaign, Company company) {
         _idCampaign = idCampaign;
