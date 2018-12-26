@@ -1,4 +1,4 @@
-package DTO.M02_DTO;
+package DTO.M03_DTO;
 
 import DTO.DTO;
 import Entities.M02_Company.Company;
