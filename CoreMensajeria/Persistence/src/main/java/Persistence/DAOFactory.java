@@ -1,5 +1,6 @@
 package Persistence;
 
+import Entities.M02_Company.CompanyDAO;
 import Persistence.M01_Login.GetUserDao;
 
 public class DAOFactory {
@@ -11,4 +12,8 @@ public class DAOFactory {
     }
 
     //endregion
+
+
+   static public CompanyDAO instanciateDaoCompany ( ) { return new CompanyDAO ( ); }
+
 }
