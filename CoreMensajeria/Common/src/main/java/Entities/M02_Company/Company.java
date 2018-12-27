@@ -8,6 +8,7 @@ public class Company extends Entity {
     private String _desc;
     private boolean _status;
     private String _link;
+            private boolean _habilitado;    // Anadido por la estructura del mapper
 
     public int get_idCompany () {
         return _idCompany;
@@ -48,6 +49,11 @@ public class Company extends Entity {
     public void set_link ( String link ) {
         _link = link;
     }
+
+    public boolean get_habilitado() { return _habilitado; }
+
+    public void set_habilitado(boolean _habilitado) { _habilitado = _habilitado; }
+
 
     public Company() {
         /**
@@ -105,4 +111,5 @@ public class Company extends Entity {
         _link = link;
 
     }
+
 }

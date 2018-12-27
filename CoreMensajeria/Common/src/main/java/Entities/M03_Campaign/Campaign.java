@@ -14,6 +14,7 @@ public class Campaign extends Entity {
     private Date _startCampaign;
     private Date _endCampaign;
     private Company _company;
+                  private boolean _habilitado; // Anadido por la estructura del mapper
 
     public int get_idCampaign() {
         return _idCampaign;
@@ -62,6 +63,11 @@ public class Campaign extends Entity {
     public void set_endCampaign(Date endCampaign) {
         _endCampaign = endCampaign;
     }
+
+
+    public boolean get_habilitado() { return _habilitado; }
+
+    public void set_habilitado(boolean _habilitado) { _habilitado = _habilitado; }
 
     /**
      * Constructor Vacio
