@@ -15,7 +15,7 @@ public class Company extends Entity {
     }
 
     public void set_idCompany ( int idCompany ) {
-        _idCompany = idCompany;
+        this._idCompany = idCompany;
     }
 
     public String get_name () {
@@ -23,7 +23,7 @@ public class Company extends Entity {
     }
 
     public void set_name ( String name ) {
-        _name = name;
+        this._name = name;
     }
 
     public String get_desc() {
@@ -31,7 +31,7 @@ public class Company extends Entity {
     }
 
     public void set_desc ( String desc ) {
-        _desc = desc;
+        this._desc = desc;
     }
 
     public boolean get_status() {
@@ -39,7 +39,7 @@ public class Company extends Entity {
     }
 
     public void set_status ( boolean status ) {
-        _status = status;
+        this._status = status;
     }
 
     public String get_link() {
@@ -47,12 +47,12 @@ public class Company extends Entity {
     }
 
     public void set_link ( String link ) {
-        _link = link;
+        this._link = link;
     }
 
     public boolean get_habilitado() { return _habilitado; }
 
-    public void set_habilitado(boolean _habilitado) { _habilitado = _habilitado; }
+    public void set_habilitado(boolean _habilitado) { this._habilitado = _habilitado; }
 
 
     public Company() {

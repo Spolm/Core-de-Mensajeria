@@ -149,9 +149,9 @@ public class CampaignDAO {
         
         try {
             ca = getDetails(id);
-            ca.set_statusCampaign(!ca.is_statusCampaign());
+            ca.set_statusCampaign(!ca.get_statusCampaign());
             String query = "UPDATE public.campaign SET" +
-                    " cam_status ="+ca.is_statusCampaign()+
+                    " cam_status ="+ca.get_statusCampaign()+
                     " WHERE cam_id =?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1,id);
@@ -167,7 +167,7 @@ public class CampaignDAO {
         finally {
             Sql.bdClose(conn);
         }
-        return ca.is_statusCampaign();
+        return ca.get_statusCampaign();
     }
 
     public Campaign createCampaign(Campaign ca) throws  CampaignDoesntExistsException {
@@ -177,7 +177,7 @@ public class CampaignDAO {
             preparedStatement.setInt(1, ca.get_idCampaign());
             preparedStatement.setString(2, ca.get_nameCampaign());
             preparedStatement.setString(3, ca.get_descCampaign());
-            preparedStatement.setBoolean(4, ca.is_statusCampaign());
+            preparedStatement.setBoolean(4, ca.get_statusCampaign());
             preparedStatement.setDate(5, (Date) ca.get_startCampaign());
             preparedStatement.setDate(6, (Date) ca.get_endCampaign());
 

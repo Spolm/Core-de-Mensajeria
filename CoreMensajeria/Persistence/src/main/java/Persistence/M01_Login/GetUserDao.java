@@ -8,8 +8,8 @@ import java.sql.SQLException;
 public class GetUserDao extends DAO implements  IDAOUser {
 
     @Override
-    public Entity create(Entity e) {
-        return null;
+    public void create(Entity e) {
+
     }
 
     @Override

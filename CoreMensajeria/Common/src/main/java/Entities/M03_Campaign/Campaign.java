@@ -21,7 +21,7 @@ public class Campaign extends Entity {
     }
 
     public void set_idCampaign(int idCampaign) {
-        _idCampaign = idCampaign;
+        this._idCampaign = idCampaign;
     }
 
     public String get_nameCampaign() {
@@ -29,7 +29,7 @@ public class Campaign extends Entity {
     }
 
     public void set_nameCampaign(String nameCampaign) {
-        _nameCampaign = nameCampaign;
+        this._nameCampaign = nameCampaign;
     }
 
     public String get_descCampaign() {
@@ -37,15 +37,15 @@ public class Campaign extends Entity {
     }
 
     public void set_descCampaign(String descCampaign) {
-        _descCampaign = descCampaign;
+        this._descCampaign = descCampaign;
     }
 
-    public boolean is_statusCampaign() {
+    public boolean get_statusCampaign() {
         return _statusCampaign;
     }
 
     public void set_statusCampaign(boolean statusCampaign) {
-        _statusCampaign = statusCampaign;
+        this._statusCampaign = statusCampaign;
     }
 
     public Date get_startCampaign() {
@@ -53,7 +53,7 @@ public class Campaign extends Entity {
     }
 
     public void set_startCampaign(Date startCampaign) {
-        _startCampaign = startCampaign;
+        this._startCampaign = startCampaign;
     }
 
     public Date get_endCampaign() {
@@ -61,9 +61,12 @@ public class Campaign extends Entity {
     }
 
     public void set_endCampaign(Date endCampaign) {
-        _endCampaign = endCampaign;
+        this._endCampaign = endCampaign;
     }
 
+    public Company get_company() { return _company; }
+
+    public void set_company(Company _company) { this._company = _company; }
 
     public boolean get_habilitado() { return _habilitado; }
 

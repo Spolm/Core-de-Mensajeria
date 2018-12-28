@@ -39,7 +39,7 @@ public class DTOCampaignWithOut_Company {
         _descCampaign = descCampaign;
     }
 
-    public boolean is_statusCampaign() {
+    public boolean get_statusCampaign() {
         return _statusCampaign;
     }
 

@@ -43,7 +43,7 @@ public class DTOFullCampaign {
         _descCampaign = descCampaign;
     }
 
-    public boolean is_statusCampaign() {
+    public boolean get_statusCampaign() {
         return _statusCampaign;
     }
 
@@ -66,6 +66,10 @@ public class DTOFullCampaign {
     public void set_endCampaign(Date endCampaign) {
         _endCampaign = endCampaign;
     }
+
+    public Company get_company() { return _company; }
+
+    public void set_company(Company _company) { this._company = _company; }
 
     public boolean get_habilitado() { return _habilitado; }
 
