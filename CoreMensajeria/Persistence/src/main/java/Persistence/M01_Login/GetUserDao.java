@@ -8,9 +8,7 @@ import java.sql.SQLException;
 public class GetUserDao extends DAO implements  IDAOUser {
 
     @Override
-    public void create(Entity e) {
-
-    }
+    public void create(Entity e) { }
 
     @Override
     public Entity read(Entity e) {

@@ -125,7 +125,6 @@ public class DAOCompany  implements IDAOCompany {
     @Override
     public void create(Entity e) {
 
-        PathHandler _ph  = new PathHandler();
 
         Company _co = (Company) e;
         try {
@@ -135,7 +134,6 @@ public class DAOCompany  implements IDAOCompany {
             preparedStatement.setString(2, _co.get_name());
             preparedStatement.setString(3, _co.get_desc());
             preparedStatement.setBoolean(4, _co.get_status());
-            preparedStatement.setString(5, _ph.generatePath(_co));
             preparedStatement.execute();
 
         }catch (Exception exc){
