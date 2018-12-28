@@ -5,14 +5,13 @@ import DTO.DTO;
 /**
  * Clase encargada de definir los DTO que seran utilizados por Company
  */
-public class DTOCompany {
+public class DTOFullCompany {
 
     private int _idCompany;
     private String _name;
     private String _desc;
     private boolean _status;
     private String _link;
-            private boolean _habilitado;
 
     public int get_idCompany () {
         return _idCompany;
@@ -54,46 +53,11 @@ public class DTOCompany {
         _link = link;
     }
 
-    public boolean get_habilitado() { return _habilitado; }
-
-    public void set_habilitado(boolean _habilitado) { _habilitado = _habilitado; }
 
     /**
      * Constructor Vacio
      */
-    public DTOCompany() {
-
-    }
-
-    /**
-     * DTO para Company sin id y sin link
-     * @param name nombre para una campaña recien creada
-     * @param desc descripcion de la campaña
-     * @param status el estatus de la campaña, puede ser activada o desactivada
-     */
-
-    public DTOCompany(String name, String desc, boolean status) {
-
-        _name = name;
-        _desc = desc;
-        _status = status;
-
-    }
-
-    /**
-     * DTO para Company con id sin link
-     * @param id id para una campaña
-     * @param name nombre para una campaña recien creada
-     * @param desc descripcion de la campaña
-     * @param status el estatus de la campaña, puede ser activada o desactivada
-     */
-
-    public DTOCompany(int id, String name, String desc, boolean status) {
-
-        _idCompany = id;
-        _name = name;
-        _desc = desc;
-        _status = status;
+    public DTOFullCompany() {
 
     }
 
@@ -106,7 +70,7 @@ public class DTOCompany {
      * @param status el estatus de la campaña, puede ser activada o desactivada
      * @param link
      */
-    public DTOCompany ( int id, String name, String desc, boolean status, String link ) {
+    public DTOFullCompany ( int id, String name, String desc, boolean status, String link ) {
 
         _idCompany = id;
         _name = name;

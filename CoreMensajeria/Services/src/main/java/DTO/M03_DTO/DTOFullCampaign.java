@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Clase encargada de definir los DTO que seran utilizados por Campaign
  */
-public class DTOCampaign {
+public class DTOFullCampaign {
     private int _idCampaign;
     private String _nameCampaign;
     private String _descCampaign;
@@ -74,46 +74,10 @@ public class DTOCampaign {
     /**
      * Constructor Vacio
      */
-    public DTOCampaign() {
+    public DTOFullCampaign() {
     }
 
-    /**
-     * DTO para campañas sin id y sin Company
-     * @param nameCampaign nombre para una campaña recien creada
-     * @param descCampaign descripcion de la campaña
-     * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
-     * @param startCampaign fecha de inicio de la campaña
-     * @param endCampaign fecha de finalización de la campaña
-     */
-    public DTOCampaign(String nameCampaign, String descCampaign, boolean statusCampaign, Date startCampaign,
-                       Date endCampaign) {
 
-        _nameCampaign = nameCampaign;
-        _descCampaign = descCampaign;
-        _statusCampaign = statusCampaign;
-        _startCampaign = startCampaign;
-        _endCampaign = endCampaign;
-    }
-
-    /**
-     * DTO para campañas sin Company
-     * @param idCampaign  id de la campaña
-     * @param nameCampaign nombre para una campaña recien creada
-     * @param descCampaign descripcion de la campaña
-     * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
-     * @param startCampaign fecha de inicio de la campaña
-     * @param endCampaign fecha de finalización de la campaña
-     */
-    public DTOCampaign(int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign,
-                       Date startCampaign, Date endCampaign) {
-
-        _idCampaign = idCampaign;
-        _nameCampaign = nameCampaign;
-        _descCampaign = descCampaign;
-        _statusCampaign = statusCampaign;
-        _startCampaign = startCampaign;
-        _endCampaign = endCampaign;
-    }
 
     /**
      * DTO para campañas con todos los atributos de la clase
@@ -125,7 +89,7 @@ public class DTOCampaign {
      * @param endCampaign fecha de finalización de la campaña
      * @param company objeto del tipo Company
      */
-    public DTOCampaign (int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign,
+    public DTOFullCampaign (int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign,
                         Date startCampaign, Date endCampaign, Company company) {
 
         _idCampaign = idCampaign;
