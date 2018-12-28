@@ -86,7 +86,7 @@ public class MapperCompanyWithOutIdAndLink extends GenericMapper <DTOCompanyWith
 
 
     /**
-     * Metodo con el cual se transforma un DTOFullCompany a una Entidad Company
+     * Metodo con el cual se transforma un DTOCompanyWithOutIdAndLink a una Entidad Company
      * @param dto Entidad que recibe para hacer el mapeo
      * @return una lista de Entidades del tipo Company
      */

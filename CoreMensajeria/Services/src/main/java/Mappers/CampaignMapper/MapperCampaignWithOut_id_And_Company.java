@@ -88,7 +88,7 @@ public class MapperCampaignWithOut_id_And_Company extends GenericMapper <DTOCamp
 
 
     /**
-     * Metodo con el cual se transforma un DTOFullCampaign a una Entidad Campaign
+     * Metodo con el cual se transforma un DTOCampaignWithOut_id_And_Company a una Entidad Campaign
      * @param dto Entidad que recibe para hacer el mapeo
      * @return una lista de Entidades del tipo Campaign
      */
