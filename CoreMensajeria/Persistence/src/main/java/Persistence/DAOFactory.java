@@ -1,6 +1,7 @@
 package Persistence;
 
 import Persistence.M01_Login.GetUserDao;
+import Persistence.M09_Statistics.GetStatisticsDao;
 
 public class DAOFactory {
 
@@ -9,6 +10,12 @@ public class DAOFactory {
     static public GetUserDao instanciateDaoUser () {
         return new GetUserDao();
     }
+
+    //endregion
+
+    //region M09
+
+    static public GetStatisticsDao instanciateDaoStatistics(){ return new GetStatisticsDao(); }
 
     //endregion
 }
