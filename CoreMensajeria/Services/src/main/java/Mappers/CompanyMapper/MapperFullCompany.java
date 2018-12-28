@@ -13,6 +13,11 @@ import java.util.List;
 
 public class MapperFullCompany extends GenericMapper <DTOFullCompany> {
 
+    /**
+     * Metodo con el cual se transforma una entidad en un DTOFullCompany
+     * @param entity Entidad que recibe para hacer el mapeo
+     * @return un objeto del tipo DTOFullCompany
+     */
     @Override
     public DTOFullCompany CreateDto(Entity entity) {
 
@@ -30,6 +35,12 @@ public class MapperFullCompany extends GenericMapper <DTOFullCompany> {
         }
     }
 
+
+    /**
+     * Metodo con el cual se transforma de una lista de entidades a una lista de dto
+     * @param entities Entidad que recibe para hacer el mapeo
+     * @return una lista de objetos del tipo DTOFullCompany
+     */
 
     @Override
     public List<DTOFullCompany> CreateDtoList(List<Entity> entities) {
@@ -50,6 +61,11 @@ public class MapperFullCompany extends GenericMapper <DTOFullCompany> {
         }
     }
 
+    /**
+     * Metodo con el cual se transforma de una lista de dtos a una lista de entidades
+     * @param dtos Entidad que recibe para hacer el mapeo
+     * @return una lista de Entidades del tipo Company
+     */
     @Override
     public List<Entity> CreateEntityList(List<DTOFullCompany> dtos) {
         try
@@ -69,6 +85,12 @@ public class MapperFullCompany extends GenericMapper <DTOFullCompany> {
         }
     }
 
+
+    /**
+     * Metodo con el cual se transforma un DTOFullCompany a una Entidad Company
+     * @param dto Entidad que recibe para hacer el mapeo
+     * @return una lista de Entidades del tipo Company
+     */
     @Override
     public Entity CreateEntity(DTOFullCompany dto) {
 

@@ -14,6 +14,12 @@ import java.util.List;
 
 public class MapperCampaignWithOut_Company extends GenericMapper <DTOCampaignWithOut_Company> {
 
+
+    /**
+     * Metodo con el cual se transforma una entidad en un DTOCampaignWithOut_Company
+     * @param entity Entidad que recibe para hacer el mapeo
+     * @return un objeto del tipo DTOCampaignWithOut_Company
+     */
     @Override
     public DTOCampaignWithOut_Company CreateDto(Entity entity) {
         try {
@@ -31,6 +37,12 @@ public class MapperCampaignWithOut_Company extends GenericMapper <DTOCampaignWit
         }
     }
 
+
+    /**
+     * Metodo con el cual se transforma de una lista de entidades a una lista de dto
+     * @param entities Entidad que recibe para hacer el mapeo
+     * @return una lista de objetos del tipo DTOCampaignWithOut_Company
+     */
     @Override
     public List<DTOCampaignWithOut_Company> CreateDtoList(List<Entity> entities) {
 
@@ -51,6 +63,12 @@ public class MapperCampaignWithOut_Company extends GenericMapper <DTOCampaignWit
         }
     }
 
+
+    /**
+     * Metodo con el cual se transforma de una lista de dtos a una lista de entidades
+     * @param dtos Entidad que recibe para hacer el mapeo
+     * @return una lista de Entidades del tipo Campaign
+     */
     @Override
     public List<Entity> CreateEntityList(List<DTOCampaignWithOut_Company> dtos) {
         try
@@ -70,6 +88,12 @@ public class MapperCampaignWithOut_Company extends GenericMapper <DTOCampaignWit
         }
     }
 
+
+    /**
+     * Metodo con el cual se transforma un DTOCampaignWithOut_Company a una Entidad Campaign
+     * @param dto Entidad que recibe para hacer el mapeo
+     * @return una lista de Entidades del tipo Campaign
+     */
     @Override
     public Entity CreateEntity(DTOCampaignWithOut_Company dto) {
         try {

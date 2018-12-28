@@ -13,6 +13,12 @@ import java.util.List;
 
 public class MapperCampaignWithOut_id_And_Company extends GenericMapper <DTOCampaignWithOut_id_And_Company> {
 
+
+    /**
+     * Metodo con el cual se transforma una entidad en un DTOCampaignWithOut_id_And_Company
+     * @param entity Entidad que recibe para hacer el mapeo
+     * @return un objeto del tipo DTOCampaignWithOut_id_And_Company
+     */
     @Override
     public DTOCampaignWithOut_id_And_Company CreateDto(Entity entity) {
         try {
@@ -30,6 +36,12 @@ public class MapperCampaignWithOut_id_And_Company extends GenericMapper <DTOCamp
         }
     }
 
+
+    /**
+     * Metodo con el cual se transforma de una lista de entidades a una lista de dto
+     * @param entities Entidad que recibe para hacer el mapeo
+     * @return una lista de objetos del tipo DTOCampaignWithOut_id_And_Company
+     */
     @Override
     public List<DTOCampaignWithOut_id_And_Company> CreateDtoList(List<Entity> entities) {
         try
@@ -49,6 +61,12 @@ public class MapperCampaignWithOut_id_And_Company extends GenericMapper <DTOCamp
         }
     }
 
+
+    /**
+     * Metodo con el cual se transforma de una lista de dtos a una lista de entidades
+     * @param dtos Entidad que recibe para hacer el mapeo
+     * @return una lista de Entidades del tipo Campaign
+     */
     @Override
     public List<Entity> CreateEntityList(List<DTOCampaignWithOut_id_And_Company> dtos) {
         try
@@ -68,6 +86,12 @@ public class MapperCampaignWithOut_id_And_Company extends GenericMapper <DTOCamp
         }
     }
 
+
+    /**
+     * Metodo con el cual se transforma un DTOFullCampaign a una Entidad Campaign
+     * @param dto Entidad que recibe para hacer el mapeo
+     * @return una lista de Entidades del tipo Campaign
+     */
     @Override
     public Entity CreateEntity(DTOCampaignWithOut_id_And_Company dto) {
         try {
