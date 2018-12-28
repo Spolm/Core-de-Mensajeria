@@ -24,7 +24,7 @@ import java.util.List;
 public class M09_StatisticsTest {
 
     Gson gson = new Gson();
-    private Connection conn = SqlEstrella.getConInstance();
+    //private Connection conn = SqlEstrella.getConInstance();
 
     @Test
     void getAllCompaniesTest() throws CompanyDoesntExistsException {
@@ -122,7 +122,7 @@ public class M09_StatisticsTest {
 
    @Test
    void getStatisticsTestOk200()  {
-       try {
+       /*try {
            M09_Statistics intance = new M09_Statistics();
            ArrayList<Integer> listaCompany  = new ArrayList<>();
            ArrayList<Integer> listaCampaign = new ArrayList<>();
@@ -139,7 +139,7 @@ public class M09_StatisticsTest {
 
        } catch ( Exception e ) {
            e.printStackTrace();
-       }
+       }*/
    }
 
    @Test
