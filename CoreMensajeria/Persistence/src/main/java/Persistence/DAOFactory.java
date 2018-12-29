@@ -2,6 +2,7 @@ package Persistence;
 
 import Persistence.M01_Login.GetUserDao;
 import Persistence.M09_Statistics.GetStatisticsDao;
+import Persistence.M02_Company.DAOCompany;
 
 public class DAOFactory {
 
@@ -18,4 +19,7 @@ public class DAOFactory {
     static public GetStatisticsDao instanciateDaoStatistics(){ return new GetStatisticsDao(); }
 
     //endregion
+
+   static public DAOCompany instanciateDaoCompany ( ) { return new DAOCompany(); }
+
 }

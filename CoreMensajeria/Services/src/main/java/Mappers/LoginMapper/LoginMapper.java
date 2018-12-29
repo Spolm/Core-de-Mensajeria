@@ -6,7 +6,7 @@ import Mappers.GenericMapper;
 
 import java.util.List;
 
-public class LoginMapper extends GenericMapper {
+public class LoginMapper extends GenericMapper <DTO> {
     @Override
     public DTO CreateDto(Entity entity) {
         return null;
