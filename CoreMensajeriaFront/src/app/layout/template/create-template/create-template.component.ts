@@ -70,7 +70,7 @@ export class CreateTemplateComponent {
   }
 
   getParameters() {
-    this.templateService.getParameters(1).subscribe(data => {
+    this.templateService.getParameters(Number(this.companyId)).subscribe(data => {
       this.parametersJson = data;
     });
   }
@@ -167,7 +167,7 @@ export class CreateTemplateComponent {
           if (this.formMessage != '') {
               if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
                   if (this.channels_integrators[0] && (this.applicationId !== undefined) && this.dateIni !== undefined && this.dateEnd !== undefined && this.timeIni !== undefined && this.timeEnd !== undefined) {
-                      this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, 1, this.channels_integrators, this.applicationId, planning);
+                      this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, Number(this.companyId), this.channels_integrators, this.applicationId, planning);
                   } else {
                       this.toastr.warning('Falta llenar un campo', 'Aviso',
                           {

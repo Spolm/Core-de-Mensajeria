@@ -1,7 +1,7 @@
 package Modulo_8;
 
-import Classes.M08_Validation.ValidationReciveParameter;
-import Classes.M08_Validation.ValidationTemplate;
+import Entities.M08_Validation.ValidationReciveParameter;
+import Entities.M08_Validation.ValidationTemplate;
 
 import java.util.Date;
 

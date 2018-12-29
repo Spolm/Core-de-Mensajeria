@@ -1,12 +1,12 @@
 package webService.M08_MessageCoreManagement;
 
 
-import Classes.M07_Template.HandlerPackage.MessageHandler;
-import Classes.M08_Validation.ValidationReciveParameter;
-import Classes.M08_Validation.ValidationTemplate;
-import Classes.M07_Template.HandlerPackage.TemplateHandler;
-import Classes.M07_Template.Template;
-import Classes.M04_Integrator.*;
+import Entities.M07_Template.HandlerPackage.MessageHandler;
+import Entities.M08_Validation.ValidationReciveParameter;
+import Entities.M08_Validation.ValidationTemplate;
+import Entities.M07_Template.HandlerPackage.TemplateHandler;
+import Entities.M07_Template.Template;
+import Entities.M04_Integrator.*;
 import Exceptions.*;
 import com.google.gson.Gson;
 import java.util.Random;

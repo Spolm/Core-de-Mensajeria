@@ -1,15 +1,14 @@
 package webService.M06_DataOrigin;
 
-import Classes.M06_DataOrigin.AddApplicationData;
-import Classes.M06_DataOrigin.Application;
-import Classes.M06_DataOrigin.ApplicationDAO;
+import Entities.M06_DataOrigin.AddApplicationData;
+import Entities.M06_DataOrigin.Application;
+import Entities.M06_DataOrigin.ApplicationDAO;
 import com.google.gson.*;
 import Exceptions.ApplicationNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 
 @Path("/applications")
 public class M06_Application {

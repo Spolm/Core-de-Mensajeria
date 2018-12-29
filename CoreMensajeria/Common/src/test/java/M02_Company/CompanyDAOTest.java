@@ -1,8 +1,8 @@
 package M02_Company;
 
-import Classes.M02_Company.Company;
-import Classes.M02_Company.CompanyDAO;
-import Classes.Sql;
+import Entities.M02_Company.Company;
+import Entities.M02_Company.CompanyDAO;
+import Entities.Sql;
 import Exceptions.CompanyDoesntExistsException;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.AfterEach;
