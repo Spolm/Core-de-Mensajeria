@@ -4,8 +4,7 @@ import DTO.DTO;
 import Entities.Entity;
 import java.util.List;
 
-public abstract class GenericMapper
-{
+public abstract class GenericMapper {
     public abstract DTO CreateDto(Entity entity);
 
     public abstract Entity CreateEntity(DTO dto);

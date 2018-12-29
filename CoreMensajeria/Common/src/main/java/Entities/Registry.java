@@ -1,3 +1,5 @@
+package Entities;
+
 public class Registry {
 
     public static String BD_USER = "CoreMensajeria";
