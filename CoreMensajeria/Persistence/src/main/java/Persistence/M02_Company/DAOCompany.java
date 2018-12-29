@@ -2,6 +2,7 @@ package Persistence.M02_Company;
 
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
+import Entities.M01_Login.User;
 import Entities.M02_Company.Company;
 import Entities.M06_DataOrigin.PathHandler;
 import Entities.Sql;
@@ -32,16 +33,16 @@ public class DAOCompany  implements IDAOCompany {
     @Override
     public void changeStatus(Entity e) {
 
-        Company _co = (Company) e;
+        Company _co = ( Company ) e;
         _conn = Sql.getConInstance();
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = _conn.prepareCall( UPDATE_COMPANY_STATUS );
-            preparedStatement.setBoolean(1, _co.get_status() );
-            preparedStatement.setInt(2, _co.get_id() );
+            preparedStatement.setBoolean( 1, _co.get_status() );
+            preparedStatement.setInt( 2, _co.get_id() );
             preparedStatement.execute();
-        } catch (SQLException e1) {
+        } catch ( SQLException e1 ) {
             e1.printStackTrace();
         }
 
@@ -99,7 +100,7 @@ public class DAOCompany  implements IDAOCompany {
     @Override
     public ArrayList<Entity> companiesByUser( Entity e ) {
         ArrayList<Entity> _coList= new ArrayList<>();
-        Company _company = ( Company ) e;
+        User _company = ( User ) e;
         try {
             PreparedStatement ps = _conn.prepareCall(SELECT_COMPANIES_BY_USER);
             ps.setInt(1, _company.get_id());
@@ -108,7 +109,7 @@ public class DAOCompany  implements IDAOCompany {
                 _coList.add( getCompany( _result ) );
             }
         }
-        catch (Exception exc) {
+        catch ( Exception exc ) {
             exc.printStackTrace();
         }
         return _coList;
@@ -123,9 +124,7 @@ public class DAOCompany  implements IDAOCompany {
 
 
     @Override
-    public void create(Entity e) {
-
-
+    public void create( Entity e ) {
         Company _co = (Company) e;
         try {
 
