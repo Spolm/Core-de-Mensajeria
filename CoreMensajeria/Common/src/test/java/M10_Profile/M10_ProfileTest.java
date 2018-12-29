@@ -1,9 +1,9 @@
 package M10_Profile;
 
-import Classes.M01_Login.User;
-import Classes.M01_Login.UserDAO;
-import Classes.M10_Profile.M10_Profile;
-import Classes.M10_Profile.Rol;
+import Entities.M01_Login.User;
+import Entities.M01_Login.UserDAO;
+import Entities.M10_Profile.M10_Profile;
+import Entities.M10_Profile.Rol;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

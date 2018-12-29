@@ -1,9 +1,9 @@
 package webService.M10_Profile;
 
-import Classes.M01_Login.User;
-import Classes.M01_Login.UserDAO;
-import Classes.M02_Company.Company;
-import Classes.M10_Profile.*;
+import Entities.M01_Login.User;
+import Entities.M01_Login.UserDAO;
+import Entities.M02_Company.Company;
+import Entities.M10_Profile.*;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;

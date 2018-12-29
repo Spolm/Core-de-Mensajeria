@@ -1,8 +1,13 @@
 package webService.M01_Login;
 
-import Classes.M01_Login.PrivilegeDao;
-import Classes.M01_Login.User;
-import Classes.M01_Login.UserDAO;
+import Entities.Entity;
+import Entities.EntityFactory;
+import Entities.M01_Login.PrivilegeDao;
+import Entities.M01_Login.User;
+import Entities.M01_Login.UserDAO;
+import Logic.Command;
+import Logic.CommandsFactory;
+import Logic.M01_Login.GetUser;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -25,8 +30,13 @@ public class M01_User {
     @Produces(MediaType.APPLICATION_JSON)
     public Response GetUsers() {
         Error error;
+        Entity user = EntityFactory.user();
+        Command commandUser = CommandsFactory.instanciateGetUser(user);
+        GetUser cmd = (GetUser) commandUser;
+        //TODO acomodar esto
+        Response rb;
         try {
-            return Response.ok(_gson.toJson(_userDAO.findAll())).build();
+             rb = Response.ok(_gson.toJson(_userDAO.findAll())).build();
         } catch (SQLException e) {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
@@ -41,6 +51,7 @@ public class M01_User {
             error.addError("Excepcion", e.getMessage());
             return Response.status(500).entity(error).build();
         }
+        return rb;
     }
 
     /**
