@@ -17,21 +17,21 @@ public class M09_StatisticsTest {
     Gson gson = new Gson();
     //private Connection conn = SqlEstrella.getConInstance();
 
-    @Test
-    void getAllCompaniesTest() throws CompanyDoesntExistsException {
-
-        try {
-            M09_Statistics intance = new M09_Statistics();
-            Response salida = intance.getAllCompanies(1);
-            assertEquals( 200, salida.getStatus() );
-            assertNotNull( salida.getEntity());
-        }
-        catch( Exception e ) {
-            e.printStackTrace();
-            throw new CompanyDoesntExistsException ( e );
-        }
-
-    }
+//    @Test
+//    void getAllCompaniesTest() throws CompanyDoesntExistsException {
+//
+//        try {
+//            M09_Statistics intance = new M09_Statistics();
+//            Response salida = intance.getAllCompanies(1);
+//            assertEquals( 200, salida.getStatus() );
+//            assertNotNull( salida.getEntity());
+//        }
+//        catch( Exception e ) {
+//            e.printStackTrace();
+//            throw new CompanyDoesntExistsException ( e );
+//        }
+//
+//    }
 
     @Test
     void getAllChannelsTest()  {
