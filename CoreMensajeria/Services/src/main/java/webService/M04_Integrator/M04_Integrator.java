@@ -1,7 +1,7 @@
 package webService.M04_Integrator;
 
-import Classes.M04_Integrator.Integrator;
-import Classes.M04_Integrator.IntegratorDAO;
+import Entities.M04_Integrator.Integrator;
+import Entities.M04_Integrator.IntegratorDAO;
 import Exceptions.DatabaseConnectionProblemException;
 import Exceptions.IntegratorNotFoundException;
 

@@ -6,6 +6,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/M03_Campaigns/';
 const httpOptions = {
   headers: new HttpHeaders({
+    'Access-Control-Allow-Origin':'*',
     'Content-Type':  'application/json'
   })};
 
@@ -35,8 +36,26 @@ export class CampaignService {
   
   
   addCampaign (campaign): Observable<any> {
+    return this.http.post<any>(endpoint + 'AddCampaign', JSON.stringify(campaign), httpOptions).pipe(
+      tap((campaign) => console.log(`Campaign added w/ ${campaign._name}`)),
+    );
+  }
+
+  addCompany (company): Observable<any> {
+    return this.http.post<any>(endpoint + 'M03_Campaign/AddCampaign', JSON.stringify(company), httpOptions).pipe(
+      tap((campaign) => console.log(`Campaign added w/ ${company._name}`)),
+    );
+  }
+
+  editCampaign (campaign): Observable<any> {
     return this.http.post<any>(endpoint + 'M03_Campaign/AddCampaign', JSON.stringify(campaign), httpOptions).pipe(
       tap((campaign) => console.log(`Campaign added w/ ${campaign._name}`)),
+    );
+  }
+
+  editCompany (company): Observable<any> {
+    return this.http.post<any>(endpoint + 'M03_Campaign/AddCampaign', JSON.stringify(company), httpOptions).pipe(
+      tap((campaign) => console.log(`Campaign added w/ ${company._name}`)),
     );
   }
 

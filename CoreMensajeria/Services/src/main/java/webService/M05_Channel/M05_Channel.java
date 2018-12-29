@@ -1,9 +1,9 @@
 package webService.M05_Channel;
 
-import Classes.M05_Channel.Channel;
-import Classes.M05_Channel.ChannelDAO;
+import Entities.M05_Channel.Channel;
+import Entities.M05_Channel.ChannelDAO;
 import Exceptions.ChannelNotFoundException;
-import Classes.M04_Integrator.Integrator;
+import Entities.M04_Integrator.Integrator;
 import Exceptions.DatabaseConnectionProblemException;
 
 import javax.ws.rs.GET;

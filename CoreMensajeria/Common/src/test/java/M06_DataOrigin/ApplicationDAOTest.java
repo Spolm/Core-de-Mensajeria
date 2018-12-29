@@ -1,22 +1,12 @@
 package M06_DataOrigin;
 
-import Classes.*;
-
-import Classes.M06_DataOrigin.AddApplicationData;
-import Classes.M06_DataOrigin.Application;
-import Classes.M06_DataOrigin.ApplicationDAO;
+import Entities.M06_DataOrigin.AddApplicationData;
+import Entities.M06_DataOrigin.Application;
+import Entities.M06_DataOrigin.ApplicationDAO;
 import Exceptions.ApplicationNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.lang.reflect.Executable;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,8 +20,8 @@ public class ApplicationDAOTest {
         _addApplicationData = new AddApplicationData(
                 "Metro de Caracas",
                 "Pagina oficial del metro de caracas",
-                7,
-                10
+                1,
+                1
         );
     }
 
@@ -84,11 +74,7 @@ public class ApplicationDAOTest {
     private void getApplicationByIdFaildTest(){
         try {
             Application application = _applicationDAO.getApplication(9000);
-            assertThrows(ApplicationNotFoundException.class,
-                    ()->{
-                        //do whatever you want to do here
-                        //ex : objectName.thisMethodShoulThrowNullPointerExceptionForNullParameter(null);
-                    });
+            assertThrows(ApplicationNotFoundException.class,()->{});
         } catch (DatabaseConnectionProblemException e) {
             e.printStackTrace();
         } catch (ApplicationNotFoundException e) {
@@ -104,6 +90,18 @@ public class ApplicationDAOTest {
         } catch (DatabaseConnectionProblemException e) {
             e.printStackTrace();
         }catch (ApplicationNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    private void getApplicationByTokenFaildTest(){
+        try {
+            Application application = _applicationDAO.getApplication("9586465");
+            assertThrows(ApplicationNotFoundException.class,()->{});
+        } catch (ApplicationNotFoundException e) {
+            e.printStackTrace();
+        } catch (DatabaseConnectionProblemException e) {
             e.printStackTrace();
         }
     }

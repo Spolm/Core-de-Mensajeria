@@ -1,20 +1,13 @@
 package webService.M03_CampaignManagement;
 
-import Classes.M03_Campaign.Campaign;
-import Classes.M03_Campaign.CampaignDAO;
-import Classes.Sql;
+import Entities.M03_Campaign.Campaign;
+import Entities.M03_Campaign.CampaignDAO;
 import Exceptions.CampaignDoesntExistsException;
 import com.google.gson.Gson;
-import org.junit.FixMethodOrder;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 @Path( "/M03_Campaigns" )
 /**
@@ -177,6 +170,25 @@ public class M03_Campaigns {
             rb.entity(gson.toJson(_caList));
         }
         catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
+
+    @POST
+    @Path("/AddCampaign")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response addCampaign(Campaign _campaign){
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CampaignDAO _campaignDAO = new CampaignDAO();
+
+        try {
+            _campaignDAO.createCampaign(_campaign);
+        } catch (CampaignDoesntExistsException e) {
             e.printStackTrace();
         }
         catch (Exception e) {

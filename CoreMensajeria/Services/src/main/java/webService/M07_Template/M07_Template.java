@@ -1,9 +1,9 @@
 package webService.M07_Template;
 
-import Classes.M01_Login.Privilege;
-import Classes.M07_Template.HandlerPackage.StatusHandler;
-import Classes.M07_Template.HandlerPackage.TemplateHandler;
-import Classes.M07_Template.Template;
+import Entities.M01_Login.Privilege;
+import Entities.M07_Template.HandlerPackage.StatusHandler;
+import Entities.M07_Template.HandlerPackage.TemplateHandler;
+import Entities.M07_Template.Template;
 import Exceptions.TemplateDoesntExistsException;
 import com.google.gson.Gson;
 

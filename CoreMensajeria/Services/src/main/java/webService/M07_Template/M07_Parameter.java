@@ -1,8 +1,8 @@
 package webService.M07_Template;
 
 
-import Classes.M07_Template.HandlerPackage.ParameterHandler;
-import Classes.M07_Template.MessagePackage.Parameter;
+import Entities.M07_Template.HandlerPackage.ParameterHandler;
+import Entities.M07_Template.MessagePackage.Parameter;
 import Exceptions.ParameterDoesntExistsException;
 import com.google.gson.Gson;
 
