@@ -21,7 +21,7 @@ public class User extends Entity {
     private Integer _blockedUser;
     private Integer _remainingAttemptsUser;
 
-        public User(int _idUser,String _passwordUser, String _usernameUser, int _typeUser, String _emailUser, String _phoneUser, Date _dayOfBirthUser, String _countryUser, String _addressUser, String _genreUser, String _cityUser) {
+        public User(int _idUser, String _passwordUser, String _usernameUser, int _typeUser, String _emailUser, String _phoneUser, Date _dayOfBirthUser, String _countryUser, String _addressUser, String _genreUser, String _cityUser) {
         this._idUser = _idUser;
         this._passwordUser = _passwordUser;
         this._usernameUser = _usernameUser;
@@ -43,7 +43,7 @@ public class User extends Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return _idUser == user._idUser &&
+        return //_idUser == user._idUser &&
                 _typeUser == user._typeUser &&
                 Objects.equals(_usernameUser, user._usernameUser) &&
                 Objects.equals(_emailUser, user._emailUser) &&
@@ -58,7 +58,7 @@ public class User extends Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(_idUser, _passwordUser, _usernameUser, _typeUser, _emailUser, _phoneUser, _dateOfBirthUser, _countryUser, _addressUser, _genderUser, _cityUser);
+        return Objects.hash(/*_idUser, */_passwordUser, _usernameUser, _typeUser, _emailUser, _phoneUser, _dateOfBirthUser, _countryUser, _addressUser, _genderUser, _cityUser);
     }
 
     public int get_idUser() {
