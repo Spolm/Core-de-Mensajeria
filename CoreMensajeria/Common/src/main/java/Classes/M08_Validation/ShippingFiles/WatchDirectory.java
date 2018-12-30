@@ -19,9 +19,8 @@ public class WatchDirectory implements Runnable{
     }
 
     public void run(){
-
         try {
-            Logger LOGGER = Logger.getLogger(WatchDirectory.class.getName());
+            Logger log = Logger.getLogger(WatchDirectory.class.getName());
             final WatchService watchService = FileSystems.getDefault().newWatchService();
 
             for (String path : _paths) {
@@ -31,10 +30,13 @@ public class WatchDirectory implements Runnable{
 
             while (true) {
                 final WatchKey key = watchService.take();
+                final Watchable watchable = key.watchable();
+                final Path directory = (Path) watchable;
+
                 for (WatchEvent<?> event : key.pollEvents()) {
-                    if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
-                        LOGGER.info("Created: " + event.context().toString());
-                    }
+
+                        log.info("Created: " + event.context().toString()+" in directory "+directory);
+
                 }
                 key.reset();
             }
