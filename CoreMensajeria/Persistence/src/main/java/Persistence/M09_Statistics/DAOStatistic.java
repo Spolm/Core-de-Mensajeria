@@ -7,22 +7,24 @@ import Entities.M03_Campaign.Campaign;
 import Entities.M05_Channel.Channel;
 import Entities.M05_Channel.ChannelFactory;
 import Entities.M09_Statistics.SqlEstrella;
+import Entities.RegistryEstrella;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.CompanyDoesntExistsException;
 import Persistence.DAO;
+import Persistence.DAOEstrella;
+import Persistence.DAOFactory;
+import Persistence.M02_Company.DAOCompany;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOStatistic extends DAO implements IDAO_Statistic {
+public class DAOStatistic extends DAOEstrella implements IDAO_Statistic {
 
-    private Connection connStar = SqlEstrella.getConInstance();
+    private Connection connStar = getConInstance();
     private Connection conn = Sql.getConInstance();
+
 
     @Override
     public void create(Entity e) {
@@ -43,6 +45,8 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
         String query = "SELECT com_id, com_name from m02_getcompaniesbyresponsible(" + userId + ") ORDER BY com_id;";
         ArrayList<Entity> companies = new ArrayList<>();
         try {
+            //implementar dao de compañia
+
             Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(query);
 
@@ -55,6 +59,7 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
             e.printStackTrace();
             throw new CompanyDoesntExistsException(e);
         } finally {
+            //cambiar a un dao
             Sql.bdClose(conn);
         }
         return companies;
@@ -82,7 +87,7 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
             e.printStackTrace();
             throw new CampaignDoesntExistsException(e);
         } finally {
-            SqlEstrella.bdClose(connStar);
+            bdClose(connStar);
             return  campaigns;
         }
     }
@@ -103,8 +108,10 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(connStar);
+            bdClose(connStar);
         }
         return channels;
     }
+
+
 }
