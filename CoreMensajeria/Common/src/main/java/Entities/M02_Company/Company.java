@@ -4,6 +4,7 @@ import Entities.Entity;
 
 public class Company extends Entity {
     private int _idCompany;
+    private int _idUser;
     private String _name;
     private String _desc;
     private boolean _status;
@@ -17,6 +18,16 @@ public class Company extends Entity {
     public void set_idCompany ( int idCompany ) {
         this._idCompany = idCompany;
     }
+
+
+    public int get_idUser () {
+        return _idUser;
+    }
+
+    public void set_idUser ( int idUser ) {
+        this._idUser = idUser;
+    }
+
 
     public String get_name () {
         return _name;
