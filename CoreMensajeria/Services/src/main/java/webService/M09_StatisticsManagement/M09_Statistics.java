@@ -78,6 +78,7 @@ public class M09_Statistics extends Application {
     @Path("/campaigns")
     @Produces("application/json")
     public Response getCampaignsForCompany(@QueryParam("companyId") List<Integer> companyIds) {
+
         String query = "SELECT DISTINCT cam_id, cam_name FROM m09_getAllCampaigns(";
         for (int i = 0; i < companyIds.size() - 1;  i++) {
             query += companyIds.get(i) + ", ";
