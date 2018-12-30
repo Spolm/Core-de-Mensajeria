@@ -4,7 +4,7 @@ import Entities.Entity;
 
 public interface IDAO {
 
-    public Entity create(Entity e) ;
+    public void create(Entity e) ;
 
     public Entity read(Entity e) ;
 
