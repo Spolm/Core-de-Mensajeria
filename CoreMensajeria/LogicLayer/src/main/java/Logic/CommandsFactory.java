@@ -16,6 +16,7 @@ public class CommandsFactory {
     public static getAllCompaniesByUserCommand getAllCompaniesByUserCommand(Integer userId) {return new getAllCompaniesByUserCommand(userId); }
     public static getCampaignsForCompanyCommand getCampaignsForCompanyCommand(List<Integer> companyIds){return new getCampaignsForCompanyCommand(companyIds);}
     public static getAllChannelsCommand getAllChannelsCommand() {return new getAllChannelsCommand();}
+    public static getIntegratorsForChannelCommand getIntegratorsForChannelCommand(List<Integer> channelIds){ return new getIntegratorsForChannelCommand(channelIds);}
 
     public static AddCompanyCommand createAddCompanyCommand( Entity _co ){ return new AddCompanyCommand( _co ); }
 

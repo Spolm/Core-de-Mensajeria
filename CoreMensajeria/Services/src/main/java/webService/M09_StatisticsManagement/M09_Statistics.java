@@ -14,6 +14,9 @@ import Exceptions.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
 import Logic.CommandsFactory;
 import Logic.M09_Statistics.*;
+import Mappers.CampaignMapper.MapperCampaignWithOut_Company;
+import Mappers.CompanyMapper.MapperCompanyWithOut_Link;
+import Mappers.GenericMapper;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -58,6 +61,7 @@ public class M09_Statistics extends Application {
     Gson gson = new Gson();
     private Connection connStar = SqlEstrella.getConInstance();
     private Connection conn = Sql.getConInstance();
+    private GenericMapper mapper;
 
     /* ====================
             Endpoints
@@ -78,7 +82,10 @@ public class M09_Statistics extends Application {
         getAllCompaniesByUserCommand command = CommandsFactory.getAllCompaniesByUserCommand(userId);
         try {
             command.execute();
-            return Response.ok(gson.toJson(command.returnList())).build();
+            mapper = new MapperCompanyWithOut_Link();
+            return Response.ok(gson.toJson(
+                    mapper.CreateDtoList(command.returnList())
+            )).build();
         } catch(CompanyDoesntExistsException e) {
             return Response.serverError().build();
         }catch (Exception e) {
@@ -106,7 +113,10 @@ public class M09_Statistics extends Application {
         getCampaignsForCompanyCommand command = CommandsFactory.getCampaignsForCompanyCommand(companyIds);
         try {
             command.execute();
-            return Response.ok(gson.toJson(command.returnList())).build();
+            mapper = new MapperCampaignWithOut_Company();
+            return Response.ok(gson.toJson(
+                    mapper.CreateDtoList(command.returnList())
+            )).build();
         } catch(CampaignDoesntExistsException e) {
             return Response.serverError().build();
         }catch (Exception e) {
@@ -150,7 +160,7 @@ public class M09_Statistics extends Application {
     @Path("/integrators")
     @Produces("application/json")
     public Response getIntegratorsForChannel(@QueryParam("channelId") List<Integer> channelIds) {
-        String query = "select int_id, int_name from m09_getIntegratorsByChannels(";
+        /*String query = "select int_id, int_name from m09_getIntegratorsByChannels(";
         for (int i = 0; i < channelIds.size() - 1;  i++) {
             query += channelIds.get(i) + ", ";
         }
@@ -158,6 +168,16 @@ public class M09_Statistics extends Application {
         try {
             return getIntegrators(query);
         } catch(ChannelNotFoundException e) {
+            return Response.serverError().build();
+        }
+        */
+        getIntegratorsForChannelCommand command = CommandsFactory.getIntegratorsForChannelCommand(channelIds);
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(
+                    command.returnList()
+            )).build();
+        } catch (ChannelNotFoundException e) {
             return Response.serverError().build();
         }
     }
