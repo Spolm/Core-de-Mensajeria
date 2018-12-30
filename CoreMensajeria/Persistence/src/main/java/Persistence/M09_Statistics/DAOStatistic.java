@@ -1,7 +1,6 @@
 package Persistence.M09_Statistics;
 
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 import Entities.M09_Statistics.SqlEstrella;
@@ -59,7 +58,7 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
     }
 
     @Override
-    public void CampaignsForCompany(List<Integer> companyIds) throws CampaignDoesntExistsException{
+    public ArrayList<Campaign> CampaignsForCompany(List<Integer> companyIds) throws CampaignDoesntExistsException{
         String query = "SELECT DISTINCT cam_id, cam_name FROM m09_getAllCampaigns(";
         for (int i = 0; i < companyIds.size() - 1;  i++) {
             query += companyIds.get(i) + ", ";
@@ -81,6 +80,7 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
             throw new CampaignDoesntExistsException(e);
         } finally {
             SqlEstrella.bdClose(connStar);
+            return  campaigns;
         }
     }
 }
