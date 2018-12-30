@@ -17,7 +17,7 @@ public class getAllCompaniesByUserCommand extends Command {
 
     @Override
     public void execute () throws CompanyDoesntExistsException {
-            dao = DAOFactory.instanciateDaoStatistics();
+            dao = DAOFactory.instanciateDAOStatistic();
             companies = dao.getAllCompanies(userId);
     }
 

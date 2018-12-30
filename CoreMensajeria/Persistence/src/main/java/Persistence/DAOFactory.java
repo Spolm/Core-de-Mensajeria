@@ -2,6 +2,7 @@ package Persistence;
 
 import Persistence.M01_Login.GetUserDao;
 import Persistence.M09_Statistics.DAOStatistic;
+import Persistence.M09_Statistics.DAOStatisticEstrella;
 import Persistence.M02_Company.DAOCompany;
 import Persistence.M03_Campaign.DAOCampaign;
 
@@ -17,7 +18,8 @@ public class DAOFactory {
 
     //region M09
 
-    static public DAOStatistic instanciateDaoStatistics(){ return new DAOStatistic(); }
+    static public DAOStatisticEstrella instanciateDaoStatisticsEstrella(){ return new DAOStatisticEstrella(); }
+    static public DAOStatistic instanciateDAOStatistic(){ return new DAOStatistic(); }
 
     //endregion
 

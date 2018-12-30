@@ -4,7 +4,7 @@ import Entities.Entity;
 import Exceptions.CampaignDoesntExistsException;
 import Logic.Command;
 import Persistence.DAOFactory;
-import Persistence.M09_Statistics.DAOStatistic;
+import Persistence.M09_Statistics.DAOStatisticEstrella;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +12,13 @@ import java.util.List;
 public class getCampaignsForCompanyCommand extends Command {
     List<Integer> companyIds;
     ArrayList<Entity> Campaigns;
-    DAOStatistic dao;
+    DAOStatisticEstrella dao;
 
     public getCampaignsForCompanyCommand(List<Integer> companyIds){this.companyIds = companyIds;}
 
     @Override
     public void execute() throws CampaignDoesntExistsException {
-            dao = DAOFactory.instanciateDaoStatistics();
+            dao = DAOFactory.instanciateDaoStatisticsEstrella();
             Campaigns = dao.CampaignsForCompany(this.companyIds);
     }
 

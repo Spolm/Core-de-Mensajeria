@@ -4,18 +4,18 @@ import Entities.Entity;
 import Entities.M05_Channel.Channel;
 import Logic.Command;
 import Persistence.DAOFactory;
-import Persistence.M09_Statistics.DAOStatistic;
+import Persistence.M09_Statistics.DAOStatisticEstrella;
 
 import java.util.ArrayList;
 
 public class getAllChannelsCommand extends Command {
 
     ArrayList<Channel> channels;
-    DAOStatistic dao;
+    DAOStatisticEstrella dao;
 
     @Override
     public void execute() throws Exception {
-        dao = DAOFactory.instanciateDaoStatistics();
+        dao = DAOFactory.instanciateDaoStatisticsEstrella();
         channels = dao.getAllChannels();
     }
 
