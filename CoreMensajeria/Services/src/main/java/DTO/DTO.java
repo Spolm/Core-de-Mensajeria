@@ -1,5 +1,5 @@
 package DTO;
 
-public class DTO {
+public abstract class DTO {
 
 }
