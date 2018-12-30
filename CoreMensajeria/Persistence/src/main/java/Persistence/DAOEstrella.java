@@ -7,7 +7,7 @@ import java.sql.*;
 public abstract class DAOEstrella implements IDAOEstrella{
 
     private static Connection conInstance;
-    private Connection _conn = bdConnect();
+    public Connection _conn = bdConnect();
     private Statement _st;
     private ResultSet _rs;
 
@@ -156,4 +156,20 @@ public abstract class DAOEstrella implements IDAOEstrella{
             e.printStackTrace();
         }
     }
+
+    /**
+     * metodo estatico para cerrar
+     * la conexion a la base de datos del DAO
+     * @param _conn
+     */
+
+    public void bdClose() {
+        try{
+            _conn.close();
+        }
+        catch ( SQLException e ){
+            e.printStackTrace();
+        }
+    }
+
 }

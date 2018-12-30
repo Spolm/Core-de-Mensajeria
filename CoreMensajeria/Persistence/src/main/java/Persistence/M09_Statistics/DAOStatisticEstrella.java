@@ -16,7 +16,6 @@ import java.util.List;
 
 public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticEstrella {
 
-    private Connection connStar = getConInstance();
     private Connection conn = Sql.getConInstance();
 
 
@@ -43,7 +42,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         query += companyIds.get(companyIds.size() - 1) + ") ORDER BY cam_id;";
         ArrayList<Entity> campaigns = new ArrayList<>();
         try {
-            Statement statement = connStar.createStatement();
+            Statement statement = _conn.createStatement();
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
@@ -56,7 +55,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
             e.printStackTrace();
             throw new CampaignDoesntExistsException(e);
         } finally {
-            bdClose(connStar);
+            bdClose();
             return  campaigns;
         }
     }
@@ -66,7 +65,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         String query = "SELECT DISTINCT cha_id, cha_name FROM dim_channel ORDER BY cha_id;";
         ArrayList<Channel> channels = new ArrayList<>();
         try {
-            Statement statement = connStar.createStatement();
+            Statement statement = _conn.createStatement();
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
@@ -77,7 +76,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose(connStar);
+            bdClose();
         }
         return channels;
     }
