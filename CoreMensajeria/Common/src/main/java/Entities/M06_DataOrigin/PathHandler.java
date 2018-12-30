@@ -39,9 +39,11 @@ public class PathHandler implements ServletContextListener {
             this.createOriginDirectories(ORIGIN_HOME_INBOX,companyDAO.companyListAll());
             this.createOriginDirectories(ORIGIN_HOME_TRASH,companyDAO.companyListAll());
             System.out.println("--------------->PATHS CREATED");
+
             Thread myThread = new Thread(WatchDirectory.getInstance(_paths));
             myThread.setDaemon(true);
             myThread.start();
+
         } catch (CompanyDoesntExistsException e) {
             System.out.println("Error creating paths");
         }
