@@ -1,7 +1,7 @@
 package Logic.M09_Statistics;
 
 import Entities.Entity;
-import Entities.M03_Campaign.Campaign;
+import Exceptions.CampaignDoesntExistsException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M09_Statistics.DAOStatistic;
@@ -11,18 +11,23 @@ import java.util.List;
 
 public class getCampaignsForCompanyCommand extends Command {
     List<Integer> companyIds;
+    ArrayList<Entity> Campaigns;
+    DAOStatistic dao;
 
     public getCampaignsForCompanyCommand(List<Integer> companyIds){this.companyIds = companyIds;}
 
     @Override
-    public void execute() throws Exception {
-        DAOStatistic dao = DAOFactory.instanciateDaoStatistics();
-        ArrayList<Campaign> Campaigns = dao.CampaignsForCompany(this.companyIds);
-        //return Response.ok(gson.toJson(Campaigns)).build();
+    public void execute() throws CampaignDoesntExistsException {
+            dao = DAOFactory.instanciateDaoStatistics();
+            Campaigns = dao.CampaignsForCompany(this.companyIds);
     }
 
     @Override
     public Entity Return() {
         return null;
+    }
+
+    public ArrayList<Entity> returnList() {
+        return Campaigns;
     }
 }

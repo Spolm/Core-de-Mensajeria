@@ -1,8 +1,11 @@
 package Persistence.M09_Statistics;
 
 import Entities.Entity;
+import Entities.Factory.EntityFactory;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
+import Entities.M05_Channel.Channel;
+import Entities.M05_Channel.ChannelFactory;
 import Entities.M09_Statistics.SqlEstrella;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
@@ -44,8 +47,8 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
-                //Entity company = EntityFactory.CreateCompanyWithOutLink(result.getInt("com_id"), result.getString("com_name"), "", true);
-                Company company = new Company(result.getInt("com_id"), result.getString("com_name"), "", true);
+                Entity company = EntityFactory.CreateCompanyWithOutLink(result.getInt("com_id"), result.getString("com_name"), "", true);
+                //Company company = new Company(result.getInt("com_id"), result.getString("com_name"), "", true);
                 companies.add(company);
             }
         } catch(SQLException e) {
@@ -58,13 +61,13 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
     }
 
     @Override
-    public ArrayList<Campaign> CampaignsForCompany(List<Integer> companyIds) throws CampaignDoesntExistsException{
+    public ArrayList<Entity> CampaignsForCompany(List<Integer> companyIds) throws CampaignDoesntExistsException{
         String query = "SELECT DISTINCT cam_id, cam_name FROM m09_getAllCampaigns(";
         for (int i = 0; i < companyIds.size() - 1;  i++) {
             query += companyIds.get(i) + ", ";
         }
         query += companyIds.get(companyIds.size() - 1) + ") ORDER BY cam_id;";
-        ArrayList<Campaign> campaigns = new ArrayList<>();
+        ArrayList<Entity> campaigns = new ArrayList<>();
         try {
             Statement statement = connStar.createStatement();
             ResultSet result = statement.executeQuery(query);
@@ -82,5 +85,26 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
             SqlEstrella.bdClose(connStar);
             return  campaigns;
         }
+    }
+
+    @Override
+    public ArrayList<Channel> getAllChannels() {
+        String query = "SELECT DISTINCT cha_id, cha_name FROM dim_channel ORDER BY cha_id;";
+        ArrayList<Channel> channels = new ArrayList<>();
+        try {
+            Statement statement = connStar.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                ChannelFactory channelFactory = new ChannelFactory();
+                Channel channel = channelFactory.getChannel(result.getInt("cha_id"), result.getString("cha_name"), null, null);
+                channels.add(channel);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(connStar);
+        }
+        return channels;
     }
 }

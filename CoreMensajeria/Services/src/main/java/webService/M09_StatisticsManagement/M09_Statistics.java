@@ -12,6 +12,8 @@ import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
+import Logic.CommandsFactory;
+import Logic.M09_Statistics.*;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -65,20 +67,30 @@ public class M09_Statistics extends Application {
     @Path("/companies")
     @Produces("application/json")
     public Response getAllCompanies(@QueryParam("userId") Integer userId) {
+        /*
         String query = "SELECT com_id, com_name from m02_getcompaniesbyresponsible(" + userId + ") ORDER BY com_id;";
         try {
             return getCompanies(query);
         } catch(CompanyDoesntExistsException e) {
             return Response.serverError().build();
         }
-
+        */
+        getAllCompaniesByUserCommand command = CommandsFactory.getAllCompaniesByUserCommand(userId);
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(command.returnList())).build();
+        } catch(CompanyDoesntExistsException e) {
+            return Response.serverError().build();
+        }catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     @Path("/campaigns")
     @Produces("application/json")
     public Response getCampaignsForCompany(@QueryParam("companyId") List<Integer> companyIds) {
-
+/*
         String query = "SELECT DISTINCT cam_id, cam_name FROM m09_getAllCampaigns(";
         for (int i = 0; i < companyIds.size() - 1;  i++) {
             query += companyIds.get(i) + ", ";
@@ -89,12 +101,24 @@ public class M09_Statistics extends Application {
         } catch(CampaignDoesntExistsException e) {
             return Response.serverError().build();
         }
+        */
+
+        getCampaignsForCompanyCommand command = CommandsFactory.getCampaignsForCompanyCommand(companyIds);
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(command.returnList())).build();
+        } catch(CampaignDoesntExistsException e) {
+            return Response.serverError().build();
+        }catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     @Path("/channels")
     @Produces("application/json")
     public Response getAllChannels() {
+        /*
         String query = "SELECT DISTINCT cha_id, cha_name FROM dim_channel ORDER BY cha_id;";
         ArrayList<Channel> channels = new ArrayList<>();
         try {
@@ -112,6 +136,14 @@ public class M09_Statistics extends Application {
             SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(channels)).build();
+        */
+        getAllChannelsCommand command = CommandsFactory.getAllChannelsCommand();
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(command.returnList())).build();
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
@@ -230,6 +262,7 @@ public class M09_Statistics extends Application {
     }
 
     private Response getCompanies(String query) throws CompanyDoesntExistsException {
+
         ArrayList<Company> companies = new ArrayList<>();
         try {
             Statement statement = conn.createStatement();
