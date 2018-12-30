@@ -9,10 +9,10 @@ import Persistence.M09_Statistics.DAOStatistic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class getCampaignsForCompany extends Command {
+public class getCampaignsForCompanyCommand extends Command {
     List<Integer> companyIds;
 
-    public getCampaignsForCompany(List<Integer> companyIds){this.companyIds = companyIds;}
+    public getCampaignsForCompanyCommand(List<Integer> companyIds){this.companyIds = companyIds;}
 
     @Override
     public void execute() throws Exception {

@@ -13,8 +13,8 @@ public class CommandsFactory {
         return new GetUser(user);
     }
 
-    public static Command GetAllCompaniesByUser(Integer userId) {return new getAllCompanies(userId); }
-    public static Command getCampaignsForCompany(List<Integer> companyIds){return new getCampaignsForCompany(companyIds);}
+    public static Command GetAllCompaniesByUserCommand(Integer userId) {return new getAllCompaniesCommand(userId); }
+    public static Command getCampaignsForCompanyCommand(List<Integer> companyIds){return new getCampaignsForCompanyCommand(companyIds);}
 
     public static AddCompanyCommand createAddCompanyCommand( Entity _co ){ return new AddCompanyCommand( _co ); }
 
