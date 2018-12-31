@@ -5,6 +5,9 @@ import Entities.Factory.EntityFactory;
 import Entities.M03_Campaign.Campaign;
 import Entities.M05_Channel.Channel;
 import Entities.M05_Channel.ChannelFactory;
+import Entities.M09_Statistics.FilterType;
+import Entities.M09_Statistics.SqlEstrella;
+import Entities.M09_Statistics.Statistics;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.CompanyDoesntExistsException;
@@ -79,6 +82,43 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
             bdClose();
         }
         return channels;
+    }
+
+    @Override
+    public Entity getOverallCountForCompanyStatistic() {
+        String query = "SELECT DISTINCT c.com_id, c.com_name, messages from dim_company_campaign c, " +
+                "(select sen_com_id, count(*) as messages from fact_sent_message " +
+                "group by sen_com_id) as m where c.com_id = m.sen_com_id ORDER BY c.com_id ASC;";
+        Statistics companiesStatistic = new Statistics();
+        try {
+            Statement statement = _conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                companiesStatistic.addX(result.getString(FilterType.company.value()));
+                companiesStatistic.addY(result.getInt("messages"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return companiesStatistic;
+    }
+
+    @Override
+    public Entity getOverallCountForCampaignStatistic() {
+        return null;
+    }
+
+    @Override
+    public Entity getOverallCountForchannelStatistic() {
+        return null;
+    }
+
+    @Override
+    public Entity getOverallCountForintegratorStatistic() {
+        return null;
     }
 
 

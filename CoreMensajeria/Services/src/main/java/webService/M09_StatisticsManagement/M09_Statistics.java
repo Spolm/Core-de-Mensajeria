@@ -1,22 +1,25 @@
 package webService.M09_StatisticsManagement;
 
+import DTO.DTO;
+import Entities.Entity;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
-import Entities.M05_Channel.Channel;
-import Entities.M05_Channel.ChannelFactory;
 import Entities.M04_Integrator.IntegratorFactory;
 import Entities.M04_Integrator.Integrator;
+import Entities.M09_Statistics.FilterType;
 import Entities.M09_Statistics.SqlEstrella;
 import Entities.M09_Statistics.Statistics;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
+import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M09_Statistics.*;
 import Mappers.CampaignMapper.MapperCampaignWithOut_Company;
 import Mappers.CompanyMapper.MapperCompanyWithOut_Link;
 import Mappers.GenericMapper;
+import Factory.MapperFactory;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -26,34 +29,6 @@ import java.sql.*;
 import java.util.*;
 import java.util.List;
 
-enum FilterType {
-    company {
-        @Override
-        public String value() {
-            return "com_name";
-        }
-    },
-    campaign {
-        @Override
-        public String value() {
-            return "cam_name";
-        }
-    },
-    channel {
-        @Override
-        public String value() {
-            return "cha_name";
-        }
-    },
-    integrator {
-        @Override
-        public String value() {
-            return "int_name";
-        }
-    };
-
-    public abstract String value();
-}
 
 @Path( "/M09_Statistics" )
 public class M09_Statistics extends Application {
@@ -62,6 +37,7 @@ public class M09_Statistics extends Application {
     private Connection connStar = SqlEstrella.getConInstance();
     private Connection conn = Sql.getConInstance();
     private GenericMapper mapper;
+    private DTO dto;
 
     /* ====================
             Endpoints
@@ -181,7 +157,7 @@ public class M09_Statistics extends Application {
             return Response.serverError().build();
         }
     }
-
+/*
     @GET
     @Path("/count")
     @Produces("application/json")
@@ -195,12 +171,22 @@ public class M09_Statistics extends Application {
             default: return Response.status(400).entity("{ \"Mensaje\": \"No se envió ningun parametro o el parametro es incorrecto\" }").build();
         }
     }
-
+*/
     @GET
     @Path("/companiesCount")
     @Produces("application/json")
     public Response getCompaniesCount() {
-        return getOverallCountFor(FilterType.company);
+        //return getOverallCountFor(FilterType.company);
+        Command command = CommandsFactory.getCompanyStatistic();
+        try {
+            command.execute();
+            mapper = MapperFactory.createStatisticMapper();
+            return Response.ok(gson.toJson(
+                    mapper.CreateDto(command.Return())
+            )).build();
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
@@ -242,21 +228,21 @@ public class M09_Statistics extends Application {
 
     public Response getOverallCountFor(FilterType filterType) {
         String query = queryForOverallCount(filterType);
-        Statistics companies = new Statistics();
+        Statistics companiesStatistic = new Statistics();
         try {
             Statement statement = connStar.createStatement();
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
-                companies.addX(result.getString(filterType.value()));
-                companies.addY(result.getInt("messages"));
+                companiesStatistic.addX(result.getString(filterType.value()));
+                companiesStatistic.addY(result.getInt("messages"));
             }
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
             SqlEstrella.bdClose(connStar);
         }
-        return Response.ok(gson.toJson(companies)).build();
+        return Response.ok(gson.toJson(companiesStatistic)).build();
     }
 
     public String queryForOverallCount(FilterType filterType) {

@@ -7,8 +7,10 @@ import DTO.M03_DTO.DTOFullCampaign;
 import DTO.M03_DTO.DTOCampaignWithOut_Company;
 import DTO.M03_DTO.DTOFullCampaign;
 import DTO.M03_DTO.DTOCampaignWithOut_id_And_Company;
+import DTO.M09_DTO.DTOStatistic;
 import Entities.M02_Company.Company;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -87,7 +89,12 @@ public class DTOFactory {
                                     endCampaign, company);
     }
 
+    /**
+     * Metodo que instancia un obejto del tipo DTOStatistic
+     * @return un objeto del tipo DTOStatistic
+     */
 
+    public static DTOStatistic CreateDTOStatistic(ArrayList x, ArrayList<Integer> y){ return new DTOStatistic(x,y);}
 
 
 
