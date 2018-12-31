@@ -16,11 +16,18 @@ public class CommandGetTagValue extends Command{
 
     @Override
     public void execute() {
-        NodeList nodeList = _element.getElementsByTagName(_tag).item(0).getChildNodes();
-        _node = (Node) nodeList.item(0);
+
+            NodeList nodeList = _element.getElementsByTagName(_tag).item(0).getChildNodes();
+            _node = (Node) nodeList.item(0);
+
     }
 
     public String getValue(){
-        return _node.getNodeValue();
+        try {
+             return _node.getNodeValue();
+        }catch (NullPointerException e){   //////// Hacer excepcion personalizada
+            System.out.println("Something bad happen");
+        }
+        return "";
     }
 }
