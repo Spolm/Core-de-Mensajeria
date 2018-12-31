@@ -164,4 +164,25 @@ public class CompanyDAO {
         return co;
     }
 
+    public Company updateCompany (int id,Company co) throws CompanyDoesntExistsException, ParameterCantBeNullException {
+        PathHandler ph  = new PathHandler();
+        try {
+
+            PreparedStatement preparedStatement = conn.prepareCall("{Call m02_updatecompany(?,?,?,?,?,?)}");
+            preparedStatement.setString(1, co.get_name());
+            preparedStatement.setString(2, co.get_desc());
+            preparedStatement.setBoolean(3, co.get_status());
+            preparedStatement.setString(4, ph.generatePath(co));
+            preparedStatement.setInt(5, co.get_idUser());
+            preparedStatement.setInt(6, id);
+            preparedStatement.execute();
+        }catch (SQLException e){
+            throw new CompanyDoesntExistsException(e);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return co;
+    }
+
+
 }

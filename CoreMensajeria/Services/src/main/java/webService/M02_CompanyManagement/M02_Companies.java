@@ -154,22 +154,70 @@ public class M02_Companies {
     @Produces("application/json")
     @Consumes("application/json")
     public Response addCompany(Company _company){
-        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        Response.ResponseBuilder rb = Response.status(Response.Status.OK);
         CompanyDAO _companyDAO = new CompanyDAO();
 
         try {
             _companyDAO.createCompany(_company);
         } catch (CompanyDoesntExistsException e) {
+            rb = Response.status(Response.Status.NO_CONTENT);
             e.printStackTrace();
         }
         catch (ParameterCantBeNullException e) {
+            rb = Response.status(Response.Status.NOT_ACCEPTABLE);
             e.printStackTrace();
         }
         catch (Exception e) {
+            rb = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
             e.printStackTrace();
         }return rb.build();
     }
-    
+
+
+    @PUT
+    @Path("/Edit/Company/{companyId}")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response editCompany(Company _company,@PathParam("companyId") int id){
+        Response.ResponseBuilder rb = Response.status(Response.Status.OK);
+        CompanyDAO _companyDAO = new CompanyDAO();
+
+        try {
+            _companyDAO.updateCompany(id,_company);
+        } catch (CompanyDoesntExistsException e) {
+            rb = Response.status(Response.Status.NO_CONTENT);
+            e.printStackTrace();
+        }
+        catch (ParameterCantBeNullException e) {
+            rb = Response.status(Response.Status.NOT_ACCEPTABLE);
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            rb = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+        }return rb.build();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /*@POST
     @Path("/EditCompany/{idCompany}")
     @Consumes("application/json")
