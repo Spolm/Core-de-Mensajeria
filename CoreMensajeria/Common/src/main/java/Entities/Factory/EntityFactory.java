@@ -106,7 +106,7 @@ public class EntityFactory {
      * @return un objeto del tipo Statistic sin datos
      */
 
-    public static Entity createStatistic(){ return new Statistics(); }
+    public static Statistics createStatistic(){ return new Statistics(); }
 
     /**
      * Fabrica para estadisticas
@@ -115,6 +115,6 @@ public class EntityFactory {
      * @return un objeto del tipo Statistic con sus valores fijados
      */
 
-    public static Entity createStatistic(ArrayList x, ArrayList<Integer> y){ return new Statistics(x,y); }
+    public static Statistics createStatistic(ArrayList x, ArrayList<Integer> y){ return new Statistics(x,y); }
 
 }

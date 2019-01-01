@@ -89,7 +89,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         String query = "SELECT DISTINCT c.com_id, c.com_name, messages from dim_company_campaign c, " +
                 "(select sen_com_id, count(*) as messages from fact_sent_message " +
                 "group by sen_com_id) as m where c.com_id = m.sen_com_id ORDER BY c.com_id ASC;";
-        Statistics companiesStatistic = new Statistics();
+        Statistics companiesStatistic =EntityFactory.createStatistic();
         try {
             Statement statement = _conn.createStatement();
             ResultSet result = statement.executeQuery(query);
@@ -111,7 +111,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         String query = "SELECT DISTINCT c.cam_id, c.cam_name, messages from dim_company_campaign c, " +
                 "(select sen_cam_id, count(*) as messages from fact_sent_message " +
                 "group by sen_cam_id) as m where c.cam_id = m.sen_cam_id ORDER BY c.cam_id ASC;";
-        Statistics CampaignStatistic = new Statistics();
+        Statistics CampaignStatistic =EntityFactory.createStatistic();
         try {
             Statement statement = _conn.createStatement();
             ResultSet result = statement.executeQuery(query);
@@ -133,7 +133,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         String query = "SELECT DISTINCT c.cha_id, c.cha_name, messages from dim_channel c, " +
                 "(select sen_cha_id, count(*) as messages from fact_sent_message " +
                 "group by sen_cha_id) as m where c.cha_id = m.sen_cha_id ORDER BY c.cha_id ASC;";
-        Statistics ChannelStatistic = new Statistics();
+        Statistics ChannelStatistic =EntityFactory.createStatistic();
         try {
             Statement statement = _conn.createStatement();
             ResultSet result = statement.executeQuery(query);
@@ -155,7 +155,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         String query = "SELECT DISTINCT i.int_id, i.int_name, messages from dim_integrator i, " +
                 "(select sen_int_id, count(*) as messages from fact_sent_message " +
                 "group by sen_int_id) as m where i.int_id = m.sen_int_id ORDER BY i.int_id ASC;";
-        Statistics integratorStatistic = new Statistics();
+        Statistics integratorStatistic = EntityFactory.createStatistic();
         try {
             Statement statement = _conn.createStatement();
             ResultSet result = statement.executeQuery(query);
