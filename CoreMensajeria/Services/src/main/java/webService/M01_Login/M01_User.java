@@ -7,7 +7,7 @@ import Entities.M01_Login.User;
 import Entities.M01_Login.UserDAO;
 import Logic.Command;
 import Logic.CommandsFactory;
-import Logic.M01_Login.GetUser;
+import Logic.M01_Login.GetUserCommand;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -32,7 +32,7 @@ public class M01_User {
         Error error;
         Entity user = EntityFactory.user();
         Command commandUser = CommandsFactory.instanciateGetUser(user);
-        GetUser cmd = (GetUser) commandUser;
+        GetUserCommand cmd = (GetUserCommand) commandUser;
         //TODO acomodar esto
         Response rb;
         try {

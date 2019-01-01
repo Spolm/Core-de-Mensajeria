@@ -7,11 +7,11 @@ import Persistence.M01_Login.GetUserDao;
 
 import java.sql.SQLException;
 
-public class GetUser extends Command {
+public class GetUserCommand extends Command {
 
     private static Entity us;
 
-    public GetUser(Entity u){
+    public GetUserCommand(Entity u){
         this.us = u;
     }
 
