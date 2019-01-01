@@ -4,13 +4,14 @@ import DTO.DTO;
 import Entities.Entity;
 import java.util.List;
 
-public abstract class GenericMapper {
-    public abstract DTO CreateDto(Entity entity);
+public abstract class GenericMapper <TDto>
+{
+    public abstract TDto CreateDto(Entity entity);
 
-    public abstract Entity CreateEntity(DTO dto);
+    public abstract Entity CreateEntity(TDto dto);
 
-    public abstract List<DTO> CreateDtoList(List<Entity> entities);
+    public abstract List<TDto> CreateDtoList(List<Entity> entities);
 
-    public abstract List<Entity> CreateEntityList(List<DTO> dtos);
+    public abstract List<Entity> CreateEntityList(List<TDto> dtos);
 
 }
