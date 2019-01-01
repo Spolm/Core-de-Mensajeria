@@ -17,11 +17,11 @@ public interface IDAO_StatisticEstrella extends IDAO {
 
     ArrayList<Channel> getAllChannels();
 
-    Entity getOverallCountForCompanyStatistic();
+    Entity getCompanyStatistic();
 
-    Entity getOverallCountForCampaignStatistic();
+    Entity getCampaignStatistic();
 
-    Entity getOverallCountForchannelStatistic();
+    Entity getChannelStatistic();
 
-    Entity getOverallCountForintegratorStatistic();
+    Entity getIntegratorStatistic();
 }

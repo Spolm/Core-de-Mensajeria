@@ -1,7 +1,6 @@
 package webService.M09_StatisticsManagement;
 
 import DTO.DTO;
-import Entities.Entity;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 import Entities.M04_Integrator.IntegratorFactory;
@@ -177,7 +176,7 @@ public class M09_Statistics extends Application {
     @Produces("application/json")
     public Response getCompaniesCount() {
         //return getOverallCountFor(FilterType.company);
-        Command command = CommandsFactory.getCompanyStatistic();
+        Command command = CommandsFactory.getCompanyStatisticCommand();
         try {
             command.execute();
             mapper = MapperFactory.createStatisticMapper();
@@ -193,7 +192,17 @@ public class M09_Statistics extends Application {
     @Path("/campaignsCount")
     @Produces("application/json")
     public Response getCampaignsCount() {
-        return getOverallCountFor(FilterType.campaign);
+        //return getOverallCountFor(FilterType.campaign);
+        Command command = CommandsFactory.getCampaignStatisticCommand();
+        try {
+            command.execute();
+            mapper = MapperFactory.createStatisticMapper();
+            return Response.ok(gson.toJson(
+                    mapper.CreateDto(command.Return())
+            )).build();
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
@@ -228,21 +237,21 @@ public class M09_Statistics extends Application {
 
     public Response getOverallCountFor(FilterType filterType) {
         String query = queryForOverallCount(filterType);
-        Statistics companiesStatistic = new Statistics();
+        Statistics Statistic = new Statistics();
         try {
             Statement statement = connStar.createStatement();
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
-                companiesStatistic.addX(result.getString(filterType.value()));
-                companiesStatistic.addY(result.getInt("messages"));
+                Statistic.addX(result.getString(filterType.value()));
+                Statistic.addY(result.getInt("messages"));
             }
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
             SqlEstrella.bdClose(connStar);
         }
-        return Response.ok(gson.toJson(companiesStatistic)).build();
+        return Response.ok(gson.toJson(Statistic)).build();
     }
 
     public String queryForOverallCount(FilterType filterType) {

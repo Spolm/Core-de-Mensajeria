@@ -19,7 +19,7 @@ import java.util.List;
 
 public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticEstrella {
 
-    private Connection conn = Sql.getConInstance();
+    private Connection connDB = Sql.getConInstance();
 
 
     @Override
@@ -85,7 +85,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
     }
 
     @Override
-    public Entity getOverallCountForCompanyStatistic() {
+    public Entity getCompanyStatistic() {
         String query = "SELECT DISTINCT c.com_id, c.com_name, messages from dim_company_campaign c, " +
                 "(select sen_com_id, count(*) as messages from fact_sent_message " +
                 "group by sen_com_id) as m where c.com_id = m.sen_com_id ORDER BY c.com_id ASC;";
@@ -107,17 +107,34 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
     }
 
     @Override
-    public Entity getOverallCountForCampaignStatistic() {
+    public Entity getCampaignStatistic() {
+        String query = "SELECT DISTINCT c.cam_id, c.cam_name, messages from dim_company_campaign c, " +
+                "(select sen_cam_id, count(*) as messages from fact_sent_message " +
+                "group by sen_cam_id) as m where c.cam_id = m.sen_cam_id ORDER BY c.cam_id ASC;";
+        Statistics CampaignStatistic = new Statistics();
+        try {
+            Statement statement = _conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                CampaignStatistic.addX(result.getString(FilterType.campaign.value()));
+                CampaignStatistic.addY(result.getInt("messages"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return CampaignStatistic;
+    }
+
+    @Override
+    public Entity getChannelStatistic() {
         return null;
     }
 
     @Override
-    public Entity getOverallCountForchannelStatistic() {
-        return null;
-    }
-
-    @Override
-    public Entity getOverallCountForintegratorStatistic() {
+    public Entity getIntegratorStatistic() {
         return null;
     }
 

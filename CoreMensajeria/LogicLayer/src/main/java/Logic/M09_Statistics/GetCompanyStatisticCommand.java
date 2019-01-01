@@ -5,7 +5,7 @@ import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M09_Statistics.DAOStatisticEstrella;
 
-public class GetCompanyStatistic extends Command {
+public class GetCompanyStatisticCommand extends Command {
 
     DAOStatisticEstrella dao;
     Entity statistic;
@@ -13,7 +13,7 @@ public class GetCompanyStatistic extends Command {
     @Override
     public void execute() throws Exception {
         dao = DAOFactory.instanciateDaoStatisticsEstrella();
-        statistic = dao.getOverallCountForCompanyStatistic();
+        statistic = dao.getCompanyStatistic();
     }
 
     @Override
