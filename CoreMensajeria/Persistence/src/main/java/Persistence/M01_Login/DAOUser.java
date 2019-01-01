@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class GetUserDao extends DAO implements  IDAOUser {
+public class DAOUser extends DAO implements  IDAOUser {
 
 
     final String QUERY_SELECT_BY_USERNAME_OR_EMAIL = "SELECT * FROM public.user where use_username=? or use_email=?";
@@ -105,7 +105,7 @@ public class GetUserDao extends DAO implements  IDAOUser {
 
 
 
-    public GetUserDao() {
+    public DAOUser() {
         _conn = Sql.getConInstance();
     }
 
