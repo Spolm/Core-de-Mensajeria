@@ -130,12 +130,46 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
 
     @Override
     public Entity getChannelStatistic() {
-        return null;
+        String query = "SELECT DISTINCT c.cha_id, c.cha_name, messages from dim_channel c, " +
+                "(select sen_cha_id, count(*) as messages from fact_sent_message " +
+                "group by sen_cha_id) as m where c.cha_id = m.sen_cha_id ORDER BY c.cha_id ASC;";
+        Statistics ChannelStatistic = new Statistics();
+        try {
+            Statement statement = _conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                ChannelStatistic.addX(result.getString(FilterType.channel.value()));
+                ChannelStatistic.addY(result.getInt("messages"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return ChannelStatistic;
     }
 
     @Override
     public Entity getIntegratorStatistic() {
-        return null;
+        String query = "SELECT DISTINCT i.int_id, i.int_name, messages from dim_integrator i, " +
+                "(select sen_int_id, count(*) as messages from fact_sent_message " +
+                "group by sen_int_id) as m where i.int_id = m.sen_int_id ORDER BY i.int_id ASC;";
+        Statistics integratorStatistic = new Statistics();
+        try {
+            Statement statement = _conn.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            while (result.next()) {
+                integratorStatistic.addX(result.getString(FilterType.integrator.value()));
+                integratorStatistic.addY(result.getInt("messages"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return integratorStatistic;
     }
 
 

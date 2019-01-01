@@ -9,12 +9,12 @@ import Persistence.M09_Statistics.DAOStatisticEstrella;
 import java.util.ArrayList;
 import java.util.List;
 
-public class getCampaignsForCompanyCommand extends Command {
+public class GetCampaignsForCompanyCommand extends Command {
     List<Integer> companyIds;
     ArrayList<Entity> Campaigns;
     DAOStatisticEstrella dao;
 
-    public getCampaignsForCompanyCommand(List<Integer> companyIds){this.companyIds = companyIds;}
+    public GetCampaignsForCompanyCommand(List<Integer> companyIds){this.companyIds = companyIds;}
 
     @Override
     public void execute() throws CampaignDoesntExistsException {

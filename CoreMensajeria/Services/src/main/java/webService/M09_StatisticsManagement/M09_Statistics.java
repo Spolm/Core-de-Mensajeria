@@ -54,7 +54,7 @@ public class M09_Statistics extends Application {
             return Response.serverError().build();
         }
         */
-        getAllCompaniesByUserCommand command = CommandsFactory.getAllCompaniesByUserCommand(userId);
+        GetAllCompaniesByUserCommand command = CommandsFactory.getAllCompaniesByUserCommand(userId);
         try {
             command.execute();
             mapper = new MapperCompanyWithOut_Link();
@@ -85,7 +85,7 @@ public class M09_Statistics extends Application {
         }
         */
 
-        getCampaignsForCompanyCommand command = CommandsFactory.getCampaignsForCompanyCommand(companyIds);
+        GetCampaignsForCompanyCommand command = CommandsFactory.getCampaignsForCompanyCommand(companyIds);
         try {
             command.execute();
             mapper = new MapperCampaignWithOut_Company();
@@ -122,7 +122,7 @@ public class M09_Statistics extends Application {
         }
         return Response.ok(gson.toJson(channels)).build();
         */
-        getAllChannelsCommand command = CommandsFactory.getAllChannelsCommand();
+        GetAllChannelsCommand command = CommandsFactory.getAllChannelsCommand();
         try {
             command.execute();
             return Response.ok(gson.toJson(command.returnList())).build();
@@ -146,7 +146,7 @@ public class M09_Statistics extends Application {
             return Response.serverError().build();
         }
         */
-        getIntegratorsForChannelCommand command = CommandsFactory.getIntegratorsForChannelCommand(channelIds);
+        GetIntegratorsForChannelCommand command = CommandsFactory.getIntegratorsForChannelCommand(channelIds);
         try {
             command.execute();
             return Response.ok(gson.toJson(
@@ -177,15 +177,7 @@ public class M09_Statistics extends Application {
     public Response getCompaniesCount() {
         //return getOverallCountFor(FilterType.company);
         Command command = CommandsFactory.getCompanyStatisticCommand();
-        try {
-            command.execute();
-            mapper = MapperFactory.createStatisticMapper();
-            return Response.ok(gson.toJson(
-                    mapper.CreateDto(command.Return())
-            )).build();
-        } catch (Exception e) {
-            return Response.serverError().build();
-        }
+        return getStadistic(command);
     }
 
     @GET
@@ -194,6 +186,28 @@ public class M09_Statistics extends Application {
     public Response getCampaignsCount() {
         //return getOverallCountFor(FilterType.campaign);
         Command command = CommandsFactory.getCampaignStatisticCommand();
+        return getStadistic(command);
+    }
+
+    @GET
+    @Path("/channelsCount")
+    @Produces("application/json")
+    public Response getChannelsCount() {
+        //return getOverallCountFor(FilterType.channel);
+        Command command = CommandsFactory.getChannelStatisticCommand();
+        return getStadistic(command);
+    }
+
+    @GET
+    @Path("/integratorsCount")
+    @Produces("application/json")
+    public Response getIntegratosCount() {
+        //return getOverallCountFor(FilterType.integrator);
+        Command command = CommandsFactory.getIntegratorStatisticCommand();
+        return getStadistic(command);
+    }
+
+    private Response getStadistic(Command command) {
         try {
             command.execute();
             mapper = MapperFactory.createStatisticMapper();
@@ -204,18 +218,6 @@ public class M09_Statistics extends Application {
             return Response.serverError().build();
         }
     }
-
-    @GET
-    @Path("/channelsCount")
-    @Produces("application/json")
-    public Response getChannelsCount() {
-        return getOverallCountFor(FilterType.channel);
-    }
-
-    @GET
-    @Path("/integratorsCount")
-    @Produces("application/json")
-    public Response getIntegratosCount() { return getOverallCountFor(FilterType.integrator); }
 
     @GET
     @Path("/update")

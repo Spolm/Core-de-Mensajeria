@@ -10,13 +10,13 @@ import Persistence.M09_Statistics.DAOStatistic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class getIntegratorsForChannelCommand extends Command {
+public class GetIntegratorsForChannelCommand extends Command {
 
     ArrayList<Integrator> integrators;
     DAOStatistic dao;
     List<Integer> channelIds;
 
-    public getIntegratorsForChannelCommand(List<Integer> channelIds){ this.channelIds = channelIds;}
+    public GetIntegratorsForChannelCommand(List<Integer> channelIds){ this.channelIds = channelIds;}
 
     @Override
     public void execute() throws ChannelNotFoundException {

@@ -7,13 +7,13 @@ import Persistence.DAOFactory;
 import Persistence.M09_Statistics.DAOStatistic;
 import java.util.ArrayList;
 
-public class getAllCompaniesByUserCommand extends Command {
+public class GetAllCompaniesByUserCommand extends Command {
 
     private static Integer userId;
     ArrayList<Entity> companies;
     DAOStatistic dao;
 
-    public getAllCompaniesByUserCommand(Integer userId){ getAllCompaniesByUserCommand.userId = userId;}
+    public GetAllCompaniesByUserCommand(Integer userId){ GetAllCompaniesByUserCommand.userId = userId;}
 
     @Override
     public void execute () throws CompanyDoesntExistsException {

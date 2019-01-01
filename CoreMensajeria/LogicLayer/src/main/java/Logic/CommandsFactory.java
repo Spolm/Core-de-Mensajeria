@@ -13,12 +13,14 @@ public class CommandsFactory {
         return new GetUser(user);
     }
 
-    public static getAllCompaniesByUserCommand getAllCompaniesByUserCommand(Integer userId) {return new getAllCompaniesByUserCommand(userId); }
-    public static getCampaignsForCompanyCommand getCampaignsForCompanyCommand(List<Integer> companyIds){return new getCampaignsForCompanyCommand(companyIds);}
-    public static getAllChannelsCommand getAllChannelsCommand() {return new getAllChannelsCommand();}
-    public static getIntegratorsForChannelCommand getIntegratorsForChannelCommand(List<Integer> channelIds){ return new getIntegratorsForChannelCommand(channelIds);}
+    public static GetAllCompaniesByUserCommand getAllCompaniesByUserCommand(Integer userId) {return new GetAllCompaniesByUserCommand(userId); }
+    public static GetCampaignsForCompanyCommand getCampaignsForCompanyCommand(List<Integer> companyIds){return new GetCampaignsForCompanyCommand(companyIds);}
+    public static GetAllChannelsCommand getAllChannelsCommand() {return new GetAllChannelsCommand();}
+    public static GetIntegratorsForChannelCommand getIntegratorsForChannelCommand(List<Integer> channelIds){ return new GetIntegratorsForChannelCommand(channelIds);}
     public static Command getCompanyStatisticCommand(){ return new GetCompanyStatisticCommand();}
     public static Command getCampaignStatisticCommand(){ return new GetCampaignStatisticCommand();}
+    public static Command getChannelStatisticCommand(){ return new GetChannelStatisticCommand();}
+    public static Command getIntegratorStatisticCommand(){ return new GetIntegratorStatisticCommand();}
 
     public static AddCompanyCommand createAddCompanyCommand( Entity _co ){ return new AddCompanyCommand( _co ); }
 

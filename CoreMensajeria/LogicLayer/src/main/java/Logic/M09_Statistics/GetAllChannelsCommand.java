@@ -8,7 +8,7 @@ import Persistence.M09_Statistics.DAOStatisticEstrella;
 
 import java.util.ArrayList;
 
-public class getAllChannelsCommand extends Command {
+public class GetAllChannelsCommand extends Command {
 
     ArrayList<Channel> channels;
     DAOStatisticEstrella dao;
