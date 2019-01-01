@@ -24,4 +24,6 @@ public interface IDAO_StatisticEstrella extends IDAO {
     Entity getChannelStatistic();
 
     Entity getIntegratorStatistic();
+
+    void updateStarSchema();
 }

@@ -21,6 +21,7 @@ public class CommandsFactory {
     public static Command getCampaignStatisticCommand(){ return new GetCampaignStatisticCommand();}
     public static Command getChannelStatisticCommand(){ return new GetChannelStatisticCommand();}
     public static Command getIntegratorStatisticCommand(){ return new GetIntegratorStatisticCommand();}
+    public static Command updateStarSchema(){ return new UpdateStarSchemaCommand();}
 
     public static AddCompanyCommand createAddCompanyCommand( Entity _co ){ return new AddCompanyCommand( _co ); }
 

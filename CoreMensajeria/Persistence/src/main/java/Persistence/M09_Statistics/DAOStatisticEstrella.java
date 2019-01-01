@@ -172,5 +172,20 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         return integratorStatistic;
     }
 
+    @Override
+    public void updateStarSchema() {
+        String query = "SELECT m09_update_starschema();";
+        try {
+            Statement st = _conn.createStatement();
+            ResultSet result = st.executeQuery(query);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+    }
+
 
 }

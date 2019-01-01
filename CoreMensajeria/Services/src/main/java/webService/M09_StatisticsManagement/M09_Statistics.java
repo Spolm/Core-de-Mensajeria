@@ -223,17 +223,14 @@ public class M09_Statistics extends Application {
     @Path("/update")
     @Produces("application/json")
     public Response updateStarSchema() {
-        String query = "SELECT m09_update_starschema();";
+        Command command = CommandsFactory.updateStarSchema();
         try {
-            Statement st = connStar.createStatement();
-            ResultSet result = st.executeQuery(query);
+            command.execute();
             return Response.ok().build();
         } catch(SQLException e) {
             return Response.serverError().build();
         } catch(Exception e) {
             return Response.serverError().build();
-        } finally {
-            SqlEstrella.bdClose(connStar);
         }
     }
 
