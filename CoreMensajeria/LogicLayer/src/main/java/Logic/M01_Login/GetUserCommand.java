@@ -3,7 +3,7 @@ package Logic.M01_Login;
 import Entities.Entity;
 import Logic.Command;
 import Persistence.DAOFactory;
-import Persistence.M01_Login.GetUserDao;
+import Persistence.M01_Login.DAOUser;
 
 import java.sql.SQLException;
 
@@ -18,7 +18,7 @@ public class GetUserCommand extends Command {
     @Override
     public void execute() throws SQLException {
         try {
-            GetUserDao dao = DAOFactory.instanciateDaoUser();
+            DAOUser dao = DAOFactory.instanciateDaoUser();
         }
         catch (Exception e){
 
