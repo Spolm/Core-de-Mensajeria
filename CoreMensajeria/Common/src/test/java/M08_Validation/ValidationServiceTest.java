@@ -1,6 +1,9 @@
 package M08_Validation;
 
 
+import Entities.M08_Validation.XMLManagement.Command;
+import Entities.M08_Validation.XMLManagement.CommandValidateParameter;
+import Entities.M08_Validation.XMLManagement.CommandValidateTemplate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -88,4 +91,17 @@ class ValidationServiceTest {
     }
 
 */
+    @Test
+    public void testTemplateExist() {
+        CommandValidateParameter c = new CommandValidateTemplate(1);
+        c.execute();
+        assertEquals(true,c.is_valid());
+    }
+
+    @Test
+    public void testTemplateDoesntExist() {
+        CommandValidateParameter c = new CommandValidateTemplate(-1);
+        c.execute();
+        assertEquals(false,c.is_valid());
+    }
 }
