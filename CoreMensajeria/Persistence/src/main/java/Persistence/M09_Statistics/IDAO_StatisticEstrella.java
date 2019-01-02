@@ -26,4 +26,24 @@ public interface IDAO_StatisticEstrella extends IDAO {
     Entity getIntegratorStatistic();
 
     void updateStarSchema();
+
+    ArrayList<Integer> getYears();
+
+    ArrayList<Integer> getMonths();
+
+    ArrayList<Integer> getDaysofWeek();
+
+    ArrayList<Integer> getDaysofMonth();
+
+    ArrayList<Integer> getDaysofYear();
+
+    ArrayList<Integer> getWeeksofYear();
+
+    ArrayList<Integer> getQuartersofYear();
+
+    ArrayList<Integer> getHours();
+
+    ArrayList<Integer> getMinutes();
+
+    ArrayList<Integer> getSeconds();
 }
