@@ -172,5 +172,200 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         return integratorStatistic;
     }
 
+    @Override
+    public void updateStarSchema() {
+        String query = "SELECT m09_update_starschema();";
+        try {
+            Statement st = _conn.createStatement();
+            ResultSet result = st.executeQuery(query);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+    }
+
+    @Override
+    public ArrayList<Integer> getYears() {
+        ArrayList<Integer> years = new ArrayList<>();
+        try{
+            Statement statement = _conn.createStatement();
+            String query = "SELECT dat_year FROM m09_getYears()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                years.add(result.getInt("dat_year"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return years;
+    }
+
+    @Override
+    public ArrayList<Integer> getMonths() {
+        ArrayList<Integer> months = new ArrayList<>();
+        try{
+            Statement statement = _conn.createStatement();
+            String query = "SELECT dat_month FROM m09_getMonths()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                months.add(result.getInt("dat_month"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return months;
+    }
+
+    @Override
+    public ArrayList<Integer> getDaysofWeek() {
+        ArrayList<Integer> daysofweek = new ArrayList<>();
+        try{
+            Statement statement = _conn.createStatement();
+            String query = "SELECT dat_dayofweek FROM m09_getDaysofWeek()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                daysofweek.add(result.getInt("dat_dayofweek"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return daysofweek;
+    }
+
+    @Override
+    public ArrayList<Integer> getDaysofMonth() {
+        ArrayList<Integer> daysofmonth = new ArrayList<>();
+        try{
+            Statement statement = _conn.createStatement();
+            String query = "SELECT dat_dayofmonth FROM m09_getDaysofMonth()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                daysofmonth.add(result.getInt("dat_dayofmonth"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return daysofmonth;
+    }
+
+    @Override
+    public ArrayList<Integer> getDaysofYear() {
+        ArrayList<Integer> daysofyear = new ArrayList<>();
+        try{
+            Statement statement = _conn.createStatement();
+            String query = "SELECT dat_dayofyear FROM m09_getDaysofYear()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                daysofyear.add(result.getInt("dat_dayofyear"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return daysofyear;
+    }
+
+    @Override
+    public ArrayList<Integer> getWeeksofYear() {
+        ArrayList<Integer> weeksofyear = new ArrayList<>();
+        try{
+            Statement statement = _conn.createStatement();
+            String query = "SELECT dat_weekofyear FROM m09_getWeeksofYear()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                weeksofyear.add(result.getInt("dat_weekofyear"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return weeksofyear;
+    }
+
+    @Override
+    public ArrayList<Integer> getQuartersofYear() {
+        ArrayList<Integer> quartersofyear = new ArrayList<>();
+        try{
+            Statement statement = _conn.createStatement();
+            String query = "SELECT dat_quarterofyear FROM m09_getQuartersofYear()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                quartersofyear.add(result.getInt("dat_quarterofyear"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return quartersofyear;
+    }
+
+    @Override
+    public ArrayList<Integer> getHours() {
+        ArrayList<Integer> hours = new ArrayList<>();
+        try{
+            Statement statement = _conn.createStatement();
+            String query = "SELECT dat_hourofday FROM m09_getHours()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                hours.add(result.getInt("dat_hourofday"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return hours;
+    }
+
+    @Override
+    public ArrayList<Integer> getMinutes() {
+        ArrayList<Integer> minutes = new ArrayList<>();
+        try{
+            Statement statement = _conn.createStatement();
+            String query = "SELECT dat_minuteofhour FROM m09_getMinutes()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                minutes.add(result.getInt("dat_minuteofhour"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return minutes;
+    }
+
+    @Override
+    public ArrayList<Integer> getSeconds() {
+        ArrayList<Integer> seconds = new ArrayList<>();
+        try{
+            Statement statement = _conn.createStatement();
+            String query = "SELECT dat_secondofminute FROM m09_getSeconds()";
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                seconds.add(result.getInt("dat_secondofminute"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            SqlEstrella.bdClose(_conn);
+        }
+        return seconds;
+    }
+
 
 }
