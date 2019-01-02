@@ -6,21 +6,23 @@ import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;
 import Persistence.M02_Company.IDAOCompany;
 
-public class GetCompanyCommand extends Command {
-    private static  Entity _co;
+public class ChangeStatusCommand extends Command {
 
-    public GetCompanyCommand( Entity _company ) {
+    private static Entity _co;
+
+    public  ChangeStatusCommand ( Entity _company ){
         this._co = _company;
     }
+
 
     @Override
     public void execute() throws Exception {
         try {
-            IDAOCompany _dao = DAOFactory.instanciateDaoCompany();
-            _dao.companyById( _co );
+            IDAOCompany _dao = DAOFactory.instanciateDaoCompany ( );
+            _dao.changeStatus( _co );
+        }
 
-
-        }catch(Exception exc) {
+        catch ( Exception e ){
 
         }
 

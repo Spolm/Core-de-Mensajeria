@@ -24,10 +24,6 @@ public class AddCompanyCommand extends Command {
         catch ( Exception e ){
 
             }
-
-
-
-
     }
 
     @Override

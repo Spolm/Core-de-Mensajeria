@@ -23,6 +23,8 @@ public interface IDAOCompany extends IDAO {
 
     ArrayList<Entity> companiesEnabled();
 
+    ArrayList<Entity> allCompanies();
+
     Company getCompany(ResultSet _result) throws SQLException;
 }
 
