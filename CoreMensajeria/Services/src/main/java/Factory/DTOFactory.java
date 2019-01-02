@@ -67,8 +67,8 @@ public class DTOFactory {
      */
     public static DTOCampaignWithOut_Company CreateDtoCampaignWithOut_Company(int idCampaign, String nameCampaign,
                                                                               String descCampaign,
-                                                                              boolean statusCampaign, Date startCampaign,
-                                                                              Date endCampaign) {
+                                                                              boolean statusCampaign,
+                                                                              Date startCampaign, Date endCampaign) {
 
         return new DTOCampaignWithOut_Company(idCampaign, nameCampaign, descCampaign, statusCampaign,
                                               startCampaign, endCampaign);

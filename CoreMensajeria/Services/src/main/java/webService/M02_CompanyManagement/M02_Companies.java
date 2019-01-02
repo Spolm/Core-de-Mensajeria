@@ -1,9 +1,17 @@
 package webService.M02_CompanyManagement;
 
+import DTO.M02_DTO.DTOCompanyWithOutIdAndLink;
+import Entities.Entity;
+import Entities.Factory.EntityFactory;
 import Entities.M02_Company.CompanyDAO;
 import Entities.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
 import Exceptions.ParameterCantBeNullException;
+import Factory.MapperFactory;
+import Logic.CommandsFactory;
+import Logic.M02_Company.AddCompanyCommand;
+import Logic.M02_Company.GetAllCompaniesCommand;
+import Mappers.CompanyMapper.MapperCompanyWithOutIdAndLink;
 import com.google.gson.Gson;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -202,8 +210,64 @@ public class M02_Companies {
 
 
 
+//---------- Region con los metodos ya con sus patrones
 
 
+
+    @POST
+    @Path("/AddCompanyPP")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response addCompanyPP(DTOCompanyWithOutIdAndLink dto){
+
+        Response.ResponseBuilder rb = Response.status(Response.Status.OK);
+
+       try {
+           MapperCompanyWithOutIdAndLink mapper = MapperFactory.CreateMapperCompanyWithOutIdAndLink( ) ;
+           Entity company = mapper.CreateEntity(dto);
+           AddCompanyCommand command = CommandsFactory.createAddCompanyCommand(company);
+           command.execute();
+           return rb.build() ;
+
+       }
+
+       catch (Exception e){
+           return Response.status(500).entity(e.getMessage()).build();
+       }
+
+    }
+
+
+
+    
+/*
+    @GET
+    @Path("/GetAllPP")
+    @Produces("application/json")
+*/
+    /**
+     * Metodo Response que devuelve todas las compañias registradas en el sistema
+     * @return Response con status ok al encontrar la informacion solicitada
+     */
+    /*
+    public Response getAllCompaniesPP() {
+
+        Response.ResponseBuilder rb = Response.status(Response.Status.OK);
+        try {
+            GetAllCompaniesCommand command = CommandsFactory.createAddCompanyCommand();
+
+
+
+            return rb.build() ;
+        }
+
+        catch (Exception e){
+            return Response.status(500).entity(e.getMessage()).build();
+        }
+    }*/
+
+
+//------------------------------------------------------
 
 
 
