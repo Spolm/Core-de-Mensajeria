@@ -101,7 +101,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return companiesStatistic;
     }
@@ -123,7 +123,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return CampaignStatistic;
     }
@@ -145,7 +145,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return ChannelStatistic;
     }
@@ -167,7 +167,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return integratorStatistic;
     }
@@ -183,7 +183,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
     }
 
@@ -200,7 +200,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return years;
     }
@@ -218,7 +218,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return months;
     }
@@ -236,7 +236,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return daysofweek;
     }
@@ -254,7 +254,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return daysofmonth;
     }
@@ -272,7 +272,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return daysofyear;
     }
@@ -290,7 +290,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return weeksofyear;
     }
@@ -308,7 +308,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return quartersofyear;
     }
@@ -326,7 +326,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return hours;
     }
@@ -344,7 +344,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return minutes;
     }
@@ -362,7 +362,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            SqlEstrella.bdClose(_conn);
+            bdClose();
         }
         return seconds;
     }

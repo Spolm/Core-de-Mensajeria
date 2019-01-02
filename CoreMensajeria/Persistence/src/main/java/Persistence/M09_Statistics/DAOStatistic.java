@@ -83,4 +83,6 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
         }
         return integrators;
     }
+
+
 }

@@ -160,7 +160,6 @@ public abstract class DAOEstrella implements IDAOEstrella{
     /**
      * metodo estatico para cerrar
      * la conexion a la base de datos del DAO
-     * @param _conn
      */
 
     public void bdClose() {
