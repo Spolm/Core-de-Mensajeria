@@ -3,6 +3,8 @@ package Logic.M02_Company;
 import Entities.Entity;
 import Logic.Command;
 
+import java.util.ArrayList;
+
 public class UpdateCompanyCommand extends Command {
     private static Entity _co;
 
@@ -27,4 +29,5 @@ public class UpdateCompanyCommand extends Command {
     public Entity Return() {
         return null;
     }
+
 }

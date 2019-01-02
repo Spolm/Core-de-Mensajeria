@@ -5,6 +5,8 @@ import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;
 
+import java.util.ArrayList;
+
 public class AddCompanyCommand extends Command {
 
     private static  Entity _co;
@@ -39,4 +41,5 @@ public class AddCompanyCommand extends Command {
     public Entity Return() {
         return null;
     }
+
 }

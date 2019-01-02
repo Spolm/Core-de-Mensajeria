@@ -6,6 +6,8 @@ import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M03_Campaign.DAOCampaign;
 
+import java.util.ArrayList;
+
 public class GetCampaignCommand extends Command {
     private static Entity _ca;
 
@@ -26,7 +28,7 @@ public class GetCampaignCommand extends Command {
     public void execute() throws Exception {
         try {
             DAOCampaign _dao = DAOFactory.instanciateDaoCampaign();
-            _dao.campaignById( _ca );
+            _ca = _dao.campaignById( _ca );
 
         }catch( Exception exc ) {
 
@@ -35,6 +37,7 @@ public class GetCampaignCommand extends Command {
 
     @Override
     public Entity Return() {
-        return null;
+        return _ca;
     }
+
 }

@@ -6,6 +6,8 @@ import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;
 import Persistence.M02_Company.IDAOCompany;
 
+import java.util.ArrayList;
+
 public class ChangeStatusCommand extends Command {
 
     private static Entity _co;
@@ -33,4 +35,6 @@ public class ChangeStatusCommand extends Command {
     public Entity Return() {
         return null;
     }
+
+
 }

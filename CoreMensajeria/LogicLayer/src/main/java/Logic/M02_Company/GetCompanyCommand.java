@@ -6,6 +6,8 @@ import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;
 import Persistence.M02_Company.IDAOCompany;
 
+import java.util.ArrayList;
+
 public class GetCompanyCommand extends Command {
     private static  Entity _co;
 
@@ -25,7 +27,7 @@ public class GetCompanyCommand extends Command {
     public void execute() throws Exception {
         try {
             IDAOCompany _dao = DAOFactory.instanciateDaoCompany();
-            _dao.companyById( _co );
+            _co = _dao.companyById( _co );
 
 
         }catch(Exception exc) {
@@ -37,6 +39,7 @@ public class GetCompanyCommand extends Command {
 
     @Override
     public Entity Return() {
-        return null;
+        return _co;
     }
+
 }

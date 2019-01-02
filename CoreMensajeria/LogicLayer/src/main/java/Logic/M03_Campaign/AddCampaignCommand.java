@@ -5,6 +5,8 @@ import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M03_Campaign.DAOCampaign;
 
+import java.util.ArrayList;
+
 public class AddCampaignCommand extends Command {
 
     private static  Entity _ca;
@@ -42,4 +44,6 @@ public class AddCampaignCommand extends Command {
     public Entity Return() {
         return null;
     }
+
+
 }
