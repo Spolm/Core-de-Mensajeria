@@ -5,7 +5,7 @@ import DTO.DTO;
 /**
  * Clase encargada de definir los DTO que seran utilizados por Company
  */
-public class DTOFullCompany {
+public class DTOFullCompany extends DTO {
 
     private int _idCompany;
     private String _name;

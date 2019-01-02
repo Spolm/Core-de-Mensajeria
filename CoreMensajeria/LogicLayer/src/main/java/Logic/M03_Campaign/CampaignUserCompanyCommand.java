@@ -11,12 +11,20 @@ public class CampaignUserCompanyCommand extends Command {
     private static Entity _comp;
 
 
+    /**
+     * Constructor de la clase.
+     * @param _user instancia de la Campana que se desea conocer
+     * @param _company instancia de la Campana que se desea conocer
+     */
     public  CampaignUserCompanyCommand ( Entity _user, Entity _company ){
         this._u = _user;
         this._comp = _company;
     }
 
 
+    /**
+     * Metodo que ejecuta la Accion del comando
+     */
     @Override
     public void execute() throws Exception {
         try {
