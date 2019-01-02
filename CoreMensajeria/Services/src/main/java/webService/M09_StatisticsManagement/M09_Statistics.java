@@ -236,8 +236,8 @@ public class M09_Statistics extends Application {
             SqlEstrella.bdClose(connStar);
         }
     }
-
     public Response getOverallCountFor(FilterType filterType) {
+        /*
         String query = queryForOverallCount(filterType);
         Statistics Statistic = new Statistics();
         try {
@@ -254,6 +254,8 @@ public class M09_Statistics extends Application {
             SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(Statistic)).build();
+        */
+        return null;
     }
 
     public String queryForOverallCount(FilterType filterType) {
