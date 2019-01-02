@@ -17,8 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOStatistic extends DAO implements IDAO_Statistic {
-    private Connection conn = getBdConnect();
 
+    private Connection conn;
+
+    public DAOStatistic(){
+        this.conn = getBdConnect();
+    }
     @Override
     public void create(Entity e) {
 
@@ -52,7 +56,7 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
             throw new CompanyDoesntExistsException(e);
         } finally {
             //checkear conexiones
-            closeConnection();
+            close();
         }
         return companies;
     }
@@ -79,10 +83,21 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
             throw new ChannelNotFoundException(e);
         } finally {
             //checkear conexiones
-            closeConnection();
+            close();
         }
         return integrators;
     }
 
+    private void close()
+    {
+        try
+        {
+            conn.close();
+        }
+        catch ( SQLException e )
+        {
+//            logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
+        }
+    }
 
 }

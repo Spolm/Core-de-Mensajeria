@@ -19,8 +19,6 @@ import java.util.List;
 
 public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticEstrella {
 
-    private Connection connDB = Sql.getConInstance();
-
 
     @Override
     public void create(Entity e) {

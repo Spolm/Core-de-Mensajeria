@@ -6,16 +6,10 @@ import java.sql.*;
 
 public abstract class DAOEstrella implements IDAOEstrella{
 
-    private static Connection conInstance;
     public Connection _conn = bdConnect();
     private Statement _st;
     private ResultSet _rs;
 
-    public static Connection getConInstance(){
-
-        conInstance = bdConnect();
-        return conInstance;
-    }
 
     /**
      * Metodo que realiza la conexion con la base de datos

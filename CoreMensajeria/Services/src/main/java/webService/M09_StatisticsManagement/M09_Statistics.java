@@ -33,8 +33,8 @@ import java.util.List;
 public class M09_Statistics extends Application {
 
     Gson gson = new Gson();
-    private Connection connStar = SqlEstrella.getConInstance();
-    private Connection conn = Sql.getConInstance();
+    //private Connection connStar = SqlEstrella.getConInstance();
+    //private Connection conn = Sql.getConInstance();
     private GenericMapper mapper;
     private DTO dto;
 
@@ -233,8 +233,9 @@ public class M09_Statistics extends Application {
             return Response.serverError().build();
         }
     }
+    /*
     public Response getOverallCountFor(FilterType filterType) {
-        /*
+
         String query = queryForOverallCount(filterType);
         Statistics Statistic = new Statistics();
         try {
@@ -251,8 +252,7 @@ public class M09_Statistics extends Application {
             SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(Statistic)).build();
-        */
-        return null;
+
     }
 
     public String queryForOverallCount(FilterType filterType) {
@@ -337,7 +337,7 @@ public class M09_Statistics extends Application {
         }
         return Response.ok(gson.toJson(integrators)).build();
     }
-
+*/
     //Endpoint que Devuelve Todos los Años donde ha habido envío de mensajes
     @GET
     @Path("/yearsCount")
@@ -497,6 +497,7 @@ public class M09_Statistics extends Application {
                                   @QueryParam("secondId") List<Integer> secondofminuteIds,
                                   @QueryParam("quarterId") List<Integer> quarterIds)
     {
+        Connection connStar = SqlEstrella.getConInstance();
         String companyin = setParametersforQuery(companyIds,"and me.sen_com_id in ");
         String campaignin = setParametersforQuery(campaignIds,"and me.sen_cam_id in ");
         String channelin = setParametersforQuery(channelIds,"and me.sen_cha_id in ");
