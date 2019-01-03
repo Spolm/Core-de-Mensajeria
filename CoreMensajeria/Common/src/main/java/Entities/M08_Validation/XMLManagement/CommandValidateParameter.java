@@ -4,7 +4,8 @@ public abstract class CommandValidateParameter extends Command{
     private String _response;
     private boolean _valid;
 
-    public abstract void execute();
+    @Override
+    public abstract void execute() throws Exception;
 
     public String get_response() {
         return _response;
