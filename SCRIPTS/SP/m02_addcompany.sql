@@ -24,7 +24,7 @@ $BODY$
     COST 100;
 ALTER FUNCTION m02_addcompany ( _name character varying, 
 										   _description character varying,
-										   _status boolean, 
+										   true, 
 										   _link character varying,
 										    _userId int
 										  )
