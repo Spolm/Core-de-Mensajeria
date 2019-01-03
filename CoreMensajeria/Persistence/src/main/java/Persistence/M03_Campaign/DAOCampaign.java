@@ -42,7 +42,7 @@ public class DAOCampaign implements IDAOCampaign {
             e1.printStackTrace();
         }
     }
-    @Override
+
     public Campaign getCampaign( ResultSet _result ) throws SQLException {
 
         Campaign _campaign = EntityFactory.CreateCampaignWithOut_Company(

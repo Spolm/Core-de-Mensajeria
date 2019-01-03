@@ -1,8 +1,18 @@
 package webService.M03_CampaignManagement;
 
+import DTO.M03_DTO.DTOFullCampaign;
+import Entities.Entity;
 import Entities.M03_Campaign.Campaign;
 import Entities.M03_Campaign.CampaignDAO;
 import Exceptions.CampaignDoesntExistsException;
+import Factory.DTOFactory;
+import Factory.MapperFactory;
+import Logic.Command;
+import Logic.CommandsFactory;
+import Mappers.CampaignMapper.MapperFullCampaign;
+import Mappers.CompanyMapper.MapperFullCompany;
+import Persistence.DAO;
+import Persistence.M03_Campaign.DAOCampaign;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -63,6 +73,8 @@ public class M03_Campaigns {
      * @param id recibe el id de la campaña que se desea ver con detalle
      * @return Response Builder con los detalles de la campaña
      */
+
+  /*
     @GET
     @Path("/CampaignDetails")
     @Produces("application/json")
@@ -81,7 +93,7 @@ public class M03_Campaigns {
             e.printStackTrace();
         }
         return rb.build();
-    }
+    }    */
     //endregion
 
 
@@ -240,4 +252,34 @@ public class M03_Campaigns {
 
 
     //endregion
+
+  ////////////////////////////////PATRONES///////////////////
+
+
+    @GET
+    @Path("/CampaignDetails")
+    @Produces("application/json")
+    public Response getCampaignDetails( DTOFullCampaign _dto ) {
+        Response.ResponseBuilder _rb = Response.status(Response.Status.ACCEPTED);
+        try {
+            MapperFullCampaign _map =  MapperFactory.CreateMapperFullCampaign();
+            Entity _ca = _map.CreateEntity( _dto );
+            Command _cmd = CommandsFactory.createGetCampaignCommand( _ca );
+            _cmd.execute( );
+           DTOFullCampaign  _campaing = _map.CreateDto( _cmd.Return() );
+            _rb.entity( gson.toJson( _campaing ) );
+        }
+        catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return _rb.build();
+    }
+
+
+
+
+
 }

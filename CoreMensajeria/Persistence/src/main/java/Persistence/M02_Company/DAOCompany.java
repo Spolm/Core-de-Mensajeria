@@ -21,7 +21,7 @@ public class DAOCompany  implements IDAOCompany {
 
     final String UPDATE_COMPANY_STATUS = "{CALL m02_changecompanystatus(?,?)}";
     final String SELECT_COMPANY_BY_ID = "{CALL  m02_getcompanybyid(?)}";
-    final String SELECT_COMPANY_BY_NAME = "";
+    final String SELECT_COMPANY_BY_RESPONSIBLE ="{CALL m02_getcompaniesbyresponsible(?)}";
     final String SELECT_COMPANIES_BY_USER = "{Call m02_getcompanies(?)}";
     final String CREATE_COMPANY=  "{Call m02_addcompany(?,?,?,?,?)}";
     final String SELECT_ALL_COMPANIES = "{Call m02_getcompaniesall}";
@@ -55,24 +55,25 @@ public class DAOCompany  implements IDAOCompany {
     }
 
     @Override
-    public Entity companiesByName(Entity e) {
-        Company _company = (Company) e;
+    public ArrayList<Entity> companiesByResponsible(Entity e) {
+        ArrayList<Entity> _coList= new ArrayList<>();
+        User _user = ( User ) e;
 
         try {
-            PreparedStatement  preparedStatement = _conn.prepareCall(SELECT_COMPANY_BY_NAME);
-            preparedStatement.setString( 1, _company.get_name() );
+            PreparedStatement  preparedStatement = _conn.prepareCall(SELECT_COMPANY_BY_RESPONSIBLE);
+            preparedStatement.setInt( 1, _user.get_idUser() );
             ResultSet _result = preparedStatement.executeQuery();
             while ( _result.next() ) {
-                _company = getCompany( _result );
+                _coList.add( getCompany( _result ) );
             }
         }
         catch (SQLException exc) {
             exc.printStackTrace();
         }
-        return _company;
-
+        return  _coList;
     }
-    @Override
+
+
     public Company getCompany( ResultSet _result ) throws SQLException {
 
         Company _company = EntityFactory.CreateFullCompany(

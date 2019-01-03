@@ -15,7 +15,7 @@ public interface IDAOCompany extends IDAO {
 
     Boolean changeStatus ( Entity e);
 
-    Entity companiesByName( Entity e );
+    ArrayList<Entity> companiesByResponsible( Entity e );
 
     Entity companyById( Entity e);
 
@@ -25,7 +25,7 @@ public interface IDAOCompany extends IDAO {
 
     ArrayList<Entity> allCompanies();
 
-    Company getCompany(ResultSet _result) throws SQLException;
+
 }
 
 

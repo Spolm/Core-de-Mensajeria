@@ -3,6 +3,8 @@ package Logic;
 import Entities.Entity;
 import Logic.M01_Login.GetUser;
 import Logic.M02_Company.*;
+import Logic.M03_Campaign.GetCampaignCommand;
+import Logic.M03_Campaign.AddCampaignCommand;
 
 public class CommandsFactory {
 
@@ -19,6 +21,10 @@ public class CommandsFactory {
     public static GetCompanyCommand createGetCompanyCommand(Entity _co){return new GetCompanyCommand(_co);}
 
     public static UpdateCompanyCommand createUpdateCompanyCommand(Entity _co) {return new UpdateCompanyCommand(_co);}
+
+
+    public static GetCampaignCommand createGetCampaignCommand(Entity _ca ){ return new GetCampaignCommand( _ca ); }
+
 
 
 }
