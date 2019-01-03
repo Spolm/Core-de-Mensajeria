@@ -20,7 +20,7 @@ $BODY$
 BEGIN
 INSERT INTO public.campaign(
      cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id)
-	VALUES (_name, _description, _status, _startDate, _endDate, _companyId);
+	VALUES (_name, _description, true, _startDate, _endDate, _companyId);
 END;
 $BODY$
     LANGUAGE plpgsql VOLATILE
