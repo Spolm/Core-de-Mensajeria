@@ -365,5 +365,125 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         return seconds;
     }
 
+    public Entity getMessagesParam(String companyIds, String campaignIds, String channelIds, String integratorIds, String yearIds,
+                                   String monthIds, String dayofweekIds, String weekofyearIds, String dayofmonthIds, String dayofyearIds,
+                                   String hourIds, String minuteIds, String secondIds, String quarterIds ,String param1, String param2,
+                                   String param3, String param4, String param5, String param6){
+        Entity statistic = EntityFactory.createStatistic();
+        try {
+            String select = "SELECT icount, paramName FROM m09_get_MessageParameter('"+ companyIds + "','" + campaignIds + "','" +
+                    channelIds + "','" + integratorIds + "','" + yearIds + "','" + monthIds + "','" + dayofweekIds + "','" +
+                    weekofyearIds + "','" + dayofmonthIds + "','" + dayofyearIds + "','" + hourIds + "','" + minuteIds + "','" +
+                    secondIds + "','" + quarterIds + "','" + param1 + "','" + param2 + "','" + param3 + "','" + param4 + "','" +
+                    param5 + "','" + param6 + "')";
+            System.out.println(select);
+            statistic = getMessages((Statistics) statistic, select);
+        }
+        catch ( SQLException e ) {
+            e.printStackTrace();
+            // throw new SQLException();
+        }
+        return statistic;
+    }
 
+    public Entity getMessagesParamCompany(String companyIds, String campaignIds, String channelIds, String integratorIds, String yearIds,
+                                   String monthIds, String dayofweekIds, String weekofyearIds, String dayofmonthIds, String dayofyearIds,
+                                   String hourIds, String minuteIds, String secondIds, String quarterIds ){
+
+        Entity statistic = EntityFactory.createStatistic();
+        try {
+            String select = "SELECT icount, paramName FROM m09_get_MessageParameter('"+ companyIds + "','" + campaignIds + "','" +
+                    channelIds + "','" + integratorIds + "','" + yearIds + "','" + monthIds + "','" + dayofweekIds + "','" +
+                    weekofyearIds + "','" + dayofmonthIds + "','" + dayofyearIds + "','" + hourIds + "','" + minuteIds + "','" +
+                    secondIds + "','" + quarterIds + "','" + "me.sen_com_id" + "','" + "co.com_name" + "','" + ", public.dim_company_campaign co" + "','" + "co.com_id" + "','" +
+                    ", public.dim_date da" + "','" + " and da.dat_id = me.sen_dat_id " + "')";
+            System.out.println(select);
+            statistic = getMessages((Statistics) statistic, select);
+        }
+        catch ( SQLException e ) {
+            e.printStackTrace();
+            // throw new SQLException();
+        }
+        return statistic;
+    }
+
+    public Entity getMessagesParamCampaign(String companyIds, String campaignIds, String channelIds, String integratorIds, String yearIds,
+                                          String monthIds, String dayofweekIds, String weekofyearIds, String dayofmonthIds, String dayofyearIds,
+                                          String hourIds, String minuteIds, String secondIds, String quarterIds ){
+        Entity statistic = EntityFactory.createStatistic();
+        try {
+            String select = "SELECT icount, paramName FROM m09_get_MessageParameter('"+ companyIds + "','" + campaignIds + "','" +
+                    channelIds + "','" + integratorIds + "','" + yearIds + "','" + monthIds + "','" + dayofweekIds + "','" +
+                    weekofyearIds + "','" + dayofmonthIds + "','" + dayofyearIds + "','" + hourIds + "','" + minuteIds + "','" +
+                    secondIds + "','" + quarterIds + "','" + "me.sen_cam_id" + "','" + "ca.cam_name" + "','" + ", public.dim_company_campaign ca" + "','" + "ca.cam_id" + "','" +
+                    ", public.dim_date da" + "','" + " and da.dat_id = me.sen_dat_id " + "')";
+            System.out.println(select);
+            statistic = getMessages((Statistics) statistic, select);
+        }
+        catch ( SQLException e ) {
+            e.printStackTrace();
+            // throw new SQLException();
+        }
+        return statistic;
+
+    }
+
+    public Entity getMessagesParamChannel(String companyIds, String campaignIds, String channelIds, String integratorIds, String yearIds,
+                                           String monthIds, String dayofweekIds, String weekofyearIds, String dayofmonthIds, String dayofyearIds,
+                                           String hourIds, String minuteIds, String secondIds, String quarterIds ){
+        Entity statistic = EntityFactory.createStatistic();
+        try {
+            String select = "SELECT icount, paramName FROM m09_get_MessageParameter('"+ companyIds + "','" + campaignIds + "','" +
+                    channelIds + "','" + integratorIds + "','" + yearIds + "','" + monthIds + "','" + dayofweekIds + "','" +
+                    weekofyearIds + "','" + dayofmonthIds + "','" + dayofyearIds + "','" + hourIds + "','" + minuteIds + "','" +
+                    secondIds + "','" + quarterIds + "','" + "me.sen_cha_id" + "','" + "ch.cha_name" + "','" + ", public.dim_channel ch" + "','" + "ch.cha_id" + "','" +
+                    ", public.dim_date da" + "','" + " and da.dat_id = me.sen_dat_id " + "')";
+            System.out.println(select);
+            statistic = getMessages((Statistics) statistic, select);
+        }
+        catch ( SQLException e ) {
+            e.printStackTrace();
+            // throw new SQLException();
+        }
+        return statistic;
+    }
+
+    public Entity getMessagesParamIntegrator(String companyIds, String campaignIds, String channelIds, String integratorIds, String yearIds,
+                                          String monthIds, String dayofweekIds, String weekofyearIds, String dayofmonthIds, String dayofyearIds,
+                                          String hourIds, String minuteIds, String secondIds, String quarterIds ) {
+        Entity statistic = EntityFactory.createStatistic();
+        try {
+
+            String select = "SELECT icount, paramName FROM m09_get_MessageParameter('"+ companyIds + "','" + campaignIds + "','" +
+                    channelIds + "','" + integratorIds + "','" + yearIds + "','" + monthIds + "','" + dayofweekIds + "','" +
+                    weekofyearIds + "','" + dayofmonthIds + "','" + dayofyearIds + "','" + hourIds + "','" + minuteIds + "','" +
+                    secondIds + "','" + quarterIds + "','" + "me.sen_int_id" + "','" + "int.int_name" + "','" + ", public.dim_integrator int" + "','" + "int.int_id" + "','" +
+                    ", public.dim_date da" + "','" + " and da.dat_id = me.sen_dat_id " + "')";
+            System.out.println(select);
+            statistic = getMessages((Statistics) statistic, select);
+        }
+        catch ( SQLException e ) {
+            e.printStackTrace();
+            // throw new SQLException();
+        }
+        return statistic;
+    }
+
+    private Entity getMessages(Statistics statistic, String select) throws SQLException {
+        ArrayList<String> listName = new ArrayList<>();
+        ArrayList<Integer> listNum = new ArrayList<>();
+        int num;
+        String name;
+        Statement st = _conn.createStatement();
+        ResultSet result = st.executeQuery( select );
+        while ( result.next() ) {
+            num = result.getInt("icount");
+            name = result.getString("paramName");
+            listNum.add( num );
+            listName.add( name );
+            statistic.x = listName;
+            statistic.y = listNum;
+        }
+        return statistic;
+    }
 }

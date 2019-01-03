@@ -1,17 +1,13 @@
 package webService.M09_StatisticsManagement;
 
 import DTO.DTO;
-import Entities.M02_Company.Company;
-import Entities.M03_Campaign.Campaign;
-import Entities.M04_Integrator.IntegratorFactory;
-import Entities.M04_Integrator.Integrator;
-import Entities.M09_Statistics.FilterType;
 import Entities.M09_Statistics.SqlEstrella;
 import Entities.M09_Statistics.Statistics;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
+import Exceptions.StatisticParametersNotFoundException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M09_Statistics.*;
@@ -177,7 +173,7 @@ public class M09_Statistics extends Application {
     public Response getCompaniesCount() {
         //return getOverallCountFor(FilterType.company);
         Command command = CommandsFactory.getCompanyStatisticCommand();
-        return getStadistic(command);
+        return getStadisticCount(command);
     }
 
     @GET
@@ -186,7 +182,7 @@ public class M09_Statistics extends Application {
     public Response getCampaignsCount() {
         //return getOverallCountFor(FilterType.campaign);
         Command command = CommandsFactory.getCampaignStatisticCommand();
-        return getStadistic(command);
+        return getStadisticCount(command);
     }
 
     @GET
@@ -195,7 +191,7 @@ public class M09_Statistics extends Application {
     public Response getChannelsCount() {
         //return getOverallCountFor(FilterType.channel);
         Command command = CommandsFactory.getChannelStatisticCommand();
-        return getStadistic(command);
+        return getStadisticCount(command);
     }
 
     @GET
@@ -204,10 +200,10 @@ public class M09_Statistics extends Application {
     public Response getIntegratosCount() {
         //return getOverallCountFor(FilterType.integrator);
         Command command = CommandsFactory.getIntegratorStatisticCommand();
-        return getStadistic(command);
+        return getStadisticCount(command);
     }
 
-    private Response getStadistic(Command command) {
+    private Response getStadisticCount(Command command) {
         try {
             command.execute();
             mapper = MapperFactory.createStatisticMapper();
@@ -497,6 +493,7 @@ public class M09_Statistics extends Application {
                                   @QueryParam("secondId") List<Integer> secondofminuteIds,
                                   @QueryParam("quarterId") List<Integer> quarterIds)
     {
+        /*
         Connection connStar = SqlEstrella.getConInstance();
         String companyin = setParametersforQuery(companyIds,"and me.sen_com_id in ");
         String campaignin = setParametersforQuery(campaignIds,"and me.sen_cam_id in ");
@@ -553,10 +550,29 @@ public class M09_Statistics extends Application {
             Sql.bdClose(connStar);
         }
         return Response.ok(gson.toJson(stats)).build();
+        */
+
+        GetStatisticCommand command = CommandsFactory.getStatisticCommand(companyIds, campaignIds, channelIds,
+                                                                            integratorIds, yearIds, monthIds,
+                                                                            dayofweekIds, weekofyearIds, dayofmonthIds,
+                                                                            dayofyearIds, hourofdayIds, minuteofhourIds,
+                                                                            secondofminuteIds, quarterIds);
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(
+                    command.returnStats()
+            )).build();
+        } catch (StatisticParametersNotFoundException e) {
+            return Response.status(400).entity("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }").build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
     //Método que devuelve la consulta de mensajes enviados, agrupada por los filtros enviados
+    /*
     public Statistics getMessagesParam(String companyIds, String campaignIds, String channelIds, String integratorIds, String yearIds,
                                        String monthIds, String dayofweekIds, String weekofyearIds, String dayofmonthIds, String dayofyearIds,
                                        String hourIds, String minuteIds, String secondIds, String quarterIds ,String param1, String param2,
@@ -589,7 +605,7 @@ public class M09_Statistics extends Application {
         }
         return gr;
     }
-
+*/
     //Método que arma las condiciones para la consulta de mensajes enviados
     public String setParametersforQuery(List<Integer> ids, String params){
         if (ids.isEmpty()) {
