@@ -173,14 +173,34 @@ public class CampaignDAO {
     public Campaign createCampaign(Campaign ca) throws  CampaignDoesntExistsException {
         try {
 
-            PreparedStatement preparedStatement = conn.prepareCall("{Call m02_addcampaign}");
-            preparedStatement.setInt(1, ca.get_idCampaign());
-            preparedStatement.setString(2, ca.get_nameCampaign());
-            preparedStatement.setString(3, ca.get_descCampaign());
-            preparedStatement.setBoolean(4, ca.get_statusCampaign());
-            preparedStatement.setDate(5, (Date) ca.get_startCampaign());
-            preparedStatement.setDate(6, (Date) ca.get_endCampaign());
+            PreparedStatement preparedStatement = conn.prepareCall("{Call m03_addcampaign}");
+            preparedStatement.setString(1, ca.get_nameCampaign());
+            preparedStatement.setString(2, ca.get_descCampaign());
+            preparedStatement.setBoolean(3, ca.get_statusCampaign());
+            preparedStatement.setDate(4, (Date) ca.get_startCampaign());
+            preparedStatement.setDate(5, (Date) ca.get_endCampaign());
+            preparedStatement.setInt(6, ca.get_idCompany());
+            preparedStatement.execute();
+        }catch (SQLException e){
+            throw new CampaignDoesntExistsException(e);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return ca;
+    }
 
+
+    public Campaign updateCompany (int id,Campaign ca) throws CampaignDoesntExistsException {
+        try {
+
+            PreparedStatement preparedStatement = conn.prepareCall("{Call m03_updatecampaign}");
+            preparedStatement.setString(1, ca.get_nameCampaign());
+            preparedStatement.setString(2, ca.get_descCampaign());
+            preparedStatement.setBoolean(3, ca.get_statusCampaign());
+            preparedStatement.setDate(4, (Date) ca.get_startCampaign());
+            preparedStatement.setDate(5, (Date) ca.get_endCampaign());
+            preparedStatement.setInt(6, ca.get_idCompany());
+            preparedStatement.setInt(7, ca.get_id());
             preparedStatement.execute();
         }catch (SQLException e){
             throw new CampaignDoesntExistsException(e);

@@ -13,11 +13,17 @@ public class Campaign extends Entity {
     private boolean _statusCampaign;
     private Date _startCampaign;
     private Date _endCampaign;
+    private int _idCompany;
     private Company _company;
-                  private boolean _habilitado; // Anadido por la estructura del mapper
+    private boolean _habilitado; // Anadido por la estructura del mapper
 
     public int get_idCampaign() {
         return _idCampaign;
+    }
+
+
+    public int get_idCompany() {
+        return _idCompany;
     }
 
     public void set_idCampaign(int idCampaign) {
@@ -130,6 +136,6 @@ public class Campaign extends Entity {
         _statusCampaign = statusCampaign;
         _startCampaign = startCampaign;
         _endCampaign = endCampaign;
-        _company = company;
+        _idCompany = _idCompany;
     }
 }
