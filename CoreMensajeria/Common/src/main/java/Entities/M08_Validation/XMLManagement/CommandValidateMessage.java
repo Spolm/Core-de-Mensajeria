@@ -10,17 +10,28 @@ import Exceptions.TemplateDoesntExistsException;
 
 import java.util.logging.Logger;
 
+/**
+ * Comando para validar mensajes
+ */
 public class CommandValidateMessage extends CommandValidateParameter{
     private int _template;
     private String _message;
     private String _channel;
 
+    /**
+     * @param _template recibe el id de una plantilla
+     * @param _message recibe el mensaje que se va a enviar
+     * @param _channel recibe el tipo de canal
+     */
     public CommandValidateMessage(int _template, String _message, String _channel) {
         this._template = _template;
         this._message = _message;
         this._channel = _channel;
     }
 
+    /**
+     * @throws Exception excepciones personalizadas
+     */
     public void execute () throws Exception{
         Logger logger = Logger.getLogger(CommandValidateParameter.class.getName());
         TemplateHandler template = new TemplateHandler();

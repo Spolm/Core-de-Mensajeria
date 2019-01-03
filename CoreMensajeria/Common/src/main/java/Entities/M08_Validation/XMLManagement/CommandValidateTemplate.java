@@ -6,13 +6,22 @@ import Exceptions.TemplateDoesntExistsException;
 
 import java.util.logging.Logger;
 
+/**
+ * Comando para validar plantillas
+ */
 public class CommandValidateTemplate extends CommandValidateParameter {
     int _id;
 
+    /**
+     * @param _id recibe el id de una plantilla
+     */
     public CommandValidateTemplate(int _id) {
         this._id = _id;
     }
 
+    /**
+     * @throws Exception excepciones personalizadas
+     */
     public void execute() throws Exception{
         Logger logger = Logger.getLogger(CommandValidateParameter.class.getName());
         TemplateHandler template = new TemplateHandler();
