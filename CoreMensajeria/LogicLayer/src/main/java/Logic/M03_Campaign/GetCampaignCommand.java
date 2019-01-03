@@ -40,4 +40,6 @@ public class GetCampaignCommand extends Command {
         return _ca;
     }
 
+    //@Override
+    public ArrayList<Entity> ReturnList() { return null ;}
 }

@@ -85,6 +85,7 @@ public class M02_Companies {
     }
 
 
+    //Falta patronear este Metodo y Poner su DAO
     @GET
     @Path("/GetCompaniesByResponsible")
     @Produces("application/json")
@@ -246,16 +247,14 @@ public class M02_Companies {
 
 
 
-    
-
-    @GET
-    @Path("/GetAllPP")
-    @Produces("application/json")
-
     /**
      * Metodo Response que devuelve todas las compañias registradas en el sistema
      * @return Response con status ok al encontrar la informacion solicitada
      */
+
+    @GET
+    @Path("/GetAllPP")
+    @Produces("application/json")
 
     public Response getAllCompaniesPP() {
 
@@ -266,8 +265,8 @@ public class M02_Companies {
 
             MapperFullCompany _mapper = MapperFactory.CreateMapperFullCompany();
 
-            List<Entity> _comp = _command.returnList();
-            List<DTOFullCompany> _dtoCo = _mapper.CreateDtoList( _comp );
+            Entity _comp = _command.Return();
+            DTOFullCompany _dtoCo = _mapper.CreateDto( _comp );
 
              _rb.entity( gson.toJson( _dtoCo ) ) ;
              return _rb.build();
@@ -303,6 +302,66 @@ public class M02_Companies {
         catch (Exception e){
             return Response.status( 500 ).entity( e.getMessage() ).build();
         }
+
+    }
+
+    @GET
+    @Path("/GetCompaniesPP")
+    @Produces("application/json")
+
+    /**
+     * Metodo que recibe el id de un usuario y devuelve las compañias en las que es administrador
+     * @param id el id del usuario
+     * @return Response con status ok al encontrar la informacion solicitada
+     */
+    public Response getCompaniesByUserPP( DTOFullCompany _dto ){
+
+        Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
+
+        try {
+            MapperFullCompany _mapper = MapperFactory.CreateMapperFullCompany();
+            Entity _comp = _mapper.CreateEntity( _dto );
+            Command _command = CommandsFactory.createGetCompanyCommand( _comp );
+            _command.execute();
+            DTOFullCompany _dtoCo = _mapper.CreateDto( _command.Return() ) ;
+
+            _rb.entity( gson.toJson( _dtoCo ) ) ;
+            return _rb.build();
+
+        }
+        catch (Exception e){
+
+
+            return Response.status( 500 ).entity( e.getMessage() ).build();
+        }
+
+    }
+
+
+
+
+    @PUT
+    @Path("/Edit/CompanyPP/{companyId}")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response editCompanyPP( DTOFullCompany _dto ){
+
+        Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
+
+        try {
+            MapperFullCompany _mapper = MapperFactory.CreateMapperFullCompany();
+            Entity _comp = _mapper.CreateEntity( _dto );
+            Command _command = CommandsFactory.createUpdateCompanyCommand( _comp );
+            _command.execute();
+
+            return _rb.build();
+        }
+
+        catch ( Exception e ){
+
+            return Response.status( 500 ).entity( e.getMessage() ).build();
+        }
+
 
     }
 

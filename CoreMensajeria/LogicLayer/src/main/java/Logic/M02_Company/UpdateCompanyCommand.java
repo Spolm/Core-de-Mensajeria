@@ -30,4 +30,6 @@ public class UpdateCompanyCommand extends Command {
         return null;
     }
 
+    //@Override
+    public ArrayList<Entity> ReturnList() { return null ; }
 }

@@ -45,5 +45,7 @@ public class AddCampaignCommand extends Command {
         return null;
     }
 
+    //@Override
+    public ArrayList<Entity> ReturnList() { return null; }
 
 }

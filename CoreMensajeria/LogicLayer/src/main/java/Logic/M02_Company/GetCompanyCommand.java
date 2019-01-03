@@ -42,4 +42,8 @@ public class GetCompanyCommand extends Command {
         return _co;
     }
 
+    //@Override
+    public ArrayList<Entity> ReturnList() { return null ; }
+
+
 }

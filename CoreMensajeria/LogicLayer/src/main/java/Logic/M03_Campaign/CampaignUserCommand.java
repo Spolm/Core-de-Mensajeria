@@ -43,7 +43,6 @@ public class CampaignUserCommand extends Command {
         return null;
     }
 
-    public ArrayList<Entity> returnList() {
-        return _caList;
-    }
+    //@Override
+    public ArrayList<Entity> ReturnList(){ return _caList; }
 }

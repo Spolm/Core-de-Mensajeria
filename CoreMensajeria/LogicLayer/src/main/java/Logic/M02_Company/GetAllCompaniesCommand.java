@@ -34,9 +34,7 @@ public class GetAllCompaniesCommand extends Command {
         return null;
     }
 
-
-    public ArrayList<Entity> returnList() {
-        return _coList;
-    }
+    //@Override
+    public ArrayList<Entity> ReturnList() { return _coList; }
 
 }
