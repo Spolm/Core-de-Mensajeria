@@ -13,7 +13,7 @@ public class CommandValidateTemplate extends CommandValidateParameter {
         this._id = _id;
     }
 
-    public void execute(){
+    public void execute() throws Exception{
         Logger logger = Logger.getLogger(CommandValidateParameter.class.getName());
         TemplateHandler template = new TemplateHandler();
         try{
@@ -24,6 +24,7 @@ public class CommandValidateTemplate extends CommandValidateParameter {
             logger.warning("Plantilla no Existe");
             this.set_valid(false);
             this.set_response("Plantilla no Existe");
+            throw e;
         }
     }
 }
