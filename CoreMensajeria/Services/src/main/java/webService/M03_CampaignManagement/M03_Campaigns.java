@@ -195,7 +195,7 @@ public class M03_Campaigns {
     @Produces("application/json")
     @Consumes("application/json")
     public Response addCampaign(Campaign _campaign){
-        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        Response.ResponseBuilder rb = Response.status(Response.Status.OK);
         CampaignDAO _campaignDAO = new CampaignDAO();
 
         try {
@@ -208,6 +208,26 @@ public class M03_Campaigns {
         }
         return rb.build();
     }
+
+    @PUT
+    @Path("/Edit/Camaign/{campaignId}")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response addCampaign(Campaign _campaign,@PathParam("campaignId") int id){
+        Response.ResponseBuilder rb = Response.status(Response.Status.OK);
+        CampaignDAO _campaignDAO = new CampaignDAO();
+
+        try {
+            _campaignDAO.updateCompany(id,_campaign);
+        } catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
+
 
     //endregion
 
