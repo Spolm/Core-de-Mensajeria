@@ -557,7 +557,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
 
     convertselectedDaysOfWeekIdsIntoHttpParams(params: HttpParams) {
         this.selectedDaysOfWeek.forEach(dayOfWeekId => {
-            params = params.append("dayofweekId", dayOfWeekId.toString());
+            params = params.append("dayofweekId", dayOfWeekId.dayOfWeek_id.toString());
         });
         return params;
     }
