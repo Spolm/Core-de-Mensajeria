@@ -101,6 +101,13 @@ class DAOStatisticEstrellaTest {
 
     @Test
     void getYears() {
+        ArrayList<Integer> years;
+        years = dao.getYears();
+        assertNotNull(years);
+        assertTrue(years.contains(2018));
+        assertTrue(years.contains(2017));
+        assertTrue(years.contains(2016));
+
     }
 
     @Test
