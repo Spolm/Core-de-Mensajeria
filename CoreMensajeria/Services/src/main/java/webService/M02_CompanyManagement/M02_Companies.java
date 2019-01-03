@@ -1,6 +1,9 @@
 package webService.M02_CompanyManagement;
 
 import DTO.M02_DTO.DTOCompanyWithOutIdAndLink;
+import DTO.M02_DTO.DTOCompanyWithOut_Link;
+import DTO.M02_DTO.DTOFullCompany;
+import DTO.M03_DTO.DTOCampaignWithOut_Company;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M02_Company.CompanyDAO;
@@ -8,14 +11,18 @@ import Entities.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
 import Exceptions.ParameterCantBeNullException;
 import Factory.MapperFactory;
+import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M02_Company.AddCompanyCommand;
 import Logic.M02_Company.GetAllCompaniesCommand;
 import Mappers.CompanyMapper.MapperCompanyWithOutIdAndLink;
+import Mappers.CompanyMapper.MapperCompanyWithOut_Link;
+import Mappers.CompanyMapper.MapperFullCompany;
 import com.google.gson.Gson;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase encargada de enviar la informacion al frontend de la aplicacion
@@ -218,21 +225,21 @@ public class M02_Companies {
     @Path("/AddCompanyPP")
     @Produces("application/json")
     @Consumes("application/json")
-    public Response addCompanyPP(DTOCompanyWithOutIdAndLink dto){
+    public Response addCompanyPP( DTOCompanyWithOutIdAndLink _dto ){
 
-        Response.ResponseBuilder rb = Response.status(Response.Status.OK);
+        Response.ResponseBuilder _rb = Response.status(Response.Status.OK );
 
        try {
            MapperCompanyWithOutIdAndLink mapper = MapperFactory.CreateMapperCompanyWithOutIdAndLink( ) ;
-           Entity company = mapper.CreateEntity(dto);
-           AddCompanyCommand command = CommandsFactory.createAddCompanyCommand(company);
-           command.execute();
-           return rb.build() ;
+           Entity _company = mapper.CreateEntity( _dto );
+           AddCompanyCommand _command = CommandsFactory.createAddCompanyCommand( _company );
+           _command.execute();
+           return _rb.build() ;
 
        }
 
-       catch (Exception e){
-           return Response.status(500).entity(e.getMessage()).build();
+       catch ( Exception e ){
+           return Response.status( 500 ).entity( e.getMessage() ).build();
        }
 
     }
@@ -240,31 +247,71 @@ public class M02_Companies {
 
 
     
-/*
+
     @GET
     @Path("/GetAllPP")
     @Produces("application/json")
-*/
+
     /**
      * Metodo Response que devuelve todas las compañias registradas en el sistema
      * @return Response con status ok al encontrar la informacion solicitada
      */
-    /*
+
     public Response getAllCompaniesPP() {
 
-        Response.ResponseBuilder rb = Response.status(Response.Status.OK);
+        Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
         try {
-            GetAllCompaniesCommand command = CommandsFactory.createAddCompanyCommand();
+            GetAllCompaniesCommand _command = CommandsFactory.createGetAllCompaniesCommand();
+            _command.execute();
 
+            MapperFullCompany _mapper = MapperFactory.CreateMapperFullCompany();
 
+            List<Entity> _comp = _command.returnList();
+            List<DTOFullCompany> _dtoCo = _mapper.CreateDtoList( _comp );
 
-            return rb.build() ;
+             _rb.entity( gson.toJson( _dtoCo ) ) ;
+             return _rb.build();
         }
 
+        catch ( Exception e ){
+            return Response.status( 500 ).entity( e.getMessage() ).build();
+        }
+    }
+
+
+    @POST
+    @Path("/updateP/{companyId}")
+    @Consumes("application/json")
+    @Produces("text/plain")
+    public Response changeCompanyStatusPP( DTOCompanyWithOut_Link _dto ){
+
+        Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
+        try {
+            MapperCompanyWithOut_Link _mapper =  MapperFactory.CreateMapperCompanyWithOut_Link();
+            Entity _comp = _mapper.CreateEntity( _dto );
+            Command _command = CommandsFactory.createChangeStatusCommand( _comp );
+            _command.execute();
+
+            //Agregue esto como un recurso desesperadooo
+
+            Company _co = ( Company ) _comp;
+
+            _rb.entity( gson.toJson( _co.get_status() ) ) ;
+            return _rb.build();
+
+        }
         catch (Exception e){
-            return Response.status(500).entity(e.getMessage()).build();
+            return Response.status( 500 ).entity( e.getMessage() ).build();
         }
-    }*/
+
+    }
+
+
+
+
+
+
+
 
 
 //------------------------------------------------------
@@ -343,3 +390,4 @@ public class M02_Companies {
 
 
 }
+

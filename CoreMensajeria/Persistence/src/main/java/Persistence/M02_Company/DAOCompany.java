@@ -34,7 +34,7 @@ public class DAOCompany  implements IDAOCompany {
     }
 
     @Override
-    public void changeStatus(Entity e) {
+    public Boolean changeStatus(Entity e) {
 
         Company _co = ( Company ) e;
         _conn = Sql.getConInstance();
@@ -45,9 +45,12 @@ public class DAOCompany  implements IDAOCompany {
             _preparedStatement.setBoolean( 1, _co.get_status() );
             _preparedStatement.setInt( 2, _co.get_id() );
             _preparedStatement.execute();
+
         } catch ( SQLException e1 ) {
             e1.printStackTrace();
         }
+
+        return _co.get_status();
 
     }
 
