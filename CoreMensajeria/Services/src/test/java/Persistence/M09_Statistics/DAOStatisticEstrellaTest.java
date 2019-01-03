@@ -4,6 +4,7 @@ import Entities.Entity;
 import Entities.EntityFactory;
 import Entities.M05_Channel.Channel;
 import Entities.M05_Channel.ChannelEmail;
+import Entities.M09_Statistics.Statistics;
 import Exceptions.CampaignDoesntExistsException;
 import Persistence.DAOFactory;
 import org.junit.jupiter.api.AfterEach;
@@ -60,18 +61,38 @@ class DAOStatisticEstrellaTest {
 
     @Test
     void getCompanyStatistic() {
+        entity = dao.getCompanyStatistic();
+        assertNotNull(entity);
+        assertNotNull(entity.get_id());
+        assertNotNull(((Statistics)entity).getX());
+        assertNotNull(((Statistics)entity).getY());
     }
 
     @Test
     void getCampaignStatistic() {
+        entity = dao.getCampaignStatistic();
+        assertNotNull(entity);
+        assertNotNull(entity.get_id());
+        assertNotNull(((Statistics)entity).getX());
+        assertNotNull(((Statistics)entity).getY());
     }
 
     @Test
     void getChannelStatistic() {
+        entity = dao.getChannelStatistic();
+        assertNotNull(entity);
+        assertNotNull(entity.get_id());
+        assertNotNull(((Statistics)entity).getX());
+        assertNotNull(((Statistics)entity).getY());
     }
 
     @Test
     void getIntegratorStatistic() {
+        entity = dao.getIntegratorStatistic();
+        assertNotNull(entity);
+        assertNotNull(entity.get_id());
+        assertNotNull(((Statistics)entity).getX());
+        assertNotNull(((Statistics)entity).getY());
     }
 
     @Test
