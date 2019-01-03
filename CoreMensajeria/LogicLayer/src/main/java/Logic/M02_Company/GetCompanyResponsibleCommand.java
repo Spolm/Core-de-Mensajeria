@@ -38,12 +38,7 @@ public class GetCompanyResponsibleCommand extends Command {
     }
 
 
-
-
-
-    public ArrayList<Entity> returnList() {
-            return _coList;
-        }
-
+    //@Override
+    public ArrayList<Entity> ReturnList(){  return _coList; }
     }
 

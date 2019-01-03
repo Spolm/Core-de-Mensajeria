@@ -50,9 +50,8 @@ public class CampaignUserCompanyCommand extends Command {
     }
 
 
-    public ArrayList< Entity > returnList() {
-        return _caList;
-    }
+   //@Override
+    public ArrayList<Entity> ReturnList() { return _caList; }
 
 }
 

@@ -35,5 +35,7 @@ public class ChangeStatusCampaignCommand extends Command {
         return null;
     }
 
+    //@Override
+    public ArrayList<Entity> ReturnList() { return null;}
 
 }

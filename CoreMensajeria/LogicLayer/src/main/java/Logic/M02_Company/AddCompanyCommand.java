@@ -42,4 +42,8 @@ public class AddCompanyCommand extends Command {
         return null;
     }
 
+    //@Override
+    public ArrayList<Entity> ReturnList() { return null; }
+
+
 }
