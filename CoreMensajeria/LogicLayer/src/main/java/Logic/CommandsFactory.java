@@ -13,6 +13,8 @@ public class CommandsFactory {
         return new GetUser(user);
     }
 
+
+    //region M09
     public static GetAllCompaniesByUserCommand getAllCompaniesByUserCommand(Integer userId) {return new GetAllCompaniesByUserCommand(userId); }
     public static GetCampaignsForCompanyCommand getCampaignsForCompanyCommand(List<Integer> companyIds){return new GetCampaignsForCompanyCommand(companyIds);}
     public static GetAllChannelsCommand getAllChannelsCommand() {return new GetAllChannelsCommand();}
@@ -32,6 +34,17 @@ public class CommandsFactory {
     public static GetHoursCommand getHours(){return new GetHoursCommand();}
     public static GetMinutesCommand getMinutes(){return new GetMinutesCommand();}
     public static GetSecondsCommand getSeconds(){return new GetSecondsCommand();}
+    public static GetStatisticCommand getStatisticCommand(List<Integer> companyIds, List<Integer> campaignIds, List<Integer> channelIds,
+                                                          List<Integer> integratorIds, List<Integer> yearIds, List<Integer> monthIds,
+                                                          List<Integer> dayofweekIds, List<Integer> weekofyearIds, List<Integer> dayofmonthIds,
+                                                          List<Integer> dayofyearIds, List<Integer> hourofdayIds, List<Integer> minuteofhourIds,
+                                                          List<Integer> secondofminuteIds, List<Integer> quarterIds){return new GetStatisticCommand(companyIds, campaignIds, channelIds,
+                                                                                                                                                    integratorIds, yearIds, monthIds,
+                                                                                                                                                    dayofweekIds, weekofyearIds, dayofmonthIds,
+                                                                                                                                                    dayofyearIds, hourofdayIds, minuteofhourIds,
+                                                                                                                                                    secondofminuteIds, quarterIds);}
+
+    //endregion
 
     public static AddCompanyCommand createAddCompanyCommand( Entity _co ){ return new AddCompanyCommand( _co ); }
 
