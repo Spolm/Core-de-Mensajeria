@@ -262,12 +262,9 @@ public class M02_Companies {
         try {
             GetAllCompaniesCommand _command = CommandsFactory.createGetAllCompaniesCommand();
             _command.execute();
-
             MapperFullCompany _mapper = MapperFactory.CreateMapperFullCompany();
-
-            Entity _comp = _command.Return();
-            DTOFullCompany _dtoCo = _mapper.CreateDto( _comp );
-
+            ArrayList< Entity > _comp = _command.ReturnList();
+            List< DTOFullCompany >_dtoCo = _mapper.CreateDtoList( _comp );
              _rb.entity( gson.toJson( _dtoCo ) ) ;
              return _rb.build();
         }

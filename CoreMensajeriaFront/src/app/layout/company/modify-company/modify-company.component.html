@@ -8,8 +8,8 @@
             </div>
             <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="opcionSeleccionado">  <!-- (change) = "capturar()" -->
               <option selected value="0">Elija</option>
-              <option *ngFor="let dato of datos">
-                {{dato}}
+              <option *ngFor="let company of companyList">
+                  {{company._name}}
               </option>
             </select>
           </div>
