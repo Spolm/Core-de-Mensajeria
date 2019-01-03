@@ -55,7 +55,7 @@ public class DAOCompany  implements IDAOCompany {
     }
 
     @Override
-    public ArrayList<Entity> companiesByResponsible(Entity e) {
+    public ArrayList<Entity> companiesByResponsible( Entity e ) {
         ArrayList<Entity> _coList= new ArrayList<>();
         User _user = ( User ) e;
 
