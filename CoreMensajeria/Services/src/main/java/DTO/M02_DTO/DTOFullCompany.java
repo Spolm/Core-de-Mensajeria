@@ -12,6 +12,7 @@ public class DTOFullCompany extends DTO {
     private String _desc;
     private boolean _status;
     private String _link;
+    private int _idUser;
 
     public int get_idCompany () {
         return _idCompany;
@@ -53,6 +54,11 @@ public class DTOFullCompany extends DTO {
         _link = link;
     }
 
+    public boolean is_status() { return _status; }
+
+    public int get_userId() { return _idUser; }
+
+    public void set_userId(int uId) { this._idUser = uId; }
 
     /**
      * Constructor Vacio
@@ -69,14 +75,16 @@ public class DTOFullCompany extends DTO {
      * @param desc descripcion de la campaña
      * @param status el estatus de la campaña, puede ser activada o desactivada
      * @param link
+     * @param uId
      */
-    public DTOFullCompany ( int id, String name, String desc, boolean status, String link ) {
+    public DTOFullCompany ( int id, String name, String desc, boolean status, String link, int uId ) {
 
         _idCompany = id;
         _name = name;
         _desc = desc;
         _status = status;
         _link = link;
+        _idUser = uId;
 
     }
 }

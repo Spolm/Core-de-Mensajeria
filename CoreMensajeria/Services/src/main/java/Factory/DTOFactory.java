@@ -53,9 +53,10 @@ public class DTOFactory {
      * @return un objeto del tipo DTOFullCompany
      */
 
-     public static DTOFullCompany CreateDtoFullCompany(int id, String name, String desc, boolean status, String link){
+     public static DTOFullCompany CreateDtoFullCompany( int id, String name, String desc,
+                                                       boolean status, String link, int userId ){
 
-         return new DTOFullCompany(id, name, desc, status, link);
+         return new DTOFullCompany( id, name, desc, status, link, userId );
      }
 
 

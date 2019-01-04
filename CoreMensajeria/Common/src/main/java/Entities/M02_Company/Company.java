@@ -113,13 +113,14 @@ public class Company extends Entity {
      * @param status el estatus de la compania, puede ser activada o desactivada
      * @param link
      */
-    public Company ( int id, String name, String desc, boolean status, String link ) {
+    public Company ( int id, String name, String desc, boolean status, String link, int userId ) {
 
         _idCompany = id;
         _name = name;
         _desc = desc;
         _status = status;
         _link = link;
+        _idUser = userId;
 
     }
 

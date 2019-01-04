@@ -18,6 +18,7 @@ import Logic.M02_Company.GetAllCompaniesCommand;
 import Mappers.CompanyMapper.MapperCompanyWithOutIdAndLink;
 import Mappers.CompanyMapper.MapperCompanyWithOut_Link;
 import Mappers.CompanyMapper.MapperFullCompany;
+import Persistence.M02_Company.DAOCompany;
 import com.google.gson.Gson;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -169,7 +170,7 @@ public class M02_Companies {
 
     //region Agregar/Editar Compañia
 
-    @POST
+  /*  @POST
     @Path("/AddCompany")
     @Produces("application/json")
     @Consumes("application/json")
@@ -194,7 +195,7 @@ public class M02_Companies {
         }return rb.build();
     }
 
-
+*/
     @PUT
     @Path("/Edit/Company/{companyId}")
     @Produces("application/json")
@@ -225,44 +226,43 @@ public class M02_Companies {
 
 //---------- Region con los metodos ya con sus patrones
 
+/* RAFA
+    @POST
+    @Path("/AddCompany")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response addCompany( Company _company ) throws CompanyDoesntExistsException, ParameterCantBeNullException {
+        Response.ResponseBuilder _rb = Response.status(Response.Status.OK);
+        DAOCompany _companyDAO = new DAOCompany();
 
+        try {
+            _companyDAO.create(_company);
+        } catch (Exception e) {
+            _rb = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+        }return _rb.build();
+    }*/
 
     @POST
     @Path("/AddCompanyPP")
     @Produces("application/json")
     @Consumes("application/json")
-    public Response addCompanyPP( DTOFullCompany _dto ){
+    public Response addCompanyPP( DTOCompanyWithOutIdAndLink _dto ){
 
         Response.ResponseBuilder _rb = Response.status(Response.Status.OK );
 
-        Logger logger = Logger.getLogger(M02_Companies.class.getName());
-        logger.info("Objeto compania recibido en AddCompany" + _dto.get_idCompany() + " " + _dto.get_name() + " "+
-                _dto.get_status() + " " + _dto.get_desc() + " " + _dto.get_link() );
-
-
        try {
-           MapperFullCompany mapper = MapperFactory.CreateMapperFullCompany( ) ;
+           MapperCompanyWithOutIdAndLink mapper = MapperFactory.CreateMapperCompanyWithOutIdAndLink( ) ;
            Entity _company = mapper.CreateEntity( _dto );
-
-           Company _co = ( Company ) _company;
-
-           logger.info("Objeto _company recibido en CreateEntity" + _co.get_idCompany() + " "
-                   + _co.get_name() + " "+ _co.get_status()  + " " + _co.get_desc() + " " + _co.get_link() );
-
-
            AddCompanyCommand _command = CommandsFactory.createAddCompanyCommand( _company );
            _command.execute();
            return _rb.build() ;
 
-       }
-
-       catch ( Exception e ){
-           return Response.status( 500 ).entity( e.getMessage() ).build();
-       }
-
+       } catch ( Exception e ) {
+           _rb = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
+           e.printStackTrace();
+        }return _rb.build();
     }
-
-
 
     /**
      * Metodo Response que devuelve todas las compañias registradas en el sistema
@@ -290,7 +290,6 @@ public class M02_Companies {
             return Response.status( 500 ).entity( e.getMessage() ).build();
         }
     }
-
 
     @POST
     @Path("/updateP/{companyId}")
@@ -350,8 +349,6 @@ public class M02_Companies {
         }
 
     }
-
-
 
 
     @PUT

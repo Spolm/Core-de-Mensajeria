@@ -49,8 +49,9 @@ public class EntityFactory {
      * @param link el enlace de la compañia
      * @return un objeto del tipo Company con los parametros id, name, desc, status, link
      */
-    public static Company CreateFullCompany(int id, String name, String desc, boolean status, String link){
-        return new Company(id, name, desc, status, link);
+    public static Company CreateFullCompany(int id, String name, String desc,
+                                            boolean status, String link, int userId){
+        return new Company(id, name, desc, status, link,userId);
     }
     /**
      * Fabrica para campañas sin id y sin Company

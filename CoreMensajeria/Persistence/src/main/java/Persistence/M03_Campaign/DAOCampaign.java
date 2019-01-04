@@ -20,6 +20,7 @@ public class DAOCampaign implements IDAOCampaign {
     final String SELECT_CAMPAIGN_BY_USER = "{Call m03_getcampaignsbyuser(?)}";
     final String SELECT_ALL_CAMPAIGNS = "{Call m03_getcampaignsall( )}";
     final String SELECT_CAMPAIGN_USER_COMPANY = " {Call m03_getcampaignsbycompany(?,?)} ";
+    final String SELECT_CAMPAIGN_BY_COMPANY = "{Call m03_getcampaigns(?)}";
 
 
     @Override
@@ -100,7 +101,7 @@ public class DAOCampaign implements IDAOCampaign {
             PreparedStatement _ps = _conn.prepareCall(SELECT_CAMPAIGN_BY_USER);
             _ps.setInt(1, _user.get_id());
             ResultSet _result = _ps.executeQuery();
-            while(_result.next()){
+            while( _result.next() ){
                 _caList.add( getCampaign( _result ) );
             }
         }
@@ -123,16 +124,34 @@ public class DAOCampaign implements IDAOCampaign {
                 e.printStackTrace();
             }
 
-
             return _caList;
         }
 
 
+    public ArrayList< Entity > campaignListCompany( Entity _e ) {
+        ArrayList<Entity> _caList = new ArrayList<>();
+        PreparedStatement _ps;
+        Company _company = (Company) _e;
+        try {
+            _ps = _conn.prepareCall(SELECT_CAMPAIGN_BY_COMPANY);
+            _ps.setInt(1, _company.get_id());
+            ResultSet _result = _ps.executeQuery();
+
+            while( _result.next() ){
+                _caList.add( getCampaign( _result ) );
+            }
+
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+        }
+
+
+        return _caList;
+    }
+
 
     @Override
     public void create(Entity e) {
-
-
 
     }
 

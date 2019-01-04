@@ -174,7 +174,8 @@ public class M03_Campaigns {
     @Path("/GetCampaignsByCompany")
     @Produces("application/json")
 
-    public Response getCampaignsByCompanyUser(@QueryParam("idCompany") int idCompany, @QueryParam("idUser") int idUser) throws CampaignDoesntExistsException {
+    public Response getCampaignsByCompanyUser(@QueryParam("idCompany") int idCompany,
+                                              @QueryParam("idUser") int idUser) throws CampaignDoesntExistsException {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
         CampaignDAO caList = new CampaignDAO();
         try {
