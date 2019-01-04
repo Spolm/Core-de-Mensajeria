@@ -8,7 +8,7 @@
 										    _companyId int
 										  ) */
 
-CREATE OR REPLACE FUNCTION m02_addcampaign ( _name character varying, 
+CREATE OR REPLACE FUNCTION m03_addcampaign ( _name character varying, 
 										   _description character varying,
 										   _status boolean, 
 										   _startDate date,
@@ -26,7 +26,7 @@ $BODY$
     LANGUAGE plpgsql VOLATILE
     COST 100;
 	
-ALTER FUNCTION  m02_addcampaign (  _name character varying, 
+ALTER FUNCTION  m03_addcampaign (  _name character varying, 
 										   _description character varying,
 										   _status boolean, 
 										   _startDate date,
