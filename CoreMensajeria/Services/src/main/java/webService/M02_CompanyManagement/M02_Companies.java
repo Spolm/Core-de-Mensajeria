@@ -1,8 +1,6 @@
 package webService.M02_CompanyManagement;
 
-import DTO.M02_DTO.DTOCompanyWithOutIdAndLink;
-import DTO.M02_DTO.DTOCompanyWithOut_Link;
-import DTO.M02_DTO.DTOFullCompany;
+import DTO.M02_DTO.*;
 import DTO.M03_DTO.DTOCampaignWithOut_Company;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
@@ -15,9 +13,7 @@ import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M02_Company.AddCompanyCommand;
 import Logic.M02_Company.GetAllCompaniesCommand;
-import Mappers.CompanyMapper.MapperCompanyWithOutIdAndLink;
-import Mappers.CompanyMapper.MapperCompanyWithOut_Link;
-import Mappers.CompanyMapper.MapperFullCompany;
+import Mappers.CompanyMapper.*;
 import Persistence.M02_Company.DAOCompany;
 import com.google.gson.Gson;
 import javax.ws.rs.*;
@@ -247,13 +243,17 @@ public class M02_Companies {
     @Path("/AddCompanyPP")
     @Produces("application/json")
     @Consumes("application/json")
-    public Response addCompanyPP( DTOCompanyWithOutIdAndLink _dto ){
-
+    public Response addCompanyPP( DTOFullCompany _dto )throws CompanyDoesntExistsException,
+                                                              ParameterCantBeNullException
+    {
         Response.ResponseBuilder _rb = Response.status(Response.Status.OK );
-
+        Logger logger = Logger.getLogger(M02_Companies.class.getName());
+        logger.info("Objeto compania recibido en AddCompany" + _dto.get_idCompany() + " " +
+                    _dto.get_name() + " "+ _dto.get_status() + " " + _dto.get_desc() + " " +
+                    _dto.get_link() + " " + _dto.get_idUser() );
        try {
-           MapperCompanyWithOutIdAndLink mapper = MapperFactory.CreateMapperCompanyWithOutIdAndLink( ) ;
-           Entity _company = mapper.CreateEntity( _dto );
+           MapperFullCompany _mapper = MapperFactory.CreateMapperFullCompany( ) ;
+           Entity _company = _mapper.CreateEntity( _dto );
            AddCompanyCommand _command = CommandsFactory.createAddCompanyCommand( _company );
            _command.execute();
            return _rb.build() ;
@@ -292,23 +292,20 @@ public class M02_Companies {
     }
 
     @POST
-    @Path("/updateP/{companyId}")
+    @Path("/updatePcompanyId")
     @Consumes("application/json")
     @Produces("text/plain")
-    public Response changeCompanyStatusPP( DTOCompanyWithOut_Link _dto ){
+    public Response changeCompanyStatusPP( DTOIdStatusCompany _dto ){
 
         Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
         try {
-            MapperCompanyWithOut_Link _mapper =  MapperFactory.CreateMapperCompanyWithOut_Link();
+            MapperIdStatusCompany _mapper =  MapperFactory.createMapperIdStatusCompany();
             Entity _comp = _mapper.CreateEntity( _dto );
             Command _command = CommandsFactory.createChangeStatusCommand( _comp );
             _command.execute();
-
-            //Agregue esto como un recurso desesperadooo
-
-            Company _co = ( Company ) _comp;
-
-            _rb.entity( gson.toJson( _co.get_status() ) ) ;
+           /* //Agregue esto como un recurso desesperadooo
+             Company _co = ( Company ) _comp;
+            _rb.entity( gson.toJson( _co.get_status() ) ) ;*/
             return _rb.build();
 
         }
@@ -334,10 +331,9 @@ public class M02_Companies {
         try {
             MapperFullCompany _mapper = MapperFactory.CreateMapperFullCompany();
             Entity _comp = _mapper.CreateEntity( _dto );
-            Command _command = CommandsFactory.createGetCompanyCommand( _comp );
+            Command _command = CommandsFactory.createGetCompanyByUserCommand( _comp );
             _command.execute();
             DTOFullCompany _dtoCo = _mapper.CreateDto( _command.Return() ) ;
-
             _rb.entity( gson.toJson( _dtoCo ) ) ;
             return _rb.build();
 

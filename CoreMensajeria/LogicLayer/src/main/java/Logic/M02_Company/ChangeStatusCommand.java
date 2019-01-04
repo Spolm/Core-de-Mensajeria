@@ -19,6 +19,7 @@ public class ChangeStatusCommand extends Command {
 
     @Override
     public void execute() throws Exception {
+
         try {
             IDAOCompany _dao = DAOFactory.instanciateDaoCompany ( );
             _dao.changeStatus( _co );

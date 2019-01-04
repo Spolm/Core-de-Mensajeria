@@ -22,6 +22,7 @@ public class CommandsFactory {
 
     public static UpdateCompanyCommand createUpdateCompanyCommand(Entity _co) {return new UpdateCompanyCommand(_co);}
 
+    public static GetCompanyByUserCommand createGetCompanyByUserCommand(Entity _co ){ return new GetCompanyByUserCommand( _co ); }
 
     public static GetCampaignCommand createGetCampaignCommand(Entity _ca ){ return new GetCampaignCommand( _ca ); }
 

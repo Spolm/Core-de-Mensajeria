@@ -1,9 +1,6 @@
 package Factory;
-import DTO.M02_DTO.DTOCompanyWithOutIdAndLink;
-import DTO.M02_DTO.DTOCompanyWithOut_Link;
-import DTO.M02_DTO.DTOFullCompany;
+import DTO.M02_DTO.*;
 
-import DTO.M02_DTO.DTOIdCompany;
 import DTO.M03_DTO.DTOFullCampaign;
 import DTO.M03_DTO.DTOCampaignWithOut_Company;
 import DTO.M03_DTO.DTOFullCampaign;
@@ -26,7 +23,14 @@ public class DTOFactory {
 
         return new DTOIdCompany(id);
     }
+    /**
+     * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
+     * @return un objeto del tipo DTOidStatusCompanyCompany
+     */
+    public static DTOIdStatusCompany CreateDTOIdStatusCompany( int id, boolean status ){
 
+        return new DTOIdStatusCompany( id, status );
+    }
 
       /**
        * Metodos que instancian un obejto del tipo DTOCompanyWithOutIdAndLink mediante los parametros pasados
@@ -43,7 +47,8 @@ public class DTOFactory {
      * @return un objeto del tipo DTOCompanyWithOut_Link
      */
 
-    public static DTOCompanyWithOut_Link CreateDtoCompanyWithOut_Link(int id, String name, String desc, boolean status){
+    public static DTOCompanyWithOut_Link CreateDtoCompanyWithOut_Link(int id, String name,
+                                                                      String desc, boolean status){
 
         return new DTOCompanyWithOut_Link(id, name, desc, status);
     }
@@ -54,7 +59,7 @@ public class DTOFactory {
      */
 
      public static DTOFullCompany CreateDtoFullCompany( int id, String name, String desc,
-                                                       boolean status, String link, int userId ){
+                                                        boolean status, String link, int userId ){
 
          return new DTOFullCompany( id, name, desc, status, link, userId );
      }
@@ -93,8 +98,8 @@ public class DTOFactory {
      */
 
     public static DTOFullCampaign CreateDtoFullCampaign(int idCampaign, String nameCampaign, String descCampaign,
-                                                                   boolean statusCampaign, Date startCampaign,
-                                                                   Date endCampaign, Company company) {
+                                                                      boolean statusCampaign, Date startCampaign,
+                                                                      Date endCampaign, Company company) {
 
         return new DTOFullCampaign(idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign,
                                     endCampaign, company);

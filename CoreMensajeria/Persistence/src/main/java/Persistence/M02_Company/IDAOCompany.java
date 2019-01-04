@@ -13,7 +13,7 @@ public interface IDAOCompany extends IDAO {
 
     Entity company( Entity e ) throws SQLException;
 
-    Boolean changeStatus ( Entity e);
+    void changeStatus ( Entity e);
 
     ArrayList<Entity> companiesByResponsible( Entity e );
 

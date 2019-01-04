@@ -3,9 +3,7 @@ package Factory;
 import Mappers.CampaignMapper.MapperCampaignWithOut_Company;
 import Mappers.CampaignMapper.MapperCampaignWithOut_id_And_Company;
 import Mappers.CampaignMapper.MapperFullCampaign;
-import Mappers.CompanyMapper.MapperCompanyWithOutIdAndLink;
-import Mappers.CompanyMapper.MapperCompanyWithOut_Link;
-import Mappers.CompanyMapper.MapperFullCompany;
+import Mappers.CompanyMapper.*;
 
 public class MapperFactory {
 
@@ -61,6 +59,15 @@ public class MapperFactory {
     public static MapperCampaignWithOut_id_And_Company CreateMapperCampaignWithOut_id_And_Company(){
 
         return new MapperCampaignWithOut_id_And_Company();
+    }
+
+
+    public static MapperIdCompany createMapperIdCompany(){
+        return  new MapperIdCompany();
+    }
+
+    public static MapperIdStatusCompany createMapperIdStatusCompany(){
+        return  new MapperIdStatusCompany();
     }
 
 }

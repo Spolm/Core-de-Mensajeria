@@ -30,6 +30,17 @@ public class EntityFactory {
         return new Company(name, desc, status);
     }
     /**
+     * Fabrica para compañias solo con id y estatus
+     ** @param id nombre de la compañia
+     * @param status el estatus de la compañia, puede ser activada o desactivada
+     * @return un objeto del tipo Company con los parametros name, desc, status
+     */
+
+    public static Company CreateCompanyIDStatus(int id, boolean status){
+        return new Company( id, status );
+    }
+
+    /**
      * Fabrica para compañias sin link
      * @param id id de una Compañia
      * @param name nombre de la compañia

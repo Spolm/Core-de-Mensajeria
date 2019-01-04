@@ -91,6 +91,17 @@ public class Company extends Entity {
     /**
      * Constructor para Companias sin _link
      * @param id id de la compania
+     * @param status el estatus de la compania, puede ser activada o desactivada
+     */
+    public Company(int id, boolean status) {
+
+        _idCompany = id;
+        _status = status;
+
+    }
+    /**
+     * Constructor para Companias sin _link
+     * @param id id de la compania
      * @param name nombre para una compania recien creada
      * @param desc descripcion de la compania
      * @param status el estatus de la compania, puede ser activada o desactivada
