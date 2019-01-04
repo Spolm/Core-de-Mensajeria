@@ -121,18 +121,20 @@ public class CompanyDAO {
 
     //endregion
 
-    public boolean changeStatus(int id) throws CompanyDoesntExistsException {
+    public boolean changeStatus(int id , Boolean status) throws CompanyDoesntExistsException {
             Company co = new Company();
 
         try {
-            co = getDetails(id);
-            co.set_status(!co.get_status());
+           // co = getDetails(id);
+            Boolean newStatus = !status.booleanValue();
+
             String query = "UPDATE public.company SET" +
-                    " com_status ="+co.get_status()+
+                    " com_status ="+newStatus+
                     " WHERE com_id =?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1,id);
             ps.executeUpdate();
+            co.set_status(newStatus);
 
         }
         catch (SQLException e) {
@@ -142,6 +144,7 @@ public class CompanyDAO {
         catch (Exception e) {
             e.printStackTrace();
         }
+
         return co.get_status();
     }
 

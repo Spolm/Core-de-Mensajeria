@@ -140,15 +140,15 @@ public class M02_Companies {
     //region Cambiar Status Compañia
     //TODO crear excepcion para este metodo
     @GET
-    @Path("/update/{companyId}")
+    @Path("/update/{companyId}/{status}")
     //@Consumes("application/json")
     @Produces("text/plain")
-    public Response changeCompanyStatus(@PathParam("companyId") int id) throws CompanyDoesntExistsException {
+    public Response changeCompanyStatus(@PathParam("companyId") int id , @PathParam("status") Boolean status) throws CompanyDoesntExistsException {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
         Boolean flag;
         CompanyDAO co = new CompanyDAO();
         try {
-            flag = co.changeStatus(id);
+            flag = co.changeStatus(id,status);
             rb.header("Company Status Changed", "Success");
             rb.tag("application/json");
             rb.entity(gson.toJson(flag));

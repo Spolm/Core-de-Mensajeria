@@ -109,7 +109,7 @@ public class DAOCompany  implements IDAOCompany {
         User _company = ( User ) e;
         try {
             PreparedStatement _ps = _conn.prepareCall(SELECT_COMPANIES_BY_USER);
-            _ps.setInt(1, _company.get_id());
+            _ps.setInt(1, _company.get_idUser());
             ResultSet _result = _ps.executeQuery();
             while(_result.next()){
                 _coList.add( getCompany( _result ) );

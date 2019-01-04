@@ -29,8 +29,8 @@
             <th>{{company._name}}</th> 
             <th>{{company._desc}}</th> 
             <th>{{company._link}}</th>
-            <th *ngIf="!company._status"><span class="badge badge-danger" (click)="activateCompany(company._idCompany)">Inactiva</span></th>
-            <th *ngIf="company._status"><span class="badge badge-success" (click)="deactivateCompany(company._idCompany)">Activa</span></th> 
+            <th *ngIf="!company._status"><span class="badge badge-danger" (click)="activateCompany(company._idCompany , company._status)">Inactiva</span></th>
+            <th *ngIf="company._status"><span class="badge badge-success" (click)="deactivateCompany(company._idCompany , company._status)">Activa</span></th> 
           </tr>
           
      <!-- </tr>-->

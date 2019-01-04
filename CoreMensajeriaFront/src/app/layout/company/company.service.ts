@@ -51,7 +51,7 @@ export class CompanyService {
     );
   }
 
-  activateCompany(_idCompany: Number){
-    return this.http.get(endpoint+'update/'+_idCompany).subscribe();
+  activateCompany(_idCompany: Number , _statusCompany : boolean ){
+    return this.http.get(endpoint+'update/'+_idCompany+'/'+_statusCompany).subscribe();
   }
 }
