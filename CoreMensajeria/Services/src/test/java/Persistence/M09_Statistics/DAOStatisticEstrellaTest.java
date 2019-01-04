@@ -51,12 +51,12 @@ class DAOStatisticEstrellaTest {
 
     @Test
     void getAllChannels() {
-        ArrayList<Channel> entitylist;
-        entitylist = dao.getAllChannels();
-        assertNotNull(entitylist);
-        Channel canal = entitylist.get(0);
+        ArrayList<Channel> channels;
+        channels = dao.getAllChannels();
+        assertNotNull(channels);
+        Channel canal = channels.get(0);
         assertEquals(canal.getNameChannel(),"SMS");
-        canal = entitylist.get(1);
+        canal = channels.get(1);
         assertEquals(canal.getNameChannel(),"Email");
     }
 

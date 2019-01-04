@@ -7,8 +7,8 @@ import Persistence.M09_Statistics.DAOStatisticEstrella;
 
 public class GetChannelStatisticCommand extends Command {
 
-    DAOStatisticEstrella dao;
-    Entity statistic;
+    private DAOStatisticEstrella dao;
+    private Entity statistic;
 
     @Override
     public void execute() throws Exception {

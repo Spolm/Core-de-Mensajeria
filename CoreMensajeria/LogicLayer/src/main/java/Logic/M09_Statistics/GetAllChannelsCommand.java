@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class GetAllChannelsCommand extends Command {
 
-    ArrayList<Channel> channels;
-    DAOStatisticEstrella dao;
+    private ArrayList<Channel> channels;
+    private DAOStatisticEstrella dao;
 
     @Override
     public void execute() throws Exception {

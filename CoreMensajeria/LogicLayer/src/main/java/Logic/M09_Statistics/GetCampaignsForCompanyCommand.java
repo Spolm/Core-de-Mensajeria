@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetCampaignsForCompanyCommand extends Command {
-    List<Integer> companyIds;
-    ArrayList<Entity> Campaigns;
-    DAOStatisticEstrella dao;
+    private List<Integer> companyIds;
+    private ArrayList<Entity> Campaigns;
+    private DAOStatisticEstrella dao;
 
     public GetCampaignsForCompanyCommand(List<Integer> companyIds){this.companyIds = companyIds;}
 

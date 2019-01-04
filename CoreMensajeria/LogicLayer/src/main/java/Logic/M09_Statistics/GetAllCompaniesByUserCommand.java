@@ -9,11 +9,11 @@ import java.util.ArrayList;
 
 public class GetAllCompaniesByUserCommand extends Command {
 
-    private static Integer userId;
-    ArrayList<Entity> companies;
-    DAOStatistic dao;
+    private Integer userId;
+    private ArrayList<Entity> companies;
+    private DAOStatistic dao;
 
-    public GetAllCompaniesByUserCommand(Integer userId){ GetAllCompaniesByUserCommand.userId = userId;}
+    public GetAllCompaniesByUserCommand(Integer userId){ this.userId = userId;}
 
     @Override
     public void execute () throws CompanyDoesntExistsException {
@@ -30,4 +30,7 @@ public class GetAllCompaniesByUserCommand extends Command {
         return companies;
     }
 
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 }
