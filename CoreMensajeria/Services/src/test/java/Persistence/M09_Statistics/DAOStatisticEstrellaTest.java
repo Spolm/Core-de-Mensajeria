@@ -19,7 +19,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DAOStatisticEstrellaTest {
-    DAOStatisticEstrella dao;
+     DAOStatisticEstrella dao;
     Entity entity;
 
     @BeforeEach
@@ -200,17 +200,122 @@ class DAOStatisticEstrellaTest {
 
     @Test
     void getMessagesParamCompany() {
+        ArrayList<Integer> lista  = new ArrayList<>();
+        String campaignin = setParametersforQuery(lista,"and me.sen_cam_id in ");
+        String channelin = setParametersforQuery(lista,"and me.sen_cha_id in ");
+        String integratorin = setParametersforQuery(lista, "and me.sen_int_id in");
+        String yearin = setParametersforQuery(lista, "and da.dat_year in");
+        String monthin = setParametersforQuery(lista, "and da.dat_month in");
+        String weekofyearin = setParametersforQuery(lista, "and da.dat_weekofyear in");
+        String dayofweekin = setParametersforQuery(lista,"and da.dat_dayofweek in");
+        String dayofmonthin = setParametersforQuery(lista, "and da.dat_dayofmonth in");
+        String dayofyearin = setParametersforQuery(lista, "and da.dat_dayofyear in");
+        String hourin = setParametersforQuery(lista, "and da.dat_hourofday in");
+        String minutein = setParametersforQuery(lista, "and da.dat_minuteofhour in");
+        String secondin = setParametersforQuery(lista, "and da.dat_secondofminute in");
+        String quarterin = setParametersforQuery(lista, "and da.dat_quarterofyear in");
+        for (int i=1;i < 5; i++)
+            lista.add(i);
+        String companyin = setParametersforQuery(lista,"and me.sen_com_id in ");
+        entity = dao.getMessagesParamCompany(companyin, campaignin, channelin, integratorin, yearin, monthin,
+                weekofyearin, dayofweekin, dayofmonthin, dayofyearin, hourin, minutein, secondin, quarterin);
+        assertNotNull(entity);
+        for (int i=1;i < 5; i++)
+            assertTrue(((Statistics) entity).getX().contains("Company " + i));
     }
 
     @Test
     void getMessagesParamCampaign() {
+        ArrayList<Integer> lista  = new ArrayList<>();
+        String companyin = setParametersforQuery(lista,"and me.sen_com_id in ");
+        String channelin = setParametersforQuery(lista,"and me.sen_cha_id in ");
+        String integratorin = setParametersforQuery(lista, "and me.sen_int_id in");
+        String yearin = setParametersforQuery(lista, "and da.dat_year in");
+        String monthin = setParametersforQuery(lista, "and da.dat_month in");
+        String weekofyearin = setParametersforQuery(lista, "and da.dat_weekofyear in");
+        String dayofweekin = setParametersforQuery(lista,"and da.dat_dayofweek in");
+        String dayofmonthin = setParametersforQuery(lista, "and da.dat_dayofmonth in");
+        String dayofyearin = setParametersforQuery(lista, "and da.dat_dayofyear in");
+        String hourin = setParametersforQuery(lista, "and da.dat_hourofday in");
+        String minutein = setParametersforQuery(lista, "and da.dat_minuteofhour in");
+        String secondin = setParametersforQuery(lista, "and da.dat_secondofminute in");
+        String quarterin = setParametersforQuery(lista, "and da.dat_quarterofyear in");
+        for (int i=1;i < 5; i++)
+            lista.add(i);
+        String campaignin = setParametersforQuery(lista,"and me.sen_cam_id in ");
+        entity = dao.getMessagesParamCampaign(companyin, campaignin, channelin, integratorin, yearin, monthin,
+                weekofyearin, dayofweekin, dayofmonthin, dayofyearin, hourin, minutein, secondin, quarterin);
+        assertNotNull(entity);
+        for (int i=1;i < 5; i++)
+            assertTrue(((Statistics) entity).getX().contains("Campaign " + i));
     }
 
     @Test
     void getMessagesParamChannel() {
+        ArrayList<Integer> lista  = new ArrayList<>();
+        String campaignin = setParametersforQuery(lista,"and me.sen_cam_id in ");
+        String companyin = setParametersforQuery(lista,"and me.sen_com_id in ");
+        String integratorin = setParametersforQuery(lista, "and me.sen_int_id in");
+        String yearin = setParametersforQuery(lista, "and da.dat_year in");
+        String monthin = setParametersforQuery(lista, "and da.dat_month in");
+        String weekofyearin = setParametersforQuery(lista, "and da.dat_weekofyear in");
+        String dayofweekin = setParametersforQuery(lista,"and da.dat_dayofweek in");
+        String dayofmonthin = setParametersforQuery(lista, "and da.dat_dayofmonth in");
+        String dayofyearin = setParametersforQuery(lista, "and da.dat_dayofyear in");
+        String hourin = setParametersforQuery(lista, "and da.dat_hourofday in");
+        String minutein = setParametersforQuery(lista, "and da.dat_minuteofhour in");
+        String secondin = setParametersforQuery(lista, "and da.dat_secondofminute in");
+        String quarterin = setParametersforQuery(lista, "and da.dat_quarterofyear in");
+        lista.add(1);
+        lista.add(2);
+        String channelin = setParametersforQuery(lista,"and me.sen_cha_id in ");
+        entity = dao.getMessagesParamChannel(companyin, campaignin, channelin, integratorin, yearin, monthin,
+                weekofyearin, dayofweekin, dayofmonthin, dayofyearin, hourin, minutein, secondin, quarterin);
+        assertNotNull(entity);
+        assertTrue(((Statistics) entity).getX().contains("Email"));
+        assertTrue(((Statistics) entity).getX().contains("SMS"));
+
     }
 
     @Test
     void getMessagesParamIntegrator() {
+        ArrayList<Integer> lista  = new ArrayList<>();
+        String campaignin = setParametersforQuery(lista,"and me.sen_cam_id in ");
+        String companyin = setParametersforQuery(lista,"and me.sen_com_id in ");
+        String channelin = setParametersforQuery(lista,"and me.sen_cha_id in ");
+        String yearin = setParametersforQuery(lista, "and da.dat_year in");
+        String monthin = setParametersforQuery(lista, "and da.dat_month in");
+        String weekofyearin = setParametersforQuery(lista, "and da.dat_weekofyear in");
+        String dayofweekin = setParametersforQuery(lista,"and da.dat_dayofweek in");
+        String dayofmonthin = setParametersforQuery(lista, "and da.dat_dayofmonth in");
+        String dayofyearin = setParametersforQuery(lista, "and da.dat_dayofyear in");
+        String hourin = setParametersforQuery(lista, "and da.dat_hourofday in");
+        String minutein = setParametersforQuery(lista, "and da.dat_minuteofhour in");
+        String secondin = setParametersforQuery(lista, "and da.dat_secondofminute in");
+        String quarterin = setParametersforQuery(lista, "and da.dat_quarterofyear in");
+        lista.add(1);
+        lista.add(2);
+        String integratorin = setParametersforQuery(lista, "and me.sen_int_id in");
+        entity = dao.getMessagesParamIntegrator(companyin, campaignin, channelin, integratorin, yearin, monthin,
+                weekofyearin, dayofweekin, dayofmonthin, dayofyearin, hourin, minutein, secondin, quarterin);
+        assertNotNull(entity);
+        assertTrue(((Statistics) entity).getX().contains("Movistar"));
+        assertTrue(((Statistics) entity).getX().contains("Digitel"));
+    }
+
+    private String setParametersforQuery(List<Integer> ids, String params) {
+        if (ids.isEmpty()) {
+            return "";
+        }
+        params = params.concat("(");
+        for (int i = 0; i < ids.size(); i++) {
+            params = params.concat(ids.get(i).toString());
+            if (i == ids.size() - 1) {
+                params = params.concat(")");
+            } else {
+                params = params.concat(",");
+            }
+        }
+        return params;
     }
 }
