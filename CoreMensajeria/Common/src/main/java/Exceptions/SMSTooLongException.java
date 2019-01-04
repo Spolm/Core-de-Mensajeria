@@ -3,7 +3,7 @@ package Exceptions;
 /**
  * Excepción personalizada para manejar el tamaño del sms.
  */
-public class SMSTooLongException extends Exception {
+public class SMSTooLongException extends RuntimeException {
     public final int ERROR_CODE = 562;
     public final String  ERROR_MSG = "Ha ocurrido un errror "+ERROR_CODE+" SMS supera 160 caracteres";
 
