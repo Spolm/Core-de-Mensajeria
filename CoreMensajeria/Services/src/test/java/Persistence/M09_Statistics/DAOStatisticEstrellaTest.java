@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -112,38 +113,89 @@ class DAOStatisticEstrellaTest {
 
     @Test
     void getMonths() {
+        ArrayList<Integer> expectedMonths = new ArrayList<>();
+        ArrayList<Integer> months = dao.getMonths();
+        assertNotNull(months);
+        for ( int i=1; i<13; i++ ){
+            expectedMonths.add(i);
+        }
+        assertEquals(expectedMonths, months);
     }
 
     @Test
     void getDaysofWeek() {
+        ArrayList<Integer> expectedDays = new ArrayList<>();
+        ArrayList<Integer> days = dao.getDaysofWeek();
+        assertNotNull(days);
+        for ( int i=1; i<8; i++ ){
+            expectedDays.add(i);
+        }
+        assertEquals(expectedDays, days);
     }
 
     @Test
     void getDaysofMonth() {
+        ArrayList<Integer> expectedDays = new ArrayList<>(Arrays.asList(1, 5, 7, 9, 10, 11, 12, 13, 15, 16, 17, 19, 23,
+                24, 25, 28, 29, 30, 31));
+        ArrayList<Integer> days = dao.getDaysofMonth();
+        assertNotNull(days);
+        assertEquals(expectedDays, days);
     }
 
     @Test
     void getDaysofYear() {
+        ArrayList<Integer> expectedDays = new ArrayList<>(Arrays.asList(1, 36, 41, 67, 74, 76, 102, 103, 106, 109, 132,
+                175, 181, 204, 240, 243, 253, 254, 285, 296, 314, 330, 333, 359, 365));
+        ArrayList<Integer> days = dao.getDaysofYear();
+        assertNotNull(days);
+        assertEquals(expectedDays, days);
     }
 
     @Test
     void getWeeksofYear() {
+        ArrayList<Integer> expectedWeeks = new ArrayList<>(Arrays.asList(6, 10, 11, 15, 16, 19, 25, 26, 29, 35, 36,
+                37, 41, 43, 45, 47, 48, 51, 52, 53));
+        ArrayList<Integer> weeks = dao.getWeeksofYear();
+        assertNotNull(weeks);
+        assertEquals(expectedWeeks, weeks);
     }
 
     @Test
     void getQuartersofYear() {
+        ArrayList<Integer> expectedQuarters = new ArrayList<>();
+        ArrayList<Integer> quarters = dao.getQuartersofYear();
+        assertNotNull(quarters);
+        for ( int i=1; i<5; i++ ){
+            expectedQuarters.add(i);
+        }
+        assertEquals(expectedQuarters, quarters);
     }
 
     @Test
     void getHours() {
+        ArrayList<Integer> expectedHours = new ArrayList<>();
+        ArrayList<Integer> hours = dao.getHours();
+        assertNotNull(hours);
+        expectedHours.add(0);
+        assertEquals(expectedHours, hours);
     }
 
     @Test
     void getMinutes() {
+        ArrayList<Integer> expectedMinutes = new ArrayList<>();
+        ArrayList<Integer> minutes = dao.getMinutes();
+        assertNotNull(minutes);
+        expectedMinutes.add(0);
+        assertEquals(expectedMinutes, minutes);
     }
 
     @Test
     void getSeconds() {
+        ArrayList<Integer> expectedSeconds = new ArrayList<>();
+        ArrayList<Integer> seconds = dao.getSeconds();
+        assertNotNull(seconds);
+        expectedSeconds.add(0);
+        assertEquals(expectedSeconds, seconds);
     }
 
     @Test
