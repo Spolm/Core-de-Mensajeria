@@ -4,7 +4,10 @@ import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CampaignDAO {
 
@@ -172,13 +175,12 @@ public class CampaignDAO {
 
     public Campaign createCampaign(Campaign ca) throws  CampaignDoesntExistsException {
         try {
-
-            PreparedStatement preparedStatement = conn.prepareCall("{Call m03_addcampaign}");
+            PreparedStatement preparedStatement = conn.prepareCall("{Call m03_addcampaign(?,?,?,?,?,?)}");
             preparedStatement.setString(1, ca.get_nameCampaign());
             preparedStatement.setString(2, ca.get_descCampaign());
             preparedStatement.setBoolean(3, ca.get_statusCampaign());
-            preparedStatement.setDate(4, (Date) ca.get_startCampaign());
-            preparedStatement.setDate(5, (Date) ca.get_endCampaign());
+            preparedStatement.setDate(4, new java.sql.Date(ca.get_startCampaign().getTime()));
+            preparedStatement.setDate(5, new java.sql.Date(ca.get_endCampaign().getTime()));
             preparedStatement.setInt(6, ca.get_idCompany());
             preparedStatement.execute();
         }catch (SQLException e){
@@ -190,15 +192,15 @@ public class CampaignDAO {
     }
 
 
+
     public Campaign updateCompany (int id,Campaign ca) throws CampaignDoesntExistsException {
         try {
-
-            PreparedStatement preparedStatement = conn.prepareCall("{Call m03_updatecampaign}");
+            PreparedStatement preparedStatement = conn.prepareCall("{Call m03_updatecampaign(?,?,?,?,?,?,?)}");
             preparedStatement.setString(1, ca.get_nameCampaign());
             preparedStatement.setString(2, ca.get_descCampaign());
             preparedStatement.setBoolean(3, ca.get_statusCampaign());
-            preparedStatement.setDate(4, (Date) ca.get_startCampaign());
-            preparedStatement.setDate(5, (Date) ca.get_endCampaign());
+            preparedStatement.setDate(4, new java.sql.Date(ca.get_startCampaign().getTime()));
+            preparedStatement.setDate(5, new java.sql.Date(ca.get_endCampaign().getTime()));
             preparedStatement.setInt(6, ca.get_idCompany());
             preparedStatement.setInt(7, ca.get_id());
             preparedStatement.execute();
