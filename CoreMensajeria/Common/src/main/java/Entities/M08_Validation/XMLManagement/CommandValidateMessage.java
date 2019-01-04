@@ -32,7 +32,7 @@ public class CommandValidateMessage extends CommandValidateParameter{
     /**
      * @throws Exception excepciones personalizadas
      */
-    public void execute () throws Exception{
+    public void execute () throws SMSTooLongException, TemplateDoesntExistsException, MessageDoesntExistsException, ParameterDoesntExistsException{
         Logger logger = Logger.getLogger(CommandValidateParameter.class.getName());
         TemplateHandler template = new TemplateHandler();
         try {
@@ -60,6 +60,7 @@ public class CommandValidateMessage extends CommandValidateParameter{
             logger.warning("Parámetro no Existe");
             this.set_valid(false);
             this.set_response("Parámetro no Existe");
+            throw e;
         }
 
     }

@@ -22,7 +22,7 @@ public class CommandValidateTemplate extends CommandValidateParameter {
     /**
      * @throws Exception excepciones personalizadas
      */
-    public void execute() throws Exception{
+    public void execute() throws TemplateDoesntExistsException{
         Logger logger = Logger.getLogger(CommandValidateParameter.class.getName());
         TemplateHandler template = new TemplateHandler();
         try{
