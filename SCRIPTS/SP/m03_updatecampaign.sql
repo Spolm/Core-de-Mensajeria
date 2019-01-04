@@ -1,4 +1,4 @@
-/*Function: FUNCTION m02_updatecampaign ( _name character varying, 
+/*Function: FUNCTION m03_updatecampaign ( _name character varying, 
 										   _description character varying,
 										   _status boolean, 
 										   _startDate date,
@@ -7,7 +7,7 @@
                                             _id int
 										  )*/
 
-/*DROP FUNCTION FUNCTION m02_updatecampaign ( _name character varying, 
+/*DROP FUNCTION FUNCTION m03_updatecampaign ( _name character varying, 
 										   _description character varying,
 										   _status boolean, 
 										   _startDate date,
@@ -16,7 +16,7 @@
                                             _id int
 										  );*/
 
-CREATE OR REPLACE FUNCTION m02_updatecampaign ( _name character varying, 
+CREATE OR REPLACE FUNCTION m03_updatecampaign ( _name character varying, 
 										   _description character varying,
 										   _status boolean, 
 										   _startDate date,
@@ -28,7 +28,7 @@ CREATE OR REPLACE FUNCTION m02_updatecampaign ( _name character varying,
 $BODY$
 BEGIN
 
-IF EXISTS(SELECT 1 FROM public.campaign WHERE com_id=_id LIMIT 1)
+IF EXISTS(SELECT 1 FROM public.campaign WHERE cam_id=_id LIMIT 1)
 THEN
 	BEGIN
 UPDATE public.campaign
@@ -49,7 +49,7 @@ $BODY$
 
 
 
-ALTER FUNCTION  m02_updatecampaign ( _name character varying, 
+ALTER FUNCTION  m03_updatecampaign ( _name character varying, 
 										   _description character varying,
 										   _status boolean, 
 										   _startDate date,
