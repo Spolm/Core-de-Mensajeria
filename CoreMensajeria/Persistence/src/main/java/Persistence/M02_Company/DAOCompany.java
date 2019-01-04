@@ -91,7 +91,7 @@ public class DAOCompany  implements IDAOCompany {
 
             try {
                 PreparedStatement  _preparedStatement = _conn.prepareCall( SELECT_COMPANY_BY_ID );
-                _preparedStatement.setInt( 1, _company.get_id() );
+                _preparedStatement.setInt( 1, _company.get_idCompany() );
                 ResultSet _result = _preparedStatement.executeQuery();
                 while ( _result.next() ) {
                     _company = getCompany( _result );

@@ -123,4 +123,13 @@ public class Company extends Entity {
 
     }
 
+
+    /**
+     * Constructor para Companias
+     * @param id id de la compania
+     */
+    public Company (int id){
+        _idCompany =  id;
+    }
+
 }

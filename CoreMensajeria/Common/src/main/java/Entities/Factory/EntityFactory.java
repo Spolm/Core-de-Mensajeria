@@ -9,6 +9,17 @@ public class EntityFactory {
 
     /**
      * Fabrica para compañias sin id y sin link
+     ** @param id nombre de la compañia
+     * @return un objeto del tipo Company con los parametros name, desc, status
+     */
+
+    public static Company CreateCompanyOnlyId(int id ){
+        return new Company(id);
+    }
+
+
+    /**
+     * Fabrica para compañias sin id y sin link
      ** @param name nombre de la compañia
      * @param desc descripcion de la compañia
      * @param status el estatus de la compañia, puede ser activada o desactivada

@@ -23,6 +23,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.io.IOException;
 
 /**
  * Clase encargada de enviar la informacion al frontend de la aplicacion
@@ -170,6 +174,7 @@ public class M02_Companies {
     @Produces("application/json")
     @Consumes("application/json")
     public Response addCompany(Company _company){
+
         Response.ResponseBuilder rb = Response.status(Response.Status.OK);
         CompanyDAO _companyDAO = new CompanyDAO();
 
@@ -226,13 +231,25 @@ public class M02_Companies {
     @Path("/AddCompanyPP")
     @Produces("application/json")
     @Consumes("application/json")
-    public Response addCompanyPP( DTOCompanyWithOutIdAndLink _dto ){
+    public Response addCompanyPP( DTOFullCompany _dto ){
 
         Response.ResponseBuilder _rb = Response.status(Response.Status.OK );
 
+        Logger logger = Logger.getLogger(M02_Companies.class.getName());
+        logger.info("Objeto compania recibido en AddCompany" + _dto.get_idCompany() + " " + _dto.get_name() + " "+
+                _dto.get_status() + " " + _dto.get_desc() + " " + _dto.get_link() );
+
+
        try {
-           MapperCompanyWithOutIdAndLink mapper = MapperFactory.CreateMapperCompanyWithOutIdAndLink( ) ;
+           MapperFullCompany mapper = MapperFactory.CreateMapperFullCompany( ) ;
            Entity _company = mapper.CreateEntity( _dto );
+
+           Company _co = ( Company ) _company;
+
+           logger.info("Objeto _company recibido en CreateEntity" + _co.get_idCompany() + " "
+                   + _co.get_name() + " "+ _co.get_status()  + " " + _co.get_desc() + " " + _co.get_link() );
+
+
            AddCompanyCommand _command = CommandsFactory.createAddCompanyCommand( _company );
            _command.execute();
            return _rb.build() ;

@@ -1,7 +1,7 @@
 package Mappers.CompanyMapper;
 
-import DTO.DTO;
 import DTO.M02_DTO.DTOFullCompany;
+import DTO.M02_DTO.DTOIdCompany;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M02_Company.Company;
@@ -13,21 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class MapperFullCompany extends GenericMapper <DTOFullCompany> {
+public class MapperIdCompany extends GenericMapper<DTOIdCompany> {
 
     /**
-     * Metodo con el cual se transforma una entidad en un DTOFullCompany
+     * Metodo con el cual se transforma una entidad en un DTOIdCompany
      * @param entity Entidad que recibe para hacer el mapeo
-     * @return un objeto del tipo DTOFullCompany
+     * @return un objeto del tipo DTOIdCompany
      */
     @Override
-    public DTOFullCompany CreateDto(Entity entity) {
+    public DTOIdCompany CreateDto(Entity entity) {
 
         try {
-            DTOFullCompany dto = null;
+            DTOIdCompany dto = null;
             Company _com = (Company) entity;
-            dto = DTOFactory.CreateDtoFullCompany(_com.get_idCompany(), _com.get_name(), _com.get_desc(),
-                                                  _com.get_status(), _com.get_link() );
+            dto = DTOFactory.CreateDTOIdCompany(_com.get_idCompany());
 
             return dto;
         }
@@ -41,14 +40,14 @@ public class MapperFullCompany extends GenericMapper <DTOFullCompany> {
     /**
      * Metodo con el cual se transforma de una lista de entidades a una lista de dto
      * @param entities Entidad que recibe para hacer el mapeo
-     * @return una lista de objetos del tipo DTOFullCompany
+     * @return una lista de objetos del tipo DTOIdCompany
      */
 
     @Override
-    public List<DTOFullCompany> CreateDtoList(List<Entity> entities) {
+    public List<DTOIdCompany> CreateDtoList(List<Entity> entities) {
         try
         {
-            ArrayList<DTOFullCompany> dtos = new ArrayList<>();
+            ArrayList<DTOIdCompany> dtos = new ArrayList<>();
 
             for (Entity _com : entities) {
                 dtos.add( CreateDto( _com ) );
@@ -69,12 +68,12 @@ public class MapperFullCompany extends GenericMapper <DTOFullCompany> {
      * @return una lista de Entidades del tipo Company
      */
     @Override
-    public List<Entity> CreateEntityList(List<DTOFullCompany> dtos) {
+    public List<Entity> CreateEntityList(List<DTOIdCompany> dtos) {
         try
         {
             ArrayList<Entity> Company = new ArrayList<>();
 
-            for (DTOFullCompany _dtocom : dtos) {
+            for (DTOIdCompany _dtocom : dtos) {
                 Company.add ( CreateEntity ( _dtocom ) );
             }
 
@@ -94,15 +93,13 @@ public class MapperFullCompany extends GenericMapper <DTOFullCompany> {
      * @return una lista de Entidades del tipo Company
      */
     @Override
-    public Entity CreateEntity(DTOFullCompany dto) {
+    public Entity CreateEntity(DTOIdCompany dto) {
 
         Logger logger = Logger.getLogger(M02_Companies.class.getName());
-        logger.info("Objeto compania recibido en Create Entity" + dto.get_idCompany() + " " + dto.get_name() + " "+
-                dto.get_status() + " " + dto.get_desc() + " " + dto.get_link() );
+        logger.info("Objeto compania recibido en Create Entity" + dto.get_idCompany());
 
         try {
-            Company _com = EntityFactory.CreateFullCompany(dto.get_idCompany(), dto.get_name(), dto.get_desc(),
-                                                            dto.get_status(), dto.get_link());
+            Company _com = EntityFactory.CreateCompanyOnlyId(dto.get_idCompany());
             return _com ;
 
         }
@@ -110,6 +107,4 @@ public class MapperFullCompany extends GenericMapper <DTOFullCompany> {
             throw e;
         }
     }
-
-
 }
