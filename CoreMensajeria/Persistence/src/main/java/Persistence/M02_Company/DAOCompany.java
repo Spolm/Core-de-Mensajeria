@@ -81,7 +81,8 @@ public class DAOCompany  implements IDAOCompany {
                 _result.getString( "com_name" ),
                 _result.getString( "com_description" ),
                 _result.getBoolean( "com_status" ),
-                _result.getString( "com_route_link" ) );
+                _result.getString( "com_route_link" ),
+                _result.getInt( "com_user_id" ));
         return _company;
     }
 
@@ -91,7 +92,7 @@ public class DAOCompany  implements IDAOCompany {
 
             try {
                 PreparedStatement  _preparedStatement = _conn.prepareCall( SELECT_COMPANY_BY_ID );
-                _preparedStatement.setInt( 1, _company.get_id() );
+                _preparedStatement.setInt( 1, _company.get_idCompany() );
                 ResultSet _result = _preparedStatement.executeQuery();
                 while ( _result.next() ) {
                     _company = getCompany( _result );
@@ -159,7 +160,7 @@ public class DAOCompany  implements IDAOCompany {
             preparedStatement.setInt(5, _co.get_idUser());
             preparedStatement.execute();
 
-        }catch (Exception exc){
+        }catch ( Exception exc ){
             exc.printStackTrace();
         }
     }

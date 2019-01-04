@@ -9,6 +9,17 @@ public class EntityFactory {
 
     /**
      * Fabrica para compañias sin id y sin link
+     ** @param id nombre de la compañia
+     * @return un objeto del tipo Company con los parametros name, desc, status
+     */
+
+    public static Company CreateCompanyOnlyId(int id ){
+        return new Company(id);
+    }
+
+
+    /**
+     * Fabrica para compañias sin id y sin link
      ** @param name nombre de la compañia
      * @param desc descripcion de la compañia
      * @param status el estatus de la compañia, puede ser activada o desactivada
@@ -38,8 +49,9 @@ public class EntityFactory {
      * @param link el enlace de la compañia
      * @return un objeto del tipo Company con los parametros id, name, desc, status, link
      */
-    public static Company CreateFullCompany(int id, String name, String desc, boolean status, String link){
-        return new Company(id, name, desc, status, link);
+    public static Company CreateFullCompany(int id, String name, String desc,
+                                            boolean status, String link, int userId){
+        return new Company(id, name, desc, status, link,userId);
     }
     /**
      * Fabrica para campañas sin id y sin Company

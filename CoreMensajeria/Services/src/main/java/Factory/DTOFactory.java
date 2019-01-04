@@ -3,6 +3,7 @@ import DTO.M02_DTO.DTOCompanyWithOutIdAndLink;
 import DTO.M02_DTO.DTOCompanyWithOut_Link;
 import DTO.M02_DTO.DTOFullCompany;
 
+import DTO.M02_DTO.DTOIdCompany;
 import DTO.M03_DTO.DTOFullCampaign;
 import DTO.M03_DTO.DTOCampaignWithOut_Company;
 import DTO.M03_DTO.DTOFullCampaign;
@@ -15,6 +16,17 @@ import java.util.Date;
  * Fabrica que instancia todos los dto
  */
 public class DTOFactory {
+
+
+    /**
+     * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
+     * @return un objeto del tipo DTOIdCompany
+     */
+    public static DTOIdCompany CreateDTOIdCompany(int id ){
+
+        return new DTOIdCompany(id);
+    }
+
 
       /**
        * Metodos que instancian un obejto del tipo DTOCompanyWithOutIdAndLink mediante los parametros pasados
@@ -41,9 +53,10 @@ public class DTOFactory {
      * @return un objeto del tipo DTOFullCompany
      */
 
-     public static DTOFullCompany CreateDtoFullCompany(int id, String name, String desc, boolean status, String link){
+     public static DTOFullCompany CreateDtoFullCompany( int id, String name, String desc,
+                                                       boolean status, String link, int userId ){
 
-         return new DTOFullCompany(id, name, desc, status, link);
+         return new DTOFullCompany( id, name, desc, status, link, userId );
      }
 
 

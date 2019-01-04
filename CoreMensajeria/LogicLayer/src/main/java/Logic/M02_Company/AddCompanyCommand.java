@@ -33,8 +33,8 @@ public class AddCompanyCommand extends Command {
         }
 
         catch ( Exception e ){
-
-            }
+            e.printStackTrace();
+        }
     }
 
     @Override

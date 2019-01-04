@@ -18,11 +18,16 @@ import Logic.M02_Company.GetAllCompaniesCommand;
 import Mappers.CompanyMapper.MapperCompanyWithOutIdAndLink;
 import Mappers.CompanyMapper.MapperCompanyWithOut_Link;
 import Mappers.CompanyMapper.MapperFullCompany;
+import Persistence.M02_Company.DAOCompany;
 import com.google.gson.Gson;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.io.IOException;
 
 /**
  * Clase encargada de enviar la informacion al frontend de la aplicacion
@@ -165,11 +170,12 @@ public class M02_Companies {
 
     //region Agregar/Editar Compañia
 
-    @POST
+  /*  @POST
     @Path("/AddCompany")
     @Produces("application/json")
     @Consumes("application/json")
     public Response addCompany(Company _company){
+
         Response.ResponseBuilder rb = Response.status(Response.Status.OK);
         CompanyDAO _companyDAO = new CompanyDAO();
 
@@ -189,7 +195,7 @@ public class M02_Companies {
         }return rb.build();
     }
 
-
+*/
     @PUT
     @Path("/Edit/Company/{companyId}")
     @Produces("application/json")
@@ -220,7 +226,22 @@ public class M02_Companies {
 
 //---------- Region con los metodos ya con sus patrones
 
+/* RAFA
+    @POST
+    @Path("/AddCompany")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response addCompany( Company _company ) throws CompanyDoesntExistsException, ParameterCantBeNullException {
+        Response.ResponseBuilder _rb = Response.status(Response.Status.OK);
+        DAOCompany _companyDAO = new DAOCompany();
 
+        try {
+            _companyDAO.create(_company);
+        } catch (Exception e) {
+            _rb = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+        }return _rb.build();
+    }*/
 
     @POST
     @Path("/AddCompanyPP")
@@ -237,15 +258,11 @@ public class M02_Companies {
            _command.execute();
            return _rb.build() ;
 
-       }
-
-       catch ( Exception e ){
-           return Response.status( 500 ).entity( e.getMessage() ).build();
-       }
-
+       } catch ( Exception e ) {
+           _rb = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
+           e.printStackTrace();
+        }return _rb.build();
     }
-
-
 
     /**
      * Metodo Response que devuelve todas las compañias registradas en el sistema
@@ -273,7 +290,6 @@ public class M02_Companies {
             return Response.status( 500 ).entity( e.getMessage() ).build();
         }
     }
-
 
     @POST
     @Path("/updateP/{companyId}")
@@ -333,8 +349,6 @@ public class M02_Companies {
         }
 
     }
-
-
 
 
     @PUT

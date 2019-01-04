@@ -6,6 +6,7 @@ import { CampaignComponent } from './campaign.component';
 import { PageHeaderModule } from './../../shared';
 import { Campaign } from '../../../model/campaign-model';
 import { CreateCampaignComponent } from './create-campaign/create-campaign.component';
+import { ModifyCampaignComponent } from './modify-campaign/modify-campaign.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import { CreateCampaignComponent } from './create-campaign/create-campaign.compo
     PageHeaderModule, 
     FormsModule
   ],
-  declarations: [CampaignComponent, CreateCampaignComponent]
+  declarations: [CampaignComponent, CreateCampaignComponent, ModifyCampaignComponent]
 })
 export class CampaignModule implements OnInit {  
   
