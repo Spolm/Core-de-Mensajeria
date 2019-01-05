@@ -2,6 +2,7 @@ package Logic;
 
 import Entities.Entity;
 import Logic.M01_Login.GetUser;
+import Logic.M07_Template.*;
 import Logic.M09_Statistics.*;
 import Logic.M02_Company.AddCompanyCommand;
 
@@ -47,6 +48,44 @@ public class CommandsFactory {
     //endregion
 
     public static AddCompanyCommand createAddCompanyCommand( Entity _co ){ return new AddCompanyCommand( _co ); }
+    //M07_Templates
+
+    public static CommandGetMessages createCommandGetMessages(){
+        return new CommandGetMessages();
+    }
+
+    public static CommandPostParameter createCommandPostParameter(){
+        return new CommandPostParameter();
+    }
+
+    public static CommandGetParameters createCommandGetParameters(){
+        return new CommandGetParameters();
+    }
+
+    public static CommandGetTemplates createCommandGetTemplates(){
+        return new CommandGetTemplates();
+    }
+
+    public static CommandGetTemplate createCommandGetTemplate(){
+        return new CommandGetTemplate();
+    }
+
+    public static CommandGetTemplatePrivilegesByUser createCommandGetTemplatePrivilegesByUser(){
+        return new CommandGetTemplatePrivilegesByUser();
+    }
+
+    public static CommandPostTemplateStatus createCommandPostTemplateStatus(){
+        return new CommandPostTemplateStatus();
+    }
+
+    public static CommandPostTemplate createCommandPostTemplate(){
+        return new CommandPostTemplate();
+    }
+
+    public static CommandUpdateTemplate CommandUpdateTemplate(){
+        return new CommandUpdateTemplate();
+}
+
 
 
 
