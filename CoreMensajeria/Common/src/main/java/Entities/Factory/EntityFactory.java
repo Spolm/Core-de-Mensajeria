@@ -1,8 +1,11 @@
 package Entities.Factory;
 
+import Entities.Entity;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
+import Entities.M09_Statistics.Statistics;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class EntityFactory {
@@ -97,4 +100,21 @@ public class EntityFactory {
                             endCampaign, company);
 
     }
+
+    /**
+     * Fabrica para estadisticas sin atributos
+     * @return un objeto del tipo Statistic sin datos
+     */
+
+    public static Statistics createStatistic(){ return new Statistics(); }
+
+    /**
+     * Fabrica para estadisticas
+     * @param x una lista para el eje que indica el tipo de datos de la estadistica
+     * @param y una lista para los valores correspondientes a cada dato de x
+     * @return un objeto del tipo Statistic con sus valores fijados
+     */
+
+    public static Statistics createStatistic(ArrayList x, ArrayList<Integer> y){ return new Statistics(x,y); }
+
 }

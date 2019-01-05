@@ -1,17 +1,20 @@
 package webService.M09_StatisticsManagement;
 
-import Entities.M02_Company.Company;
-import Entities.M03_Campaign.Campaign;
-import Entities.M05_Channel.Channel;
-import Entities.M05_Channel.ChannelFactory;
-import Entities.M04_Integrator.IntegratorFactory;
-import Entities.M04_Integrator.Integrator;
+import DTO.DTO;
 import Entities.M09_Statistics.SqlEstrella;
 import Entities.M09_Statistics.Statistics;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
+import Exceptions.StatisticParametersNotFoundException;
+import Logic.Command;
+import Logic.CommandsFactory;
+import Logic.M09_Statistics.*;
+import Mappers.CampaignMapper.MapperCampaignWithOut_Company;
+import Mappers.CompanyMapper.MapperCompanyWithOut_Link;
+import Mappers.GenericMapper;
+import Factory.MapperFactory;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -21,41 +24,15 @@ import java.sql.*;
 import java.util.*;
 import java.util.List;
 
-enum FilterType {
-    company {
-        @Override
-        public String value() {
-            return "com_name";
-        }
-    },
-    campaign {
-        @Override
-        public String value() {
-            return "cam_name";
-        }
-    },
-    channel {
-        @Override
-        public String value() {
-            return "cha_name";
-        }
-    },
-    integrator {
-        @Override
-        public String value() {
-            return "int_name";
-        }
-    };
-
-    public abstract String value();
-}
 
 @Path( "/M09_Statistics" )
 public class M09_Statistics extends Application {
 
     Gson gson = new Gson();
-    private Connection connStar = SqlEstrella.getConInstance();
-    private Connection conn = Sql.getConInstance();
+    //private Connection connStar = SqlEstrella.getConInstance();
+    //private Connection conn = Sql.getConInstance();
+    private GenericMapper mapper;
+    private DTO dto;
 
     /* ====================
             Endpoints
@@ -65,19 +42,33 @@ public class M09_Statistics extends Application {
     @Path("/companies")
     @Produces("application/json")
     public Response getAllCompanies(@QueryParam("userId") Integer userId) {
+        /*
         String query = "SELECT com_id, com_name from m02_getcompaniesbyresponsible(" + userId + ") ORDER BY com_id;";
         try {
             return getCompanies(query);
         } catch(CompanyDoesntExistsException e) {
             return Response.serverError().build();
         }
-
+        */
+        GetAllCompaniesByUserCommand command = CommandsFactory.getAllCompaniesByUserCommand(userId);
+        try {
+            command.execute();
+            mapper = new MapperCompanyWithOut_Link();
+            return Response.ok(gson.toJson(
+                    mapper.CreateDtoList(command.returnList())
+            )).build();
+        } catch(CompanyDoesntExistsException e) {
+            return Response.serverError().build();
+        }catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     @Path("/campaigns")
     @Produces("application/json")
     public Response getCampaignsForCompany(@QueryParam("companyId") List<Integer> companyIds) {
+/*
         String query = "SELECT DISTINCT cam_id, cam_name FROM m09_getAllCampaigns(";
         for (int i = 0; i < companyIds.size() - 1;  i++) {
             query += companyIds.get(i) + ", ";
@@ -88,12 +79,27 @@ public class M09_Statistics extends Application {
         } catch(CampaignDoesntExistsException e) {
             return Response.serverError().build();
         }
+        */
+
+        GetCampaignsForCompanyCommand command = CommandsFactory.getCampaignsForCompanyCommand(companyIds);
+        try {
+            command.execute();
+            mapper = new MapperCampaignWithOut_Company();
+            return Response.ok(gson.toJson(
+                    mapper.CreateDtoList(command.returnList())
+            )).build();
+        } catch(CampaignDoesntExistsException e) {
+            return Response.serverError().build();
+        }catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     @Path("/channels")
     @Produces("application/json")
     public Response getAllChannels() {
+        /*
         String query = "SELECT DISTINCT cha_id, cha_name FROM dim_channel ORDER BY cha_id;";
         ArrayList<Channel> channels = new ArrayList<>();
         try {
@@ -111,13 +117,21 @@ public class M09_Statistics extends Application {
             SqlEstrella.bdClose(connStar);
         }
         return Response.ok(gson.toJson(channels)).build();
+        */
+        GetAllChannelsCommand command = CommandsFactory.getAllChannelsCommand();
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(command.returnList())).build();
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     @Path("/integrators")
     @Produces("application/json")
     public Response getIntegratorsForChannel(@QueryParam("channelId") List<Integer> channelIds) {
-        String query = "select int_id, int_name from m09_getIntegratorsByChannels(";
+        /*String query = "select int_id, int_name from m09_getIntegratorsByChannels(";
         for (int i = 0; i < channelIds.size() - 1;  i++) {
             query += channelIds.get(i) + ", ";
         }
@@ -127,8 +141,18 @@ public class M09_Statistics extends Application {
         } catch(ChannelNotFoundException e) {
             return Response.serverError().build();
         }
+        */
+        GetIntegratorsForChannelCommand command = CommandsFactory.getIntegratorsForChannelCommand(channelIds);
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(
+                    command.returnList()
+            )).build();
+        } catch (ChannelNotFoundException e) {
+            return Response.serverError().build();
+        }
     }
-
+/*
     @GET
     @Path("/count")
     @Produces("application/json")
@@ -142,68 +166,89 @@ public class M09_Statistics extends Application {
             default: return Response.status(400).entity("{ \"Mensaje\": \"No se envió ningun parametro o el parametro es incorrecto\" }").build();
         }
     }
-
+*/
     @GET
     @Path("/companiesCount")
     @Produces("application/json")
     public Response getCompaniesCount() {
-        return getOverallCountFor(FilterType.company);
+        //return getOverallCountFor(FilterType.company);
+        Command command = CommandsFactory.getCompanyStatisticCommand();
+        return getStadisticCount(command);
     }
 
     @GET
     @Path("/campaignsCount")
     @Produces("application/json")
     public Response getCampaignsCount() {
-        return getOverallCountFor(FilterType.campaign);
+        //return getOverallCountFor(FilterType.campaign);
+        Command command = CommandsFactory.getCampaignStatisticCommand();
+        return getStadisticCount(command);
     }
 
     @GET
     @Path("/channelsCount")
     @Produces("application/json")
     public Response getChannelsCount() {
-        return getOverallCountFor(FilterType.channel);
+        //return getOverallCountFor(FilterType.channel);
+        Command command = CommandsFactory.getChannelStatisticCommand();
+        return getStadisticCount(command);
     }
 
     @GET
     @Path("/integratorsCount")
     @Produces("application/json")
-    public Response getIntegratosCount() { return getOverallCountFor(FilterType.integrator); }
+    public Response getIntegratosCount() {
+        //return getOverallCountFor(FilterType.integrator);
+        Command command = CommandsFactory.getIntegratorStatisticCommand();
+        return getStadisticCount(command);
+    }
+
+    private Response getStadisticCount(Command command) {
+        try {
+            command.execute();
+            mapper = MapperFactory.createStatisticMapper();
+            return Response.ok(gson.toJson(
+                    mapper.CreateDto(command.Return())
+            )).build();
+        } catch (Exception e) {
+            return Response.serverError().build();
+        }
+    }
 
     @GET
     @Path("/update")
     @Produces("application/json")
     public Response updateStarSchema() {
-        String query = "SELECT m09_update_starschema();";
+        Command command = CommandsFactory.updateStarSchema();
         try {
-            Statement st = connStar.createStatement();
-            ResultSet result = st.executeQuery(query);
+            command.execute();
             return Response.ok().build();
         } catch(SQLException e) {
             return Response.serverError().build();
         } catch(Exception e) {
             return Response.serverError().build();
-        } finally {
-            SqlEstrella.bdClose(connStar);
         }
     }
-
+    /*
     public Response getOverallCountFor(FilterType filterType) {
+
         String query = queryForOverallCount(filterType);
-        Statistics companies = new Statistics();
+        Statistics Statistic = new Statistics();
         try {
             Statement statement = connStar.createStatement();
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
-                companies.addX(result.getString(filterType.value()));
-                companies.addY(result.getInt("messages"));
+                Statistic.addX(result.getString(filterType.value()));
+                Statistic.addY(result.getInt("messages"));
             }
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
             SqlEstrella.bdClose(connStar);
         }
-        return Response.ok(gson.toJson(companies)).build();
+        return Response.ok(gson.toJson(Statistic)).build();
+
     }
 
     public String queryForOverallCount(FilterType filterType) {
@@ -229,6 +274,7 @@ public class M09_Statistics extends Application {
     }
 
     private Response getCompanies(String query) throws CompanyDoesntExistsException {
+
         ArrayList<Company> companies = new ArrayList<>();
         try {
             Statement statement = conn.createStatement();
@@ -287,26 +333,19 @@ public class M09_Statistics extends Application {
         }
         return Response.ok(gson.toJson(integrators)).build();
     }
-
+*/
     //Endpoint que Devuelve Todos los Años donde ha habido envío de mensajes
     @GET
     @Path("/yearsCount")
     @Produces("application/json")
     public Response getYears(){
-        ArrayList<Integer> years = new ArrayList<>();
+        GetYearsCommand command = CommandsFactory.getYears();
         try{
-            Statement statement = connStar.createStatement();
-            String query = "SELECT dat_year FROM m09_getYears()";
-            ResultSet result = statement.executeQuery(query);
-            while (result.next()) {
-                years.add(result.getInt("dat_year"));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SqlEstrella.bdClose(connStar);
+            command.execute();
+            return Response.ok(gson.toJson(command.returnList())).build();
+        } catch(Exception e) {
+            return Response.serverError().build();
         }
-        return Response.ok(gson.toJson(years)).build();
     }
 
     //Endpoint que Devuelve Todos los Meses donde ha habido envío de mensajes
@@ -314,20 +353,13 @@ public class M09_Statistics extends Application {
     @Path("/monthsCount")
     @Produces("application/json")
     public Response getMonths(){
-        ArrayList<Integer> months = new ArrayList<>();
+        GetMonthsCommand command = CommandsFactory.getMonths();
         try{
-            Statement statement = connStar.createStatement();
-            String query = "SELECT dat_month FROM m09_getMonths()";
-            ResultSet result = statement.executeQuery(query);
-            while (result.next()) {
-                months.add(result.getInt("dat_month"));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SqlEstrella.bdClose(connStar);
+            command.execute();
+            return Response.ok(gson.toJson(command.ReturnList())).build();
+        } catch(Exception e) {
+            return Response.serverError().build();
         }
-        return Response.ok(gson.toJson(months)).build();
     }
 
     //Endpoint que Devuelve Todos los días de la semana donde ha habido envío de mensajes
@@ -335,20 +367,13 @@ public class M09_Statistics extends Application {
     @Path("/daysofweekCount")
     @Produces("application/json")
     public Response getDaysofWeek(){
-        ArrayList<Integer> daysofweek = new ArrayList<>();
-        try{
-            Statement statement = connStar.createStatement();
-            String query = "SELECT dat_dayofweek FROM m09_getDaysofWeek()";
-            ResultSet result = statement.executeQuery(query);
-            while (result.next()) {
-                daysofweek.add(result.getInt("dat_dayofweek"));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SqlEstrella.bdClose(connStar);
+        GetDaysofWeekCommand command = CommandsFactory.getDaysofWeek();
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(command.ReturnList())).build();
+        }  catch (Exception e){
+            return Response.serverError().build();
         }
-        return Response.ok(gson.toJson(daysofweek)).build();
     }
 
     //Endpoint que Devuelve Todos los días del mes donde ha habido envío de mensajes
@@ -356,20 +381,13 @@ public class M09_Statistics extends Application {
     @Path("/daysofmonthCount")
     @Produces("application/json")
     public Response getDaysofMonth(){
-        ArrayList<Integer> daysofmonth = new ArrayList<>();
-        try{
-            Statement statement = connStar.createStatement();
-            String query = "SELECT dat_dayofmonth FROM m09_getDaysofMonth()";
-            ResultSet result = statement.executeQuery(query);
-            while (result.next()) {
-                daysofmonth.add(result.getInt("dat_dayofmonth"));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SqlEstrella.bdClose(connStar);
+        GetDaysofMonthCommand command = CommandsFactory.getDaysofMonth();
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(command.ReturnList())).build();
+        }  catch (Exception e){
+            return Response.serverError().build();
         }
-        return Response.ok(gson.toJson(daysofmonth)).build();
     }
 
     //Endpoint que Devuelve Todos los días del año donde ha habido envío de mensajes
@@ -377,20 +395,13 @@ public class M09_Statistics extends Application {
     @Path("/daysofyearCount")
     @Produces("application/json")
     public Response getDaysofYear(){
-        ArrayList<Integer> daysofyear = new ArrayList<>();
-        try{
-            Statement statement = connStar.createStatement();
-            String query = "SELECT dat_dayofyear FROM m09_getDaysofYear()";
-            ResultSet result = statement.executeQuery(query);
-            while (result.next()) {
-                daysofyear.add(result.getInt("dat_dayofyear"));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SqlEstrella.bdClose(connStar);
+        GetDaysofYearCommand command = CommandsFactory.getDaysofYear();
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(command.ReturnList())).build();
+        }  catch (Exception e){
+            return Response.serverError().build();
         }
-        return Response.ok(gson.toJson(daysofyear)).build();
     }
 
     //Endpoint que Devuelve Todas las semanas del año donde ha habido envío de mensajes
@@ -398,20 +409,13 @@ public class M09_Statistics extends Application {
     @Path("/weeksofyearCount")
     @Produces("application/json")
     public Response getWeeksofYear(){
-        ArrayList<Integer> weeksofyear = new ArrayList<>();
-        try{
-            Statement statement = connStar.createStatement();
-            String query = "SELECT dat_weekofyear FROM m09_getWeeksofYear()";
-            ResultSet result = statement.executeQuery(query);
-            while (result.next()) {
-                weeksofyear.add(result.getInt("dat_weekofyear"));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SqlEstrella.bdClose(connStar);
+        GetWeeksofYearCommand command = CommandsFactory.getWeeksofYear();
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(command.ReturnList())).build();
+        }  catch (Exception e){
+            return Response.serverError().build();
         }
-        return Response.ok(gson.toJson(weeksofyear)).build();
     }
 
     //Endpoint que devuelve los cuartos del año
@@ -419,20 +423,13 @@ public class M09_Statistics extends Application {
     @Path("/quartersofyearCount")
     @Produces("application/json")
     public Response getQuartersofYear(){
-        ArrayList<Integer> quartersofyear = new ArrayList<>();
-        try{
-            Statement statement = connStar.createStatement();
-            String query = "SELECT dat_quarterofyear FROM m09_getQuartersofYear()";
-            ResultSet result = statement.executeQuery(query);
-            while (result.next()) {
-                quartersofyear.add(result.getInt("dat_quarterofyear"));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SqlEstrella.bdClose(connStar);
+        GetQuartersofYearCommand command = CommandsFactory.getQuartersofYear();
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(command.ReturnList())).build();
+        }  catch (Exception e){
+            return Response.serverError().build();
         }
-        return Response.ok(gson.toJson(quartersofyear)).build();
     }
 
     //Endpoint que devuelve las horas del día donde se han enviado mensaje
@@ -440,20 +437,13 @@ public class M09_Statistics extends Application {
     @Path("/hoursCount")
     @Produces("application/json")
     public Response getHours(){
-        ArrayList<Integer> hours = new ArrayList<>();
-        try{
-            Statement statement = connStar.createStatement();
-            String query = "SELECT dat_hourofday FROM m09_getHours()";
-            ResultSet result = statement.executeQuery(query);
-            while (result.next()) {
-                hours.add(result.getInt("dat_hourofday"));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SqlEstrella.bdClose(connStar);
+        GetHoursCommand command = CommandsFactory.getHours();
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(command.ReturnList())).build();
+        }  catch (Exception e){
+            return Response.serverError().build();
         }
-        return Response.ok(gson.toJson(hours)).build();
     }
 
     //Endpoint que devuelve los minutos donde se han enviado mensaje
@@ -461,20 +451,13 @@ public class M09_Statistics extends Application {
     @Path("/minutesCount")
     @Produces("application/json")
     public Response getMinutes(){
-        ArrayList<Integer> minutes = new ArrayList<>();
-        try{
-            Statement statement = connStar.createStatement();
-            String query = "SELECT dat_minuteofhour FROM m09_getMinutes()";
-            ResultSet result = statement.executeQuery(query);
-            while (result.next()) {
-                minutes.add(result.getInt("dat_minuteofhour"));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SqlEstrella.bdClose(connStar);
+        GetMinutesCommand command = CommandsFactory.getMinutes();
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(command.ReturnList())).build();
+        }  catch (Exception e){
+            return Response.serverError().build();
         }
-        return Response.ok(gson.toJson(minutes)).build();
     }
 
     //Endpoint que devuelve los segundos donde se han enviado mensaje
@@ -482,20 +465,13 @@ public class M09_Statistics extends Application {
     @Path("/secondsCount")
     @Produces("application/json")
     public Response getSeconds(){
-        ArrayList<Integer> seconds = new ArrayList<>();
-        try{
-            Statement statement = connStar.createStatement();
-            String query = "SELECT dat_secondofminute FROM m09_getSeconds()";
-            ResultSet result = statement.executeQuery(query);
-            while (result.next()) {
-                seconds.add(result.getInt("dat_secondofminute"));
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            SqlEstrella.bdClose(connStar);
+        GetSecondsCommand command = CommandsFactory.getSeconds();
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(command.ReturnList())).build();
+        }  catch (Exception e){
+            return Response.serverError().build();
         }
-        return Response.ok(gson.toJson(seconds)).build();
     }
 
     //Endpoint que devuelve la cantidad de Mensajes según los filtros enviados(compañia, campaña, canal, integrador, tiempo)
@@ -517,6 +493,8 @@ public class M09_Statistics extends Application {
                                   @QueryParam("secondId") List<Integer> secondofminuteIds,
                                   @QueryParam("quarterId") List<Integer> quarterIds)
     {
+        /*
+        Connection connStar = SqlEstrella.getConInstance();
         String companyin = setParametersforQuery(companyIds,"and me.sen_com_id in ");
         String campaignin = setParametersforQuery(campaignIds,"and me.sen_cam_id in ");
         String channelin = setParametersforQuery(channelIds,"and me.sen_cha_id in ");
@@ -572,10 +550,29 @@ public class M09_Statistics extends Application {
             Sql.bdClose(connStar);
         }
         return Response.ok(gson.toJson(stats)).build();
+        */
+
+        GetStatisticCommand command = CommandsFactory.getStatisticCommand(companyIds, campaignIds, channelIds,
+                                                                            integratorIds, yearIds, monthIds,
+                                                                            dayofweekIds, weekofyearIds, dayofmonthIds,
+                                                                            dayofyearIds, hourofdayIds, minuteofhourIds,
+                                                                            secondofminuteIds, quarterIds);
+        try {
+            command.execute();
+            return Response.ok(gson.toJson(
+                    command.returnStats()
+            )).build();
+        } catch (StatisticParametersNotFoundException e) {
+            return Response.status(400).entity("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }").build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
     //Método que devuelve la consulta de mensajes enviados, agrupada por los filtros enviados
+    /*
     public Statistics getMessagesParam(String companyIds, String campaignIds, String channelIds, String integratorIds, String yearIds,
                                        String monthIds, String dayofweekIds, String weekofyearIds, String dayofmonthIds, String dayofyearIds,
                                        String hourIds, String minuteIds, String secondIds, String quarterIds ,String param1, String param2,
@@ -608,7 +605,7 @@ public class M09_Statistics extends Application {
         }
         return gr;
     }
-
+*/
     //Método que arma las condiciones para la consulta de mensajes enviados
     public String setParametersforQuery(List<Integer> ids, String params){
         if (ids.isEmpty()) {
