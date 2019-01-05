@@ -2,6 +2,7 @@ package Logic;
 
 import Entities.Entity;
 import Logic.M01_Login.GetUser;
+import Logic.M07_Template.*;
 import Logic.M02_Company.*;
 import Logic.M03_Campaign.*;
 import Logic.M09_Statistics.*;
@@ -65,13 +66,55 @@ public class CommandsFactory {
     public static AddCampaignCommand createAddCampaignCommand(Entity _ca ){ return new AddCampaignCommand( _ca ); }
     public static GetCampaignCommand createGetCampaignCommand(Entity _ca ){ return new GetCampaignCommand( _ca ); }
     public static CampaignUserCommand createCampaignUserCommand(Entity _ca ){ return new CampaignUserCommand( _ca ); }
-   /*public static CampaignUserCompanyCommand createCampaignUserCompany( Entity _ca ){
-        return new CampaignUserCompanyCommand( _ca  );
-     } */
+    /*public static CampaignUserCompanyCommand createCampaignUserCompany( Entity _ca ){
+         return new CampaignUserCompanyCommand( _ca  );
+      } */
     public static ChangeStatusCampaignCommand createChangeStatusCampaign( Entity _ca ){
         return new ChangeStatusCampaignCommand( _ca );
     }
     //endregion
+
+
+    //M07_Templates
+
+    public static CommandGetMessages createCommandGetMessages(){
+        return new CommandGetMessages();
+    }
+
+
+    public static CommandPostParameter createCommandPostParameter(){
+        return new CommandPostParameter();
+    }
+
+    public static CommandGetParameters createCommandGetParameters(){
+        return new CommandGetParameters();
+    }
+
+    public static CommandGetTemplates createCommandGetTemplates(){
+        return new CommandGetTemplates();
+    }
+
+    public static CommandGetTemplate createCommandGetTemplate(){
+        return new CommandGetTemplate();
+    }
+
+    public static CommandGetTemplatePrivilegesByUser createCommandGetTemplatePrivilegesByUser(){
+        return new CommandGetTemplatePrivilegesByUser();
+    }
+
+    public static CommandPostTemplateStatus createCommandPostTemplateStatus(){
+        return new CommandPostTemplateStatus();
+    }
+
+    public static CommandPostTemplate createCommandPostTemplate(){
+        return new CommandPostTemplate();
+    }
+
+    public static CommandUpdateTemplate CommandUpdateTemplate(){
+        return new CommandUpdateTemplate();
+}
+
+
 
 
 }

@@ -76,11 +76,6 @@ public class M07_Template {
         return Response.ok(gson.toJson(privileges)).build();
     }
 
-    @Path("/messages")
-    public M07_Message getMessages(){
-        return new M07_Message();
-    }
-
     /**
      *
      This method is responsible for updating the status
