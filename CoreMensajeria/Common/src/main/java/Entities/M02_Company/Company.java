@@ -11,6 +11,8 @@ public class Company extends Entity {
     private String _link;
             private boolean _habilitado;    // Anadido por la estructura del mapper
 
+
+
     public int get_idCompany () {
         return _idCompany;
     }
@@ -123,6 +125,7 @@ public class Company extends Entity {
      * @param desc descripcion de la compania
      * @param status el estatus de la compania, puede ser activada o desactivada
      * @param link
+     * @param userId
      */
     public Company ( int id, String name, String desc, boolean status, String link, int userId ) {
 
@@ -134,7 +137,21 @@ public class Company extends Entity {
         _idUser = userId;
 
     }
-
+    /**
+     * Constructor para Companias
+     * @param id id de la compania
+     * @param name nombre para una compania recien creada
+     * @param desc descripcion de la compania
+     * @param status el estatus de la compania, puede ser activada o desactivada
+     * @param link
+     */
+    public Company(int id, String name, String desc, boolean status, String link) {
+        _idCompany = id;
+        _name = name;
+        _desc = desc;
+        _status = status;
+        _link = link;
+    }
 
     /**
      * Constructor para Companias
@@ -143,5 +160,7 @@ public class Company extends Entity {
     public Company (int id){
         _idCompany =  id;
     }
+
+
 
 }

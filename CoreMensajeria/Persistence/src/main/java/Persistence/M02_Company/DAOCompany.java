@@ -25,6 +25,7 @@ public class DAOCompany  implements IDAOCompany {
     final String SELECT_COMPANIES_BY_USER = "{Call m02_getcompanies(?)}";
     final String CREATE_COMPANY=  "{Call m02_addcompany(?,?,?,?,?)}";
     final String SELECT_ALL_COMPANIES = "{Call m02_getcompaniesall}";
+    final String UPDATE_COMPANY = "{Call m02_updatecompany(?,?,?,?,?,?)}";
 
 
     @Override
@@ -55,11 +56,11 @@ public class DAOCompany  implements IDAOCompany {
     @Override
     public ArrayList<Entity> companiesByResponsible( Entity e ) {
         ArrayList<Entity> _coList= new ArrayList<>();
-        User _user = ( User ) e;
+        Company _comp = ( Company ) e;
 
         try {
             PreparedStatement  preparedStatement = _conn.prepareCall(SELECT_COMPANY_BY_RESPONSIBLE);
-            preparedStatement.setInt( 1, _user.get_idUser() );
+            preparedStatement.setInt( 1, _comp.get_idCompany() );
             ResultSet _result = preparedStatement.executeQuery();
             while ( _result.next() ) {
                 _coList.add( getCompany( _result ) );
@@ -74,13 +75,12 @@ public class DAOCompany  implements IDAOCompany {
 
     public Company getCompany( ResultSet _result ) throws SQLException {
 
-        Company _company = EntityFactory.CreateFullCompany(
+        Company _company = EntityFactory.CreateCompanyWithOutUserID(
                 _result.getInt( "com_id" ),
                 _result.getString( "com_name" ),
                 _result.getString( "com_description" ),
                 _result.getBoolean( "com_status" ),
-                _result.getString( "com_route_link" ),
-                _result.getInt( "com_user_id" ));
+                _result.getString( "com_route_link" ));
         return _company;
     }
 
@@ -106,10 +106,10 @@ public class DAOCompany  implements IDAOCompany {
     @Override
     public ArrayList<Entity> companiesByUser( Entity e ) {
         ArrayList<Entity> _coList= new ArrayList<>();
-        User _company = ( User ) e;
+        Company _company = ( Company ) e;
         try {
             PreparedStatement _ps = _conn.prepareCall(SELECT_COMPANIES_BY_USER);
-            _ps.setInt(1, _company.get_idUser());
+            _ps.setInt(1, _company.get_idCompany());
             ResultSet _result = _ps.executeQuery();
             while(_result.next()){
                 _coList.add( getCompany( _result ) );
@@ -168,8 +168,25 @@ public class DAOCompany  implements IDAOCompany {
 
     @Override
     public Entity update(Entity e) {
-        return null;
+        Company _co = (Company) e;
+        PathHandler ph  = new PathHandler();
+        try {
+            PreparedStatement _ps = _conn.prepareCall( UPDATE_COMPANY );
+            _ps.setString(1, _co.get_name());
+            _ps.setString(2, _co.get_desc());
+            _ps.setBoolean(3, _co.get_status());
+            _ps.setString(4, ph.generatePath(_co));
+            _ps.setInt(5, _co.get_idUser());
+            _ps.setInt(6, _co.get_idCompany());
+            _ps.execute();
+        }catch ( Exception _exc ){
+            _exc.printStackTrace();
+        }
+        return _co;
     }
+
+
+
 }
 
 

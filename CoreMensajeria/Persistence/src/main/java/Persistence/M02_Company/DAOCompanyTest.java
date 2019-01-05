@@ -117,7 +117,7 @@ public class DAOCompanyTest {
         assertEquals(8, _companiesList.size());
     }
 
-
+/*
     //Revisar este metodo y su Sp
     @Test
     void changeStatusTest(){
@@ -133,6 +133,6 @@ public class DAOCompanyTest {
         catch (Exception e ){
             e.printStackTrace();
         }
-    }
+    }*/
 
 }

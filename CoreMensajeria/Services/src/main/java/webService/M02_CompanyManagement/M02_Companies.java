@@ -8,11 +8,13 @@ import Entities.M02_Company.CompanyDAO;
 import Entities.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
 import Exceptions.ParameterCantBeNullException;
+import Factory.DTOFactory;
 import Factory.MapperFactory;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M02_Company.AddCompanyCommand;
 import Logic.M02_Company.GetAllCompaniesCommand;
+import Logic.M02_Company.GetCompanyByUserCommand;
 import Mappers.CompanyMapper.*;
 import Persistence.M02_Company.DAOCompany;
 import com.google.gson.Gson;
@@ -86,7 +88,7 @@ public class M02_Companies {
     }
 
 
-    //Falta patronear este Metodo y Poner su DAO
+
     @GET
     @Path("/GetCompaniesByResponsible")
     @Produces("application/json")
@@ -316,24 +318,24 @@ public class M02_Companies {
     }
 
     @GET
-    @Path("/GetCompaniesPP")
+    @Path("/GetCompaniesByUserPP/{companyId}")
+    @Consumes("application/json")
     @Produces("application/json")
-
-    /**
+      /**
      * Metodo que recibe el id de un usuario y devuelve las compañias en las que es administrador
-     * @param id el id del usuario
+     * @param _dto posee el id del usuario
      * @return Response con status ok al encontrar la informacion solicitada
      */
-    public Response getCompaniesByUserPP( DTOFullCompany _dto ){
-
+    public Response getCompaniesByUserPP( @PathParam("companyId") int id ){
+        DTOIdCompany _dto = DTOFactory.CreateDTOIdCompany(id);
         Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
-
         try {
-            MapperFullCompany _mapper = MapperFactory.CreateMapperFullCompany();
+            MapperIdCompany _mapper = MapperFactory.createMapperIdCompany();
             Entity _comp = _mapper.CreateEntity( _dto );
-            Command _command = CommandsFactory.createGetCompanyByUserCommand( _comp );
+            GetCompanyByUserCommand _command = CommandsFactory.createGetCompanyByUserCommand( _comp );
             _command.execute();
-            DTOFullCompany _dtoCo = _mapper.CreateDto( _command.Return() ) ;
+            MapperFullCompany _mappCompany = MapperFactory.CreateMapperFullCompany();
+           List < DTOFullCompany > _dtoCo = _mappCompany.CreateDtoList( _command.ReturnList() ) ;
             _rb.entity( gson.toJson( _dtoCo ) ) ;
             return _rb.build();
 
@@ -348,7 +350,7 @@ public class M02_Companies {
 
 
     @PUT
-    @Path("/Edit/CompanyPP/{companyId}")
+    @Path("/Edit/CompanyPP")
     @Produces("application/json")
     @Consumes("application/json")
     public Response editCompanyPP( DTOFullCompany _dto ){
@@ -371,13 +373,6 @@ public class M02_Companies {
 
 
     }
-
-
-
-
-
-
-
 
 
 //------------------------------------------------------
