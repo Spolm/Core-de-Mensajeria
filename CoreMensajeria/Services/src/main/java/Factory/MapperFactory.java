@@ -1,8 +1,6 @@
 package Factory;
 
-import Mappers.CampaignMapper.MapperCampaignWithOut_Company;
-import Mappers.CampaignMapper.MapperCampaignWithOut_id_And_Company;
-import Mappers.CampaignMapper.MapperFullCampaign;
+import Mappers.CampaignMapper.*;
 import Mappers.CompanyMapper.*;
 
 public class MapperFactory {
@@ -53,12 +51,24 @@ public class MapperFactory {
     }
 
     /**
+     * Metodos que instancian un obejto del tipo MapperIdCampaign
+     * @return un objeto del tipo MapperIdCampaign
+     */
+    public static MapperIdCampaign createMapperIdCampaign(){
+        return  new MapperIdCampaign();
+    }
+
+    /**
      * Metodos que instancian un obejto del tipo MapperCampaignWithOut_id_And_Company
      * @return un objeto del tipo MapperCampaignWithOut_id_And_Company
      */
     public static MapperCampaignWithOut_id_And_Company CreateMapperCampaignWithOut_id_And_Company(){
-
         return new MapperCampaignWithOut_id_And_Company();
+    }
+
+
+    public static MapperIdStatusCampaign createMapperIdStatusCampaign(){
+        return new MapperIdStatusCampaign();
     }
 
 
@@ -66,8 +76,6 @@ public class MapperFactory {
         return  new MapperIdCompany();
     }
 
-    public static MapperIdStatusCompany createMapperIdStatusCompany(){
-        return  new MapperIdStatusCompany();
-    }
+    public static MapperIdStatusCompany createMapperIdStatusCompany(){ return  new MapperIdStatusCompany(); }
 
 }

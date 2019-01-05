@@ -294,7 +294,7 @@ public class M02_Companies {
     }
 
     @POST
-    @Path("/updatePcompanyId")
+    @Path("/updateCompanyStatus")
     @Consumes("application/json")
     @Produces("text/plain")
     public Response changeCompanyStatusPP( DTOIdStatusCompany _dto ){
@@ -335,7 +335,7 @@ public class M02_Companies {
             GetCompanyByUserCommand _command = CommandsFactory.createGetCompanyByUserCommand( _comp );
             _command.execute();
             MapperFullCompany _mappCompany = MapperFactory.CreateMapperFullCompany();
-           List < DTOFullCompany > _dtoCo = _mappCompany.CreateDtoList( _command.ReturnList() ) ;
+            List < DTOFullCompany > _dtoCo = _mappCompany.CreateDtoList( _command.ReturnList() ) ;
             _rb.entity( gson.toJson( _dtoCo ) ) ;
             return _rb.build();
 
@@ -362,10 +362,8 @@ public class M02_Companies {
             Entity _comp = _mapper.CreateEntity( _dto );
             Command _command = CommandsFactory.createUpdateCompanyCommand( _comp );
             _command.execute();
-
             return _rb.build();
         }
-
         catch ( Exception e ){
 
             return Response.status( 500 ).entity( e.getMessage() ).build();

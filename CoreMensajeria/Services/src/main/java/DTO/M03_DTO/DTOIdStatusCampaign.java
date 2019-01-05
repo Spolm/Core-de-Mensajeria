@@ -13,7 +13,7 @@ public class DTOIdStatusCampaign {
     }
 
     /**
-     * DTO para Company con todos los atributos de la clase
+     * DTO para Campaign con el id y el estatus
      * @param id id para una campaña
      * @param status el estatus de una campaña
      */

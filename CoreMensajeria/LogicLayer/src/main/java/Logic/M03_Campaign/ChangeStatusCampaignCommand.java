@@ -3,7 +3,7 @@ package Logic.M03_Campaign;
 import Entities.Entity;
 import Logic.Command;
 import Persistence.DAOFactory;
-import Persistence.M02_Company.IDAOCompany;
+import Persistence.M03_Campaign.IDAOCampaign;
 
 import java.util.ArrayList;
 
@@ -19,8 +19,8 @@ public class ChangeStatusCampaignCommand extends Command {
     @Override
     public void execute() throws Exception {
         try {
-            IDAOCompany _dao = DAOFactory.instanciateDaoCompany ( );
-            _dao.changeStatus( _ca );
+            IDAOCampaign _dao = DAOFactory.instanciateDaoCampaign ( );
+            _dao.changeStatusCampaign( _ca );
         }
 
         catch ( Exception e ){

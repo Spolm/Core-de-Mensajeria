@@ -91,6 +91,16 @@ public class DTOFactory {
     }
 
     /**
+     * Metodos que instancian un obejto del tipo DTOIdCampaign mediante los parametros pasados
+     * @return un objeto del tipo DTOIdCampaign
+     */
+    public static DTOIdCampaign CreateDTOIdCampaign(int id ){
+
+        return new DTOIdCampaign( id );
+    }
+
+
+    /**
      * Metodos que instancian un obejto del tipo DTOFullCampaign mediante los parametros pasados
      * @return un objeto del tipo DTOFullCampaign
      */
@@ -107,7 +117,7 @@ public class DTOFactory {
      * Metodos que instancian un obejto del tipo DTOIdStatusCampaign mediante los parametros pasados
      * @return un objeto del tipo DTOIdStatusCampaign
      */
-    public static DTOIdStatusCampaign CreateDTODTOIdStatusCampaign(int id, boolean status ){
+    public static DTOIdStatusCampaign CreateDTOIdStatusCampaign( int id, boolean status ){
 
         return new DTOIdStatusCampaign( id, status );
     }

@@ -27,7 +27,7 @@ public class MapperIdStatusCampaign extends GenericMapper<DTOIdStatusCampaign> {
         try {
             DTOIdStatusCampaign dto = null;
             Campaign _com = (Campaign) entity;
-            dto = DTOFactory.CreateDTODTOIdStatusCampaign( _com.get_idCampaign(), _com.get_statusCampaign() );
+            dto = DTOFactory.CreateDTOIdStatusCampaign( _com.get_idCampaign(), _com.get_statusCampaign() );
 
             return dto;
         }

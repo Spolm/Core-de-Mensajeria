@@ -123,6 +123,17 @@ public class EntityFactory {
     }
 
     /**
+     * Fabrica para campañas solo con id
+     ** @param id nombre de la campaña
+     * @return un objeto del tipo Company con el parametro id
+     */
+
+    public static Campaign CreateCampaignId(int id ){
+        return new Campaign( id );
+    }
+
+
+    /**
      * Fabrica para campañas con todos los atributos
      * @param idCampaign id de una campaña
      * @param nameCampaign nombre para una campaña recien creada

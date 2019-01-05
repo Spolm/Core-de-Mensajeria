@@ -141,6 +141,17 @@ public class Campaign extends Entity {
         _idCompany = _idCompany;
     }
 
+    /**
+     * Constructor para campañas
+     * @param idCampaign   id de la campaña
+
+     */
+    public Campaign ( int idCampaign ) {
+        _idCampaign = idCampaign;
+
+    }
+
+
 
     /**
      * Constructor para campañas
