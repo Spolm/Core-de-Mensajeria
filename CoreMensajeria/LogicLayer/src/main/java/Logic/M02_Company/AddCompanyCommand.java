@@ -5,15 +5,26 @@ import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;
 
+import java.util.ArrayList;
+
 public class AddCompanyCommand extends Command {
 
     private static  Entity _co;
 
+
+    /**
+     * Constructor de la clase.
+     * @param _company instancia de la Compania que se desea agregar
+     */
     public AddCompanyCommand( Entity _company  ) {
 
       this._co = _company ;
     }
 
+
+    /**
+     * Metodo que ejecuta la Accion del comando
+     */
     @Override
     public void execute() throws Exception {
         try {
@@ -22,16 +33,17 @@ public class AddCompanyCommand extends Command {
         }
 
         catch ( Exception e ){
-
-            }
-
-
-
-
+            e.printStackTrace();
+        }
     }
 
     @Override
     public Entity Return() {
         return null;
     }
+
+    //@Override
+    public ArrayList<Entity> ReturnList() { return null; }
+
+
 }

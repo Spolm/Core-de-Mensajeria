@@ -4,5 +4,5 @@ export class Company {
     public _desc: string;
     public _link: string;
     public _status: boolean;
-    public _userId: number;
+    public _idUser: number;
 }

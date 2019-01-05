@@ -6,6 +6,7 @@ import { CompanyRoutingModule } from './company-routing.module';
 import { PageHeaderModule } from './../../shared';
 import { Company } from '../../../model/company-model';
 import { CreateCompanyComponent } from './create-company/create-company.component';
+import { ModifyCompanyComponent } from './modify-company/modify-company.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { CreateCompanyComponent } from './create-company/create-company.componen
     FormsModule
   ],
   exports: [CompanyComponent],
-  declarations: [CompanyComponent, CreateCompanyComponent]
+  declarations: [CompanyComponent, CreateCompanyComponent, ModifyCompanyComponent]
 })
 export class CompanyModule implements OnInit {
 
@@ -35,3 +36,4 @@ export class CompanyModule implements OnInit {
     localStorage.setItem('idCompany', JSON.stringify(company._idCompany));
   }
 }
+
