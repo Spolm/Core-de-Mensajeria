@@ -1,7 +1,7 @@
 package Logic.M08_SendMessage;
 
 import Entities.Entity;
-import Entities.M08_Validation.XMLManagement.Command;
+import Logic.Command;
 import java.util.Calendar;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,7 +20,8 @@ public class ScheduleMessage extends Command {
         service.schedule(new ScheduleMessageTask(), mills, TimeUnit.MILLISECONDS);
     }
 
-    public Entity Result() {
+    @Override
+    public Entity Return() {
         return null;
     }
 }

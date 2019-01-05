@@ -43,10 +43,22 @@ public class CommandProcessXML extends Command{
 
             for(Message message : messageList){
                 System.out.println(message.toString());
+                parseMessage(message);
             }
 
         } catch (SAXException | ParserConfigurationException | IOException e1) {
             e1.printStackTrace();
         }
+    }
+
+    private void parseMessage(Message message) {
+        String text = "Hola [.$Nombre$.] tu edad es [.$Edad$.]";
+        ArrayList<Parameter> params = message.get_param();
+
+        for (Parameter param : params) {
+            System.out.println(param.get_name());
+            text = text.replace("[.$" + param.get_name() + "$.]", param.get_value());
+        }
+        System.out.println(text);
     }
 }
