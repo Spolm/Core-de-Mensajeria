@@ -150,7 +150,6 @@ class ValidationServiceTest {
                 "I got you who loves me so\n" +
                 "I got you, babe", "SMS");
         assertThrows(SMSTooLongException.class, () -> c.execute());
-        });
 
     }
 }
