@@ -3,7 +3,10 @@ package webService.M07_Template;
 import Entities.M07_Template.HandlerPackage.MessageHandler;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
+import Logic.Command;
+import Logic.CommandsFactory;
 import com.google.gson.Gson;
+import webService.M01_Login.Error;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,11 +19,8 @@ import java.util.ArrayList;
  */
 @Path("/")
 public class M07_Message {
-
-    /**
-     * serialization and deserialization between Java objects
-     */
-    public Gson gson = new Gson();
+    private final String MESSAGE_ERROR_INTERN = "Error Interno";
+    private final String MESSAGE_EXCEPTION = "Excepcion";
 
     /**
      * this method returns all the templates and each one with
@@ -29,11 +29,19 @@ public class M07_Message {
      */
     @GET
     public Response getMessages(){
-        TemplateHandler templateHandler = new TemplateHandler();
-        ArrayList<Template> templateArrayList = templateHandler.getTemplates();
-        MessageHandler messageHandler = new MessageHandler();
-        ArrayList<Template> templateList = messageHandler.getMessages(templateArrayList);
-        return Response.ok(gson.toJson(templateList)).build();
+        Response response = null;
+        Error error;
+        try {
+            Command c = CommandsFactory.createCommandGetMessages();
+            c.execute();
+            response = Response.ok(c.Return()).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        }
+        return response;
     }
 
 }

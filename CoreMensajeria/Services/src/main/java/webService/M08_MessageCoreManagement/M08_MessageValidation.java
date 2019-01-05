@@ -8,6 +8,7 @@ import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
 import Entities.M04_Integrator.*;
 import Exceptions.*;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import com.google.gson.Gson;
 import java.util.Random;
 import javax.ws.rs.GET;

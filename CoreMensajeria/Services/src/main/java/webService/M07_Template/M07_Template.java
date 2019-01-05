@@ -4,7 +4,7 @@ import Entities.M01_Login.Privilege;
 import Entities.M07_Template.HandlerPackage.StatusHandler;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
-import Exceptions.TemplateDoesntExistsException;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;

@@ -16,7 +16,7 @@ import Entities.M05_Channel.Channel;
 import Entities.M05_Channel.ChannelFactory;
 import Entities.M04_Integrator.Integrator;
 import Exceptions.ParameterDoesntExistsException;
-import Exceptions.TemplateDoesntExistsException;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import com.google.gson.*;
 import java.sql.*;
 import java.util.ArrayList;

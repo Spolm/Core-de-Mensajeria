@@ -1,6 +1,7 @@
 package Logic;
 
 import Entities.Entity;
+import Entities.M07_Template.NewParameter;
 import Logic.M01_Login.GetUser;
 import Logic.M07_Template.*;
 import Logic.M09_Statistics.*;
@@ -54,12 +55,12 @@ public class CommandsFactory {
         return new CommandGetMessages();
     }
 
-    public static CommandPostParameter createCommandPostParameter(){
-        return new CommandPostParameter();
+    public static CommandPostParameter createCommandPostParameter(NewParameter newParameter){
+        return new CommandPostParameter(newParameter);
     }
 
-    public static CommandGetParameters createCommandGetParameters(){
-        return new CommandGetParameters();
+    public static CommandGetParameters createCommandGetParameters(int companyId){
+        return new CommandGetParameters(companyId);
     }
 
     public static CommandGetTemplates createCommandGetTemplates(){

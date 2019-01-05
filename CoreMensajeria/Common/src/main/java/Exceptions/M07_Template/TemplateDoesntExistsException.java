@@ -1,4 +1,4 @@
-package Exceptions;
+package Exceptions.M07_Template;
 
 /**
  * Exeption personalizada para indicar que no existe una plantilla
