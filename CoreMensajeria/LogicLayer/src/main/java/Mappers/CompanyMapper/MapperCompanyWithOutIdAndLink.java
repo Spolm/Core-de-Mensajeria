@@ -1,35 +1,34 @@
 package Mappers.CompanyMapper;
 
-import DTO.M02_DTO.DTOIdCompany;
-import DTO.M02_DTO.DTOIdStatusCompany;
+import DTO.DTOFactory;
+import DTO.M02_DTO.DTOCompanyWithOutIdAndLink;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M02_Company.Company;
-import Factory.DTOFactory;
 import Mappers.GenericMapper;
-import webService.M02_CompanyManagement.M02_Companies;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
-public class MapperIdStatusCompany  extends GenericMapper<DTOIdStatusCompany> {
+public class MapperCompanyWithOutIdAndLink extends GenericMapper <DTOCompanyWithOutIdAndLink> {
+
+
+
     /**
-     * Metodo con el cual se transforma una entidad en un DTOIdCompany
+     * Metodo con el cual se transforma una entidad en un DTOCompanyWithOutIdAndLink
      * @param entity Entidad que recibe para hacer el mapeo
-     * @return un objeto del tipo DTOIdCompany
+     * @return un objeto del tipo DTOCompanyWithOutIdAndLink
      */
     @Override
-    public DTOIdStatusCompany CreateDto(Entity entity) {
-
+    public DTOCompanyWithOutIdAndLink CreateDto(Entity entity) {
         try {
-            DTOIdStatusCompany dto = null;
+            DTOCompanyWithOutIdAndLink dto = null;
             Company _com = (Company) entity;
-            dto = DTOFactory.CreateDTOIdStatusCompany( _com.get_idCompany(), _com.get_status() );
+            dto = DTOFactory.CreateDtoCompanyWithOut_idAndlink(_com.get_name(), _com.get_desc(), _com.get_status());
 
             return dto;
         }
-        catch ( Exception e) {
+        catch (Exception e) {
 
             throw e;
         }
@@ -39,18 +38,20 @@ public class MapperIdStatusCompany  extends GenericMapper<DTOIdStatusCompany> {
     /**
      * Metodo con el cual se transforma de una lista de entidades a una lista de dto
      * @param entities Entidad que recibe para hacer el mapeo
-     * @return una lista de objetos del tipo DTOIdCompany
+     * @return una lista de objetos del tipo DTOCompanyWithOutIdAndLink
      */
-
     @Override
-    public List<DTOIdStatusCompany> CreateDtoList(List<Entity> entities) {
+    public List<DTOCompanyWithOutIdAndLink> CreateDtoList(List<Entity> entities) {
         try
         {
-            ArrayList<DTOIdStatusCompany> dtos = new ArrayList<>();
+            ArrayList<DTOCompanyWithOutIdAndLink> dtos = new ArrayList<>();
+
             for (Entity _com : entities) {
                 dtos.add( CreateDto( _com ) );
             }
+
             return dtos;
+
         }
         catch (Exception e)
         {
@@ -58,18 +59,19 @@ public class MapperIdStatusCompany  extends GenericMapper<DTOIdStatusCompany> {
         }
     }
 
+
     /**
      * Metodo con el cual se transforma de una lista de dtos a una lista de entidades
      * @param dtos Entidad que recibe para hacer el mapeo
      * @return una lista de Entidades del tipo Company
      */
     @Override
-    public List<Entity> CreateEntityList(List<DTOIdStatusCompany> dtos) {
+    public List<Entity> CreateEntityList(List<DTOCompanyWithOutIdAndLink> dtos) {
         try
         {
             ArrayList<Entity> Company = new ArrayList<>();
 
-            for (DTOIdStatusCompany _dtocom : dtos) {
+            for (DTOCompanyWithOutIdAndLink _dtocom : dtos) {
                 Company.add ( CreateEntity ( _dtocom ) );
             }
 
@@ -84,19 +86,15 @@ public class MapperIdStatusCompany  extends GenericMapper<DTOIdStatusCompany> {
 
 
     /**
-     * Metodo con el cual se transforma un DTOFullCompany a una Entidad Company
+     * Metodo con el cual se transforma un DTOCompanyWithOutIdAndLink a una Entidad Company
      * @param dto Entidad que recibe para hacer el mapeo
      * @return una lista de Entidades del tipo Company
      */
     @Override
-    public Entity CreateEntity( DTOIdStatusCompany dto ) {
-
-        Logger logger = Logger.getLogger(M02_Companies.class.getName());
-        logger.info("Objeto compania recibido en Create Entity" + dto.get_idCompany() + " " +
-                     dto.is_status());
-
+    public Entity CreateEntity(DTOCompanyWithOutIdAndLink dto) {
         try {
-            Company _com = EntityFactory.CreateCompanyIDStatus( dto.get_idCompany(), dto.is_status() );
+            Company _com = EntityFactory.CreateCompanyWithOutID(dto.get_name(), dto.get_desc(),
+                    dto.get_status());
             return _com ;
 
         }

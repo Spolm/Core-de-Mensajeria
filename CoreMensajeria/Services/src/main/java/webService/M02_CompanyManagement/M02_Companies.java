@@ -1,5 +1,6 @@
 package webService.M02_CompanyManagement;
 
+import DTO.DTOFactory;
 import DTO.M02_DTO.*;
 import DTO.M03_DTO.DTOCampaignWithOut_Company;
 import Entities.Entity;
@@ -8,14 +9,13 @@ import Entities.M02_Company.CompanyDAO;
 import Entities.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
 import Exceptions.ParameterCantBeNullException;
-import Factory.DTOFactory;
-import Factory.MapperFactory;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M02_Company.AddCompanyCommand;
 import Logic.M02_Company.GetAllCompaniesCommand;
 import Logic.M02_Company.GetCompanyByUserCommand;
 import Mappers.CompanyMapper.*;
+import Mappers.MapperFactory;
 import Persistence.M02_Company.DAOCompany;
 import com.google.gson.Gson;
 import javax.ws.rs.*;

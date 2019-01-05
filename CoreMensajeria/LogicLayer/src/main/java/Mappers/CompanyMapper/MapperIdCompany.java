@@ -1,30 +1,33 @@
 package Mappers.CompanyMapper;
 
-import DTO.M02_DTO.DTOCompanyWithOut_Link;
-
+import DTO.DTOFactory;
+import DTO.M02_DTO.DTOFullCompany;
+import DTO.M02_DTO.DTOIdCompany;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M02_Company.Company;
-import Factory.DTOFactory;
 import Mappers.GenericMapper;
+
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
-public class MapperCompanyWithOut_Link extends GenericMapper<DTOCompanyWithOut_Link> {
+public class MapperIdCompany extends GenericMapper<DTOIdCompany> {
 
     /**
-     * Metodo con el cual se transforma una entidad en un DTOCompanyWithOut_Link
+     * Metodo con el cual se transforma una entidad en un DTOIdCompany
      * @param entity Entidad que recibe para hacer el mapeo
-     * @return un objeto del tipo DTOCompanyWithOut_Link
+     * @return un objeto del tipo DTOIdCompany
      */
     @Override
-    public DTOCompanyWithOut_Link CreateDto(Entity entity) {
+    public DTOIdCompany CreateDto(Entity entity) {
+
         try {
-            DTOCompanyWithOut_Link dto = null;
+            DTOIdCompany dto = null;
             Company _com = (Company) entity;
-            dto = DTOFactory.CreateDtoCompanyWithOut_Link(_com.get_idCompany(), _com.get_name(), _com.get_desc(),
-                                                          _com.get_status() );
+            dto = DTOFactory.CreateDTOIdCompany(_com.get_idCompany());
+
             return dto;
         }
         catch (Exception e) {
@@ -37,13 +40,14 @@ public class MapperCompanyWithOut_Link extends GenericMapper<DTOCompanyWithOut_L
     /**
      * Metodo con el cual se transforma de una lista de entidades a una lista de dto
      * @param entities Entidad que recibe para hacer el mapeo
-     * @return una lista de objetos del tipo DTOCompanyWithOut_Link
+     * @return una lista de objetos del tipo DTOIdCompany
      */
+
     @Override
-    public List<DTOCompanyWithOut_Link> CreateDtoList(List<Entity> entities) {
+    public List<DTOIdCompany> CreateDtoList(List<Entity> entities) {
         try
         {
-            ArrayList<DTOCompanyWithOut_Link> dtos = new ArrayList<>();
+            ArrayList<DTOIdCompany> dtos = new ArrayList<>();
 
             for (Entity _com : entities) {
                 dtos.add( CreateDto( _com ) );
@@ -58,19 +62,18 @@ public class MapperCompanyWithOut_Link extends GenericMapper<DTOCompanyWithOut_L
         }
     }
 
-
     /**
      * Metodo con el cual se transforma de una lista de dtos a una lista de entidades
      * @param dtos Entidad que recibe para hacer el mapeo
      * @return una lista de Entidades del tipo Company
      */
     @Override
-    public List<Entity> CreateEntityList(List<DTOCompanyWithOut_Link> dtos) {
+    public List<Entity> CreateEntityList(List<DTOIdCompany> dtos) {
         try
         {
             ArrayList<Entity> Company = new ArrayList<>();
 
-            for (DTOCompanyWithOut_Link _dtocom : dtos) {
+            for (DTOIdCompany _dtocom : dtos) {
                 Company.add ( CreateEntity ( _dtocom ) );
             }
 
@@ -85,16 +88,18 @@ public class MapperCompanyWithOut_Link extends GenericMapper<DTOCompanyWithOut_L
 
 
     /**
-     * Metodo con el cual se transforma un DTOCompanyWithOut_Link a una Entidad Company
+     * Metodo con el cual se transforma un DTOFullCompany a una Entidad Company
      * @param dto Entidad que recibe para hacer el mapeo
      * @return una lista de Entidades del tipo Company
      */
     @Override
-    public Entity CreateEntity(DTOCompanyWithOut_Link dto) {
+    public Entity CreateEntity(DTOIdCompany dto) {
+
+        //Logger logger = Logger.getLogger(M02_Companies.class.getName());
+        //logger.info("Objeto compania recibido en Create Entity" + dto.get_idCompany());
 
         try {
-            Company _com = EntityFactory.CreateCompanyWithOutLink(dto.get_idCompany(), dto.get_name(), dto.get_desc(),
-                                                                  dto.get_status() );
+            Company _com = EntityFactory.CreateCompanyOnlyId(dto.get_idCompany());
             return _com ;
 
         }

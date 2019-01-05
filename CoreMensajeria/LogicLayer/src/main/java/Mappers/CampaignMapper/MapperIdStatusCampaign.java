@@ -1,14 +1,13 @@
 package Mappers.CampaignMapper;
 
+import DTO.DTOFactory;
 import DTO.M02_DTO.DTOIdStatusCompany;
 import DTO.M03_DTO.DTOIdStatusCampaign;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
-import Factory.DTOFactory;
 import Mappers.GenericMapper;
-import webService.M02_CompanyManagement.M02_Companies;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +25,8 @@ public class MapperIdStatusCampaign extends GenericMapper<DTOIdStatusCampaign> {
 
         try {
             DTOIdStatusCampaign dto = null;
-            Campaign _com = (Campaign) entity;
-            dto = DTOFactory.CreateDTOIdStatusCampaign( _com.get_idCampaign(), _com.get_statusCampaign() );
+            Campaign _cam = (Campaign) entity;
+            dto = DTOFactory.CreateDTOIdStatusCampaign( _cam.get_idCampaign(), _cam.get_statusCampaign() );
 
             return dto;
         }
@@ -93,9 +92,9 @@ public class MapperIdStatusCampaign extends GenericMapper<DTOIdStatusCampaign> {
     @Override
     public Entity CreateEntity( DTOIdStatusCampaign dto ) {
 
-        Logger logger = Logger.getLogger(M02_Companies.class.getName());
-        logger.info("Objeto compania recibido en Create Entity" + dto.get_idCampaign() + " " +
-                dto.is_status());
+    //    Logger logger = Logger.getLogger(M02_Companies.class.getName());
+      //  logger.info("Objeto compania recibido en Create Entity" + dto.get_idCampaign() + " " +
+             //   dto.is_status());
 
         try {
             Campaign _com = EntityFactory.CreateCampaignIDStatus( dto.get_idCampaign(), dto.is_status() );

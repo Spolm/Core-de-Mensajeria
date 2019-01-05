@@ -1,13 +1,14 @@
 package Mappers.CampaignMapper;
 
+import DTO.DTOFactory;
 import DTO.M02_DTO.DTOIdCompany;
 import DTO.M03_DTO.DTOIdCampaign;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M03_Campaign.Campaign;
-import Factory.DTOFactory;
+
 import Mappers.GenericMapper;
-import webService.M03_CampaignManagement.M03_Campaigns;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,8 +96,8 @@ public class MapperIdCampaign  extends GenericMapper< DTOIdCampaign > {
     @Override
     public Entity CreateEntity( DTOIdCampaign _dto ) {
 
-        Logger logger = Logger.getLogger(M03_Campaigns.class.getName());
-        logger.info("Objeto compania recibido en Create Entity" + _dto.get_idCampaign());
+        //Logger logger = Logger.getLogger(M03_Campaigns.class.getName());
+      //  logger.info("Objeto compania recibido en Create Entity" + _dto.get_idCampaign());
 
         try {
             Campaign  _cam = EntityFactory.CreateCampaignId( _dto.get_idCampaign() );

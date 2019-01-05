@@ -1,11 +1,15 @@
-package Factory;
+package Mappers;
 
-import Mappers.CampaignMapper.*;
+import DTO.M09_DTO.DTOStatistic;
 import Mappers.CompanyMapper.*;
+import Mappers.CampaignMapper.*;
+import Mappers.GenericMapper;
+import Mappers.StatisticMapper.StatisticMapper;
 
 public class MapperFactory {
 
-    /**
+// region compañias
+	  /**
      * Metodos que instancian un obejto del tipo MapperFullCompany
      * @return un objeto del tipo MapperFullCompany
      */
@@ -31,7 +35,9 @@ public class MapperFactory {
 
         return new MapperCompanyWithOutIdAndLink();
     }
+    // endregion
 
+    // region campañas
     /**
      * Metodos que instancian un obejto del tipo MapperFullCampaign
      * @return un objeto del tipo MapperFullCampaign
@@ -40,6 +46,13 @@ public class MapperFactory {
 
         return new MapperFullCampaign();
     }
+
+    public static MapperIdCompany createMapperIdCompany(){
+        return  new MapperIdCompany();
+    }
+
+    public static MapperIdStatusCompany createMapperIdStatusCompany(){ return  new MapperIdStatusCompany(); }
+
 
     /**
      * Metodos que instancian un obejto del tipo MapperCampaignWithOut_Company
@@ -66,16 +79,11 @@ public class MapperFactory {
         return new MapperCampaignWithOut_id_And_Company();
     }
 
-
     public static MapperIdStatusCampaign createMapperIdStatusCampaign(){
         return new MapperIdStatusCampaign();
     }
+    // endregion
 
 
-    public static MapperIdCompany createMapperIdCompany(){
-        return  new MapperIdCompany();
-    }
-
-    public static MapperIdStatusCompany createMapperIdStatusCompany(){ return  new MapperIdStatusCompany(); }
-
+    public static GenericMapper createStatisticMapper(){ return new StatisticMapper();}
 }

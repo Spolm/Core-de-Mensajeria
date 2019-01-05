@@ -1,36 +1,34 @@
 package Mappers.CompanyMapper;
 
-import DTO.M02_DTO.DTOFullCompany;
+import DTO.DTOFactory;
 import DTO.M02_DTO.DTOIdCompany;
+import DTO.M02_DTO.DTOIdStatusCompany;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M02_Company.Company;
-import Factory.DTOFactory;
 import Mappers.GenericMapper;
-import webService.M02_CompanyManagement.M02_Companies;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class MapperIdCompany extends GenericMapper<DTOIdCompany> {
-
+public class MapperIdStatusCompany  extends GenericMapper<DTOIdStatusCompany> {
     /**
      * Metodo con el cual se transforma una entidad en un DTOIdCompany
      * @param entity Entidad que recibe para hacer el mapeo
      * @return un objeto del tipo DTOIdCompany
      */
     @Override
-    public DTOIdCompany CreateDto(Entity entity) {
+    public DTOIdStatusCompany CreateDto(Entity entity) {
 
         try {
-            DTOIdCompany dto = null;
+            DTOIdStatusCompany dto = null;
             Company _com = (Company) entity;
-            dto = DTOFactory.CreateDTOIdCompany(_com.get_idCompany());
+            dto = DTOFactory.CreateDTOIdStatusCompany( _com.get_idCompany(), _com.get_status() );
 
             return dto;
         }
-        catch (Exception e) {
+        catch ( Exception e) {
 
             throw e;
         }
@@ -44,17 +42,14 @@ public class MapperIdCompany extends GenericMapper<DTOIdCompany> {
      */
 
     @Override
-    public List<DTOIdCompany> CreateDtoList(List<Entity> entities) {
+    public List<DTOIdStatusCompany> CreateDtoList(List<Entity> entities) {
         try
         {
-            ArrayList<DTOIdCompany> dtos = new ArrayList<>();
-
+            ArrayList<DTOIdStatusCompany> dtos = new ArrayList<>();
             for (Entity _com : entities) {
                 dtos.add( CreateDto( _com ) );
             }
-
             return dtos;
-
         }
         catch (Exception e)
         {
@@ -68,12 +63,12 @@ public class MapperIdCompany extends GenericMapper<DTOIdCompany> {
      * @return una lista de Entidades del tipo Company
      */
     @Override
-    public List<Entity> CreateEntityList(List<DTOIdCompany> dtos) {
+    public List<Entity> CreateEntityList(List<DTOIdStatusCompany> dtos) {
         try
         {
             ArrayList<Entity> Company = new ArrayList<>();
 
-            for (DTOIdCompany _dtocom : dtos) {
+            for (DTOIdStatusCompany _dtocom : dtos) {
                 Company.add ( CreateEntity ( _dtocom ) );
             }
 
@@ -93,13 +88,14 @@ public class MapperIdCompany extends GenericMapper<DTOIdCompany> {
      * @return una lista de Entidades del tipo Company
      */
     @Override
-    public Entity CreateEntity(DTOIdCompany dto) {
+    public Entity CreateEntity( DTOIdStatusCompany dto ) {
 
-        Logger logger = Logger.getLogger(M02_Companies.class.getName());
-        logger.info("Objeto compania recibido en Create Entity" + dto.get_idCompany());
+      //  Logger logger = Logger.getLogger(M02_Companies.class.getName());
+        //logger.info("Objeto compania recibido en Create Entity" + dto.get_idCompany() + " " +
+          //           dto.is_status());
 
         try {
-            Company _com = EntityFactory.CreateCompanyOnlyId(dto.get_idCompany());
+            Company _com = EntityFactory.CreateCompanyIDStatus( dto.get_idCompany(), dto.is_status() );
             return _com ;
 
         }

@@ -5,10 +5,8 @@ import DTO.M02_DTO.DTOFullCompany;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M02_Company.Company;
-import Factory.DTOFactory;
 import Mappers.GenericMapper;
-import webService.M02_CompanyManagement.M02_Companies;
-
+import DTO.DTOFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;

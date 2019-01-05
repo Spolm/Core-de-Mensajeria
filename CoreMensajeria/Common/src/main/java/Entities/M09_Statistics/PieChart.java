@@ -1,8 +1,9 @@
 package Entities.M09_Statistics;
 
+import Entities.Entity;
 import java.util.ArrayList;
 
-public class PieChart {
+public class PieChart extends Entity {
 
     public   ArrayList<Integer> values;
     public   ArrayList labels;

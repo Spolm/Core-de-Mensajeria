@@ -1,10 +1,11 @@
-package Factory;
-import DTO.M02_DTO.*;
+package DTO;
 
+import DTO.M02_DTO.*;
 import DTO.M03_DTO.*;
-import DTO.M03_DTO.DTOFullCampaign;
+import DTO.M09_DTO.DTOStatistic;
 import Entities.M02_Company.Company;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Date;
  */
 public class DTOFactory {
 
-
+  //// compañias y campañas
     /**
      * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
      * @return un objeto del tipo DTOIdCompany
@@ -122,7 +123,15 @@ public class DTOFactory {
         return new DTOIdStatusCampaign( id, status );
     }
 
+/////end
 
+    /**
+     * Metodo que instancia un obejto del tipo DTOStatistic
+     * @return un objeto del tipo DTOStatistic
+     */
+
+
+    public static DTOStatistic CreateDTOStatistic(ArrayList x, ArrayList<Integer> y){ return new DTOStatistic(x,y);}
 
 
 

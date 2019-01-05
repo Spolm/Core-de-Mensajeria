@@ -1,8 +1,9 @@
 package Entities.M09_Statistics;
 
+import Entities.Entity;
 import java.util.ArrayList;
 
-public class Statistics {
+public class Statistics extends Entity {
 
     public   ArrayList x;
     public   ArrayList<Integer> y;
