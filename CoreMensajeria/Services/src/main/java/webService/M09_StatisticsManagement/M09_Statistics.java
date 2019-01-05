@@ -1,9 +1,6 @@
 package webService.M09_StatisticsManagement;
 
 import DTO.DTO;
-import Entities.M09_Statistics.SqlEstrella;
-import Entities.M09_Statistics.Statistics;
-import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
@@ -14,14 +11,13 @@ import Logic.M09_Statistics.*;
 import Mappers.CampaignMapper.MapperCampaignWithOut_Company;
 import Mappers.CompanyMapper.MapperCompanyWithOut_Link;
 import Mappers.GenericMapper;
-import Factory.MapperFactory;
+import Mappers.MapperFactory;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 import java.sql.*;
-import java.util.*;
 import java.util.List;
 
 

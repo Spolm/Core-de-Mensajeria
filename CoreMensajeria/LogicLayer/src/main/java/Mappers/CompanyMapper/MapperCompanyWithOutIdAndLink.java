@@ -4,7 +4,7 @@ import DTO.M02_DTO.DTOCompanyWithOutIdAndLink;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M02_Company.Company;
-import Factory.DTOFactory;
+import DTO.DTOFactory;
 import Mappers.GenericMapper;
 
 import java.util.ArrayList;
