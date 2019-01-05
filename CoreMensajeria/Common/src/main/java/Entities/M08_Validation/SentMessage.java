@@ -2,14 +2,17 @@ package Entities.M08_Validation;
 
 import Entities.Entity;
 
+import java.sql.Timestamp;
+
 
 public class SentMessage extends Entity {
     public int _templateId;
-    public int _messageId;
+    public String _message;
     public int _campaignId;
     public int _integratorId;
     public int _applicationId;
-    public int _channelId;
+    public String _channel;
+    public Timestamp _sentTime;
 
     public int get_templateId() {
         return _templateId;
@@ -19,12 +22,12 @@ public class SentMessage extends Entity {
         this._templateId = _templateId;
     }
 
-    public int get_messageId() {
-        return _messageId;
+    public String get_message() {
+        return _message;
     }
 
-    public void set_messageId(int _messageId) {
-        this._messageId = _messageId;
+    public void set_message(String _message) {
+        this._message = _message;
     }
 
     public int get_campaignId() {
@@ -51,12 +54,19 @@ public class SentMessage extends Entity {
         this._applicationId = _applicationId;
     }
 
-    public int get_channelId() {
-        return _channelId;
+    public String get_channel() {
+        return _channel;
     }
 
-    public void set_channelId(int _channelId) {
-        this._channelId = _channelId;
+    public void set_channel(String _channel) {
+        this._channel = _channel;
     }
 
+    public Timestamp get_sentTime() {
+        return _sentTime;
+    }
+
+    public void set_sentTime(Timestamp _sentTime) {
+        this._sentTime = _sentTime;
+    }
 }
