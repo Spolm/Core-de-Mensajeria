@@ -47,8 +47,10 @@ export class CompanyService {
   }*/
 
   addCompany (company): Observable<any> {
-    return this.http.post<any>(endpoint + 'M02_Company/AddCompany', company, httpOptions).pipe(
-      tap((company) => console.log(`company added w/ ${company._name}`)),
+    company._idUser = localStorage.getItem('userid')
+    console.log(company)
+    return this.http.post<any>(endpoint + 'AddCompanyPP', company, httpOptions).pipe(
+      tap((company) => console.log('company added w/ ${company._name}')),
     );
   }
 
