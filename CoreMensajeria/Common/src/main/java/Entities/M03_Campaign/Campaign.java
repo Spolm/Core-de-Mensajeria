@@ -26,7 +26,7 @@ public class Campaign extends Entity {
         return _idCompany;
     }
 
-    public void set_idCampaign(int idCampaign) {
+    public void set_idCampaign( int idCampaign ) {
         this._idCampaign = idCampaign;
     }
 
@@ -34,7 +34,7 @@ public class Campaign extends Entity {
         return _nameCampaign;
     }
 
-    public void set_nameCampaign(String nameCampaign) {
+    public void set_nameCampaign( String nameCampaign ) {
         this._nameCampaign = nameCampaign;
     }
 
@@ -42,7 +42,7 @@ public class Campaign extends Entity {
         return _descCampaign;
     }
 
-    public void set_descCampaign(String descCampaign) {
+    public void set_descCampaign( String descCampaign ) {
         this._descCampaign = descCampaign;
     }
 
@@ -50,7 +50,7 @@ public class Campaign extends Entity {
         return _statusCampaign;
     }
 
-    public void set_statusCampaign(boolean statusCampaign) {
+    public void set_statusCampaign( boolean statusCampaign ) {
         this._statusCampaign = statusCampaign;
     }
 
@@ -58,7 +58,7 @@ public class Campaign extends Entity {
         return _startCampaign;
     }
 
-    public void set_startCampaign(Date startCampaign) {
+    public void set_startCampaign( Date startCampaign ) {
         this._startCampaign = startCampaign;
     }
 
@@ -66,17 +66,17 @@ public class Campaign extends Entity {
         return _endCampaign;
     }
 
-    public void set_endCampaign(Date endCampaign) {
+    public void set_endCampaign( Date endCampaign ) {
         this._endCampaign = endCampaign;
     }
 
     public Company get_company() { return _company; }
 
-    public void set_company(Company _company) { this._company = _company; }
+    public void set_company( Company _company ) { this._company = _company; }
 
     public boolean get_habilitado() { return _habilitado; }
 
-    public void set_habilitado(boolean _habilitado) { _habilitado = _habilitado; }
+    public void set_habilitado( boolean _habilitado ) { _habilitado = _habilitado; }
 
     /**
      * Constructor Vacio
@@ -92,7 +92,8 @@ public class Campaign extends Entity {
      * @param startCampaign fecha de inicio de la campaña
      * @param endCampaign fecha de finalización de la campaña
      */
-    public Campaign(String nameCampaign, String descCampaign, boolean statusCampaign, Date startCampaign, Date endCampaign) {
+    public Campaign( String nameCampaign, String descCampaign, boolean statusCampaign, Date startCampaign,
+                    Date endCampaign ) {
         _nameCampaign = nameCampaign;
         _descCampaign = descCampaign;
         _statusCampaign = statusCampaign;
@@ -109,8 +110,8 @@ public class Campaign extends Entity {
      * @param startCampaign fecha de inicio de la campaña
      * @param endCampaign fecha de finalización de la campaña
      */
-    public Campaign(int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign,
-                    Date startCampaign, Date endCampaign) {
+    public Campaign( int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign,
+                    Date startCampaign, Date endCampaign ) {
         _idCampaign = idCampaign;
         _nameCampaign = nameCampaign;
         _descCampaign = descCampaign;
@@ -129,7 +130,8 @@ public class Campaign extends Entity {
      * @param endCampaign fecha de finalización de la campaña
      * @param company objeto del tipo compania
      */
-    public Campaign (int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign, Date startCampaign, Date endCampaign, Company company) {
+    public Campaign ( int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign,
+                     Date startCampaign, Date endCampaign, Company company ) {
         _idCampaign = idCampaign;
         _nameCampaign = nameCampaign;
         _descCampaign = descCampaign;
@@ -138,4 +140,17 @@ public class Campaign extends Entity {
         _endCampaign = endCampaign;
         _idCompany = _idCompany;
     }
+
+
+    /**
+     * Constructor para campañas
+     * @param idCampaign   id de la campaña
+     * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
+     */
+    public Campaign ( int idCampaign ,boolean statusCampaign ){
+        _idCampaign = idCampaign;
+        _statusCampaign = statusCampaign;
+
+    }
+
 }

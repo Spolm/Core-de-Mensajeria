@@ -20,7 +20,7 @@ public class EntityFactory {
      * @return un objeto del tipo Company con los parametros name, desc, status
      */
 
-    public static Company CreateCompanyOnlyId(int id ){
+    public static Company CreateCompanyOnlyId( int id ){
         return new Company(id);
     }
 
@@ -33,8 +33,8 @@ public class EntityFactory {
      * @return un objeto del tipo Company con los parametros name, desc, status
      */
 
-    public static Company CreateCompanyWithOutID(String name, String desc, boolean status){
-        return new Company(name, desc, status);
+    public static Company CreateCompanyWithOutID( String name, String desc, boolean status ){
+        return new Company( name, desc, status );
     }
     /**
      * Fabrica para compañias solo con id y estatus
@@ -43,7 +43,7 @@ public class EntityFactory {
      * @return un objeto del tipo Company con los parametros name, desc, status
      */
 
-    public static Company CreateCompanyIDStatus(int id, boolean status){
+    public static Company CreateCompanyIDStatus( int id, boolean status ){
         return new Company( id, status );
     }
 
@@ -55,8 +55,8 @@ public class EntityFactory {
      * @param status el estatus de la compañia, puede ser activada o desactivada
      * @return un objeto del tipo Company con los parametros id, name, desc, status
      */
-    public static Company CreateCompanyWithOutLink(int id, String name, String desc, boolean status){
-        return new Company(id, name, desc, status);
+    public static Company CreateCompanyWithOutLink( int id, String name, String desc, boolean status ){
+        return new Company( id, name, desc, status );
     }
 
     /**
@@ -70,7 +70,7 @@ public class EntityFactory {
      */
     public static Company CreateCompanyWithOutUserID( int id, String name, String desc,
                                              boolean status, String link ){
-        return new Company(id, name, desc, status, link);
+        return new Company( id, name, desc, status, link );
     }
 
     /**
@@ -83,9 +83,9 @@ public class EntityFactory {
      * @param userId id del usuario
      * @return un objeto del tipo Company con los parametros id, name, desc, status, link, userid
      */
-    public static Company CreateFullCompany(int id, String name, String desc,
-                                            boolean status, String link, int userId){
-        return new Company(id, name, desc, status, link,userId);
+    public static Company CreateFullCompany( int id, String name, String desc,
+                                            boolean status, String link, int userId ){
+        return new Company( id, name, desc, status, link,userId );
     }
     /**
      * Fabrica para campañas sin id y sin Company
@@ -97,11 +97,11 @@ public class EntityFactory {
      * @return un objeto del tipo Campaign con los parametros nameCampaign, descCampaign, statusCampaign, startCampaign
      * endCampaign
      */
-    public static Campaign CreateCampaignWithOut_ID_Company(String nameCampaign, String descCampaign,
+    public static Campaign CreateCampaignWithOut_ID_Company( String nameCampaign, String descCampaign,
                                                             boolean statusCampaign, Date startCampaign,
-                                                            Date endCampaign){
+                                                            Date endCampaign ){
 
-        return new Campaign(nameCampaign, descCampaign, statusCampaign, startCampaign, endCampaign);
+        return new Campaign( nameCampaign, descCampaign, statusCampaign, startCampaign, endCampaign );
     }
 
     /**
@@ -116,10 +116,10 @@ public class EntityFactory {
      * startCampaign, endCampaign
      */
 
-    public static Campaign CreateCampaignWithOut_Company(int idCampaign, String nameCampaign, String descCampaign,
-                                                         boolean statusCampaign, Date startCampaign, Date endCampaign){
+    public static Campaign CreateCampaignWithOut_Company( int idCampaign, String nameCampaign, String descCampaign,
+                                                         boolean statusCampaign, Date startCampaign, Date endCampaign ){
 
-        return new Campaign(idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign, endCampaign);
+        return new Campaign( idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign, endCampaign );
     }
 
     /**
@@ -135,12 +135,25 @@ public class EntityFactory {
      * startCampaign, endCampaign, company
      */
 
-    public static Campaign CreateFullCampaign(int idCampaign, String nameCampaign, String descCampaign,
+    public static Campaign CreateFullCampaign( int idCampaign, String nameCampaign, String descCampaign,
                                               boolean statusCampaign, Date startCampaign,
-                                              Date endCampaign, Company company){
+                                              Date endCampaign, Company company ){
 
-        return new Campaign(idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign,
-                            endCampaign, company);
+        return new Campaign( idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign,
+                            endCampaign, company );
 
+    }
+
+
+
+    /**
+     * Fabrica para compañias solo con id y estatus
+     ** @param idCampaign nombre de la campaña
+     * @param statusCampaign el estatus de la compañia, puede ser activada o desactivada
+     * @return un objeto del tipo Campaign con los parametros name, desc, status
+     */
+
+    public static Campaign CreateCampaignIDStatus( int idCampaign, boolean statusCampaign ){
+        return new Campaign( idCampaign, statusCampaign );
     }
 }

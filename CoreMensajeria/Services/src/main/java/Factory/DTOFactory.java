@@ -1,10 +1,8 @@
 package Factory;
 import DTO.M02_DTO.*;
 
+import DTO.M03_DTO.*;
 import DTO.M03_DTO.DTOFullCampaign;
-import DTO.M03_DTO.DTOCampaignWithOut_Company;
-import DTO.M03_DTO.DTOFullCampaign;
-import DTO.M03_DTO.DTOCampaignWithOut_id_And_Company;
 import Entities.M02_Company.Company;
 
 import java.util.Date;
@@ -103,6 +101,15 @@ public class DTOFactory {
 
         return new DTOFullCampaign(idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign,
                                     endCampaign, company);
+    }
+
+    /**
+     * Metodos que instancian un obejto del tipo DTOIdStatusCampaign mediante los parametros pasados
+     * @return un objeto del tipo DTOIdStatusCampaign
+     */
+    public static DTOIdStatusCampaign CreateDTODTOIdStatusCampaign(int id, boolean status ){
+
+        return new DTOIdStatusCampaign( id, status );
     }
 
 
