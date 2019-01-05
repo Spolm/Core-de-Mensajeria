@@ -4,7 +4,7 @@ import DTO.M09_DTO.DTOStatistic;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M09_Statistics.Statistics;
-import Factory.DTOFactory;
+import DTO.DTOFactory;
 import Mappers.GenericMapper;
 
 import java.util.ArrayList;

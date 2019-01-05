@@ -1,4 +1,4 @@
-package Factory;
+package Mappers;
 
 import DTO.M09_DTO.DTOStatistic;
 import Mappers.GenericMapper;

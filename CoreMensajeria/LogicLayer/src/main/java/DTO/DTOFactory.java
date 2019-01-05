@@ -1,4 +1,4 @@
-package Factory;
+package DTO;
 import DTO.M02_DTO.DTOCompanyWithOutIdAndLink;
 import DTO.M02_DTO.DTOCompanyWithOut_Link;
 import DTO.M02_DTO.DTOFullCompany;
