@@ -8,9 +8,10 @@
             </div>
             <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="opcionSeleccionado">  <!-- (change) = "capturar()" -->
               <option selected value="0">Elija</option>
-              <option *ngFor="let company of companyList">
+              <option *ngFor="let company of companyList" [ngValue]="company" >
                   {{company._name}}
               </option>
+              <h1>  {{company}} </h1>
             </select>
           </div>
 
@@ -29,20 +30,16 @@
     <div class="col-4">
       <div class="form-group">
         <label for="formMessage">Nombre de la Compañia</label>
-        <input class="form-control" name="nombre" [(ngModel)]="opcionSeleccionado" required placeholder="Nombre">
+        <input class="form-control" name="nombre" [(ngModel)]="opcionSeleccionado._name" required placeholder="Nombre">
       </div>
       <div class="form-group">
         <label for="formMessage">Descripción de la Compañia</label>
-        <input class="form-control" name="descripcion" [(ngModel)]="opcionSeleccionado" required placeholder="Descripción">
+        <input class="form-control" name="descripcion" [(ngModel)]="opcionSeleccionado._desc" required placeholder="Descripción">
       </div>
-      <div class="form-group">
-          <label for="formMessage">Administrador de la Compañia</label>
-          <input class="form-control" name="admin" [(ngModel)]="opcionSeleccionado" required placeholder="Administrador" disabled>
-        </div>
     </div>
   </div>
 <div class="d-flex flex-row-reverse">
-  <button type="button" class="btn btn-success m-1 col-3" (click)="addCompany()">Modificar</button>
+  <button type="button" class="btn btn-success m-1 col-3" (click)="editCompany()">Modificar</button>
   <button type="button" class="btn btn-danger m-1 col-3" routerLink="/company">Cancelar</button>
 </div>
 </div>

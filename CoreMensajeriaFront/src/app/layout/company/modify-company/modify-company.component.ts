@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Company } from '../../../../model/company-model';
 
 
+
 @Component({
   selector: 'app-modify-company',
   templateUrl: './modify-company.component.html',
@@ -13,10 +14,10 @@ import { Company } from '../../../../model/company-model';
 })
 export class ModifyCompanyComponent implements OnInit {
 
-  opcionSeleccionado: string = "";
   verSeleccion: string = "";
   datos;
   
+  opcionSeleccionado: Company = new Company();
   constructor(public router: Router, private http: HttpClient, 
     public rest: CompanyService, private toastr: ToastrService) {
 
@@ -31,7 +32,8 @@ export class ModifyCompanyComponent implements OnInit {
 
     this.rest.getCompanies().subscribe((data) => {
       this.vacio = true;
-      this.companyList = data;
+      this.companyList = data; 
+      console.log(data);
       if (this.companyList.length > 0) {
         this.vacio = false;
       }
@@ -41,10 +43,11 @@ export class ModifyCompanyComponent implements OnInit {
 
   }
 
-  capturar() {
-    // Pasamos el valor seleccionado a la variable verSeleccion
-    this.verSeleccion = this.opcionSeleccionado;
-    console.log( "Valor Capturado", this.verSeleccion );
+  
+editCompany() {
+  this.rest.editCompany(this.opcionSeleccionado).toPromise().then(res => {
+    //manejo de la respuesta del servicio
+  });
 }
 
 

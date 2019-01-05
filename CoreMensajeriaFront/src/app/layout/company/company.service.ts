@@ -53,6 +53,14 @@ export class CompanyService {
       tap((company) => console.log('company added w/ ${company._name}')),
     );
   }
+  editCompany (opcionSeleccionado): Observable<any> {
+    opcionSeleccionado._idUser = localStorage.getItem('userid')
+    console.log(opcionSeleccionado)
+    return this.http.put<any>(endpoint + 'Edit/CompanyPP', opcionSeleccionado, httpOptions).pipe(
+      tap((company) => console.log('company added w/ ${company._name}')),
+    );
+  }
+
 
   activateCompany(_idCompany: Number , _statusCompany : boolean , Company : Company ){
     console.log("Estoy en el servicio " + Company);
