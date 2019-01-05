@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import Exceptions.SMSTooLongException;
 
+import java.lang.reflect.Executable;
+
 import static  org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -147,11 +149,7 @@ class ValidationServiceTest {
                 "I got you I won't let go\n" +
                 "I got you who loves me so\n" +
                 "I got you, babe", "SMS");
-
-//        c.execute();
-//        assertEquals(false, c.is_valid());
-        assertThrows(SMSTooLongException.class, () -> {
-            c.execute();
+        assertThrows(SMSTooLongException.class, () -> c.execute());
         });
 
     }
