@@ -2,7 +2,7 @@ package Persistence;
 
 import Entities.Entity;
 
-public interface IDAO {
+public interface IDAOEstrella {
 
     public void create(Entity e) ;
 

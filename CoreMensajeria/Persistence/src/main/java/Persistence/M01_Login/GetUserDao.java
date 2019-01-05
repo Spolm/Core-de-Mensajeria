@@ -13,9 +13,7 @@ import java.util.ArrayList;
 public class GetUserDao extends DAO implements  IDAOUser {
 
     @Override
-    public Entity create(Entity e) {
-        return null;
-    }
+    public void create(Entity e) { }
 
     @Override
     public Entity read(Entity e) {
