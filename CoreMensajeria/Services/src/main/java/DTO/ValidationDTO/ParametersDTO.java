@@ -1,15 +1,24 @@
 package DTO.ValidationDTO;
 
 import DTO.DTO;
+
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class ParametersDTO extends DTO {
+    @NotNull
     private int _idTemplate;
+    @NotNull(message = "_name es requerido")
     private String _name;
+    @NotNull(message = "_lastName es requerido")
     private String _lastName;
+    @NotNull
     private String _personId;
     private Timestamp _sendTime;
+    @NotNull
     private String _channel;
+    @NotNull
     private String _message;
 
     public int get_idTemplate() {
@@ -67,4 +76,5 @@ public class ParametersDTO extends DTO {
     public void set_message(String _message) {
         this._message = _message;
     }
+
 }
