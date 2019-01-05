@@ -6,21 +6,21 @@
     <div class="col-4">
       <div class="form-group">
         <label for="formMessage">Nombre de la Compañia</label>
-        <input class="form-control" name="nombre" [(ngModel)]="newCompany._name" required placeholder="Nombre">
+        <input class="form-control" name="nombre" [(ngModel)]="opcionSeleccionado1" required placeholder="Nombre">
       </div>
       <div class="form-group">
         <label for="formMessage">Descripción de la Compañia</label>
-        <input class="form-control" name="descripcion" [(ngModel)]="newCompany._desc" required placeholder="Descripción">
+        <input class="form-control" name="descripcion" [(ngModel)]="opcionSeleccionado2" required placeholder="Descripción">
       </div>
       <div class="form-group">
           <label for="formMessage">Administrador de la Compañia</label>
-          <input class="form-control" name="admin" [(ngModel)]="newCompany._idUser" required placeholder="Administrador">
+          <input class="form-control" name="admin" [(ngModel)]="opcionSeleccionado3" required placeholder="Administrador">
         </div>
     </div>
   </div>
 </form>
 <div class="d-flex flex-row-reverse">
-  <button type="button" class="btn btn-success m-1 col-3" (click)="addCompany()">Crear</button>
+  <button type="button" class="btn btn-success m-1 col-3" (click)=" capturar1() ; capturar2() ;  capturar3();  addCompany(opcionSeleccionado1 ,opcionSeleccionado2 , opcionSeleccionado3 )">Crear</button>
   <button type="button" class="btn btn-danger m-1 col-3" routerLink="/company">Cancelar</button>
 </div>
 </div>

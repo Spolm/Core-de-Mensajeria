@@ -40,7 +40,7 @@ export class CompanyComponent implements OnInit {
   }
 
   
-  activateCompany(_idCompany: number , _statusCompany : boolean){
+  activateCompany(_idCompany: number , _statusCompany : boolean , Company : Company){
     this.toastr.info("Para confirmar realice doble click de nuevo", "Activar la compañia id: "+ _idCompany,
     {
       timeOut: 2800,
@@ -48,7 +48,8 @@ export class CompanyComponent implements OnInit {
     });
     this.counter++;
     if(this.counter == 2 && this.lastCompanyId == _idCompany){
-      this.rest.activateCompany(_idCompany , _statusCompany );
+      this.rest.activateCompany(_idCompany , _statusCompany , Company);
+      console.log("ACT " +Company);
       this.toastr.success("Compañia activada", "Company id: "+ _idCompany,
       {
         timeOut: 2800,
@@ -61,7 +62,7 @@ export class CompanyComponent implements OnInit {
     this.lastCompanyId = _idCompany;
   }
   
-  deactivateCompany(_idCompany: number , _statusCompany : boolean ){
+  deactivateCompany(_idCompany: number , _statusCompany : boolean , Company : Company){
     this.toastr.info("Para confirmar realice doble click de nuevo", "Desactivar la compañia id: "+ _idCompany,
     {
       timeOut: 2800,
@@ -69,7 +70,8 @@ export class CompanyComponent implements OnInit {
     });
     this.counter++;
     if(this.counter == 2 && this.lastCompanyId == _idCompany){
-      this.rest.activateCompany(_idCompany , _statusCompany);
+      console.log("Des " +Company);
+      this.rest.activateCompany(_idCompany , _statusCompany , Company);
       this.toastr.success("Compañia desactivada", "Company id: "+ _idCompany,
       {
         timeOut: 2800,

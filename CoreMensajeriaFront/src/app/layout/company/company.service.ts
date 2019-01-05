@@ -1,3 +1,4 @@
+import { Company } from './../../../model/company-model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -51,7 +52,8 @@ export class CompanyService {
     );
   }
 
-  activateCompany(_idCompany: Number , _statusCompany : boolean ){
+  activateCompany(_idCompany: Number , _statusCompany : boolean , Company : Company ){
+    console.log("Estoy en el servicio " + Company);
     return this.http.get(endpoint+'update/'+_idCompany+'/'+_statusCompany).subscribe();
   }
 }
