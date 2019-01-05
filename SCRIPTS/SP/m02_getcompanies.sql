@@ -8,7 +8,7 @@ $BODY$
 BEGIN
 RETURN QUERY
 SELECT  c.com_id, c.com_name, c.com_description, c.com_status, c.com_route_link
-        FROM company c 
+        FROM company c
         WHERE (c.com_user_id = _user)
         ORDER BY com_status DESC;
 END;

@@ -1,6 +1,6 @@
 package Entities.M08_Validation.XMLManagement;
 
-public class Parameter {
+public class ParameterXML {
     private String _name;
     private String _value;
 
@@ -22,7 +22,7 @@ public class Parameter {
 
     @Override
     public String toString() {
-        return "Parameter{" +
+        return "ParameterXML{" +
                 "_name='" + _name + '\'' +
                 ", _value='" + _value + '\'' +
                 '}';

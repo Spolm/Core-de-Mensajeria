@@ -11,43 +11,48 @@ public class WatchDirectory implements Runnable{
     private static WatchDirectory watchDirectory;
     private CommandProcessXML _commandProcessXML;
 
-    public WatchDirectory(ArrayList<String> _paths){
+    public WatchDirectory( ArrayList<String> _paths ){
         this._paths = _paths;
     }
 
-    public static  WatchDirectory getInstance(ArrayList<String> _paths){
-        if (watchDirectory == null){
-            watchDirectory = new WatchDirectory(_paths);
+
+    public static  WatchDirectory getInstance( ArrayList<String> _paths ) {
+        if ( watchDirectory == null ){
+            watchDirectory = new WatchDirectory( _paths );
         }
         return watchDirectory;
     }
 
-    public void run(){
+    /**
+     * Método principal del demonio, monitorea unicamente la creación de nuevas entradas dentro de los
+     * directorios definidos en el constructor de la clase.
+     */
+    public void run() {
         try {
             Logger log = Logger.getLogger(WatchDirectory.class.getName());
             final WatchService watchService = FileSystems.getDefault().newWatchService();
 
-            for (String path : _paths) {
-                final Path myDir = Paths.get(path);
-                myDir.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+            for ( String path : _paths ) {
+                final Path myDir = Paths.get( path );
+                myDir.register( watchService, StandardWatchEventKinds.ENTRY_CREATE );
             }
-
-            while (true) {
+            while ( true ) {
                 final WatchKey key = watchService.take();
                 final Watchable watchable = key.watchable();
                 final Path directory = (Path) watchable;
 
-                for (WatchEvent<?> event : key.pollEvents()) {
+                for ( WatchEvent<?> event : key.pollEvents() ) {
 
-                    log.info("Created: " + event.context().toString()+" in directory "+directory);
-                    _commandProcessXML = CommandFactory.CreateCommanProcessXML(directory+"/"+event.context().toString());
+                    log.info("Created: " + event.context().toString() + " in directory " + directory );
+                    _commandProcessXML = CommandFactory
+                            .CreateCommanProcessXML(directory + "/" + event.context().toString() );
                     _commandProcessXML.execute();
 
                 }
                 key.reset();
             }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.toString());
+        } catch ( Exception e ) {
+            System.out.println( "Error Exc: " + e.toString() );
         }
     }
 }

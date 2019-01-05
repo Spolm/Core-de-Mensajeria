@@ -141,7 +141,6 @@ public class TemplateHandler {
                 //asignamos canales, campaña y aplicacion
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
                 template.setCampaign(campaignsService.getDetails(resultSet.getInt("tem_campaign_id")));
-
                 UserDAO userDAO = new UserDAO();
                 template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
                 //template.setCampaign(getCampaignsById(resultSet.getInt("tem_campaign_id")));

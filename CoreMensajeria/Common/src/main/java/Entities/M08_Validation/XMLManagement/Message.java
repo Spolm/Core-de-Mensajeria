@@ -3,14 +3,14 @@ package Entities.M08_Validation.XMLManagement;
 import java.util.ArrayList;
 
 public class Message {
-    private ArrayList<Parameter> _param;
+    private ArrayList<ParameterXML> _param;
     private String _destiny;
 
-    public ArrayList<Parameter> get_param() {
+    public ArrayList<ParameterXML> get_param() {
         return _param;
     }
 
-    public void set_param(ArrayList<Parameter> _param) {
+    public void set_param(ArrayList<ParameterXML> _param) {
         this._param = _param;
     }
 
