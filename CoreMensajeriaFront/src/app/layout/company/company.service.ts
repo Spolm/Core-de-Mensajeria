@@ -16,7 +16,7 @@ const httpOptions = {
 })
 export class CompanyService {
 
-  CompanyIdStatus1 : CompanyIdStatus = new CompanyIdStatus() ;
+
 
   constructor(private http: HttpClient) { 
       
@@ -64,10 +64,9 @@ export class CompanyService {
   }
 
 
-  activateCompany(_idCompany: Number , _statusCompany : boolean , company){
-    console.log("Estoy en el servicio " + Company); 
-    return this.http.post<any>(endpoint + 'updateCompanyStatus/', company).pipe(
-      tap((company) => console.log('change status ')),
+  activateCompany (company): Observable<any> {
+    return this.http.post<any>(endpoint + 'updateCompanyStatus', company, httpOptions).pipe(
+      tap((company) => console.log('company added w/ ${company._name}')),
     );
   }
 }
