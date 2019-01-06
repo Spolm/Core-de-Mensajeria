@@ -164,30 +164,6 @@ public class TemplateHandler {
         }
     }
 
-    public Campaign getCampaignsById(int campaignId){
-        Campaign campaign =  new Campaign();
-        Connection connection = Sql.getConInstance();
-        try{
-            PreparedStatement preparedStatement = connection.prepareStatement(GET_CAMAPIGN_BY_ID);
-            preparedStatement.setInt(1,campaignId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                campaign.set_idCampaign(resultSet.getInt("cam_id"));
-                campaign.set_nameCampaign(resultSet.getString("cam_name"));
-                campaign.set_descCampaign(resultSet.getString("cam_description"));
-                campaign.set_statusCampaign(resultSet.getBoolean("cam_status"));
-                campaign.set_startCampaign(resultSet.getDate("cam_start_date"));
-                campaign.set_endCampaign(resultSet.getDate("cam_end_date"));
-            }
-        } catch(SQLException e){
-            e.printStackTrace();
-        } catch (Exception e){
-            e.printStackTrace();
-        } finally {
-            Sql.bdClose(connection);
-            return campaign;
-        }
-    }
 
     /**
      * This method returns the campaigns filtering
