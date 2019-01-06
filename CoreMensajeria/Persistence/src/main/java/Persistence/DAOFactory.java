@@ -1,6 +1,8 @@
 package Persistence;
 
 import Persistence.M01_Login.GetUserDao;
+import Persistence.M07_Template.DAOMessage;
+import Persistence.M07_Template.DAOTemplate;
 import Persistence.M09_Statistics.DAOStatistic;
 import Persistence.M09_Statistics.DAOStatisticEstrella;
 import Persistence.M02_Company.DAOCompany;
@@ -26,6 +28,18 @@ public class DAOFactory {
    static public DAOCompany instanciateDaoCompany ( ) { return new DAOCompany(); }
 
    static public DAOCampaign instanciateDaoCampaign ( ) { return new DAOCampaign(); }
+
+   //region M07
+
+    static public DAOMessage  instaciateDaoMessage( ){
+        return new DAOMessage();
+    }
+
+    static public DAOTemplate instaciateDaoTemplate( ){
+        return new DAOTemplate();
+    }
+
+    // end region
 
 
 }

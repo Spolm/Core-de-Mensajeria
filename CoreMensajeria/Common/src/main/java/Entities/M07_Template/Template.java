@@ -1,5 +1,6 @@
 package Entities.M07_Template;
 
+import Entities.Entity;
 import Entities.M01_Login.User;
 import Entities.M03_Campaign.Campaign;
 import Entities.M06_DataOrigin.Application;
@@ -13,7 +14,7 @@ import java.util.*;
 /**
  * Template class uses for storing template information
  */
-public class Template {
+public class Template extends Entity {
     /**
      * Message of the template (with the parameters)
      */
@@ -22,10 +23,6 @@ public class Template {
      * date of creation of the template
      */
     private String creationDate;
-    /**
-     * id of the template
-     */
-    private int templateId;
     /**
      * status of the template (approved or not approved)
      */
@@ -39,13 +36,25 @@ public class Template {
      */
     private Campaign campaign;
     /**
+     * Campaign ID
+     */
+    private int campaignId;
+    /**
      * origin of application of the template
      */
     private Application application;
     /**
+     * Application ID
+     */
+    private int applicationId;
+    /**
      * user creator of the template
      */
     private User user;
+    /**
+     * User ID
+     */
+    private int userId;
     /**
      * planning of the template
      */
@@ -61,7 +70,7 @@ public class Template {
      * @param templateId template id
      */
     public Template(int templateId) {
-        this.templateId = templateId;
+        this.set_id(templateId);
     }
 
     /**
@@ -75,35 +84,37 @@ public class Template {
         this.message = message;
         this.status = status;
         this.creationDate = creationDate;
-        this.templateId = templateId;
+        this.set_id(templateId);
     }
 
-    public Template(Message message, String creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning) {
-        this.message = message;
+    /**
+     *
+     * @param creationDate
+     * @param campaignId
+     * @param applicationId
+     * @param userId
+     */
+    public Template(String creationDate, int campaignId, int applicationId, int userId) {
         this.creationDate = creationDate;
-        this.templateId = templateId;
-        this.status = status;
-        this.channels = channels;
-        this.campaign = campaign;
-        this.application = application;
-        this.user = user;
-        this.planning = planning;
+        this.campaignId = campaignId;
+        this.applicationId = applicationId;
+        this.userId = userId;
     }
 
     /**
-     * show id template.
-     * @return id template
+     *
+     * @param id
+     * @param creationDate
+     * @param campaignId
+     * @param applicationId
+     * @param userId
      */
-    public int getTemplateId(){
-        return templateId;
-    }
-
-    /**
-     * add id template.
-     * @param templateId new id template
-     */
-    public void setTemplateId(int templateId){
-        this.templateId = templateId;
+    public Template(int id,String creationDate, int campaignId, int applicationId, int userId) {
+        this.creationDate = creationDate;
+        this.campaignId = campaignId;
+        this.applicationId = applicationId;
+        this.userId = userId;
+        this.set_id(id);
     }
 
     /**
@@ -232,12 +243,36 @@ public class Template {
         this.planning = planning;
     }
 
+    public int getCampaignId() {
+        return campaignId;
+    }
+
+    public void setCampaignId(int campaignId) {
+        this.campaignId = campaignId;
+    }
+
+    public int getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(int applicationId) {
+        this.applicationId = applicationId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Template)) return false;
         Template template = (Template) o;
-        return getTemplateId() == template.getTemplateId() &&
+        return get_id() == template.get_id() &&
                 Objects.equals(message, template.message) &&
                 Objects.equals(getCreationDate(), template.getCreationDate()) &&
                 Objects.equals(status, template.status);
@@ -245,7 +280,7 @@ public class Template {
 
     @Override
     public int hashCode() {
-        return Objects.hash(message, getCreationDate(), getTemplateId(), status);
+        return Objects.hash(message, getCreationDate(), get_id(), status);
     }
 
 }
