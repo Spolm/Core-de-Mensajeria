@@ -9,9 +9,18 @@ import DTO.M03_DTO.DTOFullCampaign;
 import DTO.M03_DTO.DTOCampaignWithOut_id_And_Company;
 import DTO.M07_Template.DTOMessage;
 import DTO.M07_Template.DTOParameter;
+import DTO.M07_Template.DTOStatus;
+import DTO.M07_Template.DTOTemplate;
 import DTO.M09_DTO.DTOStatistic;
+import Entities.M01_Login.User;
 import Entities.M02_Company.Company;
+import Entities.M03_Campaign.Campaign;
+import Entities.M05_Channel.Channel;
+import Entities.M06_DataOrigin.Application;
+import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.MessagePackage.Parameter;
+import Entities.M07_Template.PlanningPackage.Planning;
+import Entities.M07_Template.StatusPackage.Status;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -109,6 +118,14 @@ public class DTOFactory {
 
     public static DTOMessage CreateDTOMessage(int _mMessageId, ArrayList<Parameter> _mParameterArrayList, String _mMessage){
         return new DTOMessage(_mMessageId, _mParameterArrayList,_mMessage);
+    }
+
+    public static DTOStatus CreateDTOStatus(int statusId, String statusName){
+        return new DTOStatus(statusId,statusName);
+    }
+
+    public static DTOTemplate CreateDTOTemplate(Message message, String creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning){
+        return  new DTOTemplate(message,creationDate,templateId,status,channels,campaign,application,user,planning);
     }
 
 }
