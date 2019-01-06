@@ -66,9 +66,9 @@ public class CommandsFactory {
     public static AddCampaignCommand createAddCampaignCommand(Entity _ca ){ return new AddCampaignCommand( _ca ); }
     public static GetCampaignCommand createGetCampaignCommand(Entity _ca ){ return new GetCampaignCommand( _ca ); }
     public static CampaignUserCommand createCampaignUserCommand(Entity _ca ){ return new CampaignUserCommand( _ca ); }
-    /*public static CampaignUserCompanyCommand createCampaignUserCompany( Entity _ca ){
+    public static CampaignUserCompanyCommand createCampaignUserCompany( Entity _ca ){
          return new CampaignUserCompanyCommand( _ca  );
-      } */
+      }
     public static ChangeStatusCampaignCommand createChangeStatusCampaign( Entity _ca ){
         return new ChangeStatusCampaignCommand( _ca );
     }

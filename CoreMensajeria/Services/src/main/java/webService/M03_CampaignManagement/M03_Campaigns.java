@@ -1,6 +1,7 @@
 package webService.M03_CampaignManagement;
 
 import DTO.DTOFactory;
+import DTO.M02_DTO.DTOIdCompUser;
 import DTO.M02_DTO.DTOIdCompany;
 import DTO.M03_DTO.DTOFullCampaign;
 import DTO.M03_DTO.DTOIdCampaign;
@@ -14,11 +15,13 @@ import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M03_Campaign.AddCampaignCommand;
 import Logic.M03_Campaign.CampaignUserCommand;
+import Logic.M03_Campaign.CampaignUserCompanyCommand;
 import Logic.M03_Campaign.GetCampaignCommand;
 import Mappers.CampaignMapper.MapperFullCampaign;
 import Mappers.CampaignMapper.MapperIdCampaign;
 import Mappers.CampaignMapper.MapperIdStatusCampaign;
 import Mappers.CompanyMapper.MapperFullCompany;
+import Mappers.CompanyMapper.MapperIdCompUser;
 import Mappers.CompanyMapper.MapperIdCompany;
 import Mappers.MapperFactory;
 import Persistence.DAO;
@@ -363,17 +366,17 @@ public class M03_Campaigns {
         }
      }
 
-  /*  @GET
-    @Path("/GetCampaignsByCompany")
+    @GET
+    @Path("/GetCampaignsByCompany/{idCompany}/{idUser}")
     @Produces("application/json")
-
-    public Response getCampaignsByCompanyUser() throws CampaignDoesntExistsException {
+    public Response getCampaignsByCompanyUser(@PathParam ("idCompany") int _comp ,
+                                              @PathParam("idUser") int _user) throws CampaignDoesntExistsException {
             Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-            DTOIdCompUser _dto = DTOFactory.createDtoIdCompUser( _comp , _user );
+            DTOIdCompUser _dto = DTOFactory.createDTOIdCompUser( _comp , _user );
         try {
             MapperIdCompUser _mapper = MapperFactory.createMapperIdCompUser();
             Entity _camp = _mapper.CreateEntity( _dto );
-            CampaignUserCompanyCommand _command = CommandsFactory.createCampaignUserComapanyCommand( _camp );
+            CampaignUserCompanyCommand _command = CommandsFactory.createCampaignUserCompany( _camp );
             _command.execute();
             MapperFullCampaign _caList = MapperFactory.CreateMapperFullCampaign();
             List< DTOFullCampaign > _dtoCa = _caList.CreateDtoList( _command.ReturnList() ) ;
@@ -386,7 +389,7 @@ public class M03_Campaigns {
             e.printStackTrace();
         }
         return rb.build();
-    } */
+    }
 
 
     @PUT

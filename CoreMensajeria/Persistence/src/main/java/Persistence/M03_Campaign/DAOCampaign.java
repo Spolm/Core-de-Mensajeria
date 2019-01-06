@@ -21,7 +21,7 @@ public class DAOCampaign implements IDAOCampaign {
     final String SELECT_CAMPAIGN_BY_ID = "{CALL  m03_getcampaignbyid(?)}";
     final String SELECT_CAMPAIGN_BY_USER = "{Call m03_getcampaignsbyuser(?)}";
     final String SELECT_ALL_CAMPAIGNS = "{Call m03_getcampaignsall( )}";
-    final String SELECT_CAMPAIGN_USER_COMPANY = " {Call m03_getcampaignsbycompany(?,?)} ";
+    final String SELECT_CAMPAIGN_USER_COMPANY = " {Call m03_getcampaignbycompany(?,?)} ";
     final String SELECT_CAMPAIGN_BY_COMPANY = "{Call m03_getcampaigns(?)}";
     final String ADD_CAMPAIGN = "{Call m03_addcampaign(?,?,?,?,?,?)}" ;
     final String UPDATE_CAMPAIGN = "{Call m03_updatecampaign(?,?,?,?,?,?,?)}" ;
@@ -90,14 +90,13 @@ public class DAOCampaign implements IDAOCampaign {
     }
 
     @Override
-    public ArrayList<Entity> campaignListByUserCompany ( Entity _u , Entity _comp ) {
-       User _user = ( User ) _u;
+    public ArrayList<Entity> campaignListByUserCompany (  Entity _comp ) {
        Company _company = ( Company ) _comp;
        ArrayList<Entity> _caList= new ArrayList<>();
         try {
             PreparedStatement _ps = _conn.prepareCall( SELECT_CAMPAIGN_USER_COMPANY );
-            _ps.setInt( 1, _company.get_id() );
-            _ps.setInt( 2, _user.get_id() );
+            _ps.setInt( 1, _company.get_idCompany() );
+            _ps.setInt( 2, _company.get_idUser() );
             ResultSet _result = _ps.executeQuery();
             _caList = resultList( _result );
 

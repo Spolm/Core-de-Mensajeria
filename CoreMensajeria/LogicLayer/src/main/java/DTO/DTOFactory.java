@@ -23,12 +23,20 @@ public class DTOFactory {
         return new DTOIdCompany(id);
     }
     /**
-     * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
+     * Metodos que instancian un obejto del tipo DTOIdStatusCompany mediante los parametros pasados
      * @return un objeto del tipo DTOidStatusCompanyCompany
      */
     public static DTOIdStatusCompany CreateDTOIdStatusCompany( int id, boolean status ){
 
         return new DTOIdStatusCompany( id, status );
+    }
+    /**
+     * Metodos que instancian un obejto del tipo DTOIdCompUser mediante los parametros pasados
+     * @return un objeto del tipo DTOIdCompUser
+     */
+    public static DTOIdCompUser createDTOIdCompUser( int id, int user ){
+
+        return new DTOIdCompUser( id, user );
     }
 
       /**
