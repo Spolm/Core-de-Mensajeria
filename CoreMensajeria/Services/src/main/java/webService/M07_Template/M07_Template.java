@@ -179,20 +179,66 @@ public class M07_Template {
         return response;
     }
 
-    //TODO: Arreglar los parametros de estos metodos
+    //TODO: Arreglar los parametros y retornos de estos metodos
     @POST
     @Path("add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean postTemplate(String json){
-        TemplateHandler templateHandler = new TemplateHandler();
-        return templateHandler.postTemplateData(json);
+    public Response postTemplate(String json){
+        Response response;
+        Error error;
+        try {
+            if(json==null){
+                throw new InvalidParameterException();
+            }
+            Command c = CommandsFactory.createCommandPostTemplate(json);
+            c.execute();
+            response = Response.ok(gson.toJson(c.Return())).build();
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
+            error = new Error(e.getMessage());
+            response = Response.status(404).entity(error).build();
+        }catch (ParameterDoesntExistsException e){
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        }
+        return response;
     }
 
     @PUT
     @Path("update")
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean updateTemplate(String json){
-        TemplateHandler templateHandler = new TemplateHandler();
-        return templateHandler.updateTemplateData(json);
+    public Response updateTemplate(String json){
+        Response response;
+        Error error;
+        try {
+            if(json==null){
+                throw new InvalidParameterException();
+            }
+            Command c = CommandsFactory.createCommandUpdateTemplate(json);
+            c.execute();
+            response = Response.ok(gson.toJson(c.Return())).build();
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
+            error = new Error(e.getMessage());
+            response = Response.status(404).entity(error).build();
+        }catch (ParameterDoesntExistsException e){
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        }
+        return response;
     }
 }

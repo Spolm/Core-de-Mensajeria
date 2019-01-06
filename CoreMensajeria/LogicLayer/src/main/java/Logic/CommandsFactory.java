@@ -79,12 +79,12 @@ public class CommandsFactory {
         return new CommandPostTemplateStatus(templateId,userId);
     }
 
-    public static CommandPostTemplate createCommandPostTemplate(){
-        return new CommandPostTemplate();
+    public static CommandPostTemplate createCommandPostTemplate(String json){
+        return new CommandPostTemplate(json);
     }
 
-    public static CommandUpdateTemplate CommandUpdateTemplate(){
-        return new CommandUpdateTemplate();
+    public static CommandUpdateTemplate createCommandUpdateTemplate(String json){
+        return new CommandUpdateTemplate(json);
 }
 
 
