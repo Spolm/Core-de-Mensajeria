@@ -1,7 +1,9 @@
 package Logic;
 
 import Entities.Entity;
+import DTO.M07_Template.NewParameter;
 import Logic.M01_Login.GetUser;
+import Logic.M07_Template.*;
 import Logic.M09_Statistics.*;
 import Logic.M02_Company.AddCompanyCommand;
 
@@ -47,6 +49,44 @@ public class CommandsFactory {
     //endregion
 
     public static AddCompanyCommand createAddCompanyCommand( Entity _co ){ return new AddCompanyCommand( _co ); }
+    //M07_Templates
+
+    public static CommandGetMessages createCommandGetMessages(){
+        return new CommandGetMessages();
+    }
+
+    public static CommandPostParameter createCommandPostParameter(NewParameter newParameter){
+        return new CommandPostParameter(newParameter);
+    }
+
+    public static CommandGetParameters createCommandGetParameters(int companyId){
+        return new CommandGetParameters(companyId);
+    }
+
+    public static CommandGetTemplates createCommandGetTemplates(int userId, int companyId){
+        return new CommandGetTemplates(userId, companyId);
+    }
+
+    public static CommandGetTemplate createCommandGetTemplate(int templateId){
+        return new CommandGetTemplate(templateId);
+    }
+
+    public static CommandGetTemplatePrivilegesByUser createCommandGetTemplatePrivilegesByUser(int userId, int companyId){
+        return new CommandGetTemplatePrivilegesByUser(userId,companyId);
+    }
+
+    public static CommandPostTemplateStatus createCommandPostTemplateStatus(int templateId, int userId){
+        return new CommandPostTemplateStatus(templateId,userId);
+    }
+
+    public static CommandPostTemplate createCommandPostTemplate(){
+        return new CommandPostTemplate();
+    }
+
+    public static CommandUpdateTemplate CommandUpdateTemplate(){
+        return new CommandUpdateTemplate();
+}
+
 
 
 

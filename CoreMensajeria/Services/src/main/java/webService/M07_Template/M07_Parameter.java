@@ -1,15 +1,16 @@
 package webService.M07_Template;
 
 
-import Entities.M07_Template.HandlerPackage.ParameterHandler;
-import Entities.M07_Template.MessagePackage.Parameter;
+import DTO.M07_Template.NewParameter;
+import Exceptions.M07_Template.InvalidParameterException;
 import Exceptions.ParameterDoesntExistsException;
-import com.google.gson.Gson;
+import Logic.Command;
+import Logic.CommandsFactory;
+import webService.M01_Login.Error;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 
 /**
  * M07_Parameter class is an API that is responsible for requesting information
@@ -18,23 +19,41 @@ import java.util.ArrayList;
 @Path("/parameters")
 @Produces(MediaType.APPLICATION_JSON)
 public class M07_Parameter {
-
-    /**
-     * serialization and deserialization between Java objects
-     */
-    public Gson gson = new Gson();
+    private final String MESSAGE_ERROR_INTERN = "Error Interno";
+    private final String MESSAGE_EXCEPTION = "Excepcion";
+    private final String MESSAGE_ERROR_PARAMETERDOESNTEXIST= "El parámetro ingresado no existe";
 
     /**
      *this method is responsible for making a new parameter associated
      * with a company stored.
-     * @param name name of the parameter
-     * @param companyId company id
+     * @param newParameter new parameter with its name and companyid
      */
     @POST
     @Path("add")
-    public void postParameter(@FormParam("name") String name,@FormParam("companyId") int companyId){
-        ParameterHandler parameterHandler = new ParameterHandler();
-        parameterHandler.postParameter(name,companyId);
+    public Response postParameter(NewParameter newParameter) {
+        Response response;
+        Error error;
+        try {
+            if(newParameter ==null){
+                throw new InvalidParameterException();
+            }
+            if(newParameter.getName() ==null || newParameter.getCompanyId()==0){
+                throw new InvalidParameterException();
+            }
+            Command c = CommandsFactory.createCommandPostParameter(newParameter);
+            c.execute();
+            response = Response.ok(c.Return()).build();
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
+            error = new Error(e.getMessage());
+            response = Response.status(404).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        }
+        return response;
     }
 
     /**
@@ -45,14 +64,31 @@ public class M07_Parameter {
     @GET
     @Path("get")
     public Response getParameters(@QueryParam("companyId") int companyId){
-        ParameterHandler parameterHandler = new ParameterHandler();
-        ArrayList<Parameter> parameterList = new ArrayList<Parameter>();
+        Response response;
+        Error error;
         try {
-            parameterList = parameterHandler.getParameters(companyId);
+            if(companyId==0){
+                throw new InvalidParameterException();
+            }
+            Command c = CommandsFactory.createCommandGetParameters(companyId);
+            c.execute();
+            response = Response.ok(c.Return()).build();
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
+            error = new Error(e.getMessage());
+            response = Response.status(404).entity(error).build();
         }catch (ParameterDoesntExistsException e){
-            //logg
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
         }
-            return Response.ok(gson.toJson(parameterList)).build();
+        return response;
     }
 
 }
