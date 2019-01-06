@@ -1,12 +1,15 @@
-package Entities.M08_Validation.XMLManagement;
+package Logic.M08_Validation;
 
-public abstract class CompositeCommand extends Command {
+import Logic.Command;
+
+public abstract class CompositeCommand<T> extends Command {
     private Command[] _commandList;
+
+    @Override
     public abstract void execute();
 
-    public CompositeCommand() {
-        _commandList = new Command[2];
-    }
+    @Override
+    public abstract T Return();
 
     public Command[] get_commandList() {
         return _commandList;

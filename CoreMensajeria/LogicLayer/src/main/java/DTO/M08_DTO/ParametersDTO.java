@@ -1,4 +1,4 @@
-package DTO.ValidationDTO;
+package DTO.M08_DTO;
 
 import DTO.DTO;
 

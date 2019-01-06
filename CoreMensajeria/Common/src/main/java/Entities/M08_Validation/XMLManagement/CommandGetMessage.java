@@ -1,8 +1,12 @@
 package Entities.M08_Validation.XMLManagement;
 
 import Entities.M07_Template.HandlerPackage.ParameterHandler;
+import Entities.M08_Validation.XMLManagement.Message;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.Template;
+import Entities.M08_Validation.XMLManagement.ParameterXML;
+import Entities.M08_Validation.XMLManagement.Command;
+import Entities.M08_Validation.XMLManagement.CommandsFactory;
 import Exceptions.ParameterDoesntExistsException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -10,12 +14,12 @@ import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 
-public class CommandGetMessage extends Command {
+public class CommandGetMessage extends Command<Message> {
 
     private Node _node;
     private Message _message;
-    private CommandGetTagValue _commandGetTagValue;
-    private CommandGetParameter _commandGetParameter;
+    private Command<String> _commandGetTagValue;
+    private Command<ParameterXML> _commandGetParameter;
     private Template _template;
     private int idMessage; ////// cambiar por comando plantilla
     private int idParameter;  ////// cambiar por comando plantilla
@@ -32,9 +36,12 @@ public class CommandGetMessage extends Command {
         try {
             if (_node.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) _node;
-                _commandGetTagValue = CommandFactory.CreateCommandGetTagValue("destiny", element);
-                _commandGetTagValue.execute();
-                _message.set_destiny(_commandGetTagValue.getValue());
+                _commandGetTagValue = CommandsFactory.createCommandGetTagValue("destiny", element);
+                try {
+                    _commandGetTagValue.execute();
+
+                } catch (Exception e) { }
+                _message.set_destiny( _commandGetTagValue.Return());
                 NodeList nodeList = element.getElementsByTagName("parameter");
                 ArrayList<ParameterXML> parameterXMLList = new ArrayList<>();
 
@@ -42,10 +49,15 @@ public class CommandGetMessage extends Command {
                 ArrayList<Parameter> parameterList = ParameterHandler.getParametersByMessage(idMessage); /////// cambiar por comando plantilla
 
                 for (int i = 0; i < nodeList.getLength(); i++) {
-                    _commandGetParameter = CommandFactory.CreateCommandGetParameter(nodeList.item(i),parameterList);
-                    _commandGetParameter.execute();
-                    if(_commandGetParameter.getValue() != null) {
-                        parameterXMLList.add(_commandGetParameter.getValue());
+                    _commandGetParameter = CommandsFactory.createCommandGetParameter(nodeList.item(i),parameterList);
+                    try {
+                        _commandGetParameter.execute();
+
+                    } catch (Exception e) {
+
+                    }
+                    if(_commandGetParameter.Return() != null) {
+                        parameterXMLList.add( _commandGetParameter.Return());
                     } else {
                         _message = null;
                     }
@@ -59,7 +71,9 @@ public class CommandGetMessage extends Command {
         }
     }
 
-    public Message getValue(){
+    @Override
+    public Message Return() {
         return _message;
     }
+
 }

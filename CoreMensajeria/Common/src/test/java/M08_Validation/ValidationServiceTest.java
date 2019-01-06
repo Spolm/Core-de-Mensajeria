@@ -1,16 +1,11 @@
 package M08_Validation;
 
 
-import Entities.M07_Template.MessagePackage.Parameter;
-import Entities.M08_Validation.XMLManagement.Command;
 import Entities.M08_Validation.XMLManagement.CommandValidateMessage;
 import Entities.M08_Validation.XMLManagement.CommandValidateParameter;
 import Entities.M08_Validation.XMLManagement.CommandValidateTemplate;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import Exceptions.SMSTooLongException;
-
-import java.lang.reflect.Executable;
 
 import static  org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;

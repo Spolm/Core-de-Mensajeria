@@ -1,13 +1,13 @@
 package Logic.M08_SendMessage;
 
 import Entities.Entity;
-import Entities.M08_Validation.XMLManagement.Command;
+
 import java.util.Calendar;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class ScheduleMessage extends Command {
+public class CommandScheduleMessage extends Command {
 
     @Override
     public void execute() {
@@ -17,7 +17,7 @@ public class ScheduleMessage extends Command {
         long mills = calendar.getTimeInMillis() - System.currentTimeMillis();
         System.out.println(mills);
         System.out.println(System.currentTimeMillis());
-        service.schedule(new ScheduleMessageTask(), mills, TimeUnit.MILLISECONDS);
+        service.schedule(new CommandScheduleMessageTask(), mills, TimeUnit.MILLISECONDS);
     }
 
     public Entity Result() {

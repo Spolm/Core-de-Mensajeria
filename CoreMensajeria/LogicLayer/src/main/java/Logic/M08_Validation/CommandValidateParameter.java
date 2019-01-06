@@ -1,6 +1,8 @@
-package Entities.M08_Validation.XMLManagement;
+package Logic.M08_Validation;
 
-public abstract class CommandValidateParameter extends Command{
+import Logic.Command;
+
+public abstract class CommandValidateParameter extends Command {
     private String _response;
     private boolean _valid;
 

@@ -2,7 +2,10 @@ package Entities.M08_Validation.XMLManagement;
 
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
+import Entities.M08_Validation.XMLManagement.Message;
 import Exceptions.TemplateDoesntExistsException;
+import Entities.M08_Validation.XMLManagement.Command;
+import Entities.M08_Validation.XMLManagement.CommandsFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -16,13 +19,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandProcessXML extends Command{
+public class CommandProcessXML extends Command {
 
     private File _xmlFile;
     private DocumentBuilderFactory _dbFactory;
     private DocumentBuilder _dBuilder;
-    private CommandGetMessage _commandGetMessage;
-    private CommandGetTagValue _commandGetTagValue;
+    private Command<Message> _commandGetMessage;
+    private Command<String> _commandGetTagValue;
     private Template _template;  /////// Cambiar por comando de Template
     private TemplateHandler _templateHandler = new TemplateHandler();   /////// Cambiar por comando de Template
     private String _templateId;                  /////// Cambiar por comando de Template
@@ -41,9 +44,11 @@ public class CommandProcessXML extends Command{
             doc.getDocumentElement().normalize();
 
             NodeList node = doc.getElementsByTagName("template");
-            _commandGetTagValue = CommandFactory.CreateCommandGetTagValue("id",(Element) node.item(0));
-            _commandGetTagValue.execute();
-            _templateId = _commandGetTagValue.getValue();
+            _commandGetTagValue = CommandsFactory.createCommandGetTagValue("id",(Element) node.item(0));
+            try{
+                _commandGetTagValue.execute();
+            } catch (Exception e){}
+            _templateId = _commandGetTagValue.Return();
 
             _template =_templateHandler.getTemplate(Integer.valueOf(_templateId ));   /////// Cambiar por comando de Template
 
@@ -51,10 +56,12 @@ public class CommandProcessXML extends Command{
             List<Message> messageList = new ArrayList<>();
 
             for (int i = 0; i < nodeList.getLength(); i++) {
-                _commandGetMessage = CommandFactory.CreateCommandGetMessage(nodeList.item(i),_template);
-                _commandGetMessage.execute();
-                if(_commandGetMessage.getValue() != null)
-                    messageList.add(_commandGetMessage.getValue());
+                _commandGetMessage = CommandsFactory.createCommandGetMessage(nodeList.item(i),_template);
+                try {
+                    _commandGetMessage.execute();
+                } catch (Exception e) {}
+                if(_commandGetMessage.Return() != null)
+                    messageList.add(_commandGetMessage.Return());
             }
 
             for(Message message : messageList){
@@ -65,5 +72,10 @@ public class CommandProcessXML extends Command{
         } catch (TemplateDoesntExistsException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Object Return() {
+        return null;
     }
 }

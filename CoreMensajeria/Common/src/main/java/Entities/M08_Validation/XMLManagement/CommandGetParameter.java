@@ -1,15 +1,18 @@
 package Entities.M08_Validation.XMLManagement;
 
 import Entities.M07_Template.MessagePackage.Parameter;
+import Entities.M08_Validation.XMLManagement.ParameterXML;
+import Entities.M08_Validation.XMLManagement.Command;
+import Entities.M08_Validation.XMLManagement.CommandsFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 
-public class CommandGetParameter extends Command {
+public class CommandGetParameter extends Command<ParameterXML> {
     private Node _node;
     private ParameterXML _parameterXML;
-    private CommandGetTagValue _commandGetTagValue;
+    private Command<String> _commandGetTagValue;
     private ArrayList<Parameter> _parameters;
 
     public CommandGetParameter(Node node, ArrayList<Parameter> parameter) {
@@ -22,15 +25,19 @@ public class CommandGetParameter extends Command {
     public void execute() { //////////////// Rodear de try catch y hacer excepcion personalizada
         if (_node.getNodeType() == Node.ELEMENT_NODE) {
             Element element = (Element) _node;
-            _commandGetTagValue = CommandFactory.CreateCommandGetTagValue("name", element);
-            _commandGetTagValue.execute();
-            if(findParameter(_commandGetTagValue.getValue())) {
-                _parameterXML.set_name(_commandGetTagValue.getValue());
-
-                _commandGetTagValue = CommandFactory.CreateCommandGetTagValue("value", element);
+            _commandGetTagValue = CommandsFactory.createCommandGetTagValue("name", element);
+            try {
                 _commandGetTagValue.execute();
-                if(_commandGetTagValue.getValue() != ""){
-                    _parameterXML.set_value(_commandGetTagValue.getValue());
+            } catch (Exception e) {}
+            if(findParameter( _commandGetTagValue.Return())) {
+                _parameterXML.set_name(_commandGetTagValue.Return());
+
+                _commandGetTagValue = CommandsFactory.createCommandGetTagValue("value", element);
+                try {
+                    _commandGetTagValue.execute();
+                } catch (Exception e){}
+                if(_commandGetTagValue.Return() != ""){
+                    _parameterXML.set_value((String) _commandGetTagValue.Return());
                 } else {
                     _parameterXML = null;
                 }
@@ -51,7 +58,9 @@ public class CommandGetParameter extends Command {
         return false;
     }
 
-    public ParameterXML getValue(){
+    @Override
+    public ParameterXML Return() {
         return _parameterXML;
     }
+
 }

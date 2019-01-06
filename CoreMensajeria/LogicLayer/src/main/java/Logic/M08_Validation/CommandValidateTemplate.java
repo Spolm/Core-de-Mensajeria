@@ -1,4 +1,4 @@
-package Entities.M08_Validation.XMLManagement;
+package Logic.M08_Validation;
 
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
@@ -20,7 +20,7 @@ public class CommandValidateTemplate extends CommandValidateParameter {
     }
 
     /**
-     * @throws Exception excepciones personalizadas
+     * @throws TemplateDoesntExistsException cuando no existe la plantilla que se está buscando
      */
     public void execute() throws TemplateDoesntExistsException{
         Logger logger = Logger.getLogger(CommandValidateParameter.class.getName());
@@ -35,5 +35,10 @@ public class CommandValidateTemplate extends CommandValidateParameter {
             this.set_response("Plantilla no Existe");
             throw e;
         }
+    }
+
+    @Override
+    public Object Return() {
+        return null;
     }
 }

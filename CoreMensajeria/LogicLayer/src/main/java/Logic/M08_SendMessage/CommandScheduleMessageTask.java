@@ -5,11 +5,11 @@ import Logic.CommandsFactory;
 
 import java.util.logging.Logger;
 
-public class ScheduleMessageTask implements Runnable {
+public class CommandScheduleMessageTask implements Runnable {
 
     public void run() {
         Command sendMessageCommand = CommandsFactory.createSendMessage();
-        Logger logger = Logger.getLogger(ScheduleMessageTask.class.getName());
+        Logger logger = Logger.getLogger(CommandScheduleMessageTask.class.getName());
         try {
             logger.info("Enviando mensaje");
             sendMessageCommand.execute();

@@ -1,13 +1,20 @@
 package Logic;
 
 import Entities.Entity;
+import Entities.M07_Template.MessagePackage.Parameter;
+import Entities.M07_Template.Template;
+import Entities.M08_Validation.XMLManagement.*;
 import Logic.M01_Login.GetUser;
-import Logic.M08_SendMessage.SendMessage;
+import Logic.M08_SendMessage.CommandSendMessage;
+import Logic.M08_Validation.*;
 import Logic.M07_Template.*;
 import Logic.M02_Company.*;
 import Logic.M03_Campaign.*;
 import Logic.M09_Statistics.*;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommandsFactory {
@@ -16,7 +23,7 @@ public class CommandsFactory {
         return new GetUser(user);
     }
 
-    public static Command createSendMessage() { return new SendMessage(); }
+    public static Command createSendMessage() { return new CommandSendMessage(); }
 
     //region M09
     public static GetAllCompaniesByUserCommand getAllCompaniesByUserCommand(Integer userId) {return new GetAllCompaniesByUserCommand(userId); }
@@ -116,7 +123,36 @@ public class CommandsFactory {
         return new CommandUpdateTemplate();
 }
 
+    //region M_08
+    public static CommandGetTagValue createCommandGetTagValue(String tag, Element element){
+        return new CommandGetTagValue(tag,element);
+    }
 
+    public static CommandGetParameter createCommandGetParameter(Node node, ArrayList<Parameter> parameter){
+        return new CommandGetParameter(node, parameter);
+    }
 
+    public static CommandGetMessage createCommandGetMessage(Node node, Template template){
+        return new CommandGetMessage(node,template);
+    }
+
+    public static CommandProcessXML createCommandProcessXML(String filePath){
+        return new CommandProcessXML(filePath);
+    }
+
+    public static CommandValidateMessage createCommandValidateMessage(int template, String message,
+                                                                      String channel) {
+        return new CommandValidateMessage(template, message, channel);
+
+    }
+
+    public static CommandValidateTemplate createCommandValidateTemplate (int id) {
+        return new CommandValidateTemplate(id);
+    }
+
+    public static CommandValidate createCommandValidate (int template, String message, String channel) {
+        return new CommandValidate(template, message, channel);
+    }
+    //end region
 
 }

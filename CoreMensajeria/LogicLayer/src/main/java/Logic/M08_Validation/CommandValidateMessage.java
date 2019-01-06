@@ -1,4 +1,4 @@
-package Entities.M08_Validation.XMLManagement;
+package Logic.M08_Validation;
 
 import Entities.M07_Template.HandlerPackage.MessageHandler;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
@@ -30,7 +30,10 @@ public class CommandValidateMessage extends CommandValidateParameter{
     }
 
     /**
-     * @throws Exception excepciones personalizadas
+     * @throws SMSTooLongException
+     * @throws TemplateDoesntExistsException
+     * @throws MessageDoesntExistsException
+     * @throws ParameterDoesntExistsException
      */
     public void execute () throws SMSTooLongException, TemplateDoesntExistsException, MessageDoesntExistsException, ParameterDoesntExistsException{
         Logger logger = Logger.getLogger(CommandValidateParameter.class.getName());
@@ -63,5 +66,10 @@ public class CommandValidateMessage extends CommandValidateParameter{
             throw e;
         }
 
+    }
+
+    @Override
+    public Object Return() {
+        return null;
     }
 }

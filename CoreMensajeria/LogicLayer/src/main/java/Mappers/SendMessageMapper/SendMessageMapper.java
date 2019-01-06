@@ -1,12 +1,12 @@
 package Mappers.SendMessageMapper;
 
-import DTO.ValidationDTO.ParametersDTO;
+import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
+import Entities.EntityFactory;
 import Entities.M08_Validation.SentMessage;
-import Entities.M08_Validation.XMLManagement.Command;
-import Entities.M08_Validation.XMLManagement.CommandValidate;
-import Entities.M08_Validation.XMLManagement.CommandValidateMessage;
-import Entities.M08_Validation.XMLManagement.CommandValidateTemplate;
+import Logic.Command;
+import Logic.CommandsFactory;
+import Logic.M08_Validation.CommandValidate;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Exceptions.SMSTooLongException;
@@ -18,10 +18,10 @@ import java.util.List;
 public class SendMessageMapper {
 
     public static Entity CreateEntity(ParametersDTO dto) {
-        Command c = new CommandValidate(dto.get_idTemplate(), dto.get_message(), dto.get_channel());
+        Command c = CommandsFactory.createCommandValidate(dto.get_idTemplate(), dto.get_message(), dto.get_channel());
         try {
             c.execute();
-            Entity sentMessage = new SentMessage();
+            Entity sentMessage = EntityFactory.createSendMessage();
             ((SentMessage) sentMessage).set_templateId(dto.get_idTemplate());
             ((SentMessage) sentMessage).set_channel(dto.get_channel());
             ((SentMessage) sentMessage).set_message(dto.get_message());
@@ -35,7 +35,7 @@ public class SendMessageMapper {
         } catch (MessageDoesntExistsException e) {
             throw e;
         } catch (Exception e) {
-            throw e;
+            throw new MessageDoesntExistsExgception();
         }
 
     }

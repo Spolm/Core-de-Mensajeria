@@ -1,10 +1,12 @@
 package Entities.M08_Validation.XMLManagement;
 
+import Entities.Entity;
+import Entities.M08_Validation.XMLManagement.Command;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class CommandGetTagValue extends Command{
+public class CommandGetTagValue extends Command<String> {
     private String _tag;
     private Element _element;
     private Node _node;
@@ -22,12 +24,14 @@ public class CommandGetTagValue extends Command{
 
     }
 
-    public String getValue(){
+    @Override
+    public String Return() {
         try {
-             return _node.getNodeValue();
+            return _node.getNodeValue();
         }catch (NullPointerException e){   //////// Hacer excepcion personalizada
             System.out.println("Something bad happen");
         }
         return "";
     }
+
 }

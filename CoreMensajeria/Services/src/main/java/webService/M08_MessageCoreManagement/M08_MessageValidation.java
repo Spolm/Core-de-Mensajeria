@@ -1,7 +1,7 @@
 package webService.M08_MessageCoreManagement;
 
 
-import DTO.ValidationDTO.ParametersDTO;
+import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
 import Entities.M07_Template.HandlerPackage.MessageHandler;
 import Entities.M08_Validation.SentMessage;
@@ -10,10 +10,7 @@ import Entities.M08_Validation.ValidationTemplate;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
 import Entities.M04_Integrator.*;
-import Entities.M08_Validation.XMLManagement.Command;
-import Entities.M08_Validation.XMLManagement.CommandValidate;
 import Exceptions.*;
-import Logic.M08_SendMessage.SendMessage;
 import Mappers.SendMessageMapper.SendMessageMapper;
 import com.google.gson.Gson;
 
@@ -34,7 +31,7 @@ public class M08_MessageValidation {
     Gson gson = new Gson();
 
     @POST
-    @Path("/SendMessage")
+    @Path("/CommandSendMessage")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response sendMessage(@Valid ParametersDTO dto) {
