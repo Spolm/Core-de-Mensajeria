@@ -22,8 +22,6 @@ public class CommandGetMessage extends Command<Message> {
     private Command<ParameterXML> _commandGetParameter;
     private Template _template;
     private int idMessage; ////// cambiar por comando plantilla
-    private int idParameter;  ////// cambiar por comando plantilla
-
 
     public CommandGetMessage(Node node, Template template){
         this._node = node;
@@ -37,10 +35,8 @@ public class CommandGetMessage extends Command<Message> {
             if (_node.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) _node;
                 _commandGetTagValue = CommandsFactory.createCommandGetTagValue("destiny", element);
-                try {
-                    _commandGetTagValue.execute();
+                _commandGetTagValue.execute();
 
-                } catch (Exception e) { }
                 _message.set_destiny( _commandGetTagValue.Return());
                 NodeList nodeList = element.getElementsByTagName("parameter");
                 ArrayList<ParameterXML> parameterXMLList = new ArrayList<>();
@@ -50,12 +46,8 @@ public class CommandGetMessage extends Command<Message> {
 
                 for (int i = 0; i < nodeList.getLength(); i++) {
                     _commandGetParameter = CommandsFactory.createCommandGetParameter(nodeList.item(i),parameterList);
-                    try {
-                        _commandGetParameter.execute();
+                    _commandGetParameter.execute();
 
-                    } catch (Exception e) {
-
-                    }
                     if(_commandGetParameter.Return() != null) {
                         parameterXMLList.add( _commandGetParameter.Return());
                     } else {
@@ -68,6 +60,8 @@ public class CommandGetMessage extends Command<Message> {
         }
         catch (ParameterDoesntExistsException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+
         }
     }
 

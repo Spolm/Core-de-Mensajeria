@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class WatchDirectory implements Runnable{
+
     private ArrayList<String> _paths;
     private static WatchDirectory watchDirectory;
     private Command _commandProcessXML;
@@ -14,7 +15,6 @@ public class WatchDirectory implements Runnable{
     public WatchDirectory( ArrayList<String> _paths ){
         this._paths = _paths;
     }
-
 
     public static  WatchDirectory getInstance( ArrayList<String> _paths ) {
         if ( watchDirectory == null ){
@@ -45,12 +45,11 @@ public class WatchDirectory implements Runnable{
 
                     log.info("Created: " + event.context().toString() + " in directory " + directory );
 
-                    if(directory.endsWith(".xml")) {
+                    if(event.context().toString().endsWith(".xml")) {
                         _commandProcessXML = CommandsFactory
                                 .createCommandProcessXML(directory + "/" + event.context().toString());
                         _commandProcessXML.execute();
                     }
-
                 }
                 key.reset();
             }

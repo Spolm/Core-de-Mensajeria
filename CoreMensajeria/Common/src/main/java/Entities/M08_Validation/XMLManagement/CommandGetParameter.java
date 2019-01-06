@@ -23,29 +23,30 @@ public class CommandGetParameter extends Command<ParameterXML> {
 
     @Override
     public void execute() { //////////////// Rodear de try catch y hacer excepcion personalizada
-        if (_node.getNodeType() == Node.ELEMENT_NODE) {
-            Element element = (Element) _node;
-            _commandGetTagValue = CommandsFactory.createCommandGetTagValue("name", element);
-            try {
-                _commandGetTagValue.execute();
-            } catch (Exception e) {}
-            if(findParameter( _commandGetTagValue.Return())) {
-                _parameterXML.set_name(_commandGetTagValue.Return());
+        try {
+                if (_node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) _node;
+                _commandGetTagValue = CommandsFactory.createCommandGetTagValue("name", element);
 
-                _commandGetTagValue = CommandsFactory.createCommandGetTagValue("value", element);
-                try {
                     _commandGetTagValue.execute();
-                } catch (Exception e){}
-                if(_commandGetTagValue.Return() != ""){
-                    _parameterXML.set_value((String) _commandGetTagValue.Return());
-                } else {
+
+                if(findParameter( _commandGetTagValue.Return())) {
+                    _parameterXML.set_name(_commandGetTagValue.Return());
+
+                    _commandGetTagValue = CommandsFactory.createCommandGetTagValue("value", element);
+                    try {
+                        _commandGetTagValue.execute();
+                    } catch (Exception e){}
+                    if(_commandGetTagValue.Return() != ""){
+                        _parameterXML.set_value(_commandGetTagValue.Return());
+                    } else {
+                        _parameterXML = null;
+                    }
+                } else{
                     _parameterXML = null;
                 }
-            } else{
-                _parameterXML = null;
             }
-
-        }
+        } catch (Exception e) {}
     }
 
     public boolean findParameter(String parameter){
