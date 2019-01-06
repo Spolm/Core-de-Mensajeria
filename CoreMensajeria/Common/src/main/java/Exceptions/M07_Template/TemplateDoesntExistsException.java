@@ -1,10 +1,12 @@
-package Exceptions;
+package Exceptions.M07_Template;
+
+import Exceptions.PersonalizedException;
 
 /**
  * Exeption personalizada para indicar que no existe una plantilla
  * y cual es el idTemplate que no existe.
  */
-public class TemplateDoesntExistsException extends Exception{
+public class TemplateDoesntExistsException extends PersonalizedException {
     private int idTemplate;
 
     public TemplateDoesntExistsException() {

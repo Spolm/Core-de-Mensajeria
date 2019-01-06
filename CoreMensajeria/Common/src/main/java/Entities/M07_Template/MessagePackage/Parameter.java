@@ -1,11 +1,13 @@
 package Entities.M07_Template.MessagePackage;
 
+import Entities.Entity;
+
 import java.util.*;
 
 /**
  * Message class uses for storing message information from a message
  */
-public class Parameter {
+public class Parameter extends Entity {
     /**
      * id of the parameter
      */
@@ -114,5 +116,11 @@ public class Parameter {
         return Objects.hash(getName(), getDescription());
     }
 
+    @Override
+    public String toString() {
+        return "Parameter{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
 

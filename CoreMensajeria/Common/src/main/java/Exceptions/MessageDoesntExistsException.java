@@ -4,7 +4,7 @@ package Exceptions;
  * Exeption personalizada para indicar que una plantilla no tiene mensaje
  * y cual es el idTemplate que no tiene mensaje.
  */
-public class MessageDoesntExistsException extends Exception{
+public class MessageDoesntExistsException extends PersonalizedException{
      private int idTemplate;
 
     public MessageDoesntExistsException() {

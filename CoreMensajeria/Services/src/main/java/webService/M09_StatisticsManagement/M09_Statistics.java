@@ -1,6 +1,7 @@
 package webService.M09_StatisticsManagement;
 
 import DTO.DTO;
+import Entities.Entity;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
@@ -199,12 +200,12 @@ public class M09_Statistics extends Application {
         return getStadisticCount(command);
     }
 
-    private Response getStadisticCount(Command command) {
+    private Response getStadisticCount(Command<Entity> command) {
         try {
             command.execute();
             mapper = MapperFactory.createStatisticMapper();
             return Response.ok(gson.toJson(
-                    mapper.CreateDto(command.Return())
+                    mapper.CreateDto((Entity) command.Return())
             )).build();
         } catch (Exception e) {
             return Response.serverError().build();
