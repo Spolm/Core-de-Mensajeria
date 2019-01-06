@@ -5,7 +5,7 @@ import Entities.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Command {
+public abstract class Command < T >{
     private Entity entity ;
 
     public Entity getEntity() { return entity; }
@@ -14,7 +14,7 @@ public abstract class Command {
 
     public abstract void execute() throws Exception;
 
-    public abstract Entity Return() ;
+    public abstract T Return() ;
 
     //public abstract ArrayList<Entity> ReturnList() ;
 
