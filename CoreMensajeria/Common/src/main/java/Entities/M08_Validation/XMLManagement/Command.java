@@ -1,9 +1,6 @@
-package Logic;
+package Entities.M08_Validation.XMLManagement;
 
 import Entities.Entity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Command<T> {
     private Entity entity ;

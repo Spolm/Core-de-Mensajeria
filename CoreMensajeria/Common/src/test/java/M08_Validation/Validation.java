@@ -1,4 +1,4 @@
-package Modulo_8;
+package M08_Validation;
 
 import Entities.M08_Validation.ValidationReciveParameter;
 import Entities.M08_Validation.ValidationTemplate;

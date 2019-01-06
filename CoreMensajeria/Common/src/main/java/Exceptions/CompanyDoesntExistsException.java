@@ -3,9 +3,7 @@ package Exceptions;
 /**
  * Creado por M02 para manejo de errores en la obtencion de campañas
  */
-public class CompanyDoesntExistsException extends Exception {
-    public final int ERROR_CODE = 560;
-    public final String ERROR_MSG = "Ha ocurrido un error "+ ERROR_CODE+". La compañia que desea visualizar no existe.";
+public class CompanyDoesntExistsException extends PersonalizedException {
     private String _clase;
     private String _metodo;
 
@@ -20,6 +18,8 @@ public class CompanyDoesntExistsException extends Exception {
         super(error);
         _clase = clase;
         _metodo = metodo;
+        ERROR_CODE = 560;
+        ERROR_MSG = "Ha ocurrido un error "+ ERROR_CODE+". La compañia que desea visualizar no existe.";
     }
 
     /**
@@ -28,20 +28,10 @@ public class CompanyDoesntExistsException extends Exception {
      */
     public CompanyDoesntExistsException(Exception error) {
         super(error);
-
+        ERROR_CODE = 560;
+        ERROR_MSG = "Ha ocurrido un error "+ ERROR_CODE+". El parametro "+" no puede ser Null";
     }
-    @Override
-    public String toString()
-    {
-        StringBuilder str = null;
 
-
-        str = new StringBuilder( ERROR_CODE + "\n" );
-        str.append( ERROR_MSG + "\n" );
-        str.append( super.toString() );
-
-        return str.toString();
-    }
 
 
 }

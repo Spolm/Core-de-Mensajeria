@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class ChannelNotFoundException extends Exception {
+public class ChannelNotFoundException extends PersonalizedException {
     public ChannelNotFoundException(){}
     public ChannelNotFoundException(Exception e){
         super(e);

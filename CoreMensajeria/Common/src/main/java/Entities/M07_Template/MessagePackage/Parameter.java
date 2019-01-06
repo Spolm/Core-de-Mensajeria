@@ -114,5 +114,11 @@ public class Parameter {
         return Objects.hash(getName(), getDescription());
     }
 
+    @Override
+    public String toString() {
+        return "Parameter{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
 
