@@ -29,6 +29,8 @@ public class M07_Template {
     private final String MESSAGE_EXCEPTION = "Excepcion";
     private final String MESSAGE_ERROR_PARAMETERDOESNTEXIST= "El parámetro ingresado no existe";
 
+    Gson gson = new Gson();
+
     /**
      * Method that returns all the templates filtered by a user and his company.
      * @param userId id of the user
@@ -44,9 +46,9 @@ public class M07_Template {
             if(companyId==0 || userId==0){
                 throw new InvalidParameterException();
             }
-            Command c = CommandsFactory.createCommandGetParameters(companyId);
+            Command c = CommandsFactory.createCommandGetTemplates(userId,companyId);
             c.execute();
-            response = Response.ok(c.Return()).build();
+            response = Response.ok(gson.toJson(c.Return())).build();
         } catch (InvalidParameterException e) {
             e.printStackTrace();
             error = new Error(e.getMessage());
@@ -81,7 +83,7 @@ public class M07_Template {
             }
             Command c = CommandsFactory.createCommandGetTemplate(id);
             c.execute();
-            response = Response.ok(c.Return()).build();
+            response = Response.ok(gson.toJson(c.Return())).build();
         } catch (InvalidParameterException e) {
             e.printStackTrace();
             error = new Error(e.getMessage());
@@ -119,7 +121,7 @@ public class M07_Template {
             }
             Command c = CommandsFactory.createCommandGetTemplatePrivilegesByUser(userId,companyId);
             c.execute();
-            response = Response.ok(c.Return()).build();
+            response = Response.ok(gson.toJson(c.Return())).build();
         } catch (InvalidParameterException e) {
             e.printStackTrace();
             error = new Error(e.getMessage());
@@ -158,7 +160,7 @@ public class M07_Template {
             }
             Command c = CommandsFactory.createCommandPostTemplateStatus(templateId,userId);
             c.execute();
-            response = Response.ok(c.Return()).build();
+            response = Response.ok(gson.toJson(c.Return())).build();
         } catch (InvalidParameterException e) {
             e.printStackTrace();
             error = new Error(e.getMessage());

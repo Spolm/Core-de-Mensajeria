@@ -22,6 +22,8 @@ public class M07_Message {
     private final String MESSAGE_ERROR_INTERN = "Error Interno";
     private final String MESSAGE_EXCEPTION = "Excepcion";
 
+    Gson gson = new Gson();
+
     /**
      * this method returns all the templates and each one with
      * its message and associated parameters.
@@ -34,7 +36,7 @@ public class M07_Message {
         try {
             Command c = CommandsFactory.createCommandGetMessages();
             c.execute();
-            response = Response.ok(c.Return()).build();
+            response = Response.ok(gson.toJson(c.Return())).build();
         } catch (Exception e) {
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_INTERN);

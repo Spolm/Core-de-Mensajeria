@@ -6,6 +6,7 @@ import Exceptions.M07_Template.InvalidParameterException;
 import Exceptions.ParameterDoesntExistsException;
 import Logic.Command;
 import Logic.CommandsFactory;
+import com.google.gson.Gson;
 import webService.M01_Login.Error;
 
 import javax.ws.rs.*;
@@ -22,6 +23,8 @@ public class M07_Parameter {
     private final String MESSAGE_ERROR_INTERN = "Error Interno";
     private final String MESSAGE_EXCEPTION = "Excepcion";
     private final String MESSAGE_ERROR_PARAMETERDOESNTEXIST= "El parámetro ingresado no existe";
+
+    Gson gson = new Gson();
 
     /**
      *this method is responsible for making a new parameter associated
@@ -42,7 +45,7 @@ public class M07_Parameter {
             }
             Command c = CommandsFactory.createCommandPostParameter(newParameter);
             c.execute();
-            response = Response.ok(c.Return()).build();
+            response = Response.ok(gson.toJson(c.Return())).build();
         } catch (InvalidParameterException e) {
             e.printStackTrace();
             error = new Error(e.getMessage());
@@ -72,7 +75,7 @@ public class M07_Parameter {
             }
             Command c = CommandsFactory.createCommandGetParameters(companyId);
             c.execute();
-            response = Response.ok(c.Return()).build();
+            response = Response.ok(gson.toJson(c.Return())).build();
         } catch (InvalidParameterException e) {
             e.printStackTrace();
             error = new Error(e.getMessage());
