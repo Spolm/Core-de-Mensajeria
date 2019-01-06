@@ -11,11 +11,19 @@ public class ChangeStatusCampaignCommand extends Command {
 
     private static Entity _ca;
 
+    /**
+     * Constructor de la clase.
+     * @param _campaign instancia de la Campana que se desea agregar
+     */
+
     public ChangeStatusCampaignCommand(Entity _campaign ){
         this._ca = _campaign;
     }
 
 
+    /**
+     * Metodo que ejecuta la Accion del comando
+     */
     @Override
     public void execute() throws Exception {
         try {
