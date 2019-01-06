@@ -1,5 +1,6 @@
 package Entities.M08_Validation;
-import Entities.M08_Validation.XMLManagement.CommandProcessXML;
+import Entities.M08_Validation.XMLManagement.Command;
+import Entities.M08_Validation.XMLManagement.CommandsFactory;
 
 import java.nio.file.*;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.logging.Logger;
 public class WatchDirectory implements Runnable{
     private ArrayList<String> _paths;
     private static WatchDirectory watchDirectory;
-    private  _commandProcessXML;
+    private Command _commandProcessXML;
 
     public WatchDirectory( ArrayList<String> _paths ){
         this._paths = _paths;
@@ -43,8 +44,8 @@ public class WatchDirectory implements Runnable{
                 for ( WatchEvent<?> event : key.pollEvents() ) {
 
                     log.info("Created: " + event.context().toString() + " in directory " + directory );
-                    _commandProcessXML = CommandFactory
-                            .CreateCommanProcessXML(directory + "/" + event.context().toString() );
+                    _commandProcessXML = CommandsFactory
+                            .createCommandProcessXML(directory + "/" + event.context().toString() );
                     _commandProcessXML.execute();
 
                 }
