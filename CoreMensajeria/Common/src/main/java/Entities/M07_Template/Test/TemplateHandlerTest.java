@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import Entities.M07_Template.Template;
-import Exceptions.TemplateDoesntExistsException;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

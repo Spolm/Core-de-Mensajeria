@@ -26,7 +26,7 @@ public class M10_ProfileTest {
     private User _search;
     private ArrayList<User> _users;
     private ArrayList _companies;
-
+/*
     private void newProfile(){
         _userProfile = new User();
         _userProfile.set_usernameUser("newprofile");
@@ -104,5 +104,5 @@ public class M10_ProfileTest {
     public void getCompanies(){
         _companies = _profileDao.getCompanies();
         assertNotNull(_companies);
-    }
+    }*/
 }

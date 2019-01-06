@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class IntegratorNotFoundException extends Exception {
+public class IntegratorNotFoundException extends PersonalizedException {
     public IntegratorNotFoundException() {
     }
 

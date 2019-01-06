@@ -1,19 +1,26 @@
 package webService.M08_MessageCoreManagement;
 
 
+import DTO.M08_DTO.ParametersDTO;
+import Entities.Entity;
 import Entities.M07_Template.HandlerPackage.MessageHandler;
+import Entities.M08_Validation.SentMessage;
 import Entities.M08_Validation.ValidationReciveParameter;
 import Entities.M08_Validation.ValidationTemplate;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
 import Entities.M04_Integrator.*;
 import Exceptions.*;
+import Mappers.SendMessageMapper.SendMessageMapper;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import com.google.gson.Gson;
+
 import java.util.Random;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+
+import javax.validation.Valid;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -21,6 +28,39 @@ import java.util.List;
 
 @Path("/M08_MessageCore")
 public class M08_MessageValidation {
+
+    Gson gson = new Gson();
+
+    @POST
+    @Path("/CommandSendMessage")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response sendMessage(@Valid ParametersDTO dto) {
+        System.out.println(dto.get_name());
+        Exception error = null;
+        Entity sentMessage;
+        try {
+            sentMessage = SendMessageMapper.CreateEntity(dto);
+            System.out.println(((SentMessage) sentMessage).get_message());
+            //Codigo cuando es exitoso
+            return  Response.ok(gson.toJson(sentMessage)).build();
+        } catch (TemplateDoesntExistsException e) {
+            error = e;
+        } catch (SMSTooLongException e) {
+            error = e;
+        } catch (ParameterDoesntExistsException e) {
+            error = e;
+        } catch (MessageDoesntExistsException e) {
+            error = e;
+        } catch (Exception e) {
+            error = e;
+        }
+        if (error != null)
+         return Response.status(400).entity(gson.toJson(error.toString())).build();
+        return Response.status(400).entity("{\"Mensaje\": \"Error inesperado\"}").build();
+        //return Response.ok(gson.toJson(sentMessage)).build();
+
+    }
 
     @GET
     @Path("/TestModule")

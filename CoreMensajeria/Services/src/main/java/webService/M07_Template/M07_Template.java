@@ -4,8 +4,13 @@ import Entities.M01_Login.Privilege;
 import Entities.M07_Template.HandlerPackage.StatusHandler;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
-import Exceptions.TemplateDoesntExistsException;
+import Exceptions.M07_Template.InvalidParameterException;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
+import Exceptions.ParameterDoesntExistsException;
+import Logic.Command;
+import Logic.CommandsFactory;
 import com.google.gson.Gson;
+import webService.M01_Login.Error;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -20,11 +25,11 @@ import java.util.ArrayList;
 @Path("/templates")
 @Produces(MediaType.APPLICATION_JSON)
 public class M07_Template {
+    private final String MESSAGE_ERROR_INTERN = "Error Interno";
+    private final String MESSAGE_EXCEPTION = "Excepcion";
+    private final String MESSAGE_ERROR_PARAMETERDOESNTEXIST= "El parámetro ingresado no existe";
 
-    /**
-     * serialization and deserialization between Java objects
-     */
-    public Gson gson = new Gson();
+    Gson gson = new Gson();
 
     /**
      * Method that returns all the templates filtered by a user and his company.
@@ -35,9 +40,31 @@ public class M07_Template {
     @GET
     public Response getTemplates(@QueryParam("userId") int userId,
                                  @QueryParam("companyId") int companyId){
-        TemplateHandler templateHandler = new TemplateHandler();
-         ArrayList templateArrayList = templateHandler.getTemplates(userId,companyId);
-        return Response.ok(gson.toJson(templateArrayList)).build();
+        Response response;
+        Error error;
+        try {
+            if(companyId==0 || userId==0){
+                throw new InvalidParameterException();
+            }
+            Command c = CommandsFactory.createCommandGetTemplates(userId,companyId);
+            c.execute();
+            response = Response.ok(gson.toJson(c.Return())).build();
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
+            error = new Error(e.getMessage());
+            response = Response.status(404).entity(error).build();
+        }catch (ParameterDoesntExistsException e){
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        }
+        return response;
     }
 
     /**
@@ -48,16 +75,31 @@ public class M07_Template {
     @GET
     @Path("/{templateId}")//Subsequent Path
     public Response getTemplate(@PathParam("templateId") int id){
-        TemplateHandler templateHandler = new TemplateHandler();
-        Template template = new Template();
+        Response response;
+        Error error;
         try {
-            template = templateHandler.getTemplate(id);
-        }catch (TemplateDoesntExistsException e){
+            if(id==0){
+                throw new InvalidParameterException();
+            }
+            Command c = CommandsFactory.createCommandGetTemplate(id);
+            c.execute();
+            response = Response.ok(gson.toJson(c.Return())).build();
+        } catch (InvalidParameterException e) {
             e.printStackTrace();
+            error = new Error(e.getMessage());
+            response = Response.status(404).entity(error).build();
+        }catch (ParameterDoesntExistsException e){
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
         }
-        finally {
-            return Response.ok(gson.toJson(template)).build();
-        }
+        return response;
     }
 
     /**
@@ -71,14 +113,31 @@ public class M07_Template {
     @Path("/privileges")
     public Response getTemplatePrivilegesByUser(@QueryParam("userId") int userId,
                                                 @QueryParam("companyId") int companyId){
-        TemplateHandler templateHandler = new TemplateHandler();
-        ArrayList<Privilege> privileges = templateHandler.getTemplatePrivilegesByUser(userId,companyId);
-        return Response.ok(gson.toJson(privileges)).build();
-    }
-
-    @Path("/messages")
-    public M07_Message getMessages(){
-        return new M07_Message();
+        Response response;
+        Error error;
+        try {
+            if(userId==0||companyId==0){
+                throw new InvalidParameterException();
+            }
+            Command c = CommandsFactory.createCommandGetTemplatePrivilegesByUser(userId,companyId);
+            c.execute();
+            response = Response.ok(gson.toJson(c.Return())).build();
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
+            error = new Error(e.getMessage());
+            response = Response.status(404).entity(error).build();
+        }catch (ParameterDoesntExistsException e){
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        }
+        return response;
     }
 
     /**
@@ -92,25 +151,94 @@ public class M07_Template {
      */
     @POST
     @Path("/update/{templateId}")//Subsequent Path
-    public Boolean postTemplateStatus(@PathParam("templateId") int templateId, String userId){
-        Boolean flag = false;
-        flag = StatusHandler.postTemplateStatusAprovado(templateId,Integer.valueOf(userId));
-        return flag;
+    public Response postTemplateStatus(@PathParam("templateId") int templateId, int userId){
+        Response response;
+        Error error;
+        try {
+            if(userId==0||templateId==0){
+                throw new InvalidParameterException();
+            }
+            Command c = CommandsFactory.createCommandPostTemplateStatus(templateId,userId);
+            c.execute();
+            response = Response.ok(gson.toJson(c.Return())).build();
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
+            error = new Error(e.getMessage());
+            response = Response.status(404).entity(error).build();
+        }catch (ParameterDoesntExistsException e){
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        }
+        return response;
     }
 
+    //TODO: Arreglar los parametros y retornos de estos metodos
     @POST
     @Path("add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean postTemplate(String json){
-        TemplateHandler templateHandler = new TemplateHandler();
-        return templateHandler.postTemplateData(json);
+    public Response postTemplate(String json){
+        Response response;
+        Error error;
+        try {
+            if(json==null){
+                throw new InvalidParameterException();
+            }
+            Command c = CommandsFactory.createCommandPostTemplate(json);
+            c.execute();
+            response = Response.ok(gson.toJson(c.Return())).build();
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
+            error = new Error(e.getMessage());
+            response = Response.status(404).entity(error).build();
+        }catch (ParameterDoesntExistsException e){
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        }
+        return response;
     }
 
     @PUT
     @Path("update")
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean updateTemplate(String json){
-        TemplateHandler templateHandler = new TemplateHandler();
-        return templateHandler.updateTemplateData(json);
+    public Response updateTemplate(String json){
+        Response response;
+        Error error;
+        try {
+            if(json==null){
+                throw new InvalidParameterException();
+            }
+            Command c = CommandsFactory.createCommandUpdateTemplate(json);
+            c.execute();
+            response = Response.ok(gson.toJson(c.Return())).build();
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
+            error = new Error(e.getMessage());
+            response = Response.status(404).entity(error).build();
+        }catch (ParameterDoesntExistsException e){
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+        }
+        return response;
     }
 }

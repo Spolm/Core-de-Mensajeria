@@ -1,11 +1,9 @@
 package Logic;
 
-import Entities.Entity;
-
-public abstract class Command {
+public abstract class Command<T> {
 
     public abstract void execute() throws Exception;
 
-    public abstract Entity Return() ;
+    public abstract T Return() ;
 
 }

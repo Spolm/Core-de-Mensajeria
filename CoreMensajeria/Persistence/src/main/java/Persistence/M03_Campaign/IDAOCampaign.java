@@ -22,6 +22,6 @@ public interface IDAOCampaign extends IDAO {
 
     ArrayList<Entity> campaignList();
 
-    Campaign getCampaign(ResultSet _result) throws SQLException;
+
 
 }
