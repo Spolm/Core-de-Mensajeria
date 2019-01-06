@@ -16,7 +16,7 @@ import java.util.List;
 
 public class SendMessageMapper {
 
-    public static Entity CreateEntity(ParametersDTO dto) {
+    public static Entity CreateEntity(ParametersDTO dto) throws Exception{
         Command c = CommandsFactory.createCommandValidate(dto.get_idTemplate(), dto.get_message(), dto.get_channel());
         try {
             c.execute();
@@ -34,7 +34,7 @@ public class SendMessageMapper {
         } catch (MessageDoesntExistsException e) {
             throw e;
         } catch (Exception e) {
-            throw new MessageDoesntExistsException();
+            throw e;
         }
 
     }

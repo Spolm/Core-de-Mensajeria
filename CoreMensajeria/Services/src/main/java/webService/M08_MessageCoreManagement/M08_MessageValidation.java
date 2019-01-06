@@ -37,7 +37,7 @@ public class M08_MessageValidation {
     public Response sendMessage(@Valid ParametersDTO dto) {
         System.out.println(dto.get_name());
         Exception error = null;
-        Entity sentMessage = new SentMessage();
+        Entity sentMessage;
         try {
             sentMessage = SendMessageMapper.CreateEntity(dto);
             System.out.println(((SentMessage) sentMessage).get_message());
@@ -50,6 +50,8 @@ public class M08_MessageValidation {
         } catch (ParameterDoesntExistsException e) {
             error = e;
         } catch (MessageDoesntExistsException e) {
+            error = e;
+        } catch (Exception e) {
             error = e;
         }
         if (error != null)
