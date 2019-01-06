@@ -15,7 +15,7 @@ public interface IDAOCompany extends IDAO {
 
     void changeStatus ( Entity e);
 
-    Entity companiesByName( Entity e );
+    ArrayList<Entity> companiesByResponsible( Entity e );
 
     Entity companyById( Entity e);
 
@@ -23,7 +23,9 @@ public interface IDAOCompany extends IDAO {
 
     ArrayList<Entity> companiesEnabled();
 
-    Company getCompany(ResultSet _result) throws SQLException;
+    ArrayList<Entity> allCompanies();
+
+
 }
 
 
