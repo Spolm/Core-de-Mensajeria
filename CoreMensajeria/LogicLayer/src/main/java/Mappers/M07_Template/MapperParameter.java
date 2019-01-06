@@ -48,6 +48,6 @@ public class MapperParameter extends GenericMapper {
         for(Object e: list){
             dtoList.add(CreateDto((Entity) e));
         }
-        return null;
+        return dtoList;
     }
 }
