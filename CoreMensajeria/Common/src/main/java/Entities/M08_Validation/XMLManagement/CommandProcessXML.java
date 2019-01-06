@@ -60,7 +60,7 @@ public class CommandProcessXML extends Command {
                     _commandGetMessage.execute();
                 } catch (Exception e) {}
                 if(_commandGetMessage.Return() != null)
-                    messageList.add(_commandGetMessage.Return());
+                    _messageList.add(_commandGetMessage.Return());
             }
 
             for(Message message : _messageList){

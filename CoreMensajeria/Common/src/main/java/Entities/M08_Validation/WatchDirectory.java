@@ -46,8 +46,8 @@ public class WatchDirectory implements Runnable{
                     log.info("Created: " + event.context().toString() + " in directory " + directory );
 
                     if(directory.endsWith(".xml")) {
-                        _commandProcessXML = CommandFactory
-                                .CreateCommanProcessXML(directory + "/" + event.context().toString());
+                        _commandProcessXML = CommandsFactory
+                                .createCommandProcessXML(directory + "/" + event.context().toString());
                         _commandProcessXML.execute();
                     }
 
