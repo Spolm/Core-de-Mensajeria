@@ -1,7 +1,5 @@
 package Logic;
 
-import Entities.Entity;
-
 public abstract class Command<T> {
 
     public abstract void execute() throws Exception;

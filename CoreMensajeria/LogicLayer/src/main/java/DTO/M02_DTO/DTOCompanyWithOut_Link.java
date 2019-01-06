@@ -1,6 +1,8 @@
 package DTO.M02_DTO;
 
-public class DTOCompanyWithOut_Link {
+import DTO.DTO;
+
+public class DTOCompanyWithOut_Link  extends DTO{
 
     private int _idCompany;
     private String _name;

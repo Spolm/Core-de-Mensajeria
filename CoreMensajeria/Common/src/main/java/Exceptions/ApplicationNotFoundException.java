@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class ApplicationNotFoundException extends Exception {
+public class ApplicationNotFoundException extends PersonalizedException {
     public ApplicationNotFoundException(){}
     public ApplicationNotFoundException(Exception e){
         super(e);

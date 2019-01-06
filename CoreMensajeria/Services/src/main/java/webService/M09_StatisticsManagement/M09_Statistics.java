@@ -200,7 +200,7 @@ public class M09_Statistics extends Application {
         return getStadisticCount(command);
     }
 
-    private Response getStadisticCount(Command command) {
+    private Response getStadisticCount(Command<Entity> command) {
         try {
             command.execute();
             mapper = MapperFactory.createStatisticMapper();

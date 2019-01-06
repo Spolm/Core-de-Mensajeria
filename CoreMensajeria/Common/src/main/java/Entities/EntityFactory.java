@@ -7,6 +7,7 @@ import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.ApprovedStatus;
 import Entities.M07_Template.StatusPackage.NotApprovedStatus;
 import Entities.M07_Template.StatusPackage.Status;
+import Entities.M08_Validation.SentMessage;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -44,4 +45,9 @@ public class EntityFactory {
     }
 
 
+
+    //region M_08
+    public static Entity createSendMessage() {
+        return new SentMessage();
+    }
 }

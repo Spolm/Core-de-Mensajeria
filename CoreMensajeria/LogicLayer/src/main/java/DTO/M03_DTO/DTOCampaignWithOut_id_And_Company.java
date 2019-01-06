@@ -1,10 +1,11 @@
 package DTO.M03_DTO;
 
+import DTO.DTO;
 import Entities.M02_Company.Company;
 
 import java.util.Date;
 
-public class DTOCampaignWithOut_id_And_Company {
+public class DTOCampaignWithOut_id_And_Company extends DTO {
 
     private int _idCampaign;
     private String _nameCampaign;

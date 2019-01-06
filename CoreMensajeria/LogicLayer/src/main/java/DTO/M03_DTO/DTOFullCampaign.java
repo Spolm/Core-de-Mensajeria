@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Clase encargada de definir los DTO que seran utilizados por Campaign
  */
-public class DTOFullCampaign {
+public class DTOFullCampaign extends DTO {
     private int _idCampaign;
     private String _nameCampaign;
     private String _descCampaign;
