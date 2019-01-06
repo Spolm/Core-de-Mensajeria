@@ -1,6 +1,7 @@
 package Entities;
 
 import Entities.M01_Login.User;
+import Entities.M08_Validation.SentMessage;
 
 import java.sql.Date;
 
@@ -12,5 +13,10 @@ public class EntityFactory {
 
     static public Entity user() {
         return new User();
+    }
+
+    //region M_08
+    public static Entity createSendMessage() {
+        return new SentMessage();
     }
 }
