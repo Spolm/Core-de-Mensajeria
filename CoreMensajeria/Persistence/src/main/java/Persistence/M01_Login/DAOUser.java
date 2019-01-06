@@ -15,6 +15,7 @@ import java.util.Date;
 
 public class DAOUser extends DAO implements  IDAOUser {
 
+    private Connection _conn = Sql.getConInstance();
 
     final String QUERY_SELECT_BY_USERNAME_OR_EMAIL = "SELECT * FROM public.user where use_username=? or use_email=?";
     final String QUERY_SELECT_BY_ID = "SELECT * FROM public.user where use_id=?";
@@ -43,15 +44,32 @@ public class DAOUser extends DAO implements  IDAOUser {
             " use_password=? " + " WHERE use_id=?; ";
     final String CALL_IS_BLOCKED = "{CALL m01_isBlocked(?)}";
 
-    private Connection _conn;
     private User _user;
     private ArrayList<User> _userList;
     private ResultSet _result;
     private ResultSet _generatedKeys;
 
     @Override
-    public Entity create(Entity e) {
-        return null;
+    public void create(Entity e) {
+        User _us = (User) e;
+        try {
+
+            PreparedStatement preparedStatement = _conn.prepareCall(CALL_INSERT);
+            preparedStatement.setString(1, _us.get_passwordUser());
+            preparedStatement.setString(2, _us.get_usernameUser());
+            preparedStatement.setInt(3, _us.get_typeUser());
+            preparedStatement.setString(4, _us.get_emailUser());
+            preparedStatement.setString(5, _us.get_phoneUser());
+            preparedStatement.setString(6, _us.get_countryUser());
+            preparedStatement.setString(7, _us.get_cityUser());
+            preparedStatement.setString(8, _us.get_addressUser());
+            preparedStatement.setDate(9, _us.get_dateOfBirthUser());
+            preparedStatement.setString(10, _us.get_genderUser());
+            preparedStatement.execute();
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -105,9 +123,9 @@ public class DAOUser extends DAO implements  IDAOUser {
 
 
 
-    public DAOUser() {
-        _conn = Sql.getConInstance();
-    }
+//    public DAOUser() {
+//        _conn = Sql.getConInstance();
+//    }
 
     /**
      * This method returns an User when typing the username in the method.
