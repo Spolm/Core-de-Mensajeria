@@ -29,7 +29,7 @@ public class CommandProcessXML extends Command {
     private Template _template;  /////// Cambiar por comando de Template
     private TemplateHandler _templateHandler = new TemplateHandler();   /////// Cambiar por comando de Template
     private String _templateId;                  /////// Cambiar por comando de Template
-
+    private List<Message> _messageList = new ArrayList<>();
 
     public CommandProcessXML(String filePath){
         _xmlFile = new File(filePath);
@@ -53,7 +53,6 @@ public class CommandProcessXML extends Command {
             _template =_templateHandler.getTemplate(Integer.valueOf(_templateId ));   /////// Cambiar por comando de Template
 
             NodeList nodeList = doc.getElementsByTagName("message");
-            List<Message> messageList = new ArrayList<>();
 
             for (int i = 0; i < nodeList.getLength(); i++) {
                 _commandGetMessage = CommandsFactory.createCommandGetMessage(nodeList.item(i),_template);
@@ -64,7 +63,7 @@ public class CommandProcessXML extends Command {
                     messageList.add(_commandGetMessage.Return());
             }
 
-            for(Message message : messageList){
+            for(Message message : _messageList){
                 System.out.println(message.toString());
             }
         } catch (SAXException | ParserConfigurationException | IOException e1) {
