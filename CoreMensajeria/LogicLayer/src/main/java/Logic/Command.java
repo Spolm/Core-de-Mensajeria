@@ -16,6 +16,6 @@ public abstract class Command<T> {
 
     public abstract T Return() ;
 
-    //public abstract ArrayList<Entity> ReturnList() ;
+    //public abstract ArrayList<Entity> Return() ;
 
 }

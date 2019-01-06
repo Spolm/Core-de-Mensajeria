@@ -19,11 +19,7 @@ public class GetMinutesCommand extends Command {
     }
 
     @Override
-    public Entity Return() {
-        return null;
-    }
-
-    public ArrayList<Integer> ReturnList() {
+    public ArrayList<Integer> Return() {
         return minutes;
     }
 }

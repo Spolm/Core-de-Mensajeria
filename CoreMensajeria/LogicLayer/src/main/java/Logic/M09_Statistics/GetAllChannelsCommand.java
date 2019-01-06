@@ -8,7 +8,7 @@ import Persistence.M09_Statistics.DAOStatisticEstrella;
 
 import java.util.ArrayList;
 
-public class GetAllChannelsCommand extends Command {
+public class GetAllChannelsCommand extends Command<ArrayList<Channel>> {
 
     private ArrayList<Channel> channels;
     private DAOStatisticEstrella dao;
@@ -20,11 +20,7 @@ public class GetAllChannelsCommand extends Command {
     }
 
     @Override
-    public Entity Return() {
-        return null;
-    }
-
-    public ArrayList<Channel> returnList() {
+    public ArrayList<Channel> Return() {
         return channels;
     }
 

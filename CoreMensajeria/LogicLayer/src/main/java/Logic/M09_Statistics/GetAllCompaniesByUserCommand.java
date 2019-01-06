@@ -7,7 +7,7 @@ import Persistence.DAOFactory;
 import Persistence.M09_Statistics.DAOStatistic;
 import java.util.ArrayList;
 
-public class GetAllCompaniesByUserCommand extends Command {
+public class GetAllCompaniesByUserCommand extends Command<ArrayList<Entity>> {
 
     private Integer userId;
     private ArrayList<Entity> companies;
@@ -22,15 +22,11 @@ public class GetAllCompaniesByUserCommand extends Command {
     }
 
     @Override
-    public Entity Return() {
-        return null;
-    }
-
-    public ArrayList<Entity> returnList() {
+    public ArrayList<Entity> Return() {
         return companies;
     }
 
-    public void setUserId(Integer userId) {
+    private void setUserId(Integer userId) {
         this.userId = userId;
     }
 }

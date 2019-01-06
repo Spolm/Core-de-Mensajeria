@@ -52,7 +52,7 @@ public class M09_Statistics extends Application {
             command.execute();
             mapper = new MapperCompanyWithOut_Link();
             return Response.ok(gson.toJson(
-                    mapper.CreateDtoList(command.returnList())
+                    mapper.CreateDtoList(command.Return())
             )).build();
         } catch(CompanyDoesntExistsException e) {
             return Response.serverError().build();
@@ -83,7 +83,7 @@ public class M09_Statistics extends Application {
             command.execute();
             mapper = new MapperCampaignWithOut_Company();
             return Response.ok(gson.toJson(
-                    mapper.CreateDtoList(command.returnList())
+                    mapper.CreateDtoList(command.Return())
             )).build();
         } catch(CampaignDoesntExistsException e) {
             return Response.serverError().build();
@@ -118,7 +118,7 @@ public class M09_Statistics extends Application {
         GetAllChannelsCommand command = CommandsFactory.getAllChannelsCommand();
         try {
             command.execute();
-            return Response.ok(gson.toJson(command.returnList())).build();
+            return Response.ok(gson.toJson(command.Return())).build();
         } catch (Exception e) {
             return Response.serverError().build();
         }
@@ -143,7 +143,7 @@ public class M09_Statistics extends Application {
         try {
             command.execute();
             return Response.ok(gson.toJson(
-                    command.returnList()
+                    command.Return()
             )).build();
         } catch (ChannelNotFoundException e) {
             return Response.serverError().build();
@@ -339,7 +339,7 @@ public class M09_Statistics extends Application {
         GetYearsCommand command = CommandsFactory.getYears();
         try{
             command.execute();
-            return Response.ok(gson.toJson(command.returnList())).build();
+            return Response.ok(gson.toJson(command.Return())).build();
         } catch(Exception e) {
             return Response.serverError().build();
         }
@@ -353,7 +353,7 @@ public class M09_Statistics extends Application {
         GetMonthsCommand command = CommandsFactory.getMonths();
         try{
             command.execute();
-            return Response.ok(gson.toJson(command.ReturnList())).build();
+            return Response.ok(gson.toJson(command.Return())).build();
         } catch(Exception e) {
             return Response.serverError().build();
         }
@@ -367,7 +367,7 @@ public class M09_Statistics extends Application {
         GetDaysofWeekCommand command = CommandsFactory.getDaysofWeek();
         try {
             command.execute();
-            return Response.ok(gson.toJson(command.ReturnList())).build();
+            return Response.ok(gson.toJson(command.Return())).build();
         }  catch (Exception e){
             return Response.serverError().build();
         }
@@ -381,7 +381,7 @@ public class M09_Statistics extends Application {
         GetDaysofMonthCommand command = CommandsFactory.getDaysofMonth();
         try {
             command.execute();
-            return Response.ok(gson.toJson(command.ReturnList())).build();
+            return Response.ok(gson.toJson(command.Return())).build();
         }  catch (Exception e){
             return Response.serverError().build();
         }
@@ -395,7 +395,7 @@ public class M09_Statistics extends Application {
         GetDaysofYearCommand command = CommandsFactory.getDaysofYear();
         try {
             command.execute();
-            return Response.ok(gson.toJson(command.ReturnList())).build();
+            return Response.ok(gson.toJson(command.Return())).build();
         }  catch (Exception e){
             return Response.serverError().build();
         }
@@ -409,7 +409,7 @@ public class M09_Statistics extends Application {
         GetWeeksofYearCommand command = CommandsFactory.getWeeksofYear();
         try {
             command.execute();
-            return Response.ok(gson.toJson(command.ReturnList())).build();
+            return Response.ok(gson.toJson(command.Return())).build();
         }  catch (Exception e){
             return Response.serverError().build();
         }
@@ -423,7 +423,7 @@ public class M09_Statistics extends Application {
         GetQuartersofYearCommand command = CommandsFactory.getQuartersofYear();
         try {
             command.execute();
-            return Response.ok(gson.toJson(command.ReturnList())).build();
+            return Response.ok(gson.toJson(command.Return())).build();
         }  catch (Exception e){
             return Response.serverError().build();
         }
@@ -437,7 +437,7 @@ public class M09_Statistics extends Application {
         GetHoursCommand command = CommandsFactory.getHours();
         try {
             command.execute();
-            return Response.ok(gson.toJson(command.ReturnList())).build();
+            return Response.ok(gson.toJson(command.Return())).build();
         }  catch (Exception e){
             return Response.serverError().build();
         }
@@ -451,7 +451,7 @@ public class M09_Statistics extends Application {
         GetMinutesCommand command = CommandsFactory.getMinutes();
         try {
             command.execute();
-            return Response.ok(gson.toJson(command.ReturnList())).build();
+            return Response.ok(gson.toJson(command.Return())).build();
         }  catch (Exception e){
             return Response.serverError().build();
         }
@@ -465,7 +465,7 @@ public class M09_Statistics extends Application {
         GetSecondsCommand command = CommandsFactory.getSeconds();
         try {
             command.execute();
-            return Response.ok(gson.toJson(command.ReturnList())).build();
+            return Response.ok(gson.toJson(command.Return())).build();
         }  catch (Exception e){
             return Response.serverError().build();
         }
@@ -557,7 +557,7 @@ public class M09_Statistics extends Application {
         try {
             command.execute();
             return Response.ok(gson.toJson(
-                    command.returnStats()
+                    command.Return()
             )).build();
         } catch (StatisticParametersNotFoundException e) {
             return Response.status(400).entity("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }").build();

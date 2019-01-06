@@ -3,7 +3,6 @@ package Logic.M09_Statistics;
 import Entities.Entity;
 import Entities.M02_Company.Company;
 import Entities.M05_Channel.Channel;
-import Exceptions.CompanyDoesntExistsException;
 import Entities.M09_Statistics.Statistics;
 import Logic.Command;
 import Logic.CommandsFactory;
@@ -26,16 +25,16 @@ class M09_StatisticCommandsTest {
 
     @AfterEach
     void tearDown() {
-        command = null;
     }
 
     @Test
     void GetAllChannelsCommand(){
+        Command<ArrayList<Channel>> command;
         command = CommandsFactory.getAllChannelsCommand();
         ArrayList<Channel> channels;
         try {
             command.execute();
-            channels = ((GetAllChannelsCommand) command).returnList();
+            channels = command.Return();
             assertNotNull(channels);
             Channel canal = channels.get(0);
             assertEquals(canal.getNameChannel(),"SMS");
@@ -49,11 +48,12 @@ class M09_StatisticCommandsTest {
 
     @Test
     void GetAllCompaniesByUserCommand(){
+        Command<ArrayList<Entity>> command;
         ArrayList<Entity> companies;
         command = CommandsFactory.getAllCompaniesByUserCommand(3);
         try {
             command.execute();
-            companies = ((GetAllCompaniesByUserCommand) command).returnList();
+            companies = command.Return();
             assertNotNull(companies);
             assertEquals(3, companies.size());
             assertTrue(((Company)companies.get(0)).get_name().contains("Company 1"));
@@ -66,11 +66,12 @@ class M09_StatisticCommandsTest {
 
     @Test
     void GetAllCompaniesByUserCommandDontReturn(){
+        Command<ArrayList<Entity>> command;
         ArrayList<Entity> companies;
         command = CommandsFactory.getAllCompaniesByUserCommand(0);
         try {
             command.execute();
-            companies = ((GetAllCompaniesByUserCommand) command).returnList();
+            companies = command.Return();
             assertNotNull(companies);
             assertEquals(0,companies.size());
         } catch (Exception e) {
@@ -80,6 +81,7 @@ class M09_StatisticCommandsTest {
 
     @Test
     void GetCompanyStatisticCommand(){
+        Command<Entity> command;
         command = CommandsFactory.getCompanyStatisticCommand();
         ArrayList<String> expectedCompanies = new ArrayList<>(Arrays.asList("Company 1", "Company 2", "Company 3",
                 "Company 4"));
@@ -99,12 +101,13 @@ class M09_StatisticCommandsTest {
 
     @Test
     void GetCampaignsForCompanyCommand(){
+        Command<ArrayList<Entity>> command;
         ArrayList<Integer> campaignsIds = new ArrayList<>(Arrays.asList(1,2,3));
         ArrayList<Entity> campaigns;
         command = CommandsFactory.getCampaignsForCompanyCommand(campaignsIds);
         try {
             command.execute();
-            campaigns = ((GetCampaignsForCompanyCommand) command).returnList();
+            campaigns = command.Return();
             assertNotNull(campaigns);
             assertEquals(12, campaigns.size());
         } catch ( Exception e) {
@@ -114,6 +117,7 @@ class M09_StatisticCommandsTest {
 
     @Test
     void GetCampaignStatisticCommand(){
+        Command<Entity> command;
         command = CommandsFactory.getCampaignStatisticCommand();
         ArrayList<String> expectedCampaigns = new ArrayList<>(Arrays.asList("Campaign 1", "Campaign 2", "Campaign 3",
                 "Campaign 4", "Campaign 5", "Campaign 6", "Campaign 7", "Campaign 8", "Campaign 9", "Campaign 10",
@@ -134,6 +138,7 @@ class M09_StatisticCommandsTest {
 
     @Test
     void GetChannelStatisticCommand(){
+        Command<Entity> command;
         command = CommandsFactory.getChannelStatisticCommand();
         ArrayList<String> expectedChannels = new ArrayList<>(Arrays.asList("SMS", "Email"));
         ArrayList<Integer> expectedMessagesCount = new ArrayList<>(Arrays.asList(15, 14));
@@ -152,6 +157,7 @@ class M09_StatisticCommandsTest {
 
     @Test
     void GetIntegratorStatisticCommand(){
+        Command<Entity> command;
         command = CommandsFactory.getIntegratorStatisticCommand();
         ArrayList<String> expectedIntegrators = new ArrayList<>(Arrays.asList("Movistar", "Digitel", "Movilnet",
                 "MailChimp", "Aweber", "Infusionsoft"));

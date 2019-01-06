@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GetStatisticCommand extends Command {
+public class GetStatisticCommand extends Command<Map<String, Entity>> {
     DAOStatisticEstrella dao;
     String companyin;
     String campaignin;
@@ -88,11 +88,7 @@ public class GetStatisticCommand extends Command {
     }
 
     @Override
-    public Entity Return() {
-        return null;
-    }
-
-    public Map<String, Entity> returnStats(){
+    public Map<String, Entity> Return(){
         return stats;
     }
 
