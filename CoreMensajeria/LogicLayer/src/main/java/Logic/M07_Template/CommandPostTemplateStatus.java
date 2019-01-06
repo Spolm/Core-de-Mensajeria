@@ -1,14 +1,19 @@
 package Logic.M07_Template;
 
 import Entities.Entity;
+import Entities.M07_Template.HandlerPackage.StatusHandler;
 import Logic.Command;
 
 public class CommandPostTemplateStatus extends Command {
 
-    private static Entity us;
+    private int templateId;
+    private int userId;
+    private boolean flag;
 
-    public CommandPostTemplateStatus(Entity u){
-        this.us = u;
+    public CommandPostTemplateStatus(int templateId, int userId) {
+        this.templateId = templateId;
+        this.userId = userId;
+        this.flag = false;
     }
 
     public CommandPostTemplateStatus() {
@@ -16,12 +21,12 @@ public class CommandPostTemplateStatus extends Command {
 
     @Override
     public void execute() throws Exception {
-
+        flag = StatusHandler.postTemplateStatusAprovado(templateId,userId);
     }
 
     @Override
-    public Entity Return() {
-        return null;
+    public Boolean Return() {
+        return flag;
     }
 
 }

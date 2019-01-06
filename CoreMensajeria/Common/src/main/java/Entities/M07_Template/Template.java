@@ -78,6 +78,18 @@ public class Template {
         this.templateId = templateId;
     }
 
+    public Template(Message message, String creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning) {
+        this.message = message;
+        this.creationDate = creationDate;
+        this.templateId = templateId;
+        this.status = status;
+        this.channels = channels;
+        this.campaign = campaign;
+        this.application = application;
+        this.user = user;
+        this.planning = planning;
+    }
+
     /**
      * show id template.
      * @return id template
