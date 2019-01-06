@@ -26,30 +26,166 @@ public class CommandsFactory {
     public static Command createSendMessage() { return new CommandSendMessage(); }
 
     //region M09
+
+    /**
+     * Metodo que instancia un objeto del tipo GetAllCompaniesByUserCommand
+     * @param userId ID del usuario logeado en el sistema
+     * @return un objeto del tipo GetAllCompaniesByUserCommand
+     */
     public static Command getAllCompaniesByUserCommand(Integer userId) {return new GetAllCompaniesByUserCommand(userId); }
+
+    /**
+     * Metodo que instancia un objeto del tipo GetCampaignsForCompanyCommand
+     * @param companyIds Lista de enteros con los ID's de las compañias a las que se quiere obtener sus campañas
+     * @return un objeto del tipo GetCampaignsForCompanyCommand
+     */
+
     public static Command getCampaignsForCompanyCommand(List<Integer> companyIds){return new GetCampaignsForCompanyCommand(companyIds);}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetAllChannelsCommand
+     * @return un objeto del tipo GetAllChannelsCommand
+     */
+
     public static Command getAllChannelsCommand() {return new GetAllChannelsCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetIntegratorsForChannelCommand
+     * @param channelIds lista de enteros cons los ID's de los canales a los que se quiere obtener su integrador
+     * @return un objeto del tipo GetIntegratorsForChannelCommand
+     */
+
     public static Command getIntegratorsForChannelCommand(List<Integer> channelIds){ return new GetIntegratorsForChannelCommand(channelIds);}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetCompanyStatisticCommand
+     * @return un objeto del tipo GetCompanyStatisticCommand
+     */
+
     public static Command getCompanyStatisticCommand(){ return new GetCompanyStatisticCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetCampaignStatisticCommand
+     * @return un objeto del tipo GetCampaignStatisticCommand
+     */
+
     public static Command getCampaignStatisticCommand(){ return new GetCampaignStatisticCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetChannelStatisticCommand
+     * @return un objeto del tipo GetChannelStatisticCommand
+     */
+
     public static Command getChannelStatisticCommand(){ return new GetChannelStatisticCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetIntegratorStatisticCommand
+     * @return un objeto del tipo GetIntegratorStatisticCommand
+     */
+
     public static Command getIntegratorStatisticCommand(){ return new GetIntegratorStatisticCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo UpdateStarSchemaCommand
+     * @return un objeto del tipo UpdateStarSchemaCommand
+     */
+
     public static Command updateStarSchema(){ return new UpdateStarSchemaCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetYearsCommand
+     * @return un objeto del tipo GetYearsCommand
+     */
+
     public static Command getYears(){return new GetYearsCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetMonthsCommand
+     * @return un objeto del tipo GetMonthsCommand
+     */
+
     public static Command getMonths(){return  new GetMonthsCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetDaysofWeekCommand
+     * @return un objeto del tipo GetDaysofWeekCommand
+     */
+
     public static Command getDaysofWeek(){return new GetDaysofWeekCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetDaysofMonthCommand
+     * @return un objeto del tipo GetDaysofMonthCommand
+     */
+
     public static Command getDaysofMonth(){return new GetDaysofMonthCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetDaysofYearCommand
+     * @return un objeto del tipo GetDaysofYearCommand
+     */
+
     public static Command getDaysofYear(){return new GetDaysofYearCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetWeeksofYearCommand
+     * @return un objeto del tipo GetWeeksofYearCommand
+     */
+
     public static Command getWeeksofYear(){return new GetWeeksofYearCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetQuartersofYearCommand
+     * @return un objeto del tipo GetQuartersofYearCommand
+     */
+
     public static Command getQuartersofYear(){return new GetQuartersofYearCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetHoursCommand
+     * @return un objeto del tipo GetHoursCommand
+     */
+
     public static Command getHours(){return new GetHoursCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetMinutesCommand
+     * @return un objeto del tipo GetMinutesCommand
+     */
+
     public static Command getMinutes(){return new GetMinutesCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetSecondsCommand
+     * @return un objeto del tipo GetSecondsCommand
+     */
+
     public static Command getSeconds(){return new GetSecondsCommand();}
+
+    /**
+     * Metodo que instancia un objeto del tipo GetStatisticCommand
+     * @param companyIds Lista con ID's de comañias
+     * @param campaignIds Lista con ID's de campañas
+     * @param channelIds Lista con Id's de canales
+     * @param integratorIds Lista con Id's de integradores
+     * @param yearIds Lista con años a buscar
+     * @param monthIds  Lista con meses a buscar
+     * @param dayofweekIds  Lista con dias de la semana a buscar
+     * @param weekofyearIds  Lista con semanas del años buscar
+     * @param dayofmonthIds  Lista con dias del mes a buscar
+     * @param dayofyearIds  Lista con dias del año a buscar
+     * @param hourofdayIds  Lista con horas del dia a buscar
+     * @param minuteofhourIds  Lista con minutos de horas a buscar
+     * @param secondofminuteIds  Lista con segundos de minutos a buscar
+     * @param quarterIds  Lista con cuartos de año a buscar
+     * @return un objeto del tipo GetStatisticCommand
+     */
+
     public static Command getStatisticCommand(List<Integer> companyIds, List<Integer> campaignIds, List<Integer> channelIds,
-                                                          List<Integer> integratorIds, List<Integer> yearIds, List<Integer> monthIds,
-                                                          List<Integer> dayofweekIds, List<Integer> weekofyearIds, List<Integer> dayofmonthIds,
-                                                          List<Integer> dayofyearIds, List<Integer> hourofdayIds, List<Integer> minuteofhourIds,
-                                                          List<Integer> secondofminuteIds, List<Integer> quarterIds){return new GetStatisticCommand(companyIds, campaignIds, channelIds,
+                                              List<Integer> integratorIds, List<Integer> yearIds, List<Integer> monthIds,
+                                              List<Integer> dayofweekIds, List<Integer> weekofyearIds, List<Integer> dayofmonthIds,
+                                              List<Integer> dayofyearIds, List<Integer> hourofdayIds, List<Integer> minuteofhourIds,
+                                              List<Integer> secondofminuteIds, List<Integer> quarterIds){return new GetStatisticCommand(companyIds, campaignIds, channelIds,
                                                                                                                                                     integratorIds, yearIds, monthIds,
                                                                                                                                                     dayofweekIds, weekofyearIds, dayofmonthIds,
                                                                                                                                                     dayofyearIds, hourofdayIds, minuteofhourIds,

@@ -85,5 +85,9 @@ public class MapperFactory {
     // endregion
 
 
+    /**
+     * Metodo que instancia un objeto del tipo StatisticMapper
+     * @return un objeto del tipo StatisticMapper
+     */
     public static GenericMapper createStatisticMapper(){ return new StatisticMapper();}
 }
