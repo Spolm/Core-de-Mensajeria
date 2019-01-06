@@ -1,6 +1,8 @@
 package DTO.M02_DTO;
 
-public class DTOCompanyWithOutIdAndLink {
+import DTO.DTO;
+
+public class DTOCompanyWithOutIdAndLink extends DTO {
 
     private String _name;
     private String _desc;

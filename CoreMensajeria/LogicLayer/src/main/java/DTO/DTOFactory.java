@@ -1,12 +1,7 @@
 package DTO;
-import DTO.M02_DTO.DTOCompanyWithOutIdAndLink;
-import DTO.M02_DTO.DTOCompanyWithOut_Link;
-import DTO.M02_DTO.DTOFullCompany;
 
-import DTO.M03_DTO.DTOFullCampaign;
-import DTO.M03_DTO.DTOCampaignWithOut_Company;
-import DTO.M03_DTO.DTOFullCampaign;
-import DTO.M03_DTO.DTOCampaignWithOut_id_And_Company;
+import DTO.M02_DTO.*;
+import DTO.M03_DTO.*;
 import DTO.M09_DTO.DTOStatistic;
 import Entities.M02_Company.Company;
 
@@ -17,6 +12,24 @@ import java.util.Date;
  * Fabrica que instancia todos los dto
  */
 public class DTOFactory {
+
+  //// compañias y campañas
+    /**
+     * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
+     * @return un objeto del tipo DTOIdCompany
+     */
+    public static DTOIdCompany CreateDTOIdCompany(int id ){
+
+        return new DTOIdCompany(id);
+    }
+    /**
+     * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
+     * @return un objeto del tipo DTOidStatusCompanyCompany
+     */
+    public static DTOIdStatusCompany CreateDTOIdStatusCompany( int id, boolean status ){
+
+        return new DTOIdStatusCompany( id, status );
+    }
 
       /**
        * Metodos que instancian un obejto del tipo DTOCompanyWithOutIdAndLink mediante los parametros pasados
@@ -33,7 +46,8 @@ public class DTOFactory {
      * @return un objeto del tipo DTOCompanyWithOut_Link
      */
 
-    public static DTOCompanyWithOut_Link CreateDtoCompanyWithOut_Link(int id, String name, String desc, boolean status){
+    public static DTOCompanyWithOut_Link CreateDtoCompanyWithOut_Link(int id, String name,
+                                                                      String desc, boolean status){
 
         return new DTOCompanyWithOut_Link(id, name, desc, status);
     }
@@ -43,9 +57,10 @@ public class DTOFactory {
      * @return un objeto del tipo DTOFullCompany
      */
 
-     public static DTOFullCompany CreateDtoFullCompany(int id, String name, String desc, boolean status, String link){
+     public static DTOFullCompany CreateDtoFullCompany( int id, String name, String desc,
+                                                        boolean status, String link, int userId ){
 
-         return new DTOFullCompany(id, name, desc, status, link);
+         return new DTOFullCompany( id, name, desc, status, link, userId );
      }
 
 
@@ -69,12 +84,22 @@ public class DTOFactory {
      */
     public static DTOCampaignWithOut_Company CreateDtoCampaignWithOut_Company(int idCampaign, String nameCampaign,
                                                                               String descCampaign,
-                                                                              boolean statusCampaign, Date startCampaign,
-                                                                              Date endCampaign) {
+                                                                              boolean statusCampaign,
+                                                                              Date startCampaign, Date endCampaign) {
 
         return new DTOCampaignWithOut_Company(idCampaign, nameCampaign, descCampaign, statusCampaign,
                                               startCampaign, endCampaign);
     }
+
+    /**
+     * Metodos que instancian un obejto del tipo DTOIdCampaign mediante los parametros pasados
+     * @return un objeto del tipo DTOIdCampaign
+     */
+    public static DTOIdCampaign CreateDTOIdCampaign(int id ){
+
+        return new DTOIdCampaign( id );
+    }
+
 
     /**
      * Metodos que instancian un obejto del tipo DTOFullCampaign mediante los parametros pasados
@@ -82,17 +107,29 @@ public class DTOFactory {
      */
 
     public static DTOFullCampaign CreateDtoFullCampaign(int idCampaign, String nameCampaign, String descCampaign,
-                                                                   boolean statusCampaign, Date startCampaign,
-                                                                   Date endCampaign, Company company) {
+                                                                      boolean statusCampaign, Date startCampaign,
+                                                                      Date endCampaign, Company company) {
 
         return new DTOFullCampaign(idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign,
                                     endCampaign, company);
     }
 
     /**
+     * Metodos que instancian un obejto del tipo DTOIdStatusCampaign mediante los parametros pasados
+     * @return un objeto del tipo DTOIdStatusCampaign
+     */
+    public static DTOIdStatusCampaign CreateDTOIdStatusCampaign( int id, boolean status ){
+
+        return new DTOIdStatusCampaign( id, status );
+    }
+
+/////end
+
+    /**
      * Metodo que instancia un obejto del tipo DTOStatistic
      * @return un objeto del tipo DTOStatistic
      */
+
 
     public static DTOStatistic CreateDTOStatistic(ArrayList x, ArrayList<Integer> y){ return new DTOStatistic(x,y);}
 

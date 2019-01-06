@@ -1,11 +1,13 @@
 package Mappers.CampaignMapper;
 
+import DTO.DTOFactory;
 import DTO.M03_DTO.DTOCampaignWithOut_Company;
 
+import DTO.M03_DTO.DTOFullCampaign;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M03_Campaign.Campaign;
-import DTO.DTOFactory;
+
 import Mappers.GenericMapper;
 
 import java.util.ArrayList;

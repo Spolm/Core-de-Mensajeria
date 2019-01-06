@@ -1,13 +1,36 @@
 package webService.M03_CampaignManagement;
 
+import DTO.DTOFactory;
+import DTO.M02_DTO.DTOIdCompany;
+import DTO.M03_DTO.DTOFullCampaign;
+import DTO.M03_DTO.DTOIdCampaign;
+import DTO.M03_DTO.DTOIdStatusCampaign;
+import Entities.Entity;
 import Entities.M03_Campaign.Campaign;
 import Entities.M03_Campaign.CampaignDAO;
 import Exceptions.CampaignDoesntExistsException;
+
+import Logic.Command;
+import Logic.CommandsFactory;
+import Logic.M03_Campaign.AddCampaignCommand;
+import Logic.M03_Campaign.CampaignUserCommand;
+import Logic.M03_Campaign.GetCampaignCommand;
+import Mappers.CampaignMapper.MapperFullCampaign;
+import Mappers.CampaignMapper.MapperIdCampaign;
+import Mappers.CampaignMapper.MapperIdStatusCampaign;
+import Mappers.CompanyMapper.MapperFullCompany;
+import Mappers.CompanyMapper.MapperIdCompany;
+import Mappers.MapperFactory;
+import Persistence.DAO;
+import Persistence.M03_Campaign.DAOCampaign;
 import com.google.gson.Gson;
+import webService.M02_CompanyManagement.M02_Companies;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 @Path( "/M03_Campaigns" )
 /**
@@ -16,7 +39,6 @@ import java.util.ArrayList;
 public class M03_Campaigns {
 
     Gson gson = new Gson();
-    Campaign _ca = new Campaign();
     ArrayList<Campaign> _caList = new ArrayList<>();
 
 
@@ -63,6 +85,8 @@ public class M03_Campaigns {
      * @param id recibe el id de la campaña que se desea ver con detalle
      * @return Response Builder con los detalles de la campaña
      */
+
+  /*
     @GET
     @Path("/CampaignDetails")
     @Produces("application/json")
@@ -81,11 +105,11 @@ public class M03_Campaigns {
             e.printStackTrace();
         }
         return rb.build();
-    }
+    }    */
     //endregion
 
 
-
+/*
     //Work in Progress
     //TODO fix this one
     //region Cambiar Status Campaña
@@ -110,8 +134,8 @@ public class M03_Campaigns {
             e.printStackTrace();
         }
         return rb.build();
-    }
-
+    }*/
+/*
     //region metodo campaigns by user
     @GET
     @Path("/GetCampaignsByUser")
@@ -131,7 +155,7 @@ public class M03_Campaigns {
             e.printStackTrace();
         }
         return rb.build();
-    }
+    }*/
 
     //endregion
 
@@ -157,12 +181,14 @@ public class M03_Campaigns {
     }
     //endregion
 
+/*
     //region Campañas por compañia y usuario
     @GET
     @Path("/GetCampaignsByCompany")
     @Produces("application/json")
 
-    public Response getCampaignsByCompanyUser(@QueryParam("idCompany") int idCompany, @QueryParam("idUser") int idUser) throws CampaignDoesntExistsException {
+    public Response getCampaignsByCompanyUser(@QueryParam("idCompany") int idCompany,
+                                              @QueryParam("idUser") int idUser) throws CampaignDoesntExistsException {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
         CampaignDAO caList = new CampaignDAO();
         try {
@@ -176,14 +202,14 @@ public class M03_Campaigns {
             e.printStackTrace();
         }
         return rb.build();
-    }
+    }*/
 
-    @POST
+ /*   @POST
     @Path("/AddCampaign")
     @Produces("application/json")
     @Consumes("application/json")
     public Response addCampaign(Campaign _campaign){
-        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        Response.ResponseBuilder rb = Response.status(Response.Status.OK);
         CampaignDAO _campaignDAO = new CampaignDAO();
 
         try {
@@ -195,7 +221,27 @@ public class M03_Campaigns {
             e.printStackTrace();
         }
         return rb.build();
-    }
+    }*/
+
+   /* @PUT
+    @Path("/Edit/Camaign/{campaignId}")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response UpdateCampaign(Campaign _campaign,@PathParam("campaignId") int id){
+            Response.ResponseBuilder rb = Response.status(Response.Status.OK);
+            CampaignDAO _campaignDAO = new CampaignDAO();
+
+        try {
+            _campaignDAO.updateCompany(id,_campaign);
+        } catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }*/
+
 
     //endregion
 
@@ -240,4 +286,145 @@ public class M03_Campaigns {
 
 
     //endregion
+
+  ////////////////////////////////PATRONES///////////////////
+
+
+    @GET
+    @Path("/CampaignDetails/{campaignId}")
+    @Produces("application/json")
+    public Response getCampaignDetails(  @PathParam("campaignId") int id) {
+            DTOIdCampaign _dto = DTOFactory.CreateDTOIdCampaign(id);
+            Response.ResponseBuilder _rb = Response.status(Response.Status.ACCEPTED);
+        try {
+            MapperIdCampaign _map =  MapperFactory.createMapperIdCampaign();
+            Entity _ca = _map.CreateEntity( _dto );
+            GetCampaignCommand _cmd = CommandsFactory.createGetCampaignCommand( _ca );
+            _cmd.execute( );
+            MapperFullCampaign _mapCamp = MapperFactory.CreateMapperFullCampaign();
+            DTOFullCampaign  _campaing = _mapCamp.CreateDto( _cmd.Return() );
+            _rb.entity( gson.toJson( _campaing ) );
+        }
+        catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return _rb.build();
+    }
+
+    @POST
+    @Path("/AddCampaignP")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response addCampaign( DTOFullCampaign _dto ){
+           Response.ResponseBuilder _rb = Response.status(Response.Status.OK);
+         Logger logger = Logger.getLogger(M02_Companies.class.getName());
+         logger.info("Objeto compania recibido en AddCompany" + _dto.get_idCampaign() + " " +
+                    _dto.get_nameCampaign() + " "+ _dto.get_statusCampaign() + " " + _dto.get_descCampaign() );
+        try {
+           MapperFullCampaign _mapp = MapperFactory.CreateMapperFullCampaign();
+           Entity _ca = _mapp.CreateEntity( _dto );
+           AddCampaignCommand _command = CommandsFactory.createAddCampaignCommand( _ca );
+           _command.execute();
+           return _rb.build() ;
+
+        } catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return _rb.build();
+    }
+
+    @GET
+    @Path("/GetCampaignsByUser/{id}")
+    @Produces("application/json")
+    public Response getCampaignsByUser(@QueryParam("id") int id)  {
+            DTOIdCompany _dto = DTOFactory.CreateDTOIdCompany(id);
+            Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
+        try {
+            MapperIdCompany _mapper = MapperFactory.createMapperIdCompany();
+            Entity _comp = _mapper.CreateEntity( _dto );
+            CampaignUserCommand _command = CommandsFactory.createCampaignUserCommand( _comp );
+            _command.execute();
+            MapperFullCampaign _mappCamp = MapperFactory.CreateMapperFullCampaign();
+            List< DTOFullCampaign > _dtoCo = _mappCamp.CreateDtoList( _command.ReturnList() ) ;
+            _rb.entity( gson.toJson( _dtoCo ) ) ;
+            return _rb.build();
+
+        }
+        catch (Exception e){
+
+
+            return Response.status( 500 ).entity( e.getMessage() ).build();
+        }
+     }
+
+  /*  @GET
+    @Path("/GetCampaignsByCompany")
+    @Produces("application/json")
+
+    public Response getCampaignsByCompanyUser() throws CampaignDoesntExistsException {
+            Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+
+        try {
+
+            rb.entity(gson.toJson(_caList));
+        }
+        catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    } */
+
+
+    @PUT
+    @Path("/Edit/Campaign")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response editCampaign( DTOFullCampaign _dto ){
+
+            Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
+        try {
+            MapperFullCampaign _mapper = MapperFactory.CreateMapperFullCampaign();
+            Entity _camp = _mapper.CreateEntity( _dto );
+            Command _command = CommandsFactory.createUpdateCampaignCommand( _camp );
+            _command.execute();
+            return _rb.build();
+        }
+        catch ( Exception e ){
+
+            return Response.status( 500 ).entity( e.getMessage() ).build();
+        }
+
+
+    }
+
+    @POST
+    @Path("/updateCampaignStatus")
+    @Consumes("application/json")
+    @Produces("text/plain")
+    public Response changeCampaignStatus( DTOIdStatusCampaign _dto ){
+
+        Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
+        try {
+            MapperIdStatusCampaign _mapper =  MapperFactory.createMapperIdStatusCampaign();
+            Entity _comp = _mapper.CreateEntity( _dto );
+            Command _command = CommandsFactory.createChangeStatusCampaign( _comp );
+            _command.execute();
+            return _rb.build();
+
+        }
+        catch (Exception e){
+            return Response.status( 500 ).entity( e.getMessage() ).build();
+        }
+
+    }
+
 }
