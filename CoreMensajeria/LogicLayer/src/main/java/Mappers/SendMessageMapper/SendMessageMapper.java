@@ -4,12 +4,9 @@ import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
 import Entities.EntityFactory;
 import Entities.M08_Validation.SentMessage;
+import Exceptions.*;
 import Logic.Command;
 import Logic.CommandsFactory;
-import Exceptions.MessageDoesntExistsException;
-import Exceptions.ParameterDoesntExistsException;
-import Exceptions.SMSTooLongException;
-import Exceptions.TemplateDoesntExistsException;
 
 
 import java.util.List;
@@ -34,7 +31,7 @@ public class SendMessageMapper {
         } catch (MessageDoesntExistsException e) {
             throw e;
         } catch (Exception e) {
-            throw e;
+            throw new UnexpectedErrorException();
         }
 
     }
