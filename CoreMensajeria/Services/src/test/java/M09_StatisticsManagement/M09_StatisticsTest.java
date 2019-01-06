@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import  webService.M09_StatisticsManagement.M09_Statistics;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.List;
+
 import static  org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -97,7 +99,7 @@ public class M09_StatisticsTest {
             ArrayList<Integer> lista = new ArrayList<>();
             lista.add(1);
             String params = "and me.sen_com_id in";
-            assertEquals( intance.setParametersforQuery(lista, params), "and me.sen_com_id in(1)" );
+            assertEquals( setParametersforQuery(lista, params), "and me.sen_com_id in(1)" );
 
         } catch ( Exception e ) {
             e.printStackTrace();
@@ -160,4 +162,20 @@ public class M09_StatisticsTest {
         assertEquals("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }", salida.getEntity().toString());
     }
 
+    public String setParametersforQuery(List<Integer> ids, String params){
+        if (ids.isEmpty()) {
+            return "";
+        }
+        params = params.concat("(");
+        for(int i=0;i<ids.size();i++){
+            params = params.concat(ids.get(i).toString());
+            if (i == ids.size()-1){
+                params = params.concat(")");
+            }
+            else{
+                params = params.concat(",");
+            }
+        }
+        return params;
+    }
 }
