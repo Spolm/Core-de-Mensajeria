@@ -50,13 +50,14 @@ public class DAOCampaign implements IDAOCampaign {
 
     public Campaign getCampaign( ResultSet _result ) throws SQLException {
 
-        Campaign _campaign = EntityFactory.CreateCampaignWithOut_Company(
+        Campaign _campaign = EntityFactory.CreateFullCampaign(
                 _result.getInt( "cam_id" ),
                 _result.getString( "cam_name" ),
                 _result.getString( "cam_description" ),
                 _result.getBoolean( "cam_status" ),
                 _result.getDate( "cam_start_date" ),
-                _result.getDate( "cam_end_date" ) );
+                _result.getDate( "cam_end_date" ),
+                _result.getInt( "cam_company_id" ));
         return _campaign;
     }
 
@@ -77,8 +78,9 @@ public class DAOCampaign implements IDAOCampaign {
             PreparedStatement  preparedStatement = _conn.prepareCall( SELECT_CAMPAIGN_BY_ID );
             preparedStatement.setInt( 1, _campaign.get_id() );
             ResultSet _result = preparedStatement.executeQuery();
-            resultList( _result );
-
+            while ( _result.next() ) {
+                _campaign = getCampaign( _result );
+            }
         }
         catch (SQLException exc) {
             exc.printStackTrace();
@@ -97,7 +99,7 @@ public class DAOCampaign implements IDAOCampaign {
             _ps.setInt( 1, _company.get_id() );
             _ps.setInt( 2, _user.get_id() );
             ResultSet _result = _ps.executeQuery();
-            resultList( _result );
+            _caList = resultList( _result );
 
         }
         catch ( Exception exc ) {
@@ -203,7 +205,7 @@ public class DAOCampaign implements IDAOCampaign {
             _ps.setDate( 4, new java.sql.Date( _ca.get_startCampaign().getTime()) );
             _ps.setDate( 5, new java.sql.Date( _ca.get_endCampaign().getTime()) );
             _ps.setInt( 6, _ca.get_idCompany() );
-            _ps.setInt( 7, _ca.get_id());
+            _ps.setInt( 7, _ca.get_idCampaign() );
             _ps.execute();
 
         }catch ( Exception _exc ) {

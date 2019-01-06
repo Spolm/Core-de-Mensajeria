@@ -343,22 +343,21 @@ public class M03_Campaigns {
     @GET
     @Path("/GetCampaignsByUser/{id}")
     @Produces("application/json")
-    public Response getCampaignsByUser(@QueryParam("id") int id)  {
-            DTOIdCompany _dto = DTOFactory.CreateDTOIdCompany(id);
+    public Response getCampaignsByUser(@PathParam("id") int id)  {
+            DTOIdCompany _dto = DTOFactory.CreateDTOIdCompany( id );
             Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
         try {
             MapperIdCompany _mapper = MapperFactory.createMapperIdCompany();
-            Entity _comp = _mapper.CreateEntity( _dto );
-            CampaignUserCommand _command = CommandsFactory.createCampaignUserCommand( _comp );
+            Entity _camp = _mapper.CreateEntity( _dto );
+            CampaignUserCommand _command = CommandsFactory.createCampaignUserCommand( _camp );
             _command.execute();
             MapperFullCampaign _mappCamp = MapperFactory.CreateMapperFullCampaign();
-            List< DTOFullCampaign > _dtoCo = _mappCamp.CreateDtoList( _command.ReturnList() ) ;
-            _rb.entity( gson.toJson( _dtoCo ) ) ;
+            List< DTOFullCampaign > _dtoCa = _mappCamp.CreateDtoList( _command.ReturnList() ) ;
+            _rb.entity( gson.toJson( _dtoCa ) ) ;
             return _rb.build();
 
         }
         catch (Exception e){
-
 
             return Response.status( 500 ).entity( e.getMessage() ).build();
         }
@@ -370,10 +369,15 @@ public class M03_Campaigns {
 
     public Response getCampaignsByCompanyUser() throws CampaignDoesntExistsException {
             Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-
+            DTOIdCompUser _dto = DTOFactory.createDtoIdCompUser( _comp , _user );
         try {
-
-            rb.entity(gson.toJson(_caList));
+            MapperIdCompUser _mapper = MapperFactory.createMapperIdCompUser();
+            Entity _camp = _mapper.CreateEntity( _dto );
+            CampaignUserCompanyCommand _command = CommandsFactory.createCampaignUserComapanyCommand( _camp );
+            _command.execute();
+            MapperFullCampaign _caList = MapperFactory.CreateMapperFullCampaign();
+            List< DTOFullCampaign > _dtoCa = _caList.CreateDtoList( _command.ReturnList() ) ;
+            rb.entity(gson.toJson( _dtoCa ));
         }
         catch (CampaignDoesntExistsException e) {
             e.printStackTrace();
