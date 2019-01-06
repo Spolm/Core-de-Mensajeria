@@ -6,7 +6,7 @@ public abstract class CompositeCommand<T> extends Command {
     private Command[] _commandList;
 
     @Override
-    public abstract void execute();
+    public abstract void execute() throws Exception;
 
     @Override
     public abstract T Return();

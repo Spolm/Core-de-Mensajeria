@@ -20,7 +20,7 @@ public class CommandValidate extends CompositeCommand<Boolean> {
 
 
     @Override
-    public void execute() throws TemplateDoesntExistsException, MessageDoesntExistsException, ParameterDoesntExistsException, SMSTooLongException{
+    public void execute() throws Exception{
         Command[] commandList = get_commandList();
         try {
             for (Command c : commandList) {
@@ -35,7 +35,9 @@ public class CommandValidate extends CompositeCommand<Boolean> {
             throw  e;
         } catch (SMSTooLongException e) {
             throw e;
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            throw e;
+        }
 
     }
 

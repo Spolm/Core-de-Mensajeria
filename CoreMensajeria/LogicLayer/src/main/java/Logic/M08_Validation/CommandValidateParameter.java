@@ -7,7 +7,7 @@ public abstract class CommandValidateParameter extends Command<Boolean> {
     private boolean _valid;
 
     @Override
-    public abstract void execute();
+    public abstract void execute() throws Exception;
 
     public String get_response() {
         return _response;
