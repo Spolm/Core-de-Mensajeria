@@ -4,19 +4,30 @@ import Entities.Entity;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;
+import Persistence.M02_Company.IDAOCompany;
+
+import java.util.ArrayList;
 
 public class GetCompanyCommand extends Command {
     private static  Entity _co;
 
+
+    /**
+     * Constructor de la clase.
+     * @param _company instancia de la Compania que se desea obtener
+     */
     public GetCompanyCommand( Entity _company ) {
         this._co = _company;
     }
 
+    /**
+     * Metodo que ejecuta la Accion del comando
+     */
     @Override
     public void execute() throws Exception {
         try {
-            DAOCompany _dao = DAOFactory.instanciateDaoCompany();
-            _dao.companyById( _co );
+            IDAOCompany _dao = DAOFactory.instanciateDaoCompany();
+            _co = _dao.companyById( _co );
 
 
         }catch(Exception exc) {
@@ -28,6 +39,11 @@ public class GetCompanyCommand extends Command {
 
     @Override
     public Entity Return() {
-        return null;
+        return _co;
     }
+
+    //@Override
+    public ArrayList<Entity> ReturnList() { return null ; }
+
+
 }
