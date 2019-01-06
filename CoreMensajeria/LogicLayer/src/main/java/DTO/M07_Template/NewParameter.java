@@ -1,4 +1,4 @@
-package Entities.M07_Template;
+package DTO.M07_Template;
 
 import javax.ws.rs.FormParam;
 

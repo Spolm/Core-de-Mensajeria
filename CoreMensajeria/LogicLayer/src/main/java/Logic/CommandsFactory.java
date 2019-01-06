@@ -1,7 +1,7 @@
 package Logic;
 
 import Entities.Entity;
-import Entities.M07_Template.NewParameter;
+import DTO.M07_Template.NewParameter;
 import Logic.M01_Login.GetUser;
 import Logic.M07_Template.*;
 import Logic.M09_Statistics.*;
@@ -63,20 +63,20 @@ public class CommandsFactory {
         return new CommandGetParameters(companyId);
     }
 
-    public static CommandGetTemplates createCommandGetTemplates(){
-        return new CommandGetTemplates();
+    public static CommandGetTemplates createCommandGetTemplates(int userId, int companyId){
+        return new CommandGetTemplates(userId, companyId);
     }
 
-    public static CommandGetTemplate createCommandGetTemplate(){
-        return new CommandGetTemplate();
+    public static CommandGetTemplate createCommandGetTemplate(int templateId){
+        return new CommandGetTemplate(templateId);
     }
 
-    public static CommandGetTemplatePrivilegesByUser createCommandGetTemplatePrivilegesByUser(){
-        return new CommandGetTemplatePrivilegesByUser();
+    public static CommandGetTemplatePrivilegesByUser createCommandGetTemplatePrivilegesByUser(int userId, int companyId){
+        return new CommandGetTemplatePrivilegesByUser(userId,companyId);
     }
 
-    public static CommandPostTemplateStatus createCommandPostTemplateStatus(){
-        return new CommandPostTemplateStatus();
+    public static CommandPostTemplateStatus createCommandPostTemplateStatus(int templateId, int userId){
+        return new CommandPostTemplateStatus(templateId,userId);
     }
 
     public static CommandPostTemplate createCommandPostTemplate(){

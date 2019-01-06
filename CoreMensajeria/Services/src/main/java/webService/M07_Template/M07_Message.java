@@ -29,7 +29,7 @@ public class M07_Message {
      */
     @GET
     public Response getMessages(){
-        Response response = null;
+        Response response;
         Error error;
         try {
             Command c = CommandsFactory.createCommandGetMessages();

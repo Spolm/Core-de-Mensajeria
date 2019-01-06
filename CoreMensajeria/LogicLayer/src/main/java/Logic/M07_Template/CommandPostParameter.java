@@ -2,7 +2,7 @@ package Logic.M07_Template;
 
 import Entities.Entity;
 import Entities.M07_Template.HandlerPackage.ParameterHandler;
-import Entities.M07_Template.NewParameter;
+import DTO.M07_Template.NewParameter;
 import Logic.Command;
 
 public class CommandPostParameter extends Command {

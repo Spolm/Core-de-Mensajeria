@@ -1,9 +1,7 @@
 package webService.M07_Template;
 
 
-import Entities.M07_Template.HandlerPackage.ParameterHandler;
-import Entities.M07_Template.MessagePackage.Parameter;
-import Entities.M07_Template.NewParameter;
+import DTO.M07_Template.NewParameter;
 import Exceptions.M07_Template.InvalidParameterException;
 import Exceptions.ParameterDoesntExistsException;
 import Logic.Command;
@@ -13,7 +11,6 @@ import webService.M01_Login.Error;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 
 /**
  * M07_Parameter class is an API that is responsible for requesting information
@@ -34,7 +31,7 @@ public class M07_Parameter {
     @POST
     @Path("add")
     public Response postParameter(NewParameter newParameter) {
-        Response response = null;
+        Response response;
         Error error;
         try {
             if(newParameter ==null){
@@ -67,7 +64,7 @@ public class M07_Parameter {
     @GET
     @Path("get")
     public Response getParameters(@QueryParam("companyId") int companyId){
-        Response response = null;
+        Response response;
         Error error;
         try {
             if(companyId==0){
