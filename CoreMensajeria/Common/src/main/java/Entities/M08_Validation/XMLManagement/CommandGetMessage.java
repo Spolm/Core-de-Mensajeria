@@ -41,7 +41,7 @@ public class CommandGetMessage extends Command<Message> {
                 NodeList nodeList = element.getElementsByTagName("parameter");
                 ArrayList<ParameterXML> parameterXMLList = new ArrayList<>();
 
-                idMessage = _template.getMessage().getMessageId();   ////// cambiar por comando plantilla
+                idMessage = _template.getMessage().get_id();   ////// cambiar por comando plantilla
                 ArrayList<Parameter> parameterList = ParameterHandler.getParametersByMessage(idMessage); /////// cambiar por comando plantilla
 
                 for (int i = 0; i < nodeList.getLength(); i++) {

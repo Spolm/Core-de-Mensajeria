@@ -27,7 +27,7 @@ public class CommandValidateTemplate extends CommandValidateParameter {
         TemplateHandler template = new TemplateHandler();
         try{
             Template t=template.getTemplate(this._id);
-            if (t.getTemplateId()>0)
+            if (t.get_id()>0)
                 this.set_valid(true);
         } catch (TemplateDoesntExistsException e) {
             logger.warning("Plantilla no Existe");
