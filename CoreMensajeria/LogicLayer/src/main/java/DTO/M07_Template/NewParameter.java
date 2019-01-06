@@ -1,8 +1,8 @@
 package DTO.M07_Template;
 
-import javax.ws.rs.FormParam;
+import DTO.DTO;
 
-public class NewParameter {
+public class NewParameter extends DTO {
     private String name;
     private int companyId;
 
