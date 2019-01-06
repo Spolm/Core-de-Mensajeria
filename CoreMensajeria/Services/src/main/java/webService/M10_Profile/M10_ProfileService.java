@@ -4,6 +4,7 @@ import Entities.M01_Login.User;
 import Entities.M01_Login.UserDAO;
 import Entities.M02_Company.Company;
 import Entities.M10_Profile.*;
+import Exceptions.FormErrorException;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
