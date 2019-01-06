@@ -6,7 +6,6 @@ import Entities.EntityFactory;
 import Entities.M08_Validation.SentMessage;
 import Logic.Command;
 import Logic.CommandsFactory;
-import Logic.M08_Validation.CommandValidate;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Exceptions.SMSTooLongException;
@@ -35,7 +34,7 @@ public class SendMessageMapper {
         } catch (MessageDoesntExistsException e) {
             throw e;
         } catch (Exception e) {
-            throw new MessageDoesntExistsExgception();
+            throw new MessageDoesntExistsException();
         }
 
     }
