@@ -2,6 +2,7 @@ package Entities.M06_DataOrigin;
 
 import Entities.M02_Company.Company;
 import Entities.M02_Company.CompanyDAO;
+import Entities.M08_Validation.WatchDirectory;
 import Exceptions.CompanyDoesntExistsException;
 
 import javax.servlet.ServletContextEvent;
@@ -16,6 +17,7 @@ public class PathHandler implements ServletContextListener {
     private static String ORIGIN_HOME = System.getProperty("user.home") + "/CoreMensajeria";
     private static String ORIGIN_HOME_INBOX = ORIGIN_HOME + "/Inbox";
     private static String ORIGIN_HOME_TRASH = ORIGIN_HOME + "/Trash";
+    private ArrayList<String> _paths = new ArrayList<>();
 
     public PathHandler() {
     }
@@ -36,6 +38,11 @@ public class PathHandler implements ServletContextListener {
             this.createOriginDirectories(ORIGIN_HOME_INBOX,companyDAO.companyListAll());
             this.createOriginDirectories(ORIGIN_HOME_TRASH,companyDAO.companyListAll());
             System.out.println("--------------->PATHS CREATED");
+
+            Thread myThread = new Thread(WatchDirectory.getInstance(_paths));
+            myThread.setDaemon(true);
+            myThread.start();
+
         } catch (CompanyDoesntExistsException e) {
             System.out.println("Error creating paths");
         }
@@ -46,7 +53,9 @@ public class PathHandler implements ServletContextListener {
      * @param servletContextEvent el ServletContextEvent que esta siendo manejado
      */
     @Override
-    public void contextDestroyed(ServletContextEvent servletContextEvent) { }
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+
+    }
 
     /**
      *
@@ -66,6 +75,7 @@ public class PathHandler implements ServletContextListener {
      */
     private void createOriginDirectories(String rootPath, ArrayList<Company> companies){
         for (Company company : companies) {
+            _paths.add(rootPath + "/" + company.get_link());
             this.createDirectory(rootPath + "/" + company.get_link());
         }
     }
@@ -85,5 +95,13 @@ public class PathHandler implements ServletContextListener {
 
     public static String getTrashPath(){
         return ORIGIN_HOME_TRASH;
+    }
+
+    public ArrayList<String> get_paths() {
+        return _paths;
+    }
+
+    public void set_paths(ArrayList<String> _paths) {
+        this._paths = _paths;
     }
 }
