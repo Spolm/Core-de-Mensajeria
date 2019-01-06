@@ -7,6 +7,7 @@ import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
+import Persistence.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,8 +16,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class DAOCampaign implements IDAOCampaign {
-    private Connection _conn = Sql.getConInstance();
+public class DAOCampaign extends DAO implements IDAOCampaign {
+
     final String UPDATE_CAMPAIGN_STATUS = "{CALL m03_changecampaignstatus(?,?)}";
     final String SELECT_CAMPAIGN_BY_ID = "{CALL  m03_getcampaignbyid(?)}";
     final String SELECT_CAMPAIGN_BY_USER = "{Call m03_getcampaignsbyuser(?)}";
@@ -35,7 +36,7 @@ public class DAOCampaign implements IDAOCampaign {
     @Override
     public void changeStatusCampaign( Entity e ) {
         Campaign _ca = ( Campaign ) e;
-        _conn = Sql.getConInstance();
+        Connection _conn = this.getBdConnect();
         PreparedStatement preparedStatement = null;
 
         try {
@@ -46,6 +47,8 @@ public class DAOCampaign implements IDAOCampaign {
         } catch ( SQLException e1 ) {
             e1.printStackTrace();
         }
+        this.closeConnection();
+
     }
 
     public Campaign getCampaign( ResultSet _result ) throws SQLException {
@@ -66,6 +69,7 @@ public class DAOCampaign implements IDAOCampaign {
         while ( _result.next() ){
             _caList.add( getCampaign(_result ) );
         }
+        this.closeConnection();
         return _caList;
     }
 
@@ -73,6 +77,7 @@ public class DAOCampaign implements IDAOCampaign {
     @Override
     public Entity campaignById(Entity e) {
         Campaign _campaign = ( Campaign ) e;
+        Connection _conn = this.getBdConnect();
 
         try {
             PreparedStatement  preparedStatement = _conn.prepareCall( SELECT_CAMPAIGN_BY_ID );
@@ -85,6 +90,7 @@ public class DAOCampaign implements IDAOCampaign {
         catch (SQLException exc) {
             exc.printStackTrace();
         }
+        this.closeConnection();
         return _campaign;
 
     }
@@ -93,6 +99,8 @@ public class DAOCampaign implements IDAOCampaign {
     public ArrayList<Entity> campaignListByUserCompany (  Entity _comp ) {
        Company _company = ( Company ) _comp;
        ArrayList<Entity> _caList= new ArrayList<>();
+        Connection _conn = this.getBdConnect();
+
         try {
             PreparedStatement _ps = _conn.prepareCall( SELECT_CAMPAIGN_USER_COMPANY );
             _ps.setInt( 1, _company.get_idCompany() );
@@ -104,6 +112,7 @@ public class DAOCampaign implements IDAOCampaign {
         catch ( Exception exc ) {
             exc.printStackTrace();
         }
+        this.closeConnection();
         return _caList;
     }
 
@@ -111,6 +120,8 @@ public class DAOCampaign implements IDAOCampaign {
     public ArrayList<Entity> campaignListByUser(  Entity e ) {
         ArrayList<Entity> _caList= new ArrayList<>();
         Company _user = ( Company ) e;
+        Connection _conn = this.getBdConnect();
+
         try {
             PreparedStatement _ps = _conn.prepareCall(SELECT_CAMPAIGN_BY_USER);
             _ps.setInt(1, _user.get_idCompany());
@@ -122,23 +133,27 @@ public class DAOCampaign implements IDAOCampaign {
         catch ( Exception exc ) {
             exc.printStackTrace();
         }
+        this.closeConnection();
         return _caList;
     }
 
     @Override
     public ArrayList<Entity> campaignList() {
             ArrayList<Entity> _caList= new ArrayList<>();
-            try {
+            Connection _conn = this.getBdConnect();
+
+        try {
                 PreparedStatement _ps = _conn.prepareCall(SELECT_ALL_CAMPAIGNS);
                 ResultSet _result = _ps.executeQuery();
                 resultList( _result );
 
 
-            } catch (SQLException e) {
+        }
+        catch (SQLException e) {
                 e.printStackTrace();
-            }
-
-            return _caList;
+        }
+        this.closeConnection();
+        return _caList;
         }
 
 
@@ -146,6 +161,8 @@ public class DAOCampaign implements IDAOCampaign {
         ArrayList<Entity> _caList = new ArrayList<>();
         PreparedStatement _ps;
         Company _company = (Company) _e;
+        Connection _conn = this.getBdConnect();
+
         try {
             _ps = _conn.prepareCall(SELECT_CAMPAIGN_BY_COMPANY);
             _ps.setInt(1, _company.get_id());
@@ -159,7 +176,7 @@ public class DAOCampaign implements IDAOCampaign {
             e.printStackTrace();
         }
 
-
+        this.closeConnection();
         return _caList;
     }
 
@@ -167,7 +184,7 @@ public class DAOCampaign implements IDAOCampaign {
     @Override
     public void create( Entity e ) {
         Campaign _ca = ( Campaign ) e;
-
+        Connection _conn = this.getBdConnect();
         Logger logger = Logger.getLogger(DAOCampaign.class.getName());
         logger.info("Objeto compania recibido en Create campaña" + _ca.get_idCampaign() + " " +
                     _ca.get_nameCampaign() + " "+ _ca.get_statusCampaign() + " " + _ca.get_descCampaign()+""+
@@ -185,6 +202,7 @@ public class DAOCampaign implements IDAOCampaign {
         }catch ( Exception exc ){
             exc.printStackTrace();
         }
+        this.closeConnection();
 
     }
 
@@ -196,6 +214,7 @@ public class DAOCampaign implements IDAOCampaign {
     @Override
     public Entity update( Entity e ) {
         Campaign _ca = ( Campaign ) e;
+        Connection _conn = this.getBdConnect();
         try{
             PreparedStatement _ps = _conn.prepareCall(UPDATE_CAMPAIGN);
             _ps.setString( 1, _ca.get_nameCampaign() );
@@ -210,6 +229,7 @@ public class DAOCampaign implements IDAOCampaign {
         }catch ( Exception _exc ) {
             _exc.printStackTrace();
         }
+        this.closeConnection();
         return _ca;
     }
 
