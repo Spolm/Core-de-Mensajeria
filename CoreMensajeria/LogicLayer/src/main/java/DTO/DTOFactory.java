@@ -7,8 +7,11 @@ import DTO.M03_DTO.DTOFullCampaign;
 import DTO.M03_DTO.DTOCampaignWithOut_Company;
 import DTO.M03_DTO.DTOFullCampaign;
 import DTO.M03_DTO.DTOCampaignWithOut_id_And_Company;
+import DTO.M07_Template.DTOMessage;
+import DTO.M07_Template.DTOParameter;
 import DTO.M09_DTO.DTOStatistic;
 import Entities.M02_Company.Company;
+import Entities.M07_Template.MessagePackage.Parameter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -96,7 +99,16 @@ public class DTOFactory {
 
     public static DTOStatistic CreateDTOStatistic(ArrayList x, ArrayList<Integer> y){ return new DTOStatistic(x,y);}
 
+    /**
+     *  Metodo que instancia un objeto del tipo DTOParameter
+     * @return un objeto del tipo DTOParamater
+     */
+    public  static DTOParameter CreateDTOParameter(int pid, String _pName, String pdescription){
+        return new DTOParameter(pid,_pName,pdescription);
+    }
 
-
+    public static DTOMessage CreateDTOMessage(int _mMessageId, ArrayList<Parameter> _mParameterArrayList, String _mMessage){
+        return new DTOMessage(_mMessageId, _mParameterArrayList,_mMessage);
+    }
 
 }

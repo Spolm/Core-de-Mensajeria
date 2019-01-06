@@ -1,11 +1,13 @@
 package Entities.M07_Template.MessagePackage;
 
+import Entities.Entity;
+
 import java.util.*;
 
 /**
  * Message class uses for storing message information from a template
  */
-public class Message {
+public class Message extends Entity {
     /**
      * id of the message
      */

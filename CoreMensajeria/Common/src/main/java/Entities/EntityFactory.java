@@ -1,6 +1,7 @@
 package Entities;
 
 import Entities.M01_Login.User;
+import Entities.M07_Template.MessagePackage.Parameter;
 
 import java.sql.Date;
 
@@ -13,4 +14,11 @@ public class EntityFactory {
     static public Entity user() {
         return new User();
     }
+
+    public static Parameter CreateParameter(int parameterId, String name, String description){
+        return new Parameter(parameterId,name,description);
+    }
+
+
+
 }
