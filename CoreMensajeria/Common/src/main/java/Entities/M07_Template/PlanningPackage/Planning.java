@@ -1,8 +1,10 @@
 package Entities.M07_Template.PlanningPackage;
 
+import Entities.Entity;
+
 import java.util.Objects;
 
-public class Planning {
+public class Planning extends Entity {
 
     private String startDate;
     private String endDate;

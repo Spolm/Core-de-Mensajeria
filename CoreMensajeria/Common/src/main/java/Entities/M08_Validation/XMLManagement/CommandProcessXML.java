@@ -7,6 +7,7 @@ import Entities.M08_Validation.XMLManagement.Message;
 import Exceptions.TemplateDoesntExistsException;
 import Entities.M08_Validation.XMLManagement.ParameterXML;
 import Entities.M08_Validation.XMLManagement.CommandsFactory;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

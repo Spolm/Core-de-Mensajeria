@@ -12,6 +12,7 @@ import Entities.M07_Template.Template;
 import Entities.M04_Integrator.*;
 import Exceptions.*;
 import Mappers.SendMessageMapper.SendMessageMapper;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import com.google.gson.Gson;
 
 import java.util.Random;

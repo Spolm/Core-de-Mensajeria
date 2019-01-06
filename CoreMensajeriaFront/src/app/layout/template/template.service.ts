@@ -117,7 +117,7 @@ export class TemplateService {
           });
         this.router.navigate(['/template']);
       } else {
-        this.toastr.error('No se a podido insertar', 'Error',
+        this.toastr.error('No se ha podido insertar', 'Error',
           {
             timeOut: 2800,
             progressBar: true
@@ -162,7 +162,7 @@ export class TemplateService {
         await delay(1000);
         this.router.navigate(['template', templateId]);
       } else {
-        this.toastr.error('No se a podido insertar', 'Error',
+        this.toastr.error('No se ha podido insertar', 'Error',
           {
             timeOut: 2800,
             progressBar: true
@@ -170,7 +170,7 @@ export class TemplateService {
       }
     },
       error => {
-        this.toastr.error('Falla en la conexion', 'Error',
+        this.toastr.error('Falla en la conexión', 'Error',
           {
             timeOut: 2800,
             progressBar: true

@@ -1,14 +1,16 @@
 package Logic.M07_Template;
 
 import Entities.Entity;
+import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Logic.Command;
 
 public class CommandPostTemplate extends Command {
 
-    private static Entity us;
+    private String json;
+    private Boolean rest;
 
-    public CommandPostTemplate(Entity u){
-        this.us = u;
+    public CommandPostTemplate(String json) {
+        this.json = json;
     }
 
     public CommandPostTemplate() {
@@ -16,12 +18,13 @@ public class CommandPostTemplate extends Command {
 
     @Override
     public void execute() throws Exception {
-
+        TemplateHandler templateHandler = new TemplateHandler();
+        rest = templateHandler.postTemplateData(json);
     }
 
     @Override
-    public Entity Return() {
-        return null;
+    public Boolean Return() {
+        return rest;
     }
 
 }
