@@ -3,10 +3,10 @@ package Logic.M08_Validation;
 import Entities.M07_Template.HandlerPackage.MessageHandler;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Exceptions.SMSTooLongException;
-import Exceptions.TemplateDoesntExistsException;
 
 import java.util.logging.Logger;
 

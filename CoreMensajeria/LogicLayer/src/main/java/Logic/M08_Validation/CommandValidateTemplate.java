@@ -2,7 +2,7 @@ package Logic.M08_Validation;
 
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
-import Exceptions.TemplateDoesntExistsException;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 
 import java.util.logging.Logger;
 
@@ -22,7 +22,7 @@ public class CommandValidateTemplate extends CommandValidateParameter {
     /**
      * @throws TemplateDoesntExistsException cuando no existe la plantilla que se está buscando
      */
-    public void execute() throws TemplateDoesntExistsException{
+    public void execute() throws TemplateDoesntExistsException {
         Logger logger = Logger.getLogger(CommandValidateParameter.class.getName());
         TemplateHandler template = new TemplateHandler();
         try{

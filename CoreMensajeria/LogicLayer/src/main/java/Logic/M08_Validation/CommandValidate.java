@@ -1,9 +1,9 @@
 package Logic.M08_Validation;
 
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Exceptions.SMSTooLongException;
-import Exceptions.TemplateDoesntExistsException;
 import Logic.Command;
 import Logic.CommandsFactory;
 
