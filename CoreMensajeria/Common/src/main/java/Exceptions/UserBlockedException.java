@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class UserBlockedException extends Exception {
+public class UserBlockedException extends PersonalizedException {
 
     public UserBlockedException() {
     }
