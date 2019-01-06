@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class M07_Message {
     private final String MESSAGE_ERROR_INTERN = "Error Interno";
     private final String MESSAGE_EXCEPTION = "Excepcion";
-    private final static Logger logger = Logger.;
 
     Gson gson = new Gson();
 

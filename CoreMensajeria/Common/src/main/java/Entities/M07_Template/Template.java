@@ -9,6 +9,7 @@ import Entities.M07_Template.MessagePackage.*;
 import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.*;
 
+import java.sql.Date;
 import java.util.*;
 
 /**
@@ -22,7 +23,7 @@ public class Template extends Entity {
     /**
      * date of creation of the template
      */
-    private String creationDate;
+    private Date creationDate;
     /**
      * status of the template (approved or not approved)
      */
@@ -80,10 +81,24 @@ public class Template extends Entity {
      * @param creationDate date of creation of the template
      * @param templateId template id
      */
-    public Template(Message message, Status status, String creationDate, int templateId) {
+    public Template(Message message, Status status, Date creationDate, int templateId) {
         this.message = message;
         this.status = status;
         this.creationDate = creationDate;
+        this.set_id(templateId);
+    }
+
+    /**
+     * builder with message, status, day of creation and id of the template.
+     * @param message message of the template
+     * @param status status of the template
+     * @param creationDate date of creation of the template
+     * @param templateId template id
+     */
+    public Template(Message message, Status status, String creationDate, int templateId) {
+        this.message = message;
+        this.status = status;
+        this.creationDate = Date.valueOf(creationDate);
         this.set_id(templateId);
     }
 
@@ -94,7 +109,7 @@ public class Template extends Entity {
      * @param applicationId
      * @param userId
      */
-    public Template(String creationDate, int campaignId, int applicationId, int userId) {
+    public Template(Date creationDate, int campaignId, int applicationId, int userId) {
         this.creationDate = creationDate;
         this.campaignId = campaignId;
         this.applicationId = applicationId;
@@ -109,7 +124,7 @@ public class Template extends Entity {
      * @param applicationId
      * @param userId
      */
-    public Template(int id,String creationDate, int campaignId, int applicationId, int userId) {
+    public Template(int id, Date creationDate, int campaignId, int applicationId, int userId) {
         this.creationDate = creationDate;
         this.campaignId = campaignId;
         this.applicationId = applicationId;
@@ -121,7 +136,7 @@ public class Template extends Entity {
      * show date of creation of the template.
      * @return date of creation
      */
-    public String getCreationDate(){
+    public Date getCreationDate(){
         return creationDate;
     }
 
@@ -129,7 +144,7 @@ public class Template extends Entity {
      * add date of creation of the template.
      * @param creationDate new date of creation
      */
-    public void setCreationDate(String creationDate){
+    public void setCreationDate(Date creationDate){
         this.creationDate = creationDate;
     }
 

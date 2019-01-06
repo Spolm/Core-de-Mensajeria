@@ -26,9 +26,9 @@ public class DAOPlanning  extends DAO implements IDAOPlanning {
             _pt.setInt(1, templateId);
             ResultSet resultSet = _pt.executeQuery();
             resultSet.next();
-            planning.setStartDate(resultSet.getString("panningStartDate"));
+            planning.setStartDate(resultSet.getDate("panningStartDate"));
             planning.setStartTime(resultSet.getString("planningStartTime"));
-            planning.setEndDate(resultSet.getString("planningEndDate"));
+            planning.setEndDate(resultSet.getDate("planningEndDate"));
             planning.setEndTime(resultSet.getString("planningEndTime"));
             planning.setIdPlanning(resultSet.getInt("(planningId"));
         }catch (SQLException e){
