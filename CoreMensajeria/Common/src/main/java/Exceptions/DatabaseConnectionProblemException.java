@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class DatabaseConnectionProblemException extends Exception{
+public class DatabaseConnectionProblemException extends PersonalizedException{
     public DatabaseConnectionProblemException(){}
     public DatabaseConnectionProblemException(Exception e){
         super(e);

@@ -116,5 +116,11 @@ public class Parameter extends Entity {
         return Objects.hash(getName(), getDescription());
     }
 
+    @Override
+    public String toString() {
+        return "Parameter{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
 

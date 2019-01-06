@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class StatisticParametersNotFoundException extends Exception {
+public class StatisticParametersNotFoundException extends PersonalizedException {
     public StatisticParametersNotFoundException(){}
     public StatisticParametersNotFoundException(Exception e){
         super(e);
