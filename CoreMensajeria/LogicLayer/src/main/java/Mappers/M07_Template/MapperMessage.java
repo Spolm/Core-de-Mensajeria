@@ -16,7 +16,7 @@ public class MapperMessage extends GenericMapper {
     public Object CreateDto(Entity entity) {
         try{
             Message message = (Message) entity;
-            return DTOFactory.CreateDTOMessage(message.getMessageId(),message.getParameterArrayList(),message.getMessage());
+            return DTOFactory.CreateDTOMessage(message.get_id(),message.getParameterArrayList(),message.getMessage());
         }
         catch (NullPointerException e) {
             throw e;

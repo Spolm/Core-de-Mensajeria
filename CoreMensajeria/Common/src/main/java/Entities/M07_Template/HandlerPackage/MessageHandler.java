@@ -41,13 +41,13 @@ public class MessageHandler {
             Connection connection = Sql.getConInstance();
             PreparedStatement preparedStatement = connection.prepareCall("{call m07_select_messages(?)}");
             for(int x = 0; x < templateArrayList.size(); x++){
-                preparedStatement.setInt(1, templateArrayList.get(x).getTemplateId());
+                preparedStatement.setInt(1, templateArrayList.get(x).get_id());
                 ResultSet resultSet = preparedStatement.executeQuery();
                 resultSet.next();
                 Message message = new Message();
-                message.setMessageId(resultSet.getInt("messageId"));
+                message.set_id(resultSet.getInt("messageId"));
                 message.setMessage(resultSet.getString("messageText"));
-                message.setParameters(ParameterHandler.getParametersByMessage(message.getMessageId()));
+                message.setParameters(ParameterHandler.getParametersByMessage(message.get_id()));
                 templateArrayList.get(x).setMessage(message);
             }
         }catch (SQLException e) {
@@ -77,9 +77,9 @@ public class MessageHandler {
             preparedStatement.setInt(1, templateId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
-                message.setMessageId(resultSet.getInt("messageId"));
+                message.set_id(resultSet.getInt("messageId"));
                 message.setMessage(resultSet.getString("messageText"));
-                message.setParameters(ParameterHandler.getParametersByMessage(message.getMessageId()));
+                message.setParameters(ParameterHandler.getParametersByMessage(message.get_id()));
             }
         }catch (ParameterDoesntExistsException e) {
             throw new ParameterDoesntExistsException
