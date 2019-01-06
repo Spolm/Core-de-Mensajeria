@@ -108,10 +108,10 @@ public class DTOFactory {
 
     public static DTOFullCampaign CreateDtoFullCampaign(int idCampaign, String nameCampaign, String descCampaign,
                                                                       boolean statusCampaign, Date startCampaign,
-                                                                      Date endCampaign, Company company) {
+                                                                      Date endCampaign, int idCompany) {
 
         return new DTOFullCampaign(idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign,
-                                    endCampaign, company);
+                                    endCampaign, idCompany);
     }
 
     /**

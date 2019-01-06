@@ -143,17 +143,17 @@ public class EntityFactory {
      * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
      * @param startCampaign fecha de inicio de la campaña
      * @param endCampaign fecha de finalización de la campaña
-     * @param company objeto de tipo Company
+     * @param idCompany objeto de tipo Company
      * @return un objeto del tipo Campaign con los parametros idCampaign, nameCampaign, descCampaign, statusCampaign,
      * startCampaign, endCampaign, company
      */
 
     public static Campaign CreateFullCampaign( int idCampaign, String nameCampaign, String descCampaign,
                                               boolean statusCampaign, Date startCampaign,
-                                              Date endCampaign, Company company ){
+                                              Date endCampaign, int idCompany ){
 
         return new Campaign( idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign,
-                            endCampaign, company );
+                            endCampaign, idCompany );
 
     }
 

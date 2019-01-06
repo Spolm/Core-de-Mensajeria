@@ -320,9 +320,10 @@ public class M03_Campaigns {
     @Consumes("application/json")
     public Response addCampaign( DTOFullCampaign _dto ){
            Response.ResponseBuilder _rb = Response.status(Response.Status.OK);
-         Logger logger = Logger.getLogger(M02_Companies.class.getName());
-         logger.info("Objeto compania recibido en AddCompany" + _dto.get_idCampaign() + " " +
-                    _dto.get_nameCampaign() + " "+ _dto.get_statusCampaign() + " " + _dto.get_descCampaign() );
+           Logger logger = Logger.getLogger(M02_Companies.class.getName());
+           logger.info("Objeto compania recibido en AddCampaign" + _dto.get_idCampaign() + " " +
+                     _dto.get_nameCampaign() + " "+ _dto.get_statusCampaign() + " " + _dto.get_descCampaign()+""+
+                     _dto.get_startCampaign()+""+_dto.get_endCampaign()+"id:"+_dto.get_idCompany() );
         try {
            MapperFullCampaign _mapp = MapperFactory.CreateMapperFullCampaign();
            Entity _ca = _mapp.CreateEntity( _dto );

@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class DAOCampaign implements IDAOCampaign {
     private Connection _conn = Sql.getConInstance();
@@ -165,14 +166,19 @@ public class DAOCampaign implements IDAOCampaign {
     @Override
     public void create( Entity e ) {
         Campaign _ca = ( Campaign ) e;
+
+        Logger logger = Logger.getLogger(DAOCampaign.class.getName());
+        logger.info("Objeto compania recibido en Create campaña" + _ca.get_idCampaign() + " " +
+                    _ca.get_nameCampaign() + " "+ _ca.get_statusCampaign() + " " + _ca.get_descCampaign()+""+
+                    _ca.get_startCampaign()+""+_ca.get_endCampaign()+"id:"+_ca.get_idCompany() );
         try {
             PreparedStatement preparedStatement = _conn.prepareCall(ADD_CAMPAIGN);
-            preparedStatement.setString(1, _ca.get_nameCampaign());
-            preparedStatement.setString(2, _ca.get_descCampaign());
-            preparedStatement.setBoolean(3, _ca.get_statusCampaign());
-            preparedStatement.setDate(4, new java.sql.Date(_ca.get_startCampaign().getTime()));
-            preparedStatement.setDate(5, new java.sql.Date(_ca.get_endCampaign().getTime()));
-            preparedStatement.setInt(6, _ca.get_idCompany());
+            preparedStatement.setString(1, _ca.get_nameCampaign() );
+            preparedStatement.setString(2, _ca.get_descCampaign() );
+            preparedStatement.setBoolean(3, _ca.get_statusCampaign() );
+            preparedStatement.setDate( 4, new java.sql.Date(_ca.get_startCampaign().getTime()) );
+            preparedStatement.setDate( 5, new java.sql.Date(_ca.get_endCampaign().getTime()) );
+            preparedStatement.setInt( 6, _ca.get_idCompany() );
             preparedStatement.execute();
 
         }catch ( Exception exc ){
@@ -182,7 +188,7 @@ public class DAOCampaign implements IDAOCampaign {
     }
 
     @Override
-    public Entity read(Entity e) {
+    public Entity read( Entity e) {
         return null;
     }
 
@@ -191,13 +197,13 @@ public class DAOCampaign implements IDAOCampaign {
         Campaign _ca = ( Campaign ) e;
         try{
             PreparedStatement _ps = _conn.prepareCall(UPDATE_CAMPAIGN);
-            _ps.setString(1, _ca.get_nameCampaign());
-            _ps.setString(2, _ca.get_descCampaign());
-            _ps.setBoolean(3, _ca.get_statusCampaign());
-            _ps.setDate(4, new java.sql.Date(_ca.get_startCampaign().getTime()));
-            _ps.setDate(5, new java.sql.Date(_ca.get_endCampaign().getTime()));
-            _ps.setInt(6, _ca.get_idCompany());
-            _ps.setInt(7, _ca.get_id());
+            _ps.setString( 1, _ca.get_nameCampaign() );
+            _ps.setString( 2, _ca.get_descCampaign( ) );
+            _ps.setBoolean( 3, _ca.get_statusCampaign() );
+            _ps.setDate( 4, new java.sql.Date( _ca.get_startCampaign().getTime()) );
+            _ps.setDate( 5, new java.sql.Date( _ca.get_endCampaign().getTime()) );
+            _ps.setInt( 6, _ca.get_idCompany() );
+            _ps.setInt( 7, _ca.get_id());
             _ps.execute();
 
         }catch ( Exception _exc ) {
