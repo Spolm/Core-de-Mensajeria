@@ -26,7 +26,7 @@ public class CommandProcessXML extends Command{
     private Template _template;  /////// Cambiar por comando de Template
     private TemplateHandler _templateHandler = new TemplateHandler();   /////// Cambiar por comando de Template
     private String _templateId;                  /////// Cambiar por comando de Template
-
+    private List<Message> _messageList = new ArrayList<>();
 
     public CommandProcessXML(String filePath){
         _xmlFile = new File(filePath);
@@ -44,20 +44,18 @@ public class CommandProcessXML extends Command{
             _commandGetTagValue = CommandFactory.CreateCommandGetTagValue("id",(Element) node.item(0));
             _commandGetTagValue.execute();
             _templateId = _commandGetTagValue.getValue();
-
             _template =_templateHandler.getTemplate(Integer.valueOf(_templateId ));   /////// Cambiar por comando de Template
 
             NodeList nodeList = doc.getElementsByTagName("message");
-            List<Message> messageList = new ArrayList<>();
 
             for (int i = 0; i < nodeList.getLength(); i++) {
                 _commandGetMessage = CommandFactory.CreateCommandGetMessage(nodeList.item(i),_template);
                 _commandGetMessage.execute();
                 if(_commandGetMessage.getValue() != null)
-                    messageList.add(_commandGetMessage.getValue());
+                    _messageList.add(_commandGetMessage.getValue());
             }
 
-            for(Message message : messageList){
+            for(Message message : _messageList){
                 System.out.println(message.toString());
             }
         } catch (SAXException | ParserConfigurationException | IOException e1) {

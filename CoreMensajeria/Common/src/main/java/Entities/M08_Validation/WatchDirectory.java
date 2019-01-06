@@ -44,9 +44,12 @@ public class WatchDirectory implements Runnable{
                 for ( WatchEvent<?> event : key.pollEvents() ) {
 
                     log.info("Created: " + event.context().toString() + " in directory " + directory );
-                    _commandProcessXML = CommandFactory
-                            .CreateCommanProcessXML(directory + "/" + event.context().toString() );
-                    _commandProcessXML.execute();
+
+                    if(directory.endsWith(".xml")) {
+                        _commandProcessXML = CommandFactory
+                                .CreateCommanProcessXML(directory + "/" + event.context().toString());
+                        _commandProcessXML.execute();
+                    }
 
                 }
                 key.reset();
