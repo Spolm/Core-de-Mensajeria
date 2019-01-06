@@ -2,9 +2,10 @@ package Entities.M08_Validation.XMLManagement;
 
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
+import Entities.M08_Validation.ValidationReciveParameter;
 import Entities.M08_Validation.XMLManagement.Message;
 import Exceptions.TemplateDoesntExistsException;
-import Entities.M08_Validation.XMLManagement.Command;
+import Entities.M08_Validation.XMLManagement.ParameterXML;
 import Entities.M08_Validation.XMLManagement.CommandsFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -59,6 +60,7 @@ public class CommandProcessXML extends Command {
 
             for(Message message : _messageList){
                 System.out.println(message.toString());
+                parseMessage(message);
             }
         } catch (SAXException | ParserConfigurationException | IOException e1) {
             e1.printStackTrace();
@@ -70,5 +72,16 @@ public class CommandProcessXML extends Command {
     @Override
     public Object Return() {
         return null;
+    }
+
+    private void parseMessage(Message message) {
+        String text = "Hola [.$Nombre$.] tu edad es [.$Edad$.]";
+        ArrayList<ParameterXML> params = message.get_param();
+
+        for (ParameterXML param : params) {
+            System.out.println(param.get_name());
+            text = text.replace("[.$" + param.get_name() + "$.]", param.get_value());
+        }
+        System.out.println(text);
     }
 }
