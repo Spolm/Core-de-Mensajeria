@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class ParameterDoesntExistsException extends RuntimeException{
+public class ParameterDoesntExistsException extends PersonalizedException{
     private int id;
 
     public ParameterDoesntExistsException() {
