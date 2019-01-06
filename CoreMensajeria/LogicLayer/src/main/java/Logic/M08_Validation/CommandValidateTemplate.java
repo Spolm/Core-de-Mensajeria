@@ -38,7 +38,7 @@ public class CommandValidateTemplate extends CommandValidateParameter {
     }
 
     @Override
-    public Object Return() {
-        return null;
+    public Boolean Return() {
+        return this.get_valid();
     }
 }
