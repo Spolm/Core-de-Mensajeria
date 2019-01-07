@@ -52,6 +52,8 @@ public class M08_MessageValidation {
             error = e;
         } catch (MessageDoesntExistsException e) {
             error = e;
+        } catch (TemplateNotApprovedException e) {
+            error = e;
         } catch (Exception e) {
             error = e;
         }

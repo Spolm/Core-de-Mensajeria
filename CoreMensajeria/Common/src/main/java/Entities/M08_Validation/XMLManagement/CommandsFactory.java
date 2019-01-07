@@ -45,4 +45,9 @@ public class CommandsFactory {
     public static CommandProcessXML createCommandProcessXML(String filePath){
         return new CommandProcessXML(filePath);
     }
+
+    public static Command createSendMessage(VerifiedParameter verifiedParameters) {
+        return new CommandSendMessage(verifiedParameters);
+    }
+
 }
