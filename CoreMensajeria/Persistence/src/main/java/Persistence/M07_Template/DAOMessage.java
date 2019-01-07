@@ -40,9 +40,11 @@ public class DAOMessage extends DAO implements IDAOMessage {
     }
 
     /**
-     * Adds a message to database
-     * @param e
-     * @param companyId ID de la compania
+     * Post Message
+     * @param message
+     * @param companyId
+     * @param parameters
+     * @param templateId
      */
     @Override
     public void postMessage(String message, int companyId,String[] parameters, int templateId ) {
@@ -60,6 +62,7 @@ public class DAOMessage extends DAO implements IDAOMessage {
             ResultSet _rs = preparedStatement.executeQuery();
 
             //Get the ID of the inserted message and insert Parameters
+            if(_rs.next())
             messageId = _rs.getInt(1);
             this.postParametersOfMessage(messageId, parameters,companyId);
 
@@ -105,6 +108,7 @@ public class DAOMessage extends DAO implements IDAOMessage {
             preparedStatement.setInt( 1, templateId );
             ResultSet _rs = preparedStatement.executeQuery();
 
+            if(_rs.next())
             _m = this.createMessage(_rs);
 
         } catch ( SQLException e ) {
@@ -195,6 +199,7 @@ public class DAOMessage extends DAO implements IDAOMessage {
             ResultSet _rs = preparedStatement.executeQuery();
 
             //Get the ID of the inserted message and insert Parameters
+            if(_rs.next())
             messageId = _rs.getInt(1);
 
             this.updateParameterOfMessage(messageId, parameters,companyId);
