@@ -1,6 +1,7 @@
 package DTO;
 
 import DTO.M01_DTO.DTOUser;
+import DTO.M01_DTO.DTOPrivilege;
 import DTO.M02_DTO.*;
 import DTO.M03_DTO.*;
 import DTO.M07_Template.DTOMessage;
@@ -52,8 +53,24 @@ public class DTOFactory {
                 _gender, _city, _blocked, _remainingAttempts);
 
     }
+    /**
+     * Metodo que instancia un objeto del tipo DTOPrivilege
+     * @param _idPrivileges id del privilegio
+     * @param _codePrivileges codigo del privilegio
+     * @param _actionPrivileges acciones que puede realizar el privilegio
+     * @return Objeto del tipo DTOPrivilege
+     */
 
-    //endregion
+      
+    public static DTOUser CreateDTOPrivilege(int _idPrivileges, String _codePrivileges, String _actionPrivileges) {
+
+        return new DTOPrivilege(_idPrivileges,_codePrivileges,_actionPrivileges);
+
+    }
+
+    /**
+    END REGION 
+     */
   //// compañias y campañas
     /**
      * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
