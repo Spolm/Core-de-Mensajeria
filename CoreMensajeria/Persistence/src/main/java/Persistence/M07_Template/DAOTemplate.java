@@ -42,7 +42,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     final String GET_ALL_TEMPLATES= "{ CALL m07_select_all_templates()}";
     final String GET_ALL_TEMPLATES_BY_CAMPAIGN= "{ call m07_select_templates_by_campaign(?) }";
     final String GET__CAMPAIGN_BY_TEMPLATE = "{ CALL m07_getcampaignbytemplate(?) }";
-    final String GET_CAMPAIGN_BY_USER_COMPANY = "{call m07_select_campaign_by_user_company(?,?,?)}}";
+    final String GET_CAMPAIGN_BY_USER_COMPANY = "{call m07_select_campaign_by_user_company(?,?,?)}";
     final String GET_APPLICATION_BY_TEMPLATE = "{call m07_select_applicantion_by_template(?)}";
     final String GET_CHANNEL_BY_TEMPLATE = "{call m07_select_channels_by_template(?)}";
     final String GET_PRIVILEGES_TEMPLATE = "{call m07_select_privileges_by_user_company(?,?)}";
@@ -658,7 +658,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             Planning _planning = (Planning) DAOFactory.instaciateDaoPlanning().getPlanning( templateId );
 
             //Status
-            Status _status = Status.createStatus(_rs.getInt("ts_id"),
+            Status _status = Status.createStatus(_rs.getInt("tem_id"),
                     _rs.getString("sta_name"));
 
              _t = EntityFactory.CreateTemplate(

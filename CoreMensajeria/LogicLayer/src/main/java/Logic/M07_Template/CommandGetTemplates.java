@@ -22,10 +22,10 @@ public class CommandGetTemplates extends Command {
 
     @Override
     public void execute() throws Exception {
-        TemplateHandler templateHandler = new TemplateHandler();
-        templateArrayList = templateHandler.getTemplates(userId,companyId);
-        //DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
-        //templateArrayList = daoTemplate.getTemplatesByCompany(userId,companyId);
+        //TemplateHandler templateHandler = new TemplateHandler();
+        //templateArrayList = templateHandler.getTemplates(userId,companyId);
+        DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
+        templateArrayList = daoTemplate.getTemplatesByCampaign(userId,companyId);
     }
 
     @Override
