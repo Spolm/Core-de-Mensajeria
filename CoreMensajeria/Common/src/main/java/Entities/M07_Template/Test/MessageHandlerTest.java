@@ -36,8 +36,8 @@ public class MessageHandlerTest {
         assertEquals(messageHandler.getMessages(templateArrayList).size(), 5);
 
         for (int i=0 ; i < 5 ; i++){
-            assertEquals(messageHandler.getMessages(templateArrayList).get(i).getTemplateId(), i+1);
-            assertEquals(messageHandler.getMessages(templateArrayList).get(i).getMessage().getMessageId(), i+1);
+            assertEquals(messageHandler.getMessages(templateArrayList).get(i).get_id(), i+1);
+            assertEquals(messageHandler.getMessages(templateArrayList).get(i).getMessage().get_id(), i+1);
         }
 
         sizeParameterArrayListCorrectly();

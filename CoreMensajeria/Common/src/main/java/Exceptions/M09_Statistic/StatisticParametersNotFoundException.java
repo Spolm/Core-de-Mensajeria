@@ -1,4 +1,6 @@
-package Exceptions;
+package Exceptions.M09_Statistic;
+
+import Exceptions.PersonalizedException;
 
 public class StatisticParametersNotFoundException extends PersonalizedException {
     public StatisticParametersNotFoundException(){}

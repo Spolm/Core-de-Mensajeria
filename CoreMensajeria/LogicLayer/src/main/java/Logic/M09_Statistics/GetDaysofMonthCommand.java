@@ -1,13 +1,12 @@
 package Logic.M09_Statistics;
 
-import Entities.Entity;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M09_Statistics.DAOStatisticEstrella;
 
 import java.util.ArrayList;
 
-public class GetDaysofMonthCommand extends Command {
+public class GetDaysofMonthCommand extends Command<ArrayList<Integer>> {
 
     private DAOStatisticEstrella dao;
     private ArrayList<Integer> daysofmonth;
@@ -18,12 +17,9 @@ public class GetDaysofMonthCommand extends Command {
         daysofmonth = dao.getDaysofMonth();
     }
 
-    @Override
-    public Entity Return() {
-        return null;
-    }
 
-    public ArrayList<Integer> ReturnList() {
+    @Override
+    public ArrayList<Integer> Return() {
         return daysofmonth;
     }
 }

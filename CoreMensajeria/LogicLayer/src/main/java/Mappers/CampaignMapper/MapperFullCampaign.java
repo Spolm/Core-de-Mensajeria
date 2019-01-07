@@ -11,6 +11,7 @@ import Mappers.GenericMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class MapperFullCampaign extends GenericMapper <DTOFullCampaign> {
 
@@ -21,13 +22,14 @@ public class MapperFullCampaign extends GenericMapper <DTOFullCampaign> {
      * @return un objeto del tipo DTOFullCampaign
      */
     @Override
-    public DTOFullCampaign CreateDto(Entity entity) {
+    public DTOFullCampaign CreateDto( Entity entity ) {
         try {
             DTOFullCampaign dto = null;
-            Campaign _cam = (Campaign) entity;
+            Campaign _cam = ( Campaign ) entity;
             dto = DTOFactory.CreateDtoFullCampaign(_cam.get_idCampaign(), _cam.get_nameCampaign(),
                                                    _cam.get_descCampaign(), _cam.get_statusCampaign(),
-                                                   _cam.get_startCampaign(), _cam.get_endCampaign(),_cam.get_company());
+                                                   _cam.get_startCampaign(), _cam.get_endCampaign(),
+                                                   _cam.get_idCompany());
 
             return dto;
         }
@@ -97,12 +99,16 @@ public class MapperFullCampaign extends GenericMapper <DTOFullCampaign> {
      */
     @Override
     public Entity CreateEntity(DTOFullCampaign dto) {
+        Logger logger = Logger.getLogger(MapperFullCampaign.class.getName());
+        logger.info("Objeto compania recibido en MAPPERfull" + dto.get_idCampaign() + " " +
+                    dto.get_nameCampaign() + " "+ dto.get_statusCampaign() + " " + dto.get_descCampaign()+""+
+                    dto.get_startCampaign()+""+dto.get_endCampaign()+"id:"+dto.get_idCompany() );
 
         try {
             Campaign _cam = EntityFactory.CreateFullCampaign(dto.get_idCampaign(), dto.get_nameCampaign(),
                                                             dto.get_descCampaign(), dto.get_statusCampaign(),
                                                             dto.get_startCampaign(), dto.get_endCampaign(),
-                                                             dto.get_company() );
+                                                            dto.get_idCompany() );
             return _cam ;
 
         }

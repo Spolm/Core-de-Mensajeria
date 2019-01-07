@@ -5,7 +5,7 @@ import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M09_Statistics.DAOStatisticEstrella;
 
-public class GetIntegratorStatisticCommand extends Command {
+public class GetIntegratorStatisticCommand extends Command<Entity> {
 
     DAOStatisticEstrella dao;
     Entity statistic;

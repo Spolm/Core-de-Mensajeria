@@ -2,9 +2,6 @@ package Entities.M08_Validation.XMLManagement;
 
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
-import Entities.M08_Validation.XMLManagement.Message;
-import Entities.M08_Validation.XMLManagement.Command;
-import Entities.M08_Validation.XMLManagement.CommandsFactory;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,6 +16,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class CommandProcessXML extends Command {
 
     private File _xmlFile;
@@ -26,6 +26,7 @@ public class CommandProcessXML extends Command {
     private DocumentBuilder _dBuilder;
     private Command<Message> _commandGetMessage;
     private Command<String> _commandGetTagValue;
+    private Command _commandGetTemplate;
     private Template _template;  /////// Cambiar por comando de Template
     private TemplateHandler _templateHandler = new TemplateHandler();   /////// Cambiar por comando de Template
     private String _templateId;                  /////// Cambiar por comando de Template
@@ -36,6 +37,9 @@ public class CommandProcessXML extends Command {
         _dbFactory = DocumentBuilderFactory.newInstance();
     }
 
+    /**
+     *
+     */
     @Override
     public void execute() {
         try {
@@ -47,28 +51,51 @@ public class CommandProcessXML extends Command {
             _commandGetTagValue = CommandsFactory.createCommandGetTagValue("id",(Element) node.item(0));
             _commandGetTagValue.execute();
             _templateId = _commandGetTagValue.Return();
-            _template =_templateHandler.getTemplate(Integer.valueOf(_templateId ));   /////// Cambiar por comando de Template
-            NodeList nodeList = doc.getElementsByTagName("message");
 
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                _commandGetMessage = CommandsFactory.createCommandGetMessage(nodeList.item(i),_template);
-                _commandGetMessage.execute();
-                if(_commandGetMessage.Return() != null)
-                    _messageList.add(_commandGetMessage.Return());
-            }
+            if(_templateId != "") {
+                _template = _templateHandler.getTemplate(Integer.valueOf(_templateId));   /////// Cambiar por comando de Template
+                NodeList nodeList = doc.getElementsByTagName("message");
 
-            for(Message message : _messageList){
-                System.out.println(message.toString());
+                for (int i = 0; i < nodeList.getLength(); i++) {
+                    _commandGetMessage = CommandsFactory.createCommandGetMessage(nodeList.item(i), _template);
+                    _commandGetMessage.execute();
+                    if (_commandGetMessage.Return() != null)
+                        _messageList.add(_commandGetMessage.Return());
+                }
+
+                for (Message message : _messageList) {
+                    System.out.println(message.toString());
+                    parseMessage(message);
+                }
+            } else{
+                // Excepcion personalizada
             }
         } catch (SAXException | ParserConfigurationException | IOException e1) {
             e1.printStackTrace();
         } catch (TemplateDoesntExistsException e) {
             e.printStackTrace();
-        } catch (Exception e){}
+        } catch (NullPointerException e){}
+          catch (Exception e){}
     }
 
+    /**
+     * @return
+     */
     @Override
     public Object Return() {
         return null;
+    }
+
+    /**
+     * @param message
+     */
+    private void parseMessage(Message message) {
+        String text = "Hola [.$Nombre$.] tu edad es [.$Edad$.]";
+        ArrayList<ParameterXML> params = message.get_param();
+
+        for (ParameterXML param : params) {
+            text = text.replace("[.$" + param.get_name() + "$.]", param.get_value());
+        }
+        System.out.println(text);
     }
 }

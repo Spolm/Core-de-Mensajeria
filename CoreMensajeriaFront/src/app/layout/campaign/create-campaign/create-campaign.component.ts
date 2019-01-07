@@ -11,6 +11,7 @@ import { CampaignService } from '../campaign.service';
 export class CreateCampaignComponent implements OnInit {
 
   newCampaign: Campaign = new Campaign();
+
   editMode: boolean = false;
   companies: any[];
   constructor(public companyService: CompanyService, public campaignService: CampaignService) {
@@ -37,9 +38,13 @@ export class CreateCampaignComponent implements OnInit {
   /**
    * Metodo para agregar la campaña
    */
-  createEditCampaign(){
+  addCampaign(){
+
+    this.newCampaign._startCampaign = this.newCampaign._startCampaign+"T02:06:58.147"
+    this.newCampaign._endCampaign = this.newCampaign._endCampaign+"T02:06:58.147"
     this.campaignService.addCampaign(this.newCampaign).toPromise().then(res =>{
-      console.log(res);
+      console.log(this.newCampaign);
+      this.newCampaign = new Campaign();
     });
   }
 }

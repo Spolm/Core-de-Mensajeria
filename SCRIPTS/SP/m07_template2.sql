@@ -104,8 +104,15 @@ LANGUAGE plpgsql VOLATILE;
 ---------------------------------------------------ParameterHandler-----------------------------------------------------
 
 --Funcion para el metodo PostPlanning
-CREATE OR REPLACE FUNCTION m07_postPlanning(IN )
-
+CREATE OR REPLACE FUNCTION m07_postPlanning(_templateId integer,_start_date timestamp,_start_time timestamp,_end_date timestamp,_end_time timestamp)
+RETURNS VOID AS
+$BODY$
+BEGIN
+INSERT INTO public.Planning(pla_start_date, pla_start_time, pla_end_date, pla_end_time, pla_template_id)
+VALUES (_start_date , _start_time , _end_date , _end_time, _templateId);
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;	
 --VER DESPUES
 
 --Funcion para el metodo updatePlanning 
@@ -260,3 +267,4 @@ END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
 Select * from m07_updateTemplate2(12,1,7);
+		

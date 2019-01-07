@@ -10,7 +10,7 @@ import Persistence.M09_Statistics.DAOStatisticEstrella;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class GetMonthsCommand extends Command {
+public class GetMonthsCommand extends Command<ArrayList<Integer>> {
 
     private DAOStatisticEstrella dao;
     private ArrayList<Integer> months;
@@ -22,9 +22,5 @@ public class GetMonthsCommand extends Command {
     }
 
     @Override
-    public Entity Return() {
-        return null;
-    }
-
-    public ArrayList<Integer> ReturnList() { return months; }
+    public ArrayList<Integer> Return() { return months; }
 }

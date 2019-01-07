@@ -25,9 +25,9 @@ public class TemplateTest {
     void correctAttributes(){
         assertEquals(template.getStatus().getStatusName(), "Not Approved Template");
         assertEquals(template.getStatus().getStatusId(),1);
-        assertEquals(template.getTemplateId(), 1);
+        assertEquals(template.get_id(), 1);
         assertEquals(template.getCreationDate(), "01-01-18");
-        assertEquals(template.getMessage().getMessageId(), 1);
+        assertEquals(template.getMessage().get_id(), 1);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class TemplateTest {
 
         assertEquals(template.getStatus().getStatusName(), "Approved Template");
         assertEquals(template.getStatus().getStatusId(),2);
-        assertEquals(template.getMessage().getMessageId(), 2);
+        assertEquals(template.getMessage().get_id(), 2);
     }
 
     @AfterEach
