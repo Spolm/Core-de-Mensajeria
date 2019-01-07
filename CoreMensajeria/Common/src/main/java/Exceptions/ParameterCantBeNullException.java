@@ -27,6 +27,10 @@ public class ParameterCantBeNullException extends PersonalizedException {
 
     }
 
+    public ParameterCantBeNullException() {
+        super();
+    }
+
 
 
 
