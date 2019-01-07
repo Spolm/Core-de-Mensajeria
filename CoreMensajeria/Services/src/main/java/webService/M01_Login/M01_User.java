@@ -1,25 +1,36 @@
 package webService.M01_Login;
 
+import DTO.DTO;
+import DTO.DTOFactory;
+import DTO.M01_DTO.DTOUser;
 import Entities.Entity;
 import Entities.EntityFactory;
 import Entities.M01_Login.PrivilegeDao;
 import Entities.M01_Login.User;
-import Entities.M01_Login.UserDAO;
 import Logic.Command;
 import Logic.CommandsFactory;
+import Logic.M01_Login.GetAllUsersCommand;
 import Logic.M01_Login.GetUserCommand;
+import Mappers.LoginMapper.LoginMapper;
+import Mappers.LoginMapper.UserMapper;
+import Mappers.MapperFactory;
+import Persistence.M01_Login.DAOUser;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.error;
 
 @Path("/users")
 public class M01_User {
 
     Gson _gson = new Gson();
-    UserDAO _userDAO = new UserDAO();
+    DAOUser _userDAO = new DAOUser();
     PrivilegeDao _privilegeDAO = new PrivilegeDao();
 
     /**
@@ -30,14 +41,16 @@ public class M01_User {
     @Produces(MediaType.APPLICATION_JSON)
     public Response GetUsers() {
         Error error;
-        Entity user = EntityFactory.user();
-        Command commandUser = CommandsFactory.instanciateGetUser(user);
-        GetUserCommand cmd = (GetUserCommand) commandUser;
-        //TODO acomodar esto
-        Response rb;
+        Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
         try {
-             rb = Response.ok(_gson.toJson(_userDAO.findAll())).build();
-        } catch (SQLException e) {
+                GetAllUsersCommand _command = CommandsFactory.createGetAllUsersCommand();
+                _command.execute();
+                LoginMapper _mapper = MapperFactory.createUserMapper();
+                ArrayList<Entity> _user = _command.ReturnList();
+                List<DTOUser> _dtoUs = _mapper.CreateDtoList(_user);
+                _rb.entity( _gson.toJson( _dtoUs ) ) ;
+            }
+         catch (SQLException e) {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
             return Response.status(500).entity(error).build();
@@ -51,7 +64,7 @@ public class M01_User {
             error.addError("Excepcion", e.getMessage());
             return Response.status(500).entity(error).build();
         }
-        return rb;
+        return _rb.build();
     }
 
     /**
@@ -65,6 +78,9 @@ public class M01_User {
     public Response GetUser(@PathParam("id") int id) {
         Error error;
         try {
+//            DTO user = DTOFactory.CreateDTOUser();
+//            Command commandUser = CommandsFactory.instanciateGetUser(user);
+//            GetUserCommand cmd = (GetUserCommand) commandUser;
             return Response.ok(_gson.toJson(_userDAO.findByUsernameId(id))).build();
         } catch (SQLException e) {
             e.printStackTrace();

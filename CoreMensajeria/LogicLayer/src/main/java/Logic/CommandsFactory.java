@@ -2,9 +2,8 @@ package Logic;
 
 import Entities.Entity;
 import Logic.M01_Login.AddUserCommand;
-import Logic.M01_Login.GetUserCommand;
+import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
-import Logic.M01_Login.GetUser;
 import Logic.M07_Template.*;
 import Logic.M02_Company.*;
 import Logic.M03_Campaign.*;
@@ -18,8 +17,11 @@ public class CommandsFactory {
         return new GetUserCommand(user);
     }
 
-    public static Command instanciateAddUser ( Entity user) {
-        return new AddUserCommand(user);
+    public static GetAllUsersCommand createGetAllUsersCommand () {
+        return new GetAllUsersCommand();
+    }
+    public static LogUserCommand createLogUserCommand () {
+        return new LogUserCommand();
     }
 
 

@@ -2,6 +2,7 @@ package webService.M01_Login;
 
 import Entities.M01_Login.*;
 import Exceptions.UserBlockedException;
+import Persistence.M01_Login.DAOUser;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -18,10 +19,11 @@ import java.util.logging.Logger;
 public class M01_Login {
 
     Gson _gson = new Gson();
-    UserDAO _userDAO = new UserDAO();
+    DAOUser _userDAO = new DAOUser();
 
     /**
-     * This method is the connection between front-end and back-end. Verifies that the input data matches with the data in the Data Base.
+     * This method is the connection between front-end and back-end. Verifies that the input data matches with the data
+     * in the Data Base.
      * @param loginIntent
      * @return Response
      */
@@ -32,6 +34,14 @@ public class M01_Login {
     public Response login( LoginIntent loginIntent){
         Error error;
         User user;
+//        try {
+//            GetAllUsersCommand _command = CommandsFactory.createGetAllUsersCommand();
+//            _command.execute();
+//            LoginMapper _mapper = MapperFactory.createUserMapper();
+//            ArrayList<Entity> _user = _command.ReturnList();
+//            List<DTOUser> _dtoUs = _mapper.CreateDtoList(_user);
+//            _rb.entity( _gson.toJson( _dtoUs ) ) ;
+//        }
         try {
             if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
                     loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){

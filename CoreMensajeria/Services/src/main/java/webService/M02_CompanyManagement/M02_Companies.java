@@ -284,8 +284,8 @@ public class M02_Companies {
             MapperFullCompany _mapper = MapperFactory.CreateMapperFullCompany();
             ArrayList< Entity > _comp = _command.ReturnList();
             List< DTOFullCompany >_dtoCo = _mapper.CreateDtoList( _comp );
-             _rb.entity( gson.toJson( _dtoCo ) ) ;
-             return _rb.build();
+            _rb.entity( gson.toJson( _dtoCo ) ) ;
+            return _rb.build();
         }
 
         catch ( Exception e ){

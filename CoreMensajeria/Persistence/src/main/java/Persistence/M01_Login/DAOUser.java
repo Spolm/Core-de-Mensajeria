@@ -1,8 +1,10 @@
 package Persistence.M01_Login;
 
 import Entities.Entity;
+import Entities.Factory.EntityFactory;
 import Entities.M01_Login.User;
 import Entities.Sql;
+import Exceptions.UserBlockedException;
 import Persistence.DAO;
 
 import javax.xml.bind.DatatypeConverter;
@@ -88,30 +90,18 @@ public class DAOUser extends DAO implements  IDAOUser {
     }
 
     @Override
-    public ArrayList<User> getUsers(Entity u) throws SQLException {
-        User us = (User) u;
-        ArrayList<User> userList = new ArrayList<>();
-        PreparedStatement preStatement;
-        ResultSet result;
-        try {
-            Connection conexion = DAO.getBdConnect();
+    public ArrayList<Entity> getUsers()  {
 
-            //Invocando el SP
-            preStatement = conexion.prepareCall("");
-            //Metiendo los parametros al SP
-//            preStatement.setInt(1, 1);
-            //Ejecucion del query
-            result = preStatement.executeQuery();
-            while(result.next()){
-//                int _idUser = result.getInt("use_id");
-//                User use = EntityFactory.user(_idUser, use
-//
-// );
-//                userList.add(use);
+        ArrayList<Entity> userList = new ArrayList<>();
+        PreparedStatement preStatement;
+        try {
+            preStatement = _conn.prepareCall(CALL_SELECT);
+            _result = preStatement.executeQuery();
+            while(_result.next()){
+                 userList.add( getUser( _result ) );
             }
-            result.close();
         } catch ( SQLException e) {
-//            throw new PLConnectException1(e);
+
         }  catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -120,7 +110,23 @@ public class DAOUser extends DAO implements  IDAOUser {
         return userList;
     }
 
+    private User getUser(ResultSet result) throws SQLException {
 
+            User _user = (User) EntityFactory.CreateUser(
+                    result.getInt( "use_id" ),
+                    result.getString("use_password"),
+                    result.getString( "use_username" ),
+                    result.getInt("use_type"),
+                    result.getString( "use_email" ),
+                    result.getString( "use_phone" ),
+                    result.getDate( "use_dateofbirth" ),
+                    result.getString( "use_country" ),
+                    result.getString("use_address" ),
+                    result.getString("use_genre" ),
+                    result.getString("use_city" ));
+
+            return _user;
+    }
 
 
 //    public DAOUser() {
