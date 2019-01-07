@@ -295,8 +295,8 @@ public class CommandsFactory {
         return new CommandProcessXML(filePath);
     }
 
-    public static CommandValidateMessage createCommandValidateMessage(int template, String channel) {
-        return new CommandValidateMessage(template, channel);
+    public static CommandValidateMessage createCommandValidateMessage(int template) {
+        return new CommandValidateMessage(template);
 
     }
 

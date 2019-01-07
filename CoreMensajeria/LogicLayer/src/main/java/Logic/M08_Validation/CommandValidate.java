@@ -15,7 +15,7 @@ public class CommandValidate extends CompositeCommand<Boolean> {
     public CommandValidate(ParametersDTO dto) {
         Command[] commandList = new Command[2];
         commandList[0] = CommandsFactory.createCommandValidateTemplate(dto.get_idTemplate());
-        commandList[1] = CommandsFactory.createCommandValidateMessage(dto.get_idTemplate(), dto.get_channel());
+        commandList[1] = CommandsFactory.createCommandValidateMessage(dto.get_idTemplate());
         set_commandList(commandList);
     }
 
