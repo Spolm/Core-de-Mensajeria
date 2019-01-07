@@ -64,9 +64,6 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         return null;
     }
 
-
-
-
     /**
      * This method is responsible for saving a template in specific.
      * @param json string json with information
