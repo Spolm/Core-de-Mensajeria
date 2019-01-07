@@ -7,6 +7,7 @@ import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.ParameterXML;
 import Entities.M08_Validation.XMLManagement.Command;
 import Entities.M08_Validation.XMLManagement.CommandsFactory;
+import Exceptions.M08_SendMessageManager.NullValueXMLException;
 import Exceptions.ParameterDoesntExistsException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -43,9 +44,7 @@ public class CommandGetMessage extends Command<Message> {
         try {
             if (_node.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) _node;
-                _commandGetTagValue = CommandsFactory.createCommandGetTagValue("destiny", element);
-                _commandGetTagValue.execute();
-                _message.set_destiny( _commandGetTagValue.Return());
+                setDestiny(element);
                 NodeList nodeList = element.getElementsByTagName("parameter");
 
                 idMessage = _template.getMessage().get_id();   ////// cambiar por comando plantilla
@@ -60,7 +59,7 @@ public class CommandGetMessage extends Command<Message> {
                             _parameterXMLList.add( _commandGetParameter.Return());
                         } else {
                             _message = null;
-                        }
+                         }
                     }
                     if(_message != null)
                         _message.set_param(_parameterXMLList);
@@ -73,13 +72,45 @@ public class CommandGetMessage extends Command<Message> {
         catch (ParameterDoesntExistsException e) {
             e.printStackTrace();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
     /**
      * @return
      */
+
+    public void setDestiny( Element element ){
+        try {
+            if(_template.getChannels().size() == 2) {
+
+                _commandGetTagValue = CommandsFactory.createCommandGetTagValue("correo", element);
+                _commandGetTagValue.execute();
+                _message.set_correo(_commandGetTagValue.Return());
+
+                _commandGetTagValue = CommandsFactory.createCommandGetTagValue("telefono", element);
+                _commandGetTagValue.execute();
+                _message.set_telefono(_commandGetTagValue.Return());
+
+            } else if (_template.getChannels().size() == 1 &&
+                    _template.getChannels().get(0).getNameChannel().equalsIgnoreCase("SMS")){
+                _commandGetTagValue = CommandsFactory.createCommandGetTagValue("telefono", element);
+                _commandGetTagValue.execute();
+                _message.set_telefono(_commandGetTagValue.Return());
+                _message.set_correo("");
+            } else {
+                _commandGetTagValue = CommandsFactory.createCommandGetTagValue("correo", element);
+                _commandGetTagValue.execute();
+                _message.set_correo(_commandGetTagValue.Return());
+                _message.set_telefono("");
+            }
+        } catch (NullValueXMLException e) {
+            _message = null;
+        } catch (Exception e){
+
+        }
+    }
+
     @Override
     public Message Return() {
         return _message;
