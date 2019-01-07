@@ -1,11 +1,14 @@
 package webService.M05_Channel;
 
+import DTO.M05_Channel.DTOChannel;
+import Entities.Entity;
 import Entities.M05_Channel.Channel;
-import Entities.M05_Channel.ChannelDAO;
 import Exceptions.ChannelNotFoundException;
-import Entities.M04_Integrator.Integrator;
 import Exceptions.DatabaseConnectionProblemException;
-
+import Logic.CommandsFactory;
+import Logic.M05_Channel.CommandGetAllChannels;
+import Mappers.M05_Channel.MapperChannel;
+import Mappers.MapperFactory;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -26,7 +29,7 @@ import java.util.ArrayList;
 @Path("/channel")
 public class M05_Channel {
 
-    private ChannelDAO _channelDAO = new ChannelDAO();
+    MapperChannel _mapper = MapperFactory.createMapperChannel();
 
     /**
      * Método que nos permite obtener una lista de
@@ -38,12 +41,16 @@ public class M05_Channel {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listChannel() {
+        Response response;
         try {
-            ArrayList<Channel> c = _channelDAO.listChannel();
-            return Response.ok().entity(c).build();
+            CommandGetAllChannels command = CommandsFactory.instanceGetAllChannels();
+            command.execute();
+            ArrayList<DTOChannel> c = (ArrayList<DTOChannel>) _mapper.CreateDtoList(command.returnList());
+            response = Response.ok().entity(c).build();
         } catch (DatabaseConnectionProblemException e) {
-            return Response.status(500).entity(e.getMessage()).build();
+            response = Response.status(500).entity(e.getMessage()).build();
         }
+        return response;
     }
 
     /**
@@ -53,17 +60,17 @@ public class M05_Channel {
      * @see Channel
      */
 
-    @GET
+    /*@GET
     @Path("/i/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listIntegrator(@PathParam("id") int id) {
         try {
-            ArrayList<Integrator> i = _channelDAO.listIntegratorByChannel(id);
+            ArrayList<Entity> i = _channelDAO.listIntegratorByChannel(id);
             return Response.ok().entity(i).build();
         } catch (DatabaseConnectionProblemException e) {
             return Response.status(500).entity(e.getMessage()).build();
         } catch (ChannelNotFoundException e) {
             return Response.status(404).entity(e.getMessage()).build();
         }
-    }
+    }*/
 }
