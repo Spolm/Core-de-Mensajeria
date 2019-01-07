@@ -33,10 +33,6 @@ public class CommandsFactory {
         return new CommandScheduleMessage(verifiedParameters);
     }
 
-    public static Command createSendMessage(VerifiedParameter verifiedParameters) {
-        return new CommandSendMessage(verifiedParameters);
-    }
-
     //region M09
     public static GetAllCompaniesByUserCommand getAllCompaniesByUserCommand(Integer userId) {return new GetAllCompaniesByUserCommand(userId); }
     public static GetCampaignsForCompanyCommand getCampaignsForCompanyCommand(List<Integer> companyIds){return new GetCampaignsForCompanyCommand(companyIds);}
