@@ -1,5 +1,7 @@
 package M08_Validation;
 
+import Entities.M07_Template.Template;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Logic.Command;
 import Logic.CommandsFactory;
 
@@ -10,7 +12,6 @@ import Exceptions.SMSTooLongException;
 
 import static  org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ValidationServiceTest {
 
@@ -27,11 +28,7 @@ class ValidationServiceTest {
     @Test
     public void testTemplateDoesntExist() {
         Command c = new CommandsFactory().createCommandValidateTemplate(312873618);
-        try {
-            c.execute();
-            assertEquals(false, c.Return());
-
-        } catch (Exception e) {}
+            assertThrows(TemplateDoesntExistsException.class,() -> c.execute());
     }
 
     @Test
