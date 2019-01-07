@@ -5,6 +5,7 @@ import Entities.EntityFactory;
 import Entities.M02_Company.Company;
 import Entities.M06_DataOrigin.PathHandler;
 import Entities.Sql;
+import Persistence.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

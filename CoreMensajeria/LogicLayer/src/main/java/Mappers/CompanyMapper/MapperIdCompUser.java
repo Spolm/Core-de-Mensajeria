@@ -4,7 +4,7 @@ import DTO.DTOFactory;
 import DTO.M02_DTO.DTOIdCompUser;
 import DTO.M02_DTO.DTOIdStatusCompany;
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M02_Company.Company;
 import Mappers.GenericMapper;
 

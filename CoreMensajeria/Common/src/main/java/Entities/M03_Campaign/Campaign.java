@@ -67,7 +67,7 @@ public class Campaign extends Entity {
      * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
      * @param startCampaign fecha de inicio de la campaña
      * @param endCampaign fecha de finalización de la campaña
-     * @param idCompany objeto del tipo compania
+     * @param idCompany id de una compania
      */
     public Campaign ( int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign,
                      Date startCampaign, Date endCampaign, int idCompany ) {
@@ -78,6 +78,28 @@ public class Campaign extends Entity {
         _startCampaign = startCampaign;
         _endCampaign = endCampaign;
         _idCompany = idCompany;
+    }
+
+
+    /**
+     * Constructor para campañas
+     * @param idCampaign   id de la campaña
+     * @param nameCampaign nombre para una campaña recien creada
+     * @param descCampaign descripcion de la campaña
+     * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
+     * @param startCampaign fecha de inicio de la campaña
+     * @param endCampaign fecha de finalización de la campaña
+     * @param company objeto del tipo compania
+     */
+    public Campaign ( int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign,
+                      Date startCampaign, Date endCampaign, Company company ) {
+        _idCampaign = idCampaign;
+        _nameCampaign = nameCampaign;
+        _descCampaign = descCampaign;
+        _statusCampaign = statusCampaign;
+        _startCampaign = startCampaign;
+        _endCampaign = endCampaign;
+        _company = company;
     }
 
     /**
