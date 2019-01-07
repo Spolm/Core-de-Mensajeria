@@ -2,6 +2,10 @@ package Logic;
 
 import Entities.Entity;
 import Logic.M01_Login.GetUser;
+import Logic.M04_Integrator.CommandDisableIntegrator;
+import Logic.M04_Integrator.CommandEnableIntegrator;
+import Logic.M04_Integrator.CommandGetAllIntegrator;
+import Logic.M04_Integrator.CommandGetConcreteIntegrator;
 import Logic.M07_Template.*;
 import Logic.M02_Company.*;
 import Logic.M03_Campaign.*;
@@ -74,6 +78,24 @@ public class CommandsFactory {
     }
     //endregion
 
+
+    // region M04_Integrator
+    public static CommandDisableIntegrator createCommandDisableIntegrator(int id) {
+        return new CommandDisableIntegrator(id);
+    }
+
+    public static CommandEnableIntegrator createCommandEnableIntegrator(int id) {
+        return new CommandEnableIntegrator( id );
+    }
+
+    public static CommandGetAllIntegrator createCommandGetAllIntegrators() {
+        return new CommandGetAllIntegrator();
+    }
+
+    public static CommandGetConcreteIntegrator createCommandGetConcreteIntegrator(int id) {
+        return new CommandGetConcreteIntegrator(id);
+    }
+    //endregion
 
     //M07_Templates
 

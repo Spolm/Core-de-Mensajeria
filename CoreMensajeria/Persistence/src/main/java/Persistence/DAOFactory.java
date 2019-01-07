@@ -1,6 +1,7 @@
 package Persistence;
 
 import Persistence.M01_Login.GetUserDao;
+import Persistence.M04_Integrator.DAOIntegrator;
 import Persistence.M09_Statistics.DAOStatistic;
 import Persistence.M09_Statistics.DAOStatisticEstrella;
 import Persistence.M02_Company.DAOCompany;
@@ -14,6 +15,10 @@ public class DAOFactory {
         return new GetUserDao();
     }
 
+    //endregion
+
+    //region M04
+    static public DAOIntegrator instanciateDaoIntegrator(){return new DAOIntegrator();}
     //endregion
 
     //region M09

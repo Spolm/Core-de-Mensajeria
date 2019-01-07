@@ -2,10 +2,10 @@ package DTO;
 
 import DTO.M02_DTO.*;
 import DTO.M03_DTO.*;
-import DTO.M04_DTO.DTOIntegrator;
+import DTO.M04_Integrator.DTOIntegrator;
 import DTO.M09_DTO.DTOStatistic;
 import Entities.M02_Company.Company;
-
+import DTO.M04_Integrator.DTOIntegrator;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -131,9 +131,9 @@ public class DTOFactory {
 
 
 // M04_region
-    public static DTOIntegrator CreateDTOIntegrator (int idIntegrator, int threadCapacity, float messageCost,
+    public static DTOIntegrator CreateDTOIntegrator (int threadCapacity, float messageCost,
                                                      String nameIntegrator, String apiIntegrator, boolean enabled){
-        return new DTOIntegrator(idIntegrator,threadCapacity,messageCost,nameIntegrator,apiIntegrator,enabled);
+        return new DTOIntegrator(threadCapacity,messageCost,nameIntegrator,apiIntegrator,enabled);
     }
 //end region
 

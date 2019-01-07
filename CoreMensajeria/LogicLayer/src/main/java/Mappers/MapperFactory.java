@@ -4,6 +4,7 @@ import DTO.M09_DTO.DTOStatistic;
 import Mappers.CompanyMapper.*;
 import Mappers.CampaignMapper.*;
 import Mappers.GenericMapper;
+import Mappers.M04_Integrator.MapperIntegrator;
 import Mappers.StatisticMapper.StatisticMapper;
 
 public class MapperFactory {
@@ -83,6 +84,11 @@ public class MapperFactory {
         return new MapperIdStatusCampaign();
     }
     // endregion
+
+
+    //M04_Region
+    public static MapperIntegrator createMapperIntegrator(){return new MapperIntegrator();}
+    // end M04_region
 
 
     public static GenericMapper createStatisticMapper(){ return new StatisticMapper();}
