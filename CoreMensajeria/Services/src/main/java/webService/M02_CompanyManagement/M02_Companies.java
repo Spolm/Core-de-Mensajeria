@@ -266,7 +266,7 @@ public class M02_Companies {
                     _dto.get_name() + " "+ _dto.get_status() + " " + _dto.get_desc() + " " +
                     _dto.get_link() + " " + _dto.get_idUser() );
        try {
-           if( _dto.get_desc() == ""  ||  _dto.get_desc() == "") {
+           if( _dto.get_name() == "" ) {
                throw new InvalidParameterException();
            }
 
@@ -342,9 +342,6 @@ public class M02_Companies {
             Entity _comp = _mapper.CreateEntity( _dto );
             Command _command = CommandsFactory.createChangeStatusCommand( _comp );
             _command.execute();
-           /* //Agregue esto como un recurso desesperadooo
-             Company _co = ( Company ) _comp;
-            _rb.entity( gson.toJson( _co.get_status() ) ) ;*/
             return _rb.build();
         }
         catch (ParameterCantBeNullException e){

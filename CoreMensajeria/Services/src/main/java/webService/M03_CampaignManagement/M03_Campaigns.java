@@ -11,6 +11,8 @@ import Entities.M03_Campaign.Campaign;
 import Entities.M03_Campaign.CampaignDAO;
 import Exceptions.CampaignDoesntExistsException;
 
+import Exceptions.M07_Template.InvalidParameterException;
+import Exceptions.ParameterCantBeNullException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M03_Campaign.AddCampaignCommand;
@@ -41,6 +43,9 @@ import java.util.logging.Logger;
  */
 public class M03_Campaigns {
 
+   private final String MESSAGE_ERROR_INTERN = "Error Interno";
+    private final String MESSAGE_EXCEPTION = "Excepcion";
+    private final String MESSAGE_ERROR_PARAMETERDOESNTEXIST= "La parametros ingresados no Validos";
     Gson gson = new Gson();
     ArrayList<Campaign> _caList = new ArrayList<>();
 
@@ -168,9 +173,11 @@ public class M03_Campaigns {
     @Produces("application/json")
 
     public Response getCampaigns(@QueryParam("id") int id) throws CampaignDoesntExistsException {
+
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
         CampaignDAO caList = new CampaignDAO();
         try {
+
             _caList = caList.campaignList(id);
             rb.entity(gson.toJson(_caList));
         }
@@ -297,9 +304,14 @@ public class M03_Campaigns {
     @Path("/CampaignDetails/{campaignId}")
     @Produces("application/json")
     public Response getCampaignDetails(  @PathParam("campaignId") int id) {
+            Error _error;
             DTOIdCampaign _dto = DTOFactory.CreateDTOIdCampaign(id);
             Response.ResponseBuilder _rb = Response.status(Response.Status.ACCEPTED);
         try {
+            if (id == 0)
+            {
+                throw new InvalidParameterException();
+            }
             MapperIdCampaign _map =  MapperFactory.createMapperIdCampaign();
             Entity _ca = _map.CreateEntity( _dto );
             GetCampaignCommand _cmd = CommandsFactory.createGetCampaignCommand( _ca );
@@ -310,9 +322,12 @@ public class M03_Campaigns {
         }
         catch (CampaignDoesntExistsException e) {
             e.printStackTrace();
+            _error = new Error( MESSAGE_ERROR_PARAMETERDOESNTEXIST );
+            return Response.status(500).entity(_error).build();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            _error = new Error( MESSAGE_ERROR_INTERN );
+            return Response.status(500).entity(_error).build();
         }
         return _rb.build();
     }
@@ -322,12 +337,17 @@ public class M03_Campaigns {
     @Produces("application/json")
     @Consumes("application/json")
     public Response addCampaign( DTOFullCampaign _dto ){
+           Error _error;
            Response.ResponseBuilder _rb = Response.status(Response.Status.OK);
-           Logger logger = Logger.getLogger(M02_Companies.class.getName());
+           Logger logger = Logger.getLogger(M03_Campaigns.class.getName());
            logger.info("Objeto compania recibido en AddCampaign" + _dto.get_idCampaign() + " " +
                      _dto.get_nameCampaign() + " "+ _dto.get_statusCampaign() + " " + _dto.get_descCampaign()+""+
                      _dto.get_startCampaign()+""+_dto.get_endCampaign()+"id:"+_dto.get_idCompany() );
         try {
+            if ( _dto == null || _dto.get_nameCampaign() == null || _dto.get_startCampaign() == null )
+            {
+                throw new ParameterCantBeNullException();
+            }
            MapperFullCampaign _mapp = MapperFactory.CreateMapperFullCampaign();
            Entity _ca = _mapp.CreateEntity( _dto );
            AddCampaignCommand _command = CommandsFactory.createAddCampaignCommand( _ca );
@@ -336,20 +356,27 @@ public class M03_Campaigns {
 
         } catch (CampaignDoesntExistsException e) {
             e.printStackTrace();
+            _error = new Error( MESSAGE_ERROR_PARAMETERDOESNTEXIST );
+            return Response.status(500).entity(_error).build();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            _error = new Error( MESSAGE_ERROR_INTERN );
+            return Response.status(500).entity(_error).build();
         }
-        return _rb.build();
     }
 
     @GET
     @Path("/GetCampaignsByUser/{id}")
     @Produces("application/json")
     public Response getCampaignsByUser(@PathParam("id") int id)  {
+            Error _error;
             DTOIdCompany _dto = DTOFactory.CreateDTOIdCompany( id );
             Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
         try {
+            if ( id == 0 )
+            {
+                throw new ParameterCantBeNullException();
+            }
             MapperIdCompany _mapper = MapperFactory.createMapperIdCompany();
             Entity _camp = _mapper.CreateEntity( _dto );
             CampaignUserCommand _command = CommandsFactory.createCampaignUserCommand( _camp );
@@ -359,9 +386,11 @@ public class M03_Campaigns {
             _rb.entity( gson.toJson( _dtoCa ) ) ;
             return _rb.build();
 
-        }
-        catch (Exception e){
-
+         }catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+            _error = new Error( MESSAGE_ERROR_PARAMETERDOESNTEXIST );
+            return Response.status(500).entity(_error).build();
+         }catch (Exception e){
             return Response.status( 500 ).entity( e.getMessage() ).build();
         }
      }
@@ -370,10 +399,15 @@ public class M03_Campaigns {
     @Path("/GetCampaignsByCompany/{idCompany}/{idUser}")
     @Produces("application/json")
     public Response getCampaignsByCompanyUser(@PathParam ("idCompany") int _comp ,
-                                              @PathParam("idUser") int _user) throws CampaignDoesntExistsException {
+                                              @PathParam("idUser") int _user){
+            Error _error;
             Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
             DTOIdCompUser _dto = DTOFactory.createDTOIdCompUser( _comp , _user );
         try {
+            if( _comp == 0 && _user ==0 )
+            {
+                throw new ParameterCantBeNullException();
+            }
             MapperIdCompUser _mapper = MapperFactory.createMapperIdCompUser();
             Entity _camp = _mapper.CreateEntity( _dto );
             CampaignUserCompanyCommand _command = CommandsFactory.createCampaignUserCompany( _camp );
@@ -381,12 +415,13 @@ public class M03_Campaigns {
             MapperFullCampaign _caList = MapperFactory.CreateMapperFullCampaign();
             List< DTOFullCampaign > _dtoCa = _caList.CreateDtoList( _command.ReturnList() ) ;
             rb.entity(gson.toJson( _dtoCa ));
-        }
-        catch (CampaignDoesntExistsException e) {
+        } catch (CampaignDoesntExistsException e) {
             e.printStackTrace();
-        }
-        catch (Exception e) {
+            _error = new Error( MESSAGE_ERROR_PARAMETERDOESNTEXIST );
+            return Response.status(500).entity(_error).build();
+        } catch (Exception e) {
             e.printStackTrace();
+            return Response.status( 500 ).entity( e.getMessage() ).build();
         }
         return rb.build();
     }
@@ -397,17 +432,24 @@ public class M03_Campaigns {
     @Produces("application/json")
     @Consumes("application/json")
     public Response editCampaign( DTOFullCampaign _dto ){
-
+            Error _error;
             Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
         try {
+            if( _dto.get_idCampaign() == 0 )
+            {
+                throw new ParameterCantBeNullException();
+            }
             MapperFullCampaign _mapper = MapperFactory.CreateMapperFullCampaign();
             Entity _camp = _mapper.CreateEntity( _dto );
             Command _command = CommandsFactory.createUpdateCampaignCommand( _camp );
             _command.execute();
             return _rb.build();
-        }
-        catch ( Exception e ){
-
+        } catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+            _error = new Error( MESSAGE_ERROR_PARAMETERDOESNTEXIST );
+            return Response.status(500).entity(_error).build();
+           }
+         catch ( Exception e ){
             return Response.status( 500 ).entity( e.getMessage() ).build();
         }
 
@@ -419,20 +461,28 @@ public class M03_Campaigns {
     @Consumes("application/json")
     @Produces("text/plain")
     public Response changeCampaignStatus( DTOIdStatusCampaign _dto ){
-
+        Error _error;
         Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
+        String Status = String.valueOf( _dto.is_status() );
         try {
+            if ( _dto.get_idCampaign() == 0 || Status == "" )
+            {
+                throw new InvalidParameterException();
+            }
             MapperIdStatusCampaign _mapper =  MapperFactory.createMapperIdStatusCampaign();
             Entity _comp = _mapper.CreateEntity( _dto );
             Command _command = CommandsFactory.createChangeStatusCampaign( _comp );
             _command.execute();
             return _rb.build();
 
+        } catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+            _error = new Error( MESSAGE_ERROR_PARAMETERDOESNTEXIST );
+           return Response.status(500).entity(_error).build();
         }
         catch (Exception e){
             return Response.status( 500 ).entity( e.getMessage() ).build();
         }
-
     }
 
 }
