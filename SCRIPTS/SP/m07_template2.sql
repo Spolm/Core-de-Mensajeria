@@ -126,7 +126,7 @@ RETURNS VOID AS
 $BODY$
 BEGIN
 INSERT INTO public.template_status(ts_date, ts_template, ts_user_id, ts_status) 
-VALUES(CURRENT_TIMESTAMP, _templateID, _userID, (select sta_id from public.status where sta_name='Aprobado'))
+VALUES(CURRENT_TIMESTAMP, _templateID, _userID, (select sta_id from public.status where sta_name='Aprobado'));
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;

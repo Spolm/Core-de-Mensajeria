@@ -1,8 +1,8 @@
 package Logic.M07_Template;
 
-import Entities.Entity;
-import Entities.M07_Template.HandlerPackage.StatusHandler;
 import Logic.Command;
+import Persistence.DAOFactory;
+import Persistence.M07_Template.DAOStatus;
 
 public class CommandPostTemplateStatus extends Command {
 
@@ -21,7 +21,9 @@ public class CommandPostTemplateStatus extends Command {
 
     @Override
     public void execute() throws Exception {
-        flag = StatusHandler.postTemplateStatusAprovado(templateId,userId);
+        DAOStatus daoStatus = DAOFactory.createDAOStatus();
+        //flag = StatusHandler.postTemplateStatusAprovado(templateId,userId);
+        flag = daoStatus.postTemplateStatusApproved(templateId,userId);
     }
 
     @Override

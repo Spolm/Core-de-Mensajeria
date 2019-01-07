@@ -1,10 +1,7 @@
 package Persistence;
 
 import Persistence.M01_Login.GetUserDao;
-import Persistence.M07_Template.DAOMessage;
-import Persistence.M07_Template.DAOParameter;
-import Persistence.M07_Template.DAOPlanning;
-import Persistence.M07_Template.DAOTemplate;
+import Persistence.M07_Template.*;
 import Persistence.M09_Statistics.DAOStatistic;
 import Persistence.M09_Statistics.DAOStatisticEstrella;
 import Persistence.M02_Company.DAOCompany;
@@ -48,6 +45,8 @@ public class DAOFactory {
     static public DAOParameter instaciateDaoParameter( ){
         return new DAOParameter();
     }
+
+    static public DAOStatus createDAOStatus(){return new DAOStatus();}
 
     // end region
 

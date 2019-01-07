@@ -16,10 +16,7 @@ import Entities.M06_DataOrigin.Application;
 import Entities.M06_DataOrigin.ApplicationDAO;
 import Entities.M07_Template.HandlerPackage.*;
 import Entities.M07_Template.MessagePackage.Message;
-import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.PlanningPackage.Planning;
-import Entities.M07_Template.StatusPackage.Status;
-import Entities.M07_Template.Template;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
@@ -80,7 +77,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             //se crea el template y se retorna su id
             int templateId = this.postTemplate(gsonObj.get("campaign").getAsInt(),gsonObj.get("applicationId").getAsInt(), gsonObj.get("userId").getAsInt());
             //se establece el template  como no aprobado
-            StatusHandler.postTemplateStatusNoAprovado(templateId);
+            DAOStatus daoStatus = DAOFactory.createDAOStatus();
+            //StatusHandler.postTemplateStatusNoAprovado(templateId);
+            daoStatus.postTemplateStatusNotApproved(templateId);
             //insertamos los nuevos parametros
             String[] parameters = gson.fromJson(gsonObj.get("newParameters").getAsJsonArray(),String[].class);
             DAOFactory.instaciateDaoParameter().postParameter(parameters,gsonObj.get("company").getAsInt());
@@ -116,7 +115,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             //
             int templateId = postTemplate(_t.getCampaign().get_id(), _t.getApplication().get_idApplication(), _t.getUser().get_id() );
             //se establece el template  como no aprobado
-            StatusHandler.postTemplateStatusNoAprovado(templateId);
+            StatusHandler.postTemplateStatusNotApproved(templateId);
             //insertamos los nuevos parametros
             _daoParameter.postParameter( _t.getMessage().getParameterArrayList(), _t.getCompanyId() ); //Este codigo no va aqui
             //obtenemos el valor del mensaje,y parametros

@@ -23,8 +23,8 @@ public class CommandGetTemplate extends Command {
     public void execute() throws Exception {
         TemplateHandler templateHandler = new TemplateHandler();
         template = templateHandler.getTemplate(templateId);
-        //DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
-        //template = (Template) daoTemplate.get(templateId);
+        DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
+        template = (Template) daoTemplate.get(templateId);
 
     }
 
