@@ -6,7 +6,6 @@
 <div class="d-flex flex-row-reverse">
   <button type="button" class="btn btn-dark" routerLink="/template/create" *ngIf="CTEMPLATE">Crear Plantilla</button>
   <select class="form-control" id="company" name="company" [(ngModel)]="companyId" (change)="changeCompany(companyId)">
-
     <ng-container *ngFor="let company of companiesJson">
       <option *ngIf="company._status" [value]="company._idCompany">
         <p>

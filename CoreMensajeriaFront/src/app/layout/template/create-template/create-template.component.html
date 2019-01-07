@@ -1,5 +1,5 @@
 <router-outlet></router-outlet>
-<div *ngIf="CTEMPLATE; else elseBlock">
+<div>
   <h2 class="text-capitalize main-title">Crear Plantilla</h2>
   <hr>
   <form>
@@ -38,6 +38,7 @@
     <div class="row">
       <div *ngFor="let parameter of parameters">
         <button type="button" class="btn btn-danger m-1" (click)="deleteParameter(formMessage, parameter)">
+          <i class="fa fa-trash"></i>
           {{parameter}}
         </button>
       </div>
@@ -84,6 +85,7 @@
     <div class="row">
       <div *ngFor="let channel_integrator of channels_integrators">
         <button type="button" class="btn btn-danger m-1" (click)="deleteChannel_Integrator(channel_integrator)">
+          <i class="fa fa-trash"></i>
           {{channel_integrator.channel.nameChannel}} | {{channel_integrator.integrator.nameIntegrator}}
         </button>
       </div>
@@ -184,10 +186,3 @@
     <button type="button" class="btn btn-danger m-1" routerLink="/template">Cancelar</button>
   </div>
 </div>
-
-<ng-template #elseBlock>
-  <h1>No tienes permisos</h1>
-  <div class="d-flex flex-row-reverse">
-    <button type="button" class="btn btn-danger m-1" routerLink="/template">Regresar</button>
-  </div>
-</ng-template>
