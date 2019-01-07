@@ -5,7 +5,7 @@ import Logic.Command;
 
 import java.util.ArrayList;
 
-public class GetAllCompaniesCommand extends Command {
+public class GetAllCompaniesToProfileCommand extends Command {
     private ArrayList<Company> companies;
 
     @Override
