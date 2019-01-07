@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
           <label for="formMessage">Compañia</label>
-          <select class="form-control" [(ngModel)]="newCampaign._companyId" name="companiaId" required>
+          <select class="form-control" [(ngModel)]="newCampaign._idCompany" name="companiaId" required>
             <option *ngFor="let company of companyList" value="{{company._idCompany}}">{{company._name}}</option>
           </select>
         </div>
@@ -33,7 +33,7 @@
     </div>
     <div class="row">
       <div class="col-5">
-        <button type="button" class="btn btn-success m-1 col-12" (click)="createEditCampaign()">Crear</button>
+        <button type="button" class="btn btn-success m-1 col-12" (click)="addCampaign()">Crear</button>
       </div>
       <div class="col-5">
         <button type="button" class="btn btn-danger m-1 col-12" routerLink="/campaigns">Cancelar</button>

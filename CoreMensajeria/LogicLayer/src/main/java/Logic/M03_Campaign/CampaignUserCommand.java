@@ -19,7 +19,7 @@ public class CampaignUserCommand extends Command {
     public  CampaignUserCommand ( Entity _campaign ){
 
         this._ca = _campaign;
-       _caList = new ArrayList<Entity>();
+       _caList = new ArrayList< Entity >();
     }
 
 

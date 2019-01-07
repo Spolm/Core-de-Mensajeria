@@ -2,8 +2,19 @@ package DTO;
 
 import DTO.M02_DTO.*;
 import DTO.M03_DTO.*;
+import DTO.M07_Template.DTOMessage;
+import DTO.M07_Template.DTOParameter;
+import DTO.M07_Template.DTOTemplate;
 import DTO.M09_DTO.DTOStatistic;
+import Entities.M01_Login.User;
 import Entities.M02_Company.Company;
+import Entities.M03_Campaign.Campaign;
+import Entities.M05_Channel.Channel;
+import Entities.M06_DataOrigin.Application;
+import Entities.M07_Template.MessagePackage.Message;
+import Entities.M07_Template.MessagePackage.Parameter;
+import Entities.M07_Template.PlanningPackage.Planning;
+import Entities.M07_Template.StatusPackage.Status;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,12 +34,20 @@ public class DTOFactory {
         return new DTOIdCompany(id);
     }
     /**
-     * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
+     * Metodos que instancian un obejto del tipo DTOIdStatusCompany mediante los parametros pasados
      * @return un objeto del tipo DTOidStatusCompanyCompany
      */
     public static DTOIdStatusCompany CreateDTOIdStatusCompany( int id, boolean status ){
 
         return new DTOIdStatusCompany( id, status );
+    }
+    /**
+     * Metodos que instancian un obejto del tipo DTOIdCompUser mediante los parametros pasados
+     * @return un objeto del tipo DTOIdCompUser
+     */
+    public static DTOIdCompUser createDTOIdCompUser( int id, int user ){
+
+        return new DTOIdCompUser( id, user );
     }
 
       /**
@@ -108,10 +127,10 @@ public class DTOFactory {
 
     public static DTOFullCampaign CreateDtoFullCampaign(int idCampaign, String nameCampaign, String descCampaign,
                                                                       boolean statusCampaign, Date startCampaign,
-                                                                      Date endCampaign, Company company) {
+                                                                      Date endCampaign, int idCompany) {
 
         return new DTOFullCampaign(idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign,
-                                    endCampaign, company);
+                                    endCampaign, idCompany);
     }
 
     /**
@@ -133,7 +152,22 @@ public class DTOFactory {
 
     public static DTOStatistic CreateDTOStatistic(ArrayList x, ArrayList<Integer> y){ return new DTOStatistic(x,y);}
 
+    /**
+     *  Metodo que instancia un objeto del tipo DTOParameter
+     * @return un objeto del tipo DTOParamater
+     */
+    public  static DTOParameter CreateDTOParameter(int pid, String _pName, String pdescription){
+        return new DTOParameter(pid,_pName,pdescription);
+    }
 
+    public static DTOMessage CreateDTOMessage(int _mMessageId, ArrayList<Parameter> _mParameterArrayList, String _mMessage){
+        return new DTOMessage(_mMessageId, _mParameterArrayList,_mMessage);
+    }
+
+
+    public static DTOTemplate CreateDTOTemplate(Message message, String creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning){
+        return  new DTOTemplate(message,creationDate,templateId,status,channels,campaign,application,user,planning);
+    }
 
 
 }

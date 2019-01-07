@@ -12,6 +12,7 @@ import Entities.M07_Template.Template;
 import Entities.M04_Integrator.*;
 import Exceptions.*;
 import Mappers.SendMessageMapper.SendMessageMapper;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import com.google.gson.Gson;
 
 import java.util.Random;
@@ -93,7 +94,7 @@ public class M08_MessageValidation {
          IntegratorDAO _integratorDAO =new IntegratorDAO();
          MessageIntegrator respuestaIntegrador = null;
 
-        char[] characters = String.valueOf(MessageHandler.getMessage(template2.getTemplateId()).getMessage()).toCharArray();
+        char[] characters = String.valueOf(MessageHandler.getMessage(template2.get_id()).getMessage()).toCharArray();
         posicion= new int[characters.length];
 
 
@@ -110,7 +111,7 @@ public class M08_MessageValidation {
             }
 
             if((j /parametersArray.size())==2){
-                newMessage = MessageHandler.getMessage(template2.getTemplateId()).getMessage();
+                newMessage = MessageHandler.getMessage(template2.get_id()).getMessage();
                 for (int i = 0; i <  parametersArray.size(); i++){
                     if(parametersArray.get(i).getParameter().getName().equals("Correo")){
                         correo = parametersArray.get(i).getParameter().getValue();

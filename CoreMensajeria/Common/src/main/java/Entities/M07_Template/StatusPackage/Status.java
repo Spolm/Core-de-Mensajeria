@@ -1,9 +1,12 @@
 package Entities.M07_Template.StatusPackage;
 
+import Entities.Entity;
+import Entities.EntityFactory;
+
 /**
  * Status abstract class uses for storing status information from a template
  */
-public abstract class Status {
+public abstract class Status extends Entity {
     /**
      * id of the status
      */
@@ -37,9 +40,9 @@ public abstract class Status {
     public static Status createStatus(int statusId,String statusName){
         Status status;
         if(statusName.equals("Aprobado")){
-            status = new ApprovedStatus(statusId,statusName);
+            status = EntityFactory.CreateApprovedStatus(statusId,statusName);
         }else if(statusName.equals("No Aprobado")){
-            status = new NotApprovedStatus(statusId,statusName);
+            status = EntityFactory.CreateNotApprovedStatus(statusId,statusName);
         }else{
             status = null;
         }

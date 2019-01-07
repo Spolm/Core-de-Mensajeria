@@ -1,23 +1,23 @@
 package Entities.M07_Template.MessagePackage;
 
+import Entities.Entity;
+
 import java.util.*;
 
 /**
  * Message class uses for storing message information from a template
  */
-public class Message {
-    /**
-     * id of the message
-     */
-    private int messageId;
+public class Message extends Entity {
     /**
      * list of parameters of the message
-    */
+     */
     private ArrayList<Parameter> parameterArrayList;
     /**
      * string with de message and parameters
      */
     private String message;
+
+    private int templateId;
 
     /**
      * empty builder
@@ -29,7 +29,7 @@ public class Message {
      * @param messageId message id
      */
     public Message(int messageId) {
-        this.messageId = messageId;
+        this.set_id(messageId);
     }
 
     /**
@@ -49,9 +49,29 @@ public class Message {
      * @param message string with message and parameters
      */
     public Message(int messageId, ArrayList<Parameter> parameterArrayList, String message) {
-        this.messageId = messageId;
+        this.set_id(messageId);
         this.parameterArrayList = parameterArrayList;
         this.message = message;
+    }
+
+    public Message(int messageId, String message, int templateId) {
+        this.set_id(messageId);
+        this.message = message;
+        this.templateId = templateId;
+    }
+
+    /**
+     * Builder with all the data
+     * @param messageId
+     * @param parameterArrayList
+     * @param message
+     * @param templateId
+     */
+    public Message(int messageId,ArrayList<Parameter> parameterArrayList, String message, int templateId) {
+        this.set_id(messageId);
+        this.parameterArrayList = parameterArrayList;
+        this.message = message;
+        this.templateId = templateId;
     }
 
     /**
@@ -91,16 +111,20 @@ public class Message {
     }
 
     /**
-     * show id of the message
-     * @return  message id
+     * Get the id of the Template
+     * @return Template ID
      */
-    public int getMessageId() { return messageId; }
+    public int getTemplateId() {
+        return templateId;
+    }
 
     /**
-     * add message id of the message
-     * @param messageId new message id
+     * set Template ID
+     * @param templateId
      */
-    public void setMessageId(int messageId) { this.messageId = messageId; }
+    public void setTemplateId(int templateId) {
+        this.templateId = templateId;
+    }
 
     @Override
     public boolean equals(Object o) {

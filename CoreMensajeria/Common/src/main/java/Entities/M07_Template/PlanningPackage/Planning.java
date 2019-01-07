@@ -1,11 +1,14 @@
 package Entities.M07_Template.PlanningPackage;
 
+import Entities.Entity;
+
+import java.sql.Date;
 import java.util.Objects;
 
-public class Planning {
+public class Planning extends Entity {
 
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
     private String startTime;
     private String endTime;
     private int idPlanning;
@@ -17,14 +20,14 @@ public class Planning {
         this.idPlanning = idPlanning;
     }
 
-    public Planning(String startDate, String endDate, String startTime, String endTime) {
+    public Planning(Date startDate, Date endDate, String startTime, String endTime) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public Planning(String startDate, String endDate, String startTime, String endTime, int idPlanning) {
+    public Planning(Date startDate, Date endDate, String startTime, String endTime, int idPlanning) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.startTime = startTime;
@@ -32,19 +35,19 @@ public class Planning {
         this.idPlanning = idPlanning;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

@@ -16,7 +16,7 @@ public interface IDAOCampaign extends IDAO {
 
     Entity campaignById( Entity e);
 
-    ArrayList<Entity> campaignListByUserCompany( Entity _u , Entity _comp );
+    ArrayList<Entity> campaignListByUserCompany(  Entity _comp );
 
     ArrayList<Entity> campaignListByUser( Entity e );
 

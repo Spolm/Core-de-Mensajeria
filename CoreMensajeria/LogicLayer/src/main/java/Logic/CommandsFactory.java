@@ -1,9 +1,14 @@
 package Logic;
 
 import Entities.Entity;
+import Logic.M01_Login.GetUser;
+import Logic.M08_SendMessage.CommandScheduleMessage;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.*;
+import DTO.M07_Template.NewParameter;
 import Logic.M01_Login.GetUser;
 import Logic.M08_SendMessage.CommandSendMessage;
 import Logic.M08_Validation.*;
@@ -11,8 +16,6 @@ import Logic.M07_Template.*;
 import Logic.M02_Company.*;
 import Logic.M03_Campaign.*;
 import Logic.M09_Statistics.*;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,8 @@ public class CommandsFactory {
     public static Command instanciateGetUser ( Entity user) {
         return new GetUser(user);
     }
+
+    public static Command createScheduleMessage() { return new CommandScheduleMessage(); }
 
     public static Command createSendMessage() { return new CommandSendMessage(); }
 
@@ -211,9 +216,9 @@ public class CommandsFactory {
     public static AddCampaignCommand createAddCampaignCommand(Entity _ca ){ return new AddCampaignCommand( _ca ); }
     public static GetCampaignCommand createGetCampaignCommand(Entity _ca ){ return new GetCampaignCommand( _ca ); }
     public static CampaignUserCommand createCampaignUserCommand(Entity _ca ){ return new CampaignUserCommand( _ca ); }
-    /*public static CampaignUserCompanyCommand createCampaignUserCompany( Entity _ca ){
+    public static CampaignUserCompanyCommand createCampaignUserCompany( Entity _ca ){
          return new CampaignUserCompanyCommand( _ca  );
-      } */
+      }
     public static ChangeStatusCampaignCommand createChangeStatusCampaign( Entity _ca ){
         return new ChangeStatusCampaignCommand( _ca );
     }
@@ -226,37 +231,36 @@ public class CommandsFactory {
         return new CommandGetMessages();
     }
 
-
-    public static CommandPostParameter createCommandPostParameter(){
-        return new CommandPostParameter();
+    public static CommandPostParameter createCommandPostParameter(NewParameter newParameter){
+        return new CommandPostParameter(newParameter);
     }
 
-    public static CommandGetParameters createCommandGetParameters(){
-        return new CommandGetParameters();
+    public static CommandGetParameters createCommandGetParameters(int companyId){
+        return new CommandGetParameters(companyId);
     }
 
-    public static CommandGetTemplates createCommandGetTemplates(){
-        return new CommandGetTemplates();
+    public static CommandGetTemplates createCommandGetTemplates(int userId, int companyId){
+        return new CommandGetTemplates(userId, companyId);
     }
 
-    public static CommandGetTemplate createCommandGetTemplate(){
-        return new CommandGetTemplate();
+    public static CommandGetTemplate createCommandGetTemplate(int templateId){
+        return new CommandGetTemplate(templateId);
     }
 
-    public static CommandGetTemplatePrivilegesByUser createCommandGetTemplatePrivilegesByUser(){
-        return new CommandGetTemplatePrivilegesByUser();
+    public static CommandGetTemplatePrivilegesByUser createCommandGetTemplatePrivilegesByUser(int userId, int companyId){
+        return new CommandGetTemplatePrivilegesByUser(userId,companyId);
     }
 
-    public static CommandPostTemplateStatus createCommandPostTemplateStatus(){
-        return new CommandPostTemplateStatus();
+    public static CommandPostTemplateStatus createCommandPostTemplateStatus(int templateId, int userId){
+        return new CommandPostTemplateStatus(templateId,userId);
     }
 
-    public static CommandPostTemplate createCommandPostTemplate(){
-        return new CommandPostTemplate();
+    public static CommandPostTemplate createCommandPostTemplate(String json){
+        return new CommandPostTemplate(json);
     }
 
-    public static CommandUpdateTemplate CommandUpdateTemplate(){
-        return new CommandUpdateTemplate();
+    public static CommandUpdateTemplate createCommandUpdateTemplate(String json){
+        return new CommandUpdateTemplate(json);
 }
 
     //region M_08
@@ -290,5 +294,4 @@ public class CommandsFactory {
         return new CommandValidate(template, message, channel);
     }
     //end region
-
 }

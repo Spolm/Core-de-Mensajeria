@@ -5,6 +5,7 @@ import Entities.Entity;
 import Entities.EntityFactory;
 import Entities.M08_Validation.SentMessage;
 import Exceptions.*;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Logic.Command;
 import Logic.CommandsFactory;
 

@@ -3,10 +3,10 @@ package Logic.M08_Validation;
 import Entities.M07_Template.HandlerPackage.MessageHandler;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Exceptions.SMSTooLongException;
-import Exceptions.TemplateDoesntExistsException;
 
 import java.util.logging.Logger;
 
@@ -40,7 +40,7 @@ public class CommandValidateMessage extends CommandValidateParameter{
         TemplateHandler template = new TemplateHandler();
         try {
             Template t = template.getTemplate(this._template);
-            MessageHandler.getMessage(t.getTemplateId());
+            MessageHandler.getMessage(t.get_id());
             if ((this._channel.equals("SMS"))&& (this._message.length()>160)){
                 logger.warning("SMS supera 160 caracteres");
                 this.set_valid(false);
