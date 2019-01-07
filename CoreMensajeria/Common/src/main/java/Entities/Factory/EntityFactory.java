@@ -4,6 +4,7 @@ import Entities.Entity;
 import Entities.M01_Login.User;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
+import Entities.M04_Integrator.*;
 import Entities.M09_Statistics.Statistics;
 
 import java.util.ArrayList;
@@ -169,6 +170,55 @@ public class EntityFactory {
     public static Campaign CreateCampaignIDStatus( int idCampaign, boolean statusCampaign ){
         return new Campaign( idCampaign, statusCampaign );
     }
+
+// M04_region
+
+    /**
+     * Método que se encarga de crear un integrador en concreto
+     * La creación de este tipo de integrador dependera del integratorType
+     * que es recibido por parametro
+     *
+     * @param integratorType el tipo de integrador, del cual dependera la creación del objeto
+     * @param idIntegrator   el id del integrador a crear
+     * @param nameIntegrator nombre del integrador
+     * @param messageCost    costo por mensaje del integrador
+     * @param threadCapacity capacidad de hilos que soportar el integrador
+     * @param apiIntegrator  un código de seguridad que se requiere para validar que
+     *                       el integrador sea el correcto
+     * @param enabled        Que nos indica cual es el estado del integrador
+     * @return Un objeto integrador con las caracteristicas enviadas por parametro
+     * @see Integrator
+     */
+
+    public static Integrator CreateIntegrator(String integratorType, int idIntegrator, String nameIntegrator,
+                                           float messageCost, int threadCapacity, String apiIntegrator, boolean enabled)
+    {
+        if (integratorType == null) {
+            return null;
+        }
+        if (integratorType.equalsIgnoreCase("MOVISTAR")) {
+            return new Movistar(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+
+        } else if (integratorType.equalsIgnoreCase("DIGITEL")) {
+            return new Digitel(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+
+        } else if (integratorType.equalsIgnoreCase("MOVILNET")) {
+            return new Movilnet(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+
+        } else if (integratorType.equalsIgnoreCase("MAILCHIMP")) {
+            return new MailChimp(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+
+        } else if (integratorType.equalsIgnoreCase("AWEBER")) {
+            return new Aweber(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+
+        } else if (integratorType.equalsIgnoreCase("INFUSIONSOFT")) {
+            return new InfusionSoft(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+        }
+
+        return null;
+    }
+
+//end M04_region
 
     /**
      * Fabrica para estadisticas sin atributos
