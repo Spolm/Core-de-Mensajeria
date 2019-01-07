@@ -1,10 +1,8 @@
-package Entities.M06_DataOrigin;
-
-import Entities.Entity;
+package Persistence.M06_Application;
 
 import java.util.Date;
 
-public class Application extends Entity {
+public class Application {
 
     private int _idApplication;
     private String _nameApplication;
