@@ -34,12 +34,20 @@ public class DTOFactory {
         return new DTOIdCompany(id);
     }
     /**
-     * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
+     * Metodos que instancian un obejto del tipo DTOIdStatusCompany mediante los parametros pasados
      * @return un objeto del tipo DTOidStatusCompanyCompany
      */
     public static DTOIdStatusCompany CreateDTOIdStatusCompany( int id, boolean status ){
 
         return new DTOIdStatusCompany( id, status );
+    }
+    /**
+     * Metodos que instancian un obejto del tipo DTOIdCompUser mediante los parametros pasados
+     * @return un objeto del tipo DTOIdCompUser
+     */
+    public static DTOIdCompUser createDTOIdCompUser( int id, int user ){
+
+        return new DTOIdCompUser( id, user );
     }
 
       /**
@@ -119,10 +127,10 @@ public class DTOFactory {
 
     public static DTOFullCampaign CreateDtoFullCampaign(int idCampaign, String nameCampaign, String descCampaign,
                                                                       boolean statusCampaign, Date startCampaign,
-                                                                      Date endCampaign, Company company) {
+                                                                      Date endCampaign, int idCompany) {
 
         return new DTOFullCampaign(idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign,
-                                    endCampaign, company);
+                                    endCampaign, idCompany);
     }
 
     /**

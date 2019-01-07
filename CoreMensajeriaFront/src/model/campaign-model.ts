@@ -3,7 +3,7 @@ export class Campaign {
     public _nameCampaign: string;
     public _descCampaign: string;
     public _statusCampaign: boolean;
-    public _startCampaign: Date;
-    public _endCampaign: Date;
-    public _companyId: number;
+    public _startCampaign: string;
+    public _endCampaign: string;
+    public _idCompany: number;
 }

@@ -35,6 +35,7 @@ ngOnInit() {
   this.companyService.getCompanies().subscribe((data) => {
     this.vacio = true;
     this.companyList = data;
+    console.log(this.companyList);
     localStorage.setItem('companyid', data._idCompany);
     if (this.companyList.length > 0) {
     this.vacio = false;
@@ -42,9 +43,12 @@ ngOnInit() {
     }, (err) => {
     console.log(err);
     })
-this.campaignService.getCampaignsByCompany().subscribe((data) => {
+
+
+this.campaignService.getCampaigns().subscribe((data) => {
 this.vacio = true;
 this.campaignList = data;
+console.log(this.campaignList);
 if (this.campaignList.length > 0) {
 this.vacio = false;
 }
