@@ -17,8 +17,8 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-@Path("/profile")
-public class M10_ProfileService {
+//@Path("/profile")
+public class M10_ProfileService {/*
     private Gson _gson = new Gson();
     private User _us;
     private ArrayList<User> _users;
@@ -172,4 +172,5 @@ public class M10_ProfileService {
             return Response.ok(_gson.toJson(_users)).build();
         }
     }
+    */
 }

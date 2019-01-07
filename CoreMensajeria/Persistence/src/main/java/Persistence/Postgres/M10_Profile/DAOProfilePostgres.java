@@ -43,6 +43,6 @@ public class DAOProfilePostgres extends DAOPostgres implements IDAOProfile {
             e.printStackTrace();
         }
 
-        return null;
+        return privileges;
     }
 }
