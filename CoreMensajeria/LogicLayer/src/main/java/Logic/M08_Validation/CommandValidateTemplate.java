@@ -1,8 +1,12 @@
 package Logic.M08_Validation;
 
-import Entities.M07_Template.HandlerPackage.TemplateHandler;
+import Entities.M07_Template.StatusPackage.Status;
 import Entities.M07_Template.Template;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
+import Exceptions.TemplateNotApprovedException;
+import Exceptions.UnexpectedErrorException;
+import Logic.CommandsFactory;
+import Logic.M07_Template.CommandGetTemplate;
 
 import java.util.logging.Logger;
 
@@ -22,23 +26,30 @@ public class CommandValidateTemplate extends CommandValidateParameter {
     /**
      * @throws TemplateDoesntExistsException cuando no existe la plantilla que se está buscando
      */
-    public void execute() throws TemplateDoesntExistsException {
+    public void execute() throws Exception {
+        set_valid(false);
         Logger logger = Logger.getLogger(CommandValidateParameter.class.getName());
-        TemplateHandler template = new TemplateHandler();
-        try{
-            Template t=template.getTemplate(this._id);
-            if (t.get_id()>0)
-                this.set_valid(true);
-            else{
+        CommandGetTemplate c = CommandsFactory.createCommandGetTemplate(this._id);
+        try {
+            c.execute();
+            Template t = c.Return();
+            if (t.get_id() > 0) {
+                if (t.getStatus().getStatusName().equals("Aprobado"))
+                    this.set_valid(true);
+                else {
+                    logger.warning("Status Plantilla: " + t.getStatus().getStatusName());
+                    this.set_valid(false);
+                    throw new TemplateNotApprovedException();
+                }
+            }
+            else {
                 logger.warning("Plantilla no Existe");
                 this.set_valid(false);
-                this.set_response("Plantilla no Existe");
                 throw new TemplateDoesntExistsException();
             }
         } catch (TemplateDoesntExistsException e) {
             logger.warning("Plantilla no Existe");
             this.set_valid(false);
-            this.set_response("Plantilla no Existe");
             throw e;
         }
     }
