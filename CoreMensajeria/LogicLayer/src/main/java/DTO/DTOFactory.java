@@ -4,6 +4,7 @@ import DTO.M02_DTO.*;
 import DTO.M03_DTO.*;
 import DTO.M07_Template.DTOMessage;
 import DTO.M07_Template.DTOParameter;
+import DTO.M07_Template.DTOPlanning;
 import DTO.M07_Template.DTOTemplate;
 import DTO.M09_DTO.DTOStatistic;
 import Entities.M01_Login.User;
@@ -158,6 +159,10 @@ public class DTOFactory {
 
     public static DTOTemplate CreateDTOTemplate(Message message, java.sql.Date creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning){
         return  new DTOTemplate(message,creationDate,templateId,status,channels,campaign,application,user,planning);
+    }
+
+    public static DTOPlanning CreateDTOPlanning(java.sql.Date _pStartDate, java.sql.Date _pEndDate, String _pStartTime, String _pEndTime, int _pIdPlanning){
+        return new DTOPlanning(_pStartDate,_pEndDate,_pStartTime,_pEndTime,_pIdPlanning);
     }
 
 
