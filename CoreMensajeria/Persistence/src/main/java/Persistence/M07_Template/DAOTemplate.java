@@ -18,6 +18,7 @@ import Entities.M07_Template.HandlerPackage.*;
 import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.Status;
+import Entities.M07_Template.Template;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
@@ -39,6 +40,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     final String CREATE_TEMPLATE_WITHOUT_APP= "{CALL m07_posttemplate2(?,?)}";
     final String GET_TEMPLATE= "{CALL m07_gettemplate(?)}";
     final String GET_ALL_TEMPLATES= "{ CALL m07_select_all_templates()}";
+    final String GET_ALL_TEMPLATES_BY_CAMPAIGN= "{ call m07_select_templates_by_campaign(?) }";
     final String GET__CAMPAIGN_BY_TEMPLATE = "{ CALL m07_getcampaignbytemplate(?) }";
     final String GET_CAMPAIGN_BY_USER_COMPANY = "{call m07_select_campaign_by_user_company(?,?,?)}}";
     final String GET_APPLICATION_BY_TEMPLATE = "{call m07_select_applicantion_by_template(?)}";
@@ -279,15 +281,32 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }
     }
 
-    /**
-     * Get template by company
-     * @param userID
-     * @param companyId
-     * @return
-     */
+
     @Override
-    public ArrayList<Company> getTemplatesByCompany(int userID, int companyId) {
-        return null;
+    public ArrayList<Template> getTemplatesByCampaign(int userId, int companyId) {
+        ArrayList<Template> templateArrayList = new ArrayList<>();
+        ArrayList<Campaign> campaignArrayList = null;
+        Connection _conn = this.getBdConnect();
+        UserDAO userDAO = new UserDAO();
+        try{
+            campaignArrayList = this.getCampaignsByUserOrCompany(userId,companyId);
+            for(int x = 0; x < campaignArrayList.size(); x++){
+                PreparedStatement preparedStatement = _conn.prepareCall(GET_ALL_TEMPLATES_BY_CAMPAIGN);
+                preparedStatement.setInt(1,campaignArrayList.get(x).get_idCampaign());
+                ResultSet _rs = preparedStatement.executeQuery();
+                while(_rs.next()){
+                    Template template = (Template) this.createTemplate(_rs);
+                    templateArrayList.add(template);
+                }
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            this.closeConnection();
+            return templateArrayList;
+        }
     }
 
     /**

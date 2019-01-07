@@ -24,21 +24,26 @@ LANGUAGE plpgsql VOLATILE;
 
 --Funcion para el metodo updateMessage
 --ESTOY EN DESACUERDO CON ESTE
-CREATE OR REPLACE FUNCTION m07_updateMessage(IN _text character varying, IN _parameterID integer)
-RETURNS VOID AS
-$BODY$
+CREATE OR REPLACE FUNCTION m07_updatemessage(_text character varying, _parameterid integer) returns integer
+	language plpgsql
+as $$
 DECLARE
-_messageID integer;
+  _messageID integer;
 BEGIN
-	select m.mes_id,m.mes_text from public.message as m
-	where (m.mes_template = _parameterID) into _messageID;
-	if _messageID > -1 then
-	EXECUTE format('UPDATE public.MESSAGE set mes_text = %L WHERE mes_template = %L', _text, _parameterID);
-	end if;
-RETURN _messageID;
+
+  select m.mes_id from public.message as m
+  where (m.mes_template = _parameterID) into _messageID;
+
+  if _messageID > -1 then
+    EXECUTE format('UPDATE public.MESSAGE set mes_text = %L WHERE mes_template = %L', _text, _parameterID);
+  end if;
+  RETURN _messageID;
 END;
-$BODY$
-LANGUAGE plpgsql VOLATILE;
+$$;
+
+alter function m07_updatemessage(varchar, integer) owner to "CoreMensajeria";
+
+
 -- Select * from m07_updateMessage('test1',1);
 
 --Funcion para el metodo UpdateParameterOfMessage
