@@ -10,11 +10,13 @@ import Exceptions.ParameterDoesntExistsException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import webService.M01_Login.Error;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 /**
@@ -29,7 +31,8 @@ public class M07_Template {
     private final String MESSAGE_EXCEPTION = "Excepcion";
     private final String MESSAGE_ERROR_PARAMETERDOESNTEXIST= "El parámetro ingresado no existe";
 
-    Gson gson = new Gson();
+    Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss").create();;
 
     /**
      * Method that returns all the templates filtered by a user and his company.
