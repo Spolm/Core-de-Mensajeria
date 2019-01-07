@@ -1,22 +1,22 @@
 package Logic.M08_SendMessage;
 
-import Logic.Command;
-import Logic.CommandsFactory;
+import Entities.M08_Validation.XMLManagement.Command;
+import Entities.M08_Validation.XMLManagement.CommandsFactory;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 
 import java.util.logging.Logger;
 
-public class CommandScheduleMessageTask implements Runnable {
+public class ScheduleMessageTask implements Runnable {
 
     private VerifiedParameter _verifiedParameters;
 
-    public CommandScheduleMessageTask(VerifiedParameter verifiedParameter) {
+    public ScheduleMessageTask(VerifiedParameter verifiedParameter) {
         _verifiedParameters = verifiedParameter;
     }
 
     public void run() {
         Command sendMessageCommand = CommandsFactory.createSendMessage(_verifiedParameters);
-        Logger logger = Logger.getLogger(CommandScheduleMessageTask.class.getName());
+        Logger logger = Logger.getLogger(ScheduleMessageTask.class.getName());
         try {
             logger.info("Enviando mensaje");
             sendMessageCommand.execute();
