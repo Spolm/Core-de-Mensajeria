@@ -55,12 +55,12 @@ public class DAOPlanning  extends DAO implements IDAOPlanning {
         }
     }
 
-    public void postPlanning(Planning planning, int templateId) {
+    public void postPlanning(String[] planning, int templateId) {
         Connection connection = getBdConnect();
         String query = "INSERT INTO public.Planning" +
                 "(pla_start_date, pla_start_time, pla_end_date, pla_end_time, pla_template_id) " +
-                "VALUES ('" + planning.getStartDate() + "','" + planning.getStartTime() +
-                "','" + planning.getEndDate() + "','" + planning.getEndTime() + "'," + templateId + ")";
+                "VALUES ('" + planning[0] + "','" + planning[2] +
+                "','" + planning[1] + "','" + planning[3] + "'," + templateId + ")";
         try{
             _st=connection.createStatement();
             _salida=_st.execute( query );
@@ -80,11 +80,10 @@ public class DAOPlanning  extends DAO implements IDAOPlanning {
     }
 
 
-    public void updatePlanning(Planning planning, int templateId) {
+    public void updatePlanning(String[] planning, int templateId) {
         Connection connection = getBdConnect();
         String query = "update public.Planning \n" +
-                "set pla_start_date = '" + planning.getStartDate() + "',pla_start_time = '" + planning.getStartTime() +
-                "', pla_end_date = '" + planning.getEndDate() + "', pla_end_time = '" + planning.getEndTime() + "'" +
+                "set pla_start_date = '" + planning[0] + "',pla_start_time = '" + planning[2] + "', pla_end_date = '" + planning[1] + "', pla_end_time = '" + planning[3] + "'" +
                 "where pla_template_id = " + templateId;
         try{
             _st=connection.createStatement();

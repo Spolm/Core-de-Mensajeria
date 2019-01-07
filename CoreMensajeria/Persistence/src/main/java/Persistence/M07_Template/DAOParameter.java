@@ -16,10 +16,9 @@ public class DAOParameter extends DAO implements IDAOParameter {
     boolean _salida;
 
     @Override
-    public void postParameter(ArrayList<Parameter> parameters, int companyId) {
-        for( Parameter parameter : parameters ){
-            postParameter(parameter.getName(),companyId);
-        }
+    public void postParameter(String[] parameters, int companyId) {
+        for (int i = 0; i < parameters.length;i++)
+            postParameter(parameters[i],companyId);
     }
 
     @Override

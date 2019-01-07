@@ -27,9 +27,7 @@ import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Persistence.DAO;
 import Persistence.DAOFactory;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,12 +64,50 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         return null;
     }
 
+
+
+
     /**
-     * Adds
-     * @param e
-     * @return
+     * This method is responsible for saving a template in specific.
+     * @param json string json with information
+     * @return If the template was saved successfully it returns true,
+     * otherwise it returns false.
      */
-    @Override
+    public boolean postTemplateData(String json){
+        try {
+            Gson gson = new Gson();
+            //recibimos el objeto json
+            JsonParser parser = new JsonParser();
+            JsonObject gsonObj = parser.parse(json).getAsJsonObject();
+            //hay que extraer campaña y aplicacion, parametros por defecto
+            //se crea el template y se retorna su id
+            int templateId = this.postTemplate(gsonObj.get("campaign").getAsInt(),gsonObj.get("applicationId").getAsInt(), gsonObj.get("userId").getAsInt());
+            //se establece el template  como no aprobado
+            StatusHandler.postTemplateStatusNoAprovado(templateId);
+            //insertamos los nuevos parametros
+            String[] parameters = gson.fromJson(gsonObj.get("newParameters").getAsJsonArray(),String[].class);
+            DAOFactory.instaciateDaoParameter().postParameter(parameters,gsonObj.get("company").getAsInt());
+            //obtenemos el valor del mensaje,y parametros
+            parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
+            String message = gsonObj.get("messagge").getAsString();
+            DAOFactory.instaciateDaoMessage().postMessage(message,templateId,parameters,gsonObj.get("company").getAsInt());
+
+            //obtenemos los valores de los canales e integradores
+            JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
+            postChannelIntegrator(channelIntegrator,templateId);
+
+            //planning
+            String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
+            PlanningHandler.postPlanning(planning,templateId);
+
+            return true;
+        } catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    /*@Override
     public boolean postTemplateData(Entity e){
 
         Template _t = (Template) e;
@@ -102,7 +138,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
         this.closeConnection();
         return true;
-    }
+    }*/
 
     @Override
     public int postTemplate(int campaignId,int applicationId, int userId) {
@@ -153,7 +189,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             preparedStatement.setInt( 1, templateId );
             ResultSet _rs = preparedStatement.executeQuery();
 
-            _t = this.createTemplate(_rs);
+            if(_rs.next()){
+                _t = this.createTemplate(_rs);
+            }
 
 
         }
@@ -219,11 +257,17 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             preparedStatement = _conn.prepareCall( GET__CAMPAIGN_BY_TEMPLATE );
             preparedStatement.setInt(1, id );
             ResultSet _rs = preparedStatement.executeQuery();
-            //instanciando el api de campana
-            CampaignDAO campaignsService = new CampaignDAO();
-            //obtener objeto campana con el id de campana del query anterior
-            campaign = campaignsService.getDetails
-                    ( _rs.getInt("tem_campaign_id") );
+
+            if( _rs.next() ){
+
+                //instanciando el api de campana
+                CampaignDAO campaignsService = new CampaignDAO();
+                //obtener objeto campana con el id de campana del query anterior
+                campaign = campaignsService.getDetails
+                        ( _rs.getInt("tem_campaign_id") );
+
+            }
+
         } catch (SQLException e){
             e.printStackTrace();
             throw new TemplateDoesntExistsException
@@ -451,11 +495,41 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     }
 
     /**
-     * Update template
-     * @param e
-     * @return
+     * This method is responsible for modifying a specific template.
+     * @param json string json with information
+     * @return If the template was saved successfully it returns true,
+     * otherwise it returns false.
      */
-    @Override
+    public boolean updateTemplateData(String json){
+        try {
+            Gson gson = new Gson();
+            //recibimos el objeto json
+            JsonParser parser = new JsonParser();
+            JsonObject gsonObj = parser.parse(json).getAsJsonObject();
+            updateTemplate(gsonObj.get("campaign").getAsInt(), gsonObj.get("applicationId").getAsInt(), gsonObj.get("templateId").getAsInt());
+
+            //insertamos los nuevos parametros
+            String[] parameters = gson.fromJson(gsonObj.get("newParameters").getAsJsonArray(),String[].class);
+            DAOFactory.instaciateDaoParameter().postParameter(parameters,gsonObj.get("company").getAsInt());
+            //update de mensaje
+            parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
+            String message = gsonObj.get("messagge").getAsString();
+            DAOFactory.instaciateDaoMessage().updateMessage(gsonObj.get("messagge").getAsString(),gsonObj.get("templateId").getAsInt(),parameters,gsonObj.get("company").getAsInt());
+
+            //update de Channel Integrator
+            JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
+            updateChannelIntegrator(channelIntegrator,gsonObj.get("templateId").getAsInt());
+            //planning
+            String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
+            PlanningHandler.updatePlanning(planning,gsonObj.get("templateId").getAsInt());
+
+            return true;
+        } catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+    /*@Override
     public boolean updateTemplateData(Entity e) {
         Template _t = (Template) e;
         DAOParameter _daoParameter = DAOFactory.instaciateDaoParameter();
@@ -486,7 +560,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
         this.closeConnection();
         return true;
-    }
+    }*/
 
     @Override
     public void updateTemplate(int campaignId, int applicationId, int templateId ) {
