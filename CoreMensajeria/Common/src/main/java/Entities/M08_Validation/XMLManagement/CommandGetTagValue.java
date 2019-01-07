@@ -35,6 +35,7 @@ public class CommandGetTagValue extends Command<String> {
             NodeList nodeList = _element.getElementsByTagName( _tag ).item(0).getChildNodes();
             _node = ( Node ) nodeList.item(0);
             _value = _node.getNodeValue();
+            log.info( "M08_CommandGetTagValue, se obtiene el valor [" + _value + "] del tag [" + _tag + "] " );
         }catch ( NullPointerException e ){
             String msg = "Ha ocurrido una execpción: " + e.getClass().getName()
                     + "en la clase" + this.getClass().getName();
