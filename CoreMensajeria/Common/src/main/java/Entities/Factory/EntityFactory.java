@@ -5,6 +5,9 @@ import Entities.M01_Login.User;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 import Entities.M04_Integrator.*;
+import Entities.M05_Channel.Channel;
+import Entities.M05_Channel.ChannelEmail;
+import Entities.M05_Channel.ChannelSms;
 import Entities.M09_Statistics.Statistics;
 
 import java.util.ArrayList;
@@ -172,6 +175,49 @@ public class EntityFactory {
     }
 
 // M04_region
+
+    /**
+     * Metodo que se encarga de crear un canal en concreto
+     * La creacion de este tipo de canal dependerá del nameChannel
+     * que es recibido por parametro
+     *
+     * @param idChannel          id del canal a crear
+     * @param nameChannel        nombre del canal a crear
+     * @param descriptionChannel Breve descripción del canal
+     * @param integrators        Integradores que perteneces a esta canal
+     * @return Un objeto Channel con las caracteristicas enviadas por parametro
+     * @see Channel
+     */
+    public static Channel CreateChannel(int idChannel, String nameChannel, String descriptionChannel, ArrayList<Entity> integrators) {
+        if (nameChannel == null)
+            return null;
+        if (nameChannel.equalsIgnoreCase("SMS"))
+            return new ChannelSms(idChannel, nameChannel, descriptionChannel, integrators);
+        else if (nameChannel.equalsIgnoreCase("EMAIL"))
+            return new ChannelEmail(idChannel, nameChannel, descriptionChannel, integrators);
+        return null;
+    }
+
+    /**
+     * Metodo que se encarga de crear un canal en concreto
+     * La creacion de este tipo de canal dependerá del nameChannel
+     * que es recibido por parametro
+     *
+     * @param idChannel          id del canal a crear
+     * @param nameChannel        nombre del canal a crear
+     * @param descriptionChannel Breve descripción del canal
+     * @return Un objeto Channel con las caracteristicas enviadas por parametro
+     * @see Channel
+     */
+    public static Channel createChannel(int idChannel, String nameChannel, String descriptionChannel) {
+        if (nameChannel == null)
+            return null;
+        if (nameChannel.equalsIgnoreCase("SMS"))
+            return new ChannelSms(idChannel, nameChannel, descriptionChannel);
+        else if (nameChannel.equalsIgnoreCase("EMAIL"))
+            return new ChannelEmail(idChannel, nameChannel, descriptionChannel);
+        return null;
+    }
 
     /**
      * Método que se encarga de crear un integrador en concreto

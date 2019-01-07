@@ -3,7 +3,6 @@ package Persistence.M05_Channel;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M04_Integrator.Integrator;
-import Entities.M04_Integrator.IntegratorDAO;
 import Entities.M05_Channel.Channel;
 import Entities.Sql;
 import Exceptions.ChannelNotFoundException;
@@ -112,7 +111,7 @@ public class DAOChannel {
 
     private Channel extractChannel(ResultSet rs) throws SQLException {
         Channel channel;
-        channel = EntityFactory.CreateChannel(rs.getInt("cha_id"), rs.getString("cha_name"),
+        channel = EntityFactory.createChannel(rs.getInt("cha_id"), rs.getString("cha_name"),
                 rs.getString("cha_description"));
 
         return channel;
