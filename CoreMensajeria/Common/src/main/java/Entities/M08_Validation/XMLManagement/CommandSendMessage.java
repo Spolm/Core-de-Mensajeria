@@ -17,6 +17,7 @@ public class CommandSendMessage extends Command {
     }
     @Override
     public void execute() throws Exception {
+        System.out.println("Enviando mensaje");
         ArrayList<Channel> _channels = _template.getChannels();
 
         for(Message message : _verifiedMessages){

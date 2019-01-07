@@ -3,6 +3,8 @@ package Entities.M08_Validation.XMLManagement;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -31,6 +33,7 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
     private String _templateId;                  /////// Cambiar por comando de Template
     private ArrayList<Message> _messageList = new ArrayList<>();
     private VerifiedParameter _verifiedParameters;
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
 
     public CommandProcessXML(String filePath){
         _xmlFile = new File(filePath);
@@ -67,17 +70,23 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
                     System.out.println(message.toString());
                 }
 
+                _verifiedParameters = new VerifiedParameter();
                 _verifiedParameters.set_verifiedMessages(_messageList);
                 _verifiedParameters.set_template(_template);
             } else{
-                // Excepcion personalizada
+                // TODO: Excepcion personalizada
             }
         } catch (SAXException | ParserConfigurationException | IOException e1) {
+            System.out.println("Error");
             e1.printStackTrace();
         } catch (TemplateDoesntExistsException e) {
+            System.out.println("Error 2");
             e.printStackTrace();
-        } catch (NullPointerException e){}
-          catch (Exception e){}
+        } catch (NullPointerException e){
+            System.out.println("Error 3: " + e);
+        } catch (Exception e){
+              System.out.println("Error 4: " + e);
+        }
     }
 
     /**
