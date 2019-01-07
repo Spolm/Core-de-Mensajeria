@@ -14,12 +14,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  */
-public class CommandProcessXML extends Command {
+public class CommandProcessXML extends Command<VerifiedParameter> {
 
     private File _xmlFile;
     private DocumentBuilderFactory _dbFactory;
@@ -30,7 +29,8 @@ public class CommandProcessXML extends Command {
     private Template _template;  /////// Cambiar por comando de Template
     private TemplateHandler _templateHandler = new TemplateHandler();   /////// Cambiar por comando de Template
     private String _templateId;                  /////// Cambiar por comando de Template
-    private List<Message> _messageList = new ArrayList<>();
+    private ArrayList<Message> _messageList = new ArrayList<>();
+    private VerifiedParameter _verifiedParameters;
 
     public CommandProcessXML(String filePath){
         _xmlFile = new File(filePath);
@@ -65,8 +65,10 @@ public class CommandProcessXML extends Command {
 
                 for (Message message : _messageList) {
                     System.out.println(message.toString());
-                    parseMessage(message);
                 }
+
+                _verifiedParameters.set_verifiedMessages(_messageList);
+                _verifiedParameters.set_template(_template);
             } else{
                 // Excepcion personalizada
             }
@@ -82,20 +84,7 @@ public class CommandProcessXML extends Command {
      * @return
      */
     @Override
-    public Object Return() {
-        return null;
-    }
-
-    /**
-     * @param message
-     */
-    private void parseMessage(Message message) {
-        String text = "Hola [.$Nombre$.] tu edad es [.$Edad$.]";
-        ArrayList<ParameterXML> params = message.get_param();
-
-        for (ParameterXML param : params) {
-            text = text.replace("[.$" + param.get_name() + "$.]", param.get_value());
-        }
-        System.out.println(text);
+    public VerifiedParameter Return() {
+        return _verifiedParameters;
     }
 }
