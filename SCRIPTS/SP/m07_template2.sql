@@ -120,16 +120,24 @@ CREATE OR REPLACE FUNCTION m07_postPlanning(_templateId integer,_start_date time
 RETURNS VOID AS
 $BODY$
 BEGIN
-INSERT INTO public.Planning(pla_start_date, pla_start_time, pla_end_date, pla_end_time, pla_template_id)
-VALUES (_start_date , _start_time , _end_date , _end_time, _templateId);
+EXECUTE format('INSERT INTO public.Planning(pla_start_date, pla_start_time, pla_end_date, pla_end_time, pla_template_id)
+VALUES (%L , %L , %L , %L, %L)',_start_date,_start_time,_end_date,_end_time,_templateId);
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;	
 --VER DESPUES
 
 --Funcion para el metodo updatePlanning 
-CREATE OR REPLACE FUNCTION m07_updatePlanning(IN )
-
+CREATE OR REPLACE FUNCTION m07_updatePlanning(_templateId integer,_start_date timestamp,_start_time timestamp,_end_date timestamp,_end_time timestamp )
+RETURNS void AS $$
+DECLARE
+BEGIN
+	EXECUTE format('update public.Planning set pla_start_date = %L ,
+					pla_start_time = %L , pla_end_date = %L ,
+					pla_end_time = %L
+                	where pla_template_id = %L',_start_date,_start_time,_end_date,_end_time,_templateId);
+END;
+$$ LANGUAGE plpgsql;
 --VER DESPUES
 
 --Funcion para el metodo postTemplateStatusAprobado
