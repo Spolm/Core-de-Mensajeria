@@ -18,7 +18,6 @@ import Entities.M07_Template.StatusPackage.Status;
 
 import java.util.ArrayList;
 import java.util.Date;
-
 /**
  * Fabrica que instancia todos los dto
  */
@@ -157,7 +156,7 @@ public class DTOFactory {
     }
 
 
-    public static DTOTemplate CreateDTOTemplate(Message message, Date creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning){
+    public static DTOTemplate CreateDTOTemplate(Message message, java.sql.Date creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning){
         return  new DTOTemplate(message,creationDate,templateId,status,channels,campaign,application,user,planning);
     }
 

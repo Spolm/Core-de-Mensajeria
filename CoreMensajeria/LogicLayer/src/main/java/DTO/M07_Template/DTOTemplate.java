@@ -9,8 +9,8 @@ import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.Status;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class DTOTemplate extends DTO {
 

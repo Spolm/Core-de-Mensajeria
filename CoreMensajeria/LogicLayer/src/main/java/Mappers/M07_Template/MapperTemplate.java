@@ -11,7 +11,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Template_Mapper extends GenericMapper {
+public class MapperTemplate extends GenericMapper {
 
     @Override
     public Object CreateDto(Entity entity) {
