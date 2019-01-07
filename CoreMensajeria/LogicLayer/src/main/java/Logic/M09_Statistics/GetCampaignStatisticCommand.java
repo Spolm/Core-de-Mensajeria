@@ -5,10 +5,10 @@ import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M09_Statistics.DAOStatisticEstrella;
 
-public class GetCampaignStatisticCommand extends Command {
+public class GetCampaignStatisticCommand extends Command<Entity> {
 
-    DAOStatisticEstrella dao;
-    Entity statistic;
+    private DAOStatisticEstrella dao;
+    private Entity statistic;
 
     @Override
     public void execute() throws Exception {

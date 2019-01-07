@@ -44,7 +44,6 @@ public class CommandValidateMessage extends CommandValidateParameter{
             if ((this._channel.equals("SMS"))&& (this._message.length()>160)){
                 logger.warning("SMS supera 160 caracteres");
                 this.set_valid(false);
-                this.set_response("SMS supera 160 caracteres");
                 throw new SMSTooLongException();
             }
             else
@@ -52,17 +51,14 @@ public class CommandValidateMessage extends CommandValidateParameter{
         } catch (TemplateDoesntExistsException e) {
             logger.warning("Plantilla no Existe");
             this.set_valid(false);
-            this.set_response("Plantilla no Existe");
             throw e;
         } catch (MessageDoesntExistsException e) {
             logger.warning("Mensaje no Existe");
             this.set_valid(false);
-            this.set_response("Mensaje no Existe");
             throw e;
         } catch (ParameterDoesntExistsException e) {
             logger.warning("Parámetro no Existe");
             this.set_valid(false);
-            this.set_response("Parámetro no Existe");
             throw e;
         }
 

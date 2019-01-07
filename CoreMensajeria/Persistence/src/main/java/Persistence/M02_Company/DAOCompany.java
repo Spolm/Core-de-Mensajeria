@@ -12,9 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DAOCompany  implements IDAOCompany {
+public class DAOCompany extends DAO implements IDAOCompany {
 
-    private Connection _conn = Sql.getConInstance();
 
     final String UPDATE_COMPANY_STATUS = "{CALL m02_changecompanystatus(?,?)}";
     final String SELECT_COMPANY_BY_ID = "{CALL  m02_getcompanybyid(?)}";
@@ -35,7 +34,7 @@ public class DAOCompany  implements IDAOCompany {
     public void changeStatus(Entity e) {
 
         Company _co = ( Company ) e;
-        _conn = Sql.getConInstance();
+        Connection _conn = this.getBdConnect();
         PreparedStatement _preparedStatement = null;
 
         try {
@@ -47,13 +46,14 @@ public class DAOCompany  implements IDAOCompany {
         } catch ( SQLException e1 ) {
             e1.printStackTrace();
         }
-
+        this.closeConnection();
     }
 
     @Override
     public ArrayList<Entity> companiesByResponsible( Entity e ) {
         ArrayList<Entity> _coList= new ArrayList<>();
         Company _comp = ( Company ) e;
+        Connection _conn = this.getBdConnect();
 
         try {
             PreparedStatement  preparedStatement = _conn.prepareCall(SELECT_COMPANY_BY_RESPONSIBLE);
@@ -66,6 +66,7 @@ public class DAOCompany  implements IDAOCompany {
         catch (SQLException exc) {
             exc.printStackTrace();
         }
+        this.closeConnection();
         return  _coList;
     }
 
@@ -85,8 +86,9 @@ public class DAOCompany  implements IDAOCompany {
     @Override
     public Entity companyById( Entity e ) {
         Company _company = ( Company ) e;
+        Connection _conn = this.getBdConnect();
 
-            try {
+        try {
                 PreparedStatement  _preparedStatement = _conn.prepareCall( SELECT_COMPANY_BY_ID );
                 _preparedStatement.setInt( 1, _company.get_idCompany() );
                 ResultSet _result = _preparedStatement.executeQuery();
@@ -97,7 +99,8 @@ public class DAOCompany  implements IDAOCompany {
             catch (SQLException exc) {
                 exc.printStackTrace();
             }
-            return _company;
+        this.closeConnection();
+        return _company;
 
     }
 
@@ -105,6 +108,8 @@ public class DAOCompany  implements IDAOCompany {
     public ArrayList<Entity> companiesByUser( Entity e ) {
         ArrayList<Entity> _coList= new ArrayList<>();
         Company _company = ( Company ) e;
+        Connection _conn = this.getBdConnect();
+
         try {
             PreparedStatement _ps = _conn.prepareCall(SELECT_COMPANIES_BY_USER);
             _ps.setInt(1, _company.get_idCompany());
@@ -116,6 +121,7 @@ public class DAOCompany  implements IDAOCompany {
         catch ( Exception exc ) {
             exc.printStackTrace();
         }
+        this.closeConnection();
         return _coList;
     }
 
@@ -128,6 +134,8 @@ public class DAOCompany  implements IDAOCompany {
     @Override
     public ArrayList<Entity> allCompanies() {
         ArrayList<Entity> _coList = new ArrayList<>();
+        Connection _conn = this.getBdConnect();
+
         try {
             PreparedStatement _ps = _conn.prepareCall(SELECT_ALL_COMPANIES);
             ResultSet _result = _ps.executeQuery();
@@ -138,6 +146,7 @@ public class DAOCompany  implements IDAOCompany {
         catch ( Exception exc ) {
             exc.printStackTrace();
         }
+        this.closeConnection();
         return _coList;
     }
 
@@ -146,6 +155,8 @@ public class DAOCompany  implements IDAOCompany {
     public void create( Entity e ) {
         Company _co = ( Company ) e;
         PathHandler _ph  = new PathHandler();
+        Connection _conn = this.getBdConnect();
+
         try {
 
             PreparedStatement preparedStatement = _conn.prepareCall(CREATE_COMPANY);
@@ -159,6 +170,7 @@ public class DAOCompany  implements IDAOCompany {
         }catch ( Exception exc ){
             exc.printStackTrace();
         }
+        this.closeConnection();
     }
 
     @Override
@@ -168,6 +180,8 @@ public class DAOCompany  implements IDAOCompany {
     public Entity update( Entity e ) {
         Company _co = ( Company ) e;
         PathHandler ph  = new PathHandler();
+        Connection _conn = this.getBdConnect();
+
         try {
             PreparedStatement _ps = _conn.prepareCall( UPDATE_COMPANY );
             _ps.setString( 1, _co.get_name() );
@@ -180,6 +194,7 @@ public class DAOCompany  implements IDAOCompany {
         }catch ( Exception _exc ){
             _exc.printStackTrace();
         }
+        this.closeConnection();
         return _co;
     }
 

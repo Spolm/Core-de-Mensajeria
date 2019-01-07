@@ -4,39 +4,45 @@
   <form>
     <div class="row">
       <div class="col-5">
+          <div class="form-group">
+              <label for="formMessage">Campaña</label>
+              <select class="custom-select"  [(ngModel)]="opcamp" name="nombre">
+                <option *ngFor="let campaign of campaignList" [ngValue]="campaign" >
+                    {{campaign._nameCampaign}}
+                </option>
+                <h1>  {{campaign}} </h1>
+              </select>
+            </div>
         <div class="form-group">
           <label for="formMessage">Nombre de la Campaña</label>
-          <input class="form-control" placeholder="Nombre" name="nombre" [(ngModel)]="newCampaign._nameCampaign" required>
+          <input class="form-control" placeholder="Nombre" name="nombre" [(ngModel)]="opcamp._nameCampaign" required>
         </div>
         <div class="form-group">
           <label for="formMessage">Descripción de la Campaña</label>
-          <textarea class="form-control" id="formDescription" name="descripcion" rows="5" [(ngModel)]="newCampaign._descCampaign"
+          <textarea class="form-control" id="formDescription" name="descripcion" rows="5" [(ngModel)]="opcamp._descCampaign"
             placeholder="Descripción"></textarea>
         </div>
-      </div>
+      </div>      
       <div class="col-5">
         <div class="form-group">
           <label for="formMessage">Fecha de Inicio de la Campaña</label>
-          <input class="form-control" [(ngModel)]="newCampaign._startCampaign" name="fIni" required type="date">
+          <input class="form-control" [(ngModel)]="opcamp._startCampaign" name="fIni" required type="date">
         </div>
         <div class="form-group">
           <label for="formMessage">Fecha de finalización de la Campaña</label>
-          <input type="date" [(ngModel)]="newCampaign._endCampaign" name="fFin" required class="form-control">
+          <input type="date" [(ngModel)]="opcamp._endCampaign" name="fFin" required class="form-control">
         </div>
-        <div class="input-group-prepend">
-              <label class="input-group-text" for="inputGroupSelect01">Compañia:</label>
-            </div>
-            <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="opcionSeleccionado">  <!--[(ngModel)]="newCampaign._idCompany">   (change) = "capturar()" -->
-              <option selected value="0">Elija</option>
-              <option *ngFor="let company of companyList">
-                  {{company._name}}
-              </option>
-            </select>
+        <div class="form-group">
+          <label for="formMessage">Compañia</label>
+          <select class="form-control" [(ngModel)]="opcamp._idCompany" name="companiaId" required>
+            <option *ngFor="let company of companyList" value="{{opcamp._idCompany}}">{{company._name}}</option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="col-5">
-        <button type="button" class="btn btn-success m-1 col-12" (click)="createEditCampaign()">Modificar</button>
+        <button type="button" class="btn btn-success m-1 col-12" (click)="editCompany()">Crear</button>
       </div>
       <div class="col-5">
         <button type="button" class="btn btn-danger m-1 col-12" routerLink="/campaigns">Cancelar</button>

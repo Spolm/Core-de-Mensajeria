@@ -1,8 +1,13 @@
 package M08_Validation;
 
+import Entities.M07_Template.StatusPackage.Status;
+import Entities.M07_Template.Template;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
+import Exceptions.TemplateNotApprovedException;
 import Logic.Command;
 import Logic.CommandsFactory;
 
+import Logic.M07_Template.CommandGetTemplate;
 import Logic.M08_Validation.CommandValidateTemplate;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.jupiter.api.Test;
@@ -10,12 +15,11 @@ import Exceptions.SMSTooLongException;
 
 import static  org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ValidationServiceTest {
 
     @Test
-    public void testTemplateExist() {
+    public void testTemplateValid() {
         Command c = CommandsFactory.createCommandValidateTemplate(1);
         try{
             c.execute();
@@ -27,11 +31,13 @@ class ValidationServiceTest {
     @Test
     public void testTemplateDoesntExist() {
         Command c = new CommandsFactory().createCommandValidateTemplate(312873618);
-        try {
-            c.execute();
-            assertEquals(false, c.Return());
+            assertThrows(TemplateDoesntExistsException.class,() -> c.execute());
+    }
 
-        } catch (Exception e) {}
+    @Test
+    public void testTemplateNotApproved() {
+        Command c = new CommandsFactory().createCommandValidateTemplate(2);
+        assertThrows(TemplateNotApprovedException.class,() -> c.execute());
     }
 
     @Test

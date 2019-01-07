@@ -7,7 +7,7 @@ import Persistence.M09_Statistics.DAOStatisticEstrella;
 
 import java.util.ArrayList;
 
-public class GetHoursCommand extends Command {
+public class GetHoursCommand extends Command<ArrayList<Integer>> {
 
     private DAOStatisticEstrella dao;
     private ArrayList<Integer> hours;
@@ -19,11 +19,7 @@ public class GetHoursCommand extends Command {
     }
 
     @Override
-    public Entity Return() {
-        return null;
-    }
-
-    public ArrayList<Integer> ReturnList() {
+    public ArrayList<Integer> Return() {
         return hours;
     }
 }

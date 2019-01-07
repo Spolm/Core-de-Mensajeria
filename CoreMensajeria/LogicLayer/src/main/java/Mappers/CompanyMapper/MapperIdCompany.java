@@ -93,8 +93,8 @@ public class MapperIdCompany extends GenericMapper<DTOIdCompany> {
     @Override
     public Entity CreateEntity(DTOIdCompany dto) {
 
-        //Logger logger = Logger.getLogger(M02_Companies.class.getName());
-        //logger.info("Objeto compania recibido en Create Entity" + dto.get_idCompany());
+        Logger logger = Logger.getLogger(MapperIdCompany.class.getName());
+        logger.info("Objeto compania recibido en Create Entity" + dto.get_idCompany());
 
         try {
             Company _com = EntityFactory.CreateCompanyOnlyId(dto.get_idCompany());

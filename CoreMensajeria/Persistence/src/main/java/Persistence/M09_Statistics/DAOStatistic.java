@@ -20,7 +20,7 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
     private Connection conn;
 
     public DAOStatistic(){
-        this.conn = getBdConnect();
+
     }
     @Override
     public void create(Entity e) {
@@ -39,6 +39,7 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
 
     @Override
     public ArrayList<Entity> getAllCompanies(Integer userId) throws CompanyDoesntExistsException {
+        this.conn = getBdConnect();
         String query = "SELECT com_id, com_name from m02_getcompaniesbyresponsible(" + userId + ") ORDER BY com_id;";
         ArrayList<Entity> companies = new ArrayList<>();
         try {
@@ -62,6 +63,7 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
 
     @Override
     public ArrayList<Integrator> getIntegratorsForChannel(List<Integer> channelIds) throws ChannelNotFoundException{
+        this.conn = getBdConnect();
         String query = "select int_id, int_name from m09_getIntegratorsByChannels(";
         for (int i = 0; i < channelIds.size() - 1;  i++) {
             query += channelIds.get(i) + ", ";
@@ -87,7 +89,7 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
         return integrators;
     }
 
-    private void close()
+    public void close()
     {
         try
         {
