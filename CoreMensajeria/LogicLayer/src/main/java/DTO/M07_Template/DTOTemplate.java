@@ -47,7 +47,7 @@ public class DTOTemplate extends DTO {
         this._tMessage = _tMessage;
     }
 
-    public Date get_tCreationDate() {
+    public java.sql.Date get_tCreationDate() {
         return _tCreationDate;
     }
 
