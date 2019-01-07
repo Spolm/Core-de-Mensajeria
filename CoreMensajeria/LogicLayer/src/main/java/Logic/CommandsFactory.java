@@ -4,11 +4,21 @@ import Entities.Entity;
 import Logic.M01_Login.AddUserCommand;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
+import Entities.M07_Template.MessagePackage.Parameter;
+import Entities.M07_Template.Template;
+import Entities.M08_Validation.XMLManagement.*;
+import DTO.M07_Template.NewParameter;
+import Logic.M01_Login.GetUser;
+import Logic.M08_SendMessage.CommandSendMessage;
+import Logic.M08_Validation.*;
 import Logic.M07_Template.*;
 import Logic.M02_Company.*;
 import Logic.M03_Campaign.*;
 import Logic.M09_Statistics.*;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommandsFactory {
@@ -24,6 +34,7 @@ public class CommandsFactory {
         return new LogUserCommand();
     }
 
+    public static Command createSendMessage() { return new CommandSendMessage(); }
 
     //region M09
     public static GetAllCompaniesByUserCommand getAllCompaniesByUserCommand(Integer userId) {return new GetAllCompaniesByUserCommand(userId); }
@@ -90,40 +101,68 @@ public class CommandsFactory {
         return new CommandGetMessages();
     }
 
-
-    public static CommandPostParameter createCommandPostParameter(){
-        return new CommandPostParameter();
+    public static CommandPostParameter createCommandPostParameter(NewParameter newParameter){
+        return new CommandPostParameter(newParameter);
     }
 
-    public static CommandGetParameters createCommandGetParameters(){
-        return new CommandGetParameters();
+    public static CommandGetParameters createCommandGetParameters(int companyId){
+        return new CommandGetParameters(companyId);
     }
 
-    public static CommandGetTemplates createCommandGetTemplates(){
-        return new CommandGetTemplates();
+    public static CommandGetTemplates createCommandGetTemplates(int userId, int companyId){
+        return new CommandGetTemplates(userId, companyId);
     }
 
-    public static CommandGetTemplate createCommandGetTemplate(){
-        return new CommandGetTemplate();
+    public static CommandGetTemplate createCommandGetTemplate(int templateId){
+        return new CommandGetTemplate(templateId);
     }
 
-    public static CommandGetTemplatePrivilegesByUser createCommandGetTemplatePrivilegesByUser(){
-        return new CommandGetTemplatePrivilegesByUser();
+    public static CommandGetTemplatePrivilegesByUser createCommandGetTemplatePrivilegesByUser(int userId, int companyId){
+        return new CommandGetTemplatePrivilegesByUser(userId,companyId);
     }
 
-    public static CommandPostTemplateStatus createCommandPostTemplateStatus(){
-        return new CommandPostTemplateStatus();
+    public static CommandPostTemplateStatus createCommandPostTemplateStatus(int templateId, int userId){
+        return new CommandPostTemplateStatus(templateId,userId);
     }
 
-    public static CommandPostTemplate createCommandPostTemplate(){
-        return new CommandPostTemplate();
+    public static CommandPostTemplate createCommandPostTemplate(String json){
+        return new CommandPostTemplate(json);
     }
 
-    public static CommandUpdateTemplate CommandUpdateTemplate(){
-        return new CommandUpdateTemplate();
+    public static CommandUpdateTemplate createCommandUpdateTemplate(String json){
+        return new CommandUpdateTemplate(json);
 }
 
+    //region M_08
+    public static CommandGetTagValue createCommandGetTagValue(String tag, Element element){
+        return new CommandGetTagValue(tag,element);
+    }
 
+    public static CommandGetParameter createCommandGetParameter(Node node, ArrayList<Parameter> parameter){
+        return new CommandGetParameter(node, parameter);
+    }
 
+    public static CommandGetMessage createCommandGetMessage(Node node, Template template){
+        return new CommandGetMessage(node,template);
+    }
+
+    public static CommandProcessXML createCommandProcessXML(String filePath){
+        return new CommandProcessXML(filePath);
+    }
+
+    public static CommandValidateMessage createCommandValidateMessage(int template, String message,
+                                                                      String channel) {
+        return new CommandValidateMessage(template, message, channel);
+
+    }
+
+    public static CommandValidateTemplate createCommandValidateTemplate (int id) {
+        return new CommandValidateTemplate(id);
+    }
+
+    public static CommandValidate createCommandValidate (int template, String message, String channel) {
+        return new CommandValidate(template, message, channel);
+    }
+    //end region
 
 }

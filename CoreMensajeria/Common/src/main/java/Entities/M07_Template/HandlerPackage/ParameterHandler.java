@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * ParameterHandler class used for the management of information
- * search in the database with respect to Parameter.
+ * search in the database with respect to ParameterXML.
  */
 public class ParameterHandler {
     /**
@@ -53,7 +53,7 @@ public class ParameterHandler {
         try {
             ResultSet resultSet = sql.sqlConn(query);
             if (!resultSet.next()) {
-                query = "INSERT INTO public.Parameter (par_name,par_company_id) \n" +
+                query = "INSERT INTO public.ParameterXML (par_name,par_company_id) \n" +
                         "VALUES ('" + name + "'," + companyId + ")";
                 sql.sqlNoReturn(query);
             }

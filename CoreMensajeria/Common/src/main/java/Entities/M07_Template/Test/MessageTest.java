@@ -43,7 +43,7 @@ class MessageTest {
                 + " de prueba " + parameters.get(2).getName();
         assertEquals(message.getMessage(), text);
         assertEquals(message.getParameterArrayList(), parameters);
-        assertEquals(message.getMessageId(), 1);
+        assertEquals(message.get_id(), 1);
     }
 
     @AfterEach
