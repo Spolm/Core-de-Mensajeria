@@ -148,7 +148,7 @@ public class M09_Statistics extends Application {
     @Path("/update")
     @Produces("application/json")
     public Response updateStarSchema() {
-        Command command = CommandsFactory.updateStarSchema();
+        Command command = CommandsFactory.updateStarSchemaCommand();
         try {
             command.execute();
             return Response.ok().build();
@@ -164,7 +164,7 @@ public class M09_Statistics extends Application {
     @Path("/yearsCount")
     @Produces("application/json")
     public Response getYears(){
-        Command command = CommandsFactory.getYears();
+        Command command = CommandsFactory.getYearsCommand();
         try{
             command.execute();
             return Response.ok(gson.toJson(command.Return())).build();
@@ -178,7 +178,7 @@ public class M09_Statistics extends Application {
     @Path("/monthsCount")
     @Produces("application/json")
     public Response getMonths(){
-        Command command = CommandsFactory.getMonths();
+        Command command = CommandsFactory.getMonthsCommand();
         try{
             command.execute();
             return Response.ok(gson.toJson(command.Return())).build();
@@ -192,7 +192,7 @@ public class M09_Statistics extends Application {
     @Path("/daysofweekCount")
     @Produces("application/json")
     public Response getDaysofWeek(){
-        Command command = CommandsFactory.getDaysofWeek();
+        Command command = CommandsFactory.getDaysofWeekCommand();
         try {
             command.execute();
             return Response.ok(gson.toJson(command.Return())).build();
@@ -206,7 +206,7 @@ public class M09_Statistics extends Application {
     @Path("/daysofmonthCount")
     @Produces("application/json")
     public Response getDaysofMonth(){
-        Command command = CommandsFactory.getDaysofMonth();
+        Command command = CommandsFactory.getDaysofMonthCommand();
         try {
             command.execute();
             return Response.ok(gson.toJson(command.Return())).build();
@@ -220,7 +220,7 @@ public class M09_Statistics extends Application {
     @Path("/daysofyearCount")
     @Produces("application/json")
     public Response getDaysofYear(){
-        Command command = CommandsFactory.getDaysofYear();
+        Command command = CommandsFactory.getDaysofYearCommand();
         try {
             command.execute();
             return Response.ok(gson.toJson(command.Return())).build();
@@ -234,7 +234,7 @@ public class M09_Statistics extends Application {
     @Path("/weeksofyearCount")
     @Produces("application/json")
     public Response getWeeksofYear(){
-        Command command = CommandsFactory.getWeeksofYear();
+        Command command = CommandsFactory.getWeeksofYearCommand();
         try {
             command.execute();
             return Response.ok(gson.toJson(command.Return())).build();
@@ -248,7 +248,7 @@ public class M09_Statistics extends Application {
     @Path("/quartersofyearCount")
     @Produces("application/json")
     public Response getQuartersofYear(){
-        Command command = CommandsFactory.getQuartersofYear();
+        Command command = CommandsFactory.getQuartersofYearCommand();
         try {
             command.execute();
             return Response.ok(gson.toJson(command.Return())).build();
@@ -262,7 +262,7 @@ public class M09_Statistics extends Application {
     @Path("/hoursCount")
     @Produces("application/json")
     public Response getHours(){
-        Command command = CommandsFactory.getHours();
+        Command command = CommandsFactory.getHoursCommand();
         try {
             command.execute();
             return Response.ok(gson.toJson(command.Return())).build();
@@ -276,7 +276,7 @@ public class M09_Statistics extends Application {
     @Path("/minutesCount")
     @Produces("application/json")
     public Response getMinutes(){
-        Command command = CommandsFactory.getMinutes();
+        Command command = CommandsFactory.getMinutesCommand();
         try {
             command.execute();
             return Response.ok(gson.toJson(command.Return())).build();
@@ -290,7 +290,7 @@ public class M09_Statistics extends Application {
     @Path("/secondsCount")
     @Produces("application/json")
     public Response getSeconds(){
-        Command command = CommandsFactory.getSeconds();
+        Command command = CommandsFactory.getSecondsCommand();
         try {
             command.execute();
             return Response.ok(gson.toJson(command.Return())).build();

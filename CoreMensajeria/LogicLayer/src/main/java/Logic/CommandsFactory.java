@@ -95,77 +95,77 @@ public class CommandsFactory {
      * @return un objeto del tipo UpdateStarSchemaCommand
      */
 
-    public static Command updateStarSchema(){ return new UpdateStarSchemaCommand();}
+    public static Command updateStarSchemaCommand(){ return new UpdateStarSchemaCommand();}
 
     /**
      * Metodo que instancia un objeto del tipo GetYearsCommand
      * @return un objeto del tipo GetYearsCommand
      */
 
-    public static Command getYears(){return new GetYearsCommand();}
+    public static Command getYearsCommand(){return new GetYearsCommand();}
 
     /**
      * Metodo que instancia un objeto del tipo GetMonthsCommand
      * @return un objeto del tipo GetMonthsCommand
      */
 
-    public static Command getMonths(){return  new GetMonthsCommand();}
+    public static Command getMonthsCommand(){return  new GetMonthsCommand();}
 
     /**
      * Metodo que instancia un objeto del tipo GetDaysofWeekCommand
      * @return un objeto del tipo GetDaysofWeekCommand
      */
 
-    public static Command getDaysofWeek(){return new GetDaysofWeekCommand();}
+    public static Command getDaysofWeekCommand(){return new GetDaysofWeekCommand();}
 
     /**
      * Metodo que instancia un objeto del tipo GetDaysofMonthCommand
      * @return un objeto del tipo GetDaysofMonthCommand
      */
 
-    public static Command getDaysofMonth(){return new GetDaysofMonthCommand();}
+    public static Command getDaysofMonthCommand(){return new GetDaysofMonthCommand();}
 
     /**
      * Metodo que instancia un objeto del tipo GetDaysofYearCommand
      * @return un objeto del tipo GetDaysofYearCommand
      */
 
-    public static Command getDaysofYear(){return new GetDaysofYearCommand();}
+    public static Command getDaysofYearCommand(){return new GetDaysofYearCommand();}
 
     /**
      * Metodo que instancia un objeto del tipo GetWeeksofYearCommand
      * @return un objeto del tipo GetWeeksofYearCommand
      */
 
-    public static Command getWeeksofYear(){return new GetWeeksofYearCommand();}
+    public static Command getWeeksofYearCommand(){return new GetWeeksofYearCommand();}
 
     /**
      * Metodo que instancia un objeto del tipo GetQuartersofYearCommand
      * @return un objeto del tipo GetQuartersofYearCommand
      */
 
-    public static Command getQuartersofYear(){return new GetQuartersofYearCommand();}
+    public static Command getQuartersofYearCommand(){return new GetQuartersofYearCommand();}
 
     /**
      * Metodo que instancia un objeto del tipo GetHoursCommand
      * @return un objeto del tipo GetHoursCommand
      */
 
-    public static Command getHours(){return new GetHoursCommand();}
+    public static Command getHoursCommand(){return new GetHoursCommand();}
 
     /**
      * Metodo que instancia un objeto del tipo GetMinutesCommand
      * @return un objeto del tipo GetMinutesCommand
      */
 
-    public static Command getMinutes(){return new GetMinutesCommand();}
+    public static Command getMinutesCommand(){return new GetMinutesCommand();}
 
     /**
      * Metodo que instancia un objeto del tipo GetSecondsCommand
      * @return un objeto del tipo GetSecondsCommand
      */
 
-    public static Command getSeconds(){return new GetSecondsCommand();}
+    public static Command getSecondsCommand(){return new GetSecondsCommand();}
 
     /**
      * Metodo que instancia un objeto del tipo GetStatisticCommand
