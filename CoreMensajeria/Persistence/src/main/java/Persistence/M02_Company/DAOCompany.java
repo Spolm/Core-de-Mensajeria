@@ -49,6 +49,12 @@ public class DAOCompany extends DAO implements IDAOCompany {
         } catch ( SQLException e1 ) {
             e1.printStackTrace();
         }
+        catch ( NullPointerException en ){
+            en.printStackTrace();
+        }
+        catch ( Exception ex ){
+            ex.printStackTrace();
+        }
         this.closeConnection();
     }
 
@@ -68,6 +74,12 @@ public class DAOCompany extends DAO implements IDAOCompany {
         }
         catch (SQLException exc) {
             exc.printStackTrace();
+        }
+        catch (NullPointerException en) {
+            en.printStackTrace();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
         this.closeConnection();
         return  _coList;
@@ -99,9 +111,15 @@ public class DAOCompany extends DAO implements IDAOCompany {
                     _company = getCompany( _result );
                 }
             }
-            catch (SQLException exc) {
-                exc.printStackTrace();
-            }
+        catch (SQLException exc) {
+            exc.printStackTrace();
+        }
+        catch (NullPointerException en) {
+            en.printStackTrace();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
         this.closeConnection();
         return _company;
 
@@ -121,8 +139,11 @@ public class DAOCompany extends DAO implements IDAOCompany {
                 _coList.add( getCompany( _result ) );
             }
         }
-        catch ( Exception exc ) {
+        catch (SQLException exc) {
             exc.printStackTrace();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
         this.closeConnection();
         return _coList;
@@ -146,8 +167,14 @@ public class DAOCompany extends DAO implements IDAOCompany {
                 _coList.add( getCompany( _result ) );
             }
         }
-        catch ( Exception exc ) {
+        catch (SQLException exc) {
             exc.printStackTrace();
+        }
+        catch (NullPointerException en) {
+            en.printStackTrace();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
         this.closeConnection();
         return _coList;
@@ -170,8 +197,14 @@ public class DAOCompany extends DAO implements IDAOCompany {
             preparedStatement.setInt( 5, _co.get_idUser() );
             preparedStatement.execute();
 
-        }catch ( Exception exc ){
+        }catch (SQLException exc) {
             exc.printStackTrace();
+        }
+        catch (NullPointerException en) {
+            en.printStackTrace();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
         this.closeConnection();
     }
@@ -194,8 +227,14 @@ public class DAOCompany extends DAO implements IDAOCompany {
             _ps.setInt( 5, _co.get_idUser() );
             _ps.setInt( 6, _co.get_idCompany() );
             _ps.execute();
-        }catch ( Exception _exc ){
-            _exc.printStackTrace();
+        }catch (SQLException exc) {
+            exc.printStackTrace();
+        }
+        catch (NullPointerException en) {
+            en.printStackTrace();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
         this.closeConnection();
         return _co;

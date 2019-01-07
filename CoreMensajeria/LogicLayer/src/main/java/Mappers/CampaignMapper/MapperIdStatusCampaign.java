@@ -11,9 +11,12 @@ import Mappers.GenericMapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MapperIdStatusCampaign extends GenericMapper<DTOIdStatusCampaign> {
+
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
 
     /**
      * Metodo con el cual se transforma una entidad en un DTOIdStatusCampaign
@@ -92,10 +95,7 @@ public class MapperIdStatusCampaign extends GenericMapper<DTOIdStatusCampaign> {
     @Override
     public Entity CreateEntity( DTOIdStatusCampaign dto ) {
 
-        Logger logger = Logger.getLogger(MapperIdStatusCampaign.class.getName());
-        logger.info("Objeto compania recibido en Create Entity" + dto.get_idCampaign() + " " +
-                dto.is_status());
-
+         log.info( dto.get_idCampaign() + " "  + dto.is_status() );
         try {
             Campaign _com = EntityFactory.CreateCampaignIDStatus( dto.get_idCampaign(), dto.is_status() );
             return _com ;
