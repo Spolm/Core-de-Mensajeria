@@ -7,7 +7,7 @@ import Persistence.M09_Statistics.DAOStatisticEstrella;
 
 import java.util.ArrayList;
 
-public class GetQuartersofYearCommand extends Command {
+public class GetQuartersofYearCommand extends Command<ArrayList<Integer>> {
 
     private DAOStatisticEstrella dao;
     private ArrayList<Integer> quartersofyear;
@@ -19,11 +19,7 @@ public class GetQuartersofYearCommand extends Command {
     }
 
     @Override
-    public Entity Return() {
-        return null;
-    }
-
-    public ArrayList<Integer> ReturnList() {
+    public ArrayList<Integer> Return() {
         return quartersofyear;
     }
 }

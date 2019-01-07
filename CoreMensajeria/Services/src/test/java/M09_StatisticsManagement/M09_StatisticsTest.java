@@ -1,37 +1,33 @@
 package M09_StatisticsManagement;
 
-import Entities.M09_Statistics.SqlEstrella;
 import Exceptions.CompanyDoesntExistsException;
-import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import  webService.M09_StatisticsManagement.M09_Statistics;
 import javax.ws.rs.core.Response;
-import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+
 import static  org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-public class M09_StatisticsTest {/*
+public class M09_StatisticsTest {
 
-    Gson gson = new Gson();
-    //private Connection conn = SqlEstrella.getConInstance();
+    @Test
+    void getAllCompaniesTest() throws CompanyDoesntExistsException {
 
-//    @Test
-//    void getAllCompaniesTest() throws CompanyDoesntExistsException {
-//
-//        try {
-//            M09_Statistics intance = new M09_Statistics();
-//            Response salida = intance.getAllCompanies(1);
-//            assertEquals( 200, salida.getStatus() );
-//            assertNotNull( salida.getEntity());
-//        }
-//        catch( Exception e ) {
-//            e.printStackTrace();
-//            throw new CompanyDoesntExistsException ( e );
-//        }
-//
-//    }
+        try {
+            M09_Statistics intance = new M09_Statistics();
+            Response salida = intance.getAllCompanies(1);
+            assertEquals( 200, salida.getStatus() );
+            assertNotNull( salida.getEntity());
+        }
+        catch( Exception e ) {
+            e.printStackTrace();
+            throw new CompanyDoesntExistsException ( e );
+        }
+
+    }
 
     @Test
     void getAllChannelsTest()  {
@@ -103,7 +99,7 @@ public class M09_StatisticsTest {/*
             ArrayList<Integer> lista = new ArrayList<>();
             lista.add(1);
             String params = "and me.sen_com_id in";
-            assertEquals( intance.setParametersforQuery(lista, params), "and me.sen_com_id in(1)" );
+            assertEquals( setParametersforQuery(lista, params), "and me.sen_com_id in(1)" );
 
         } catch ( Exception e ) {
             e.printStackTrace();
@@ -113,7 +109,7 @@ public class M09_StatisticsTest {/*
 
    @Test
    void getStatisticsTestOk200()  {
-       /*try {
+       try {
            M09_Statistics intance = new M09_Statistics();
            ArrayList<Integer> listaCompany  = new ArrayList<>();
            ArrayList<Integer> listaCampaign = new ArrayList<>();
@@ -164,6 +160,22 @@ public class M09_StatisticsTest {/*
                 listaWeekOfYear, listaDayOfWeek, listaDayOfMonth, listaDayOfYear, listaHour, listaMinute, listaSecond, listaQuarter);
         assertEquals(400, salida.getStatus());
         assertEquals("{ \"Mensaje\": \"Debe enviar al menos un parametro\" }", salida.getEntity().toString());
-    }*/
+    }
 
+    public String setParametersforQuery(List<Integer> ids, String params){
+        if (ids.isEmpty()) {
+            return "";
+        }
+        params = params.concat("(");
+        for(int i=0;i<ids.size();i++){
+            params = params.concat(ids.get(i).toString());
+            if (i == ids.size()-1){
+                params = params.concat(")");
+            }
+            else{
+                params = params.concat(",");
+            }
+        }
+        return params;
+    }
 }

@@ -1,7 +1,14 @@
 package webService.M01_Login;
 
+import DTO.M01_DTO.DTOLogin;
 import Entities.M01_Login.*;
 import Exceptions.UserBlockedException;
+import Logic.CommandsFactory;
+import Logic.M01_Login.LogUserCommand;
+import Mappers.LoginMapper.LoginMapper;
+import Mappers.MapperFactory;
+import Persistence.M01_Login.DAOUser;
+import Persistence.M01_Login.DAOPrivilege;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -18,10 +25,11 @@ import java.util.logging.Logger;
 public class M01_Login {
 
     Gson _gson = new Gson();
-    UserDAO _userDAO = new UserDAO();
+    DAOUser _userDAO = new DAOUser();
 
     /**
-     * This method is the connection between front-end and back-end. Verifies that the input data matches with the data in the Data Base.
+     * This method is the connection between front-end and back-end. Verifies that the input data matches with the data
+     * in the Data Base.
      * @param loginIntent
      * @return Response
      */
@@ -32,6 +40,14 @@ public class M01_Login {
     public Response login( LoginIntent loginIntent){
         Error error;
         User user;
+//        try {
+//            LogUserCommand _command = CommandsFactory.createLogUserCommand(user);
+//            _command.execute();
+            LoginMapper _mapper = MapperFactory.createLoginMapper();
+//            ArrayList<Entity> _user = _command.ReturnList();
+//            DTOLogin _dtoLog = _mapper.CreateDto(user);
+//            _rb.entity( _gson.toJson( _dtoLog ) ) ;
+//        }
         try {
             if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
                     loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){

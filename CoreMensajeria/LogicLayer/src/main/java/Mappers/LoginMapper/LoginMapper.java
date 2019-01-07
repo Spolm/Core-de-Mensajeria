@@ -1,29 +1,29 @@
 package Mappers.LoginMapper;
 
-import DTO.DTO;
+import DTO.M01_DTO.DTOLogin;
 import Entities.Entity;
 import Mappers.GenericMapper;
 
 import java.util.List;
 
-public class LoginMapper extends GenericMapper <DTO> {
+public class LoginMapper extends GenericMapper <DTOLogin> {
     @Override
-    public DTO CreateDto(Entity entity) {
+    public DTOLogin CreateDto(Entity entity) {
         return null;
     }
 
     @Override
-    public List<DTO> CreateDtoList(List<Entity> entities) {
+    public Entity CreateEntity(DTOLogin dtoLogin) {
         return null;
     }
 
     @Override
-    public List<Entity> CreateEntityList(List<DTO> dtos) {
+    public List<DTOLogin> CreateDtoList(List<Entity> entities) {
         return null;
     }
 
     @Override
-    public Entity CreateEntity(DTO dto) {
+    public List<Entity> CreateEntityList(List<DTOLogin> dtoLogins) {
         return null;
     }
 }
