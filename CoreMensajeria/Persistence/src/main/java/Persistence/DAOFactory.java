@@ -1,6 +1,6 @@
 package Persistence;
 
-import Persistence.M01_Login.GetUserDao;
+import Persistence.M01_Login.DAOUser;
 import Persistence.M07_Template.DAOMessage;
 import Persistence.M07_Template.DAOParameter;
 import Persistence.M07_Template.DAOPlanning;
@@ -14,8 +14,8 @@ public class DAOFactory {
 
     //region M01
 
-    static public GetUserDao instanciateDaoUser () {
-        return new GetUserDao();
+    static public DAOUser instanciateDaoUser () {
+        return new DAOUser();
     }
 
     //endregion

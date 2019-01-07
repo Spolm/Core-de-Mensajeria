@@ -2,9 +2,7 @@ package webService.M02_CompanyManagement;
 
 import DTO.DTOFactory;
 import DTO.M02_DTO.*;
-import DTO.M03_DTO.DTOCampaignWithOut_Company;
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
 import Entities.M02_Company.CompanyDAO;
 import Entities.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
@@ -24,10 +22,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.FileHandler;
 import java.util.logging.Logger;
-import java.util.logging.Level;
-import java.io.IOException;
 
 /**
  * Clase encargada de enviar la informacion al frontend de la aplicacion
@@ -308,8 +303,8 @@ public class M02_Companies {
             MapperFullCompany _mapper = MapperFactory.CreateMapperFullCompany();
             ArrayList< Entity > _comp = _command.ReturnList();
             List< DTOFullCompany >_dtoCo = _mapper.CreateDtoList( _comp );
-             _rb.entity( gson.toJson( _dtoCo ) ) ;
-             return _rb.build();
+            _rb.entity( gson.toJson( _dtoCo ) ) ;
+            return _rb.build();
         }
 
         catch ( Exception e ){

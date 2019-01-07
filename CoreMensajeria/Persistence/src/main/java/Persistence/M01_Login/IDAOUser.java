@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public interface IDAOUser extends IDAO {
 
     Entity user(Entity e) throws SQLException;
-    ArrayList<User> getUsers(Entity e) throws SQLException;
+    ArrayList<Entity> getUsers() throws SQLException;
 
 
 }
