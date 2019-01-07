@@ -148,12 +148,12 @@ public class DAOMessage extends DAO implements IDAOMessage {
             preparedStatement = _conn.prepareCall( GET_MESSAGE_BY_TEMPLATE );
             preparedStatement.setInt( 1, id );
             ResultSet _rs = preparedStatement.executeQuery();
-
-            _m = EntityFactory.CreateMessage(
-                    _rs.getInt("messageid"),
-                    _daoParameter.getParametersByMessage(id),
-                    _rs.getString("messagetext")
-                    );
+            if(_rs.next())
+                _m = EntityFactory.CreateMessage(
+                        _rs.getInt("messageid"),
+                        _daoParameter.getParametersByMessage(id),
+                        _rs.getString("messagetext")
+                        );
 
         } catch ( SQLException e ) {
             e.printStackTrace();

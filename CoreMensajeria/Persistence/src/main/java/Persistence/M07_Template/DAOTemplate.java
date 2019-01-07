@@ -39,7 +39,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
     final String CREATE_TEMPLATE_WITH_APP= "{CALL m07_posttemplate(?,?,?)}";
     final String CREATE_TEMPLATE_WITHOUT_APP= "{CALL m07_posttemplate2(?,?)}";
-    final String GET_TEMPLATE= "{CALL m07_get_template(?)}";
+    final String GET_TEMPLATE= "{CALL m07_gettemplate(?)}";
     final String GET_ALL_TEMPLATES= "{m07_select_all_templates()}";
     final String GET__CAMPAIGN_BY_TEMPLATE = "{ CALL m07_getcampaignbytemplate(?) }";
     final String GET_CAMPAIGN_BY_USER_COMPANY = "{call m07_select_campaign_by_user_company(?,?,?)}}";
@@ -150,10 +150,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             preparedStatement = _conn.prepareCall( GET_TEMPLATE );
             preparedStatement.setInt( 1, templateId );
             ResultSet _rs = preparedStatement.executeQuery();
-
-            _t = this.createTemplate(_rs);
-
-
+            if(_rs.next())
+                _t = this.createTemplate(_rs);;
         }
         catch (SQLException el){
             el.printStackTrace();
@@ -214,8 +212,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             //instanciando el api de campana
             CampaignDAO campaignsService = new CampaignDAO();
             //obtener objeto campana con el id de campana del query anterior
-            campaign = campaignsService.getDetails
-                    ( _rs.getInt("tem_campaign_id") );
+            if(_rs.next())
+                campaign = campaignsService.getDetails
+                        ( _rs.getInt("tem_campaign_id") );
         } catch (SQLException e){
             e.printStackTrace();
             throw new TemplateDoesntExistsException
