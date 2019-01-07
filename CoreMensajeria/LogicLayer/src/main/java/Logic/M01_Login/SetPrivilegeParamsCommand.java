@@ -8,12 +8,12 @@ import Logic.Command;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SetPrivilegeParams extends Command {
+public class SetPrivilegeParamsCommand extends Command {
     private static ResultSet _result;
     private static Privilege _privilege;
     private static Entity _us;
 
-    public SetPrivilegeParams (ResultSet result, Privilege privilege){
+    public SetPrivilegeParamsCommand(ResultSet result, Privilege privilege){
         this._result = result;
         this._privilege = privilege;
     }
@@ -30,4 +30,5 @@ public class SetPrivilegeParams extends Command {
     @Override
     public Entity Return() { return _us;}
 }
-}
+
+

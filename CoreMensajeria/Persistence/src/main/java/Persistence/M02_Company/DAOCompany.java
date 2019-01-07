@@ -1,14 +1,11 @@
 package Persistence.M02_Company;
 
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
-import Entities.M01_Login.User;
+import Entities.EntityFactory;
 import Entities.M02_Company.Company;
 import Entities.M06_DataOrigin.PathHandler;
 import Entities.Sql;
-import Exceptions.CompanyDoesntExistsException;
-import Exceptions.ParameterCantBeNullException;
-import Persistence.DAO;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

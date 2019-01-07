@@ -1,12 +1,11 @@
 package Persistence.M03_Campaign;
 
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M01_Login.User;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 import Entities.Sql;
-import Exceptions.CampaignDoesntExistsException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

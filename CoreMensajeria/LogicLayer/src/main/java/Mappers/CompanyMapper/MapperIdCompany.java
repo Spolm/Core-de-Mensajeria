@@ -1,17 +1,15 @@
 package Mappers.CompanyMapper;
 
 import DTO.DTOFactory;
-import DTO.M02_DTO.DTOFullCompany;
 import DTO.M02_DTO.DTOIdCompany;
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M02_Company.Company;
 import Mappers.GenericMapper;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class MapperIdCompany extends GenericMapper<DTOIdCompany> {
 

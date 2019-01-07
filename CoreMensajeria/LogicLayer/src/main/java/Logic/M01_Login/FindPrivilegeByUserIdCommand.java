@@ -21,13 +21,18 @@ public class FindPrivilegeByUserIdCommand extends Command {
     }
     @Override
     public ArrayList<Privilege> Return() {
+        ArrayList<Privilege> priList = new ArrayList<>();
+
         try{
+
             PrivilegeDao dao = new PrivilegeDao();
-            return dao.findPrivilegesByUserId(_id);
+            priList = dao.findPrivilegesByUserId(_id);
+
         }
+
         catch (Exception e){
 
         }
-
+        return priList;
     }
 }

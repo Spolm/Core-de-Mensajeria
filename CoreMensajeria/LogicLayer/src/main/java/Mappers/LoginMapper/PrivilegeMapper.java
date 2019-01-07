@@ -3,7 +3,7 @@ package Mappers.LoginMapper;
 import DTO.DTOFactory;
 import DTO.M01_DTO.DTOPrivilege;
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M01_Login.Privilege;
 
 import Mappers.GenericMapper;
@@ -11,7 +11,7 @@ import Mappers.GenericMapper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapperFullPrivilege extends GenericMapper <DTOPrivilege> {
+public class PrivilegeMapper extends GenericMapper <DTOPrivilege> {
 
 
     /**
@@ -20,9 +20,9 @@ public class MapperFullPrivilege extends GenericMapper <DTOPrivilege> {
      * @return un objeto del tipo DTOFullCampaign
      */
     @Override
-    public DTOFullPrivilege CreateDto(Entity entity) {
+    public DTOPrivilege CreateDto(Entity entity) {
         try {
-            DTOFullPrivilege dto = null;
+            DTOPrivilege dto = null;
             Privilege _pri = (Privilege) entity;
             dto = DTOFactory.CreateDTOPrivilege(_pri.get_idPrivileges(), _pri.get_codePrivileges(),
                                                    _pri.get_actionPrivileges());
@@ -35,18 +35,17 @@ public class MapperFullPrivilege extends GenericMapper <DTOPrivilege> {
         }
     }
 
-
     /**
      * Metodo con el cual se transforma de una lista de entidades a una lista de dto
      * @param entities Entidad que recibe para hacer el mapeo
      * @return una lista de objetos del tipo DTOFullPrivilege
      */
     @Override
-    public List<DTOFullPrivilege> CreateDtoList(List<Entity> entities) {
+    public List<DTOPrivilege> CreateDtoList(List<Entity> entities) {
 
         try
         {
-            ArrayList<DTOFullPrivilege> dtos = new ArrayList<>();
+            ArrayList<DTOPrivilege> dtos = new ArrayList<>();
 
             for (Entity _pri : entities) {
                 dtos.add( CreateDto( _pri ) );
@@ -62,19 +61,38 @@ public class MapperFullPrivilege extends GenericMapper <DTOPrivilege> {
     }
 
 
+
+    /**
+     * Metodo con el cual se transforma un DTOFullCampaign a una Entidad Campaign
+     * @param dto Entidad que recibe para hacer el mapeo
+     * @return una lista de Entidades del tipo Campaign
+     */
+    @Override
+    public Entity CreateEntity(DTOPrivilege dto) {
+
+        try {
+            Entity _pri = EntityFactory.privilege(dto.get_idPrivileges(), dto.get_codePrivileges(),
+                                                            dto.get_actionPrivileges());
+            return _pri ;
+
+        }
+        catch (Exception e){
+            throw e;
+        }
+    }
     /**
      * Metodo con el cual se transforma de una lista de dtos a una lista de entidades
      * @param dtos Entidad que recibe para hacer el mapeo
      * @return una lista de Entidades del tipo Campaign
      */
     @Override
-    public List<Entity> CreateEntityList(List<DTOFullPrivilege> dtos) {
+    public List<Entity> CreateEntityList(List<DTOPrivilege> dtos) {
 
         try
         {
             ArrayList<Entity> Privilege = new ArrayList<>();
 
-            for (DTOFullCampaign _dtopri : dtos) {
+            for (DTOPrivilege _dtopri : dtos) {
                 Privilege.add ( CreateEntity ( _dtopri ) );
             }
 
@@ -83,26 +101,6 @@ public class MapperFullPrivilege extends GenericMapper <DTOPrivilege> {
         }
         catch (Exception e)
         {
-            throw e;
-        }
-    }
-
-
-    /**
-     * Metodo con el cual se transforma un DTOFullCampaign a una Entidad Campaign
-     * @param dto Entidad que recibe para hacer el mapeo
-     * @return una lista de Entidades del tipo Campaign
-     */
-    @Override
-    public Entity CreateEntity(DTOFullPrivilege dto) {
-
-        try {
-            Campaign _pri = EntityFactory.privilege(dto.get_idPrivileges(), dto.get_codePrivileges(),
-                                                            dto.get_actionPrivileges());
-            return _pri ;
-
-        }
-        catch (Exception e){
             throw e;
         }
     }

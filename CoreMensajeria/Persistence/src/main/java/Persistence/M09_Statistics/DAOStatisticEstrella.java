@@ -1,16 +1,13 @@
 package Persistence.M09_Statistics;
 
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M03_Campaign.Campaign;
 import Entities.M05_Channel.Channel;
 import Entities.M05_Channel.ChannelFactory;
 import Entities.M09_Statistics.FilterType;
-import Entities.M09_Statistics.SqlEstrella;
 import Entities.M09_Statistics.Statistics;
-import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
-import Exceptions.CompanyDoesntExistsException;
 import Persistence.DAOEstrella;
 
 import java.sql.*;
@@ -87,7 +84,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         String query = "SELECT DISTINCT c.com_id, c.com_name, messages from dim_company_campaign c, " +
                 "(select sen_com_id, count(*) as messages from fact_sent_message " +
                 "group by sen_com_id) as m where c.com_id = m.sen_com_id ORDER BY c.com_id ASC;";
-        Statistics companiesStatistic =EntityFactory.createStatistic();
+        Statistics companiesStatistic = EntityFactory.createStatistic();
         try {
             Statement statement = _conn.createStatement();
             ResultSet result = statement.executeQuery(query);

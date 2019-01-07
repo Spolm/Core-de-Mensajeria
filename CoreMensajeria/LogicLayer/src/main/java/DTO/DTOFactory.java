@@ -1,7 +1,7 @@
 package DTO;
 
-import DTO.M01_DTO.DTOUser;
 import DTO.M01_DTO.DTOPrivilege;
+import DTO.M01_DTO.DTOUser;
 import DTO.M02_DTO.*;
 import DTO.M03_DTO.*;
 import DTO.M07_Template.DTOMessage;
@@ -62,7 +62,7 @@ public class DTOFactory {
      */
 
       
-    public static DTOUser CreateDTOPrivilege(int _idPrivileges, String _codePrivileges, String _actionPrivileges) {
+    public static DTOPrivilege CreateDTOPrivilege(int _idPrivileges, String _codePrivileges, String _actionPrivileges) {
 
         return new DTOPrivilege(_idPrivileges,_codePrivileges,_actionPrivileges);
 

@@ -2,9 +2,7 @@ package webService.M02_CompanyManagement;
 
 import DTO.DTOFactory;
 import DTO.M02_DTO.*;
-import DTO.M03_DTO.DTOCampaignWithOut_Company;
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
 import Entities.M02_Company.CompanyDAO;
 import Entities.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
@@ -16,16 +14,12 @@ import Logic.M02_Company.GetAllCompaniesCommand;
 import Logic.M02_Company.GetCompanyByUserCommand;
 import Mappers.CompanyMapper.*;
 import Mappers.MapperFactory;
-import Persistence.M02_Company.DAOCompany;
 import com.google.gson.Gson;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.FileHandler;
 import java.util.logging.Logger;
-import java.util.logging.Level;
-import java.io.IOException;
 
 /**
  * Clase encargada de enviar la informacion al frontend de la aplicacion
