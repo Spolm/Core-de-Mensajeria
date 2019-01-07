@@ -48,7 +48,7 @@ public class CommandGetMessage extends Command<Message> {
                 _message.set_destiny( _commandGetTagValue.Return());
                 NodeList nodeList = element.getElementsByTagName("parameter");
 
-                idMessage = _template.getMessage().getMessageId();   ////// cambiar por comando plantilla
+                idMessage = _template.getMessage().get_id();   ////// cambiar por comando plantilla
                 _parameterList = ParameterHandler.getParametersByMessage(idMessage); /////// cambiar por comando plantilla
 
                 if(nodeList.getLength() >= _parameterList.size()){
