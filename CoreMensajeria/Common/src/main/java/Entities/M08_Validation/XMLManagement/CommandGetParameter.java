@@ -9,6 +9,9 @@ import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class CommandGetParameter extends Command<ParameterXML> {
 
     private Node _node;
@@ -22,6 +25,9 @@ public class CommandGetParameter extends Command<ParameterXML> {
         this._parameters = parameter;
     }
 
+    /**
+     *
+     */
     @Override
     public void execute() { //////////////// Rodear de try catch y hacer excepcion personalizada
         try {
@@ -50,6 +56,10 @@ public class CommandGetParameter extends Command<ParameterXML> {
         }
     }
 
+    /**
+     * @param parameter
+     * @return
+     */
     public boolean findParameter(String parameter){
         for (Parameter param : _parameters){
             String singleParam = param.getName();
@@ -61,6 +71,9 @@ public class CommandGetParameter extends Command<ParameterXML> {
         return false;
     }
 
+    /**
+     * @return
+     */
     @Override
     public ParameterXML Return() {
         return _parameterXML;
