@@ -1,6 +1,7 @@
 package Entities.M10_Profile;
+import Entities.Entity;
 
-public class CreateUserRequestBody {
+public class CreateUserRequestBody extends Entity{
     private String _usernameUser;
     private String _emailUser;
     private String _birthdateUser;
