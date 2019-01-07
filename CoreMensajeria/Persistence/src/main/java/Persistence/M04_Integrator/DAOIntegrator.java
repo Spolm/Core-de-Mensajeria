@@ -3,14 +3,12 @@ package Persistence.M04_Integrator;
 import Entities.Entity;
 import Entities.Factory.EntityFactory;
 import Entities.M04_Integrator.Integrator;
-import Entities.M04_Integrator.IntegratorDAO;
 import Entities.M05_Channel.Channel;
 import Entities.Sql;
 import Exceptions.ChannelNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
 import Exceptions.IntegratorNotFoundException;
 import Persistence.DAO;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +16,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DAOIntegrator extends DAO implements IDAOIntegrator {
+
+    private final String SELECT_ALL_INTEGRATORS_BY_CHANNEL = "{call m04_getIntegratorsByChannel(?)}";
 
     private Connection _conn;
     private Integrator _integrator;
@@ -147,6 +147,40 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
         }
     }
 
+    /**
+     * Retorna una lista de integradores por canal.
+     * Este método retorna una lista de integradores, en caso de no tener
+     * el archivo se encontrara en blanco.
+     *
+     * @return Lista de canales
+     * @see Channel
+     * @see Integrator
+     */
+
+    public ArrayList<Entity> listIntegratorByChannel(Entity e) throws DatabaseConnectionProblemException, ChannelNotFoundException {
+        try {
+            Channel channel = (Channel) e;
+            Sql.bdClose(_conn);
+            _conn = Sql.getConInstance();
+            ArrayList<Entity> integratorList = new ArrayList<>();
+            PreparedStatement preparedStatement = _conn.prepareCall(SELECT_ALL_INTEGRATORS_BY_CHANNEL);
+            preparedStatement.setInt(1, channel.get_id());
+            ResultSet result = preparedStatement.executeQuery();
+
+            while (result.next())
+                integratorList.add(extractIntegrator(result));
+            if (integratorList.size() == 0)
+                throw new ChannelNotFoundException("El canal no existe");
+
+            return integratorList;
+        }
+        catch (SQLException ex) {
+            throw new DatabaseConnectionProblemException("Error de comunicacion con la base de datos.", ex);
+        }
+        finally {
+            Sql.bdClose(_conn);
+        }
+    }
 
     /**
      *
@@ -163,9 +197,7 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
     }
 
     @Override
-    public void create(Entity e) {
-
-    }
+    public void create(Entity e) {}
 
     @Override
     public Entity read(Entity e) {
