@@ -64,4 +64,14 @@ public class DAOPrivilege extends DAO implements IDAOPrivilege {
     public Entity update(Entity e) {
         return null;
     }
+
+    @Override
+    public Entity privilege(Entity e) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Entity> getPrivileges() throws SQLException {
+        return null;
+    }
 }

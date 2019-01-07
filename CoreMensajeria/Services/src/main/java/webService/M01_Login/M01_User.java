@@ -2,13 +2,18 @@ package webService.M01_Login;
 
 import DTO.M01_DTO.DTOUser;
 import Entities.Entity;
-import Entities.M01_Login.PrivilegeDao;
+//import Entities.M01_Login.PrivilegeDao;
 import Entities.M01_Login.User;
+import Logic.M01_Login.FindPrivilegeByUserIdCommand;
+import Logic.M01_Login.SetPrivilegeParamsCommand;
+
 import Logic.CommandsFactory;
 import Logic.M01_Login.GetAllUsersCommand;
 import Mappers.LoginMapper.UserMapper;
+
 import Mappers.MapperFactory;
 import Persistence.M01_Login.DAOUser;
+import Persistence.M01_Login.DAOPrivilege;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -23,7 +28,7 @@ public class M01_User {
 
     Gson _gson = new Gson();
     DAOUser _userDAO = new DAOUser();
-    PrivilegeDao _privilegeDAO = new PrivilegeDao();
+    DAOPrivilege _privilegeDAO = new DAOPrivilege();
 
     /**
      * This method returns a response from the server when it gets

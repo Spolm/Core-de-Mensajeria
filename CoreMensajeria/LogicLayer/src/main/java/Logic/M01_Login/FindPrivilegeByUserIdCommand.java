@@ -2,7 +2,7 @@ package Logic.M01_Login;
 
 import Entities.Entity;
 import Entities.M01_Login.Privilege;
-import Entities.M01_Login.PrivilegeDao;
+import Persistence.M01_Login.DAOPrivilege;
 import Logic.Command;
 
 import java.sql.SQLException;
@@ -25,7 +25,7 @@ public class FindPrivilegeByUserIdCommand extends Command {
 
         try{
 
-            PrivilegeDao dao = new PrivilegeDao();
+            DAOPrivilege dao = new DAOPrivilege();
             priList = dao.findPrivilegesByUserId(_id);
 
         }

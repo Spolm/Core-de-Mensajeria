@@ -8,6 +8,7 @@ import Logic.M01_Login.LogUserCommand;
 import Mappers.LoginMapper.LoginMapper;
 import Mappers.MapperFactory;
 import Persistence.M01_Login.DAOUser;
+import Persistence.M01_Login.DAOPrivilege;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;

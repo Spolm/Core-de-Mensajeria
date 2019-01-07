@@ -4,6 +4,7 @@ import Entities.Entity;
 import Entities.M01_Login.Privilege;
 import Entities.M01_Login.PrivilegeDao;
 import Logic.Command;
+import Persistence.M01_Login.DAOPrivilege;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ public class SetPrivilegeParamsCommand extends Command {
     @Override
     public void execute() throws SQLException {
         try{
-            PrivilegeDao dao = new PrivilegeDao();
+            DAOPrivilege dao = new DAOPrivilege();
             dao.setPrivilegeParams(_result,_privilege);
         }
         catch (Exception e){
