@@ -89,5 +89,5 @@ public class MapperFactory {
      * Metodo que instancia un objeto del tipo StatisticMapper
      * @return un objeto del tipo StatisticMapper
      */
-    public static GenericMapper createStatisticMapper(){ return new StatisticMapper();}
+    public static StatisticMapper createStatisticMapper(){ return new StatisticMapper();}
 }

@@ -1,6 +1,8 @@
 package webService.M09_StatisticsManagement;
 
 import DTO.DTO;
+import DTO.M03_DTO.DTOCampaignWithOut_Company;
+import DTO.M09_DTO.DTOStatistic;
 import Entities.Entity;
 import Entities.M05_Channel.Channel;
 import Exceptions.CampaignDoesntExistsException;
@@ -41,11 +43,11 @@ public class M09_Statistics extends Application {
     public Response getAllCompanies(@QueryParam("userId") Integer userId) {
         Command<ArrayList<Entity>> command = CommandsFactory.getAllCompaniesByUserCommand(userId);
         try {
+            List<DTO> dto;
+            mapper = MapperFactory.CreateMapperCompanyWithOut_Link();
             command.execute();
-            mapper = new MapperCompanyWithOut_Link();
-            return Response.ok(gson.toJson(
-                    mapper.CreateDtoList(command.Return())
-            )).build();
+            dto = mapper.CreateDtoList(command.Return());
+            return Response.ok(gson.toJson(dto)).build();
         } catch(CompanyDoesntExistsException e) {
             return Response.serverError().build();
         }catch (Exception e) {
@@ -59,11 +61,11 @@ public class M09_Statistics extends Application {
     public Response getCampaignsForCompany(@QueryParam("companyId") List<Integer> companyIds) {
         Command<ArrayList<Entity>> command = CommandsFactory.getCampaignsForCompanyCommand(companyIds);
         try {
+            List<DTO> dto;
+            mapper = MapperFactory.CreateMapperCampaignWithOut_Company();
             command.execute();
-            mapper = new MapperCampaignWithOut_Company();
-            return Response.ok(gson.toJson(
-                    mapper.CreateDtoList(command.Return())
-            )).build();
+            dto = mapper.CreateDtoList(command.Return());
+            return Response.ok(gson.toJson(dto)).build();
         } catch(CampaignDoesntExistsException e) {
             return Response.serverError().build();
         }catch (Exception e) {
@@ -136,11 +138,11 @@ public class M09_Statistics extends Application {
 
     private Response getStadisticCount(Command<Entity> command) {
         try {
+            GenericMapper<DTOStatistic> mapper;
             command.execute();
             mapper = MapperFactory.createStatisticMapper();
-            return Response.ok(gson.toJson(
-                    mapper.CreateDto(command.Return())
-            )).build();
+            dto = mapper.CreateDto(command.Return());
+            return Response.ok(gson.toJson(dto)).build();
         } catch (Exception e) {
             return Response.serverError().build();
         }
