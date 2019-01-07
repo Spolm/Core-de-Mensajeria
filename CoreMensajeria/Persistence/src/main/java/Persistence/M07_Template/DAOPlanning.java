@@ -80,10 +80,11 @@ public class DAOPlanning  extends DAO implements IDAOPlanning {
     }
 
 
-    public void updatePlanning(String[] planning, int templateId) {
+    public void updatePlanning(Planning planning, int templateId) {
         Connection connection = getBdConnect();
         String query = "update public.Planning \n" +
-                "set pla_start_date = '" + planning[0] + "',pla_start_time = '" + planning[2] + "', pla_end_date = '" + planning[1] + "', pla_end_time = '" + planning[3] + "'" +
+                "set pla_start_date = '" + planning.getStartDate() + "',pla_start_time = '" + planning.getStartTime() +
+                "', pla_end_date = '" + planning.getEndDate() + "', pla_end_time = '" + planning.getEndTime() + "'" +
                 "where pla_template_id = " + templateId;
         try{
             _st=connection.createStatement();

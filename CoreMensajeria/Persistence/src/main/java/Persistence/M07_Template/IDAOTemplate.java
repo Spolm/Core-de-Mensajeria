@@ -28,4 +28,8 @@ public interface IDAOTemplate extends IDAO {
     public ArrayList<Channel> getChannelsByTemplate(int templateId);
 
     public ArrayList<Privilege> getTemplatePrivilegesByUser(int userId, int companyId);
+
+    public boolean updateTemplateData(Entity e);
+
+    public void updateTemplate(int campaignId,int applicationId, int templateId);
 }

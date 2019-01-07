@@ -46,6 +46,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     final String GET_APPLICATION_BY_TEMPLATE = "{call m07_select_applicantion_by_template(?)}";
     final String GET_CHANNEL_BY_TEMPLATE = "{call m07_select_channels_by_template(?)}";
     final String GET_PRIVILEGES_TEMPLATE = "{call m07_select_privileges_by_user_company(?,?)}";
+    final String UPDATE_TEMPLATE_WITH_APP = "{CALL m07_updatetemplate(?,?,?)}";
+    final String UPDATE_TEMPLATE_WITHOUT_APP = "{CALL m07_updatetemplate2(?,?)}";
     private static final String GET_CAMAPIGN_BY_ID = "select* from public.campaign where cam_id = ? "; //Cambiar por SP
 
     @Override
@@ -76,20 +78,21 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         DAOPlanning _daoPlanning = DAOFactory.instaciateDaoPlanning();
 
         try {
+            //
             int templateId = postTemplate(_t.getCampaign().get_id(), _t.getApplication().get_idApplication(), _t.getUser().get_id() );
             //se establece el template  como no aprobado
             StatusHandler.postTemplateStatusNoAprovado(templateId);
             //insertamos los nuevos parametros
             _daoParameter.postParameter( _t.getMessage().getParameterArrayList(), _t.getCompanyId() ); //Este codigo no va aqui
             //obtenemos el valor del mensaje,y parametros
-            _daoMessage.postMessage(_t.getMessage(), _t.getCompanyId());
+            _daoMessage.postMessage(_t.getMessage(), _t.getCompanyId(), templateId);
 
             //obtenemos los valores de los canales e integradores
             //JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
             //postChannelIntegrator(channelIntegrator,templateId);
 
             //planning
-            _daoPlanning.postPlanning( _t.getPlanning(), _t.get_id());
+            _daoPlanning.postPlanning( _t.getPlanning(), templateId);
         } catch (Exception ex){
             System.out.println(ex);
             return false;
@@ -409,7 +412,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     }
 
     /**
-     * WHY THIS?!?!?
+     * Store Channel and Integrator NEED TO CHANGE THIS
      * @param channelIntegratorList
      * @param templateId
      */
@@ -439,6 +442,99 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }
     }
 
+    /**
+     * Update template
+     * @param e
+     * @return
+     */
+    @Override
+    public boolean updateTemplateData(Entity e) {
+        Template _t = (Template) e;
+        DAOParameter _daoParameter = DAOFactory.instaciateDaoParameter();
+        DAOMessage _daoMessage = DAOFactory.instaciateDaoMessage();
+        DAOPlanning _daoPlanning = DAOFactory.instaciateDaoPlanning();
+
+        try {
+            updateTemplate(_t.getCampaign().get_id(), _t.getApplication().get_idApplication(), _t.getUser().get_id());
+
+            //insertamos los nuevos parametros
+            _daoParameter.postParameter( _t.getMessage().getParameterArrayList(), _t.getCompanyId() ); //Este codigo no va aqui
+
+            //update de mensaje
+            _daoMessage.updateMessage(_t.getMessage(), _t.getCompanyId(), _t.get_id());
+
+            //update de Channel Integrator
+            //JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
+            //updateChannelIntegrator(channelIntegrator,gsonObj.get("templateId").getAsInt());
+
+            //planning
+            _daoPlanning.updatePlanning( _t.getPlanning(), _t.get_id());
+
+
+        } catch (Exception ex){
+            System.out.println(ex);
+            return false;
+        }
+
+        this.closeConnection();
+        return true;
+    }
+
+    @Override
+    public void updateTemplate(int campaignId, int applicationId, int templateId ) {
+        Connection _conn = this.getBdConnect();
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            //Buscar manera de quitar este IF
+            if( applicationId > 0){
+                preparedStatement = _conn.prepareCall( UPDATE_TEMPLATE_WITH_APP );
+                preparedStatement.setInt(1, campaignId );
+                preparedStatement.setInt(2, applicationId );
+                preparedStatement.setInt(3, templateId );
+            }
+            else{
+                preparedStatement = _conn.prepareCall( UPDATE_TEMPLATE_WITHOUT_APP );
+                preparedStatement.setInt(1, campaignId );
+                preparedStatement.setInt(2, templateId );
+            }
+
+            preparedStatement.execute();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        this.closeConnection();
+    }
+
+    /**
+     * Update Channel and integrator, NEED TO CHANGE THIS
+     * @param channelIntegratorList
+     * @param templateId
+     */
+    private void updateChannelIntegrator(JsonArray channelIntegratorList, int templateId) {
+        Sql sql = new Sql();
+        String query = "DELETE FROM public.template_channel_integrator\n" +
+                "WHERE tci_template_id = " + templateId;
+        try{
+            sql.sqlNoReturn(query);
+            postChannelIntegrator(channelIntegratorList,templateId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch(Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(sql.getConn());
+        }
+    }
+
+    /**
+     * Private function for creating Template Entity out of ResultSet
+     * @param _rs
+     * @return
+     */
     private Entity createTemplate(ResultSet _rs){
         Entity _t = null;
         try{
