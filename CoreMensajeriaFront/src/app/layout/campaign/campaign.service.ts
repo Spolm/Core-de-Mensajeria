@@ -45,7 +45,8 @@ export class CampaignService {
 
 
   editCampaign (opcamp): Observable<any> {
-    return this.http.post<any>(endpoint + '/Edit/Campaign', opcamp, httpOptions).pipe(
+    console.log(opcamp)
+    return this.http.put<any>(endpoint + 'Edit/Campaign', opcamp, httpOptions).pipe(
       tap((campaign) => console.log(`Campaign added w/ ${opcamp._nameCampaign}`)),
     );
   }

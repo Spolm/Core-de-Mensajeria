@@ -58,6 +58,8 @@ export class ModifyCampaignComponent implements OnInit {
 
 
   editCompany() {
+    var sDate =  new Date(this.opcamp._startCampaign)
+    console.log(sDate.toISOString);
     this.opcamp._startCampaign = this.opcamp._startCampaign+"T02:06:58.147"
     this.opcamp._endCampaign = this.opcamp._endCampaign+"T02:06:58.147"
     this.campaignService.editCampaign(this.opcamp).toPromise().then(res => {
