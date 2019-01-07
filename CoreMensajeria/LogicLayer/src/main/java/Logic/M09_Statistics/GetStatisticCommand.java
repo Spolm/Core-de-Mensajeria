@@ -1,7 +1,7 @@
 package Logic.M09_Statistics;
 
 import Entities.Entity;
-import Exceptions.StatisticParametersNotFoundException;
+import Exceptions.M09_Statistic.StatisticParametersNotFoundException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M09_Statistics.DAOStatisticEstrella;

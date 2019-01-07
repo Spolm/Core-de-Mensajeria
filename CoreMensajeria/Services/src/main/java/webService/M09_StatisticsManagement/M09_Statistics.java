@@ -1,19 +1,15 @@
 package webService.M09_StatisticsManagement;
 
 import DTO.DTO;
-import DTO.M03_DTO.DTOCampaignWithOut_Company;
 import DTO.M09_DTO.DTOStatistic;
 import Entities.Entity;
 import Entities.M05_Channel.Channel;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
-import Exceptions.StatisticParametersNotFoundException;
+import Exceptions.M09_Statistic.StatisticParametersNotFoundException;
 import Logic.Command;
 import Logic.CommandsFactory;
-import Logic.M09_Statistics.*;
-import Mappers.CampaignMapper.MapperCampaignWithOut_Company;
-import Mappers.CompanyMapper.MapperCompanyWithOut_Link;
 import Mappers.GenericMapper;
 import Mappers.MapperFactory;
 import com.google.gson.Gson;
