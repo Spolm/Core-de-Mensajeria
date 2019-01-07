@@ -3,9 +3,12 @@ package Persistence.M07_Template;
 import Entities.Entity;
 import Entities.EntityFactory;
 import Entities.M03_Campaign.Campaign;
+import Entities.M07_Template.HandlerPackage.ParameterHandler;
 import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.MessagePackage.Parameter;
+import Entities.M07_Template.Template;
 import Entities.Sql;
+import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Persistence.DAO;
 import Persistence.DAOFactory;
@@ -21,9 +24,8 @@ import java.util.ArrayList;
 public class DAOMessage extends DAO implements IDAOMessage {
 
     final String CREATE_MESSAGE= "{CALL m07_insertmessage(?,?)}";
-    final String GET_MESSAGE= "{CALL m07_get_message(?)}";
     final String GET_MESSAGE_BY_TEMPLATE= "{CALL m07_select_message(?)}";
-    final String GET_ALL_MESSAGES = "{CALL m07_get_all_messages()}";
+    final String GET_ALL_MESSAGES = "{CALL m07_select_messages(?)}";
     final String UPDATE_MESSAGE = "{CALL m07_updatemessage(?,?)}";
     final String POST_PARAMETER_OF_MESSAGE = "{CALL m07_postparameterofmessage(?,?,?)}";
     final String DELETE_MESSAGE = "{CALL m07_deletemessage(?)}";
@@ -83,24 +85,37 @@ public class DAOMessage extends DAO implements IDAOMessage {
         return null;
     }
 
+    /**
+     * Finds message by template
+     * @param templateId
+     * @return
+     * @throws ParameterDoesntExistsException
+     * @throws MessageDoesntExistsException
+     */
     @Override
-    public Entity get(int id) {
+    public Entity getMessage(int templateId) throws ParameterDoesntExistsException, MessageDoesntExistsException{
         Entity _m  = null;
         Connection _conn = this.getBdConnect();
+        DAOParameter _daoParameter = DAOFactory.instaciateDaoParameter();
 
         PreparedStatement preparedStatement = null;
 
         try {
-            preparedStatement = _conn.prepareCall( GET_MESSAGE );
-            preparedStatement.setInt( 1, id );
+            preparedStatement = _conn.prepareCall( GET_MESSAGE_BY_TEMPLATE );
+            preparedStatement.setInt( 1, templateId );
             ResultSet _rs = preparedStatement.executeQuery();
-
 
             _m = this.createMessage(_rs);
 
-
-        } catch ( SQLException e1 ) {
-            e1.printStackTrace();
+        } catch ( SQLException e ) {
+            e.printStackTrace();
+            throw new MessageDoesntExistsException
+                    ("Error: No existe mensaje para esta plantilla con id:"
+                            + templateId, e, templateId);
+        } catch ( ParameterDoesntExistsException e ){
+            throw new ParameterDoesntExistsException( "No hay mensajes para la plantilla " + templateId, e, templateId );
+        } catch ( Exception e ){
+            e.printStackTrace();
         }
 
         this.closeConnection();
@@ -111,61 +126,31 @@ public class DAOMessage extends DAO implements IDAOMessage {
      * Get all the messages
      * @return
      */
-    public ArrayList<Entity> getAll(){
-        ArrayList<Entity> _m  = null;
-        Connection _conn = this.getBdConnect();
-
-        PreparedStatement preparedStatement = null;
-
-        try {
-            preparedStatement = _conn.prepareCall( GET_ALL_MESSAGES );
-            ResultSet _rs = preparedStatement.executeQuery();
-
-
-            while( _rs.next() ){
-                Entity _message = this.createMessage(_rs);
-                _m.add( _message );
-            }
-
-
-        } catch ( SQLException e1 ) {
-            e1.printStackTrace();
-        }
-
-        this.closeConnection();
-        return _m;
-    }
-
     @Override
-    public Message getMessageByTemplate(int id) {
-        Message _m  = null;
-        Connection _conn = this.getBdConnect();
-        DAOParameter _daoParameter = DAOFactory.instaciateDaoParameter();
-
-        PreparedStatement preparedStatement = null;
-
+    public ArrayList<Template> getMessages(ArrayList<Template> templateArrayList){
         try {
-            preparedStatement = _conn.prepareCall( GET_MESSAGE_BY_TEMPLATE );
-            preparedStatement.setInt( 1, id );
-            ResultSet _rs = preparedStatement.executeQuery();
-            if(_rs.next())
-                _m = EntityFactory.CreateMessage(
-                        _rs.getInt("messageid"),
-                        _daoParameter.getParametersByMessage(id),
-                        _rs.getString("messagetext")
-                        );
-
-        } catch ( SQLException e ) {
+            Connection _conn = this.getBdConnect();
+            PreparedStatement preparedStatement = _conn.prepareCall( GET_ALL_MESSAGES );
+            for(int x = 0; x < templateArrayList.size(); x++){
+                preparedStatement.setInt(1, templateArrayList.get(x).get_id());
+                ResultSet resultSet = preparedStatement.executeQuery();
+                resultSet.next();
+                Message message = new Message();
+                message.set_id(resultSet.getInt("messageId"));
+                message.setMessage(resultSet.getString("messageText"));
+                message.setParameters(ParameterHandler.getParametersByMessage(message.get_id()));
+                templateArrayList.get(x).setMessage(message);
+            }
+        }catch (SQLException e) {
             e.printStackTrace();
-        } catch ( ParameterDoesntExistsException e ){
+        }catch(Exception e){
             e.printStackTrace();
-        } catch ( Exception e ){
-            e.printStackTrace();
+        }finally {
+            this.closeConnection();
+            return templateArrayList;
         }
-
-        this.closeConnection();
-        return _m;
     }
+
 
 
 
@@ -240,7 +225,12 @@ public class DAOMessage extends DAO implements IDAOMessage {
         }
     }
 
-    private Entity createMessage(ResultSet _rs ){
+    /**
+     * Creates message entity
+     * @param _rs
+     * @return
+     */
+    private Entity createMessage( ResultSet _rs )throws ParameterDoesntExistsException{
         Entity _m = null;
         try{
             //Parameters
@@ -254,8 +244,8 @@ public class DAOMessage extends DAO implements IDAOMessage {
                     _rs.getString("messagetext")
                     );
 
-        }catch ( ParameterDoesntExistsException e1 ) {
-            e1.printStackTrace();
+        }catch ( ParameterDoesntExistsException ex ) {
+            throw new ParameterDoesntExistsException( ex );
         }catch ( SQLException e1 ) {
             e1.printStackTrace();
         }

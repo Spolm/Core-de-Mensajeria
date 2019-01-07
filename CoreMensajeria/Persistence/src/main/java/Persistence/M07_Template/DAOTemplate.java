@@ -23,6 +23,8 @@ import Entities.M07_Template.Template;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
+import Exceptions.MessageDoesntExistsException;
+import Exceptions.ParameterDoesntExistsException;
 import Persistence.DAO;
 import Persistence.DAOFactory;
 import com.google.gson.JsonArray;
@@ -138,7 +140,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * @return template
      */
     @Override
-    public Entity get(int templateId) {
+    public Entity get(int templateId) throws TemplateDoesntExistsException, MessageDoesntExistsException, ParameterDoesntExistsException {
         //Entity to Return
         Entity _t  = null;
         Connection _conn = this.getBdConnect();
@@ -153,8 +155,14 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             if(_rs.next())
                 _t = this.createTemplate(_rs);;
         }
-        catch (SQLException el){
-            el.printStackTrace();
+        catch (SQLException ex){
+            ex.printStackTrace();
+            throw new TemplateDoesntExistsException
+                    ("Error: la plantilla " + templateId + " no existe", ex, templateId);
+        } catch ( MessageDoesntExistsException ex ){
+            ex.printStackTrace();
+        } catch ( ParameterDoesntExistsException ex ){
+            ex.printStackTrace();
         }
 
         this.closeConnection();
@@ -166,7 +174,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * @return
      */
     @Override
-    public ArrayList<Entity> getAll() {
+    public ArrayList<Entity> getAll() throws MessageDoesntExistsException, ParameterDoesntExistsException {
         //Entity to Return
         ArrayList<Entity> _t  = null;
         Connection _conn = this.getBdConnect();
@@ -534,7 +542,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * @param _rs
      * @return
      */
-    private Entity createTemplate(ResultSet _rs){
+    private Entity createTemplate(ResultSet _rs) throws ParameterDoesntExistsException, MessageDoesntExistsException{
         Entity _t = null;
         try{
             int templateId = _rs.getInt("tem_id");
@@ -546,7 +554,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             Application _app = this.getApplicationByTemplate( templateId );
 
             //Message
-            Message _message = DAOFactory.instaciateDaoMessage().getMessageByTemplate( templateId );
+            Message _message = ( Message )DAOFactory.instaciateDaoMessage().getMessage( templateId );
 
             //user
             UserDAO _userDao = new UserDAO();
@@ -570,6 +578,10 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             );
         }catch( SQLException ex ){
             ex.printStackTrace();
+        }catch (ParameterDoesntExistsException e) {
+            throw new ParameterDoesntExistsException( e );
+        }catch (MessageDoesntExistsException e){
+            throw new MessageDoesntExistsException( e );
         }
 
         return _t;
