@@ -5,6 +5,7 @@ import Entities.M01_Login.Privilege;
 import Entities.M02_Company.Company;
 import Entities.M05_Channel.Channel;
 import Entities.M06_DataOrigin.Application;
+import Entities.M07_Template.Template;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
@@ -24,7 +25,7 @@ public interface IDAOTemplate extends IDAO {
 
     public Entity getCampaignByTemplate(int id);
 
-    public ArrayList<Company> getTemplatesByCompany(int userID, int companyId);
+    public ArrayList<Template> getTemplatesByCampaign(int userId, int companyId);
 
     public Application getApplicationByTemplate(int templateId);
 
