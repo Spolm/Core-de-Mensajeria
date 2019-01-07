@@ -63,7 +63,7 @@ public class TemplateHandler {
                     template.setChannels(getChannelsByTemplate(template.get_id()));
                     template.setCampaign(campaignArrayList.get(x));
                     template.setApplication(getApplicationByTemplate(template.get_id()));
-                    template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
+                    //template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
                     template.setMessage(MessageHandler.getMessage(template.get_id()));
                     template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
                     templateArrayList.add(template);
