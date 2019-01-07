@@ -1,4 +1,4 @@
-package Logic.M09_Statistics;
+package M09_Statistics;
 
 import Entities.Entity;
 import Entities.M02_Company.Company;

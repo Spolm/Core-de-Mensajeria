@@ -1,16 +1,14 @@
-package Persistence.M09_Statistics;
+package M09_Statistics;
 
 import Entities.Entity;
-import Entities.EntityFactory;
 import Entities.M05_Channel.Channel;
-import Entities.M05_Channel.ChannelEmail;
 import Entities.M09_Statistics.Statistics;
 import Exceptions.CampaignDoesntExistsException;
 import Persistence.DAOFactory;
+import Persistence.M09_Statistics.DAOStatisticEstrella;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DAOStatisticEstrellaTest {
-     DAOStatisticEstrella dao;
+    DAOStatisticEstrella dao;
     Entity entity;
 
     @BeforeEach

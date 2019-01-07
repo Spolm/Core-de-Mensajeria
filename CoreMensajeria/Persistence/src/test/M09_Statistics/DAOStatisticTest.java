@@ -1,4 +1,4 @@
-package Persistence.M09_Statistics;
+package M09_Statistics;
 
 import Entities.Entity;
 import Entities.M02_Company.Company;
@@ -6,6 +6,7 @@ import Entities.M04_Integrator.Integrator;
 import Exceptions.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
 import Persistence.DAOFactory;
+import Persistence.M09_Statistics.DAOStatistic;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
