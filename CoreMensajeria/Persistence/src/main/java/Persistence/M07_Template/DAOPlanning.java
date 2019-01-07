@@ -55,12 +55,12 @@ public class DAOPlanning  extends DAO implements IDAOPlanning {
         }
     }
 
-    public void postPlanning(String[] planning, int templateId) {
+    public void postPlanning(Planning planning, int templateId) {
         Connection connection = getBdConnect();
         String query = "INSERT INTO public.Planning" +
                 "(pla_start_date, pla_start_time, pla_end_date, pla_end_time, pla_template_id) " +
-                "VALUES ('" + planning[0] + "','" + planning[2] +
-                "','" + planning[1] + "','" + planning[3] + "'," + templateId + ")";
+                "VALUES ('" + planning.getStartDate() + "','" + planning.getStartTime() +
+                "','" + planning.getEndDate() + "','" + planning.getEndTime() + "'," + templateId + ")";
         try{
             _st=connection.createStatement();
             _salida=_st.execute( query );

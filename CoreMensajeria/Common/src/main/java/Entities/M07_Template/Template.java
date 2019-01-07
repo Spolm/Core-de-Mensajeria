@@ -36,29 +36,21 @@ public class Template extends Entity {
      */
     private Campaign campaign;
     /**
-     * Campaign ID
-     */
-    private int campaignId;
-    /**
      * origin of application of the template
      */
     private Application application;
-    /**
-     * Application ID
-     */
-    private int applicationId;
     /**
      * user creator of the template
      */
     private User user;
     /**
-     * User ID
-     */
-    private int userId;
-    /**
      * planning of the template
      */
     private Planning planning;
+    /**
+     * Company ID
+     */
+    private int companyId;
 
     /**
      * empty builder
@@ -87,33 +79,14 @@ public class Template extends Entity {
         this.set_id(templateId);
     }
 
-    /**
-     *
-     * @param creationDate
-     * @param campaignId
-     * @param applicationId
-     * @param userId
-     */
-    public Template(String creationDate, int campaignId, int applicationId, int userId) {
+    public Template(int id, Message message, String creationDate, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning) {
+        this.message = message;
         this.creationDate = creationDate;
-        this.campaignId = campaignId;
-        this.applicationId = applicationId;
-        this.userId = userId;
-    }
-
-    /**
-     *
-     * @param id
-     * @param creationDate
-     * @param campaignId
-     * @param applicationId
-     * @param userId
-     */
-    public Template(int id,String creationDate, int campaignId, int applicationId, int userId) {
-        this.creationDate = creationDate;
-        this.campaignId = campaignId;
-        this.applicationId = applicationId;
-        this.userId = userId;
+        this.channels = channels;
+        this.campaign = campaign;
+        this.application = application;
+        this.user = user;
+        this.planning = planning;
         this.set_id(id);
     }
 
@@ -243,28 +216,12 @@ public class Template extends Entity {
         this.planning = planning;
     }
 
-    public int getCampaignId() {
-        return campaignId;
+    public int getCompanyId() {
+        return companyId;
     }
 
-    public void setCampaignId(int campaignId) {
-        this.campaignId = campaignId;
-    }
-
-    public int getApplicationId() {
-        return applicationId;
-    }
-
-    public void setApplicationId(int applicationId) {
-        this.applicationId = applicationId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 
     @Override

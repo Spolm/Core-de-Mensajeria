@@ -2,6 +2,7 @@ package Entities;
 
 import Entities.M01_Login.User;
 import Entities.M03_Campaign.Campaign;
+import Entities.M05_Channel.Channel;
 import Entities.M06_DataOrigin.Application;
 import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.MessagePackage.Parameter;
@@ -47,8 +48,10 @@ public class EntityFactory {
         return new NotApprovedStatus(statusId, statusName);
     }
 
-    public Template CreateTemplate(int id, Campaign campaign, Application application, User user){
-        return new Template();
+    public static Template CreateTemplate(int id, Message message, String creationDate,
+                                   ArrayList<Channel> channels, Campaign campaign, Application application,
+                                   User user, Planning planning){
+        return new Template(id, message, creationDate, channels, campaign, application, user, planning);
     }
 
 

@@ -1,7 +1,10 @@
 package Persistence.M07_Template;
 
 import Entities.Entity;
+import Entities.EntityFactory;
 import Entities.M01_Login.Privilege;
+import Entities.M01_Login.User;
+import Entities.M01_Login.UserDAO;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 import Entities.M03_Campaign.CampaignDAO;
@@ -11,8 +14,11 @@ import Entities.M05_Channel.Channel;
 import Entities.M05_Channel.ChannelFactory;
 import Entities.M06_DataOrigin.Application;
 import Entities.M06_DataOrigin.ApplicationDAO;
-import Entities.M07_Template.HandlerPackage.TemplateHandler;
+import Entities.M07_Template.HandlerPackage.*;
 import Entities.M07_Template.MessagePackage.Message;
+import Entities.M07_Template.MessagePackage.Parameter;
+import Entities.M07_Template.PlanningPackage.Planning;
+import Entities.M07_Template.StatusPackage.Status;
 import Entities.M07_Template.Template;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
@@ -31,9 +37,10 @@ import java.util.ArrayList;
 
 public class DAOTemplate extends DAO implements IDAOTemplate {
 
-    private DAOFactory daoFactory;
-    final String CREATE_TEMPLATE= "{CALL m07_insert_template(?,?,?)}";
+    final String CREATE_TEMPLATE_WITH_APP= "{CALL m07_posttemplate(?,?,?)}";
+    final String CREATE_TEMPLATE_WITHOUT_APP= "{CALL m07_posttemplate2(?,?)}";
     final String GET_TEMPLATE= "{CALL m07_get_template(?)}";
+    final String GET_ALL_TEMPLATES= "{m07_select_all_templates()}";
     final String GET__CAMPAIGN_BY_TEMPLATE = "{ CALL m07_getcampaignbytemplate(?) }";
     final String GET_CAMPAIGN_BY_USER_COMPANY = "{call m07_select_campaign_by_user_company(?,?,?)}}";
     final String GET_APPLICATION_BY_TEMPLATE = "{call m07_select_applicantion_by_template(?)}";
@@ -43,22 +50,6 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
     @Override
     public void create(Entity e) {
-        Template _tem = (Template) e;
-        Connection _conn = this.getBdConnect();
-
-        PreparedStatement preparedStatement = null;
-
-        try {
-            preparedStatement = _conn.prepareCall( CREATE_TEMPLATE );
-            preparedStatement.setInt(1, _tem.getCampaign().get_idCampaign() );
-            preparedStatement.setInt(2, _tem.getApplication().get_idApplication() );
-            preparedStatement.setInt(3, _tem.getUser().get_idUser() );
-            preparedStatement.execute();
-        } catch ( SQLException e1 ) {
-            e1.printStackTrace();
-        }
-
-        this.closeConnection();
     }
 
     @Override
@@ -69,6 +60,73 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     @Override
     public Entity update(Entity e) {
         return null;
+    }
+
+    /**
+     * Adds
+     * @param e
+     * @return
+     */
+    @Override
+    public boolean postTemplateData(Entity e){
+
+        Template _t = (Template) e;
+        DAOParameter _daoParameter = DAOFactory.instaciateDaoParameter();
+        DAOMessage _daoMessage = DAOFactory.instaciateDaoMessage();
+        DAOPlanning _daoPlanning = DAOFactory.instaciateDaoPlanning();
+
+        try {
+            int templateId = postTemplate(_t.getCampaign().get_id(), _t.getApplication().get_idApplication(), _t.getUser().get_id() );
+            //se establece el template  como no aprobado
+            StatusHandler.postTemplateStatusNoAprovado(templateId);
+            //insertamos los nuevos parametros
+            _daoParameter.postParameter( _t.getMessage().getParameterArrayList(), _t.getCompanyId() ); //Este codigo no va aqui
+            //obtenemos el valor del mensaje,y parametros
+            _daoMessage.postMessage(_t.getMessage(), _t.getCompanyId());
+
+            //obtenemos los valores de los canales e integradores
+            //JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
+            //postChannelIntegrator(channelIntegrator,templateId);
+
+            //planning
+            _daoPlanning.postPlanning( _t.getPlanning(), _t.get_id());
+        } catch (Exception ex){
+            System.out.println(ex);
+            return false;
+        }
+
+        this.closeConnection();
+        return true;
+    }
+
+    @Override
+    public int postTemplate(int campaignId,int applicationId, int userId) {
+
+        Connection _conn = this.getBdConnect();
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            if( applicationId != 0){
+                preparedStatement = _conn.prepareCall( CREATE_TEMPLATE_WITH_APP );
+                preparedStatement.setInt(1, campaignId );
+                preparedStatement.setInt(2, applicationId );
+                preparedStatement.setInt(3, userId );
+            }
+            else{
+                preparedStatement = _conn.prepareCall( CREATE_TEMPLATE_WITHOUT_APP );
+                preparedStatement.setInt(1, campaignId );
+                preparedStatement.setInt(2, userId );
+            }
+
+            preparedStatement.execute();
+
+        } catch ( SQLException e1 ) {
+            e1.printStackTrace();
+        }
+
+        this.closeConnection();
+        return 0;
     }
 
     /**
@@ -90,26 +148,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             preparedStatement.setInt( 1, templateId );
             ResultSet _rs = preparedStatement.executeQuery();
 
-            TemplateHandler _th = new TemplateHandler();
+            _t = this.createTemplate(_rs);
 
-            //Campaign
-            Campaign _campaign = this.getCampaignByTemplate( templateId );
-
-            //application
-            Application _app = this.getApplicationByTemplate( templateId );
-
-            //Message
-            Message _message = (Message) daoFactory.instaciateDaoMessage().getMessageByTemplate( templateId );
-
-            //user
-            //User _user =
-
-            /*_t = EntityFactory.template(
-                    _rs.getInt("tem_id"),
-                    _rs.getString("tem_creation_date"),
-                    _rs.getInt("tem_campaign_id"),
-                    _rs.getInt("tem_application_id"),
-                    _rs.getInt("tem_user_id")*/
 
         }
         catch (SQLException el){
@@ -126,7 +166,30 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      */
     @Override
     public ArrayList<Entity> getAll() {
-        return null;
+        //Entity to Return
+        ArrayList<Entity> _t  = null;
+        Connection _conn = this.getBdConnect();
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+
+            preparedStatement = _conn.prepareCall( GET_ALL_TEMPLATES );
+            ResultSet _rs = preparedStatement.executeQuery();
+
+            while( _rs.next() ){
+                Entity _template = this.createTemplate(_rs);
+                _t.add(_template);
+            }
+
+
+        }
+        catch (SQLException el){
+            el.printStackTrace();
+        }
+
+        this.closeConnection();
+        return _t;
     }
 
     /**
@@ -374,5 +437,46 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         } finally {
             Sql.bdClose(sql.getConn());
         }
+    }
+
+    private Entity createTemplate(ResultSet _rs){
+        Entity _t = null;
+        try{
+            int templateId = _rs.getInt("tem_id");
+
+            //Campaign
+            Campaign _campaign = this.getCampaignByTemplate( templateId );
+
+            //application
+            Application _app = this.getApplicationByTemplate( templateId );
+
+            //Message
+            Message _message = DAOFactory.instaciateDaoMessage().getMessageByTemplate( templateId );
+
+            //user
+            UserDAO _userDao = new UserDAO();
+            User _user = _userDao.findByUsernameId( _rs.getInt("tem_user_id") );
+
+            //Channel
+            ArrayList<Channel> _channels = this.getChannelsByTemplate( templateId );
+
+            //Planning
+            Planning _planning = (Planning) DAOFactory.instaciateDaoPlanning().getPlanning( templateId );
+
+             _t = EntityFactory.CreateTemplate(
+                    _rs.getInt("tem_id"),
+                    _message,
+                    _rs.getString("tem_creation_date"),
+                    _channels,
+                    _campaign,
+                    _app,
+                    _user,
+                    _planning
+            );
+        }catch( SQLException ex ){
+            ex.printStackTrace();
+        }
+
+        return _t;
     }
 }

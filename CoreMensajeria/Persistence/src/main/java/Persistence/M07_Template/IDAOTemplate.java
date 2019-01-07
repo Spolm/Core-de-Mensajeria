@@ -11,6 +11,10 @@ import java.util.ArrayList;
 
 public interface IDAOTemplate extends IDAO {
 
+    public int postTemplate(int campaignId,int applicationId, int userId);
+
+    public boolean postTemplateData(Entity e);
+
     public Entity get(int id);
 
     public ArrayList<Entity> getAll();
