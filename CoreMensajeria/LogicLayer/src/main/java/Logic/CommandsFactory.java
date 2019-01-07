@@ -1,14 +1,13 @@
 package Logic;
 
 import Entities.Entity;
-import Logic.M01_Login.AddUserCommand;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.*;
 import DTO.M07_Template.NewParameter;
-import Logic.M01_Login.GetUser;
+import Logic.M01_Login.GetUserCommand;
 import Logic.M08_SendMessage.CommandSendMessage;
 import Logic.M08_Validation.*;
 import Logic.M07_Template.*;
@@ -30,8 +29,8 @@ public class CommandsFactory {
     public static GetAllUsersCommand createGetAllUsersCommand () {
         return new GetAllUsersCommand();
     }
-    public static LogUserCommand createLogUserCommand () {
-        return new LogUserCommand();
+    public static LogUserCommand createLogUserCommand (Entity user) {
+        return new LogUserCommand(user);
     }
 
     public static Command createSendMessage() { return new CommandSendMessage(); }

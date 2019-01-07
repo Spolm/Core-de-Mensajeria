@@ -1,17 +1,11 @@
 package webService.M01_Login;
 
-import DTO.DTO;
-import DTO.DTOFactory;
 import DTO.M01_DTO.DTOUser;
 import Entities.Entity;
-import Entities.EntityFactory;
 import Entities.M01_Login.PrivilegeDao;
 import Entities.M01_Login.User;
-import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M01_Login.GetAllUsersCommand;
-import Logic.M01_Login.GetUserCommand;
-import Mappers.LoginMapper.LoginMapper;
 import Mappers.LoginMapper.UserMapper;
 import Mappers.MapperFactory;
 import Persistence.M01_Login.DAOUser;
@@ -23,8 +17,6 @@ import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.error;
 
 @Path("/users")
 public class M01_User {
@@ -45,7 +37,7 @@ public class M01_User {
         try {
                 GetAllUsersCommand _command = CommandsFactory.createGetAllUsersCommand();
                 _command.execute();
-                LoginMapper _mapper = MapperFactory.createUserMapper();
+                UserMapper _mapper = MapperFactory.createUserMapper();
                 ArrayList<Entity> _user = _command.ReturnList();
                 List<DTOUser> _dtoUs = _mapper.CreateDtoList(_user);
                 _rb.entity( _gson.toJson( _dtoUs ) ) ;

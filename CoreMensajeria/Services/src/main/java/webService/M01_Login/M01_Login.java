@@ -1,7 +1,12 @@
 package webService.M01_Login;
 
+import DTO.M01_DTO.DTOLogin;
 import Entities.M01_Login.*;
 import Exceptions.UserBlockedException;
+import Logic.CommandsFactory;
+import Logic.M01_Login.LogUserCommand;
+import Mappers.LoginMapper.LoginMapper;
+import Mappers.MapperFactory;
 import Persistence.M01_Login.DAOUser;
 import com.google.gson.Gson;
 
@@ -35,12 +40,12 @@ public class M01_Login {
         Error error;
         User user;
 //        try {
-//            GetAllUsersCommand _command = CommandsFactory.createGetAllUsersCommand();
+//            LogUserCommand _command = CommandsFactory.createLogUserCommand(user);
 //            _command.execute();
-//            LoginMapper _mapper = MapperFactory.createUserMapper();
+            LoginMapper _mapper = MapperFactory.createLoginMapper();
 //            ArrayList<Entity> _user = _command.ReturnList();
-//            List<DTOUser> _dtoUs = _mapper.CreateDtoList(_user);
-//            _rb.entity( _gson.toJson( _dtoUs ) ) ;
+//            DTOLogin _dtoLog = _mapper.CreateDto(user);
+//            _rb.entity( _gson.toJson( _dtoLog ) ) ;
 //        }
         try {
             if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
