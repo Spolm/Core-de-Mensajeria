@@ -10,11 +10,12 @@ import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.Status;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DTOTemplate extends DTO {
 
     private Message _tMessage;
-    private String _tCreationDate;
+    private Date _tCreationDate;
     private int _tTemplateid;
     private Status status;
     private ArrayList<Channel> _tChannels;
@@ -26,7 +27,7 @@ public class DTOTemplate extends DTO {
     public DTOTemplate() {
     }
 
-    public DTOTemplate(Message _tMessage, String _tCreationDate, int _tTemplateid, Status status, ArrayList<Channel> _tChannels, Campaign _tCampaign, Application _tApplication, User _tUser, Planning _tPlanning) {
+    public DTOTemplate(Message _tMessage, Date _tCreationDate, int _tTemplateid, Status status, ArrayList<Channel> _tChannels, Campaign _tCampaign, Application _tApplication, User _tUser, Planning _tPlanning) {
         this._tMessage = _tMessage;
         this._tCreationDate = _tCreationDate;
         this._tTemplateid = _tTemplateid;
@@ -46,11 +47,11 @@ public class DTOTemplate extends DTO {
         this._tMessage = _tMessage;
     }
 
-    public String get_tCreationDate() {
+    public Date get_tCreationDate() {
         return _tCreationDate;
     }
 
-    public void set_tCreationDate(String _tCreationDate) {
+    public void set_tCreationDate(Date _tCreationDate) {
         this._tCreationDate = _tCreationDate;
     }
 
