@@ -236,7 +236,7 @@ VALUES (4,9);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
 VALUES (4,10);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
-VALUES (4,1);
+VALUES (4,11);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
 VALUES (4,3);
 
@@ -308,3 +308,18 @@ INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_en
 VALUES ('2014-11-11','2020-04-11', '9:00', '17:30', 4);
 INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
 VALUES ('2016-07-04','2019-12-01', '12:00', '23:15', 5);
+
+INSERT INTO public.application(app_name,app_description,app_token,app_date,app_status,app_user_creator, app_company) values
+('Facebook','Red Social','BF5453E0B1BF86A7FA020A4B87D7C0A9B0946ACCEB403E918E352D10BD35007D','04/05/1995',1,1,1);
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Numero Tarjeta',2);
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Fecha',2);
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Renta',2);
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Codigo',2);
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Cancion',2);
+INSERT INTO public.Parameter (par_name,par_company_id) 
+VALUES ('Monto',2);

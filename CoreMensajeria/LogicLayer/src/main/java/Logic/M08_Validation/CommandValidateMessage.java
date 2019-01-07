@@ -40,7 +40,7 @@ public class CommandValidateMessage extends CommandValidateParameter{
         TemplateHandler template = new TemplateHandler();
         try {
             Template t = template.getTemplate(this._template);
-            MessageHandler.getMessage(t.getTemplateId());
+            MessageHandler.getMessage(t.get_id());
             if ((this._channel.equals("SMS"))&& (this._message.length()>160)){
                 logger.warning("SMS supera 160 caracteres");
                 this.set_valid(false);
