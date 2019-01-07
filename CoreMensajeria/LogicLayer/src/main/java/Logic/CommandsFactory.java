@@ -1,6 +1,10 @@
 package Logic;
 
 import Entities.Entity;
+import Logic.M01_Login.GetUser;
+import Logic.M08_SendMessage.CommandScheduleMessage;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.*;
@@ -12,8 +16,6 @@ import Logic.M07_Template.*;
 import Logic.M02_Company.*;
 import Logic.M03_Campaign.*;
 import Logic.M09_Statistics.*;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,8 @@ public class CommandsFactory {
     public static Command instanciateGetUser ( Entity user) {
         return new GetUser(user);
     }
+
+    public static Command createScheduleMessage() { return new CommandScheduleMessage(); }
 
     public static Command createSendMessage() { return new CommandSendMessage(); }
 
@@ -154,5 +158,4 @@ public class CommandsFactory {
         return new CommandValidate(template, message, channel);
     }
     //end region
-
 }

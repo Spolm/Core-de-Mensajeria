@@ -466,7 +466,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
              _t = EntityFactory.CreateTemplate(
                     _rs.getInt("tem_id"),
                     _message,
-                    _rs.getString("tem_creation_date"),
+                    _rs.getDate("tem_creation_date"),
                     _channels,
                     _campaign,
                     _app,

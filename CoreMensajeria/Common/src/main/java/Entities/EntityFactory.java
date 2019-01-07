@@ -9,7 +9,6 @@ import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.ApprovedStatus;
 import Entities.M07_Template.StatusPackage.NotApprovedStatus;
-import Entities.M07_Template.StatusPackage.Status;
 import Entities.M07_Template.Template;
 import Entities.M08_Validation.SentMessage;
 
@@ -36,7 +35,7 @@ public class EntityFactory {
         return new Message(messageId, parameterArrayList, message);
     }
 
-    public static Planning CreatePlanning(String startDate, String endDate, String startTime, String endTime, int idPlanning){
+    public static Planning CreatePlanning(Date startDate, Date endDate, String startTime, String endTime, int idPlanning){
         return new Planning(startDate, endDate, startTime, endTime, idPlanning);
     }
 
@@ -48,7 +47,7 @@ public class EntityFactory {
         return new NotApprovedStatus(statusId, statusName);
     }
 
-    public static Template CreateTemplate(int id, Message message, String creationDate,
+    public static Template CreateTemplate(int id, Message message, Date creationDate,
                                    ArrayList<Channel> channels, Campaign campaign, Application application,
                                    User user, Planning planning){
         return new Template(id, message, creationDate, channels, campaign, application, user, planning);

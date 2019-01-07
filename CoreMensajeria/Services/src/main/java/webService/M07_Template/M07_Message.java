@@ -6,6 +6,7 @@ import Entities.M07_Template.Template;
 import Logic.Command;
 import Logic.CommandsFactory;
 import com.google.gson.Gson;
+import org.apache.logging.log4j.Logger;
 import webService.M01_Login.Error;
 
 import javax.ws.rs.GET;
@@ -38,7 +39,6 @@ public class M07_Message {
             c.execute();
             response = Response.ok(gson.toJson(c.Return())).build();
         } catch (Exception e) {
-            e.printStackTrace();
             error = new Error(MESSAGE_ERROR_INTERN);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();

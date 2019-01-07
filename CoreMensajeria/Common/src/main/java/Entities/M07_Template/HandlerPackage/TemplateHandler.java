@@ -56,7 +56,7 @@ public class TemplateHandler {
                 while(resultSet.next()){
                     Template template = new Template();
                     template.set_id(resultSet.getInt("tem_id"));
-                    template.setCreationDate(resultSet.getString("tem_creation_date"));
+                    template.setCreationDate(resultSet.getDate("tem_creation_date"));
                     Status status = Status.createStatus(resultSet.getInt("sta_id"),
                             resultSet.getString("sta_name"));
                     template.setStatus(status);
@@ -92,7 +92,7 @@ public class TemplateHandler {
             while(resultSet.next()){
                 Template template = new Template();
                 template.set_id(resultSet.getInt("tem_id"));
-                template.setCreationDate(resultSet.getString("tem_creation_date"));
+                template.setCreationDate(resultSet.getDate("tem_creation_date"));
                 Status status = Status.createStatus(resultSet.getInt("sta_id"),
                         resultSet.getString("sta_name"));
                 template.setStatus(status);
@@ -133,7 +133,7 @@ public class TemplateHandler {
             if (resultSet.next()) {
                 //asignamos los datos basicos del propio template
                 template.set_id(resultSet.getInt("tem_id"));
-                template.setCreationDate(resultSet.getString("tem_creation_date"));
+                template.setCreationDate(resultSet.getDate("tem_creation_date"));
                 //asignamos el mensaje y status del template
                 template.setMessage(MessageHandler.getMessage(template.get_id()));
                 template.setStatus(Status.createStatus(resultSet.getInt("ts_id"),
