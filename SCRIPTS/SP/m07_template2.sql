@@ -101,6 +101,18 @@ END;
 LANGUAGE plpgsql VOLATILE;
 -- select * from m07_getParametersByMessage(1);
 
+--Funcion para borrar mensaje
+CREATE OR REPLACE FUNCTION m07_deletemessage(_messageid integer) returns void
+	language plpgsql
+as $$
+DECLARE
+BEGIN
+  EXECUTE format('DELETE from public.MESSAGE WHERE mes_id= %L', _messageID);
+END;
+$$;
+
+alter function m07_deletemessage(integer) owner to "CoreMensajeria";
+
 ---------------------------------------------------ParameterHandler-----------------------------------------------------
 
 --Funcion para el metodo PostPlanning
@@ -108,16 +120,24 @@ CREATE OR REPLACE FUNCTION m07_postPlanning(_templateId integer,_start_date time
 RETURNS VOID AS
 $BODY$
 BEGIN
-INSERT INTO public.Planning(pla_start_date, pla_start_time, pla_end_date, pla_end_time, pla_template_id)
-VALUES (_start_date , _start_time , _end_date , _end_time, _templateId);
+EXECUTE format('INSERT INTO public.Planning(pla_start_date, pla_start_time, pla_end_date, pla_end_time, pla_template_id)
+VALUES (%L , %L , %L , %L, %L)',_start_date,_start_time,_end_date,_end_time,_templateId);
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;	
 --VER DESPUES
 
 --Funcion para el metodo updatePlanning 
-CREATE OR REPLACE FUNCTION m07_updatePlanning(IN )
-
+CREATE OR REPLACE FUNCTION m07_updatePlanning(_templateId integer,_start_date timestamp,_start_time timestamp,_end_date timestamp,_end_time timestamp )
+RETURNS void AS $$
+DECLARE
+BEGIN
+	EXECUTE format('update public.Planning set pla_start_date = %L ,
+					pla_start_time = %L , pla_end_date = %L ,
+					pla_end_time = %L
+                	where pla_template_id = %L',_start_date,_start_time,_end_date,_end_time,_templateId);
+END;
+$$ LANGUAGE plpgsql;
 --VER DESPUES
 
 --Funcion para el metodo postTemplateStatusAprobado
@@ -207,27 +227,31 @@ DROP FUNCTION m07_postchannelintegrator(integer,integer,integer,integer);
 -- select * from m07_postChannelIntegrator(1,1,1,1);
 
 --Funcion para el metodo postTemplate parte 1 
-CREATE OR REPLACE FUNCTION m07_postTemplate(_campaignId integer, _appId integer, _userId integer)
-RETURNS VOID AS
-$BODY$
+--Funcion para el metodo postTemplate parte 1 
+CREATE OR REPLACE FUNCTION m07_postTemplate(_campaignid integer, _appid integer, _userid integer) returns void
+	language plpgsql
+as $$
 BEGIN
-INSERT INTO public.template(tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id)
-VALUES(CURRENT_TIMESTAMP,_campaignId,_appId,_userId);
+  INSERT INTO public.template(tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id)
+  VALUES(CURRENT_TIMESTAMP,_campaignId,_appId,_userId);
 END;
-$BODY$
-LANGUAGE plpgsql VOLATILE;
-select * from m07_postTemplate(1,1,1);
+$$;
+
+alter function m07_postTemplate(integer, integer, integer) owner to "CoreMensajeria";
+
 --Funcion para el metodo postTemplate parte 2
-CREATE OR REPLACE FUNCTION m07_postTemplate2(_campaignId integer, _appId integer, _userId integer)
-RETURNS VOID AS
-$BODY$
+CREATE OR REPLACE FUNCTION m07_posttemplate2(_campaignid integer, _userid integer) returns void
+	language plpgsql
+as $$
 BEGIN
-INSERT INTO public.template(tem_creation_date, tem_campaign_id, tem_user_id)
-VALUES(CURRENT_TIMESTAMP,_campaignId,_userId);
+  INSERT INTO public.template(tem_creation_date, tem_campaign_id, tem_user_id)
+  VALUES(CURRENT_TIMESTAMP,_campaignId,_userId);
 END;
-$BODY$
-LANGUAGE plpgsql VOLATILE;					 
-select * from m07_postTemplate2(1,1,1);
+$$;
+
+alter function m07_posttemplate2(integer, integer) owner to "CoreMensajeria";
+
+
 
 --Funcion para el metodo updateChannelIntegrator
 CREATE OR REPLACE FUNCTION m07_updateChannelIntegrator(_templateID integer)
@@ -240,31 +264,35 @@ $$ LANGUAGE plpgsql;
 -- select * from m07_updateChannelIntegrator();
 
 --Funcion para el metodo updateTemplate1
-CREATE OR REPLACE FUNCTION m07_updateTemplate(_campaignId integer,_appId integer, _templateID integer)
-RETURNS VOID AS
-$BODY$
+CREATE OR REPLACE FUNCTION m07_updateTemplate(_campaignid integer, _appid integer, _templateid integer) returns void
+	language plpgsql
+as $$
 BEGIN
-	select t.tem_id,t.tem_campaign_id,t.tem_application_id from public.template as t
-	where (t.tem_id = _templateID) into _templateID;
-	if _templateID > -1 then
-	EXECUTE format('UPDATE public.template set tem_campaign_id = %L, tem_application_id = %L WHERE tem_id = %L',_campaignId,_appId,_templateID );
-	end if;
+  select t.tem_id,t.tem_campaign_id,t.tem_application_id from public.template as t
+  where (t.tem_id = _templateID) into _templateID;
+  if _templateID > -1 then
+    EXECUTE format('UPDATE public.template set tem_campaign_id = %L, tem_application_id = %L WHERE tem_id = %L',_campaignId,_appId,_templateID );
+  end if;
 END;
-$BODY$
-LANGUAGE plpgsql VOLATILE;
-Select * from m07_updateTemplate(12,1,7);
+$$;
+
+alter function m07_updatetemplate(integer, integer, integer) owner to "CoreMensajeria";
+
+
 --Funcion para el metodo updateTemplate2
-CREATE OR REPLACE FUNCTION m07_updateTemplate2(_campaignId integer,_appId integer, _templateID integer)
-RETURNS VOID AS
-$BODY$
+CREATE OR REPLACE FUNCTION m07_updatetemplate2(_campaignid integer, _templateid integer) returns void
+	language plpgsql
+as $$
 BEGIN
-	select t.tem_id,t.tem_campaign_id,t.tem_application_id from public.template as t
-	where (t.tem_id = _templateID) into _templateID;
-	if _templateID > -1 then
-	EXECUTE format('UPDATE public.template set tem_campaign_id = %L, tem_application_id = null WHERE tem_id = %L',_campaignId,_templateID );
-	end if;
+  select t.tem_id,t.tem_campaign_id,t.tem_application_id from public.template as t
+  where (t.tem_id = _templateID) into _templateID;
+  if _templateID > -1 then
+    EXECUTE format('UPDATE public.template set tem_campaign_id = %L, tem_application_id = null WHERE tem_id = %L',_campaignId,_templateID );
+  end if;
 END;
-$BODY$
-LANGUAGE plpgsql VOLATILE;
-Select * from m07_updateTemplate2(12,1,7);
+$$;
+
+alter function m07_updatetemplate2(integer, integer) owner to "CoreMensajeria";
+
+
 		

@@ -37,7 +37,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     final String CREATE_TEMPLATE_WITH_APP= "{CALL m07_posttemplate(?,?,?)}";
     final String CREATE_TEMPLATE_WITHOUT_APP= "{CALL m07_posttemplate2(?,?)}";
     final String GET_TEMPLATE= "{CALL m07_gettemplate(?)}";
-    final String GET_ALL_TEMPLATES= "{m07_select_all_templates()}";
+    final String GET_ALL_TEMPLATES= "{ CALL m07_select_all_templates()}";
     final String GET__CAMPAIGN_BY_TEMPLATE = "{ CALL m07_getcampaignbytemplate(?) }";
     final String GET_CAMPAIGN_BY_USER_COMPANY = "{call m07_select_campaign_by_user_company(?,?,?)}}";
     final String GET_APPLICATION_BY_TEMPLATE = "{call m07_select_applicantion_by_template(?)}";
