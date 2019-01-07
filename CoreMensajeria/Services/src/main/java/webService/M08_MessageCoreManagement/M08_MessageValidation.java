@@ -11,6 +11,8 @@ import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
 import Entities.M04_Integrator.*;
 import Exceptions.*;
+import Logic.Command;
+import Logic.CommandsFactory;
 import Mappers.SendMessageMapper.SendMessageMapper;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import com.google.gson.Gson;
@@ -40,10 +42,15 @@ public class M08_MessageValidation {
         Exception error = null;
         Entity sentMessage;
         try {
-            sentMessage = SendMessageMapper.CreateEntity(dto);
-            System.out.println(((SentMessage) sentMessage).get_message());
-            //Codigo cuando es exitoso
-            return  Response.ok(gson.toJson(sentMessage)).build();
+            Command<Boolean> c = CommandsFactory.createCommandValidate(dto);
+            c.execute();
+            if (c.Return() == true) {
+                sentMessage = SendMessageMapper.CreateEntity(dto);
+                System.out.println(((SentMessage) sentMessage).get_message());
+                //Codigo cuando es exitoso
+                return  Response.ok(gson.toJson(sentMessage)).build();
+            }
+
         } catch (TemplateDoesntExistsException e) {
             error = e;
         } catch (SMSTooLongException e) {
@@ -53,6 +60,8 @@ public class M08_MessageValidation {
         } catch (MessageDoesntExistsException e) {
             error = e;
         } catch (TemplateNotApprovedException e) {
+            error = e;
+        } catch (UnexpectedErrorException e){
             error = e;
         } catch (Exception e) {
             error = e;
