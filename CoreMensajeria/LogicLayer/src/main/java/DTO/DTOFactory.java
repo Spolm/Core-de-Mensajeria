@@ -157,7 +157,7 @@ public class DTOFactory {
     }
 
 
-    public static DTOTemplate CreateDTOTemplate(Message message, String creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning){
+    public static DTOTemplate CreateDTOTemplate(Message message, Date creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning){
         return  new DTOTemplate(message,creationDate,templateId,status,channels,campaign,application,user,planning);
     }
 

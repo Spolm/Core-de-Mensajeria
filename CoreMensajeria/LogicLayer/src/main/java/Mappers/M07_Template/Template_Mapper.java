@@ -7,6 +7,7 @@ import Entities.EntityFactory;
 import Entities.M07_Template.Template;
 import Mappers.GenericMapper;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class Template_Mapper extends GenericMapper {
     @Override
     public Entity CreateEntity(Object o) {
         DTOTemplate dtoTemplate = (DTOTemplate) o;
-        return EntityFactory.CreateTemplate(dtoTemplate.get_tTemplateid(),dtoTemplate.get_tMessage(),dtoTemplate.get_tCreationDate(),dtoTemplate.get_tChannels(),dtoTemplate.get_tCampaign(),dtoTemplate.get_tApplication(),dtoTemplate.get_tUser(),dtoTemplate.get_tPlanning());
+        return EntityFactory.CreateTemplate(dtoTemplate.get_tTemplateid(),dtoTemplate.get_tMessage(), (Date) dtoTemplate.get_tCreationDate(),dtoTemplate.get_tChannels(),dtoTemplate.get_tCampaign(),dtoTemplate.get_tApplication(),dtoTemplate.get_tUser(),dtoTemplate.get_tPlanning());
 
     }
 
