@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class CommandProcessXML extends Command {
 
     private File _xmlFile;
@@ -34,6 +37,9 @@ public class CommandProcessXML extends Command {
         _dbFactory = DocumentBuilderFactory.newInstance();
     }
 
+    /**
+     *
+     */
     @Override
     public void execute() {
         try {
@@ -72,11 +78,17 @@ public class CommandProcessXML extends Command {
           catch (Exception e){}
     }
 
+    /**
+     * @return
+     */
     @Override
     public Object Return() {
         return null;
     }
 
+    /**
+     * @param message
+     */
     private void parseMessage(Message message) {
         String text = "Hola [.$Nombre$.] tu edad es [.$Edad$.]";
         ArrayList<ParameterXML> params = message.get_param();

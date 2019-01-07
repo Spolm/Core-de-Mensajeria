@@ -14,6 +14,9 @@ import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class CommandGetMessage extends Command<Message> {
 
     private Node _node;
@@ -32,6 +35,9 @@ public class CommandGetMessage extends Command<Message> {
         _parameterXMLList = new ArrayList<>();
     }
 
+    /**
+     *
+     */
     @Override
     public void execute() {
         try {
@@ -71,6 +77,9 @@ public class CommandGetMessage extends Command<Message> {
         }
     }
 
+    /**
+     * @return
+     */
     @Override
     public Message Return() {
         return _message;
