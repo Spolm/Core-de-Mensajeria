@@ -4,6 +4,8 @@ import Entities.Entity;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
 import Logic.Command;
+import Persistence.DAOFactory;
+import Persistence.M07_Template.DAOTemplate;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,8 @@ public class CommandGetTemplates extends Command {
     public void execute() throws Exception {
         TemplateHandler templateHandler = new TemplateHandler();
         templateArrayList = templateHandler.getTemplates(userId,companyId);
+        //DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
+        //templateArrayList = daoTemplate.getTemplatesByCompany(userId,companyId);
     }
 
     @Override

@@ -30,7 +30,7 @@ public class MapperTemplate extends GenericMapper {
     @Override
     public Entity CreateEntity(Object o) {
         DTOTemplate dtoTemplate = (DTOTemplate) o;
-        return EntityFactory.CreateTemplate(dtoTemplate.get_tTemplateid(),dtoTemplate.get_tMessage(), dtoTemplate.get_tCreationDate(),dtoTemplate.get_tChannels(),dtoTemplate.get_tCampaign(),dtoTemplate.get_tApplication(),dtoTemplate.get_tUser(),dtoTemplate.get_tPlanning());
+        return EntityFactory.CreateTemplate(dtoTemplate.get_tTemplateid(),dtoTemplate.get_tMessage(), dtoTemplate.get_tCreationDate(),dtoTemplate.getStatus(),dtoTemplate.get_tChannels(),dtoTemplate.get_tCampaign(),dtoTemplate.get_tApplication(),dtoTemplate.get_tUser(),dtoTemplate.get_tPlanning());
 
     }
 

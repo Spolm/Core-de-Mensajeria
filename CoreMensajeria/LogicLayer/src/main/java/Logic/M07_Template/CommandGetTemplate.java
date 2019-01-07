@@ -21,8 +21,8 @@ public class CommandGetTemplate extends Command {
 
     @Override
     public void execute() throws Exception {
-        TemplateHandler templateHandler = new TemplateHandler();
-        template = templateHandler.getTemplate(templateId);
+        //TemplateHandler templateHandler = new TemplateHandler();
+        //template = templateHandler.getTemplate(templateId);
         DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
         template = (Template) daoTemplate.get(templateId);
 

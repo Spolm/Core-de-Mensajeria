@@ -17,6 +17,7 @@ import Entities.M06_DataOrigin.ApplicationDAO;
 import Entities.M07_Template.HandlerPackage.*;
 import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.PlanningPackage.Planning;
+import Entities.M07_Template.StatusPackage.Status;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
@@ -637,10 +638,15 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             //Planning
             Planning _planning = (Planning) DAOFactory.instaciateDaoPlanning().getPlanning( templateId );
 
+            //Status
+            Status _status = Status.createStatus(_rs.getInt("ts_id"),
+                    _rs.getString("sta_name"));
+
              _t = EntityFactory.CreateTemplate(
                     _rs.getInt("tem_id"),
                     _message,
                     _rs.getDate("tem_creation_date"),
+                    _status,
                     _channels,
                     _campaign,
                     _app,

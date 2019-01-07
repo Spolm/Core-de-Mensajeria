@@ -94,9 +94,10 @@ public class Template extends Entity {
         this.set_id(templateId);
     }
 
-    public Template(int id, Message message, Date creationDate, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning) {
+    public Template(int id, Message message, Date creationDate, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning) {
         this.message = message;
         this.creationDate = creationDate;
+        this.status = status;
         this.channels = channels;
         this.campaign = campaign;
         this.application = application;
