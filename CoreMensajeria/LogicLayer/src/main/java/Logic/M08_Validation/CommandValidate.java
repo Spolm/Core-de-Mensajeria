@@ -14,9 +14,8 @@ public class CommandValidate extends CompositeCommand<Boolean> {
 
     public CommandValidate(ParametersDTO dto) {
         Command[] commandList = new Command[2];
-        commandList[0] = CommandsFactory.createCommandValidateMessage(dto.get_idTemplate(), dto.get_message(),
-                                                                        dto.get_channel());
-        commandList[1] = CommandsFactory.createCommandValidateTemplate(dto.get_idTemplate());
+        commandList[0] = CommandsFactory.createCommandValidateTemplate(dto.get_idTemplate());
+        commandList[1] = CommandsFactory.createCommandValidateMessage(dto.get_idTemplate(), dto.get_channel());
         set_commandList(commandList);
     }
 
@@ -32,10 +31,6 @@ public class CommandValidate extends CompositeCommand<Boolean> {
             }
         } catch (TemplateDoesntExistsException e) {
             throw e;
-        } catch (MessageDoesntExistsException e) {
-            throw e;
-        } catch (ParameterDoesntExistsException e) {
-            throw  e;
         } catch (SMSTooLongException e) {
             throw e;
         } catch (Exception e) {
