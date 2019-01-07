@@ -6,6 +6,7 @@ import Entities.M07_Template.Template;
 import Logic.Command;
 import Logic.CommandsFactory;
 import com.google.gson.Gson;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import webService.M01_Login.Error;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 public class M07_Message {
     private final String MESSAGE_ERROR_INTERN = "Error Interno";
     private final String MESSAGE_EXCEPTION = "Excepcion";
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
 
     Gson gson = new Gson();
 
@@ -32,17 +34,29 @@ public class M07_Message {
      */
     @GET
     public Response getMessages(){
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getMessages()" );
+        //endregion
         Response response;
         Error error;
         try {
             Command c = CommandsFactory.createCommandGetMessages();
             c.execute();
             response = Response.ok(gson.toJson(c.Return())).build();
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getMessages() exitosamente");
+            //endregion
         } catch (Exception e) {
             error = new Error(MESSAGE_ERROR_INTERN);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getMessages() arrojo la excepcion:" + e.getMessage());
+            //endregion
         }
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo getMessages() con retorno: "+ response.getEntity().toString());
+        //endregion
         return response;
     }
 
