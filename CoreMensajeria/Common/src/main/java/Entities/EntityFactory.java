@@ -15,7 +15,10 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class EntityFactory {
-
+    /**
+    REGION 1
+    
+     */
     static public Entity user(int id, String _passwordUser, String _usernameUser, int _typeUser, String _emailUser, String _phoneUser, Date _dayOfBirthUser, String _countryUser, String _addressUser, String _genreUser, String _cityUser ) {
         return new User(id, _passwordUser, _usernameUser, _typeUser, _emailUser, _phoneUser, _dayOfBirthUser, _countryUser, _addressUser, _genreUser, _cityUser);
     }
@@ -24,6 +27,13 @@ public class EntityFactory {
         return new User();
     }
 
+    static public Entity privilege(int id,String _codePrivilege,String _actionPrivilege) {
+        return new privilege(id, _codePrivilege, _actionPrivilege);
+    }
+
+    static public Entity privilege() {
+        return new privilege();
+    }
 
     // M07_Templates
     public static Parameter CreateParameter(int parameterId, String name, String description){
