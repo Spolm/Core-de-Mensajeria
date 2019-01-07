@@ -77,6 +77,7 @@ export class TemplateComponent {
   }
 
   changeCompany(companyId: string){
+    console.log('companyId: '+ companyId)
     localStorage.setItem('companyId', companyId);
     this.getTemplates(this.userId, companyId);
     this.getPrivileges(this.userId, Number(companyId));

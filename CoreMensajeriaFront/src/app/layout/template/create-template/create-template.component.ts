@@ -139,10 +139,8 @@ export class CreateTemplateComponent {
   }
 
   deleteParameter(message: string, parameterName: string) {
-    const pointer = message.search(parameterName) - 4;
-    const startMessage = message.slice(0, pointer);
-    const endMessage = message.slice(pointer + parameterName.length + 8, message.length);
-    this.formMessage = startMessage + endMessage;
+    var text = '[.$'+parameterName+'$.]';
+    this.formMessage = message.replace(text,'');
     this.parameters.splice(this.parameters.indexOf(parameterName), 1);
     if (this.newParameters.find(x => x == parameterName)) {
       this.newParameters.splice(this.newParameters.indexOf(parameterName), 1);

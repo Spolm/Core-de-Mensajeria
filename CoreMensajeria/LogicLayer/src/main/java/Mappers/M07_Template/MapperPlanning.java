@@ -1,22 +1,23 @@
 package Mappers.M07_Template;
 
 import DTO.DTOFactory;
-import DTO.M07_Template.DTOMessage;
+import DTO.M07_Template.DTOPlanning;
 import Entities.Entity;
 import Entities.EntityFactory;
-import Entities.M07_Template.MessagePackage.Message;
+import Entities.M07_Template.PlanningPackage.Planning;
 import Mappers.GenericMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapperMessage extends GenericMapper {
+public class MapperPlanning extends GenericMapper {
+
 
     @Override
     public Object CreateDto(Entity entity) {
         try{
-            Message message = (Message) entity;
-            return DTOFactory.CreateDTOMessage(message.get_id(),message.getParameterArrayList(),message.getMessage());
+            Planning planning = (Planning) entity;
+            return DTOFactory.CreateDTOPlanning(planning.getStartDate(),planning.getEndDate(),planning.getStartTime(),planning.getEndTime(),planning.getIdPlanning());
         }
         catch (NullPointerException e) {
             throw e;
@@ -28,8 +29,8 @@ public class MapperMessage extends GenericMapper {
 
     @Override
     public Entity CreateEntity(Object o) {
-        DTOMessage dtoMessage = (DTOMessage) o;
-        return EntityFactory.CreateMessage(dtoMessage.get_mMessageId(),dtoMessage.get_mParameterArrayList(),dtoMessage.get_mMessage());
+        DTOPlanning dtoPlanning = (DTOPlanning) o;
+        return EntityFactory.CreatePlanning(dtoPlanning.get_pStartDate(),dtoPlanning.get_pEndDate(),dtoPlanning.get_pStartTime(),dtoPlanning.get_pEndTime(),dtoPlanning.get_pIdPlanning());
     }
 
     @Override
