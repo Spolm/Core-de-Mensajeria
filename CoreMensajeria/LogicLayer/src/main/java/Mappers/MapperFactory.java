@@ -5,6 +5,7 @@ import Mappers.CompanyMapper.*;
 import Mappers.CampaignMapper.*;
 import Mappers.GenericMapper;
 import Mappers.M04_Integrator.MapperIntegrator;
+import Mappers.M05_Channel.MapperChannel;
 import Mappers.StatisticMapper.StatisticMapper;
 
 public class MapperFactory {
@@ -88,6 +89,7 @@ public class MapperFactory {
 
     //M04_Region
     public static MapperIntegrator createMapperIntegrator(){return new MapperIntegrator();}
+    public static MapperChannel createMapperChannel(){ return new MapperChannel(); }
     // end M04_region
 
 

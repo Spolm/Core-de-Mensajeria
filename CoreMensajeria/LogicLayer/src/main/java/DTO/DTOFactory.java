@@ -3,7 +3,9 @@ package DTO;
 import DTO.M02_DTO.*;
 import DTO.M03_DTO.*;
 import DTO.M04_Integrator.DTOIntegrator;
+import DTO.M05_Channel.DTOChannel;
 import DTO.M09_DTO.DTOStatistic;
+import Entities.Entity;
 import Entities.M02_Company.Company;
 import DTO.M04_Integrator.DTOIntegrator;
 import java.util.ArrayList;
@@ -134,6 +136,10 @@ public class DTOFactory {
     public static DTOIntegrator CreateDTOIntegrator (int threadCapacity, float messageCost,
                                                      String nameIntegrator, String apiIntegrator, boolean enabled){
         return new DTOIntegrator(threadCapacity,messageCost,nameIntegrator,apiIntegrator,enabled);
+    }
+
+    public static DTOChannel createDTOChannel (String nameChannel, String descriptionChannel, ArrayList<Entity> integrators){
+        return new DTOChannel(nameChannel, descriptionChannel, integrators);
     }
 //end region
 
