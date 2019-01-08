@@ -4,6 +4,7 @@ import DTO.M09_DTO.DTOStatistic;
 import Mappers.CompanyMapper.*;
 import Mappers.CampaignMapper.*;
 import Mappers.GenericMapper;
+import Mappers.M07_Template.MapperTemplate;
 import Mappers.StatisticMapper.StatisticMapper;
 
 public class MapperFactory {
@@ -86,4 +87,7 @@ public class MapperFactory {
 
 
     public static GenericMapper createStatisticMapper(){ return new StatisticMapper();}
+
+    // M07_Template
+    public static MapperTemplate createMapperTemplate(){ return new MapperTemplate();}
 }

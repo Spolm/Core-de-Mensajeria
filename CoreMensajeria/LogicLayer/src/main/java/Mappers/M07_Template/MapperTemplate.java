@@ -7,17 +7,16 @@ import Entities.EntityFactory;
 import Entities.M07_Template.Template;
 import Mappers.GenericMapper;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapperTemplate extends GenericMapper {
 
     @Override
-    public Object CreateDto(Entity entity) {
+    public DTOTemplate CreateDto(Entity entity) {
         try{
             Template template = (Template) entity;
-            return DTOFactory.CreateDTOTemplate(template.getMessage(),template.getCreationDate(),template.get_id(),template.getStatus(),template.getChannels(),template.getCampaign(),template.getApplication(),template.getUser(),template.getPlanning());
+            return DTOFactory.CreateDTOTemplate(template.getMessage(),template.getCreationDate(),template.get_id(),template.getStatus(),template.getChannels(),template.getCampaign(),template.getApplication(),template.getUser(),template.getPlanning(),template.getCompanyId());
         }
         catch (NullPointerException e) {
             throw e;
@@ -30,7 +29,7 @@ public class MapperTemplate extends GenericMapper {
     @Override
     public Entity CreateEntity(Object o) {
         DTOTemplate dtoTemplate = (DTOTemplate) o;
-        return EntityFactory.CreateTemplate(dtoTemplate.get_tTemplateid(),dtoTemplate.get_tMessage(), dtoTemplate.get_tCreationDate(),dtoTemplate.getStatus(),dtoTemplate.get_tChannels(),dtoTemplate.get_tCampaign(),dtoTemplate.get_tApplication(),dtoTemplate.get_tUser(),dtoTemplate.get_tPlanning());
+        return EntityFactory.CreateTemplate(dtoTemplate.get_id(),dtoTemplate.getMessage(), dtoTemplate.getCreationDate(),dtoTemplate.getStatus(),dtoTemplate.getChannels(),dtoTemplate.getCampaign(),dtoTemplate.getApplication(),dtoTemplate.getUser(),dtoTemplate.getPlanning());
 
     }
 

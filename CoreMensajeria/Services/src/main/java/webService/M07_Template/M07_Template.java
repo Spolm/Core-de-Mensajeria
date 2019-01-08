@@ -1,5 +1,7 @@
 package webService.M07_Template;
 
+import DTO.M07_Template.DTOTemplate;
+import Entities.Entity;
 import Entities.M01_Login.Privilege;
 import Entities.M07_Template.HandlerPackage.StatusHandler;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
@@ -9,6 +11,10 @@ import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Logic.Command;
 import Logic.CommandsFactory;
+import Logic.M07_Template.CommandGetTemplate;
+import Logic.M07_Template.CommandGetTemplates;
+import Mappers.M07_Template.MapperTemplate;
+import Mappers.MapperFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.logging.log4j.LogManager;
@@ -58,7 +64,9 @@ public class M07_Template {
             }
             Command c = CommandsFactory.createCommandGetTemplates(userId,companyId);
             c.execute();
-            response = Response.ok(gson.toJson(c.Return())).build();
+            MapperTemplate mapperTemplate = MapperFactory.createMapperTemplate();
+            ArrayList<DTOTemplate> dtoTemplates = (ArrayList<DTOTemplate>) mapperTemplate.CreateDtoList(((CommandGetTemplates) c).Return());
+            response = Response.ok(gson.toJson(dtoTemplates)).build();
             //region Instrumentation Info
             log.info("Se ejecuto el metodo getTemplates("+userId+","+companyId+") exitosamente");
             //endregion
@@ -111,7 +119,9 @@ public class M07_Template {
             }
             Command c = CommandsFactory.createCommandGetTemplate(id);
             c.execute();
-            response = Response.ok(gson.toJson(c.Return())).build();
+            MapperTemplate mapperTemplate = MapperFactory.createMapperTemplate();
+            DTOTemplate dtoTemplate = mapperTemplate.CreateDto(((CommandGetTemplate) c).Return());
+            response = Response.ok(gson.toJson(dtoTemplate)).build();
             //region Instrumentation Info
             log.info("Se ejecuto el metodo getTemplate() exitosamente");
             //endregion
