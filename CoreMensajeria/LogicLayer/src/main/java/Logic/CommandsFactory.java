@@ -1,7 +1,6 @@
 package Logic;
 
 import Entities.Entity;
-import Logic.M01_Login.GetUser;
 import Logic.M04_Integrator.*;
 import Logic.M05_Channel.CommandGetAllChannels;
 import Entities.M02_Company.Company;

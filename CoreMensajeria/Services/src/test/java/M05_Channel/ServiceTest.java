@@ -7,7 +7,7 @@ import javax.ws.rs.core.Response;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class ChannelServiceTest {
+public class ServiceTest {
     private static M05_Channel _channelService;
 
     @BeforeEach
