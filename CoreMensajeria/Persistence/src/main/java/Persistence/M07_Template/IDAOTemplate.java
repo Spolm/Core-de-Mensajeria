@@ -37,5 +37,5 @@ public interface IDAOTemplate extends IDAO {
 
     public void updateTemplate(int campaignId,int applicationId, int templateId);
 
-    //public void deleteTemplate(int id);
+    public void deleteTemplate(int id);
 }
