@@ -76,7 +76,8 @@ public class CommandGetParameter extends Command<ParameterXML> {
         } catch (ParameterDoesntExistsInXMLException e) {
             throw new ParameterDoesntExistsInXMLException();
         }catch (Exception e){
-            log.error("Ha ocurrido una excepción inesperada.");
+            log.error("Error inesperado de tipo "
+                    + e.getClass().getName() );
         }
     }
 

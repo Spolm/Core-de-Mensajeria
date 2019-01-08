@@ -74,7 +74,7 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
                         CommandsFactory.createCommandGetTemplate(Integer.valueOf(_templateId));
                 _commandGetTemplate.execute();
                 Template _template = _commandGetTemplate.Return();
-                log.info("Se ha ejecutado el comando DETEMPLATEQUEFALTA" ); ///*** RECORDAR CAMBIAR POR EL NOMBRE DEL COMANDO DE PLANTILLA
+                log.info("Se ha ejecutado el comando GetTemplate" );
                 NodeList nodeList = doc.getElementsByTagName("message");
 
                 for (int i = 0; i < nodeList.getLength(); i++) {
@@ -118,9 +118,9 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
             log.error( "El Id de la plantilla es inválido, solo números enteros" );
         } catch (DateNotValidException e) {
             log.error("La fecha de inicio o fin la plantilla es inválida");
-        }
-        catch (Exception e){
-            log.error( "Ha ocurrido una excepción inesperada" );
+        } catch (Exception e){
+            log.error("Error inesperado de tipo "
+                    + e.getClass().getName() );
         }
     }
 

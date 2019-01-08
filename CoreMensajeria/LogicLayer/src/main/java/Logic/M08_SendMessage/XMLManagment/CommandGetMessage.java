@@ -97,7 +97,8 @@ public class CommandGetMessage extends Command<Message> {
             _message = null;
         }
         catch (Exception e) {
-            log.error( "Ha ocurrido una excepción inesperada." );
+            log.error("Error inesperado de tipo "
+                    + e.getClass().getName() );
         }
     }
 
