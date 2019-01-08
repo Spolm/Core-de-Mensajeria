@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class MapperChannelTest {
+public class MapperTest {
     private static MapperChannel _mapper;
     private static Channel _channel;
     private static DTOChannel _dtoChannel;
