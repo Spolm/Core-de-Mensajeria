@@ -2,7 +2,7 @@ package Logic;
 
 import Entities.Entity;
 
-//import Logic.M10_Profile.*;
+import Logic.M10_Profile.*;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
 import Logic.M08_SendMessage.CommandScheduleMessage;
@@ -311,10 +311,10 @@ public class CommandsFactory {
     //end region
 
     //region Commands M_10
-    /*public static AddUserCommand createAddUserCommand(){
-        return new AddUserCommand();
-    }*/
-    /*public static EditUserProfileCommand createEditUserProfileCommand(){
+    public static AddUserByProfileCommand createAddUserByProfileCommand(){
+        return new AddUserByProfileCommand();
+    }
+    public static EditUserProfileCommand createEditUserProfileCommand(){
         return new EditUserProfileCommand();
     }
 
@@ -328,10 +328,6 @@ public class CommandsFactory {
 
     public static GetAllRolesCommand createGetAllRolesCommand(){
         return new GetAllRolesCommand();
-    }*/
-
-    /*public static GetAllUsersCommand createGetAllUsersCommand(){
-        return new GetAllUsersCommand();
-    }*/
+    }
     //endregion
 }
