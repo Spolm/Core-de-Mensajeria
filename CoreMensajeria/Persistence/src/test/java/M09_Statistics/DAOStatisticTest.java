@@ -52,7 +52,7 @@ class DAOStatisticTest {
     void getIntegratorsForChannel() {
         List<Integer> channelIds = Arrays.asList(1,2);
         try {
-            ArrayList<Integrator> integrators = dao.getIntegratorsForChannel(channelIds);
+            ArrayList<Entity> integrators = dao.getIntegratorsForChannel(channelIds);
             assertNotNull(integrators);
             assertEquals(6, integrators.size());
             assertTrue(((Integrator)integrators.get(0)).getNameIntegrator().contains("Movistar"));
