@@ -37,22 +37,21 @@ public class M08_MessageValidation {
     @Path("/CommandSendMessage")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public SentMessage sendMessage(@Valid ParametersDTO dto) throws Exception{
+    public ParametersDTO sendMessage(@Valid ParametersDTO dto) throws Exception{
         Exception error = null;
-        Entity sentMessage = new SentMessage();
+        ParametersDTO response = dto;
+        SentMessage sentMessage = new SentMessage();
         try {
             Command<Boolean> c = CommandsFactory.createCommandValidate(dto);
             c.execute();
             if (c.Return() == true) {
                 sentMessage = SendMessageMapper.CreateEntity(dto);
-                System.out.println(((SentMessage) sentMessage).get_message());
                 //Codigo cuando es exitoso
 
             }
 
         } catch (TemplateDoesntExistsException e) {
-            String json = "{\"Message\": \"La plantilla no existe\"}";
-            throw new WebApplicationException(Response.status(400).entity(json).build());
+            error = e;
         } catch (SMSTooLongException e) {
             error = e;
         } catch (ParameterDoesntExistsException e) {
@@ -64,10 +63,12 @@ public class M08_MessageValidation {
         } catch (UnexpectedErrorException e){
             error = e;
         } catch (Exception e) {
-            error = e;
+            throw new WebApplicationException(Response.status(500).entity(e).build());
         }
+        if (error != null)
+          throw new WebApplicationException(Response.status(400).entity(error).build());
         //return Response.ok(gson.toJson(sentMessage)).build();
-        return  (SentMessage) sentMessage;
+        return   response;
     }
 
     @GET
