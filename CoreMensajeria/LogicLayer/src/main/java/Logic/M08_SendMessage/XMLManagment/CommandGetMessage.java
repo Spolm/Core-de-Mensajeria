@@ -7,7 +7,7 @@ import Entities.M08_Validation.XMLManagement.Message;
 import Entities.M08_Validation.XMLManagement.ParameterXML;
 import Exceptions.M08_SendMessageManager.MissLengthXMLException;
 import Exceptions.M08_SendMessageManager.NullValueXMLException;
-import Exceptions.ParameterDoesntExistsException;
+import Exceptions.M08_SendMessageManager.ParameterDoesntExistsInXMLException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import org.apache.logging.log4j.LogManager;
@@ -33,6 +33,12 @@ public class CommandGetMessage extends Command<Message> {
     private ArrayList<ParameterXML> _parameterXMLList;
     private ArrayList<Parameter> _parameterList;
 
+    /**
+     * Constructor de la clase CommandGetMessage que emplea
+     * como parametros el nodo del archivo XML y la plantilla.
+     * @param node Nodo del archivo XML
+     * @param template Plantilla para comprar los parametros de la misma.
+     */
     public CommandGetMessage(Node node, Template template){
         this._node = node;
         _message = new Message();
@@ -41,7 +47,16 @@ public class CommandGetMessage extends Command<Message> {
     }
 
     /**
-     * Obtiene los mensajes para rellenar la plantilla.
+     * Obtiene los mensajes para rellenar la plantilla, comparando los
+     * parametros del archivo XML y el de la plantilla registrada en el sistema.
+     *
+     * Emplea el comando GetParameter para obtener los parametros del archivo XML.
+     *
+     * Compara el tamaño del mensaje dentro del archivo XML.
+     *
+     * @see CommandGetParameter
+     * @throws MissLengthXMLException si el tamaño del archivo XML no coincide con los
+     * valores registrados dentro del sistema.
      */
     @Override
     public void execute() throws MissLengthXMLException {
@@ -77,19 +92,27 @@ public class CommandGetMessage extends Command<Message> {
                 }
 
             }
-        } catch (ParameterDoesntExistsException e) {
-            log.error( "Los parametros del mensaje " + idMessage + " no existen" ); ///*** MOSCA CON LOS CAMBIOS
-            _message = null;
         } catch (MissLengthXMLException e){
             throw new MissLengthXMLException();
-        } catch (Exception e) {
+        } catch (ParameterDoesntExistsInXMLException e) {
+            log.error( "Los parametros del mensaje " + idMessage + " no existen" ); ///*** MOSCA CON LOS CAMBIOS
+            _message = null;
+        }
+        catch (Exception e) {
             log.error( "Ha ocurrido una excepción inesperada." );
         }
     }
 
+
     /**
-     * Devuelve la lista de parametros para rellenar la plantilla.
+     * Configura los destinos entre correo electrónico o número de telefono,
+     * variando entre sí la plantilla esta configurada para enviar a ciertos canales.
      *
+     * Emplea el comando GetTagValue para obtener la información del destinatario,
+     * que puede ser correo electrónico o número de teléfono.
+     *
+     * @param element Objeto elemento para procesar el archivo XML.
+     * @see CommandGetTagValue
      */
 
     public void setDestiny( Element element ){
@@ -126,7 +149,7 @@ public class CommandGetMessage extends Command<Message> {
 
     /**
      * Retorna los parametros del mensaje a ser enviados.
-     * @return _message
+     * @return mensaje para su posterior envío.
      */
     @Override
     public Message Return() {

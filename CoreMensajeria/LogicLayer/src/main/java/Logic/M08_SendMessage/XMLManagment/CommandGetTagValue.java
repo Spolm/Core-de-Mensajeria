@@ -20,6 +20,12 @@ public class CommandGetTagValue extends Command<String> {
     private Node _node;
     private String _value;
 
+    /**
+     * Constructor que inicializa un objeto de la clase CommandGetTagValue
+     * con la etiqueta y un objeto Element.
+     * @param tag Etiqueta del archivo XML.
+     * @param element Nodo del archivo XML.
+     */
     public CommandGetTagValue(String tag, Element element){
         this._tag = tag;
         this._element = element;
@@ -27,8 +33,9 @@ public class CommandGetTagValue extends Command<String> {
 
     /**
      * Obtiene el valor de una etiqueta o tag.
-     * @throws NullValueXMLException
-     * @throws UnexpectedErrorException
+     * @throws NullValueXMLException si alguna etiqueta dentro
+     * del XML no encuentra su valor o es ta vacio.
+     * @throws UnexpectedErrorException si existe un error no esperado.
      */
     @Override
     public void execute() throws NullValueXMLException, UnexpectedErrorException {
@@ -52,7 +59,7 @@ public class CommandGetTagValue extends Command<String> {
 
     /**
      * Método para devolve el valor del nodo para el manejo XML.
-     * @return _value Valor de la etiqueta.
+     * @return Valor de la etiqueta en el archivo XML.
      */
     @Override
     public String Return() {

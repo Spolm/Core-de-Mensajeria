@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Clase patrón comando que se encarga de procesar un XML que ha encontrado el demonio.
+ * Clase patrón comando que se encarga de procesar los XML que ha encontrado el demonio.
  */
 public class CommandProcessXML extends Command<VerifiedParameter> {
 
@@ -41,13 +41,24 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
     private ArrayList<Message> _messageList = new ArrayList<>();
     private VerifiedParameter _verifiedParameters;
 
+    /**
+     * Constructor que instancia la clase CommandProcessXML
+     * con la ruta del archivo creado.
+     * @param filePath Ruta del archivo.
+     */
     public CommandProcessXML(String filePath){
         _xmlFile = new File(filePath);
         _dbFactory = DocumentBuilderFactory.newInstance();
     }
 
     /**
-     * Procesa un XML encontrado por el demonio
+     * Método para el procesa de un XML encontrado por el demonio.
+     * Haciendo uso de los comando GetTagValue para obtener los valores
+     * de las etiquetas dentro del archivo XML, y GetMessage para obtener
+     * los parametros del mensaje a ser enviado.
+     *
+     * @see CommandGetTagValue
+     * @see CommandGetMessage
      */
     @Override
     public void execute() {
@@ -78,7 +89,7 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
                             _messageList.add(_commandGetMessage.Return());
                     } catch (MissLengthXMLException e){
                         log.error( "El tamaño del XML es mayor a lo establecido en la plantilla, " +
-                                "revise la posición " + i + " del archivo XML." );
+                                "revise la posición " + i + " del mensaje del archivo XML." );
                     }
                 }
 
@@ -112,7 +123,7 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
 
     /**
      * Retorna los parametros ya verificados.
-     * @return _verifiedParameters Parametros ya verificados.
+     * @return Parametros ya verificados.
      */
     @Override
     public VerifiedParameter Return() {
