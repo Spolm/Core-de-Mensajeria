@@ -7,7 +7,7 @@ import Entities.M08_Validation.XMLManagement.Message;
 import Entities.M08_Validation.XMLManagement.ParameterXML;
 import Exceptions.M08_SendMessageManager.MissLengthXMLException;
 import Exceptions.M08_SendMessageManager.NullValueXMLException;
-import Exceptions.ParameterDoesntExistsException;
+import Exceptions.M08_SendMessageManager.ParameterDoesntExistsInXMLException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import org.apache.logging.log4j.LogManager;
@@ -23,16 +23,20 @@ import java.util.ArrayList;
  */
 public class CommandGetMessage extends Command<Message> {
 
-    final static Logger log = LogManager.getLogger("CoreMensajeria");
+    private final static Logger log = LogManager.getLogger("CoreMensajeria");
     private Node _node;
     private Message _message;
     private Command<String> _commandGetTagValue;
-    private Command<ParameterXML> _commandGetParameter;
     private Template _template;
-    private int idMessage; ////// cambiar por comando plantilla
+    private int idMessage;
     private ArrayList<ParameterXML> _parameterXMLList;
-    private ArrayList<Parameter> _parameterList;
 
+    /**
+     * Constructor de la clase CommandGetMessage que emplea
+     * como parametros el nodo del archivo XML y la plantilla.
+     * @param node Nodo del archivo XML
+     * @param template Plantilla para comprar los parametros de la misma.
+     */
     public CommandGetMessage(Node node, Template template){
         this._node = node;
         _message = new Message();
@@ -41,7 +45,16 @@ public class CommandGetMessage extends Command<Message> {
     }
 
     /**
-     * Obtiene los mensajes para rellenar la plantilla.
+     * Obtiene los mensajes para rellenar la plantilla, comparando los
+     * parametros del archivo XML y el de la plantilla registrada en el sistema.
+     *
+     * Emplea el comando GetParameter para obtener los parametros del archivo XML.
+     *
+     * Compara el tamaño del mensaje dentro del archivo XML.
+     *
+     * @see CommandGetParameter
+     * @throws MissLengthXMLException si el tamaño del archivo XML no coincide con los
+     * valores registrados dentro del sistema.
      */
     @Override
     public void execute() throws MissLengthXMLException {
@@ -51,14 +64,14 @@ public class CommandGetMessage extends Command<Message> {
                 setDestiny( element );
                 NodeList nodeList = element.getElementsByTagName( "parameter" );
 
-                idMessage = _template.getMessage().get_id();   ////// cambiar por comando plantilla
-                _parameterList = ParameterHandler.getParametersByMessage( idMessage ); /////// cambiar por comando plantilla
+                idMessage = _template.get_id();
+                ArrayList<Parameter> _parameterList = ParameterHandler.getParametersByMessage(idMessage);
                 log.info("Se ejecutó el comando FALTANOMBRE " +
                         " con el idMessage " + idMessage ); ///*** FALTA CAMBIAR POR EL NOMBRE DEL COMANDO
                 if( nodeList.getLength() == _parameterList.size() ){
                     for (int i = 0; i < nodeList.getLength(); i++) {
-                        _commandGetParameter =
-                                CommandsFactory.createCommandGetParameter(nodeList.item(i),_parameterList);
+                        Command<ParameterXML> _commandGetParameter = CommandsFactory.
+                                createCommandGetParameter(nodeList.item(i), _parameterList);
                         _commandGetParameter.execute();
                         log.info("Se ejecutó el comando GetParameter" );
                         if(_commandGetParameter.Return() != null) {
@@ -77,19 +90,28 @@ public class CommandGetMessage extends Command<Message> {
                 }
 
             }
-        } catch (ParameterDoesntExistsException e) {
-            log.error( "Los parametros del mensaje " + idMessage + " no existen" ); ///*** MOSCA CON LOS CAMBIOS
-            _message = null;
         } catch (MissLengthXMLException e){
             throw new MissLengthXMLException();
-        } catch (Exception e) {
-            log.error( "Ha ocurrido una excepción inesperada." );
+        } catch (ParameterDoesntExistsInXMLException e) {
+            log.error( "Los parametros del mensaje " + idMessage + " no existen" ); ///*** MOSCA CON LOS CAMBIOS
+            _message = null;
+        }
+        catch (Exception e) {
+            log.error("Error inesperado de tipo "
+                    + e.getClass().getName() );
         }
     }
 
+
     /**
-     * Devuelve la lista de parametros para rellenar la plantilla.
-     * @return
+     * Configura los destinos entre correo electrónico o número de telefono,
+     * variando entre sí la plantilla esta configurada para enviar a ciertos canales.
+     *
+     * Emplea el comando GetTagValue para obtener la información del destinatario,
+     * que puede ser correo electrónico o número de teléfono.
+     *
+     * @param element Objeto elemento para procesar el archivo XML.
+     * @see CommandGetTagValue
      */
 
     public void setDestiny( Element element ){
@@ -124,6 +146,10 @@ public class CommandGetMessage extends Command<Message> {
         }
     }
 
+    /**
+     * Retorna los parametros del mensaje a ser enviados.
+     * @return mensaje para su posterior envío.
+     */
     @Override
     public Message Return() {
         return _message;
