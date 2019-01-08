@@ -20,11 +20,6 @@ ALTER TABLE public.User
 ADD COLUMN use_blocked integer DEFAULT 0 NOT NULL,
 ADD CoLUMN use_remaining_attempts integer DEFAULT 3 NOT NULL;
 
-ALTER TABLE public.User
-ADD COLUMN use_rg_id integer,
-ADD CONSTRAINT fk_geographical_region_id_ FOREIGN KEY ("use_rg_id") 
-REFERENCES public.GEOGRAPHICAL_REGION(rg_id);
-
 create table public.Role
 (
     rol_id serial primary key,
@@ -241,13 +236,4 @@ CREATE TABLE public.Planning
     pla_template_id integer NOT NULL,
     CONSTRAINT fk_template_id FOREIGN KEY ("pla_template_id")
     REFERENCES public.Template(tem_id)
-);
-
-CREATE TABLE PUBLIC.GEOGRAPHICAL_REGION
-(
-	rg_id serial PRIMARY KEY,
-	rg_name VARCHAR(60) NOT NULL,
-	rg_type INTEGER NOT NULL,
-	rg_rg INTEGER,
-	CONSTRAINT fk_geografical_region_id FOREIGN KEY ("rg_rg") REFERENCES PUBLIC.GEOGRAPHICAL_REGION ("rg_id")
 );
