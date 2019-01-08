@@ -51,13 +51,16 @@ public class CommandSendMessage extends Command {
                 ArrayList<Integrator> integrators = channel.getIntegrators();
 
                 for(Integrator integrator : integrators){
-                    if(channel.getNameChannel().equalsIgnoreCase("SMS")){ ///*** MOSCA CON ESTO
-                        //integrator.sendMessage(finalMessage,telefono,"Valor a cambiar");
-                        System.out.println(finalMessage + " destino " +  telefono);
-                    }else{
-                        //integrator.sendMessage(finalMessage,correo,"Valor a cambiar"); ///*** MOSCA CON ESTO
-                        System.out.println(finalMessage + " destino " +  correo);
+                    if (integrator.isEnabled()) {
+                        if(channel.getNameChannel().equalsIgnoreCase("SMS")){ ///*** MOSCA CON ESTO
+                            //integrator.sendMessage(finalMessage,telefono,"Valor a cambiar");
+                            System.out.println(finalMessage + " destino " +  telefono);
+                        }else{
+                            //integrator.sendMessage(finalMessage,correo,"Valor a cambiar"); ///*** MOSCA CON ESTO
+                            System.out.println(finalMessage + " destino " +  correo);
+                        }
                     }
+
                 }
             }
         }
