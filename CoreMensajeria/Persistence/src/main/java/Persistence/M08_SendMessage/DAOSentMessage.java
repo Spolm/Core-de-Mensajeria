@@ -9,9 +9,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ *DAO de la tabla sent_message
+ */
 public class DAOSentMessage extends DAO implements IDAOSentMessage{
     private Connection _conn;
-    final String CALL_INSERT = "{CALL m08_insertSentMessagge(?,?,?,?,?,?)}";
+    private final String CALL_INSERT = "{CALL m08_insertSentMessagge(?,?,?,?,?,?)}";
+
+    /**
+     * @param e La entidad sentMessage que se va insertar en la bd
+     * @throws SQLException excepcion que se lanza para que capas superiores lo manejen
+     */
     @Override
     public void create(Entity e) throws SQLException {
         _conn = getBdConnect();
