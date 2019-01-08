@@ -3,14 +3,12 @@ package Logic.M08_SendMessage;
 import Entities.Entity;
 import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.Template;
-import Entities.M08_Validation.XMLManagement.Command;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import Logic.Command;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
