@@ -27,11 +27,9 @@ public class CommandGetMessage extends Command<Message> {
     private Node _node;
     private Message _message;
     private Command<String> _commandGetTagValue;
-    private Command<ParameterXML> _commandGetParameter;
     private Template _template;
-    private int idMessage; ////// cambiar por comando plantilla
+    private int idMessage;
     private ArrayList<ParameterXML> _parameterXMLList;
-    private ArrayList<Parameter> _parameterList;
 
     /**
      * Constructor de la clase CommandGetMessage que emplea
@@ -66,14 +64,14 @@ public class CommandGetMessage extends Command<Message> {
                 setDestiny( element );
                 NodeList nodeList = element.getElementsByTagName( "parameter" );
 
-                idMessage = _template.getMessage().get_id();   ////// cambiar por comando plantilla
-                _parameterList = ParameterHandler.getParametersByMessage( idMessage ); /////// cambiar por comando plantilla
+                idMessage = _template.get_id();
+                ArrayList<Parameter> _parameterList = ParameterHandler.getParametersByMessage(idMessage);
                 log.info("Se ejecutó el comando FALTANOMBRE " +
                         " con el idMessage " + idMessage ); ///*** FALTA CAMBIAR POR EL NOMBRE DEL COMANDO
                 if( nodeList.getLength() == _parameterList.size() ){
                     for (int i = 0; i < nodeList.getLength(); i++) {
-                        _commandGetParameter =
-                                CommandsFactory.createCommandGetParameter(nodeList.item(i),_parameterList);
+                        Command<ParameterXML> _commandGetParameter = CommandsFactory.
+                                createCommandGetParameter(nodeList.item(i), _parameterList);
                         _commandGetParameter.execute();
                         log.info("Se ejecutó el comando GetParameter" );
                         if(_commandGetParameter.Return() != null) {
