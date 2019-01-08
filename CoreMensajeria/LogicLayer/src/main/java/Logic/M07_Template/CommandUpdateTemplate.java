@@ -18,7 +18,8 @@ public class CommandUpdateTemplate extends Command {
     @Override
     public void execute() throws Exception {
         TemplateHandler templateHandler = new TemplateHandler();
-        rest = templateHandler.updateTemplateData(json);
+        re
+                st = templateHandler.updateTemplateData(json);
     }
 
     @Override
