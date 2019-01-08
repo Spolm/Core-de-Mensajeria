@@ -157,12 +157,6 @@ public class M02_Companies {
             _command.execute();
             return _rb.build();
         }
-        catch (InvalidParameterException e){
-            e.printStackTrace();
-            error = new Error( MESSAGE_ERROR_PARAMETERDOESNTEXIST );
-            error.addError( MESSAGE_EXCEPTION,e.getMessage() );
-            return Response.status(500).entity(error).build();
-        }
         catch (Exception e){
             error = new Error( MESSAGE_ERROR_INTERN );
             error.addError( MESSAGE_EXCEPTION,e.getMessage() );
