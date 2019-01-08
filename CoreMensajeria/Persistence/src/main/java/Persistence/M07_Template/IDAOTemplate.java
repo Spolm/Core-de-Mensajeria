@@ -36,4 +36,6 @@ public interface IDAOTemplate extends IDAO {
     public boolean updateTemplateData(String json);
 
     public void updateTemplate(int campaignId,int applicationId, int templateId);
+
+    //public void deleteTemplate(int id);
 }

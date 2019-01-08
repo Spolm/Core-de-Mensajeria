@@ -632,6 +632,16 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }
     }
 
+    /*public void deleteTemplate(int id){
+        Connection _conn = this.getBdConnect();
+        PreparedStatement _ps = _conn.prepareStatement()
+        try{
+
+        }catch( SQLException ex ){
+            ex.printStackTrace();
+        }
+    }*/
+
     /**
      * Private function for creating Template Entity out of ResultSet
      * @param _rs
