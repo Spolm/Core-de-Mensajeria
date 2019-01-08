@@ -52,25 +52,4 @@ public class M05_Channel {
         }
         return response;
     }
-
-    /**
-     * Obtiene la lista de integradores según el
-     * id de un canal en formato Json.
-     *
-     * @see Channel
-     */
-
-    /*@GET
-    @Path("/i/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response listIntegrator(@PathParam("id") int id) {
-        try {
-            ArrayList<Entity> i = _channelDAO.listIntegratorByChannel(id);
-            return Response.ok().entity(i).build();
-        } catch (DatabaseConnectionProblemException e) {
-            return Response.status(500).entity(e.getMessage()).build();
-        } catch (ChannelNotFoundException e) {
-            return Response.status(404).entity(e.getMessage()).build();
-        }
-    }*/
 }

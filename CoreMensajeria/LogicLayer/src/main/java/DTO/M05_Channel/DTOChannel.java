@@ -2,7 +2,6 @@ package DTO.M05_Channel;
 
 import DTO.DTO;
 import Entities.Entity;
-import Entities.M04_Integrator.Integrator;
 
 import java.util.ArrayList;
 

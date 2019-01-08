@@ -9,6 +9,4 @@ import java.util.ArrayList;
 public interface IDAOChannel extends IDAO {
 
     ArrayList<Entity> listChannel() throws DatabaseConnectionProblemException;
-    ArrayList<Entity> listIntegratorByChannel(Entity e) throws DatabaseConnectionProblemException,
-            ChannelNotFoundException;
 }

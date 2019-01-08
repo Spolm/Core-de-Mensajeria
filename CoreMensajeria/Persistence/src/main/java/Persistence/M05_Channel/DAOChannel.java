@@ -59,7 +59,7 @@ public class DAOChannel {
 
             while (result.next()) {
                 Channel channel = extractChannel(result);
-                channel.set_integrators(daoIntegrator.listIntegratorByChannel(channel));
+                channel.set_integrators(daoIntegrator.listIntegratorByChannel(channel.get_id()));
                 channelList.add(channel);
             }
             return channelList;
