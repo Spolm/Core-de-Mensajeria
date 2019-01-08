@@ -27,7 +27,4 @@ public class GetApplicationByTokenCommand extends Command {
         return this._app;
     }
 
-   /* public Application ReturnList(){
-        return this._app;
-    }*/
 }

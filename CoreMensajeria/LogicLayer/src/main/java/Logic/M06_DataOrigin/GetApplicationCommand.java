@@ -20,8 +20,4 @@ public class GetApplicationCommand extends Command{
     public ArrayList<Application> Return() {
         return applicationList;
     }
-
-   /* public ArrayList<Application> ReturnList(){
-        return applicationList;
-    }*/
 }

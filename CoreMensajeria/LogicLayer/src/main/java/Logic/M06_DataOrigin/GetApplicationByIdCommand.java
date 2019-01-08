@@ -1,5 +1,6 @@
 package Logic.M06_DataOrigin;
 
+import Entities.EntityFactory;
 import Entities.M06_DataOrigin.Application;
 import Logic.Command;
 import Persistence.DAOFactory;
@@ -22,10 +23,8 @@ public class GetApplicationByIdCommand extends Command{
     }
 
     @Override
-    public Object Return() {
-        return null;
+    public Application Return() {
+        return _app;
     }
-
-    public Application ReturnList(){ return _app;}
 
 }

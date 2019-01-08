@@ -23,11 +23,7 @@ public class GetApplicationByIdCompanyCommand extends Command {
     }
 
     @Override
-    public Object Return() {
-        return null;
-    }
-
-    public ArrayList<Application> returnList(){
+    public ArrayList<Application> Return() {
         return this._listCompany;
     }
 }

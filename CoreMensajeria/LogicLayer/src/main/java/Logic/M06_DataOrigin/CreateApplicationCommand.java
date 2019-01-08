@@ -29,8 +29,4 @@ public class CreateApplicationCommand extends Command {
     public Application Return() {
         return _app;
     }
-
-   /* public Application ReturnApp(){
-        return _app;
-    }*/
 }

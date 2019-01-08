@@ -26,9 +26,4 @@ public class UpdateApplicationCommand extends Command {
     public Application Return() {
         return this._app;
     }
-
-  /*  public Application ReturnList(){
-        return this._app;
-    }*/
-
 }
