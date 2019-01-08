@@ -1,10 +1,12 @@
-package Logic.M03_Campaign;
+package M03_Campaign;
 import Entities.Entity;
 import Entities.EntityFactory;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 import Logic.Command;
 import Logic.CommandsFactory;
+import Logic.M03_Campaign.CampaignUserCommand;
+import Logic.M03_Campaign.CampaignUserCompanyCommand;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,7 +54,7 @@ public class CampaignCommandTest {
         command = CommandsFactory.createCampaignUserCompany( _co );
         try {
             command.execute();
-            companies = ( ( CampaignUserCompanyCommand ) command ).ReturnList();
+            companies = ( (CampaignUserCompanyCommand) command ).ReturnList();
             assertNotNull(companies);
 
         } catch (Exception e) {
