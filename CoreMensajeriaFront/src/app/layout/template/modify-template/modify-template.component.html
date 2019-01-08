@@ -136,6 +136,35 @@
     </div>
     <br>
 
+    <div>
+      <hr>
+      <div class="form-row m-6">
+
+        <div class="form-group col-2 m-6">
+          <div class="form-check">
+            <label class="form-check-label" for="originApp">
+              Campaña
+            </label>
+          </div>
+          <br>
+        </div>
+        <div class="form-group col-4" *ngIf="originOption == 'app'">
+          <div class="form-check">
+            <select class="form-control" id="campaign" name="campaign" [(ngModel)]="campaignId">
+              <ng-container *ngFor="let campaign of campaignsJson">
+              <option *ngIf="campaign._statusCampaign == 1" [value]="campaign._idCampaign">
+                <p>
+                  <!-- {{application._nameApplication}} | {{application._descriptionApplication}} -->
+                </p>
+              </option>
+            </ng-container>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
     <div class="row">
       <div class="col-2">
         Planificación

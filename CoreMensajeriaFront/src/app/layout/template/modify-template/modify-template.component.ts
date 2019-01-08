@@ -26,6 +26,7 @@ export class ModifyTemplateComponent {
   parametersJson: any = [];
   channelsJson: any = [];
   applicationsJson: any = [];
+  campaignsJson: any = [];
   originOption = 'app';
   applicationId: number;
   formMessage = '';
@@ -45,6 +46,7 @@ export class ModifyTemplateComponent {
     this.getParameters();
     this.getChannels();
     this.getApplications(Number(this.companyId));
+    this.getCampaigns(Number(this.companyId));
     this.getTemplate();    
     this.getPrivileges(this.userId, Number(this.companyId));
   }
@@ -92,6 +94,12 @@ export class ModifyTemplateComponent {
   getApplications(company: number) {
     this.templateService.getApplicationsByCompany(company).subscribe(data => {
       this.applicationsJson = data;
+    });
+  }
+
+  getCampaigns(company: number) {
+    this.templateService.getCampaigns(company).subscribe(data => {
+      this.campaignsJson = data;
     });
   }
 
