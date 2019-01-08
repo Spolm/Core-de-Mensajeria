@@ -5,6 +5,9 @@ import Entities.Entity;
 import java.sql.Timestamp;
 
 
+/**
+ * Entidad del mensaje enviado que será insertada en bd
+ */
 public class SentMessage extends Entity {
     public int _templateId;
     public int _messageId;

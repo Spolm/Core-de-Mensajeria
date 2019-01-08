@@ -12,14 +12,23 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
+/**
+ * Servicios para validar mensajes
+ */
 @Path("/M08_MessageCore")
 public class M08_MessageValidation {
 
+    /**
+     * @param dto los parametros del mensaje a ser enviado
+     * @return el body ingresado si el mismo se valida correctamente
+     * @throws PersonalizedException excepciones personalizadas a traves de la WebApplicationException
+     * excepcion de javaEE
+     */
     @POST
     @Path("/CommandSendMessage")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public ParametersDTO sendMessage(@Valid ParametersDTO dto) throws Exception{
+    public ParametersDTO sendMessage(@Valid ParametersDTO dto) throws WebApplicationException{
         Exception error = null;
         ParametersDTO response = dto;
         try {
