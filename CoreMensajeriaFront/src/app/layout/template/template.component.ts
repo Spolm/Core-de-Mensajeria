@@ -81,6 +81,7 @@ export class TemplateComponent {
     localStorage.setItem('companyId', companyId);
     this.getTemplates(this.userId, companyId);
     this.getPrivileges(this.userId, Number(companyId));
+  
   }
 
   templateDetails(id: number) {

@@ -49,6 +49,12 @@ export class TemplateService {
       map(this.extractData));
   }
 
+  getCampaigns(companyId:number)
+  {
+    return this.http.get(endpoint + 'M03_Campaigns/GetCampaigns?companyId=' + companyId.toString()).pipe(
+      map(this.extractData));
+  }
+
   getCompanies(userId: string) {
     return this.http.get(endpoint + 'M02_Companies/GetCompaniesByResponsible?id=' + userId).pipe(
       map(this.extractData));

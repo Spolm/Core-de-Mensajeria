@@ -64,7 +64,7 @@ $$ LANGUAGE plpgsql;
 
 --Funcion para el metodo post parameter PARTE I 
 CREATE OR REPLACE FUNCTION m07_findParameterByPar_Com_IDAndByParameterName(IN _companyId integer, IN _name character varying)
- RETURNS TABLE(par_id,par_name,par_company_id) AS
+ RETURNS TABLE(par_id integer,par_name character varying,par_company_id integer) AS
  $BODY$
 BEGIN
 RETURN QUERY

@@ -1,5 +1,6 @@
 package Logic.M07_Template;
 
+import Entities.M07_Template.HandlerPackage.StatusHandler;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M07_Template.DAOStatus;

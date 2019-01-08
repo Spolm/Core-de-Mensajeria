@@ -142,7 +142,6 @@ END;
 $$
 LANGUAGE 'plpgsql' VOLATILE;
 
-select * from planning;
 
 -- DROP FUNCTION  m07_select_applicantion_by_template(integer);
 CREATE OR REPLACE FUNCTION m07_select_applicantion_by_template(IN templateId INTEGER)
