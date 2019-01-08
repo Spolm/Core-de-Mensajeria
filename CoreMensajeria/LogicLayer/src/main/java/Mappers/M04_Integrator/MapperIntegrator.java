@@ -14,7 +14,11 @@ public class MapperIntegrator extends GenericMapper<DTOIntegrator> {
 
     @Override
     public DTOIntegrator CreateDto(Entity entity) {
-        try {
+        Integrator _integrator = (Integrator) entity;
+        return DTOFactory.CreateDTOIntegrator( _integrator.getThreadCapacity(),
+                _integrator.getMessageCost(),_integrator.getNameIntegrator(), _integrator.getApiIntegrator(),
+                _integrator.isEnabled());
+       /* try {
             DTOIntegrator dto = null;
             Integrator _integrator = (Integrator) entity;
             dto = DTOFactory.CreateDTOIntegrator( _integrator.getThreadCapacity(),
@@ -25,7 +29,7 @@ public class MapperIntegrator extends GenericMapper<DTOIntegrator> {
         catch(Exception e){
 
         }
-        return null;
+        return null;*/
     }
 
 
