@@ -1,5 +1,7 @@
 package Logic;
 
+import DTO.DTO;
+import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
@@ -288,9 +290,8 @@ public class CommandsFactory {
         return new CommandProcessXML(filePath);
     }
 
-    public static CommandValidateMessage createCommandValidateMessage(int template, String message,
-                                                                      String channel) {
-        return new CommandValidateMessage(template, message, channel);
+    public static CommandValidateMessage createCommandValidateMessage(int template) {
+        return new CommandValidateMessage(template);
 
     }
 
@@ -298,8 +299,8 @@ public class CommandsFactory {
         return new CommandValidateTemplate(id);
     }
 
-    public static CommandValidate createCommandValidate (int template, String message, String channel) {
-        return new CommandValidate(template, message, channel);
+    public static CommandValidate createCommandValidate (ParametersDTO dto) {
+        return new CommandValidate(dto);
     }
 
     public static Command createSendMessage(VerifiedParameter parameters) {
