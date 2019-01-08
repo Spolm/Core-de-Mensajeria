@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class M02_CompaniesTest {
 
-    Gson gson = new Gson();
     private ArrayList<Company> _coList;
     private Company _co;
     private CompanyDAO _coMng = new CompanyDAO();
@@ -30,23 +29,40 @@ public class M02_CompaniesTest {
 
 
     @Test
-    void  getAllCompaniesPPTest() {
-
-        M02_Companies intance = new M02_Companies ();
-        Response salida = intance.getAllCompaniesPP();
-        assertEquals(200, salida.getStatus());
-        assertNotNull( salida.getEntity());
+    void  getAllCompaniesPPTest() throws CompanyDoesntExistsException{
+        try {
+            M02_Companies intance = new M02_Companies ();
+            Response salida = intance.getAllCompaniesPP();
+            assertEquals(200, salida.getStatus());
+            assertNotNull( salida.getEntity());
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new CompanyDoesntExistsException(e);
+        }
 
     }
 
     @Test
-    void getCompaniesByUserTest() {
-        M02_Companies intance = new M02_Companies ();
-        Response salida = intance.getCompaniesByUserPP (1) ;
-        assertEquals(200, salida.getStatus());
-        assertNotNull(salida);
+    void getCompaniesByUserTest() throws CompanyDoesntExistsException {
+        try{
+            M02_Companies intance = new M02_Companies ();
+            Response salida = intance.getCompaniesByUserPP (1) ;
+            assertEquals(200, salida.getStatus());
+            assertNotNull(salida);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new CompanyDoesntExistsException(e);
+        }
     }
 
+    @Test
+    void f() {
+        try {
+
+        } catch (Exception e) {
+
+        }
 
 
+    }
 }
