@@ -4,6 +4,7 @@ import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.Message;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
+import Exceptions.M08_SendMessageManager.DateNotValidException;
 import Exceptions.M08_SendMessageManager.MissLengthXMLException;
 import Exceptions.M08_SendMessageManager.NullValueXMLException;
 import Logic.Command;
@@ -87,20 +88,25 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
                 _verifiedParameters.set_verifiedMessages(_messageList);
                 _verifiedParameters.set_template(_template);
                 log.info("Se ha configurado la plantilla" );
+
+                Command scheduleMessageCommand = CommandsFactory.createScheduleMessage(_verifiedParameters);
+                scheduleMessageCommand.execute();
             } else{
                 log.error("El Id del temple es vacío" );
             }
         } catch (SAXException | ParserConfigurationException | IOException e1) {
-            System.out.println("Error"); ///*** PENDIENTE POR CAMBIAR
+            System.out.println("Error"); ///*** TODO: PENDIENTE POR CAMBIAR
             e1.printStackTrace();
         } catch (TemplateDoesntExistsException e) {
             log.error( "la plantilla no existe" );
         } catch (NullPointerException e){
-            System.out.println("Error 3: " + e); ///*** PENDIENTE POR CAMBIAR
+            System.out.println("Error 3: " + e); ///*** TODO: PENDIENTE POR CAMBIAR
         } catch ( NullValueXMLException e ){
             log.error( "valores nulos o vacios dentro del XML" );
         } catch (NumberFormatException e){
             log.error( "El Id de la plantilla es inválido, solo números enteros" );
+        } catch (DateNotValidException e) {
+            log.error("La fecha de inicio o fin la plantilla es inválida");
         }
         catch (Exception e){
             log.error( "Ha ocurrido una excepción inesperada" );
