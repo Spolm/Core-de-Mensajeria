@@ -18,9 +18,9 @@ import {
 import { MoreFiltersComponent } from "./more-filters/more-filters.component";
 import { Chart } from "chart.js";
 import { Point } from "./point";
-import { forEach } from "@angular/router/src/utils/collection";
-import { ChartsComponent } from "../charts/charts.component";
-import { DropdownComponent } from "../bs-component/components";
+//import { forEach } from "@angular/router/src/utils/collection";
+//import { ChartsComponent } from "../charts/charts.component";
+//import { DropdownComponent } from "../bs-component/components";
 import { DropdownMethods } from "./DropdownMethods";
 //import { create } from "domain";
 
@@ -557,7 +557,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
 
     convertselectedDaysOfWeekIdsIntoHttpParams(params: HttpParams) {
         this.selectedDaysOfWeek.forEach(dayOfWeekId => {
-            params = params.append("dayofweekId", dayOfWeekId.toString());
+            params = params.append("dayofweekId", dayOfWeekId.dayOfWeek_id.toString());
         });
         return params;
     }

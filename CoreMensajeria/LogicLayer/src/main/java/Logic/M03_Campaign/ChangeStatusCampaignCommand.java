@@ -1,6 +1,7 @@
 package Logic.M03_Campaign;
 
 import Entities.Entity;
+import Entities.M03_Campaign.Campaign;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M03_Campaign.IDAOCampaign;
@@ -9,13 +10,21 @@ import java.util.ArrayList;
 
 public class ChangeStatusCampaignCommand extends Command {
 
-    private static Entity _ca;
+    private static Campaign _ca;
 
-    public ChangeStatusCampaignCommand(Entity _campaign ){
+    /**
+     * Constructor de la clase.
+     * @param _campaign instancia de la Campana que se desea agregar
+     */
+
+    public ChangeStatusCampaignCommand(Campaign _campaign ){
         this._ca = _campaign;
     }
 
 
+    /**
+     * Metodo que ejecuta la Accion del comando
+     */
     @Override
     public void execute() throws Exception {
         try {

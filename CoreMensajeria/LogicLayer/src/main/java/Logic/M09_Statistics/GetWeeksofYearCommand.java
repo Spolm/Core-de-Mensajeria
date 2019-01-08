@@ -7,7 +7,7 @@ import Persistence.M09_Statistics.DAOStatisticEstrella;
 
 import java.util.ArrayList;
 
-public class GetWeeksofYearCommand extends Command {
+public class GetWeeksofYearCommand extends Command<ArrayList<Integer>> {
 
     private DAOStatisticEstrella dao;
     private ArrayList<Integer> weeksofyear;
@@ -19,9 +19,5 @@ public class GetWeeksofYearCommand extends Command {
     }
 
     @Override
-    public Entity Return() {
-        return null;
-    }
-
-    public ArrayList<Integer> ReturnList() { return weeksofyear; }
+    public ArrayList<Integer> Return() { return weeksofyear; }
 }

@@ -15,9 +15,39 @@ public class DTOFullCampaign extends DTO {
     private boolean _statusCampaign;
     private Date _startCampaign;
     private Date _endCampaign;
-    private Company _company;
+    private int _idCompany;
 
-            private boolean _habilitado;
+    /**
+     * Constructor Vacio
+     */
+    public DTOFullCampaign() {
+    }
+
+
+
+    /**
+     * DTO para campañas con todos los atributos de la clase
+     * @param idCampaign  id de la campaña
+     * @param nameCampaign nombre para una campaña recien creada
+     * @param descCampaign descripcion de la campaña
+     * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
+     * @param startCampaign fecha de inicio de la campaña
+     * @param endCampaign fecha de finalización de la campaña
+     * @param idCompany id de la compañia
+     */
+    public DTOFullCampaign ( int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign,
+                            Date startCampaign, Date endCampaign, int idCompany ) {
+
+        _idCampaign = idCampaign;
+        _nameCampaign = nameCampaign;
+        _descCampaign = descCampaign;
+        _statusCampaign = statusCampaign;
+        _startCampaign = startCampaign;
+        _endCampaign = endCampaign;
+        _idCompany = idCompany;
+
+    }
+
 
     public int get_idCampaign() {
         return _idCampaign;
@@ -67,42 +97,11 @@ public class DTOFullCampaign extends DTO {
         _endCampaign = endCampaign;
     }
 
-    public Company get_company() { return _company; }
-
-    public void set_company(Company _company) { this._company = _company; }
-
-    public boolean get_habilitado() { return _habilitado; }
-
     public void set_habilitado(boolean _habilitado) { _habilitado = _habilitado; }
 
-    /**
-     * Constructor Vacio
-     */
-    public DTOFullCampaign() {
-    }
+    public boolean is_statusCampaign() { return _statusCampaign; }
 
+    public int get_idCompany() { return _idCompany; }
 
-
-    /**
-     * DTO para campañas con todos los atributos de la clase
-     * @param idCampaign  id de la campaña
-     * @param nameCampaign nombre para una campaña recien creada
-     * @param descCampaign descripcion de la campaña
-     * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
-     * @param startCampaign fecha de inicio de la campaña
-     * @param endCampaign fecha de finalización de la campaña
-     * @param company objeto del tipo Company
-     */
-    public DTOFullCampaign (int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign,
-                        Date startCampaign, Date endCampaign, Company company) {
-
-        _idCampaign = idCampaign;
-        _nameCampaign = nameCampaign;
-        _descCampaign = descCampaign;
-        _statusCampaign = statusCampaign;
-        _startCampaign = startCampaign;
-        _endCampaign = endCampaign;
-        _company = company;
-
-    }
+    public void set_idCompany( int _idCompany ) { this._idCompany = _idCompany; }
 }

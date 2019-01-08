@@ -3,7 +3,7 @@ package Mappers.CompanyMapper;
 import DTO.M02_DTO.DTOCompanyWithOut_Link;
 
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M02_Company.Company;
 import DTO.DTOFactory;
 import Mappers.GenericMapper;

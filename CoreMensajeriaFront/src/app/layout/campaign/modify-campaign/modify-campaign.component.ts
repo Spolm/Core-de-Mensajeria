@@ -3,7 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Company } from '../../../../model/company-model';
 import { Router } from '@angular/router';
+import { Campaign } from '../../../../model/campaign-model';
+import { CampaignService } from '../campaign.service';
 import { CompanyService } from '../../company/company.service';
+
 
 @Component({
   selector: 'app-modify-campaign',
@@ -12,24 +15,26 @@ import { CompanyService } from '../../company/company.service';
 })
 export class ModifyCampaignComponent implements OnInit {
 
-  opcionSeleccionado: string = "";
+  opcamp: Campaign = new Campaign();
   verSeleccion: string = "";
   datos;
+  newCampaign: Campaign = new Campaign();
+  campaigns: any = [];
 
-  constructor(public router: Router, private http: HttpClient, 
-    public rest: CompanyService, private toastr: ToastrService) {
-
-      //this.datos = ['Compañias' , 'Campañas', 'Canales'];
-
-     }
+  constructor(public companyService: CompanyService, public router: Router, private http: HttpClient, 
+    public campaignService: CampaignService, private toastr: ToastrService) { 
+      campaignService.getCampaigns().subscribe(data => {
+        this.campaigns = data;
+      });
+    }
 
 
   private companyList = Array<Company>();
      private vacio: boolean;
-
+     private campaignList = Array<Campaign>();
   ngOnInit() {
 
-    this.rest.getCompanies().subscribe((data) => {
+    this.companyService.getCompanies().subscribe((data) => {
       this.vacio = true;
       this.companyList = data;
       if (this.companyList.length > 0) {
@@ -39,13 +44,44 @@ export class ModifyCampaignComponent implements OnInit {
    console.log(err);
     })
 
+    this.campaignService.getCampaigns().subscribe((data) => {
+      this.vacio = true;
+      this.campaignList = data;
+      console.log(this.campaignList);
+      if (this.campaignList.length > 0) {
+      this.vacio = false;
+      }
+      }, (err) => {
+      console.log(err);
+      })
   }
 
 
-  capturar() {
-    // Pasamos el valor seleccionado a la variable verSeleccion
-    this.verSeleccion = this.opcionSeleccionado;
-    console.log( "Valor Capturado", this.verSeleccion );
+  editCompany() {
+
+    if ( (this.opcamp._nameCampaign) && 
+         (this.opcamp._descCampaign != null) && (this.opcamp._startCampaign != null) &&
+         (this.opcamp._endCampaign != null) && (this.opcamp._idCompany != null) )    {
+
+    var sDate =  new Date(this.opcamp._startCampaign)
+    console.log(sDate.toISOString);
+    this.opcamp._startCampaign = this.opcamp._startCampaign+"T02:06:58.147"
+    this.opcamp._endCampaign = this.opcamp._endCampaign+"T02:06:58.147"
+    this.campaignService.editCampaign(this.opcamp).toPromise().then(res => {
+      //manejo de la respuesta del servicio
+    });
+
+  }
+  else{
+    this.toastr.error("Algun Campo esta Vacio.");
+    this.opcamp._nameCampaign = null ;
+    this.opcamp._descCampaign = null ; 
+    this.opcamp._startCampaign = null ;
+    this.opcamp._endCampaign = null ;
+    this.opcamp._idCompany = null;
+
+  }
+
 }
 
 }

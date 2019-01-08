@@ -34,9 +34,9 @@ public class PlanningHandler {
             preparedStatement.setInt(1, templateId);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            planning.setStartDate(resultSet.getString("panningStartDate"));
+            planning.setStartDate(resultSet.getDate("panningStartDate"));
             planning.setStartTime(resultSet.getString("planningStartTime"));
-            planning.setEndDate(resultSet.getString("planningEndDate"));
+            planning.setEndDate(resultSet.getDate("planningEndDate"));
             planning.setEndTime(resultSet.getString("planningEndTime"));
             planning.setIdPlanning(resultSet.getInt("(planningId"));
         }catch (SQLException e){

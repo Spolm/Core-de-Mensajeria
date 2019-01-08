@@ -1,6 +1,7 @@
 package Logic.M03_Campaign;
 
 import Entities.Entity;
+import Entities.M02_Company.Company;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M03_Campaign.DAOCampaign;
@@ -9,18 +10,15 @@ import java.util.ArrayList;
 
 public class CampaignUserCompanyCommand extends Command {
 
-    private static Entity _u;
-    private static Entity _comp;
+    private static Company _comp;
     private static ArrayList< Entity > _caList ;
 
 
     /**
      * Constructor de la clase.
-     * @param _user instancia de la Campana que se desea conocer
      * @param _company instancia de la Campana que se desea conocer
      */
-    public  CampaignUserCompanyCommand ( Entity _user, Entity _company ){
-        this._u = _user;
+    public  CampaignUserCompanyCommand (  Company _company ){
         this._comp = _company;
         _caList = new ArrayList<Entity>();
     }
@@ -33,7 +31,7 @@ public class CampaignUserCompanyCommand extends Command {
     public void execute() throws Exception {
         try {
             DAOCampaign _dao = DAOFactory.instanciateDaoCampaign();
-            _caList = _dao.campaignListByUserCompany( _u , _comp );
+            _caList = _dao.campaignListByUserCompany( _comp );
 
 
         }catch(Exception exc) {

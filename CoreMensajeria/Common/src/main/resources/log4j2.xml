@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error">
+    <Appenders>
+        <File name="CoreMensajeria" fileName="C:/Users/Public/CoreMensajeriaCommon.log" immediateFlush="true" append="true">
+            <PatternLayout pattern="[%d{dd MMM yyyy HH:mm}] [%level] Class[%C] Method[%M] Line[%L] Message[%m]%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="CoreMensajeria" level="trace"/>
+        </Root>
+    </Loggers>
+</Configuration>

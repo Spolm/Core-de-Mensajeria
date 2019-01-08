@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class GetYearsCommand extends Command {
+public class GetYearsCommand extends Command<ArrayList<Integer>> {
 
     private DAOStatisticEstrella dao;
     private ArrayList<Integer> years;
@@ -21,9 +21,5 @@ public class GetYearsCommand extends Command {
     }
 
     @Override
-    public Entity Return() {
-        return null;
-    }
-
-    public ArrayList<Integer> returnList() { return years; }
+    public ArrayList<Integer> Return() { return years; }
 }

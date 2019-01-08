@@ -1,6 +1,7 @@
 package Entities.M10_Profile;
 
 import Entities.M01_Login.UserDAO;
+import Exceptions.FormErrorException;
 
 public class CreateFormHandler {
     
@@ -31,7 +32,7 @@ public class CreateFormHandler {
     public CreateFormHandler() {
     }
 
-    public void validate() throws FormErrorException{
+    public void validate() throws FormErrorException {
 
             UserDAO user = new UserDAO();
 

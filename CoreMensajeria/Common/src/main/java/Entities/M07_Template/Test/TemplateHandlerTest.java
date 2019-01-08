@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import Entities.M07_Template.Template;
-import Exceptions.TemplateDoesntExistsException;
+import Exceptions.M07_Template.TemplateDoesntExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ public class TemplateHandlerTest {
         assertEquals(templateHandler.getTemplates().size(), 5);
 
         for (int i=0 ; i < 5 ; i++){
-            assertEquals(templateHandler.getTemplates().get(i).getTemplateId(), i+1);
+            assertEquals(templateHandler.getTemplates().get(i).get_id(), i+1);
         }
 
         //statusTemplateCorrectly();
@@ -41,7 +41,7 @@ public class TemplateHandlerTest {
 
             for (int i=0 ; i < 5 ; i++){
                 template = templateHandler.getTemplate(i+1);
-                assertEquals(template.getTemplateId(), i+1);
+                assertEquals(template.get_id(), i+1);
             }
             //statusTemplateCorrectly();
         }catch (TemplateDoesntExistsException e){

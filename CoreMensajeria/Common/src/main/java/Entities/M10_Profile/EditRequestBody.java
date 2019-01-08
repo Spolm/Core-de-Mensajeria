@@ -1,7 +1,7 @@
 package Entities.M10_Profile;
+import Entities.Entity;
 
-
-public class EditRequestBody {
+public class EditRequestBody extends Entity{
     private String _addressUser;
     private int _idUser;
     private String _phoneUser;
