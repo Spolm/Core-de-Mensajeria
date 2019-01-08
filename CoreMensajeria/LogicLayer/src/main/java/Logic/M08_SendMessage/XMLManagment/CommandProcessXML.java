@@ -109,23 +109,25 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
                 log.error("El Id del temple es vacío" );
             }
         } catch (SAXException | ParserConfigurationException | IOException e) {
-            String msg = "Ha ocurrido una excepción inesperada, " +
-                    "se ha lanzado NullXMLException ";
-            log.error( msg );
+            String msg = "El archivo XML es vacio o inválido.";
+            _verifiedParameters = null;
+            log.error( "Se ha lanzado NullXMLException, " + msg );
             throw new NullXMLException( msg, e);
         } catch ( TemplateDoesntExistsException e ) {
+            _verifiedParameters = null;
             log.error( "la plantilla no existe" );
-        } catch (NullPointerException e){
-            System.out.println("Error 3: " + e); ///*** TODO: PENDIENTE POR CAMBIAR
         } catch ( NullValueXMLException e ){
+            _verifiedParameters = null;
             log.error( "valores nulos o vacios dentro del XML" );
+            String msg = "El archivo XML es inválido.";
+            throw new NullXMLException( msg, e);
         } catch ( NumberFormatException e ){
+            _verifiedParameters = null;
             log.error( "El Id de la plantilla es inválido, solo números enteros" );
-        } catch ( DateNotValidException e ) {
-            log.error("La fecha de inicio o fin la plantilla es inválida");
         } catch (Exception e){
             log.error("Error inesperado de tipo "
                     + e.getClass().getName() );
+            _verifiedParameters = null;
         }
     }
 
