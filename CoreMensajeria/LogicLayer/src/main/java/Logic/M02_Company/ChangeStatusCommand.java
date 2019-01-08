@@ -2,6 +2,8 @@ package Logic.M02_Company;
 
 import Entities.Entity;
 import Entities.M02_Company.Company;
+import Exceptions.M02_Company.CompanyInvalidDataException;
+import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;
@@ -26,18 +28,17 @@ public class ChangeStatusCommand extends Command {
      * Metodo que ejecuta la Accion del comando
      */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws CompanyInvalidDataException, UnexpectedErrorException {
 
         try {
-            IDAOCompany _dao = DAOFactory.instanciateDaoCompany ( );
-            _dao.changeStatus( _co );
+            IDAOCompany _dao = DAOFactory.instanciateDaoCompany();
+            _dao.changeStatus(_co);
         }
-
-        catch ( Exception e ){
-
+        catch(NullPointerException e ){
+            throw new CompanyInvalidDataException("Datos Invalidos", e);
+        }catch(Exception e ){
+            throw new UnexpectedErrorException(e);
         }
-
-
     }
 
     @Override
