@@ -8,7 +8,7 @@ import Exceptions.PersonalizedException;
 public class NullValueXMLException extends PersonalizedException {
 
     /**
-     * Constructor simple.
+     * Constructor simple que sube el mensaje y la excepción a la clase padre.
      */
     public NullValueXMLException(String message, Exception e) {
         super( message, e );

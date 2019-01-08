@@ -1,6 +1,7 @@
 package Logic.M08_SendMessage.XMLManagment;
 
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
+import Exceptions.M08_SendMessageManager.NullXMLException;
 import Logic.Command;
 import Logic.CommandsFactory;
 
@@ -82,7 +83,9 @@ public class WatchDirectory implements Runnable{
                 }
                 key.reset();
             }
-        } catch ( Exception e ) {
+        } catch (NullXMLException e) {
+            log.error("El archivo XML es nulo o esta vacio" );
+        }catch ( Exception e ) {
             log.error("Error inesperado de tipo "
                     + e.getClass().getName() );
         }
