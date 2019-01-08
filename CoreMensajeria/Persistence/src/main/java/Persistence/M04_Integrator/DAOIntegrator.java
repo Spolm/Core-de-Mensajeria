@@ -1,7 +1,7 @@
 package Persistence.M04_Integrator;
 
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M04_Integrator.Integrator;
 import Entities.M05_Channel.Channel;
 import Entities.Sql;
@@ -111,7 +111,7 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
      * @see Integrator
      */
     @Override
-    public void disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
+    public Entity disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
         try {
 
             _conn = Sql.getConInstance();
@@ -124,6 +124,7 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
         } finally {
             Sql.bdClose(_conn);
         }
+        return getConcreteIntegrator(id);
     }
 
     /**
@@ -134,7 +135,7 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
      * @see Integrator
      */
     @Override
-    public void enableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
+    public Entity enableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
         try {
 
             _conn = Sql.getConInstance();
@@ -147,6 +148,7 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
         } finally {
             Sql.bdClose(_conn);
         }
+        return getConcreteIntegrator(id);
     }
 
     /**
