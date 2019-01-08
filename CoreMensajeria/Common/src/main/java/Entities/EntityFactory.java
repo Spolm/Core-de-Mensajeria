@@ -259,7 +259,7 @@ public class EntityFactory {
      * @return Un objeto Channel con las caracteristicas enviadas por parametro
      * @see Channel
      */
-    public static Channel CreateChannel(int idChannel, String nameChannel, String descriptionChannel, ArrayList<Entity> integrators) {
+    public static Channel createChannel(int idChannel, String nameChannel, String descriptionChannel, ArrayList<Entity> integrators) {
         if (nameChannel == null)
             return null;
         if (nameChannel.equalsIgnoreCase("SMS"))

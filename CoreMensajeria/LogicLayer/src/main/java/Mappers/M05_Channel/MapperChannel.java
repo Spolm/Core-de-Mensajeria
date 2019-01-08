@@ -23,7 +23,7 @@ public class MapperChannel extends GenericMapper<DTOChannel> {
 
     @Override
     public Entity CreateEntity(DTOChannel dtoChannel) {
-        return EntityFactory.CreateChannel(
+        return EntityFactory.createChannel(
                 -1,
                 dtoChannel.get_nameChannel(),
                 dtoChannel.get_descriptionChannel(),

@@ -20,7 +20,7 @@ public class MapperTest {
     public void init() {
         _mapper = new MapperChannel();
         _channel = new ChannelSms(1, "Yahoo", "Yahoo sms service");
-        _dtoChannel = new DTOChannel("Claro", "Claro sms service");
+        _dtoChannel = new DTOChannel("SMS", "SMS");
     }
 
     @Test
@@ -33,11 +33,11 @@ public class MapperTest {
 
     @Test
     public void CreateEntityTest(){
-        ChannelSms channel = (ChannelSms) _mapper.CreateEntity(_dtoChannel);
+        Channel channel = (Channel) _mapper.CreateEntity(_dtoChannel);
         assertNotNull(channel);
         assertEquals(-1, channel.get_id());
-        assertEquals("Claro", channel.get_nameChannel());
-        assertEquals("Claro sms service", channel.get_descriptionChannel());
+        assertEquals("SMS", channel.get_nameChannel());
+        assertEquals("SMS", channel.get_descriptionChannel());
     }
 
     @Test

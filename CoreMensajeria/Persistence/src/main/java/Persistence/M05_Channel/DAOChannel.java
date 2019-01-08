@@ -1,7 +1,7 @@
 package Persistence.M05_Channel;
 
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M05_Channel.Channel;
 import Entities.Sql;
 import Exceptions.ChannelNotFoundException;
