@@ -25,11 +25,7 @@ public class GetIntegratorsForChannelCommand extends Command {
     }
 
     @Override
-    public Entity Return() {
-        return null;
-    }
-
-    public ArrayList<Integrator> returnList() {
+    public ArrayList<Integrator> Return() {
         return integrators;
     }
 }

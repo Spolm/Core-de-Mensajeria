@@ -1,6 +1,9 @@
 package Logic.M03_Campaign;
 
 import Entities.Entity;
+import Entities.M03_Campaign.Campaign;
+import Exceptions.M03_Campaign.CampaignInvalidDataException;
+import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M03_Campaign.IDAOCampaign;
@@ -9,22 +12,40 @@ import java.util.ArrayList;
 
 public class ChangeStatusCampaignCommand extends Command {
 
-    private static Entity _ca;
+    private static Campaign _ca;
 
-    public ChangeStatusCampaignCommand(Entity _campaign ){
+    /**
+     * Constructor de la clase.
+     * @param _campaign instancia de la Campana que se desea agregar
+     */
+
+    public ChangeStatusCampaignCommand(Campaign _campaign ){
         this._ca = _campaign;
     }
 
 
+    /**
+     * Metodo que ejecuta la Accion del comando
+     */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws CampaignInvalidDataException, UnexpectedErrorException  {
         try {
+            if(_ca.get_idCampaign()== 0) {
+                throw new CampaignInvalidDataException();
+            }
+
             IDAOCampaign _dao = DAOFactory.instanciateDaoCampaign ( );
             _dao.changeStatusCampaign( _ca );
+
         }
 
-        catch ( Exception e ){
-
+        catch ( CampaignInvalidDataException e ){
+            throw new  CampaignInvalidDataException("Datos Invalidos",e);
+        }
+        catch ( NullPointerException e ){
+            throw new  CampaignInvalidDataException("Datos Invalidos",e);
+        }catch ( Exception e ){
+            throw new UnexpectedErrorException( e );
         }
 
 

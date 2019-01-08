@@ -1,12 +1,9 @@
 package Logic.M06_DataOrigin;
 
-import Entities.Entity;
-import Entities.Factory.EntityFactory;
 import Entities.M06_DataOrigin.Application;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M06_DataOrigin.IDAOApplication;
-import java.util.ArrayList;
 
 public class GetApplicationByIdCommand extends Command{
 

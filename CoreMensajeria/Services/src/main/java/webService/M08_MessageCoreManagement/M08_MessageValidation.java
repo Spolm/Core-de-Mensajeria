@@ -11,6 +11,8 @@ import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
 import Entities.M04_Integrator.*;
 import Exceptions.*;
+import Logic.Command;
+import Logic.CommandsFactory;
 import Mappers.SendMessageMapper.SendMessageMapper;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import com.google.gson.Gson;
@@ -35,31 +37,38 @@ public class M08_MessageValidation {
     @Path("/CommandSendMessage")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response sendMessage(@Valid ParametersDTO dto) {
+    public SentMessage sendMessage(@Valid ParametersDTO dto) throws Exception{
         System.out.println(dto.get_name());
         Exception error = null;
-        Entity sentMessage;
+        Entity sentMessage = new SentMessage();
         try {
-            sentMessage = SendMessageMapper.CreateEntity(dto);
-            System.out.println(((SentMessage) sentMessage).get_message());
-            //Codigo cuando es exitoso
-            return  Response.ok(gson.toJson(sentMessage)).build();
+            Command<Boolean> c = CommandsFactory.createCommandValidate(dto);
+            c.execute();
+            if (c.Return() == true) {
+                sentMessage = SendMessageMapper.CreateEntity(dto);
+                System.out.println(((SentMessage) sentMessage).get_message());
+                //Codigo cuando es exitoso
+
+            }
+
         } catch (TemplateDoesntExistsException e) {
-            error = e;
+            String json = "{\"Message\": \"La plantilla no existe\"}";
+            throw new WebApplicationException(Response.status(400).entity(json).build());
         } catch (SMSTooLongException e) {
             error = e;
         } catch (ParameterDoesntExistsException e) {
             error = e;
         } catch (MessageDoesntExistsException e) {
             error = e;
+        } catch (TemplateNotApprovedException e) {
+            error = e;
+        } catch (UnexpectedErrorException e){
+            error = e;
         } catch (Exception e) {
             error = e;
         }
-        if (error != null)
-         return Response.status(400).entity(gson.toJson(error.toString())).build();
-        return Response.status(400).entity("{\"Mensaje\": \"Error inesperado\"}").build();
         //return Response.ok(gson.toJson(sentMessage)).build();
-
+        return  (SentMessage) sentMessage;
     }
 
     @GET
@@ -94,7 +103,7 @@ public class M08_MessageValidation {
          IntegratorDAO _integratorDAO =new IntegratorDAO();
          MessageIntegrator respuestaIntegrador = null;
 
-        char[] characters = String.valueOf(MessageHandler.getMessage(template2.getTemplateId()).getMessage()).toCharArray();
+        char[] characters = String.valueOf(MessageHandler.getMessage(template2.get_id()).getMessage()).toCharArray();
         posicion= new int[characters.length];
 
 
@@ -111,7 +120,7 @@ public class M08_MessageValidation {
             }
 
             if((j /parametersArray.size())==2){
-                newMessage = MessageHandler.getMessage(template2.getTemplateId()).getMessage();
+                newMessage = MessageHandler.getMessage(template2.get_id()).getMessage();
                 for (int i = 0; i <  parametersArray.size(); i++){
                     if(parametersArray.get(i).getParameter().getName().equals("Correo")){
                         correo = parametersArray.get(i).getParameter().getValue();

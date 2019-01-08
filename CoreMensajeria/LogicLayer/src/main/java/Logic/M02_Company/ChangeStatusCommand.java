@@ -1,6 +1,10 @@
 package Logic.M02_Company;
 
 import Entities.Entity;
+import Entities.M02_Company.Company;
+import Exceptions.M02_Company.CompanyInvalidDataException;
+import Exceptions.M07_Template.InvalidParameterException;
+import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;
@@ -10,26 +14,35 @@ import java.util.ArrayList;
 
 public class ChangeStatusCommand extends Command {
 
-    private static Entity _co;
+    private static Company _co;
 
-    public  ChangeStatusCommand ( Entity _company ){
+    /**
+     * Constructor de la clase.
+     * @param _company instancia de la Compania que se desea agregar
+     */
+    public  ChangeStatusCommand ( Company _company ){
         this._co = _company;
     }
 
 
+    /**
+     * Metodo que ejecuta la Accion del comando
+     */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws CompanyInvalidDataException, UnexpectedErrorException {
 
         try {
-            IDAOCompany _dao = DAOFactory.instanciateDaoCompany ( );
-            _dao.changeStatus( _co );
+            if ( _co.get_idCompany() == 0){
+                throw new CompanyInvalidDataException();
+            }
+            IDAOCompany _dao = DAOFactory.instanciateDaoCompany();
+            _dao.changeStatus(_co);
         }
-
-        catch ( Exception e ){
-
+        catch(NullPointerException e ){
+            throw new CompanyInvalidDataException("Datos Invalidos", e);
+        }catch(Exception e ){
+            throw new UnexpectedErrorException(e);
         }
-
-
     }
 
     @Override

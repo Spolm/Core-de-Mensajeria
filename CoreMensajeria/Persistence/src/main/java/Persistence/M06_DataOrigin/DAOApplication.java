@@ -1,7 +1,6 @@
 package Persistence.M06_DataOrigin;
 
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
 import Entities.M06_DataOrigin.AddApplicationData;
 import Entities.M06_DataOrigin.Application;
 import Entities.M06_DataOrigin.Encrypter;

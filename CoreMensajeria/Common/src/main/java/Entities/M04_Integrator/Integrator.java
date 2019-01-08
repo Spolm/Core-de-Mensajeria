@@ -1,5 +1,5 @@
 package Entities.M04_Integrator;
-
+import Entities.Entity;
 
 /**
  * Clase abstracta Integrador que implementa la interfaz IIntegrador
@@ -11,7 +11,7 @@ package Entities.M04_Integrator;
  * @see IIntegrator
  */
 
-public abstract class Integrator implements IIntegrator {
+public abstract class Integrator  extends Entity /*implements IIntegrator*/{
     private int idIntegrator;
     private int threadCapacity;
     private float messageCost;

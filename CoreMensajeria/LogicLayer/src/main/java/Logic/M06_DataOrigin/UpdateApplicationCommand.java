@@ -1,11 +1,8 @@
 package Logic.M06_DataOrigin;
 
-import Entities.Factory.EntityFactory;
 import Entities.M06_DataOrigin.Application;
 import Logic.Command;
-import Logic.CommandsFactory;
 import Persistence.DAOFactory;
-import Persistence.M06_DataOrigin.DAOApplication;
 import Persistence.M06_DataOrigin.IDAOApplication;
 
 public class UpdateApplicationCommand extends Command {

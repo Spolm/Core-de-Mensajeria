@@ -4,7 +4,7 @@ import Entities.M01_Login.Privilege;
 import Entities.M01_Login.UserDAO;
 import Entities.M03_Campaign.Campaign;
 import Entities.M03_Campaign.CampaignDAO;
-import Entities.M04_Integrator.IntegratorDAO;
+//import Entities.M04_Integrator.IntegratorDAO;
 import Entities.M06_DataOrigin.Application;
 import Entities.M06_DataOrigin.ApplicationDAO;
 import Entities.M07_Template.StatusPackage.Status;
@@ -13,7 +13,7 @@ import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Entities.M05_Channel.Channel;
-import Entities.M05_Channel.ChannelFactory;
+//import Entities.M05_Channel.ChannelFactory;
 import Entities.M04_Integrator.Integrator;
 import Exceptions.ParameterDoesntExistsException;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
@@ -55,17 +55,17 @@ public class TemplateHandler {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while(resultSet.next()){
                     Template template = new Template();
-                    template.setTemplateId(resultSet.getInt("tem_id"));
-                    template.setCreationDate(resultSet.getString("tem_creation_date"));
+                    template.set_id(resultSet.getInt("tem_id"));
+                    template.setCreationDate(resultSet.getDate("tem_creation_date"));
                     Status status = Status.createStatus(resultSet.getInt("sta_id"),
                             resultSet.getString("sta_name"));
                     template.setStatus(status);
-                    template.setChannels(getChannelsByTemplate(template.getTemplateId()));
+                    template.setChannels(getChannelsByTemplate(template.get_id()));
                     template.setCampaign(campaignArrayList.get(x));
-                    template.setApplication(getApplicationByTemplate(template.getTemplateId()));
-                    template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
-                    template.setMessage(MessageHandler.getMessage(template.getTemplateId()));
-                    template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
+                    template.setApplication(getApplicationByTemplate(template.get_id()));
+                    //template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
+                    template.setMessage(MessageHandler.getMessage(template.get_id()));
+                    template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
                     templateArrayList.add(template);
                 }
             }
@@ -91,17 +91,20 @@ public class TemplateHandler {
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 Template template = new Template();
-                template.setTemplateId(resultSet.getInt("tem_id"));
-                template.setCreationDate(resultSet.getString("tem_creation_date"));
+                template.set_id(resultSet.getInt("tem_id"));
+                template.setCreationDate(resultSet.getDate("tem_creation_date"));
                 Status status = Status.createStatus(resultSet.getInt("sta_id"),
                         resultSet.getString("sta_name"));
                 template.setStatus(status);
-                template.setChannels(getChannelsByTemplate(template.getTemplateId()));
-                template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
+                template.setChannels(getChannelsByTemplate(template.get_id()));
+                template.setCampaign(getCampaingByTemplate(template.get_id()));
                 ApplicationDAO applicationService = new ApplicationDAO();
                /* template.setApplication(applicationService.getApplication
                         (template.getTemplateId()));*/
-                template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
+     //             template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
+       //         template.setApplication(applicationService.getApplication
+         //               (template.get_id()));
+                template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
                 templateArrayList.add(template);
             }
         }catch (SQLException e) {
@@ -132,20 +135,21 @@ public class TemplateHandler {
             ResultSet resultSet = sql.sqlConn(query);
             if (resultSet.next()) {
                 //asignamos los datos basicos del propio template
-                template.setTemplateId(resultSet.getInt("tem_id"));
-                template.setCreationDate(resultSet.getString("tem_creation_date"));
+                template.set_id(resultSet.getInt("tem_id"));
+                template.setCreationDate(resultSet.getDate("tem_creation_date"));
                 //asignamos el mensaje y status del template
-                template.setMessage(MessageHandler.getMessage(template.getTemplateId()));
+                template.setMessage(MessageHandler.getMessage(template.get_id()));
                 template.setStatus(Status.createStatus(resultSet.getInt("ts_id"),
                         resultSet.getString("sta_name")));
                 //asignamos canales, campaña y aplicacion
-                template.setChannels(getChannelsByTemplate(template.getTemplateId()));
+                template.setChannels(getChannelsByTemplate(template.get_id()));
                 template.setCampaign(campaignsService.getDetails(resultSet.getInt("tem_campaign_id")));
+
                 UserDAO userDAO = new UserDAO();
-                template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
+                //template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
                 //template.setCampaign(getCampaignsById(resultSet.getInt("tem_campaign_id")));
-                template.setApplication(getApplicationByTemplate(template.getTemplateId()));
-                template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
+                template.setApplication(getApplicationByTemplate(template.get_id()));
+                template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
             }
 
         }catch (ParameterDoesntExistsException e) {
@@ -163,6 +167,30 @@ public class TemplateHandler {
         }
     }
 
+    public Campaign getCampaignsById(int campaignId){
+        Campaign campaign =  new Campaign();
+        Connection connection = Sql.getConInstance();
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_CAMAPIGN_BY_ID);
+            preparedStatement.setInt(1,campaignId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                campaign.set_idCampaign(resultSet.getInt("cam_id"));
+                campaign.set_nameCampaign(resultSet.getString("cam_name"));
+                campaign.set_descCampaign(resultSet.getString("cam_description"));
+                campaign.set_statusCampaign(resultSet.getBoolean("cam_status"));
+                campaign.set_startCampaign(resultSet.getDate("cam_start_date"));
+                campaign.set_endCampaign(resultSet.getDate("cam_end_date"));
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            Sql.bdClose(connection);
+            return campaign;
+        }
+    }
 
     /**
      * This method returns the campaigns filtering
@@ -223,18 +251,18 @@ public class TemplateHandler {
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 ArrayList<Integrator> integrators = new ArrayList<>();
-                IntegratorDAO integratorDAO = new IntegratorDAO();
-                Integrator integrator = integratorDAO.getConcreteIntegrator(
-                        resultSet.getInt("ci_integrator_id")
-                );
-                integrators.add(integrator);
-                Channel channel = new ChannelFactory().getChannel(
-                        resultSet.getInt("ci_channel_id"),
-                        resultSet.getString("cha_name"),
-                        resultSet.getString("cha_description"),
-                        integrators
-                );
-                channels.add(channel);
+          //      IntegratorDAO integratorDAO = new IntegratorDAO();
+            //    Integrator integrator = integratorDAO.getConcreteIntegrator(
+                //        resultSet.getInt("ci_integrator_id")
+               // );
+             //   integrators.add(integrator);
+              //  Channel channel = new ChannelFactory().getChannel(
+               //         resultSet.getInt("ci_channel_id"),
+                //        resultSet.getString("cha_name"),
+                //        resultSet.getString("cha_description"),
+                 //       integrators
+           //     );
+             //   channels.add(channel);
             }
 
         } catch (SQLException e) {
@@ -514,5 +542,3 @@ public class TemplateHandler {
         return sql;
     }
 }
-
-

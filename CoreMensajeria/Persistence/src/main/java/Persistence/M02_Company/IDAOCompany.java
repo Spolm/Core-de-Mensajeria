@@ -17,9 +17,9 @@ public interface IDAOCompany extends IDAO {
 
     ArrayList<Entity> companiesByResponsible( Entity e );
 
-    Entity companyById( Entity e);
+    Company companyById( Company e);
 
-    ArrayList<Entity> companiesByUser( Entity e );
+    ArrayList<Entity> companiesByUser( Company e );
 
     ArrayList<Entity> companiesEnabled();
 

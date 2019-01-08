@@ -1,6 +1,8 @@
 package Logic.M03_Campaign;
 
 import Entities.Entity;
+import Exceptions.M03_Campaign.CampaignNotFoundException;
+import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M03_Campaign.DAOCampaign;
@@ -23,14 +25,16 @@ public class UpdateCampaignCommand extends Command {
      * Metodo que ejecuta la Accion del comando
      */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws CampaignNotFoundException, UnexpectedErrorException {
         try {
+
             DAOCampaign _dao = DAOFactory.instanciateDaoCampaign ( );
             _ca = _dao.update( _ca );
-        }
 
-        catch ( Exception e ){
-            e.printStackTrace();
+        }catch(NullPointerException e) {
+            throw new CampaignNotFoundException("Compañia no encontrada",e);
+        }catch ( Exception e ){
+            throw new UnexpectedErrorException( e );
         }
 
     }
