@@ -1,9 +1,7 @@
 package webService.M05_Channel;
 
 import DTO.M05_Channel.DTOChannel;
-import Entities.Entity;
 import Entities.M05_Channel.Channel;
-import Exceptions.ChannelNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
 import Logic.CommandsFactory;
 import Logic.M05_Channel.CommandGetAllChannels;
@@ -11,7 +9,6 @@ import Mappers.M05_Channel.MapperChannel;
 import Mappers.MapperFactory;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

@@ -23,7 +23,7 @@ class DAOChannelTest {
      * en el sistema es diferente a Null.
      */
     @Test
-    public void listChannel() {
+    public void listChannelTest() {
         try {
             _channelList = _DAOChannel.listChannel();
             assertNotNull(_channelList);

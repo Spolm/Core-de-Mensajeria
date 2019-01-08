@@ -3,7 +3,7 @@ package Mappers.M05_Channel;
 import DTO.DTOFactory;
 import DTO.M05_Channel.DTOChannel;
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M05_Channel.Channel;
 import Mappers.GenericMapper;
 import java.util.ArrayList;
