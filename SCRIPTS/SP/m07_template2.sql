@@ -51,14 +51,18 @@ alter function m07_updatemessage(varchar, integer) owner to "CoreMensajeria";
 -- Select * from m07_updateMessage('test1',1);
 
 --Funcion para el metodo UpdateParameterOfMessage
-CREATE OR REPLACE FUNCTION m07_deleteMessage(IN _messageID integer)
-RETURNS void AS $$
+CREATE OR REPLACE FUNCTION m07_deleteMessage(_messageid integer) returns void
+	language plpgsql
+as $$
 DECLARE
 BEGIN
-	EXECUTE format('DELETE from public.MESSAGE WHERE mes_id= %L', _messageID);
+  EXECUTE format('DELETE from public.message_parameter WHERE mp_message = %L', _messageID);
 END;
-$$ LANGUAGE plpgsql;
--- select * from m01_deleteMessage(2);
+$$;
+
+alter function m07_deleteMessage(integer) owner to "CoreMensajeria";
+
+
 
 ------------------------------------------ MessageHandler ---------------------------------------------------
 

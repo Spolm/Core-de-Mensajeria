@@ -23,7 +23,7 @@ public class CommandPostTemplate extends Command {
         //TemplateHandler templateHandler = new TemplateHandler();
         //rest = templateHandler.postTemplateData(json);
         DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
-        rest = daoTemplate.postTemplateData(json);
+        rest = daoTemplate.postTemplateData(json) > 0;
     }
 
     @Override

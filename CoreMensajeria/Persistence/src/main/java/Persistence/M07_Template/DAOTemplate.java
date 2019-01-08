@@ -70,7 +70,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * @return If the template was saved successfully it returns true,
      * otherwise it returns false.
      */
-    public boolean postTemplateData(String json){
+    public int postTemplateData(String json){
         try {
             Gson gson = new Gson();
             //recibimos el objeto json
@@ -100,10 +100,10 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
             PlanningHandler.postPlanning(planning,templateId);
 
-            return true;
+            return templateId;
         } catch (Exception e){
             System.out.println(e);
-            return false;
+            return -1;
         }
     }
 
@@ -533,8 +533,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             DAOFactory.instaciateDaoParameter().postParameter(parameters,gsonObj.get("company").getAsInt());
             //update de mensaje
             parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
-            String message = gsonObj.get("messagge").getAsString();
-            DAOFactory.instaciateDaoMessage().updateMessage(gsonObj.get("messagge").getAsString(),gsonObj.get("templateId").getAsInt(),parameters,gsonObj.get("company").getAsInt());
+            String message = gsonObj.get("message").getAsString();
+            DAOFactory.instaciateDaoMessage().updateMessage(gsonObj.get("message").getAsString(),gsonObj.get("templateId").getAsInt(),parameters,gsonObj.get("company").getAsInt());
 
             //update de Channel Integrator
             JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
