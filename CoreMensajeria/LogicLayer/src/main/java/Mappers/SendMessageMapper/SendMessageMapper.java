@@ -14,9 +14,9 @@ import java.util.List;
 
 public class SendMessageMapper {
 
-    public static Entity CreateEntity(ParametersDTO dto) {
-        Entity sentMessage = EntityFactory.createSendMessage();
-        ((SentMessage) sentMessage).set_templateId(dto.get_idTemplate());
+    public static SentMessage CreateEntity(ParametersDTO dto) {
+        SentMessage sentMessage = EntityFactory.createSendMessage();
+        sentMessage.set_templateId(dto.get_idTemplate());
         return sentMessage;
     }
 
