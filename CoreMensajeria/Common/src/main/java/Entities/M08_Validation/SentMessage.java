@@ -7,11 +7,11 @@ import java.sql.Timestamp;
 
 public class SentMessage extends Entity {
     public int _templateId;
-    public String _message;
+    public int _messageId;
     public int _campaignId;
     public int _integratorId;
     public int _applicationId;
-    public String _channel;
+    public int _channelId;
     public Timestamp _sentTime;
 
     public int get_templateId() {
@@ -22,12 +22,10 @@ public class SentMessage extends Entity {
         this._templateId = _templateId;
     }
 
-    public String get_message() {
-        return _message;
-    }
+    public int get_message() { return _messageId; }
 
-    public void set_message(String _message) {
-        this._message = _message;
+    public void set_message(int _message) {
+        this._messageId = _message;
     }
 
     public int get_campaignId() {
@@ -54,12 +52,12 @@ public class SentMessage extends Entity {
         this._applicationId = _applicationId;
     }
 
-    public String get_channel() {
-        return _channel;
+    public int get_channel() {
+        return _channelId;
     }
 
-    public void set_channel(String _channel) {
-        this._channel = _channel;
+    public void set_channel(int _channel) {
+        this._channelId = _channel;
     }
 
     public Timestamp get_sentTime() {
