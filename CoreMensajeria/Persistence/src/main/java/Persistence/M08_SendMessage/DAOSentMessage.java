@@ -13,7 +13,7 @@ public class DAOSentMessage extends DAO implements IDAOSentMessage{
     private Connection _conn;
     final String CALL_INSERT = "{CALL m08_insertSentMessagge(?,?,?,?,?,?)}";
     @Override
-    public void create(Entity e) {
+    public void create(Entity e) throws SQLException {
         _conn = getBdConnect();
         SentMessage sentMessage = (SentMessage) e;
         try {
@@ -29,7 +29,7 @@ public class DAOSentMessage extends DAO implements IDAOSentMessage{
                 e.set_id(result.getInt("id"));
             }
         } catch(SQLException error) {
-
+            throw error;
         }
 
     }
