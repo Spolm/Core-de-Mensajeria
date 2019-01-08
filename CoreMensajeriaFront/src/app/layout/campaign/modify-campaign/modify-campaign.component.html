@@ -6,11 +6,10 @@
       <div class="col-5">
           <div class="form-group">
               <label for="formMessage">Campaña</label>
-              <select class="custom-select"  [(ngModel)]="opcamp" name="nombre">
+              <select class="form-control"  [(ngModel)]="opcamp" name="nombre">
                 <option *ngFor="let campaign of campaignList" [ngValue]="campaign" >
                     {{campaign._nameCampaign}}
                 </option>
-                <h1>  {{campaign}} </h1>
               </select>
             </div>
         <div class="form-group">
@@ -30,7 +29,7 @@
         </div>
         <div class="form-group">
           <label for="formMessage">Fecha de finalización de la Campaña</label>
-          <input type="date" [(ngModel)]="opcamp._endCampaign" name="fFin" required class="form-control">
+          <input type="date" value="{{opcamp._endCampaign}}" [(ngModel)]="opcamp._endCampaign" name="fFin" required class="form-control">
         </div>
         <div class="form-group">
           <label for="formMessage">Compañia</label>

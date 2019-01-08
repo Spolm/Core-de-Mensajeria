@@ -9,13 +9,13 @@ import Persistence.M03_Campaign.DAOCampaign;
 import java.util.ArrayList;
 
 public class GetCampaignCommand extends Command {
-    private static Entity _ca;
+    private static Campaign _ca;
 
     /**
      * Constructor de la clase.
      * @param _campaign instancia de la Campana que se desea obtener
      */
-    public GetCampaignCommand( Entity _campaign ){
+    public GetCampaignCommand( Campaign _campaign ){
         this._ca = _campaign;
 
     }

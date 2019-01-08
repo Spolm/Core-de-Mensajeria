@@ -75,8 +75,8 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
 
 
     @Override
-    public Entity campaignById(Entity e) {
-        Campaign _campaign = ( Campaign ) e;
+    public Campaign campaignById(Campaign e) {
+        Campaign _campaign =  e;
         Connection _conn = this.getBdConnect();
 
         try {

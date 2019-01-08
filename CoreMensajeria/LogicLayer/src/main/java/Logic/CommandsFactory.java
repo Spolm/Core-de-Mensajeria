@@ -3,6 +3,8 @@ package Logic;
 import DTO.DTO;
 import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
+import Entities.M02_Company.Company;
+import Entities.M03_Campaign.Campaign;
 
 //import Logic.M10_Profile.*;
 import Logic.M01_Login.*;
@@ -212,12 +214,12 @@ public class CommandsFactory {
 
 
     // region m02
-    public static AddCompanyCommand createAddCompanyCommand( Entity _co ){ return new AddCompanyCommand( _co ); }
-    public static ChangeStatusCommand createChangeStatusCommand(Entity _co ) {return new ChangeStatusCommand( _co );}
+    public static AddCompanyCommand createAddCompanyCommand( Company _co ){ return new AddCompanyCommand( _co ); }
+    public static ChangeStatusCommand createChangeStatusCommand(Company _co ) {return new ChangeStatusCommand( _co );}
     public static GetAllCompaniesCommand createGetAllCompaniesCommand() {return new GetAllCompaniesCommand();}
-    public static GetCompanyCommand createGetCompanyCommand(Entity _co){return new GetCompanyCommand(_co);}
+    public static GetCompanyCommand createGetCompanyCommand(Company _co){return new GetCompanyCommand(_co);}
     public static UpdateCompanyCommand createUpdateCompanyCommand(Entity _co) {return new UpdateCompanyCommand(_co);}
-    public static GetCompanyByUserCommand createGetCompanyByUserCommand( Entity _co ){
+    public static GetCompanyByUserCommand createGetCompanyByUserCommand( Company _co ){
         return new GetCompanyByUserCommand( _co );
     }
     //endregion
@@ -225,13 +227,13 @@ public class CommandsFactory {
 
     // region m03
     public static UpdateCampaignCommand createUpdateCampaignCommand(Entity _co) {return new UpdateCampaignCommand(_co);}
-    public static AddCampaignCommand createAddCampaignCommand(Entity _ca ){ return new AddCampaignCommand( _ca ); }
-    public static GetCampaignCommand createGetCampaignCommand(Entity _ca ){ return new GetCampaignCommand( _ca ); }
-    public static CampaignUserCommand createCampaignUserCommand(Entity _ca ){ return new CampaignUserCommand( _ca ); }
-    public static CampaignUserCompanyCommand createCampaignUserCompany( Entity _ca ){
+    public static AddCampaignCommand createAddCampaignCommand(Campaign _ca ){ return new AddCampaignCommand( _ca ); }
+    public static GetCampaignCommand createGetCampaignCommand(Campaign _ca ){ return new GetCampaignCommand( _ca ); }
+    public static CampaignUserCommand createCampaignUserCommand(Company _ca ){ return new CampaignUserCommand( _ca ); }
+    public static CampaignUserCompanyCommand createCampaignUserCompany( Company _ca ){
          return new CampaignUserCompanyCommand( _ca  );
       }
-    public static ChangeStatusCampaignCommand createChangeStatusCampaign( Entity _ca ){
+    public static ChangeStatusCampaignCommand createChangeStatusCampaign( Campaign _ca ){
         return new ChangeStatusCampaignCommand( _ca );
     }
     //endregion
@@ -309,29 +311,4 @@ public class CommandsFactory {
         return new CommandSendMessage(parameters);
     }
     //end region
-
-    //region Commands M_10
-    /*public static AddUserCommand createAddUserCommand(){
-        return new AddUserCommand();
-    }*/
-    /*public static EditUserProfileCommand createEditUserProfileCommand(){
-        return new EditUserProfileCommand();
-    }
-
-    public static FindUserByIdCommand createFindUserByIdCommand(){
-        return new FindUserByIdCommand();
-    }
-
-    public  static GetAllCompaniesToProfileCommand createGetAllCompaniesToProfileCommand(){
-        return new GetAllCompaniesToProfileCommand();
-    }
-
-    public static GetAllRolesCommand createGetAllRolesCommand(){
-        return new GetAllRolesCommand();
-    }*/
-
-    /*public static GetAllUsersCommand createGetAllUsersCommand(){
-        return new GetAllUsersCommand();
-    }*/
-    //endregion
 }

@@ -170,7 +170,7 @@ public class M10_Profile {
                     "(use_password, use_username, use_type, use_email, use_phone, use_country, use_city, use_address," +
                     " use_date_of_birth, use_gender) " +
                     "values(MD5('"+ user.get_passwordUser() +"'), '"+ user.get_usernameUser() +"'," +
-                    user.get_typeUser() +" , '"+ user.get_emailUser() +"', '"+ user.get_phoneUser() +"'," +
+                    user.get_typeUser() +" , '"+ user.get_emailUser() +"', '"+ user.get_emailUser() +"'," +
                     "'"+ user.get_countryUser() +"', '"+ user.get_cityUser() +"', '"+ user.get_addressUser() +"', " +
                     "TO_TIMESTAMP('"+ user.get_birthdateUser() +"','YYYY-MM-DD'), '"+ user.get_genderUser() +"')";
 
