@@ -4,6 +4,7 @@ import Entities.Entity;
 import Entities.M02_Company.Company;
 import Exceptions.M02_Company.CompanyInvalidDataException;
 import Exceptions.M02_Company.CompanyNotFoundException;
+import Exceptions.M07_Template.InvalidParameterException;
 import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Persistence.DAOFactory;
@@ -32,10 +33,16 @@ public class AddCompanyCommand extends Command {
     @Override
     public void execute() throws CompanyInvalidDataException, UnexpectedErrorException {
         try {
+            if( _co.get_name() == "" ) {
+                throw new CompanyInvalidDataException();
+            }
             DAOCompany _dao = DAOFactory.instanciateDaoCompany ( );
             _dao.create( _co );
         }
 
+        catch ( CompanyInvalidDataException e ){
+            throw new  CompanyInvalidDataException("Datos Invalidos",e);
+        }
         catch ( NullPointerException e ){
             throw new  CompanyInvalidDataException("Datos Invalidos",e);
         }catch ( Exception e ){

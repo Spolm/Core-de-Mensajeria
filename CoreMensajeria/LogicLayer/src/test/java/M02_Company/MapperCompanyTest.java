@@ -1,4 +1,4 @@
-package Mappers.CompanyMapper;
+package M02_Company;
 
 import DTO.DTOFactory;
 import DTO.M02_DTO.*;
@@ -7,6 +7,7 @@ import Entities.EntityFactory;
 import Entities.M02_Company.Company;
 import Entities.Sql;
 import Exceptions.CompanyDoesntExistsException;
+import Mappers.CompanyMapper.*;
 import Mappers.MapperFactory;
 import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;

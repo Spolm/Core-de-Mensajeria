@@ -2,6 +2,8 @@ package Logic.M03_Campaign;
 
 import Entities.Entity;
 import Entities.M03_Campaign.Campaign;
+import Exceptions.M03_Campaign.CampaignInvalidDataException;
+import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M03_Campaign.IDAOCampaign;
@@ -26,14 +28,24 @@ public class ChangeStatusCampaignCommand extends Command {
      * Metodo que ejecuta la Accion del comando
      */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws CampaignInvalidDataException, UnexpectedErrorException  {
         try {
+            if(_ca.get_idCampaign()== 0) {
+                throw new CampaignInvalidDataException();
+            }
+
             IDAOCampaign _dao = DAOFactory.instanciateDaoCampaign ( );
             _dao.changeStatusCampaign( _ca );
+
         }
 
-        catch ( Exception e ){
-
+        catch ( CampaignInvalidDataException e ){
+            throw new  CampaignInvalidDataException("Datos Invalidos",e);
+        }
+        catch ( NullPointerException e ){
+            throw new  CampaignInvalidDataException("Datos Invalidos",e);
+        }catch ( Exception e ){
+            throw new UnexpectedErrorException( e );
         }
 
 

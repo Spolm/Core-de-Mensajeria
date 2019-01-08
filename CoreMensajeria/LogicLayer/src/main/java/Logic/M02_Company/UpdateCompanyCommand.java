@@ -2,6 +2,7 @@ package Logic.M02_Company;
 
 import Entities.Entity;
 import Exceptions.M02_Company.CompanyNotFoundException;
+import Exceptions.M07_Template.InvalidParameterException;
 import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Persistence.DAOFactory;
@@ -29,7 +30,6 @@ public class UpdateCompanyCommand extends Command {
         try {
             DAOCompany _dao = DAOFactory.instanciateDaoCompany ( );
            _co = _dao.update( _co );
-
         }catch(NullPointerException e) {
             throw new CompanyNotFoundException("Compañia no encontrada al Actualizar",e);
         }catch ( Exception e ){
