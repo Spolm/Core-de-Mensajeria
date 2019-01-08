@@ -1,6 +1,8 @@
 package Logic.M02_Company;
 
 import Entities.Entity;
+import Exceptions.M02_Company.CompanyNotFoundException;
+import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;
@@ -24,15 +26,16 @@ public class GetCompanyCommand extends Command {
      * Metodo que ejecuta la Accion del comando
      */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws CompanyNotFoundException, UnexpectedErrorException {
         try {
             IDAOCompany _dao = DAOFactory.instanciateDaoCompany();
             _co = _dao.companyById( _co );
 
-
-        }catch(Exception exc) {
-
-        }
+        }catch(NullPointerException e) {
+            throw new CompanyNotFoundException("Compañia no encontrada",e);
+        }catch ( Exception e ){
+        throw new UnexpectedErrorException( e );
+    }
 
 
     }

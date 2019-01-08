@@ -7,7 +7,7 @@ public class CompanyNotFoundException extends PersonalizedException {
     public CompanyNotFoundException(){}
 
     private int idCompany =-100;
-
+    private String internalMessage = "Internal message no defined";
     public CompanyNotFoundException(Exception e){
         super(e);
     }
@@ -25,7 +25,18 @@ public class CompanyNotFoundException extends PersonalizedException {
         this.idCompany = id;
     }
 
-    public int getIdTemplate() {
+    public CompanyNotFoundException(String msg,Exception e, int id ,
+                                    String internalMessage){
+        super(msg, e);
+        this.idCompany = id;
+        this.internalMessage = internalMessage;
+    }
+
+    public int getIdCompany() {
         return idCompany;
+    }
+
+    public String getInternalMessage() {
+        return internalMessage;
     }
 }
