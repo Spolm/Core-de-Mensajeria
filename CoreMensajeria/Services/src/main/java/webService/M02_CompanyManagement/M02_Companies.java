@@ -210,13 +210,13 @@ public class M02_Companies {
             List < DTOFullCompany > _dtoCo = _mappCompany.CreateDtoList( _command.ReturnList() ) ;
             _rb.entity( gson.toJson( _dtoCo ) ) ;
             return _rb.build();
-        }
+        }/*
         catch ( ParameterCantBeNullException e ){
             e.printStackTrace();
             error = new Error( MESSAGE_ERROR_PARAMETERDOESNTEXIST );
             error.addError( MESSAGE_EXCEPTION,e.getMessage() );
             return Response.status(500).entity(error).build();
-        }
+        }*/
         catch (Exception e){
             e.printStackTrace();
             error = new Error( MESSAGE_ERROR_INTERN );

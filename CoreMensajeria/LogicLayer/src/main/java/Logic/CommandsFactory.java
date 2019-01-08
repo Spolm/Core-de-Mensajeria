@@ -3,10 +3,12 @@ package Logic;
 import Entities.Entity;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
+
+//import Logic.M10_Profile.*;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
 import Logic.M08_SendMessage.CommandScheduleMessage;
-import Logic.M08_SendMessage.CommandSendMessage;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
@@ -309,4 +311,29 @@ public class CommandsFactory {
         return new CommandValidate(template, message, channel);
     }
     //end region
+
+    //region Commands M_10
+    /*public static AddUserCommand createAddUserCommand(){
+        return new AddUserCommand();
+    }*/
+    /*public static EditUserProfileCommand createEditUserProfileCommand(){
+        return new EditUserProfileCommand();
+    }
+
+    public static FindUserByIdCommand createFindUserByIdCommand(){
+        return new FindUserByIdCommand();
+    }
+
+    public  static GetAllCompaniesToProfileCommand createGetAllCompaniesToProfileCommand(){
+        return new GetAllCompaniesToProfileCommand();
+    }
+
+    public static GetAllRolesCommand createGetAllRolesCommand(){
+        return new GetAllRolesCommand();
+    }*/
+
+    /*public static GetAllUsersCommand createGetAllUsersCommand(){
+        return new GetAllUsersCommand();
+    }*/
+    //endregion
 }
