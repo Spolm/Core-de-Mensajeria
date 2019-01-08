@@ -1,11 +1,13 @@
 package Logic;
 
 import Entities.Entity;
+import Entities.M06_DataOrigin.AddApplicationData;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.*;
 import DTO.M07_Template.NewParameter;
 import Logic.M01_Login.GetUser;
+import Logic.M06_DataOrigin.*;
 import Logic.M08_SendMessage.CommandSendMessage;
 import Logic.M08_Validation.*;
 import Logic.M07_Template.*;
@@ -81,6 +83,39 @@ public class CommandsFactory {
       } */
     public static ChangeStatusCampaignCommand createChangeStatusCampaign( Entity _ca ){
         return new ChangeStatusCampaignCommand( _ca );
+    }
+    //endregion
+
+
+    //region M06_Origin
+    public  static CreateApplicationCommand CreateApplication(AddApplicationData _app){
+
+        return new CreateApplicationCommand(_app);
+    }
+
+    public  static GetApplicationByIdCommand GetApplicationId(int _co){
+
+        return new GetApplicationByIdCommand(_co);
+    }
+
+    public  static GetApplicationByIdCompanyCommand GetApplicationCompanyId(int _co){
+
+        return new GetApplicationByIdCompanyCommand(_co);
+    }
+
+    public  static GetApplicationByTokenCommand GetApplicationToken(String _co){
+
+        return new GetApplicationByTokenCommand(_co);
+    }
+
+    public static GetApplicationCommand GetApplication(){
+
+        return  new GetApplicationCommand();
+    }
+
+    public static UpdateApplicationCommand UpdateApplication(int _id,int status){
+
+        return new UpdateApplicationCommand(_id,status);
     }
     //endregion
 

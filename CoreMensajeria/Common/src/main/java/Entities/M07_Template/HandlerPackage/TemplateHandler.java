@@ -99,8 +99,8 @@ public class TemplateHandler {
                 template.setChannels(getChannelsByTemplate(template.getTemplateId()));
                 template.setCampaign(getCampaingByTemplate(template.getTemplateId()));
                 ApplicationDAO applicationService = new ApplicationDAO();
-                template.setApplication(applicationService.getApplication
-                        (template.getTemplateId()));
+               /* template.setApplication(applicationService.getApplication
+                        (template.getTemplateId()));*/
                 template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
                 templateArrayList.add(template);
             }
@@ -297,8 +297,8 @@ public class TemplateHandler {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             ApplicationDAO applicationService = new ApplicationDAO();
-            application = applicationService.getApplication
-                    (resultSet.getInt("applicationId"));
+           /* application = applicationService.getApplication
+                    (resultSet.getInt("applicationId")); */
         } catch (SQLException e){
             e.printStackTrace();
         } catch (Exception e){
