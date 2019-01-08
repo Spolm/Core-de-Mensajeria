@@ -17,8 +17,6 @@ public class SendMessageMapper {
     public static Entity CreateEntity(ParametersDTO dto) {
         Entity sentMessage = EntityFactory.createSendMessage();
         ((SentMessage) sentMessage).set_templateId(dto.get_idTemplate());
-        ((SentMessage) sentMessage).set_channel(dto.get_channel());
-        ((SentMessage) sentMessage).set_message(dto.get_message());
         return sentMessage;
     }
 
