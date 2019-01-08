@@ -12,6 +12,7 @@ import Exceptions.ParameterDoesntExistsException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M07_Template.CommandGetTemplate;
+import Logic.M07_Template.CommandGetTemplates;
 import Mappers.M07_Template.MapperTemplate;
 import Mappers.MapperFactory;
 import com.google.gson.Gson;
@@ -63,7 +64,9 @@ public class M07_Template {
             }
             Command c = CommandsFactory.createCommandGetTemplates(userId,companyId);
             c.execute();
-            response = Response.ok(gson.toJson(c.Return())).build();
+            MapperTemplate mapperTemplate = MapperFactory.createMapperTemplate();
+            ArrayList<DTOTemplate> dtoTemplates = (ArrayList<DTOTemplate>) mapperTemplate.CreateDtoList(((CommandGetTemplates) c).Return());
+            response = Response.ok(gson.toJson(dtoTemplates)).build();
             //region Instrumentation Info
             log.info("Se ejecuto el metodo getTemplates("+userId+","+companyId+") exitosamente");
             //endregion
