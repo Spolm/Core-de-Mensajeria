@@ -88,8 +88,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             DAOFactory.instaciateDaoParameter().postParameter(parameters,gsonObj.get("company").getAsInt());
             //obtenemos el valor del mensaje,y parametros
             parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
-            String message = gsonObj.get("messagge").getAsString();
-            DAOFactory.instaciateDaoMessage().postMessage(message,templateId,parameters,gsonObj.get("company").getAsInt());
+
+            String message = gsonObj.get("message").getAsString();
+            DAOFactory.instaciateDaoMessage().postMessage(message,gsonObj.get("company").getAsInt(),parameters,templateId);
 
             //obtenemos los valores de los canales e integradores
             JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
@@ -159,7 +160,10 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
                 preparedStatement.setInt(2, userId );
             }
 
-            preparedStatement.execute();
+           ResultSet _rs = preparedStatement.executeQuery();
+
+            if( _rs.next() )
+                return _rs.getInt(1);
 
         } catch ( SQLException e1 ) {
             e1.printStackTrace();

@@ -1,14 +1,18 @@
 --Funcion para el metodo postMessage
-CREATE OR REPLACE FUNCTION m07_insertMessage(IN _text character varying, IN _templateID integer)
-RETURNS VOID AS
-$BODY$
+CREATE OR REPLACE FUNCTION m07_insertMessage(_text character varying, _templateid integer) returns integer
+	language plpgsql
+as $$
+DECLARE id INTEGER;
 BEGIN
-INSERT INTO public.message(mes_text,mes_template)
-VALUES(_text,_templateID);
+  INSERT INTO public.message(mes_text,mes_template)
+  VALUES(_text,_templateID) returning mes_id into id;
+  return id;
 END;
-$BODY$
-LANGUAGE plpgsql VOLATILE;
---Select m07_insertMessage('test1',1);
+$$;
+
+alter function m07_insertmessage(varchar, integer) owner to "CoreMensajeria";
+
+
 
 --Funcion para el metodo postParameterOfMessage
 CREATE OR REPLACE FUNCTION m07_insertParameterOfMessage(IN _messageID integer, IN _parameterID integer)
@@ -232,29 +236,38 @@ DROP FUNCTION m07_postchannelintegrator(integer,integer,integer,integer);
 -- select * from m07_postChannelIntegrator(1,1,1,1);
 
 --Funcion para el metodo postTemplate parte 1 
---Funcion para el metodo postTemplate parte 1 
-CREATE OR REPLACE FUNCTION m07_postTemplate(_campaignid integer, _appid integer, _userid integer) returns void
+CREATE OR REPLACE FUNCTION m07_postTemplate(_campaignid integer, _appid integer, _userid integer) returns integer
 	language plpgsql
 as $$
+DECLARE id integer;
 BEGIN
   INSERT INTO public.template(tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id)
-  VALUES(CURRENT_TIMESTAMP,_campaignId,_appId,_userId);
+  VALUES(CURRENT_TIMESTAMP,_campaignId,_appId,_userId) returning tem_id INTO id;
+  
+  RETURN id;
 END;
 $$;
 
-alter function m07_postTemplate(integer, integer, integer) owner to "CoreMensajeria";
+alter function m07_posttemplate(integer, integer, integer) owner to "CoreMensajeria";
+
+
 
 --Funcion para el metodo postTemplate parte 2
-CREATE OR REPLACE FUNCTION m07_posttemplate2(_campaignid integer, _userid integer) returns void
-	language plpgsql
-as $$
+CREATE OR REPLACE FUNCTION m07_posttemplate2(_campaignid integer, _userid integer) returns int
+  language plpgsql
+as
+$$
+DECLARE id INTEGER;
 BEGIN
   INSERT INTO public.template(tem_creation_date, tem_campaign_id, tem_user_id)
-  VALUES(CURRENT_TIMESTAMP,_campaignId,_userId);
+  VALUES(CURRENT_TIMESTAMP,_campaignId,_userId) returning tem_id INTO id;
+  RETURN id;
 END;
 $$;
 
 alter function m07_posttemplate2(integer, integer) owner to "CoreMensajeria";
+
+
 
 
 
