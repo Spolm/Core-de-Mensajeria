@@ -1,7 +1,10 @@
-package Entities.M08_Validation.XMLManagement;
+package Logic.M08_SendMessage.XMLManagment;
 
 import Entities.M07_Template.MessagePackage.Parameter;
+import Entities.M08_Validation.XMLManagement.ParameterXML;
 import Exceptions.M08_SendMessageManager.NullValueXMLException;
+import Logic.Command;
+import Logic.CommandsFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 

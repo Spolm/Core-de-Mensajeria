@@ -1,6 +1,7 @@
-package Entities.M08_Validation;
-import Entities.M08_Validation.XMLManagement.Command;
-import Entities.M08_Validation.XMLManagement.CommandsFactory;
+package Logic.M08_SendMessage.XMLManagment;
+
+import Logic.Command;
+import Logic.CommandsFactory;
 
 import java.nio.file.*;
 import java.util.ArrayList;

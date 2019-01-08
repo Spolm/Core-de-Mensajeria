@@ -1,8 +1,8 @@
 package Logic.M08_SendMessage;
 
-import Entities.M08_Validation.XMLManagement.Command;
-import Entities.M08_Validation.XMLManagement.CommandsFactory;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
+import Logic.Command;
+import Logic.CommandsFactory;
 
 import java.util.logging.Logger;
 

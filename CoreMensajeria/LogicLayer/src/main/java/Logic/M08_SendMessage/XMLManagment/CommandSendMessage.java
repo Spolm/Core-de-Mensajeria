@@ -1,8 +1,12 @@
-package Entities.M08_Validation.XMLManagement;
+package Logic.M08_SendMessage.XMLManagment;
 
 import Entities.M04_Integrator.Integrator;
 import Entities.M05_Channel.Channel;
 import Entities.M07_Template.Template;
+import Entities.M08_Validation.XMLManagement.Message;
+import Entities.M08_Validation.XMLManagement.ParameterXML;
+import Entities.M08_Validation.XMLManagement.VerifiedParameter;
+import Logic.Command;
 
 import java.util.ArrayList;
 
