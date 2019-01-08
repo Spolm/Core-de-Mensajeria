@@ -2,7 +2,6 @@ package webService.M06_DataOrigin;
 
 import Entities.M06_DataOrigin.AddApplicationData;
 import Entities.M06_DataOrigin.Application;
-import Entities.M06_DataOrigin.ApplicationDAO;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M06_DataOrigin.CreateApplicationCommand;

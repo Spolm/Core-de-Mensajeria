@@ -101,9 +101,9 @@ public class TemplateHandler {
                 ApplicationDAO applicationService = new ApplicationDAO();
                /* template.setApplication(applicationService.getApplication
                         (template.getTemplateId()));*/
-     //             template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
-       //         template.setApplication(applicationService.getApplication
-         //               (template.get_id()));
+              //  template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
+               // template.setApplication(applicationService.getApplication
+               //         (template.get_id()));
                 template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
                 templateArrayList.add(template);
             }
@@ -252,17 +252,17 @@ public class TemplateHandler {
             while(resultSet.next()){
                 ArrayList<Integrator> integrators = new ArrayList<>();
           //      IntegratorDAO integratorDAO = new IntegratorDAO();
-            //    Integrator integrator = integratorDAO.getConcreteIntegrator(
-                //        resultSet.getInt("ci_integrator_id")
-               // );
+           //     Integrator integrator = integratorDAO.getConcreteIntegrator(
+            //            resultSet.getInt("ci_integrator_id")
+              //  );
              //   integrators.add(integrator);
               //  Channel channel = new ChannelFactory().getChannel(
-               //         resultSet.getInt("ci_channel_id"),
-                //        resultSet.getString("cha_name"),
-                //        resultSet.getString("cha_description"),
-                 //       integrators
-           //     );
-             //   channels.add(channel);
+            //            resultSet.getInt("ci_channel_id"),
+            //            resultSet.getString("cha_name"),
+            //            resultSet.getString("cha_description"),
+            //            integrators
+            //    );
+            //    channels.add(channel);
             }
 
         } catch (SQLException e) {
