@@ -12,11 +12,17 @@ import org.apache.logging.log4j.Logger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+
+/**
+ * Clase que se encarga de insertar los mensajes que se van a enviar en una cola
+ * para ser enviados en una fecha y hora determinada.
+ * La fecha y la hora del envío es la fecha y hora de inicio especificados en la plantilla
+ */
 
 public class CommandScheduleMessage extends Command<Entity> {
 
@@ -28,6 +34,12 @@ public class CommandScheduleMessage extends Command<Entity> {
         _verifiedParameters = verifiedParameter;
     }
 
+    /**
+     * @throws DateNotValidException
+     * La excepción de lanza si alguna fecha no es válida, esto quiere decir,
+     * si la fecha de inicio es menor a la fecha actual o si la fecha de fin es
+     * mayor a la fecha de inicio.
+     */
     @Override
     public void execute() throws DateNotValidException {
         log.info("El mensaje será registrado");
@@ -56,15 +68,31 @@ public class CommandScheduleMessage extends Command<Entity> {
 
     }
 
+    /**
+     * @return
+     */
     public Entity Return() {
         return null;
     }
 
+    /**
+     * @param startDate: Fecha de inicio de la plantilla
+     * @param endDate: Fecha de fin de la plantilla
+     * @return; Retorna true si la fecha de inicio es mayor o igual al día actual y la fecha fin
+     * es mayor a la fecha de inicio y false si alguno de los casos anteriores falla
+     */
     private boolean planningIsValid(Date startDate, Date endDate) {
         return (((startDate.compareTo(new Date()) > 0) || (startDate.compareTo(new Date()) == 0))
                 && (startDate.compareTo(endDate)) < 0);
     }
 
+    /**
+     * @param date: Variable de tipo Date a la que se le desea agregar el tiempo
+     * @param time: El tiempo en String que se desea agregar al día
+     * @return: Retorna una variable de tipo Date con dia y hora
+     * @throws DateNotValidException: Se lanza esta excepción en el caso de que la fecha
+     * no cumpla con el formato definido por el SimpleDateFormat
+     */
     private Date addTimeToDate(Date date, String time) throws DateNotValidException {
         DateFormat dateToString = new SimpleDateFormat("yyyy-MM-dd");
         String stringDate = dateToString.format(date);
