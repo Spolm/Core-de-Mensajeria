@@ -41,6 +41,7 @@ public class DAOCampaignsTest {
 
     /**
      * Pruebas unitarias para el Metodo campaignById en DAOCampaign
+     *
      * */
     @Test
     void campaignByIdTest(){
@@ -58,6 +59,11 @@ public class DAOCampaignsTest {
     }
 
 
+
+    /**
+     * Pruebas unitarias para el Metodo campaignListByUserTest en DAOCampaign
+     *
+     * */
     @Test
     void campaignListByUserTest(){
         java.util.Date uDate = new java.util.Date();
@@ -75,6 +81,10 @@ public class DAOCampaignsTest {
 
     }
 
+    /**
+     * Pruebas unitarias para el Metodo changeStatusCampaign en DAOCampaign
+     *
+     * */
     @Test
     void changeStatusCampaignTest() {
 
@@ -88,6 +98,11 @@ public class DAOCampaignsTest {
         }
     }
 
+
+    /**
+     * Pruebas unitarias para el Metodo campaignListByUserCompany en DAOCampaign
+     *
+     * */
     @Test
     void campaignListByUserCompanyTest(){
 

@@ -28,6 +28,10 @@ public class M02_CompaniesTest {
 
 
 
+    /**
+     * Pruebas unitarias para el Metodo getAllCompaniesPP en web service M02_Companies
+     *
+     * */
     @Test
     void  getAllCompaniesPPTest() throws CompanyDoesntExistsException{
         try {
@@ -42,6 +46,10 @@ public class M02_CompaniesTest {
 
     }
 
+    /**
+     * Pruebas unitarias para el Metodo getCompaniesByUser en web service M02_Companies
+     *
+     * */
     @Test
     void getCompaniesByUserTest() throws CompanyDoesntExistsException {
         try{

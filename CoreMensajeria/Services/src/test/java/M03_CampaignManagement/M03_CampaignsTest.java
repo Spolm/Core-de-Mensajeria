@@ -27,7 +27,10 @@ public class M03_CampaignsTest {
     private CampaignDAO _coMng = new CampaignDAO();
 
 
-
+    /**
+     * Pruebas unitarias para el Metodo getCampaignsByUser en web service M03_Campaigns
+     *
+     * */
     @Test
     void getCampaignsByUserTest() throws CampaignDoesntExistsException {
 
@@ -43,6 +46,10 @@ public class M03_CampaignsTest {
     }
 
 
+    /**
+     * Pruebas unitarias para el Metodo getCampaignsByCompanyUser en web service M03_Campaigns
+     *
+     * */
     @Test
     void getCampaignsByCompanyUserTest()throws CampaignDoesntExistsException{
 
@@ -57,6 +64,10 @@ public class M03_CampaignsTest {
         }
     }
 
+    /**
+     * Pruebas unitarias para el Metodo getCampaignDetails en web service M03_Campaigns
+     *
+     * */
     @Test
     void getCampaignDetailsTest() throws CampaignDoesntExistsException{
 
@@ -74,15 +85,7 @@ public class M03_CampaignsTest {
     @Test
     void D() throws CampaignDoesntExistsException{
 
-        try {
-            M03_Campaigns _instance = new M03_Campaigns();
-            Response _salida =  _instance.getCampaignDetails(1);
-            assertEquals(202, _salida.getStatus() );
-            assertNotNull( _salida.getEntity());
-        } catch ( Exception e ){
-            e.printStackTrace();
-            throw new CampaignDoesntExistsException( e );
-        }
+
 
     }
 
