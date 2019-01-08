@@ -13,4 +13,7 @@ RETURN QUERY
 INSERT INTO public.sent_message VALUES (nextval('sent_message_sen_id_seq'), _time, _messageID, _campaignId, _channelId, _integratorId, _applicationId)
 RETURNING sen_id;
 END; $BODY$
-LANGUAGE plpgsql VOLATILE
+LANGUAGE plpgsql VOLATILE;
+
+ALTER FUNCTION m08_insertSentMessage(timestamp, integer, integer, integer, integer, integer)
+  OWNER TO "CoreMensajeria";
