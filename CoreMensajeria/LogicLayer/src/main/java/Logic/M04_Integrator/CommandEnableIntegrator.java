@@ -20,12 +20,12 @@ public class CommandEnableIntegrator extends Command {
     public void execute() throws IntegratorNotFoundException, DatabaseConnectionProblemException {
 
             IDAOIntegrator _dao = DAOFactory.instanciateDaoIntegrator();
-            _dao.enableIntegrator(_id);
+            _entity = _dao.enableIntegrator(_id);
 
     }
 
     @Override
     public Entity Return() {
-        return null;
+        return _entity;
     }
 }

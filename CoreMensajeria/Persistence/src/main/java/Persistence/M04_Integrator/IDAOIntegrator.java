@@ -16,9 +16,9 @@ public interface IDAOIntegrator extends IDAO {
 
     Entity getConcreteIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException;
 
-    void disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException;
+    Entity disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException;
 
-    void enableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException;
+    Entity enableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException;
 
 
 }

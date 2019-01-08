@@ -4,7 +4,7 @@ import DTO.DTO;
 import DTO.DTOFactory;
 import DTO.M04_Integrator.DTOIntegrator;
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M04_Integrator.Integrator;
 import Mappers.GenericMapper;
 import java.util.ArrayList;
