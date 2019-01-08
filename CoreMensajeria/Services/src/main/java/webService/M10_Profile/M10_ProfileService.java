@@ -3,17 +3,22 @@ package webService.M10_Profile;
 import Entities.M01_Login.User;
 import Entities.M02_Company.Company;
 import Entities.M10_Profile.*;
+import Exceptions.FormErrorException;
 import Persistence.M01_Login.DAOUser;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
-@Path("/profile")
-public class M10_ProfileService {
+//@Path("/profile")
+public class M10_ProfileService {/*
     private Gson _gson = new Gson();
     private User _us;
     private ArrayList<User> _users;
@@ -67,6 +72,33 @@ public class M10_ProfileService {
             //Se procede a editar al usuario
             String success = _daoProfile.editProfile(editBody.get_idUser(), editBody.get_emailUser(),
                     editBody.get_phoneUser(), editBody.get_addressUser());
+
+            //region Instrumentation DEBUG
+            Logger logger = Logger.getLogger("MyLog");
+            logger.setUseParentHandlers(false);
+            FileHandler fh;
+
+            try {
+
+                // This block configure the logger with handler and formatter
+                fh = new FileHandler("C:/Users/ruben/Desktop/MyLogFile.log");
+                logger.addHandler(fh);
+                SimpleFormatter formatter = new SimpleFormatter();
+                fh.setFormatter(formatter);
+
+                // the following statement is used to log any messages
+                logger.info(editBody.get_idUser() + " - " + editBody.get_emailUser()+ " - " +
+                        editBody.get_phoneUser()+ " - " + editBody.get_addressUser());
+
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            logger.info("Exit edit user");
+            //endregion
+
             return Response.ok(_gson.toJson(success)).build();
 
         } catch (FormErrorException e) {
@@ -140,4 +172,5 @@ public class M10_ProfileService {
             return Response.ok(_gson.toJson(_users)).build();
         }
     }
+    */
 }

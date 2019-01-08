@@ -1,5 +1,7 @@
 package Entities.M10_Profile;
 
+import Exceptions.FormErrorException;
+
 public class EditFormHandler {
     private String _addressUser;
     private String _phoneUser;
@@ -44,7 +46,7 @@ public class EditFormHandler {
         this._emailUser = _emailUser;
     }
 
-    public void validate() throws FormErrorException{
+    public void validate() throws FormErrorException {
 
         if( ! _emailUser.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$") ){
             throw new FormErrorException("Formato de correo no valido");

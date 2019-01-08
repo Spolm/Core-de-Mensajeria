@@ -1,4 +1,4 @@
-package Entities.M10_Profile;
+package Exceptions;
 
 public class EditProfileException extends Exception {
 

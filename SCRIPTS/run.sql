@@ -31,6 +31,7 @@
 -- Modulo 9
 \ir SP/m09_coremensajeria.sql
 -- Modulo 10
+\ir SP/m10_profile.sql
 \ir SP/m10_getallcompanies.sql
 \ir SP/m10_getallroles.sql
 

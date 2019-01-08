@@ -3,6 +3,8 @@ package Logic;
 import DTO.DTO;
 import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
+
+//import Logic.M10_Profile.*;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
 import Logic.M08_SendMessage.CommandScheduleMessage;
@@ -307,4 +309,29 @@ public class CommandsFactory {
         return new CommandSendMessage(parameters);
     }
     //end region
+
+    //region Commands M_10
+    /*public static AddUserCommand createAddUserCommand(){
+        return new AddUserCommand();
+    }*/
+    /*public static EditUserProfileCommand createEditUserProfileCommand(){
+        return new EditUserProfileCommand();
+    }
+
+    public static FindUserByIdCommand createFindUserByIdCommand(){
+        return new FindUserByIdCommand();
+    }
+
+    public  static GetAllCompaniesToProfileCommand createGetAllCompaniesToProfileCommand(){
+        return new GetAllCompaniesToProfileCommand();
+    }
+
+    public static GetAllRolesCommand createGetAllRolesCommand(){
+        return new GetAllRolesCommand();
+    }*/
+
+    /*public static GetAllUsersCommand createGetAllUsersCommand(){
+        return new GetAllUsersCommand();
+    }*/
+    //endregion
 }
