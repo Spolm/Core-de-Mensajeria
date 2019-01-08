@@ -1,5 +1,6 @@
 package Entities;
 
+import Entities.M01_Login.LoginIntent;
 import Entities.M01_Login.Privilege;
 import Entities.M01_Login.User;
 import Entities.M02_Company.Company;
@@ -22,6 +23,10 @@ public class EntityFactory {
 
     static public Entity CreateUser(int id, String _passwordUser, String _usernameUser, int _typeUser, String _emailUser, String _phoneUser, java.sql.Date _dayOfBirthUser, String _countryUser, String _addressUser, String _genreUser, String _cityUser ) {
         return new User(id, _passwordUser, _usernameUser, _typeUser, _emailUser, _phoneUser, _dayOfBirthUser, _countryUser, _addressUser, _genreUser, _cityUser);
+    }
+
+    static public Entity createLoginIntent (String _username, String _password) {
+        return new LoginIntent(_username, _password);
     }
 
     /**

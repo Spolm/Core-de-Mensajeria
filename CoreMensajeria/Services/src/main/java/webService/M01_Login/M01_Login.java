@@ -1,6 +1,7 @@
 package webService.M01_Login;
 
 import DTO.M01_DTO.DTOLogin;
+import Entities.Entity;
 import Entities.M01_Login.*;
 import Exceptions.UserBlockedException;
 import Logic.CommandsFactory;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -30,35 +32,34 @@ public class M01_Login {
     /**
      * This method is the connection between front-end and back-end. Verifies that the input data matches with the data
      * in the Data Base.
-     * @param loginIntent
+     * @param login
      * @return Response
      */
     @Path("/login")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response login( LoginIntent loginIntent){
+    public Response login( DTOLogin login) throws Exception {
+        Response.ResponseBuilder _rb = Response.status(Response.Status.ACCEPTED);
         Error error;
-        User user;
-//        try {
-//            LogUserCommand _command = CommandsFactory.createLogUserCommand(user);
-//            _command.execute();
-            LoginMapper _mapper = MapperFactory.createLoginMapper();
-//            ArrayList<Entity> _user = _command.ReturnList();
-//            DTOLogin _dtoLog = _mapper.CreateDto(user);
-//            _rb.entity( _gson.toJson( _dtoLog ) ) ;
-//        }
+        LoginMapper _mapper = MapperFactory.createLoginMapper();
+        LoginIntent _log = (LoginIntent) _mapper.CreateEntity(login);
+        LogUserCommand _command = CommandsFactory.createLogUserCommand(_log);
+        _command.execute();
+        Entity _cmd = _command.Return();
+        DTOLogin _dtoLog = _mapper.CreateDto(_cmd);
+        _rb.entity( _gson.toJson( _dtoLog ) ) ;
         try {
-            if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
-                    loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
+            if(_log.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
+                    _log.get_password().matches("[a-zA-Z0-9/*_-]+")){
 
-                if( _userDAO.isBlockedUser(loginIntent.get_username()) )
-                    throw new UserBlockedException("El usuario ingresado se encuentra bloqueado");
-
-                user = _userDAO.logUser(loginIntent.get_username(),loginIntent.get_password());
-                if (user == null)
-                    throw new NullPointerException();
-                return Response.ok(_gson.toJson(user)).build();
+//                if( _userDAO.isBlockedUser(loginIntent.get_username()) )
+//                    throw new UserBlockedException("El usuario ingresado se encuentra bloqueado");
+//
+//                user = _userDAO.logUser(loginIntent.get_username(),loginIntent.get_password());
+//                if (user == null)
+//                    throw new NullPointerException();
+                return Response.ok(_gson.toJson(_cmd)).build();
             }
             else {
                 error = new Error("Los datos ingresados no tienen el formato adecuado");
@@ -67,14 +68,6 @@ public class M01_Login {
                 return Response.status(404).entity(error).build();
             }
 
-        } catch(UserBlockedException e){
-            e.printStackTrace();
-            error = new Error("El usuario ha sido bloqueado");
-            return Response.status(401).entity(error).build();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            error = new Error("Error a nivel de base de datos");
-            return Response.status(500).entity(error).build();
         } catch (NullPointerException e){
             error = new Error("Las credenciales ingresadas son incorrectas");
             error.addError("credenciales","No se encontro el usuario deseado");

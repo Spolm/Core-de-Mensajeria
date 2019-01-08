@@ -1,5 +1,6 @@
 package DTO;
 
+import DTO.M01_DTO.DTOLogin;
 import DTO.M01_DTO.DTOPrivilege;
 import DTO.M01_DTO.DTOUser;
 import DTO.M02_DTO.*;
@@ -68,9 +69,12 @@ public class DTOFactory {
 
     }
 
-    /**
-    END REGION 
-     */
+    public static DTOLogin createDTOLogin (String _username, String _password) {
+        return new DTOLogin(_username, _password);
+    }
+
+
+    //endregion
   //// compañias y campañas
     /**
      * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
