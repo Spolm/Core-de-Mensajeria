@@ -9,6 +9,7 @@ import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Logic.Command;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class CommandSendMessage extends Command {
 
@@ -21,13 +22,14 @@ public class CommandSendMessage extends Command {
     }
     @Override
     public void execute() throws Exception {
-        System.out.println("Enviando mensaje");
         ArrayList<Channel> _channels = _template.getChannels();
 
-        for(Message message : _verifiedMessages){
+        for(Message message : _verifiedMessages) {
             String correo = message.get_correo();
             String telefono = message.get_telefono();
             String finalMessage = parseMessage(message);
+
+            System.out.println(finalMessage);
 
             for(Channel channel : _channels){
                 ArrayList<Integrator> integrators = channel.getIntegrators();
@@ -41,6 +43,7 @@ public class CommandSendMessage extends Command {
                 }
             }
         }
+        System.out.println("Mensajes enviados satisactoriamente");
     }
 
     @Override
@@ -53,7 +56,8 @@ public class CommandSendMessage extends Command {
         ArrayList<ParameterXML> params = message.get_param();
 
         for (ParameterXML param : params) {
-            text = text.replace("[.$" + param.get_name() + "$.]", param.get_value());
+            String parameterToBeReplaced = Pattern.quote("[.$" + param.get_name() + "$.]");
+            text = text.replaceAll("(?i)" + parameterToBeReplaced, param.get_value());
         }
         return text;
     }
