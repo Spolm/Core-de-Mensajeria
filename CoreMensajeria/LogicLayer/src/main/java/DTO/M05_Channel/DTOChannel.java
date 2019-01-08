@@ -17,6 +17,12 @@ public class DTOChannel extends DTO {
         this._integrators = integrators;
     }
 
+    public DTOChannel(String nameChannel, String descriptionChannel) {
+        this._nameChannel = nameChannel;
+        this._descriptionChannel = descriptionChannel;
+        this._integrators = null;
+    }
+
     public String get_nameChannel() {
         return _nameChannel;
     }
