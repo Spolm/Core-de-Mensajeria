@@ -48,6 +48,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     final String GET_PRIVILEGES_TEMPLATE = "{call m07_select_privileges_by_user_company(?,?)}";
     final String UPDATE_TEMPLATE_WITH_APP = "{CALL m07_updatetemplate(?,?,?)}";
     final String UPDATE_TEMPLATE_WITHOUT_APP = "{CALL m07_updatetemplate2(?,?)}";
+    private static String DELETE = "{CALL m07_deletetemplate(?)}";
     private static final String GET_CAMAPIGN_BY_ID = "select* from public.campaign where cam_id = ? "; //Cambiar por SP
 
     @Override
@@ -70,7 +71,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * @return If the template was saved successfully it returns true,
      * otherwise it returns false.
      */
-    public int postTemplateData(String json){
+    public Entity postTemplateData(String json){
         try {
             Gson gson = new Gson();
             //recibimos el objeto json
@@ -100,10 +101,10 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
             PlanningHandler.postPlanning(planning,templateId);
 
-            return templateId;
+            return this.get(templateId);
         } catch (Exception e){
             System.out.println(e);
-            return -1;
+            return null;
         }
     }
 
@@ -219,7 +220,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     @Override
     public ArrayList<Entity> getAll() throws MessageDoesntExistsException, ParameterDoesntExistsException {
         //Entity to Return
-        ArrayList<Entity> _t  = null;
+        ArrayList<Entity> _t  = new ArrayList<>();
         Connection _conn = this.getBdConnect();
 
         PreparedStatement preparedStatement = null;
@@ -246,11 +247,11 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
     /**
      * Get campaing by template
-     * @param id
+     * @param templateId
      * @return
      */
     @Override
-    public Campaign getCampaignByTemplate(int id) {
+    public Campaign getCampaignByTemplate(int templateId) {
 
         Connection _conn = this.getBdConnect();
         Campaign campaign = new Campaign();
@@ -258,7 +259,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
         try{
             preparedStatement = _conn.prepareCall( GET__CAMPAIGN_BY_TEMPLATE );
-            preparedStatement.setInt(1, id );
+            preparedStatement.setInt(1, templateId );
             ResultSet _rs = preparedStatement.executeQuery();
 
             if( _rs.next() ){
@@ -274,7 +275,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         } catch (SQLException e){
             e.printStackTrace();
             throw new TemplateDoesntExistsException
-                    ("Error: la plantilla " + id + " no existe", e, id);
+                    ("Error: la plantilla " + templateId + " no existe", e, templateId);
         } catch (CampaignDoesntExistsException e) {
             //logg
         }catch (Exception e){
@@ -289,7 +290,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     @Override
     public ArrayList<Template> getTemplatesByCampaign(int userId, int companyId) {
         ArrayList<Template> templateArrayList = new ArrayList<>();
-        ArrayList<Campaign> campaignArrayList = null;
+        ArrayList<Campaign> campaignArrayList = new ArrayList<>();
         Connection _conn = this.getBdConnect();
         UserDAO userDAO = new UserDAO();
         try{
@@ -629,6 +630,22 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             e.printStackTrace();
         } finally {
             Sql.bdClose(sql.getConn());
+        }
+    }
+
+    /**
+     * Delete Template
+     * @param id
+     */
+    @Override
+    public void deleteTemplate(int id){
+        try{
+            Connection _conn = this.getBdConnect();
+            PreparedStatement _ps = _conn.prepareCall(DELETE);
+            _ps.setInt(1,id);
+            _ps.execute();
+        }catch( SQLException ex ){
+            ex.printStackTrace();
         }
     }
 

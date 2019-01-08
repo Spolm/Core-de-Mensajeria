@@ -17,7 +17,7 @@ public interface IDAOTemplate extends IDAO {
 
     public int postTemplate(int campaignId,int applicationId, int userId);
 
-    public int postTemplateData(String json);
+    public Entity postTemplateData(String json);
 
     public Entity get(int id) throws TemplateDoesntExistsException, MessageDoesntExistsException, ParameterDoesntExistsException;
 
@@ -36,4 +36,6 @@ public interface IDAOTemplate extends IDAO {
     public boolean updateTemplateData(String json);
 
     public void updateTemplate(int campaignId,int applicationId, int templateId);
+
+    public void deleteTemplate(int id);
 }

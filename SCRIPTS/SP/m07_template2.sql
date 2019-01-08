@@ -316,5 +316,36 @@ $$;
 
 alter function m07_updatetemplate2(integer, integer) owner to "CoreMensajeria";
 
+--Fucion para el metodo deleteTemplate
+CREATE OR REPLACE FUNCTION m07_deletetemplate(_id integer) returns void
+	language plpgsql
+as $$
+BEGIN
+  DELETE FROM public.message_parameter mp
+  WHERE mp.mp_message = ( SELECT m.mes_id FROM public.message m
+                          WHERE m.mes_template = _id );
+  DELETE FROM public.message m
+  WHERE m.mes_template = _id;
+
+  DELETE FROM public.template_channel_integrator tci
+  WHERE tci.tci_template_id = _id;
+
+  DELETE FROM public.template_status ts
+  WHERE ts.ts_template = _id;
+
+  DELETE FROM public.planning p
+  WHERE p.pla_template_id = _id;
+
+  DELETE FROM public.template t
+  WHERE t.tem_id = _id;
+
+
+END;
+$$;
+
+alter function m07_deletetemplate(integer) owner to "CoreMensajeria";
+
+
+
 
 		
