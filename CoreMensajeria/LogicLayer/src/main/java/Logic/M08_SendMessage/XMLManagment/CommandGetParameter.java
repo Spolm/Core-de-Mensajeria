@@ -49,7 +49,7 @@ public class CommandGetParameter extends Command<ParameterXML> {
      * dentro del archivo XML
      */
     @Override
-    public void execute() throws ParameterDoesntExistsInXMLException { //////////////// Rodear de try catch y hacer excepcion personalizada
+    public void execute() throws ParameterDoesntExistsInXMLException {
         try {
                 if (_node.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) _node;

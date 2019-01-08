@@ -45,8 +45,6 @@ public class CommandSendMessage extends Command {
             String telefono = message.get_telefono();
             String finalMessage = parseMessage(message);
 
-            System.out.println(finalMessage);
-
             for(Channel channel : _channels){
                 ArrayList<Integrator> integrators = channel.getIntegrators();
 
