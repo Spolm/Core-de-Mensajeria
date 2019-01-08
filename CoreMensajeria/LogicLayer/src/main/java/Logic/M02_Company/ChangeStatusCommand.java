@@ -1,6 +1,7 @@
 package Logic.M02_Company;
 
 import Entities.Entity;
+import Entities.M02_Company.Company;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;
@@ -10,13 +11,13 @@ import java.util.ArrayList;
 
 public class ChangeStatusCommand extends Command {
 
-    private static Entity _co;
+    private static Company _co;
 
     /**
      * Constructor de la clase.
      * @param _company instancia de la Compania que se desea agregar
      */
-    public  ChangeStatusCommand ( Entity _company ){
+    public  ChangeStatusCommand ( Company _company ){
         this._co = _company;
     }
 

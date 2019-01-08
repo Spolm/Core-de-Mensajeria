@@ -97,7 +97,7 @@ public class DAOCompany extends DAO implements IDAOCompany {
     }
 
     @Override
-    public Entity companyById( Entity e ) {
+    public Company companyById( Company e ) {
         Company _company = ( Company ) e;
         Connection _conn = this.getBdConnect();
 
@@ -124,7 +124,7 @@ public class DAOCompany extends DAO implements IDAOCompany {
     }
 
     @Override
-    public ArrayList<Entity> companiesByUser( Entity e ) {
+    public ArrayList<Entity> companiesByUser( Company e ) {
         ArrayList<Entity> _coList= new ArrayList<>();
         Company _company = ( Company ) e;
         Connection _conn = this.getBdConnect();

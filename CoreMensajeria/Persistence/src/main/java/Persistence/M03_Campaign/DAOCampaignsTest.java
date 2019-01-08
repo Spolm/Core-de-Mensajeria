@@ -45,7 +45,7 @@ public class DAOCampaignsTest {
     @Test
     void campaignByIdTest(){
 
-        Entity _com = EntityFactory.CreateCampaignId(1);
+        Campaign _com = EntityFactory.CreateCampaignId(1);
         try {
             Entity _e = _dao.campaignById(_com);
             assertNotNull(_e);

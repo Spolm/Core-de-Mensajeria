@@ -67,10 +67,10 @@ public class DAOCompanyTest {
      */
     @Test
     void companyByIdTest(){
-        Entity _com = EntityFactory.CreateCompanyOnlyId(1);
+        Company _com = EntityFactory.CreateCompanyOnlyId(1);
 
         try {
-            Entity _e = _dao.companyById(_com);
+            Company _e = _dao.companyById(_com);
             assertNotNull(_e);
 
             assertEquals(((Company) _com).get_idCompany(), ((Company) _e).get_idCompany());
@@ -90,7 +90,7 @@ public class DAOCompanyTest {
     void companyByUserTest(){
         java.util.Date uDate = new java.util.Date();
         java.sql.Date sDate = new java.sql.Date(uDate.getTime());
-        Entity _user = EntityFactory.CreateFullCompany(1 ,"Company 1", "jeje", true ,
+        Company _user = EntityFactory.CreateFullCompany(1 ,"Company 1", "jeje", true ,
                 "dkdk", 1);
         try {
 
