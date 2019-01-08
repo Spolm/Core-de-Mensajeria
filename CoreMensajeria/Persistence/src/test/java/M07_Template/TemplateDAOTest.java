@@ -1,6 +1,7 @@
 package M07_Template;
 
 
+import Entities.M07_Template.Template;
 import Persistence.DAOFactory;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TemplateDAOTest {
     private static String json;
-    private static int id;
+    private static Template _template;
 
     @BeforeAll
     public static void init(){
@@ -48,9 +49,9 @@ class TemplateDAOTest {
     @Test
     public void a(){
         try{
-            id = DAOFactory.instaciateDaoTemplate().postTemplateData(json);
+            _template = (Template) DAOFactory.instaciateDaoTemplate().postTemplateData(json);
             json = "{\n" +
-                    "    \"templateId\": "+id+",\n" +
+                    "    \"templateId\": "+_template.get_id()+",\n" +
                     "    \"campaign\": 1,\n" +
                     "    \"applicationId\": 1,\n" +
                     "    \"userId\": 1,\n" +
@@ -75,7 +76,7 @@ class TemplateDAOTest {
                     "        \"23:02\"\n" +
                     "    ]\n" +
                     "}";
-            assertTrue(id>0);
+            assertNotNull(_template);
         } catch ( Exception e ) {
             e.printStackTrace();
         }
@@ -90,4 +91,5 @@ class TemplateDAOTest {
             e.printStackTrace();
         }
     }
+
 }

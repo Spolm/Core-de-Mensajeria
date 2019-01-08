@@ -17,7 +17,7 @@ public interface IDAOTemplate extends IDAO {
 
     public int postTemplate(int campaignId,int applicationId, int userId);
 
-    public int postTemplateData(String json);
+    public Entity postTemplateData(String json);
 
     public Entity get(int id) throws TemplateDoesntExistsException, MessageDoesntExistsException, ParameterDoesntExistsException;
 

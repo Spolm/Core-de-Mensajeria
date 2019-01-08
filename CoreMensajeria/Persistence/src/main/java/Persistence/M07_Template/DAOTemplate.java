@@ -70,7 +70,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * @return If the template was saved successfully it returns true,
      * otherwise it returns false.
      */
-    public int postTemplateData(String json){
+    public Entity postTemplateData(String json){
         try {
             Gson gson = new Gson();
             //recibimos el objeto json
@@ -100,10 +100,10 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
             PlanningHandler.postPlanning(planning,templateId);
 
-            return templateId;
+            return this.get(templateId);
         } catch (Exception e){
             System.out.println(e);
-            return -1;
+            return null;
         }
     }
 
