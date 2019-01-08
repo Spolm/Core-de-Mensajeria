@@ -14,7 +14,7 @@ public interface IDAOCampaign extends IDAO {
 
     void changeStatusCampaign( Entity e);
 
-    Entity campaignById( Entity e);
+    Campaign campaignById( Campaign e);
 
     ArrayList<Entity> campaignListByUserCompany(  Entity _comp );
 

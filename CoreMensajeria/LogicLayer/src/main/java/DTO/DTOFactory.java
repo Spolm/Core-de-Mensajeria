@@ -70,8 +70,8 @@ public class DTOFactory {
 
     /**
     END REGION 
+  /// COMPANY
      */
-  //// compañias y campañas
     /**
      * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
      * @return un objeto del tipo DTOIdCompany
@@ -128,8 +128,9 @@ public class DTOFactory {
 
          return new DTOFullCompany( id, name, desc, status, link, userId );
      }
+     // END COMPANY
 
-
+    //CAMPAIGN
      /**
       * Metodos que instancian un obejto del tipo DTOCampaignWithOut_id_And_Company mediante los parametros pasados
       * @return un objeto del tipo DTOCampaignWithOut_id_And_Company
@@ -189,7 +190,7 @@ public class DTOFactory {
         return new DTOIdStatusCampaign( id, status );
     }
 
-/////end
+//  END CAMPAIGN
 
     /**
      * Metodo que instancia un obejto del tipo DTOStatistic

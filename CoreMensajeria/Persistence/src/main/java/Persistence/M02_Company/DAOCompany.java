@@ -47,6 +47,12 @@ public class DAOCompany extends DAO implements IDAOCompany {
         } catch ( SQLException e1 ) {
             e1.printStackTrace();
         }
+        catch ( NullPointerException en ){
+            en.printStackTrace();
+        }
+        catch ( Exception ex ){
+            ex.printStackTrace();
+        }
         this.closeConnection();
     }
 
@@ -67,6 +73,12 @@ public class DAOCompany extends DAO implements IDAOCompany {
         catch (SQLException exc) {
             exc.printStackTrace();
         }
+        catch (NullPointerException en) {
+            en.printStackTrace();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
         this.closeConnection();
         return  _coList;
     }
@@ -85,7 +97,7 @@ public class DAOCompany extends DAO implements IDAOCompany {
     }
 
     @Override
-    public Entity companyById( Entity e ) {
+    public Company companyById( Company e ) {
         Company _company = ( Company ) e;
         Connection _conn = this.getBdConnect();
 
@@ -97,16 +109,22 @@ public class DAOCompany extends DAO implements IDAOCompany {
                     _company = getCompany( _result );
                 }
             }
-            catch (SQLException exc) {
-                exc.printStackTrace();
-            }
+        catch (SQLException exc) {
+            exc.printStackTrace();
+        }
+        catch (NullPointerException en) {
+            en.printStackTrace();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
         this.closeConnection();
         return _company;
 
     }
 
     @Override
-    public ArrayList<Entity> companiesByUser( Entity e ) {
+    public ArrayList<Entity> companiesByUser( Company e ) {
         ArrayList<Entity> _coList= new ArrayList<>();
         Company _company = ( Company ) e;
         Connection _conn = this.getBdConnect();
@@ -119,8 +137,11 @@ public class DAOCompany extends DAO implements IDAOCompany {
                 _coList.add( getCompany( _result ) );
             }
         }
-        catch ( Exception exc ) {
+        catch (SQLException exc) {
             exc.printStackTrace();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
         this.closeConnection();
         return _coList;
@@ -144,8 +165,14 @@ public class DAOCompany extends DAO implements IDAOCompany {
                 _coList.add( getCompany( _result ) );
             }
         }
-        catch ( Exception exc ) {
+        catch (SQLException exc) {
             exc.printStackTrace();
+        }
+        catch (NullPointerException en) {
+            en.printStackTrace();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
         this.closeConnection();
         return _coList;
@@ -168,8 +195,14 @@ public class DAOCompany extends DAO implements IDAOCompany {
             preparedStatement.setInt( 5, _co.get_idUser() );
             preparedStatement.execute();
 
-        }catch ( Exception exc ){
+        }catch (SQLException exc) {
             exc.printStackTrace();
+        }
+        catch (NullPointerException en) {
+            en.printStackTrace();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
         this.closeConnection();
     }
@@ -192,8 +225,14 @@ public class DAOCompany extends DAO implements IDAOCompany {
             _ps.setInt( 5, _co.get_idUser() );
             _ps.setInt( 6, _co.get_idCompany() );
             _ps.execute();
-        }catch ( Exception _exc ){
-            _exc.printStackTrace();
+        }catch (SQLException exc) {
+            exc.printStackTrace();
+        }
+        catch (NullPointerException en) {
+            en.printStackTrace();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
         this.closeConnection();
         return _co;
@@ -204,154 +243,4 @@ public class DAOCompany extends DAO implements IDAOCompany {
 }
 
 
-
-    //region API Obtener Compañias por usuario
-/*
-    public ArrayList<Company> companyList(int id) throws CompanyDoesntExistsException {
-        ArrayList<Company> coList= new ArrayList<>();
-        try {
-            PreparedStatement ps = conn.prepareCall("{Call m02_getcompanies(?)}");
-            ps.setInt(1, id);
-            ResultSet result = ps.executeQuery();
-            while(result.next()){
-                Company co = new Company();
-                co.set_idCompany(result.getInt("com_id"));
-                co.set_name(result.getString("com_name"));
-                co.set_desc(result.getString("com_description"));
-                co.set_status(result.getBoolean("com_status"));
-                co.set_link(result.getString("com_route_link"));
-                coList.add(co);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            throw new CompanyDoesntExistsException(e);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }return coList;
-    }
-    //endregion
-
-    public ArrayList<Company> companyListResponsible(int id) throws CompanyDoesntExistsException {
-        ArrayList<Company> coList= new ArrayList<>();
-        try {
-            PreparedStatement ps = conn.prepareCall("{Call m02_getcompaniesbyresponsible(?)}");
-            ps.setInt(1, id);
-            ResultSet result = ps.executeQuery();
-            while(result.next()){
-                Company co = new Company();
-                co.set_idCompany(result.getInt("com_id"));
-                co.set_name(result.getString("com_name"));
-                co.set_desc(result.getString("com_description"));
-                co.set_status(result.getBoolean("com_status"));
-                co.set_link(result.getString("com_route_link"));
-                coList.add(co);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            throw new CompanyDoesntExistsException(e);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }return coList;
-    }
-
-
-    //region Todas Las Campañas
-    public ArrayList<Company> companyListAll() throws CompanyDoesntExistsException {
-        ArrayList<Company> coList = new ArrayList<>();
-        try {
-            PreparedStatement ps = conn.prepareCall("{Call m02_getcompaniesall()}");
-            ResultSet result = ps.executeQuery();
-            while (result.next()) {
-                Company co = new Company();
-                co.set_idCompany(result.getInt("com_id"));
-                co.set_name(result.getString("com_name"));
-                co.set_desc(result.getString("com_description"));
-                co.set_status(result.getBoolean("com_status"));
-                co.set_link(result.getString("com_route_link"));
-                coList.add(co);
-            }
-        }
-            catch (SQLException e) {
-                e.printStackTrace();
-                throw new CompanyDoesntExistsException(e);
-            }
-        return coList;
-    }
-    //endregion
-
-    //region API Detalles Compañia
-
-    public Company getDetails (int id) throws CompanyDoesntExistsException {
-        String select = "SELECT * FROM company where com_id = ?";
-        Company co = new Company();
-        try {
-
-            PreparedStatement ps = conn.prepareStatement(select);
-            ps.setInt(1, id);
-            ResultSet result = ps.executeQuery();
-            while (result.next()) {
-                co.set_idCompany(result.getInt("com_id"));
-                co.set_name(result.getString("com_name"));
-                co.set_desc(result.getString("com_description"));
-                co.set_status(result.getBoolean("com_status"));
-                co.set_link(result.getString("com_route_link"));
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            throw new CompanyDoesntExistsException(e);
-        }
-
-        return co;
-    }
-
-    //endregion
-
-    public boolean changeStatus(int id) throws CompanyDoesntExistsException {
-            Company co = new Company();
-
-        try {
-            co = getDetails(id);
-            co.set_status(!co.get_status());
-            String query = "UPDATE public.company SET" +
-                    " com_status ="+co.get_status()+
-                    " WHERE com_id =?";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1,id);
-            ps.executeUpdate();
-
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            throw new CompanyDoesntExistsException(e);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return co.get_status();
-    }
-
-    public Company createCompany (Company co) throws CompanyDoesntExistsException, ParameterCantBeNullException {
-        PathHandler ph  = new PathHandler();
-        try {
-
-            PreparedStatement preparedStatement = conn.prepareCall("{Call m02_addcompany}");
-            preparedStatement.setInt(1, co.get_idCompany());
-            preparedStatement.setString(2, co.get_name());
-            preparedStatement.setString(3, co.get_desc());
-            preparedStatement.setBoolean(4, co.get_status());
-            preparedStatement.setString(5, ph.generatePath(co));
-            preparedStatement.execute();
-        }catch (SQLException e){
-            throw new CompanyDoesntExistsException(e);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return co;
-    }
-*/
 
