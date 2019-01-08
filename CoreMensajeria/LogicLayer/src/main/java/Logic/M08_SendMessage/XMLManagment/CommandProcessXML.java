@@ -28,7 +28,7 @@ import java.util.ArrayList;
  */
 public class CommandProcessXML extends Command<VerifiedParameter> {
 
-    final static Logger log = LogManager.getLogger("CoreMensajeria");
+    private final static Logger log = LogManager.getLogger("CoreMensajeria");
     private File _xmlFile;
     private DocumentBuilderFactory _dbFactory;
     private DocumentBuilder _dBuilder;
@@ -112,7 +112,7 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
 
     /**
      * Retorna los parametros ya verificados.
-     * @return
+     * @return _verifiedParameters Parametros ya verificados.
      */
     @Override
     public VerifiedParameter Return() {

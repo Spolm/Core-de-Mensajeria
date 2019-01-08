@@ -3,18 +3,22 @@ package Logic.M08_SendMessage.XMLManagment;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M08_Validation.XMLManagement.ParameterXML;
 import Exceptions.M08_SendMessageManager.NullValueXMLException;
+import Exceptions.ParameterDoesntExistsException;
 import Logic.Command;
 import Logic.CommandsFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 
 /**
- *
+ * Clase patrón comando que se encarga de obtener los parametros de una plantilla.
  */
 public class CommandGetParameter extends Command<ParameterXML> {
 
+    private final static Logger log = LogManager.getLogger("CoreMensajeria");
     private Node _node;
     private ParameterXML _parameterXML;
     private Command<String> _commandGetTagValue;
@@ -27,7 +31,9 @@ public class CommandGetParameter extends Command<ParameterXML> {
     }
 
     /**
-     *
+     * Busca los parametros del mensaje dentro del archivo XML,
+     * guardando su contenido dentro de la variable _parameterXML para
+     * su posterior retorno.
      */
     @Override
     public void execute() { //////////////// Rodear de try catch y hacer excepcion personalizada
@@ -46,20 +52,24 @@ public class CommandGetParameter extends Command<ParameterXML> {
 
                 } else {
                     _parameterXML = null;
-
+                    log.error( "se ha lanzado ParameterDoesntExistsException," +
+                            " buscando el parametro " + _commandGetTagValue.Return() );
+                    throw new ParameterDoesntExistsException();
                 }
             }
         } catch (NullValueXMLException e) {
-            e.printStackTrace();
+            log.error("valores nulos o vacios dentro del XML");
             _parameterXML = null;
         } catch (Exception e){
-
+            log.error("Ha ocurrido una excepción inesperada.");
         }
     }
 
     /**
-     * @param parameter
-     * @return
+     * Encuentra un parametro dentro de los posibles del archivo XML
+     * @param parameter Parametro sujeto a la búsqueda.
+     * @return Verdadero si encuentra el parametro dentro del mensaje,
+     * falso si no lo hace.
      */
     public boolean findParameter(String parameter){
         for (Parameter param : _parameters){
@@ -73,7 +83,7 @@ public class CommandGetParameter extends Command<ParameterXML> {
     }
 
     /**
-     * @return
+     * @return Los parametros del archivo XML.
      */
     @Override
     public ParameterXML Return() {

@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 public class CommandGetMessage extends Command<Message> {
 
-    final static Logger log = LogManager.getLogger("CoreMensajeria");
+    private final static Logger log = LogManager.getLogger("CoreMensajeria");
     private Node _node;
     private Message _message;
     private Command<String> _commandGetTagValue;
@@ -89,7 +89,7 @@ public class CommandGetMessage extends Command<Message> {
 
     /**
      * Devuelve la lista de parametros para rellenar la plantilla.
-     * @return
+     *
      */
 
     public void setDestiny( Element element ){
@@ -124,6 +124,10 @@ public class CommandGetMessage extends Command<Message> {
         }
     }
 
+    /**
+     * Retorna los parametros del mensaje a ser enviados.
+     * @return _message
+     */
     @Override
     public Message Return() {
         return _message;

@@ -14,7 +14,7 @@ import org.w3c.dom.NodeList;
  */
 public class CommandGetTagValue extends Command<String> {
 
-    final static Logger log = LogManager.getLogger("CoreMensajeria");
+    private final static Logger log = LogManager.getLogger("CoreMensajeria");
     private String _tag;
     private Element _element;
     private Node _node;
@@ -52,7 +52,7 @@ public class CommandGetTagValue extends Command<String> {
 
     /**
      * Método para devolve el valor del nodo para el manejo XML.
-     * @return
+     * @return _value Valor de la etiqueta.
      */
     @Override
     public String Return() {
