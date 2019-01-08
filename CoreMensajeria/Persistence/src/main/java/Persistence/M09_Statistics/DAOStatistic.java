@@ -1,10 +1,9 @@
 package Persistence.M09_Statistics;
 
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M04_Integrator.Integrator;
 import Entities.M04_Integrator.IntegratorFactory;
-import Entities.Sql;
 import Exceptions.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
 import Persistence.DAO;

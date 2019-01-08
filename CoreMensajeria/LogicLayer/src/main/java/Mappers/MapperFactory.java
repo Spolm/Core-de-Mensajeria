@@ -1,9 +1,9 @@
 package Mappers;
 
-import DTO.M09_DTO.DTOStatistic;
 import Mappers.CompanyMapper.*;
 import Mappers.CampaignMapper.*;
-import Mappers.GenericMapper;
+import Mappers.LoginMapper.LoginMapper;
+import Mappers.LoginMapper.UserMapper;
 import Mappers.StatisticMapper.StatisticMapper;
 
 public class MapperFactory {
@@ -88,9 +88,12 @@ public class MapperFactory {
     // endregion
 
 
-    /**
-     * Metodo que instancia un objeto del tipo StatisticMapper
-     * @return un objeto del tipo StatisticMapper
-     */
-    public static StatisticMapper createStatisticMapper(){ return new StatisticMapper();}
+    public static GenericMapper createStatisticMapper(){ return new StatisticMapper();}
+
+    public static UserMapper createUserMapper() {
+        return new UserMapper();
+    }
+    public static LoginMapper createLoginMapper() {
+        return new LoginMapper();
+    }
 }

@@ -1,8 +1,10 @@
 package Entities.M01_Login;
 
+import Entities.Entity;
+
 import java.util.Objects;
 
-public class Privilege {
+public class Privilege extends Entity {
 
     private int _idPrivileges;
     private String _codePrivileges;

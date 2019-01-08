@@ -1,10 +1,10 @@
 package webService.M10_Profile;
 
 import Entities.M01_Login.User;
-import Entities.M01_Login.UserDAO;
 import Entities.M02_Company.Company;
 import Entities.M10_Profile.*;
 import Exceptions.FormErrorException;
+import Persistence.M01_Login.DAOUser;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -24,7 +24,7 @@ public class M10_ProfileService {/*
     private ArrayList<User> _users;
     private ArrayList<Company> _comp;
     private M10_Profile _daoProfile;
-    private UserDAO _daoUser;
+    private DAOUser _daoUser;
     private ArrayList<Rol> _rols;
 
 
@@ -41,7 +41,7 @@ public class M10_ProfileService {/*
     @Produces(MediaType.APPLICATION_JSON)
     public Response listIntegrator(@PathParam("id") int id) { //Hay que cambiarle el nombre a esto
         try {
-            _daoUser = new UserDAO();
+            _daoUser = new DAOUser();
             _us = _daoUser.findByUsernameId(id);
         } catch (NullPointerException e) {
             _us = null;

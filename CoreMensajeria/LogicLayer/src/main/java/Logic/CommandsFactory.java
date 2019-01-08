@@ -1,17 +1,23 @@
 package Logic;
 
 import Entities.Entity;
-import Logic.M01_Login.GetUser;
-import Logic.M02_Company.GetAllCompaniesCommand;
+
+//import Logic.M10_Profile.*;
+import Logic.M01_Login.*;
+import Logic.M02_Company.AddCompanyCommand;
 import Logic.M08_SendMessage.CommandScheduleMessage;
-import Logic.M10_Profile.*;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.Template;
-import Entities.M08_Validation.XMLManagement.*;
+import Entities.M08_Validation.XMLManagement.VerifiedParameter;
+import Entities.M08_Validation.XMLManagement.CommandGetMessage;
+import Entities.M08_Validation.XMLManagement.CommandProcessXML;
+import Entities.M08_Validation.XMLManagement.CommandGetParameter;
+import Entities.M08_Validation.XMLManagement.CommandGetTagValue;
 import DTO.M07_Template.NewParameter;
-import Logic.M01_Login.GetUser;
+import Logic.M01_Login.GetUserCommand;
 import Logic.M08_SendMessage.CommandSendMessage;
 import Logic.M08_Validation.*;
 import Logic.M07_Template.*;
@@ -25,12 +31,19 @@ import java.util.List;
 public class CommandsFactory {
 
     public static Command instanciateGetUser ( Entity user) {
-        return new GetUser(user);
+        return new GetUserCommand(user);
     }
 
-    public static Command createScheduleMessage() { return new CommandScheduleMessage(); }
+    public static GetAllUsersCommand createGetAllUsersCommand () {
+        return new GetAllUsersCommand();
+    }
+    public static LogUserCommand createLogUserCommand (Entity user) {
+        return new LogUserCommand(user);
+    }
 
-    public static Command createSendMessage() { return new CommandSendMessage(); }
+    public static Entities.M08_Validation.XMLManagement.Command createScheduleMessage(VerifiedParameter verifiedParameters) {
+        return new CommandScheduleMessage(verifiedParameters);
+    }
 
     //region M09
 
@@ -298,10 +311,10 @@ public class CommandsFactory {
     //end region
 
     //region Commands M_10
-    public static AddUserCommand createAddUserCommand(){
+    /*public static AddUserCommand createAddUserCommand(){
         return new AddUserCommand();
-    }
-    public static EditUserProfileCommand createEditUserProfileCommand(){
+    }*/
+    /*public static EditUserProfileCommand createEditUserProfileCommand(){
         return new EditUserProfileCommand();
     }
 
@@ -315,10 +328,10 @@ public class CommandsFactory {
 
     public static GetAllRolesCommand createGetAllRolesCommand(){
         return new GetAllRolesCommand();
-    }
+    }*/
 
-    public static GetAllUsersCommand createGetAllUsersCommand(){
+    /*public static GetAllUsersCommand createGetAllUsersCommand(){
         return new GetAllUsersCommand();
-    }
+    }*/
     //endregion
 }

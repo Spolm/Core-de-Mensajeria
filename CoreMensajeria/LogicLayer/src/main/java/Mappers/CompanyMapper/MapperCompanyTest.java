@@ -3,7 +3,7 @@ package Mappers.CompanyMapper;
 import DTO.DTOFactory;
 import DTO.M02_DTO.*;
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M02_Company.Company;
 import Entities.Sql;
 import Exceptions.CompanyDoesntExistsException;

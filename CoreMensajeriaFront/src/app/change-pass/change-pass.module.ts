@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, FormStyle } from '@angular/common';
 
 import { ChangePassRoutingModule } from './change-pass-routing.module';
 import { ChangePassComponent } from './change-pass.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    ChangePassRoutingModule
+    ChangePassRoutingModule,
+    FormsModule
   ],
   declarations: [ChangePassComponent]
 })
