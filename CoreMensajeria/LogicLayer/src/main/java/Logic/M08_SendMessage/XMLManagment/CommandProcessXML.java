@@ -1,10 +1,14 @@
-package Entities.M08_Validation.XMLManagement;
+package Logic.M08_SendMessage.XMLManagment;
 
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
+import Entities.M08_Validation.XMLManagement.Message;
+import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.M08_SendMessageManager.MissLengthXMLException;
 import Exceptions.M08_SendMessageManager.NullValueXMLException;
+import Logic.Command;
+import Logic.CommandsFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;

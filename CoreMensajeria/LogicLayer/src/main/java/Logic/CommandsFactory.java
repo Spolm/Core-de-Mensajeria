@@ -4,19 +4,14 @@ import Entities.Entity;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
 import Logic.M08_SendMessage.CommandScheduleMessage;
-import Logic.M08_SendMessage.CommandSendMessage;
+import Logic.M08_SendMessage.XMLManagment.*;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
-import Entities.M08_Validation.XMLManagement.CommandGetMessage;
-import Entities.M08_Validation.XMLManagement.CommandProcessXML;
-import Entities.M08_Validation.XMLManagement.CommandGetParameter;
-import Entities.M08_Validation.XMLManagement.CommandGetTagValue;
 import DTO.M07_Template.NewParameter;
 import Logic.M01_Login.GetUserCommand;
-import Logic.M08_SendMessage.CommandSendMessage;
 import Logic.M08_Validation.*;
 import Logic.M07_Template.*;
 import Logic.M02_Company.*;
@@ -39,7 +34,7 @@ public class CommandsFactory {
         return new LogUserCommand(user);
     }
 
-    public static Entities.M08_Validation.XMLManagement.Command createScheduleMessage(VerifiedParameter verifiedParameters) {
+    public static Command createScheduleMessage(VerifiedParameter verifiedParameters) {
         return new CommandScheduleMessage(verifiedParameters);
     }
 
@@ -277,19 +272,19 @@ public class CommandsFactory {
 }
 
     //region M_08
-    public static CommandGetTagValue createCommandGetTagValue(String tag, Element element){
+    public static Command createCommandGetTagValue(String tag, Element element){
         return new CommandGetTagValue(tag,element);
     }
 
-    public static CommandGetParameter createCommandGetParameter(Node node, ArrayList<Parameter> parameter){
+    public static Command createCommandGetParameter(Node node, ArrayList<Parameter> parameter){
         return new CommandGetParameter(node, parameter);
     }
 
-    public static CommandGetMessage createCommandGetMessage(Node node, Template template){
+    public static Command createCommandGetMessage(Node node, Template template){
         return new CommandGetMessage(node,template);
     }
 
-    public static CommandProcessXML createCommandProcessXML(String filePath){
+    public static Command createCommandProcessXML(String filePath){
         return new CommandProcessXML(filePath);
     }
 
@@ -305,6 +300,10 @@ public class CommandsFactory {
 
     public static CommandValidate createCommandValidate (int template, String message, String channel) {
         return new CommandValidate(template, message, channel);
+    }
+
+    public static Command createSendMessage(VerifiedParameter parameters) {
+        return new CommandSendMessage(parameters);
     }
     //end region
 }

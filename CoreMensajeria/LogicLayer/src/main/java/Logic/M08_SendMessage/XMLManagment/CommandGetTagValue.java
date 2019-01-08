@@ -1,7 +1,8 @@
-package Entities.M08_Validation.XMLManagement;
+package Logic.M08_SendMessage.XMLManagment;
 
 import Exceptions.M08_SendMessageManager.NullValueXMLException;
 import Exceptions.UnexpectedErrorException;
+import Logic.Command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
