@@ -90,9 +90,6 @@ public class M02_Companies {
                     _dto.get_name() + " "+ _dto.get_status() + " " + _dto.get_desc() + " " +
                     _dto.get_link() + " " + _dto.get_idUser() );
        try {
-           if( _dto.get_name() == "" ) {
-               throw new InvalidParameterException();
-           }
 
            MapperFullCompany _mapper = MapperFactory.CreateMapperFullCompany( ) ;
            Company _company = (Company) _mapper.CreateEntity( _dto );
@@ -152,18 +149,15 @@ public class M02_Companies {
     public Response changeCompanyStatusPP( DTOIdStatusCompany _dto ) {
         Error error;
         Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
-        String Status = String.valueOf( _dto.is_status() );
         try {
-            if ( _dto.get_idCompany() == 0 || Status == "" ){
-                throw new InvalidParameterException();
-            }
+
             MapperIdStatusCompany _mapper =  MapperFactory.createMapperIdStatusCompany();
             Company _comp = (Company) _mapper.CreateEntity( _dto );
             Command _command = CommandsFactory.createChangeStatusCommand( _comp );
             _command.execute();
             return _rb.build();
         }
-        catch (ParameterCantBeNullException e){
+        catch (InvalidParameterException e){
             e.printStackTrace();
             error = new Error( MESSAGE_ERROR_PARAMETERDOESNTEXIST );
             error.addError( MESSAGE_EXCEPTION,e.getMessage() );
@@ -205,13 +199,13 @@ public class M02_Companies {
             List < DTOFullCompany > _dtoCo = _mappCompany.CreateDtoList( _command.ReturnList() ) ;
             _rb.entity( gson.toJson( _dtoCo ) ) ;
             return _rb.build();
-        }/*
-        catch ( ParameterCantBeNullException e ){
+        }
+        catch ( InvalidParameterException e ){
             e.printStackTrace();
             error = new Error( MESSAGE_ERROR_PARAMETERDOESNTEXIST );
             error.addError( MESSAGE_EXCEPTION,e.getMessage() );
             return Response.status(500).entity(error).build();
-        }*/
+        }
         catch (Exception e){
             e.printStackTrace();
             error = new Error( MESSAGE_ERROR_INTERN );
@@ -238,22 +232,11 @@ public class M02_Companies {
         String Status = String.valueOf( _dto.is_status() );
 
         try {
-            if ( _dto.get_idCompany() == 0 || _dto.get_name() == "" || _dto.get_desc() == "" || _dto.get_link() == ""
-                    || Status == "" || _dto.get_idUser() == 0 ) {
-
-                throw new InvalidParameterException();
-            }
             MapperFullCompany _mapper = MapperFactory.CreateMapperFullCompany();
             Company _comp =(Company) _mapper.CreateEntity( _dto );
             Command _command = CommandsFactory.createUpdateCompanyCommand( _comp );
             _command.execute();
             return _rb.build();
-        }
-        catch ( ParameterCantBeNullException e ){
-            e.printStackTrace();
-            error = new Error( MESSAGE_ERROR_PARAMETERDOESNTEXIST );
-            error.addError( MESSAGE_EXCEPTION,e.getMessage() );
-            return Response.status(500).entity(error).build();
         }
         catch ( Exception e ){
             e.printStackTrace();
