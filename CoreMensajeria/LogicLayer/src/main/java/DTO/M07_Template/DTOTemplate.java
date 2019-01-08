@@ -14,53 +14,55 @@ import java.util.ArrayList;
 
 public class DTOTemplate extends DTO {
 
-    private Message _tMessage;
-    private Date _tCreationDate;
-    private int _tTemplateid;
+    private Message message;
+    private Date creationDate;
+    private int _id;
     private Status status;
-    private ArrayList<Channel> _tChannels;
-    private Campaign _tCampaign;
-    private Application _tApplication;
-    private User _tUser;
-    private Planning _tPlanning;
+    private ArrayList<Channel> channels;
+    private Campaign campaign;
+    private Application application;
+    private User user;
+    private Planning planning;
+    private int companyId;
 
     public DTOTemplate() {
     }
 
-    public DTOTemplate(Message _tMessage, Date _tCreationDate, int _tTemplateid, Status status, ArrayList<Channel> _tChannels, Campaign _tCampaign, Application _tApplication, User _tUser, Planning _tPlanning) {
-        this._tMessage = _tMessage;
-        this._tCreationDate = _tCreationDate;
-        this._tTemplateid = _tTemplateid;
+    public DTOTemplate(Message message, Date creationDate, int _id, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning, int companyId) {
+        this.message = message;
+        this.creationDate = creationDate;
+        this._id = _id;
         this.status = status;
-        this._tChannels = _tChannels;
-        this._tCampaign = _tCampaign;
-        this._tApplication = _tApplication;
-        this._tUser = _tUser;
-        this._tPlanning = _tPlanning;
+        this.channels = channels;
+        this.campaign = campaign;
+        this.application = application;
+        this.user = user;
+        this.planning = planning;
+        this.companyId = companyId;
     }
 
-    public Message get_tMessage() {
-        return _tMessage;
+    public Message getMessage() {
+        return message;
     }
 
-    public void set_tMessage(Message _tMessage) {
-        this._tMessage = _tMessage;
+    public void setMessage(Message message) {
+        this.message = message;
     }
 
-    public java.sql.Date get_tCreationDate() {
-        return _tCreationDate;
+    public java.sql.Date getCreationDate() {
+        return creationDate;
     }
 
-    public void set_tCreationDate(Date _tCreationDate) {
-        this._tCreationDate = _tCreationDate;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
-    public int get_tTemplateid() {
-        return _tTemplateid;
+    public int get_id() {
+        return _id;
     }
 
-    public void set_tTemplateid(int _tTemplateid) {
-        this._tTemplateid = _tTemplateid;
+    public void set_id(int _id) {
+        this._id = _id;
     }
 
     public Status getStatus() {
@@ -71,43 +73,51 @@ public class DTOTemplate extends DTO {
         this.status = status;
     }
 
-    public ArrayList<Channel> get_tChannels() {
-        return _tChannels;
+    public ArrayList<Channel> getChannels() {
+        return channels;
     }
 
-    public void set_tChannels(ArrayList<Channel> _tChannels) {
-        this._tChannels = _tChannels;
+    public void setChannels(ArrayList<Channel> channels) {
+        this.channels = channels;
     }
 
-    public Campaign get_tCampaign() {
-        return _tCampaign;
+    public Campaign getCampaign() {
+        return campaign;
     }
 
-    public void set_tCampaign(Campaign _tCampaign) {
-        this._tCampaign = _tCampaign;
+    public void setCampaign(Campaign campaign) {
+        this.campaign = campaign;
     }
 
-    public Application get_tApplication() {
-        return _tApplication;
+    public Application getApplication() {
+        return application;
     }
 
-    public void set_tApplication(Application _tApplication) {
-        this._tApplication = _tApplication;
+    public void setApplication(Application application) {
+        this.application = application;
     }
 
-    public User get_tUser() {
-        return _tUser;
+    public User getUser() {
+        return user;
     }
 
-    public void set_tUser(User _tUser) {
-        this._tUser = _tUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Planning get_tPlanning() {
-        return _tPlanning;
+    public Planning getPlanning() {
+        return planning;
     }
 
-    public void set_tPlanning(Planning _tPlanning) {
-        this._tPlanning = _tPlanning;
+    public void setPlanning(Planning planning) {
+        this.planning = planning;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

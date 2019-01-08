@@ -157,8 +157,8 @@ public class DTOFactory {
     }
 
 
-    public static DTOTemplate CreateDTOTemplate(Message message, java.sql.Date creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning){
-        return  new DTOTemplate(message,creationDate,templateId,status,channels,campaign,application,user,planning);
+    public static DTOTemplate CreateDTOTemplate(Message message, java.sql.Date creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning, int companyId){
+        return  new DTOTemplate(message,creationDate,templateId,status,channels,campaign,application,user,planning,companyId);
     }
 
     public static DTOPlanning CreateDTOPlanning(java.sql.Date _pStartDate, java.sql.Date _pEndDate, String _pStartTime, String _pEndTime, int _pIdPlanning){
