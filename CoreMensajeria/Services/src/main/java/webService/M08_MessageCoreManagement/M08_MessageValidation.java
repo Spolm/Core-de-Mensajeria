@@ -38,7 +38,6 @@ public class M08_MessageValidation {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public SentMessage sendMessage(@Valid ParametersDTO dto) throws Exception{
-        System.out.println(dto.get_name());
         Exception error = null;
         Entity sentMessage = new SentMessage();
         try {

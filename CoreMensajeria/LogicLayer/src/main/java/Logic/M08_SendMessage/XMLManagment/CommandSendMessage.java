@@ -7,8 +7,11 @@ import Entities.M08_Validation.XMLManagement.Message;
 import Entities.M08_Validation.XMLManagement.ParameterXML;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Logic.Command;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * Clase patrón comando que se encarga de enviar el mensaje a los
@@ -18,6 +21,7 @@ public class CommandSendMessage extends Command {
 
     private ArrayList<Message> _verifiedMessages;
     private Template _template;
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
 
     /**
      * Constructor de la clase CommandSendMessage.
@@ -34,28 +38,33 @@ public class CommandSendMessage extends Command {
      */
     @Override
     public void execute() {
-        System.out.println("Enviando mensaje"); ///*** CAMBIAR POR LOGGER
         ArrayList<Channel> _channels = _template.getChannels();
 
-        for(Message message : _verifiedMessages){
+        for(Message message : _verifiedMessages) {
             String correo = message.get_correo();
             String telefono = message.get_telefono();
             String finalMessage = parseMessage(message);
+
+            System.out.println(finalMessage);
 
             for(Channel channel : _channels){
                 ArrayList<Integrator> integrators = channel.getIntegrators();
 
                 for(Integrator integrator : integrators){
-                    if(channel.getNameChannel().equalsIgnoreCase("SMS")){ ///*** MOSCA CON ESTO
-                        //integrator.sendMessage(finalMessage,telefono,"Valor a cambiar");
-                        System.out.println(finalMessage + " destino " +  telefono);
-                    }else{
-                        //integrator.sendMessage(finalMessage,correo,"Valor a cambiar"); ///*** MOSCA CON ESTO
-                        System.out.println(finalMessage + " destino " +  correo);
+                    if (integrator.isEnabled()) {
+                        if(channel.getNameChannel().equalsIgnoreCase("SMS")){ ///*** MOSCA CON ESTO
+                            //integrator.sendMessage(finalMessage,telefono,"Valor a cambiar");
+                            System.out.println(finalMessage + " destino " +  telefono);
+                        }else{
+                            //integrator.sendMessage(finalMessage,correo,"Valor a cambiar"); ///*** MOSCA CON ESTO
+                            System.out.println(finalMessage + " destino " +  correo);
+                        }
                     }
+
                 }
             }
         }
+        log.info("Mensajes enviados satisactoriamente");
     }
 
     @Override
@@ -73,7 +82,8 @@ public class CommandSendMessage extends Command {
         ArrayList<ParameterXML> params = message.get_param();
 
         for (ParameterXML param : params) {
-            text = text.replace("[.$" + param.get_name() + "$.]", param.get_value());
+            String parameterToBeReplaced = Pattern.quote("[.$" + param.get_name() + "$.]");
+            text = text.replaceAll("(?i)" + parameterToBeReplaced, param.get_value());
         }
         return text;
     }

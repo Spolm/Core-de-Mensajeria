@@ -53,14 +53,27 @@ public class CommandScheduleMessage extends Command<Entity> {
         log.info("Fecha de inicio de la plantilla: " + startDate);
         log.info("Fecha de fin de la plantilla: " + endDate);
 
+//        try {
+//            DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
+//            startDate = df.parse("2019-01-08 12:50 PM");
+//            endDate = df.parse("2019-01-09 12:30 PM");
+//        } catch(ParseException e) {
+//        }
+
+        System.out.println("Fecha de inicio de la plantilla: " + startDate);
+        System.out.println("Fecha de fin de la plantilla: " + endDate);
+
         if (planningIsValid(startDate, endDate)) {
             ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
             long mills = startDate.getTime() - System.currentTimeMillis();
-            log.info("El mensaje se enviará en " + mills + "milisegundos");
             service.schedule(new ScheduleMessageTask(_verifiedParameters), mills, TimeUnit.MILLISECONDS);
             log.info("El mensaje ha sido registrado para el envío");
+            System.out.println("El mensaje ha sido registrado para el envío");
+            log.info("El mensaje se enviará en " + mills + "milisegundos");
+            System.out.println("El mensaje se enviará en " + mills + "milisegundos");
         } else {
             log.error("La fecha de inicio o fin es inválida");
+            System.out.println("La fecha de inicio o fin es inválida");
             throw new DateNotValidException("Le fecha de fin no puede ser mayor a la fecha de inicio y la " +
                     "fecha de inicio no puede ser menor al día actual.");
         }

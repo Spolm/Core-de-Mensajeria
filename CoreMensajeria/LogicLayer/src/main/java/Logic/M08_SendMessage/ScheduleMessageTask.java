@@ -30,6 +30,7 @@ public class ScheduleMessageTask implements Runnable {
         Command sendMessageCommand = CommandsFactory.createSendMessage(_verifiedParameters);
         try {
             log.info("Enviando mensaje");
+            System.out.println("Enviando mensaje");
             sendMessageCommand.execute();
         } catch(Exception e) {
             // TODO: Manejar el error
