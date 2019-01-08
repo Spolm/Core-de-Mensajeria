@@ -7,6 +7,8 @@ import Entities.M08_Validation.XMLManagement.Message;
 import Entities.M08_Validation.XMLManagement.ParameterXML;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Logic.Command;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -19,6 +21,7 @@ public class CommandSendMessage extends Command {
 
     private ArrayList<Message> _verifiedMessages;
     private Template _template;
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
 
     /**
      * Constructor de la clase CommandSendMessage.
@@ -58,7 +61,7 @@ public class CommandSendMessage extends Command {
                 }
             }
         }
-        System.out.println("Mensajes enviados satisactoriamente");
+        log.info("Mensajes enviados satisactoriamente");
     }
 
     @Override
