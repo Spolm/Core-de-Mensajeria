@@ -30,7 +30,7 @@ public class WatchDirectory implements Runnable{
      */
     public void run() {
         try {
-            Logger log = Logger.getLogger(WatchDirectory.class.getName());
+
             final WatchService watchService = FileSystems.getDefault().newWatchService();
 
             for ( String path : _paths ) {
@@ -44,7 +44,7 @@ public class WatchDirectory implements Runnable{
 
                 for ( WatchEvent<?> event : key.pollEvents() ) {
 
-                    log.info("Created: " + event.context().toString() + " in directory " + directory );
+
 
                     if(event.context().toString().endsWith(".xml")) {
                         _commandProcessXML = CommandsFactory

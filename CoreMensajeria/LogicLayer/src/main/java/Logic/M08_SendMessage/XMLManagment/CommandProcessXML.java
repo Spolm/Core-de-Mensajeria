@@ -1,6 +1,5 @@
 package Logic.M08_SendMessage.XMLManagment;
 
-import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.Message;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
@@ -28,16 +27,9 @@ import java.util.ArrayList;
  */
 public class CommandProcessXML extends Command<VerifiedParameter> {
 
-    final static Logger log = LogManager.getLogger("CoreMensajeria");
+    private final static Logger log = LogManager.getLogger("CoreMensajeria");
     private File _xmlFile;
     private DocumentBuilderFactory _dbFactory;
-    private DocumentBuilder _dBuilder;
-    private Command<Message> _commandGetMessage;
-    private Command<String> _commandGetTagValue;
-    private Command _commandGetTemplate;
-    private Template _template;  /////// Cambiar por comando de Template
-    private TemplateHandler _templateHandler = new TemplateHandler();   /////// Cambiar por comando de Template
-    private String _templateId;                  /////// Cambiar por comando de Template
     private ArrayList<Message> _messageList = new ArrayList<>();
     private VerifiedParameter _verifiedParameters;
 
@@ -52,26 +44,31 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
     @Override
     public void execute() {
         try {
-            _dBuilder = _dbFactory.newDocumentBuilder();
+            DocumentBuilder _dBuilder = _dbFactory.newDocumentBuilder();
             Document doc = _dBuilder.parse(_xmlFile);
             doc.getDocumentElement().normalize();
 
             NodeList node = doc.getElementsByTagName("template");
-            _commandGetTagValue = CommandsFactory.createCommandGetTagValue("id",(Element) node.item(0));
+            Command<String> _commandGetTagValue =
+                    CommandsFactory.createCommandGetTagValue("id", (Element) node.item(0));
             _commandGetTagValue.execute();
             log.info("Se ha ejecutado el comando GetTagValue" );
-            _templateId = _commandGetTagValue.Return();
+            String _templateId = _commandGetTagValue.Return();
             log.debug("Se obtenido el TemplateId " + _templateId
                     + " del método de return del comando GetTagValue" );
 
             if(_templateId != "") {
-                _template = _templateHandler.getTemplate(Integer.valueOf(_templateId));   /////// Cambiar por comando de Template
+                Command<Template> _commandGetTemplate =
+                        CommandsFactory.createCommandGetTemplate(Integer.valueOf(_templateId));
+                _commandGetTemplate.execute();
+                Template _template = _commandGetTemplate.Return();
                 log.info("Se ha ejecutado el comando DETEMPLATEQUEFALTA" ); ///*** RECORDAR CAMBIAR POR EL NOMBRE DEL COMANDO DE PLANTILLA
                 NodeList nodeList = doc.getElementsByTagName("message");
 
                 for (int i = 0; i < nodeList.getLength(); i++) {
                     try {
-                        _commandGetMessage = CommandsFactory.createCommandGetMessage(nodeList.item(i), _template);
+                        Command<Message> _commandGetMessage =
+                                CommandsFactory.createCommandGetMessage(nodeList.item(i), _template);
                         _commandGetMessage.execute();
                         log.info("Se ha ejecutado el comando GetMessage para la posición " + i );
                         if (_commandGetMessage.Return() != null)

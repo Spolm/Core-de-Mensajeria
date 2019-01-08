@@ -30,7 +30,7 @@ public class CommandGetParameter extends Command<ParameterXML> {
      *
      */
     @Override
-    public void execute() { //////////////// Rodear de try catch y hacer excepcion personalizada
+    public void execute() {
         try {
                 if (_node.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) _node;
