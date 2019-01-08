@@ -73,29 +73,28 @@ public class WatchDirectory implements Runnable{
 
                     if(event.context().toString().endsWith(".xml")) {
                         log.debug("Inicio del procesamiento del Archivo XML.");
-                        _commandProcessXML = CommandsFactory
-                                .createCommandProcessXML(directory + "/" + event.context().toString());
-                        _commandProcessXML.execute();
-                        log.info("Se ha procesado el XML.");
-                        VerifiedParameter verifiedParameter = _commandProcessXML.Return();
-                        log.debug("Inicio del proceamiento para el envío del mensaje" );
-                        if( verifiedParameter != null) {
-                            Command _commandSendMsg = CommandsFactory.createSendMessage(verifiedParameter);
-                            _commandSendMsg.execute();
-                            log.info("Se ha enviado el mensaje." );
+                        try {
+                            _commandProcessXML = CommandsFactory
+                                    .createCommandProcessXML(directory + "/" + event.context().toString());
+                            _commandProcessXML.execute();
+                            log.info("Se ha procesado el XML.");
+                            VerifiedParameter verifiedParameter = _commandProcessXML.Return();
+                            log.debug("Inicio del proceamiento para el envío del mensaje" );
+                            if( verifiedParameter != null) {
+                                Command _commandSendMsg = CommandsFactory.createSendMessage(verifiedParameter);
+                                _commandSendMsg.execute();
+                                log.info("Se ha enviado el mensaje." );
+                            }
+                        } catch (NullXMLException e) {
+                            log.error(e.getMessage());
                         }
                     }
                 }
                 key.reset();
             }
-        } catch (NullXMLException e) {
-            log.error( e.getMessage() + ", el demonio se ha reiniciado.");
-            this.run();
         }catch ( Exception e ) {
             log.error("Error inesperado de tipo "
-                    + e.getClass().getName()
-                    + ", el demonio se ha reiniciado" );
-            this.run();
+                    + e.getClass().getName() );
         }
     }
 }
