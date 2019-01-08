@@ -11,7 +11,7 @@ public interface IDAOIntegrator extends IDAO {
 
     ArrayList<Entity> listIntegrator() throws DatabaseConnectionProblemException;
 
-    ArrayList<Entity> listIntegratorByChannel(Entity e)throws DatabaseConnectionProblemException,
+    ArrayList<Entity> listIntegratorByChannel(int id)throws DatabaseConnectionProblemException,
             ChannelNotFoundException;
 
     Entity getConcreteIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException;

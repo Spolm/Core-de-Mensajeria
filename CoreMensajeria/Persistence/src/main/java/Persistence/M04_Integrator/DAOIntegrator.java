@@ -159,23 +159,24 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
      * @see Integrator
      */
 
-    public ArrayList<Entity> listIntegratorByChannel(Entity e) throws DatabaseConnectionProblemException,
+    public ArrayList<Entity> listIntegratorByChannel(int id) throws DatabaseConnectionProblemException,
             ChannelNotFoundException {
+        ArrayList<Entity> _integratorList = new ArrayList<>();
         try {
-            Channel channel = (Channel) e;
+           // Channel channel = (Channel) e;
             Sql.bdClose(_conn);
             _conn = Sql.getConInstance();
-            ArrayList<Entity> integratorList = new ArrayList<>();
+           // ArrayList<Entity> integratorList = new ArrayList<>();
             PreparedStatement preparedStatement = _conn.prepareCall(SELECT_ALL_INTEGRATORS_BY_CHANNEL);
-            preparedStatement.setInt(1, channel.get_id());
+            preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
 
             while (result.next())
-                integratorList.add(extractIntegrator(result));
-            if (integratorList.size() == 0)
+                _integratorList.add(extractIntegrator(result));
+            if (_integratorList.size() == 0)
                 throw new ChannelNotFoundException("El canal no existe");
 
-            return integratorList;
+            return _integratorList;
         }
         catch (SQLException ex) {
             throw new DatabaseConnectionProblemException("Error de comunicacion con la base de datos.", ex);

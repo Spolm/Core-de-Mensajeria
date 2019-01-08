@@ -94,8 +94,8 @@ public class CommandsFactory {
         return new CommandGetConcreteIntegrator(id);
     }
 
-    public static CommandGetIntegratorByChannel createCommandGetIntegratorByChannel(Entity e){
-        return new CommandGetIntegratorByChannel(e);
+    public static CommandGetIntegratorByChannel createCommandGetIntegratorByChannel(int id){
+        return new CommandGetIntegratorByChannel(id);
     }
 
     public static CommandGetAllChannels instanceGetAllChannels(){ return new CommandGetAllChannels(); }

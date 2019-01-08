@@ -4,10 +4,7 @@ package webService.M04_Integrator;
 import DTO.M04_Integrator.DTOIntegrator;
 import Entities.M04_Integrator.Integrator;
 import Logic.CommandsFactory;
-import Logic.M04_Integrator.CommandDisableIntegrator;
-import Logic.M04_Integrator.CommandEnableIntegrator;
-import Logic.M04_Integrator.CommandGetAllIntegrator;
-import Logic.M04_Integrator.CommandGetConcreteIntegrator;
+import Logic.M04_Integrator.*;
 import Mappers.M04_Integrator.MapperIntegrator;
 import Mappers.MapperFactory;
 
@@ -93,23 +90,22 @@ public class M04_Integrator {
      * @param id
      * @return
      */
- /*   @GET
+    @GET
     @Path("/channel/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listIntegratorByChannel(@PathParam("id") int id) {
-        Response response;/*
+        Response response;
         try {
-            CommandGetConcreteIntegrator command = CommandsFactory.createCommandGetConcreteIntegrator(id);
+            CommandGetIntegratorByChannel command = CommandsFactory.createCommandGetIntegratorByChannel(id);
             command.execute();
             DTOIntegrator _integrator = _mapper.CreateDto(command.Return());
-
             response = Response.ok().entity(_integrator).build();
         } catch (Exception e) {
             response = Response.status(500).entity(e.getMessage()).build();
         }
         return response;
     }
-*/
+
     /**
      * Método que nos permite deshabilitar un integrador
      *

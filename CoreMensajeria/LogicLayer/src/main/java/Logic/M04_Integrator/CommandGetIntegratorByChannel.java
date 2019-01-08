@@ -11,11 +11,11 @@ import java.util.ArrayList;
 
 public class CommandGetIntegratorByChannel extends Command {
 
-    private static Entity _channel;
+    private static int _id;
     private static ArrayList< Entity > _entityList;
 
-    public CommandGetIntegratorByChannel(Entity channel) {
-        _channel = channel;
+    public CommandGetIntegratorByChannel(int id) {
+        _id = id;
         _entityList = new ArrayList<Entity>();
     }
 
@@ -23,7 +23,7 @@ public class CommandGetIntegratorByChannel extends Command {
     public void execute()throws DatabaseConnectionProblemException,ChannelNotFoundException {
 
             IDAOIntegrator _dao =DAOFactory.instanciateDaoIntegrator();
-            _entityList = _dao.listIntegratorByChannel(_channel);
+            _entityList = _dao.listIntegratorByChannel(_id);
 
     }
 
