@@ -7,6 +7,7 @@ import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 
+import Logic.M10_Profile.GetPrivilegesByUserCompanyCommand;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
@@ -311,6 +312,11 @@ public class CommandsFactory {
     //end region
 
     //region Commands M_10
+
+    public static GetPrivilegesByUserCompanyCommand createGetPrivilegesByUserCompanyCommand(int userId, int companyId){
+        return new GetPrivilegesByUserCompanyCommand(userId, companyId);
+    }
+
     /*public static AddUserCommand createAddUserCommand(){
         return new AddUserCommand();
     }*/
