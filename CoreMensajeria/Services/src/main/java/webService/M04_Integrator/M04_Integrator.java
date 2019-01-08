@@ -3,7 +3,6 @@ package webService.M04_Integrator;
 
 import DTO.M04_Integrator.DTOIntegrator;
 import Entities.M04_Integrator.Integrator;
-import Entities.M04_Integrator.IntegratorDAO;
 import Logic.CommandsFactory;
 import Logic.M04_Integrator.CommandDisableIntegrator;
 import Logic.M04_Integrator.CommandEnableIntegrator;
@@ -32,7 +31,7 @@ public class M04_Integrator {
 
     MapperIntegrator _mapper = MapperFactory.createMapperIntegrator();
 
-    private IntegratorDAO _integratorDAO = new IntegratorDAO();
+    //private IntegratorDAO _integratorDAO = new IntegratorDAO();
 
     /**
      * Método que nos permite obtener la lista de todos
@@ -88,6 +87,29 @@ public class M04_Integrator {
         return response;
     }
 
+    /**
+     *Método que nos permite obtener una lista de integradores por canal
+     *
+     * @param id
+     * @return
+     */
+ /*   @GET
+    @Path("/channel/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listIntegratorByChannel(@PathParam("id") int id) {
+        Response response;/*
+        try {
+            CommandGetConcreteIntegrator command = CommandsFactory.createCommandGetConcreteIntegrator(id);
+            command.execute();
+            DTOIntegrator _integrator = _mapper.CreateDto(command.Return());
+
+            response = Response.ok().entity(_integrator).build();
+        } catch (Exception e) {
+            response = Response.status(500).entity(e.getMessage()).build();
+        }
+        return response;
+    }
+*/
     /**
      * Método que nos permite deshabilitar un integrador
      *

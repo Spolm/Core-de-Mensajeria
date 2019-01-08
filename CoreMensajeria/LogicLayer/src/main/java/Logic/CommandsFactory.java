@@ -2,10 +2,7 @@ package Logic;
 
 import Entities.Entity;
 import Logic.M01_Login.GetUser;
-import Logic.M04_Integrator.CommandDisableIntegrator;
-import Logic.M04_Integrator.CommandEnableIntegrator;
-import Logic.M04_Integrator.CommandGetAllIntegrator;
-import Logic.M04_Integrator.CommandGetConcreteIntegrator;
+import Logic.M04_Integrator.*;
 import Logic.M05_Channel.CommandGetAllChannels;
 import Logic.M07_Template.*;
 import Logic.M02_Company.*;
@@ -95,6 +92,10 @@ public class CommandsFactory {
 
     public static CommandGetConcreteIntegrator createCommandGetConcreteIntegrator(int id) {
         return new CommandGetConcreteIntegrator(id);
+    }
+
+    public static CommandGetIntegratorByChannel createCommandGetIntegratorByChannel(Entity e){
+        return new CommandGetIntegratorByChannel(e);
     }
 
     public static CommandGetAllChannels instanceGetAllChannels(){ return new CommandGetAllChannels(); }

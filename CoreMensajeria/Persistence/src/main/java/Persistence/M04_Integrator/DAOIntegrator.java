@@ -17,6 +17,10 @@ import java.util.ArrayList;
 
 public class DAOIntegrator extends DAO implements IDAOIntegrator {
 
+    private final String SELECT_ALL_INTEGRATORS = "{call m04_getintegrators(?)}" ;
+    private final String SELECT_CONCRETE_INTEGRATOR = "{call m04_getConcreteIntegrator(?)}";
+    private final String UPDATE_DISABLE_INTEGRATOR = "{call m04_disableintegrator(?)}";
+    private final String UPDATE_ENABLE_INTEGRATOR = "{call m04_enableintegrator(?)}";
     private final String SELECT_ALL_INTEGRATORS_BY_CHANNEL = "{call m04_getIntegratorsByChannel(?)}";
 
     private Connection _conn;
@@ -51,7 +55,7 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
 
            // Integrator _integrator = (Integrator) e;
             _integratorList = new ArrayList<>();
-            PreparedStatement st = _conn.prepareCall("{call m04_getintegrators()}");
+            PreparedStatement st = _conn.prepareCall(SELECT_ALL_INTEGRATORS);
             _result = st.executeQuery();
 
             while (_result.next()) {
@@ -78,7 +82,7 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
     public Entity getConcreteIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException{
 
         try {
-            PreparedStatement preparedStatement = _conn.prepareCall("{call m04_getConcreteIntegrator(?)}");
+            PreparedStatement preparedStatement = _conn.prepareCall(SELECT_CONCRETE_INTEGRATOR);
             preparedStatement.setInt(1, id);
             _result = preparedStatement.executeQuery();
 
@@ -109,10 +113,9 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
     @Override
     public void disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
         try {
-            //getConcreteIntegrator(id);
-            //Integrator _integrator = ( Integrator ) e;
+
             _conn = Sql.getConInstance();
-            PreparedStatement preparedStatement = _conn.prepareCall("{call m04_disableintegrator(?)}");
+            PreparedStatement preparedStatement = _conn.prepareCall(UPDATE_DISABLE_INTEGRATOR);
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException exc) {
@@ -133,15 +136,14 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
     @Override
     public void enableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
         try {
-            //getConcreteIntegrator(id);
-            //Integrator _integrator = ( Integrator ) e;
+
             _conn = Sql.getConInstance();
-            PreparedStatement preparedStatement = _conn.prepareCall("{call m04_enableintegrator(?)}");
+            PreparedStatement preparedStatement = _conn.prepareCall(UPDATE_ENABLE_INTEGRATOR);
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException exc) {
             exc.printStackTrace();
-            throw new DatabaseConnectionProblemException("Error al deshabilitar integrator. ", exc);
+            throw new DatabaseConnectionProblemException("Error al habilitar integrator. ", exc);
         } finally {
             Sql.bdClose(_conn);
         }
@@ -157,7 +159,8 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
      * @see Integrator
      */
 
-    public ArrayList<Entity> listIntegratorByChannel(Entity e) throws DatabaseConnectionProblemException, ChannelNotFoundException {
+    public ArrayList<Entity> listIntegratorByChannel(Entity e) throws DatabaseConnectionProblemException,
+            ChannelNotFoundException {
         try {
             Channel channel = (Channel) e;
             Sql.bdClose(_conn);

@@ -1,6 +1,7 @@
 package Persistence.M04_Integrator;
 
 import Entities.Entity;
+import Exceptions.ChannelNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
 import Exceptions.IntegratorNotFoundException;
 import Persistence.IDAO;
@@ -10,10 +11,14 @@ public interface IDAOIntegrator extends IDAO {
 
     ArrayList<Entity> listIntegrator() throws DatabaseConnectionProblemException;
 
+    ArrayList<Entity> listIntegratorByChannel(Entity e)throws DatabaseConnectionProblemException,
+            ChannelNotFoundException;
+
     Entity getConcreteIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException;
 
     void disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException;
 
     void enableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException;
+
 
 }
