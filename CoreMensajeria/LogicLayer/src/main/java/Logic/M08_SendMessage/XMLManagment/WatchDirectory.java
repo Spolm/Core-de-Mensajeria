@@ -1,5 +1,6 @@
 package Logic.M08_SendMessage.XMLManagment;
 
+import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Logic.Command;
 import Logic.CommandsFactory;
 
@@ -16,7 +17,7 @@ public class WatchDirectory implements Runnable{
     private final static Logger log = LogManager.getLogger("CoreMensajeria");
     private ArrayList<String> _paths;
     private static WatchDirectory watchDirectory;
-    private Command _commandProcessXML;
+    private Command<VerifiedParameter> _commandProcessXML;
 
     /**
      * Consturctor que inicializa una instancia de la clase WatchDirectory
@@ -74,6 +75,9 @@ public class WatchDirectory implements Runnable{
                                 .createCommandProcessXML(directory + "/" + event.context().toString());
                         _commandProcessXML.execute();
                         log.info("Se ha procesado el XML");
+                        VerifiedParameter verifiedParameter = _commandProcessXML.Return();
+                        Command _commandSendMsg = CommandsFactory.createSendMessage(verifiedParameter);
+                        _commandSendMsg.execute();
                     }
                 }
                 key.reset();

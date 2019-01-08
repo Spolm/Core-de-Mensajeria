@@ -10,18 +10,31 @@ import Logic.Command;
 
 import java.util.ArrayList;
 
+/**
+ * Clase patrón comando que se encarga de enviar el mensaje a los
+ * destinatarios a través del integrador.
+ */
 public class CommandSendMessage extends Command {
 
     private ArrayList<Message> _verifiedMessages;
     private Template _template;
 
+    /**
+     * Constructor de la clase CommandSendMessage.
+     * @param verifiedParameter parametros verificados.
+     */
     public CommandSendMessage(VerifiedParameter verifiedParameter){
         _verifiedMessages = verifiedParameter.get_verifiedMessages();
         _template = verifiedParameter.get_template();
     }
+
+    /**
+     * Método para enviar el mensaje a través de los dos canales disponbiles
+     * SMS y/o Integrador.
+     */
     @Override
-    public void execute() throws Exception {
-        System.out.println("Enviando mensaje");
+    public void execute() {
+        System.out.println("Enviando mensaje"); ///*** CAMBIAR POR LOGGER
         ArrayList<Channel> _channels = _template.getChannels();
 
         for(Message message : _verifiedMessages){
@@ -33,10 +46,12 @@ public class CommandSendMessage extends Command {
                 ArrayList<Integrator> integrators = channel.getIntegrators();
 
                 for(Integrator integrator : integrators){
-                    if(channel.getNameChannel().equalsIgnoreCase("SMS")){
-                        integrator.sendMessage(finalMessage,telefono,"Valor a cambiar");
+                    if(channel.getNameChannel().equalsIgnoreCase("SMS")){ ///*** MOSCA CON ESTO
+                        //integrator.sendMessage(finalMessage,telefono,"Valor a cambiar");
+                        System.out.println(finalMessage + " destino " +  telefono);
                     }else{
-                        integrator.sendMessage(finalMessage,correo,"Valor a cambiar");
+                        //integrator.sendMessage(finalMessage,correo,"Valor a cambiar"); ///*** MOSCA CON ESTO
+                        System.out.println(finalMessage + " destino " +  correo);
                     }
                 }
             }
@@ -48,6 +63,11 @@ public class CommandSendMessage extends Command {
         return null;
     }
 
+    /**
+     * Método para parsear el mensaje final a ser enviado.
+     * @param message Mensaje que contiene los valores a ser enviado.
+     * @return el String a ser enviado.
+     */
     private String parseMessage(Message message) {
         String text = _template.getMessage().getMessage();
         ArrayList<ParameterXML> params = message.get_param();
