@@ -44,6 +44,12 @@ public class CommandsFactory {
     public static TokenGeneratorCommand tokenGeneratorCommand ( String email) {
         return new TokenGeneratorCommand(email);
     }
+    public static FindByUsernameOrEmailCommand findByUsernameOrEmailCommand (String username) {
+        return new FindByUsernameOrEmailCommand(username);
+    }
+    public static ChangePasswordCommand changePasswordCommand (String username, String password) {
+        return  new ChangePasswordCommand(username, password);
+    }
 
     public static Entities.M08_Validation.XMLManagement.Command createScheduleMessage(VerifiedParameter verifiedParameters) {
         return new CommandScheduleMessage(verifiedParameters);

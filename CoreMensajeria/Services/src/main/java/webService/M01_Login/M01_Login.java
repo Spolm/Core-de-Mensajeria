@@ -4,14 +4,11 @@ import DTO.M01_DTO.DTOLogin;
 import Entities.Entity;
 import Entities.M01_Login.*;
 import Exceptions.UserBlockedException;
+import Logic.Command;
 import Logic.CommandsFactory;
-import Logic.M01_Login.IsBlockedUserCommand;
-import Logic.M01_Login.LogUserCommand;
-import Logic.M01_Login.TokenGeneratorCommand;
+import Logic.M01_Login.*;
 import Mappers.LoginMapper.LoginMapper;
 import Mappers.MapperFactory;
-import Persistence.M01_Login.DAOUser;
-import Persistence.M01_Login.DAOPrivilege;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -29,7 +26,6 @@ import java.util.logging.Logger;
 public class M01_Login {
 
     Gson _gson = new Gson();
-    DAOUser _userDAO = new DAOUser();
 
     /**
      * This method is the connection between front-end and back-end. Verifies that the input data matches with the data
@@ -151,14 +147,22 @@ public class M01_Login {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response changePassword( PasswordChange passwordChange){
         Error error;
+        FindByUsernameOrEmailCommand _command =
+                CommandsFactory.findByUsernameOrEmailCommand(passwordChange.get_username());
+
         User user;
         try {
-            user = _userDAO.findByUsernameOrEmail(passwordChange.get_username());
-            if(_userDAO.tokenGenerator(user.get_emailUser()).equals(passwordChange.get_token())){
+            _command.execute();
+            user = (User) _command.Return();//_userDAO.findByUsernameOrEmail(passwordChange.get_username());
+            TokenGeneratorCommand _cmd = CommandsFactory.tokenGeneratorCommand(user.get_emailUser());
+            _cmd.execute();
+            if(_cmd.returnString().equals(passwordChange.get_token())){
                 Logger logger = Logger.getLogger(getClass().getName());
                 logger.info("Password: " + passwordChange.get_newPassword());
+
                 if(passwordChange.get_newPassword().matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$")){
-                    _userDAO.changePassword(user.get_usernameUser(),passwordChange.get_newPassword());
+                    ChangePasswordCommand passCmd = CommandsFactory.changePasswordCommand(user.get_usernameUser(), passwordChange.get_newPassword());
+                    passCmd.execute();
                     return Response.ok(_gson.toJson("Clave cambiada exitosamente")).build();
                 } else{
                     error = new Error("La clave no es segura");
