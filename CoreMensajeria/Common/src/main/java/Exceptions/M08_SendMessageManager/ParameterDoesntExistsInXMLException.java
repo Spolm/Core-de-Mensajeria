@@ -3,10 +3,18 @@ package Exceptions.M08_SendMessageManager;
 import Exceptions.PersonalizedException;
 
 /**
- * Clase excepción hija de PersonalizedException
+ * Excepcion personalizada que se ejecuta cuando los parametros
+ * del mensaje no existen
+ *
+ * @see PersonalizedException
  */
 public class ParameterDoesntExistsInXMLException extends PersonalizedException {
 
-    public ParameterDoesntExistsInXMLException() { super(); }
+    /**
+     * Constructor vacio
+     */
+    public ParameterDoesntExistsInXMLException() {
+        super();
+    }
 
 }
