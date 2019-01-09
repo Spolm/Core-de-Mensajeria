@@ -7,6 +7,7 @@ import Exceptions.UserBlockedException;
 import Logic.CommandsFactory;
 import Logic.M01_Login.IsBlockedUserCommand;
 import Logic.M01_Login.LogUserCommand;
+import Logic.M01_Login.TokenGeneratorCommand;
 import Mappers.LoginMapper.LoginMapper;
 import Mappers.MapperFactory;
 import Persistence.M01_Login.DAOUser;
@@ -101,10 +102,12 @@ public class M01_Login {
     @Produces(MediaType.APPLICATION_JSON)
     public Response requestPassword(@QueryParam("email") String email){
         Error error;
+        TokenGeneratorCommand _command = CommandsFactory.tokenGeneratorCommand(email);
         try {
 
             if(email.matches("^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$")){
-                String token = _userDAO.tokenGenerator(email);
+                _command.execute();
+                String token = _command.returnString();
                 Logger logger = Logger.getLogger(getClass().getName());
                 logger.info("token: "+token);
                 MailSender.generateAndSendEmail(token,email);

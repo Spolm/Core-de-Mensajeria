@@ -6,6 +6,7 @@ import Entities.M01_Login.User;
 import Logic.Command;
 import Persistence.DAO;
 import Persistence.DAOFactory;
+import Persistence.IDAO;
 import Persistence.M01_Login.DAOUser;
 
 public class LogUserCommand extends Command {
@@ -26,7 +27,7 @@ public class LogUserCommand extends Command {
     @Override
     public void execute() throws Exception {
         try {
-            DAO _dao = DAOFactory.instanciateDaoUser();
+            IDAO _dao = DAOFactory.instanciateDaoUser();
             _use = ((DAOUser) _dao).logUser(_log.get_username(), _log.get_password());
 
         }

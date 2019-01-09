@@ -41,6 +41,9 @@ public class CommandsFactory {
     public static IsBlockedUserCommand isBlockedUserCommand (Entity log) {
         return new IsBlockedUserCommand(log);
     }
+    public static TokenGeneratorCommand tokenGeneratorCommand ( String email) {
+        return new TokenGeneratorCommand(email);
+    }
 
     public static Entities.M08_Validation.XMLManagement.Command createScheduleMessage(VerifiedParameter verifiedParameters) {
         return new CommandScheduleMessage(verifiedParameters);
