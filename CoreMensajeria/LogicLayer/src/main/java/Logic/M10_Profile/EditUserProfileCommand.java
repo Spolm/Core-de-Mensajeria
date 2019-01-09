@@ -7,11 +7,18 @@ import Persistence.IDAOProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * EditUserProfileCommand Class is the command responsible for having a user profile edited
+ */
 public class EditUserProfileCommand extends Command {
     private User user;
     private String r;
     final static Logger log = LogManager.getLogger("CoreMensajeria");
 
+    /**
+     * CTOR of EditUserProfileCommand
+     * @param user User to modify
+     */
     public EditUserProfileCommand(User user) {
         //region Instrumentation Debug
         log.debug("Entrando al constructor EditUserProfileCommand(" + user.toString() +")");
@@ -19,6 +26,10 @@ public class EditUserProfileCommand extends Command {
         this.user = user;
     }
 
+    /**
+     * Method that is responsible for sending the information to be edited by the user in the database
+     * @throws Exception
+     */
     @Override
     public void execute() throws Exception {
         DAOAbstractFactory factory = DAOAbstractFactory.getFactory();
@@ -35,8 +46,12 @@ public class EditUserProfileCommand extends Command {
         //endregion
     }
 
+    /**
+     * Method that returns the execution of the command
+     * @return
+     */
     @Override
-    public String Return() {
+    public Object Return() {
         return r;
     }
 }

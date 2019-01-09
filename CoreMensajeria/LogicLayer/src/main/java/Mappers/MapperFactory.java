@@ -113,6 +113,11 @@ public class MapperFactory {
     }
 
     //region M10
+
+    /**
+     * Method that instantiated a MapperEditUser object
+     * @return object MapperEditUser
+     */
     public static MapperEditUser createMapperEditUser(){return new MapperEditUser();}
     //endregion
 }

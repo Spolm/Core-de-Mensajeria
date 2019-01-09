@@ -345,16 +345,31 @@ public class CommandsFactory {
     //end region
 
     //region Commands M_10
-
+    /**
+     * Method that instantiates an object of type EditUserProfileCommand
+     * @param userId Id of the user
+     * @param companyId Id of the company
+     * @return object EditUserProfileCommand
+     */
     public static Command createGetPrivilegesByUserCompanyCommand(int userId, int companyId){
         return new GetPrivilegesByUserCompanyCommand(userId, companyId);
     }
 
+    /**
+     * Method that instantiates an object of type GetGeographicalRegionCommand
+     * @param id of the GeographicalRegion
+     * @return object GetGeographicalRegionCommand
+     */
     public static Command createGetGeographicalRegionCommand(int id){
         return new GetGeographicalRegionCommand(id);
     }
 
-    public static EditUserProfileCommand createEditUserProfileCommand(User user){
+    /**
+     * Method that instantiates an object of type EditUserProfileCommand
+     * @param user to modify
+     * @return object EditUserProfileCommand
+     */
+    public static Command createEditUserProfileCommand(User user){
         return new EditUserProfileCommand(user);
     }
 

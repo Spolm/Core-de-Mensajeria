@@ -16,6 +16,11 @@ public class GetPrivilegesByUserCompanyCommand extends Command {
     private ArrayList<Privilege> privileges;
     final static Logger log = LogManager.getLogger("CoreMensajeria");
 
+    /**
+     * CTOR of GetPrivilegesByUserCompanyCommand
+     * @param userId id of the user
+     * @param companyId id of the company
+     */
     public GetPrivilegesByUserCompanyCommand(int userId, int companyId){
         //region Instrumentation Debug
         log.debug("Entrando al constructor GetPrivilegesByUserCompanyCommand("+userId+","+companyId+")" );
@@ -24,6 +29,10 @@ public class GetPrivilegesByUserCompanyCommand extends Command {
         this.companyId = companyId;
     }
 
+    /**
+     * Method that is responsible for making the database search the desired privileges
+     * @throws Exception
+     */
     @Override
     public void execute() throws Exception {
         DAOAbstractFactory factory = DAOAbstractFactory.getFactory();
@@ -39,6 +48,10 @@ public class GetPrivilegesByUserCompanyCommand extends Command {
         //endregion
     }
 
+    /**
+     * Method that returns the execution of the command
+     * @return object ArrayList<Privilege>
+     */
     @Override
     public Object Return() {
         return privileges;
