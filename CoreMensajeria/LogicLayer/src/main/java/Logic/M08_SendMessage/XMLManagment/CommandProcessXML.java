@@ -4,10 +4,8 @@ import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.Message;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
-import Exceptions.M08_SendMessageManager.DateNotValidException;
-import Exceptions.M08_SendMessageManager.MissLengthXMLException;
-import Exceptions.M08_SendMessageManager.NullValueXMLException;
-import Exceptions.M08_SendMessageManager.NullXMLException;
+import Exceptions.M08_SendMessageManager.*;
+import Exceptions.TemplateNotApprovedException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import org.apache.logging.log4j.LogManager;
@@ -55,9 +53,10 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
      * @see CommandGetMessage
      *
      * @throws NullXMLException Si el XML esta vacio.
+     * @throws TemplateNotApprovedException la plantilla no esta aprobada.
      */
     @Override
-    public void execute() throws NullXMLException {
+    public void execute() throws NullXMLException, TemplateNotApprovedException {
         try {
             DocumentBuilder _dBuilder = _dbFactory.newDocumentBuilder();
             Document doc = _dBuilder.parse(_xmlFile);
@@ -73,8 +72,13 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
                     + " del método de return del comando GetTagValue" );
 
             if(_templateId != "") {
+                int idTemplate = Integer.valueOf(_templateId);
+                Command<Boolean> commandValidateTemplate =
+                        CommandsFactory.createCommandValidateTemplate(idTemplate);
+                commandValidateTemplate.execute();
+
                 Command<Template> _commandGetTemplate =
-                        CommandsFactory.createCommandGetTemplate(Integer.valueOf(_templateId));
+                        CommandsFactory.createCommandGetTemplate(idTemplate);
                 _commandGetTemplate.execute();
                 Template _template = _commandGetTemplate.Return();
                 log.info("Se ha ejecutado el comando GetTemplate" );
@@ -93,12 +97,12 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
                                 "revise la posición " + i + " del mensaje del archivo XML." );
                     }
                 }
-
+                for ( Message message : _messageList ){
+                    System.out.println(message.toString());
+                }
                 _verifiedParameters = new VerifiedParameter( _messageList, _template );
                 log.info("Se ha configurado la plantilla" );
 
-//                Command scheduleMessageCommand = CommandsFactory.createScheduleMessage(_verifiedParameters);
-//                scheduleMessageCommand.execute();
             } else{
                 log.error("El Id del temple es vacío" );
             }
@@ -118,7 +122,11 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
         } catch ( NumberFormatException e ){
             _verifiedParameters = null;
             log.error( "El Id de la plantilla es inválido, solo números enteros" );
-        } catch (Exception e){
+        }catch (TemplateNotApprovedException e) {
+            _verifiedParameters = null;
+            log.error( e.getMessage() );
+            throw new TemplateNotApprovedException();
+        }catch (Exception e){
             log.error("Error inesperado de tipo "
                     + e.getClass().getName() );
             _verifiedParameters = null;

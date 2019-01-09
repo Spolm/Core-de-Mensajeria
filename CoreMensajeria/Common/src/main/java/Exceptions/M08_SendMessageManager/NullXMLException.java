@@ -7,8 +7,6 @@ import Exceptions.PersonalizedException;
  */
 public class NullXMLException extends PersonalizedException {
 
-    public NullXMLException () { super(); }
-
     public NullXMLException(String message, Exception e) {
         super(message, e);
     }
