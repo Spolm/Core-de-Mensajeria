@@ -2,6 +2,8 @@ package Logic;
 
 import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
+import Entities.M01_Login.User;
+import Entities.M06_DataOrigin.AddApplicationData;
 import Logic.M04_Integrator.*;
 import Logic.M05_Channel.CommandGetAllChannels;
 import Entities.M02_Company.Company;
@@ -14,14 +16,19 @@ import Logic.M02_Company.AddCompanyCommand;
 import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
+import Logic.M10_Profile.EditUserProfileCommand;
 import Logic.M10_Profile.GetGeographicalRegionCommand;
 import Logic.M10_Profile.GetPrivilegesByUserCompanyCommand;
+import Logic.M10_Profile.GetResponsabilityByCompanyCommand;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import DTO.M07_Template.NewParameter;
+//import Logic.M01_Login.GetUser;
+import Logic.M06_DataOrigin.*;
+//import Logic.M08_SendMessage.CommandSendMessage;
 import Logic.M01_Login.GetUserCommand;
 import Logic.M08_Validation.*;
 import Logic.M07_Template.*;
@@ -41,8 +48,20 @@ public class CommandsFactory {
     public static GetAllUsersCommand createGetAllUsersCommand () {
         return new GetAllUsersCommand();
     }
-    public static LogUserCommand createLogUserCommand (Entity user) {
-        return new LogUserCommand(user);
+    public static LogUserCommand createLogUserCommand (Entity log) {
+        return new LogUserCommand(log);
+    }
+    public static IsBlockedUserCommand isBlockedUserCommand (Entity log) {
+        return new IsBlockedUserCommand(log);
+    }
+    public static TokenGeneratorCommand tokenGeneratorCommand ( String email) {
+        return new TokenGeneratorCommand(email);
+    }
+    public static FindByUsernameOrEmailCommand findByUsernameOrEmailCommand (String username) {
+        return new FindByUsernameOrEmailCommand(username);
+    }
+    public static ChangePasswordCommand changePasswordCommand (String username, String password) {
+        return  new ChangePasswordCommand(username, password);
     }
 
     public static Command createScheduleMessage(VerifiedParameter verifiedParameters) {
@@ -210,10 +229,10 @@ public class CommandsFactory {
                                               List<Integer> dayofweekIds, List<Integer> weekofyearIds, List<Integer> dayofmonthIds,
                                               List<Integer> dayofyearIds, List<Integer> hourofdayIds, List<Integer> minuteofhourIds,
                                               List<Integer> secondofminuteIds, List<Integer> quarterIds){return new GetStatisticCommand(companyIds, campaignIds, channelIds,
-                                                                                                                                                    integratorIds, yearIds, monthIds,
-                                                                                                                                                    dayofweekIds, weekofyearIds, dayofmonthIds,
-                                                                                                                                                    dayofyearIds, hourofdayIds, minuteofhourIds,
-                                                                                                                                                    secondofminuteIds, quarterIds);}
+            integratorIds, yearIds, monthIds,
+            dayofweekIds, weekofyearIds, dayofmonthIds,
+            dayofyearIds, hourofdayIds, minuteofhourIds,
+            secondofminuteIds, quarterIds);}
 
     //endregion
 
@@ -322,8 +341,8 @@ public class CommandsFactory {
      */
     public static CampaignUserCompanyCommand createCampaignUserCompany( Company _ca ){
 
-         return new CampaignUserCompanyCommand( _ca  );
-      }
+        return new CampaignUserCompanyCommand( _ca  );
+    }
 
 
     /**
@@ -337,7 +356,40 @@ public class CommandsFactory {
     //endregion
 
 
-    // region M04_Integrator
+    //region M06_Origin
+    public  static CreateApplicationCommand CreateApplication(AddApplicationData _app){
+
+        return new CreateApplicationCommand(_app);
+    }
+
+    public  static GetApplicationByIdCommand GetApplicationId(int _co){
+
+        return new GetApplicationByIdCommand(_co);
+    }
+
+    public  static GetApplicationByIdCompanyCommand GetApplicationCompanyId(int _co){
+
+        return new GetApplicationByIdCompanyCommand(_co);
+    }
+
+    public  static GetApplicationByTokenCommand GetApplicationToken(String _co){
+
+        return new GetApplicationByTokenCommand(_co);
+    }
+
+    public static GetApplicationCommand GetApplication(){
+
+        return  new GetApplicationCommand();
+    }
+
+    public static UpdateApplicationCommand UpdateApplication(int _id,int status){
+
+        return new UpdateApplicationCommand(_id,status);
+    }
+    //endregion
+
+
+    //M04_Integrator
     public static CommandDisableIntegrator createCommandDisableIntegrator(int id) {
         return new CommandDisableIntegrator(id);
     }
@@ -357,9 +409,13 @@ public class CommandsFactory {
     public static CommandGetIntegratorByChannel createCommandGetIntegratorByChannel(int id){
         return new CommandGetIntegratorByChannel(id);
     }
+    //end M04_Integrator
 
-    public static CommandGetAllChannels instanceGetAllChannels(){ return new CommandGetAllChannels(); }
-    //endregion
+    //M05_Channels
+    public static CommandGetAllChannels createCommandGetAllChannels(){
+        return new CommandGetAllChannels();
+    }
+    //end M05_Channels
 
     //M07_Templates
 
@@ -393,7 +449,7 @@ public class CommandsFactory {
 
     public static CommandUpdateTemplate createCommandUpdateTemplate(String json){
         return new CommandUpdateTemplate(json);
-}
+    }
 
     //region M_08
     public static Command createCommandGetTagValue(String tag, Element element){
@@ -436,15 +492,41 @@ public class CommandsFactory {
     //end region
 
     //region Commands M_10
-
+    /**
+     * Method that instantiates an object of type EditUserProfileCommand
+     * @param userId Id of the user
+     * @param companyId Id of the company
+     * @return object EditUserProfileCommand
+     */
     public static Command createGetPrivilegesByUserCompanyCommand(int userId, int companyId){
         return new GetPrivilegesByUserCompanyCommand(userId, companyId);
     }
 
+    /**
+     * Method that instantiates an object of type GetGeographicalRegionCommand
+     * @param id id of the GeographicalRegion
+     * @return object GetGeographicalRegionCommand
+     */
     public static Command createGetGeographicalRegionCommand(int id){
         return new GetGeographicalRegionCommand(id);
     }
 
-    //end region
+    /**
+     * Method that instantiates an object of type GetResponsabilityByCompanyCommand
+     * @param companyId id of the company
+     * @return object GetResponsabilityByCompanyCommand
+     */
+    public static Command createGetResponsabilityByCompanyCommand(int companyId) {
+        return new GetResponsabilityByCompanyCommand(companyId);
+    }
+    /**
+     * Method that instantiates an object of type EditUserProfileCommand
+     * @param user to modify
+     * @return object EditUserProfileCommand
+     */
+    public static Command createEditUserProfileCommand(User user){
+        return new EditUserProfileCommand(user);
+    }
+//endregion
 
 }

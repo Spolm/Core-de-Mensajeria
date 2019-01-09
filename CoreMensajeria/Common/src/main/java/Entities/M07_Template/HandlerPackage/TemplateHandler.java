@@ -99,28 +99,31 @@ public class TemplateHandler {
                 template.setChannels(getChannelsByTemplate(template.get_id()));
                 template.setCampaign(getCampaingByTemplate(template.get_id()));
                 ApplicationDAO applicationService = new ApplicationDAO();
-                template.setApplication(applicationService.getApplication
-                        (template.get_id()));
-                template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
-                templateArrayList.add(template);
-            }
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            Sql.bdClose(sql.getConn());
-            return templateArrayList;
-        }
-    }*/
+               /* template.setApplication(applicationService.getApplication
+                        (template.getTemplateId()));*/
+              //  template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
+               // template.setApplication(applicationService.getApplication
+               //         (template.get_id()));
+//                template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
+//                templateArrayList.add(template);
+//            }
+//        }catch (SQLException e) {
+//            e.printStackTrace();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }finally {
+//            Sql.bdClose(sql.getConn());
+//            return templateArrayList;
+//        }
+//    }*/
 
-    /**
-     * this method returns a template filtering
-     * by the id of the template that is desired.
-     * @param id template id
-     * @return template
-     * @throws TemplateDoesntExistsException
-     */
+//    /**
+//     * this method returns a template filtering
+//     * by the id of the template that is desired.
+//     * @param id template id
+//     * @return template
+//     * @throws TemplateDoesntExistsException
+//     */
    /* public Template getTemplate(int id) throws TemplateDoesntExistsException{
         CampaignDAO campaignsService = new CampaignDAO();
         Template template = new Template();
@@ -320,8 +323,8 @@ public class TemplateHandler {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             ApplicationDAO applicationService = new ApplicationDAO();
-            application = applicationService.getApplication
-                    (resultSet.getInt("applicationId"));
+           /* application = applicationService.getApplication
+                    (resultSet.getInt("applicationId")); */
         } catch (SQLException e){
             e.printStackTrace();
         } catch (Exception e){

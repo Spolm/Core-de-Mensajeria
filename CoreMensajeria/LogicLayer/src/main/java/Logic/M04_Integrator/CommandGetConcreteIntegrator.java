@@ -2,22 +2,18 @@ package Logic.M04_Integrator;
 
 import Entities.Entity;
 import Exceptions.DatabaseConnectionProblemException;
-import Exceptions.IntegratorNotFoundException;
+import Exceptions.M04_Integrator.IntegratorNotFoundException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M04_Integrator.IDAOIntegrator;
 
-import java.util.ArrayList;
-
 public class CommandGetConcreteIntegrator extends Command {
+    private Entity _entity;
+    private int _id;
 
-    private static  Entity _entity;
-    private static int _id;
-    /**
-     *
-     */
     public CommandGetConcreteIntegrator(int id) {
         this._id = id;
+        this._entity = null;
     }
 
     @Override

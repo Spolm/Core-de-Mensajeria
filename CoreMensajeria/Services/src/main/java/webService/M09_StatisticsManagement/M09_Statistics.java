@@ -5,7 +5,7 @@ import DTO.M09_DTO.DTOStatistic;
 import Entities.Entity;
 import Entities.M05_Channel.Channel;
 import Exceptions.CampaignDoesntExistsException;
-import Exceptions.ChannelNotFoundException;
+import Exceptions.M05_Channel.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
 import Exceptions.M09_Statistic.StatisticParametersNotFoundException;
 import Logic.Command;

@@ -2,7 +2,7 @@ package Persistence.M09_Statistics;
 
 import Entities.Entity;
 import Entities.M04_Integrator.Integrator;
-import Exceptions.ChannelNotFoundException;
+import Exceptions.M05_Channel.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
 
 import java.util.ArrayList;
