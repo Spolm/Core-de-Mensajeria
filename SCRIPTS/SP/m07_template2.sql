@@ -114,18 +114,6 @@ END;
 LANGUAGE plpgsql VOLATILE;
 -- select * from m07_getParametersByMessage(1);
 
---Funcion para borrar mensaje
-CREATE OR REPLACE FUNCTION m07_deletemessage(_messageid integer) returns void
-	language plpgsql
-as $$
-DECLARE
-BEGIN
-  EXECUTE format('DELETE from public.MESSAGE WHERE mes_id= %L', _messageID);
-END;
-$$;
-
-alter function m07_deletemessage(integer) owner to "CoreMensajeria";
-
 ---------------------------------------------------ParameterHandler-----------------------------------------------------
 
 --Funcion para el metodo PostPlanning
