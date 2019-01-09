@@ -1,6 +1,7 @@
 package Logic;
 
 import Entities.Entity;
+import Entities.M07_Template.JSONTemplate;
 import Logic.M01_Login.GetUser;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import org.w3c.dom.Element;
@@ -115,7 +116,7 @@ public class CommandsFactory {
         return new CommandPostTemplateStatus(templateId,userId);
     }
 
-    public static CommandPostTemplate createCommandPostTemplate(String json){
+    public static CommandPostTemplate createCommandPostTemplate(JSONTemplate json){
         return new CommandPostTemplate(json);
     }
 

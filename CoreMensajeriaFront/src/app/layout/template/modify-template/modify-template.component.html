@@ -154,7 +154,7 @@
               <ng-container *ngFor="let campaign of campaignsJson">
               <option *ngIf="campaign._statusCampaign == 1" [value]="campaign._idCampaign">
                 <p>
-                  <!-- {{application._nameApplication}} | {{application._descriptionApplication}} -->
+                  {{application._nameApplication}} | {{application._descriptionApplication}}
                 </p>
               </option>
             </ng-container>

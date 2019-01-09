@@ -236,7 +236,7 @@ VALUES(xtci_template_id,(select ci_id from public.channel_integrator as c where 
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;			
-DROP FUNCTION m07_postchannelintegrator(integer,integer,integer,integer);
+--DROP FUNCTION m07_postchannelintegrator(integer,integer,integer,integer);
 -- select * from m07_postChannelIntegrator(1,1,1,1);
 
 --Funcion para el metodo postTemplate parte 1 

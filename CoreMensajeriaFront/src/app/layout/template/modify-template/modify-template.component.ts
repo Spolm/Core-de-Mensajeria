@@ -29,6 +29,7 @@ export class ModifyTemplateComponent {
   campaignsJson: any = [];
   originOption = 'app';
   applicationId: number;
+  campaignId:number;
   formMessage = '';
   parameters: Array<string> = [];
   newParameters: Array<string> = [];
@@ -49,6 +50,7 @@ export class ModifyTemplateComponent {
     this.getCampaigns(Number(this.companyId));
     this.getTemplate();    
     this.getPrivileges(this.userId, Number(this.companyId));
+    console.log(this.campaignsJson);
   }
 
   async getPrivileges(userId: string, companyId: number) {
@@ -101,6 +103,7 @@ export class ModifyTemplateComponent {
     this.templateService.getCampaigns(company).subscribe(data => {
       this.campaignsJson = data;
     });
+    console.log(this.campaignsJson);
   }
 
   async getTemplate() {
@@ -208,7 +211,7 @@ export class ModifyTemplateComponent {
           if (this.formMessage != '') {
               if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
                   if (this.channels_integrators[0]) {
-                      this.templateService.updateTemplate(this.templateId, this.formMessage, this.parameters, this.newParameters, Number(this.companyId), this.channels_integrators,this.applicationId, planning);
+                      this.templateService.updateTemplate(this.templateId, this.formMessage, this.parameters, this.newParameters, Number(this.companyId), this.channels_integrators, this.campaignId ,this.applicationId, planning);
                   } else {
                       this.toastr.error('Falta llenar un campo', 'Error',
                           {

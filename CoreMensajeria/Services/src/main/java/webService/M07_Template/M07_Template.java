@@ -5,6 +5,7 @@ import Entities.Entity;
 import Entities.M01_Login.Privilege;
 import Entities.M07_Template.HandlerPackage.StatusHandler;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
+import Entities.M07_Template.JSONTemplate;
 import Entities.M07_Template.Template;
 import Exceptions.M07_Template.InvalidParameterException;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
@@ -268,7 +269,7 @@ public class M07_Template {
     @POST
     @Path("add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postTemplate(String json){
+    public Response postTemplate(JSONTemplate json){
         //region Instrumentation Debug
         log.debug("Entrando a el metodo postTemplate("+json+")" );
         //endregion
