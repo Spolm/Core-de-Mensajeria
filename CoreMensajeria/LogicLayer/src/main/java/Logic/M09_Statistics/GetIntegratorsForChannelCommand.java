@@ -2,7 +2,7 @@ package Logic.M09_Statistics;
 
 import Entities.Entity;
 import Entities.M04_Integrator.Integrator;
-import Exceptions.ChannelNotFoundException;
+import Exceptions.M05_Channel.ChannelNotFoundException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M09_Statistics.DAOStatistic;

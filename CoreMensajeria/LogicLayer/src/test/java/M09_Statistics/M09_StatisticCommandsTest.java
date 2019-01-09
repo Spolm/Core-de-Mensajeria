@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class M09_StatisticCommandsTest {
 
-  /*  private Entity entity;
+    private Entity entity;
 
     @BeforeEach
     void setUp(){}

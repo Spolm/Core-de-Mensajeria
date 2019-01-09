@@ -3,7 +3,7 @@ package M09_Statistics;
 import Entities.Entity;
 import Entities.M02_Company.Company;
 import Entities.M04_Integrator.Integrator;
-import Exceptions.ChannelNotFoundException;
+import Exceptions.M05_Channel.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
 import Persistence.DAOFactory;
 import Persistence.M09_Statistics.DAOStatistic;
