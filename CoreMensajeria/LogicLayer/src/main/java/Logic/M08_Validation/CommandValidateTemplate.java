@@ -24,6 +24,7 @@ public class CommandValidateTemplate extends CommandValidateParameter {
     }
 
     /**
+     * Realiza todas las validaciones a una plantilla
      * @throws TemplateDoesntExistsException cuando no existe la plantilla que se está buscando
      */
     public void execute() throws Exception {

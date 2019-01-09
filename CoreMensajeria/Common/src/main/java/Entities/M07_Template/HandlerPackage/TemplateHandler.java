@@ -251,18 +251,20 @@ public class TemplateHandler {
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 ArrayList<Integrator> integrators = new ArrayList<>();
-          //      IntegratorDAO integratorDAO = new IntegratorDAO();
-           //     Integrator integrator = integratorDAO.getConcreteIntegrator(
-            //            resultSet.getInt("ci_integrator_id")
-              //  );
-             //   integrators.add(integrator);
-              //  Channel channel = new ChannelFactory().getChannel(
-            //            resultSet.getInt("ci_channel_id"),
-            //            resultSet.getString("cha_name"),
-            //            resultSet.getString("cha_description"),
-            //            integrators
-            //    );
-            //    channels.add(channel);
+                /*
+                IntegratorDAO integratorDAO = new IntegratorDAO();
+                Integrator integrator = integratorDAO.getConcreteIntegrator(
+                        resultSet.getInt("ci_integrator_id")
+                );
+                integrators.add(integrator);
+                Channel channel = new ChannelFactory().getChannel(
+                        resultSet.getInt("ci_channel_id"),
+                        resultSet.getString("cha_name"),
+                        resultSet.getString("cha_description"),
+                        integrators
+                );
+                channels.add(channel);
+                */
             }
 
         } catch (SQLException e) {
