@@ -82,12 +82,14 @@ public class WatchDirectory implements Runnable{
                             VerifiedParameter verifiedParameter = _commandProcessXML.Return();
                             log.debug("Inicio del proceamiento para el envío del mensaje" );
                             if( verifiedParameter != null) {
-                                Command _commandSendMsg = CommandsFactory.createScheduleMessage(verifiedParameter);
+                                Command _commandSendMsg = CommandsFactory.createScheduleMessage( verifiedParameter );
                                 _commandSendMsg.execute();
                                 log.info("Se ha planificado el mensaje." );
                             }
-                        } catch (NullXMLException e) {
-                            log.error(e.getMessage());
+                        } catch ( NullXMLException e ) {
+                            log.error( e.getMessage() );
+                        } catch ( DateNotValidException e ){
+                            log.error( e.getMessage() );
                         }
                     }
                 }
