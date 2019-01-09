@@ -53,8 +53,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     final String UPDATE_TEMPLATE_WITH_APP = "{CALL m07_updatetemplate(?,?,?)}";
     final String UPDATE_TEMPLATE_WITHOUT_APP = "{CALL m07_updatetemplate2(?,?)}";
     final String CREATE_CHANNEL_INTEGRATOR = "{CALL m07_postChannelIntegrator(?,?,?)}";
-    private static String DELETE = "{CALL m07_deletetemplate(?)}";
-    private static final String DELETE_CHANNEL_INTEGRATOR = "{CALL m07_deleteChannelIntegrator(?)}";
+    final String DELETE = "{CALL m07_deletetemplate(?)}";
+    final String DELETE_CHANNEL_INTEGRATOR = "{CALL m07_deleteChannelIntegrator(?)}";
 
     @Override
     public void create(Entity e) {
