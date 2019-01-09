@@ -2,7 +2,10 @@ package M07_Template;
 
 
 import Entities.Entity;
+import Entities.M01_Login.Privilege;
 import Entities.M03_Campaign.Campaign;
+import Entities.M05_Channel.Channel;
+import Entities.M06_DataOrigin.Application;
 import Entities.M07_Template.Template;
 import Entities.Registry;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
@@ -18,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
 
 import java.io.Console;
+import java.nio.channels.Channels;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -29,8 +33,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class TemplateDAOTest {
     private static String json;
     private static Template _template;
-    private static Connection _conn;
-    private static String DELETE = "{CALL m07_deletetemplate(?)}";
     private static DAOTemplate _daoTemplate = DAOFactory.instaciateDaoTemplate();
 
     @BeforeAll
@@ -75,6 +77,18 @@ class TemplateDAOTest {
     }
 
     @Test
+    public void postTemplateTest(){
+        try {
+            int _templateId = _daoTemplate.postTemplate(1,1,1);
+            _daoTemplate.deleteTemplate( _templateId );
+            assertTrue(_templateId > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
+        }
+    }
+
+    @Test
     public void updateTemplateDataTest(){
         try{
             _template = (Template) _daoTemplate.postTemplateData(json);
@@ -113,6 +127,21 @@ class TemplateDAOTest {
     }
 
     @Test
+    public void updateTemplateTest(){
+        try {
+            _template = (Template) _daoTemplate.postTemplateData(json);
+            _daoTemplate.updateTemplate(2,1,_template.get_id());
+            _template = (Template)_daoTemplate.get(_template.get_id());
+            _daoTemplate.deleteTemplate(_template.get_id());
+
+            assertEquals(2,_template.getCampaign().get_idCampaign());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
+        }
+    }
+
+    @Test
     public void getTest(){
         try {
             _template = (Template) _daoTemplate.postTemplateData(json);
@@ -131,9 +160,23 @@ class TemplateDAOTest {
     }
 
     @Test
+    public void templateDoesntExistsExceptionTest(){
+        try {
+            assertThrows(TemplateDoesntExistsException.class, () -> {
+                _daoTemplate.get(100000);
+            });
+        } catch ( Exception e) {
+            e.printStackTrace();
+            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
+        }
+    }
+
+    @Test
     public void getAllTest(){
         try {
+            _template = (Template) _daoTemplate.postTemplateData(json);
             ArrayList<Entity> list = DAOFactory.instaciateDaoTemplate().getAll();
+            _daoTemplate.deleteTemplate(_template.get_id());
             assertTrue(list.size()>=1);
         } catch (MessageDoesntExistsException e) {
             e.printStackTrace();
@@ -165,6 +208,71 @@ class TemplateDAOTest {
             ArrayList<Template> _t = _daoTemplate.getTemplatesByCampaign(3, 1);
             _daoTemplate.deleteTemplate(_template.get_id());
             assertTrue(_t.size()>=1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
+        }
+    }
+
+    @Test
+    public void getApplicationByTemplateTest(){
+        try {
+            _template = (Template) _daoTemplate.postTemplateData(json);
+            Application _app = _daoTemplate.getApplicationByTemplate(_template.get_id());
+            _daoTemplate.deleteTemplate(_template.get_id());
+            assertEquals(1,_app.get_idApplication());
+        } catch (Exception e) {
+            e.printStackTrace();
+            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
+        }
+    }
+
+    @Test
+    public void getChannelsByTemplateTest(){
+        try {
+            _template = (Template) _daoTemplate.postTemplateData(json);
+            ArrayList<Channel> _c = _daoTemplate.getChannelsByTemplate(_template.get_id());
+            _daoTemplate.deleteTemplate(_template.get_id());
+            assertTrue(_c.size() > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
+        }
+    }
+
+    @Test
+    public void getTemplatePrivilegesByUserTest(){
+        try {
+            _template = (Template) _daoTemplate.postTemplateData(json);
+            ArrayList<Privilege> _p = _daoTemplate.getTemplatePrivilegesByUser(3,1);
+            _daoTemplate.deleteTemplate(_template.get_id());
+            assertTrue(_p.size() > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
+        }
+    }
+
+    @Test
+    public void getCampaignsByUserOrCompanyTest(){
+        try {
+            _template = (Template) _daoTemplate.postTemplateData(json);
+            ArrayList<Campaign> _c = _daoTemplate.getCampaignsByUserOrCompany(3,1);
+            _daoTemplate.deleteTemplate(_template.get_id());
+            assertTrue(_c.size() > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
+        }
+    }
+
+    @Test
+    public void postChannelIntegratorTest(){
+        try {
+            _template = (Template) _daoTemplate.postTemplateData(json);
+            ArrayList<Campaign> _c = _daoTemplate.getCampaignsByUserOrCompany(3,1);
+            _daoTemplate.deleteTemplate(_template.get_id());
+            assertTrue(_c.size() > 0);
         } catch (Exception e) {
             e.printStackTrace();
             //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );

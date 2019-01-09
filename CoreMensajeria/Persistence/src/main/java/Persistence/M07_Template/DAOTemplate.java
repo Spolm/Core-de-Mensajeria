@@ -48,8 +48,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     final String GET_PRIVILEGES_TEMPLATE = "{call m07_select_privileges_by_user_company(?,?)}";
     final String UPDATE_TEMPLATE_WITH_APP = "{CALL m07_updatetemplate(?,?,?)}";
     final String UPDATE_TEMPLATE_WITHOUT_APP = "{CALL m07_updatetemplate2(?,?)}";
+    final String CREATE_CHANNEL_INTEGRATOR = "{CALL m07_postChannelIntegrator(?,?,?)}";
     private static String DELETE = "{CALL m07_deletetemplate(?)}";
-    private static final String GET_CAMAPIGN_BY_ID = "select* from public.campaign where cam_id = ? "; //Cambiar por SP
+    private static final String DELETE_CHANNEL_INTEGRATOR = "{CALL m07_deleteChannelIntegrator(?)}";
 
     @Override
     public void create(Entity e) {
@@ -195,8 +196,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
             if(_rs.next()){
                 _t = this.createTemplate(_rs);
+            }else{
+                throw new TemplateDoesntExistsException("Error: la plantilla " + templateId + " no existe");
             }
-
 
         }
         catch (SQLException ex){
@@ -205,6 +207,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
                     ("Error: la plantilla " + templateId + " no existe", ex, templateId);
         } catch ( MessageDoesntExistsException ex ){
             ex.printStackTrace();
+            throw new MessageDoesntExistsException();
         } catch ( ParameterDoesntExistsException ex ){
             ex.printStackTrace();
         }
@@ -292,7 +295,6 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         ArrayList<Template> templateArrayList = new ArrayList<>();
         ArrayList<Campaign> campaignArrayList = new ArrayList<>();
         Connection _conn = this.getBdConnect();
-        UserDAO userDAO = new UserDAO();
         try{
             campaignArrayList = this.getCampaignsByUserOrCompany(userId,companyId);
             for(int x = 0; x < campaignArrayList.size(); x++){
@@ -417,35 +419,6 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         return privileges;
     }
 
-    /**
-     *
-     * @param campaignId
-     * @return
-     */
-    public Campaign getCampaignsById(int campaignId){
-        Campaign campaign =  new Campaign();
-        Connection _conn = this.getBdConnect();
-        try{
-            PreparedStatement preparedStatement = _conn.prepareStatement(GET_CAMAPIGN_BY_ID);
-            preparedStatement.setInt(1,campaignId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                campaign.set_idCampaign(resultSet.getInt("cam_id"));
-                campaign.set_nameCampaign(resultSet.getString("cam_name"));
-                campaign.set_descCampaign(resultSet.getString("cam_description"));
-                campaign.set_statusCampaign(resultSet.getBoolean("cam_status"));
-                campaign.set_startCampaign(resultSet.getDate("cam_start_date"));
-                campaign.set_endCampaign(resultSet.getDate("cam_end_date"));
-            }
-        } catch(SQLException e){
-            e.printStackTrace();
-        } catch (Exception e){
-            e.printStackTrace();
-        } finally {
-            this.closeConnection();
-            return campaign;
-        }
-    }
 
     public ArrayList<Campaign> getCampaignsByUserOrCompany(int userId, int companyId){
         ArrayList<Campaign> campaignArrayList = new ArrayList<>();
@@ -490,28 +463,29 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * @param templateId
      */
     private void postChannelIntegrator(JsonArray channelIntegratorList, int templateId) {
-        String query= "";
         JsonObject channelIntegrator;
         int channel;
         int integrator;
-        Sql sql = new Sql();
+        Connection _conn = this.getBdConnect();
+        PreparedStatement _ps = null;
         try {
             for (JsonElement list : channelIntegratorList){
                 channelIntegrator = list.getAsJsonObject();
                 channel = channelIntegrator.get("channel").getAsJsonObject().get("idChannel").getAsInt();
                 integrator = channelIntegrator.get("integrator").getAsJsonObject().get("idIntegrator").getAsInt();
+                _ps = _conn.prepareCall(CREATE_CHANNEL_INTEGRATOR);
+                _ps.setInt(1,templateId);
+                _ps.setInt(2,channel);
+                _ps.setInt(3,integrator);
 
-                query = query + "insert into public.template_channel_integrator (tci_template_id,tci_ci_id) " +
-                        "values (" + templateId + ",(select ci_id from public.channel_integrator " +
-                        "where ci_channel_id = " + channel + " and ci_integrator_id = " + integrator +"));";
+                _ps.execute();
             }
-            sql.sqlNoReturn(query);
         }catch (SQLException e) {
             e.printStackTrace();
         }catch(Exception e){
             e.printStackTrace();
         } finally {
-            Sql.bdClose(sql.getConn());
+            this.closeConnection();
         }
     }
 
@@ -618,18 +592,19 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * @param templateId
      */
     private void updateChannelIntegrator(JsonArray channelIntegratorList, int templateId) {
-        Sql sql = new Sql();
-        String query = "DELETE FROM public.template_channel_integrator\n" +
-                "WHERE tci_template_id = " + templateId;
+        Connection _conn = this.getBdConnect();
+        PreparedStatement _ps = null;
         try{
-            sql.sqlNoReturn(query);
+            _ps = _conn.prepareCall(DELETE_CHANNEL_INTEGRATOR);
+            _ps.setInt(1,templateId);
+            _ps.execute();
             postChannelIntegrator(channelIntegratorList,templateId);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch(Exception e){
             e.printStackTrace();
         } finally {
-            Sql.bdClose(sql.getConn());
+            this.closeConnection();
         }
     }
 
