@@ -84,13 +84,12 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
             PreparedStatement preparedStatement = _conn.prepareCall(SELECT_CONCRETE_INTEGRATOR);
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
-            result.next();
-            _integrator = extractIntegrator(result);
-            if(_integrator == null){
+            if(result.next()) {
+                return extractIntegrator(result);
+            }
+            else {
                 throw new IntegratorNotFoundException("El integrador no existe.");
             }
-
-            return _integrator;
         }
         catch (SQLException exc) {
             throw new DatabaseConnectionProblemException("Error al obtener integrador.", exc);

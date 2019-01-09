@@ -4,6 +4,7 @@ import DTO.DTO;
 
 public class DTOIntegrator extends DTO {
 
+    private String integratorType;
     private int threadCapacity;
     private float messageCost;
     private String nameIntegrator;
@@ -19,7 +20,7 @@ public class DTOIntegrator extends DTO {
      * @param apiIntegrator
      * @param enabled
      */
-    public DTOIntegrator(int threadCapacity, float messageCost, String nameIntegrator,
+    public DTOIntegrator(String integratorType, int threadCapacity, float messageCost, String nameIntegrator,
                          String apiIntegrator, boolean enabled) {
 
         this.threadCapacity = threadCapacity;
@@ -27,6 +28,7 @@ public class DTOIntegrator extends DTO {
         this.nameIntegrator = nameIntegrator;
         this.apiIntegrator = apiIntegrator;
         this.enabled = enabled;
+        this.integratorType = integratorType;
     }
 
     /**
@@ -76,5 +78,13 @@ public class DTOIntegrator extends DTO {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getIntegratorType() {
+        return integratorType;
+    }
+
+    public void setIntegratorType(String integratorType) {
+        this.integratorType = integratorType;
     }
 }

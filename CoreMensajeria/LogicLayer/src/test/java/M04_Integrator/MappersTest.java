@@ -20,16 +20,12 @@ public class MappersTest {
     private static Integrator _integrator;
     private static DTOIntegrator _dtoIntegrator;
 
- //   private static MapperChannel _mapper;
-  // private static Channel _channel;
-   // private static DTOChannel _dtoChannel;
-
     @BeforeEach
     public void init() {
         _mapper = new MapperIntegrator();
         _integrator = new Movistar(1,25,13.4f,"Movistar",
                 "oqiwueyeiu", true);
-        _dtoIntegrator = new DTOIntegrator(25, 13.4f, "Movistar",
+        _dtoIntegrator = new DTOIntegrator("MOVISTAR",25, 13.4f, "Movistar",
                 "oqiwueyeiu", true);
     }
 
@@ -39,21 +35,18 @@ public class MappersTest {
         DTOIntegrator dtoIntegrator = _mapper.CreateDto(_integrator);
         assertNotNull(dtoIntegrator);
         assertEquals("Movistar",dtoIntegrator.getNameIntegrator());
-//        assertEquals(13.4f,dtoIntegrator.getMessageCost());
         assertEquals(25,dtoIntegrator.getThreadCapacity());
         assertEquals("oqiwueyeiu",dtoIntegrator.getApiIntegrator());
-        assertEquals(true,dtoIntegrator.isEnabled());
+        assertTrue(dtoIntegrator.isEnabled());
     }
 
     @Test
     public void CreateEntityTest(){
-
         Integrator movistar = (Integrator) _mapper.CreateEntity(_dtoIntegrator);
         assertNotNull(movistar);
-        assertEquals(1, movistar.get_id());
-        assertEquals("MOVISTAR", movistar.getNameIntegrator());
+        assertEquals(-1, movistar.get_id());
+        assertEquals("Movistar", movistar.getNameIntegrator());
         assertEquals("oqiwueyeiu", movistar.getApiIntegrator());
-        //assertEquals(13.4f, movistar.getMessageCost());
         assertEquals(25, movistar.getThreadCapacity());
         assertTrue(movistar.isEnabled());
     }
@@ -63,7 +56,6 @@ public class MappersTest {
         ArrayList<DTOIntegrator> dtoIntegratorList = new ArrayList<>();
         dtoIntegratorList.add(_dtoIntegrator);
         assertNotNull(_mapper.CreateEntityList(dtoIntegratorList));
-
     }
 
     @Test

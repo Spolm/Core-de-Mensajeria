@@ -202,9 +202,9 @@ public class DTOFactory {
 
 
 // M04_region
-    public static DTOIntegrator CreateDTOIntegrator (int threadCapacity, float messageCost,
+    public static DTOIntegrator CreateDTOIntegrator (String integratorType, int threadCapacity, float messageCost,
                                                      String nameIntegrator, String apiIntegrator, boolean enabled){
-        return new DTOIntegrator(threadCapacity,messageCost,nameIntegrator,apiIntegrator,enabled);
+        return new DTOIntegrator(integratorType, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
     }
 
     public static DTOChannel createDTOChannel (String nameChannel, String descriptionChannel, ArrayList<Entity> integrators){

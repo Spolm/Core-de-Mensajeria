@@ -12,7 +12,6 @@ import Entities.Entity;
  */
 
 public abstract class Integrator  extends Entity /*implements IIntegrator*/{
-    private int idIntegrator;
     private int threadCapacity;
     private float messageCost;
     private String nameIntegrator;
@@ -32,20 +31,12 @@ public abstract class Integrator  extends Entity /*implements IIntegrator*/{
      */
 
     public Integrator(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator, boolean enabled) {
-        this.idIntegrator = idIntegrator;
+        this.set_id(idIntegrator);
         this.threadCapacity = threadCapacity;
         this.messageCost = messageCost;
         this.nameIntegrator = nameIntegrator;
         this.apiIntegrator = apiIntegrator;
         this.enabled = enabled;
-    }
-
-    public int getIdIntegrator() {
-        return idIntegrator;
-    }
-
-    public void setIdIntegrator(int idIntegrator) {
-        this.idIntegrator = idIntegrator;
     }
 
     public int getThreadCapacity() {
@@ -97,7 +88,7 @@ public abstract class Integrator  extends Entity /*implements IIntegrator*/{
     @Override
     public String toString() {
         return "Integrator{" +
-                "idIntegrator=" + idIntegrator +
+                "idIntegrator=" + get_id() +
                 ", threadCapacity=" + threadCapacity +
                 ", messageCost=" + messageCost +
                 ", nameIntegrator='" + nameIntegrator + '\'' +
