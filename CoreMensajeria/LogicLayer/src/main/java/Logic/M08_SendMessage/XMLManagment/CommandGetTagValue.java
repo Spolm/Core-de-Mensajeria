@@ -36,7 +36,8 @@ public class CommandGetTagValue extends Command<String> {
      * @throws NullValueXMLException si alguna etiqueta dentro
      * del XML no encuentra su valor o es ta vacio.
      * @throws UnexpectedErrorException si existe un error no esperado.
-     * @throws NullValueXMLException si
+     * @throws NullValueXMLException si existen valores vacios o nulos
+     * dentro del archivo XML.
      */
     @Override
     public void execute() throws NullValueXMLException, UnexpectedErrorException {
