@@ -345,6 +345,21 @@ $$;
 
 alter function m07_deletetemplate(integer) owner to "CoreMensajeria";
 
+--Fucion para el metodo channelintegrator
+CREATE OR REPLACE FUNCTION m07_deletechannelintegrator(_templateid integer) returns void
+	language plpgsql
+as $$
+BEGIN
+  DELETE FROM public.template_channel_integrator
+  WHERE tci_template_id =  _templateId;
+
+END;
+$$;
+
+alter function m07_deletechannelintegrator(integer) owner to "CoreMensajeria";
+
+
+
 
 
 
