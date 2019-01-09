@@ -20,6 +20,11 @@ public class User extends Entity {
     private String _cityUser;
     private Integer _blockedUser;
     private Integer _remainingAttemptsUser;
+    private String _nameUser;
+    private String _lastnameUser;
+    private Integer _identificationNumberUser;
+    private Integer _rgUser;
+    private String _bdUser;
 
         public User(int _idUser, String _passwordUser, String _usernameUser, int _typeUser, String _emailUser, String _phoneUser, Date _dayOfBirthUser, String _countryUser, String _addressUser, String _genreUser, String _cityUser) {
         this._idUser = _idUser;
@@ -33,6 +38,25 @@ public class User extends Entity {
         this._addressUser = _addressUser;
         this._genderUser = _genreUser;
         this._cityUser = _cityUser;
+    }
+
+    public User(int _idUser, String _passwordUser, String _usernameUser, int _typeUser, String _emailUser, String _phoneUser, Date _dateOfBirthUser, String _countryUser, String _addressUser, String _genderUser, String _cityUser, String _nameUser, String _lastnameUser, Integer _identificationNumberUser, Integer _rgUser, String _bdUser) {
+        this._idUser = _idUser;
+        this._passwordUser = _passwordUser;
+        this._usernameUser = _usernameUser;
+        this._typeUser = _typeUser;
+        this._emailUser = _emailUser;
+        this._phoneUser = _phoneUser;
+        this._dateOfBirthUser = _dateOfBirthUser;
+        this._countryUser = _countryUser;
+        this._addressUser = _addressUser;
+        this._genderUser = _genderUser;
+        this._cityUser = _cityUser;
+        this._nameUser = _nameUser;
+        this._lastnameUser = _lastnameUser;
+        this._identificationNumberUser = _identificationNumberUser;
+        this._rgUser = _rgUser;
+        this._bdUser = _bdUser;
     }
 
     public User() {
@@ -163,5 +187,45 @@ public class User extends Entity {
 
     public void set_remainingAttemptsUser(Integer _remainingAttemptsUser) {
         this._remainingAttemptsUser = _remainingAttemptsUser;
+    }
+
+    public String get_nameUser() {
+        return _nameUser;
+    }
+
+    public void set_nameUser(String _nameUser) {
+        this._nameUser = _nameUser;
+    }
+
+    public String get_lastnameUser() {
+        return _lastnameUser;
+    }
+
+    public void set_lastnameUser(String _lastnameUser) {
+        this._lastnameUser = _lastnameUser;
+    }
+
+    public Integer get_identificationNumberUser() {
+        return _identificationNumberUser;
+    }
+
+    public void set_identificationNumberUser(Integer _identificationNumberUser) {
+        this._identificationNumberUser = _identificationNumberUser;
+    }
+
+    public Integer get_rgUser() {
+        return _rgUser;
+    }
+
+    public void set_rgUser(Integer _rgUser) {
+        this._rgUser = _rgUser;
+    }
+
+    public String get_bdUser() {
+        return _bdUser;
+    }
+
+    public void set_bdUser(String _bdUser) {
+        this._bdUser = _bdUser;
     }
 }

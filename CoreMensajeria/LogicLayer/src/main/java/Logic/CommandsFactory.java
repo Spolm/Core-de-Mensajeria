@@ -2,6 +2,7 @@ package Logic;
 
 import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
+import Entities.M01_Login.User;
 import Logic.M04_Integrator.*;
 import Logic.M05_Channel.CommandGetAllChannels;
 import Entities.M02_Company.Company;
@@ -14,6 +15,7 @@ import Logic.M02_Company.AddCompanyCommand;
 import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
+import Logic.M10_Profile.EditUserProfileCommand;
 import Logic.M10_Profile.GetGeographicalRegionCommand;
 import Logic.M10_Profile.GetPrivilegesByUserCompanyCommand;
 import Logic.M10_Profile.GetResponsabilityByCompanyCommand;
@@ -211,10 +213,10 @@ public class CommandsFactory {
                                               List<Integer> dayofweekIds, List<Integer> weekofyearIds, List<Integer> dayofmonthIds,
                                               List<Integer> dayofyearIds, List<Integer> hourofdayIds, List<Integer> minuteofhourIds,
                                               List<Integer> secondofminuteIds, List<Integer> quarterIds){return new GetStatisticCommand(companyIds, campaignIds, channelIds,
-                                                                                                                                                    integratorIds, yearIds, monthIds,
-                                                                                                                                                    dayofweekIds, weekofyearIds, dayofmonthIds,
-                                                                                                                                                    dayofyearIds, hourofdayIds, minuteofhourIds,
-                                                                                                                                                    secondofminuteIds, quarterIds);}
+            integratorIds, yearIds, monthIds,
+            dayofweekIds, weekofyearIds, dayofmonthIds,
+            dayofyearIds, hourofdayIds, minuteofhourIds,
+            secondofminuteIds, quarterIds);}
 
     //endregion
 
@@ -237,8 +239,8 @@ public class CommandsFactory {
     public static GetCampaignCommand createGetCampaignCommand(Campaign _ca ){ return new GetCampaignCommand( _ca ); }
     public static CampaignUserCommand createCampaignUserCommand(Company _ca ){ return new CampaignUserCommand( _ca ); }
     public static CampaignUserCompanyCommand createCampaignUserCompany( Company _ca ){
-         return new CampaignUserCompanyCommand( _ca  );
-      }
+        return new CampaignUserCompanyCommand( _ca  );
+    }
     public static ChangeStatusCampaignCommand createChangeStatusCampaign( Campaign _ca ){
         return new ChangeStatusCampaignCommand( _ca );
     }
@@ -301,7 +303,7 @@ public class CommandsFactory {
 
     public static CommandUpdateTemplate createCommandUpdateTemplate(String json){
         return new CommandUpdateTemplate(json);
-}
+    }
 
     //region M_08
     public static Command createCommandGetTagValue(String tag, Element element){
@@ -353,8 +355,12 @@ public class CommandsFactory {
         return new GetGeographicalRegionCommand(id);
     }
 
-    public static Command createGetResponsabilityByCompanyCommand(int companyId){
+    public static Command createGetResponsabilityByCompanyCommand(int companyId) {
         return new GetResponsabilityByCompanyCommand(companyId);
+    }
+
+    public static EditUserProfileCommand createEditUserProfileCommand(User user){
+        return new EditUserProfileCommand(user);
     }
 
     //end region
