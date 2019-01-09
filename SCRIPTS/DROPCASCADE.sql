@@ -86,3 +86,9 @@ drop function m01_changepassword(varchar, varchar);
 drop function m01_findbyusernameid(integer);
 
 drop function m01_deleteuser(integer);
+
+drop function m10_select_privileges_by_user_company(integer,integer);
+
+drop function m10_select_geographical_region(integer)
+
+

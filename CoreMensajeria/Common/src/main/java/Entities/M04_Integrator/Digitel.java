@@ -9,7 +9,7 @@ package Entities.M04_Integrator;
  * @author José Cedeño
  * @see Integrator
  */
-public class Digitel extends Integrator {
+public class Digitel extends Integrator implements IIntegrator{
 
     /**
      * Constructor de la clase Digitel
@@ -23,7 +23,8 @@ public class Digitel extends Integrator {
      * @see Integrator
      */
 
-    public Digitel(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator, boolean enabled) {
+    public Digitel(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator,
+                   boolean enabled) {
         super(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
     }
 

@@ -1,9 +1,12 @@
 package webService.M04_Integrator;
 
+
+import DTO.M04_Integrator.DTOIntegrator;
 import Entities.M04_Integrator.Integrator;
-import Entities.M04_Integrator.IntegratorDAO;
-import Exceptions.DatabaseConnectionProblemException;
-import Exceptions.IntegratorNotFoundException;
+import Logic.CommandsFactory;
+import Logic.M04_Integrator.*;
+import Mappers.M04_Integrator.MapperIntegrator;
+import Mappers.MapperFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -15,15 +18,17 @@ import java.util.ArrayList;
  * Clase que implementa los métodos PUT y GET para el funcionamiento
  * del servicio RESTful referido a los integradores del sistema.
  *
- * @author José Salas
- * @author Manuel Espinoza
- * @author José Cedeño
+ * @author Kevin Martinez
+ * @author Alexander Fernnadez
+ * @author Braulio Picon
  */
 
 @Path("/integrators")
 public class M04_Integrator {
 
-    private IntegratorDAO _integratorDAO = new IntegratorDAO();
+    MapperIntegrator _mapper = MapperFactory.createMapperIntegrator();
+
+    //private IntegratorDAO _integratorDAO = new IntegratorDAO();
 
     /**
      * Método que nos permite obtener la lista de todos
@@ -36,13 +41,23 @@ public class M04_Integrator {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listIntegrator() {
+        Response response;
         try {
-            ArrayList<Integrator> i = _integratorDAO.listIntegrator();
-            return Response.ok().entity(i).build();
-        } catch (DatabaseConnectionProblemException e) {
-            return Response.status(500).entity(e.getMessage()).build();
+            CommandGetAllIntegrator command = CommandsFactory.createCommandGetAllIntegrators();
+            command.execute();
+            ArrayList<DTOIntegrator> _integrator =  (ArrayList<DTOIntegrator>)
+                    _mapper.CreateDtoList(CommandsFactory.createCommandGetAllIntegrators().ReturnList());
+            response = Response.ok().entity(_integrator).build();
+        } catch (Exception e) {
+            response = Response.status(500).entity(e.getMessage()).build();
         }
+        return response;
     }
+
+
+
+
+
 
     /**
      * Método que nos permite obtener un integrador en concreto.
@@ -56,14 +71,39 @@ public class M04_Integrator {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getConcreteIntegrator(@PathParam("id") int id) {
+        Response response;
         try {
-            Integrator i = _integratorDAO.getConcreteIntegrator(id);
-            return Response.ok().entity(i).build();
-        } catch (DatabaseConnectionProblemException e) {
-            return Response.status(500).entity(e.getMessage()).build();
-        } catch (IntegratorNotFoundException e) {
-            return Response.status(404).entity(e.getMessage()).build();
+        CommandGetConcreteIntegrator command = CommandsFactory.createCommandGetConcreteIntegrator(id);
+        command.execute();
+        DTOIntegrator _integrator = _mapper.CreateDto(command.Return());
+
+            response = Response.ok().entity(_integrator).build();
+        } catch (Exception e) {
+            response = Response.status(500).entity(e.getMessage()).build();
         }
+        return response;
+    }
+
+    /**
+     *Método que nos permite obtener una lista de integradores por canal
+     *
+     * @param id
+     * @return
+     */
+    @GET
+    @Path("/channel/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listIntegratorByChannel(@PathParam("id") int id) {
+        Response response;
+        try {
+            CommandGetIntegratorByChannel command = CommandsFactory.createCommandGetIntegratorByChannel(id);
+            command.execute();
+            DTOIntegrator _integrator = _mapper.CreateDto(command.Return());
+            response = Response.ok().entity(_integrator).build();
+        } catch (Exception e) {
+            response = Response.status(500).entity(e.getMessage()).build();
+        }
+        return response;
     }
 
     /**
@@ -78,14 +118,16 @@ public class M04_Integrator {
     @Path("/disabled/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response disableIntegrator(@PathParam("id") int id) {
+        Response response;
         try {
-            _integratorDAO.disableIntegrator(id);
-            return Response.ok().entity("Integrador deshabilitado").build();
-        } catch (DatabaseConnectionProblemException e) {
-            return Response.status(500).entity(e.getMessage()).build();
-        } catch (IntegratorNotFoundException e) {
-            return Response.status(404).entity(e.getMessage()).build();
+            CommandDisableIntegrator command = CommandsFactory.createCommandDisableIntegrator(id);
+            command.execute();
+            DTOIntegrator _integrator = _mapper.CreateDto(command.Return());
+            response = Response.ok().entity("Integrador deshabilitado").build();
+        } catch (Exception e) {
+            response = Response.status(500).entity(e.getMessage()).build();
         }
+        return response;
     }
 
     /**
@@ -100,14 +142,16 @@ public class M04_Integrator {
     @Path("/enabled/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response enableIntegrator(@PathParam("id") int id) {
+        Response response;
         try {
-            _integratorDAO.enableIntegrator(id);
-            return Response.ok().entity("Integrador habilitado").build();
-        } catch (DatabaseConnectionProblemException e) {
-            return Response.status(500).entity(e.getMessage()).build();
-        } catch (IntegratorNotFoundException e) {
-            return Response.status(404).entity(e.getMessage()).build();
+            CommandEnableIntegrator command = CommandsFactory.createCommandEnableIntegrator(id);
+            command.execute();
+            DTOIntegrator _integrator = _mapper.CreateDto(command.Return());
+            response = Response.ok().entity("Integrador habilitado").build();
+        } catch (Exception e) {
+            response = Response.status(500).entity(e.getMessage()).build();
         }
+        return response;
     }
 
 }

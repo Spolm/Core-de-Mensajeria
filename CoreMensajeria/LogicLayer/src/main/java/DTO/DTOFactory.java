@@ -4,8 +4,15 @@ import DTO.M01_DTO.DTOPrivilege;
 import DTO.M01_DTO.DTOUser;
 import DTO.M02_DTO.*;
 import DTO.M03_DTO.*;
+import DTO.M04_Integrator.DTOIntegrator;
+import DTO.M05_Channel.DTOChannel;
+import DTO.M09_DTO.DTOStatistic;
+import Entities.Entity;
+import Entities.M02_Company.Company;
+import DTO.M04_Integrator.DTOIntegrator;
 import DTO.M07_Template.DTOMessage;
 import DTO.M07_Template.DTOParameter;
+import DTO.M07_Template.DTOPlanning;
 import DTO.M07_Template.DTOTemplate;
 import DTO.M09_DTO.DTOStatistic;
 import Entities.M01_Login.User;
@@ -17,10 +24,8 @@ import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.Status;
-
 import java.util.ArrayList;
 import java.util.Date;
-
 /**
  * Fabrica que instancia todos los dto
  */
@@ -61,7 +66,7 @@ public class DTOFactory {
      * @return Objeto del tipo DTOPrivilege
      */
 
-      
+
     public static DTOPrivilege CreateDTOPrivilege(int _idPrivileges, String _codePrivileges, String _actionPrivileges) {
 
         return new DTOPrivilege(_idPrivileges,_codePrivileges,_actionPrivileges);
@@ -69,7 +74,7 @@ public class DTOFactory {
     }
 
     /**
-    END REGION 
+    END REGION
   /// COMPANY
      */
     /**
@@ -192,6 +197,27 @@ public class DTOFactory {
 
 //  END CAMPAIGN
 
+
+
+
+
+// M04_region
+    public static DTOIntegrator CreateDTOIntegrator (String integratorType, int threadCapacity, float messageCost,
+                                                     String nameIntegrator, String apiIntegrator, boolean enabled){
+        return new DTOIntegrator(integratorType, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+    }
+
+    public static DTOChannel createDTOChannel (String nameChannel, String descriptionChannel, ArrayList<Entity> integrators){
+        return new DTOChannel(nameChannel, descriptionChannel, integrators);
+    }
+//end region
+
+
+
+
+
+
+
     /**
      * Metodo que instancia un obejto del tipo DTOStatistic
      * @return un objeto del tipo DTOStatistic
@@ -213,8 +239,12 @@ public class DTOFactory {
     }
 
 
-    public static DTOTemplate CreateDTOTemplate(Message message, String creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning){
-        return  new DTOTemplate(message,creationDate,templateId,status,channels,campaign,application,user,planning);
+    public static DTOTemplate CreateDTOTemplate(Message message, java.sql.Date creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning, int companyId){
+        return  new DTOTemplate(message,creationDate,templateId,status,channels,campaign,application,user,planning,companyId);
+    }
+
+    public static DTOPlanning CreateDTOPlanning(java.sql.Date _pStartDate, java.sql.Date _pEndDate, String _pStartTime, String _pEndTime, int _pIdPlanning){
+        return new DTOPlanning(_pStartDate,_pEndDate,_pStartTime,_pEndTime,_pIdPlanning);
     }
 
 

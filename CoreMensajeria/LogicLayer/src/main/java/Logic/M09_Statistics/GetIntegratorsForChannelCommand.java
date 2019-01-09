@@ -12,7 +12,7 @@ import java.util.List;
 
 public class GetIntegratorsForChannelCommand extends Command {
 
-    ArrayList<Integrator> integrators;
+    ArrayList<Entity> integrators;
     DAOStatistic dao;
     List<Integer> channelIds;
 
@@ -25,7 +25,7 @@ public class GetIntegratorsForChannelCommand extends Command {
     }
 
     @Override
-    public ArrayList<Integrator> Return() {
+    public ArrayList<Entity> Return() {
         return integrators;
     }
 }

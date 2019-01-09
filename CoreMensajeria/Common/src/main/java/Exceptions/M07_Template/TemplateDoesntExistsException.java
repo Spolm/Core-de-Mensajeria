@@ -17,6 +17,10 @@ public class TemplateDoesntExistsException extends PersonalizedException {
         super(e);
     }
 
+    public TemplateDoesntExistsException(String message) {
+        super(message);
+    }
+
     public TemplateDoesntExistsException(String message, Exception e) {
         super(message, e);
     }

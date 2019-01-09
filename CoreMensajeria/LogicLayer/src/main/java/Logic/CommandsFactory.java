@@ -1,16 +1,21 @@
 package Logic;
 
-import DTO.DTO;
 import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
+import Logic.M04_Integrator.*;
+import Logic.M05_Channel.CommandGetAllChannels;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 
 //import Logic.M10_Profile.*;
+import Entities.M08_Validation.XMLManagement.Message;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
+import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
+import Logic.M10_Profile.GetGeographicalRegionCommand;
+import Logic.M10_Profile.GetPrivilegesByUserCompanyCommand;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
@@ -239,11 +244,31 @@ public class CommandsFactory {
     //endregion
 
 
-    //M07_Templates
-
-    public static CommandGetMessages createCommandGetMessages(){
-        return new CommandGetMessages();
+    // region M04_Integrator
+    public static CommandDisableIntegrator createCommandDisableIntegrator(int id) {
+        return new CommandDisableIntegrator(id);
     }
+
+    public static CommandEnableIntegrator createCommandEnableIntegrator(int id) {
+        return new CommandEnableIntegrator( id );
+    }
+
+    public static CommandGetAllIntegrator createCommandGetAllIntegrators() {
+        return new CommandGetAllIntegrator();
+    }
+
+    public static CommandGetConcreteIntegrator createCommandGetConcreteIntegrator(int id) {
+        return new CommandGetConcreteIntegrator(id);
+    }
+
+    public static CommandGetIntegratorByChannel createCommandGetIntegratorByChannel(int id){
+        return new CommandGetIntegratorByChannel(id);
+    }
+
+    public static CommandGetAllChannels instanceGetAllChannels(){ return new CommandGetAllChannels(); }
+    //endregion
+
+    //M07_Templates
 
     public static CommandPostParameter createCommandPostParameter(NewParameter newParameter){
         return new CommandPostParameter(newParameter);
@@ -310,5 +335,23 @@ public class CommandsFactory {
     public static Command createSendMessage(VerifiedParameter parameters) {
         return new CommandSendMessage(parameters);
     }
+
+    public static Command createCommandParseMessage(Message message, Template template){
+        return new CommandParseMessage(message, template);
+    }
+
     //end region
+
+    //region Commands M_10
+
+    public static Command createGetPrivilegesByUserCompanyCommand(int userId, int companyId){
+        return new GetPrivilegesByUserCompanyCommand(userId, companyId);
+    }
+
+    public static Command createGetGeographicalRegionCommand(int id){
+        return new GetGeographicalRegionCommand(id);
+    }
+
+    //end region
+
 }
