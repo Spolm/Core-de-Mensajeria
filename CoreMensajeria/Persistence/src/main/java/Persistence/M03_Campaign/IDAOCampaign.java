@@ -22,6 +22,7 @@ public interface IDAOCampaign extends IDAO {
 
     ArrayList<Entity> campaignList();
 
+    ArrayList< Entity > campaignListCompany( Entity _e );
 
 
 }
