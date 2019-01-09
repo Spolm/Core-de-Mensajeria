@@ -1,6 +1,5 @@
 package Persistence;
 
-import Persistence.M01_Login.GetUserDao;
 import Persistence.M07_Template.*;
 import Persistence.M01_Login.DAOUser;
 import Persistence.M09_Statistics.DAOStatistic;
