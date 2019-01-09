@@ -26,6 +26,8 @@ import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Persistence.DAO;
 import Persistence.DAOFactory;
+import Persistence.M01_Login.DAOUser;
+import Persistence.M03_Campaign.DAOCampaign;
 import com.google.gson.*;
 
 import java.sql.Connection;
@@ -264,10 +266,11 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             if( _rs.next() ){
 
                 //instanciando el api de campana
+                DAOCampaign daoCampaign = DAOFactory.instanciateDaoCampaign();
                 CampaignDAO campaignsService = new CampaignDAO();
+                Campaign c = EntityFactory.CreateCampaignId(_rs.getInt("tem_campaign_id"));
                 //obtener objeto campana con el id de campana del query anterior
-                campaign = campaignsService.getDetails
-                        ( _rs.getInt("tem_campaign_id") );
+                campaign = daoCampaign.campaignById(c);
 
             }
 
@@ -275,8 +278,6 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             e.printStackTrace();
             throw new TemplateDoesntExistsException
                     ("Error: la plantilla " + templateId + " no existe", e, templateId);
-        } catch (CampaignDoesntExistsException e) {
-            //logg
         }catch (Exception e){
             e.printStackTrace();
         } finally {
@@ -640,7 +641,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             Message _message = ( Message )DAOFactory.instaciateDaoMessage().getMessage( templateId );
 
             //user
-            UserDAO _userDao = new UserDAO();
+            DAOUser _userDao = DAOFactory.instanciateDaoUser();
             User _user = _userDao.findByUsernameId( _rs.getInt("tem_user_id") );
 
             //Channel

@@ -1,12 +1,22 @@
 <app-page-header [heading]="'Compañias'" [icon]="'fa fa-rebel'"></app-page-header>
+<div class="form-row">
 
-<div class="d-flex flex-row-reverse">
-  <button type="button" class="btn btn-dark" routerLink="/company/create">Crear Compañia</button>
+  <div class="col-3">
+    <div class="d-flex flex-row-reverse">
+      <button type="button" class="btn btn-dark" routerLink="/company/create">Crear Compañia</button>
+    </div>
+    </div>
+    
+    <div class="col-6">
+    <div class="d-flex flex-row-reverse">
+      <button type="button" class="btn btn-dark" routerLink="/company/modify">Modificar Compañia</button>
+    </div>
+    </div>
+
+
+
 </div>
 
-<div class="d-flex flex-row-reverse">
-  <button type="button" class="btn btn-dark" routerLink="/company/modify">Modificar Compañia</button>
-</div>
 
 <div class="card">
   <table class="table table-bordered table-hover">

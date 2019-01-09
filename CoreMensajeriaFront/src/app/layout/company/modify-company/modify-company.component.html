@@ -6,7 +6,7 @@
             <div class="input-group-prepend">
               <label class="input-group-text" for="inputGroupSelect01">Modificar:</label>
             </div>
-            <select class="custom-select" id="inputGroupSelect01" [(ngModel)]="opcionSeleccionado">  <!-- (change) = "capturar()" -->
+            <select class="custom-select" (ngModelChange)="enabledMode()" id="inputGroupSelect01" [(ngModel)]="opcionSeleccionado" required>  <!-- (change) = "capturar()" -->
               <option selected value="0">Elija</option>
               <option *ngFor="let company of companyList" [ngValue]="company" >
                   {{company._name}}
@@ -15,14 +15,6 @@
             </select>
           </div>
 
-    <div class="form-row">
-
-      <button type="button" class="btn btn-success btn-lg" (click) = "capturar()"> Consultar</button>
-
-      <p [hidden]="opcionSeleccionado == '0'">Haz seleccionado la Consulta acerca :  {{ verSeleccion }}</p>
-
-    </div>
-
 
     
 <div class="container-fluid">
@@ -30,11 +22,11 @@
     <div class="col-4">
       <div class="form-group">
         <label for="formMessage">Nombre de la Compañia</label>
-        <input class="form-control" name="nombre" [(ngModel)]="opcionSeleccionado._name" required placeholder="Nombre">
+        <input class="form-control" id="NameCompany" [disabled]="editMode" name="nombre" [(ngModel)]="opcionSeleccionado._name" required placeholder="Nombre" >
       </div>
       <div class="form-group">
         <label for="formMessage">Descripción de la Compañia</label>
-        <input class="form-control" name="descripcion" [(ngModel)]="opcionSeleccionado._desc" required placeholder="Descripción">
+        <input class="form-control" id="DescCompany" [disabled]="editMode" name="descripcion" [(ngModel)]="opcionSeleccionado._desc" required placeholder="Descripción" >
       </div>
     </div>
   </div>

@@ -16,6 +16,8 @@ const httpOptions = {
 })
 export class CompanyService {
 
+
+
   constructor(private http: HttpClient) { 
       
    }
@@ -27,7 +29,7 @@ export class CompanyService {
 
   getCompanies(): Observable<any> {
    
-      return this.http.get(endpoint + 'GetCompanies?id='+localStorage.getItem('userid')).pipe(
+      return this.http.get(endpoint + 'GetCompaniesByUserPP/'+localStorage.getItem('userid')).pipe(
         map(this.extractData));
       
   }
@@ -62,8 +64,9 @@ export class CompanyService {
   }
 
 
-  activateCompany(_idCompany: Number , _statusCompany : boolean , Company : Company ){
-    console.log("Estoy en el servicio " + Company);
-    return this.http.get(endpoint+'update/'+_idCompany+'/'+_statusCompany).subscribe();
+  activateCompany (company): Observable<any> {
+    return this.http.post<any>(endpoint + 'updateCompanyStatus', company, httpOptions).pipe(
+      tap((company) => console.log('company added w/ ${company._name}')),
+    );
   }
 }

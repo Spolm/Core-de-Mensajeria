@@ -1,7 +1,6 @@
 package Logic.M07_Template;
 
 import DTO.DTOFactory;
-import DTO.M07_Template.DTOParameter;
 import Entities.Entity;
 import Entities.M07_Template.HandlerPackage.ParameterHandler;
 import DTO.M07_Template.NewParameter;

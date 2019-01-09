@@ -16,7 +16,7 @@ export class ModifyCompanyComponent implements OnInit {
 
   verSeleccion: string = "";
   datos;
-  
+  editMode: boolean = true;
   opcionSeleccionado: Company = new Company();
   constructor(public router: Router, private http: HttpClient, 
     public rest: CompanyService, private toastr: ToastrService) {
@@ -43,12 +43,29 @@ export class ModifyCompanyComponent implements OnInit {
 
   }
 
+
+  HabilitarTexto(){
+    
+  }
   
-editCompany() {
+  editCompany() {
+
+  if ( (this.opcionSeleccionado._name != null ) && ( this.opcionSeleccionado._desc != null ) &&
+   (this.opcionSeleccionado !=null)  ) {
   this.rest.editCompany(this.opcionSeleccionado).toPromise().then(res => {
     //manejo de la respuesta del servicio
-  });
+  }); 
 }
+  else { this.toastr.error("Algun Campo esta Vacio.");
+  this.opcionSeleccionado._name = null;
+  this.opcionSeleccionado._desc = null;
+    }
+
+  }
+  enabledMode(){
+    console.log("llamando");
+    this.editMode = false; 
+  }
 
 
 }

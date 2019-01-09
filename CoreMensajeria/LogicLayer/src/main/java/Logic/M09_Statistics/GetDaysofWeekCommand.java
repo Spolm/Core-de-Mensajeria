@@ -1,13 +1,12 @@
 package Logic.M09_Statistics;
 
-import Entities.Entity;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M09_Statistics.DAOStatisticEstrella;
 
 import java.util.ArrayList;
 
-public class GetDaysofWeekCommand extends Command {
+public class GetDaysofWeekCommand extends Command<ArrayList<Integer>> {
 
     private DAOStatisticEstrella dao;
     private ArrayList<Integer> daysofweek;
@@ -19,11 +18,7 @@ public class GetDaysofWeekCommand extends Command {
     }
 
     @Override
-    public Entity Return() {
-        return null;
-    }
-
-    public ArrayList<Integer> ReturnList() {
+    public ArrayList<Integer> Return() {
         return daysofweek;
     }
 }

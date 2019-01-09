@@ -1,8 +1,9 @@
 package Mappers;
 
-import DTO.M09_DTO.DTOStatistic;
 import Mappers.CompanyMapper.*;
 import Mappers.CampaignMapper.*;
+import Mappers.LoginMapper.LoginMapper;
+import Mappers.LoginMapper.UserMapper;
 import Mappers.GenericMapper;
 import Mappers.M07_Template.MapperTemplate;
 import Mappers.StatisticMapper.StatisticMapper;
@@ -38,6 +39,7 @@ public class MapperFactory {
     }
     // endregion
 
+
     // region campañas
     /**
      * Metodos que instancian un obejto del tipo MapperFullCampaign
@@ -53,6 +55,8 @@ public class MapperFactory {
     }
 
     public static MapperIdStatusCompany createMapperIdStatusCompany(){ return  new MapperIdStatusCompany(); }
+
+    public static MapperIdCompUser createMapperIdCompUser(){ return  new MapperIdCompUser(); }
 
 
     /**
@@ -90,4 +94,11 @@ public class MapperFactory {
 
     // M07_Template
     public static MapperTemplate createMapperTemplate(){ return new MapperTemplate();}
+
+    public static UserMapper createUserMapper() {
+        return new UserMapper();
+    }
+    public static LoginMapper createLoginMapper() {
+        return new LoginMapper();
+    }
 }

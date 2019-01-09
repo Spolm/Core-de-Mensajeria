@@ -1,5 +1,7 @@
 package DTO;
 
+import DTO.M01_DTO.DTOPrivilege;
+import DTO.M01_DTO.DTOUser;
 import DTO.M02_DTO.*;
 import DTO.M03_DTO.*;
 import DTO.M07_Template.DTOMessage;
@@ -24,7 +26,52 @@ import java.util.Date;
  */
 public class DTOFactory {
 
-  //// compañias y campañas
+    //region M01 Login
+
+    /**
+     * Metodo que instancia un objeto del tipo DTOUser
+     * @param _idUser id del usuario
+     * @param _password contraseña
+     * @param _username nombre de usuario
+     * @param _type tipo de usuario
+     * @param _email direccion de correo del usuario
+     * @param _phone telefono del usuario
+     * @param _dateOfBirth fecha de nacimiento del usuario
+     * @param _country pais del usuario
+     * @param _address direccion del usuario
+     * @param _gender genero del usuario
+     * @param _city ciudad del usuario
+     * @param _blocked indica si el usuario esta bloqueado en el sistema
+     * @param _remainingAttempts indica la cantidad de intentos disponibles para loggearse correctamente antes de que el usuario sea bloqueado
+     * @return Objeto de tipo DTOUser
+     */
+    public static DTOUser CreateDTOUser(int _idUser, String _password, String _username, int _type, String _email,
+                                        String _phone, java.sql.Date _dateOfBirth, String _country, String _address,
+                                        String _gender, String _city, Integer _blocked, Integer _remainingAttempts) {
+
+        return new DTOUser(_idUser, _password, _username, _type, _email, _phone, _dateOfBirth, _country, _address,
+                _gender, _city, _blocked, _remainingAttempts);
+
+    }
+    /**
+     * Metodo que instancia un objeto del tipo DTOPrivilege
+     * @param _idPrivileges id del privilegio
+     * @param _codePrivileges codigo del privilegio
+     * @param _actionPrivileges acciones que puede realizar el privilegio
+     * @return Objeto del tipo DTOPrivilege
+     */
+
+      
+    public static DTOPrivilege CreateDTOPrivilege(int _idPrivileges, String _codePrivileges, String _actionPrivileges) {
+
+        return new DTOPrivilege(_idPrivileges,_codePrivileges,_actionPrivileges);
+
+    }
+
+    /**
+    END REGION 
+  /// COMPANY
+     */
     /**
      * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
      * @return un objeto del tipo DTOIdCompany
@@ -34,12 +81,20 @@ public class DTOFactory {
         return new DTOIdCompany(id);
     }
     /**
-     * Metodos que instancian un obejto del tipo DTOIdCompany mediante los parametros pasados
+     * Metodos que instancian un obejto del tipo DTOIdStatusCompany mediante los parametros pasados
      * @return un objeto del tipo DTOidStatusCompanyCompany
      */
     public static DTOIdStatusCompany CreateDTOIdStatusCompany( int id, boolean status ){
 
         return new DTOIdStatusCompany( id, status );
+    }
+    /**
+     * Metodos que instancian un obejto del tipo DTOIdCompUser mediante los parametros pasados
+     * @return un objeto del tipo DTOIdCompUser
+     */
+    public static DTOIdCompUser createDTOIdCompUser( int id, int user ){
+
+        return new DTOIdCompUser( id, user );
     }
 
       /**
@@ -73,8 +128,9 @@ public class DTOFactory {
 
          return new DTOFullCompany( id, name, desc, status, link, userId );
      }
+     // END COMPANY
 
-
+    //CAMPAIGN
      /**
       * Metodos que instancian un obejto del tipo DTOCampaignWithOut_id_And_Company mediante los parametros pasados
       * @return un objeto del tipo DTOCampaignWithOut_id_And_Company
@@ -119,10 +175,10 @@ public class DTOFactory {
 
     public static DTOFullCampaign CreateDtoFullCampaign(int idCampaign, String nameCampaign, String descCampaign,
                                                                       boolean statusCampaign, Date startCampaign,
-                                                                      Date endCampaign, Company company) {
+                                                                      Date endCampaign, int idCompany) {
 
         return new DTOFullCampaign(idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign,
-                                    endCampaign, company);
+                                    endCampaign, idCompany);
     }
 
     /**
@@ -134,7 +190,7 @@ public class DTOFactory {
         return new DTOIdStatusCampaign( id, status );
     }
 
-/////end
+//  END CAMPAIGN
 
     /**
      * Metodo que instancia un obejto del tipo DTOStatistic

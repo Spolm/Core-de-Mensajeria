@@ -1,10 +1,9 @@
 package Mappers.CampaignMapper;
 
 import DTO.DTOFactory;
-import DTO.M02_DTO.DTOIdCompany;
 import DTO.M03_DTO.DTOIdCampaign;
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M03_Campaign.Campaign;
 
 import Mappers.GenericMapper;
@@ -12,7 +11,6 @@ import Mappers.GenericMapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class MapperIdCampaign  extends GenericMapper< DTOIdCampaign > {
 

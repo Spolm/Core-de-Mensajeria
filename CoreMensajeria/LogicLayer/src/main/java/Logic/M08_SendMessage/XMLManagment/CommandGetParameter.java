@@ -1,9 +1,10 @@
-package Entities.M08_Validation.XMLManagement;
+package Logic.M08_SendMessage.XMLManagment;
 
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M08_Validation.XMLManagement.ParameterXML;
-import Entities.M08_Validation.XMLManagement.Command;
-import Entities.M08_Validation.XMLManagement.CommandsFactory;
+import Exceptions.M08_SendMessageManager.NullValueXMLException;
+import Logic.Command;
+import Logic.CommandsFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -37,22 +38,22 @@ public class CommandGetParameter extends Command<ParameterXML> {
                 _commandGetTagValue.execute();
 
                 if(findParameter( _commandGetTagValue.Return())) {
+
                     _parameterXML.set_name(_commandGetTagValue.Return());
                     _commandGetTagValue = CommandsFactory.createCommandGetTagValue("value", element);
                     _commandGetTagValue.execute();
+                    _parameterXML.set_value(_commandGetTagValue.Return());
 
-                    if(_commandGetTagValue.Return() != ""){
-                        _parameterXML.set_value(_commandGetTagValue.Return());
-                    } else {
-                        _parameterXML = null;
-                    }
-                } else{
+                } else {
                     _parameterXML = null;
 
                 }
             }
-        } catch (Exception e) {
-            //// Excepcion personalizada
+        } catch (NullValueXMLException e) {
+            e.printStackTrace();
+            _parameterXML = null;
+        } catch (Exception e){
+
         }
     }
 

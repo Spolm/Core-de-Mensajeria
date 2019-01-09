@@ -161,6 +161,17 @@ public class Company extends Entity {
         _idCompany =  id;
     }
 
+    /**
+     * Constructor para Companias sin _link
+     * @param id id de la compania
+     * @param user id del usuario
+     */
+    public Company(int id, int user) {
+
+        _idCompany = id;
+        _idUser = user;
+
+    }
 
 
 }
