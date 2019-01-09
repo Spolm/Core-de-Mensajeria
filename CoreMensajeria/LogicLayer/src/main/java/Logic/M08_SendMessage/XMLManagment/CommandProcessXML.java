@@ -94,10 +94,6 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
                     }
                 }
 
-                for (Message message : _messageList) {
-                    System.out.println(message.toString());
-                }
-
                 _verifiedParameters = new VerifiedParameter( _messageList, _template );
                 log.info("Se ha configurado la plantilla" );
 
