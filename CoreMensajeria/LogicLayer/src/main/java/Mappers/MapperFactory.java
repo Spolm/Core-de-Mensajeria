@@ -9,6 +9,7 @@ import Mappers.LoginMapper.LoginMapper;
 import Mappers.LoginMapper.UserMapper;
 import Mappers.GenericMapper;
 import Mappers.M07_Template.MapperTemplate;
+import Mappers.M10_Profile.MapperEditUser;
 import Mappers.StatisticMapper.StatisticMapper;
 
 public class MapperFactory {
@@ -145,4 +146,13 @@ public class MapperFactory {
     public static LoginMapper createLoginMapper() {
         return new LoginMapper();
     }
+
+    //region M10
+
+    /**
+     * Method that instantiated a MapperEditUser object
+     * @return object MapperEditUser
+     */
+    public static MapperEditUser createMapperEditUser(){return new MapperEditUser();}
+    //endregion
 }

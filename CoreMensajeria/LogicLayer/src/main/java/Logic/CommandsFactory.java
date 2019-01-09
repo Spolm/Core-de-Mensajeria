@@ -2,6 +2,7 @@ package Logic;
 
 import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
+import Entities.M01_Login.User;
 import Entities.M06_DataOrigin.AddApplicationData;
 import Logic.M04_Integrator.*;
 import Logic.M05_Channel.CommandGetAllChannels;
@@ -15,8 +16,10 @@ import Logic.M02_Company.AddCompanyCommand;
 import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
+import Logic.M10_Profile.EditUserProfileCommand;
 import Logic.M10_Profile.GetGeographicalRegionCommand;
 import Logic.M10_Profile.GetPrivilegesByUserCompanyCommand;
+import Logic.M10_Profile.GetResponsabilityByCompanyCommand;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
@@ -226,10 +229,10 @@ public class CommandsFactory {
                                               List<Integer> dayofweekIds, List<Integer> weekofyearIds, List<Integer> dayofmonthIds,
                                               List<Integer> dayofyearIds, List<Integer> hourofdayIds, List<Integer> minuteofhourIds,
                                               List<Integer> secondofminuteIds, List<Integer> quarterIds){return new GetStatisticCommand(companyIds, campaignIds, channelIds,
-                                                                                                                                                    integratorIds, yearIds, monthIds,
-                                                                                                                                                    dayofweekIds, weekofyearIds, dayofmonthIds,
-                                                                                                                                                    dayofyearIds, hourofdayIds, minuteofhourIds,
-                                                                                                                                                    secondofminuteIds, quarterIds);}
+            integratorIds, yearIds, monthIds,
+            dayofweekIds, weekofyearIds, dayofmonthIds,
+            dayofyearIds, hourofdayIds, minuteofhourIds,
+            secondofminuteIds, quarterIds);}
 
     //endregion
 
@@ -334,8 +337,8 @@ public class CommandsFactory {
      */
     public static CampaignUserCompanyCommand createCampaignUserCompany( Company _ca ){
 
-         return new CampaignUserCompanyCommand( _ca  );
-      }
+        return new CampaignUserCompanyCommand( _ca  );
+    }
 
 
     /**
@@ -442,7 +445,7 @@ public class CommandsFactory {
 
     public static CommandUpdateTemplate createCommandUpdateTemplate(String json){
         return new CommandUpdateTemplate(json);
-}
+    }
 
     //region M_08
     public static Command createCommandGetTagValue(String tag, Element element){
@@ -485,15 +488,41 @@ public class CommandsFactory {
     //end region
 
     //region Commands M_10
-
+    /**
+     * Method that instantiates an object of type EditUserProfileCommand
+     * @param userId Id of the user
+     * @param companyId Id of the company
+     * @return object EditUserProfileCommand
+     */
     public static Command createGetPrivilegesByUserCompanyCommand(int userId, int companyId){
         return new GetPrivilegesByUserCompanyCommand(userId, companyId);
     }
 
+    /**
+     * Method that instantiates an object of type GetGeographicalRegionCommand
+     * @param id id of the GeographicalRegion
+     * @return object GetGeographicalRegionCommand
+     */
     public static Command createGetGeographicalRegionCommand(int id){
         return new GetGeographicalRegionCommand(id);
     }
 
-    //end region
+    /**
+     * Method that instantiates an object of type GetResponsabilityByCompanyCommand
+     * @param companyId id of the company
+     * @return object GetResponsabilityByCompanyCommand
+     */
+    public static Command createGetResponsabilityByCompanyCommand(int companyId) {
+        return new GetResponsabilityByCompanyCommand(companyId);
+    }
+    /**
+     * Method that instantiates an object of type EditUserProfileCommand
+     * @param user to modify
+     * @return object EditUserProfileCommand
+     */
+    public static Command createEditUserProfileCommand(User user){
+        return new EditUserProfileCommand(user);
+    }
+//endregion
 
 }
