@@ -15,11 +15,12 @@ import java.util.Date;
  * Comando para llamar al DAO e insertar el mensaje enviado en base de datos
  */
 
-public class CommandInsertMessage extends Command {
+public class CommandInsertMessage extends Command<Boolean> {
     private Template _template;
     private int _integratorId;
     private int _channelId;
     private Date _time;
+    private Boolean _result ;
 
     /**
      * @param template recibe la plantilla para acceder al id del mensaje y de la aplicación
@@ -32,6 +33,7 @@ public class CommandInsertMessage extends Command {
         this._integratorId = integratorId;
         this._channelId = channelId;
         this._time = time;
+        this._result = false;
     }
 
     /**
@@ -40,7 +42,7 @@ public class CommandInsertMessage extends Command {
     @Override
     public void execute() throws Exception {
         SentMessage sentMessage = EntityFactory.createSendMessage();
-        sentMessage.set_applicationId(this._template.getApplication().get_id());
+        sentMessage.set_applicationId(this._template.getApplication().get_idApplication());
         sentMessage.set_campaignId(this._template.getCampaign().get_idCampaign());
         sentMessage.set_channel(this._channelId);
         sentMessage.set_integratorId(this._integratorId);
@@ -49,9 +51,12 @@ public class CommandInsertMessage extends Command {
         sentMessage.set_sentTime(time);
         IDAOSentMessage _dao = DAOFactory.instanciateDaoSentMessage();
         _dao.create(sentMessage);
+        _result = true;
     }
 
-    public Entity Return() {
-        return null;
+
+    @Override
+    public Boolean Return() {
+        return this._result;
     }
 }
