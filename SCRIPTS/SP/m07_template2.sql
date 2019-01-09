@@ -72,7 +72,7 @@ CREATE OR REPLACE FUNCTION m07_findParameterByPar_Com_IDAndByParameterName(IN _c
  $BODY$
 BEGIN
 RETURN QUERY
-	select p.par_id, p.par_name,p.par_company_id where _companyId = p.par_company_id and _name = p.par_name;
+	select p.par_id, p.par_name,p.par_company_id from parameter p where _companyId = p.par_company_id and _name = p.par_name;
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
