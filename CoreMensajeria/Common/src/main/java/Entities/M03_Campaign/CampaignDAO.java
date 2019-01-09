@@ -49,7 +49,8 @@ public class CampaignDAO {
     //endregion
 
     //region Obtener Lista de Campañas
-    public void getCampaignList(int id, String select, ArrayList<Campaign> caList) throws CampaignDoesntExistsException {
+    public void getCampaignList(int id, String select, ArrayList<Campaign> caList)
+                                throws CampaignDoesntExistsException {
         try {
             PreparedStatement ps = conn.prepareCall(select);
             ps.setInt(1, id);
@@ -77,7 +78,8 @@ public class CampaignDAO {
         }
     }
 
-    public void getCampaignList2(int idCompany, int idUser, String select, ArrayList<Campaign> caList) throws CampaignDoesntExistsException {
+    public void getCampaignList2(int idCompany, int idUser, String select, ArrayList<Campaign> caList)
+                                 throws CampaignDoesntExistsException {
         try {
             PreparedStatement ps = conn.prepareCall(select);
             ps.setInt(1, idCompany);
@@ -121,7 +123,8 @@ public class CampaignDAO {
 
     //region Obtener Campañas por compañia y usuario
 
-    public ArrayList<Campaign> campaignListByUserCompany(int idCompany, int idUser) throws CampaignDoesntExistsException {
+    public ArrayList<Campaign> campaignListByUserCompany(int idCompany, int idUser)
+                                                         throws CampaignDoesntExistsException {
         String select = "{Call m03_getcampaignsbycompany(?,?)}";
         ArrayList<Campaign> caList= new ArrayList<>();
         getCampaignList2(idCompany, idUser, select, caList);

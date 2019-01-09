@@ -109,6 +109,11 @@ public class MapperFactory {
         return new MapperCampaignWithOut_id_And_Company();
     }
 
+
+    /**
+     * Metodos que instancian un obejto del tipo MapperIdStatusCampaign
+     * @return un objeto del tipo MapperIdStatusCampaign
+     */
     public static MapperIdStatusCampaign createMapperIdStatusCampaign(){
 
         return new MapperIdStatusCampaign();

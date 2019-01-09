@@ -24,8 +24,8 @@ public class DTOCampaignWithOut_Company extends DTO {
      * @param startCampaign fecha de inicio de la campaña
      * @param endCampaign fecha de finalización de la campaña
      */
-    public DTOCampaignWithOut_Company(int idCampaign, String nameCampaign, String descCampaign, boolean statusCampaign,
-                                      Date startCampaign, Date endCampaign) {
+    public DTOCampaignWithOut_Company(int idCampaign, String nameCampaign, String descCampaign,
+                                      boolean statusCampaign, Date startCampaign, Date endCampaign) {
 
         _idCampaign = idCampaign;
         _nameCampaign = nameCampaign;
