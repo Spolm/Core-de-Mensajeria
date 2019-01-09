@@ -6,11 +6,12 @@ import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.*;
 import Exceptions.M08_SendMessageManager.DateNotValidException;
+import Exceptions.M08_SendMessageManager.SMSTooLongException;
+import Exceptions.M08_SendMessageManager.TemplateNotApprovedException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Logic.M07_Template.CommandGetTemplate;
-import Logic.M08_SendMessage.CommandScheduleMessage;
 
 import javax.validation.Valid;
 import javax.ws.rs.*;
