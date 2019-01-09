@@ -1,5 +1,6 @@
 package webService.M10_Profile;
 
+import DTO.M10_DTO.DTOCreateUser;
 import DTO.M10_DTO.DTOEditUser;
 import Entities.M01_Login.Privilege;
 import Entities.M01_Login.User;
@@ -108,11 +109,17 @@ public class M10_Profile {
     }
 
     @GET
-    @Path("/companies")
+    @Path("/roles")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRoles(){
         Response response = null;
-
+        try{
+            Command command = CommandsFactory.createGetRolesCommand();
+            command.execute();
+            return Response.ok(new Gson().toJson(command.Return())).build();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return response;
     }
 
@@ -152,6 +159,25 @@ public class M10_Profile {
 
             return response;
         }
+    }
+
+    @POST
+    @Path("/createUser")
+    @Consumes("application/json")
+    @Produces("text/plain")
+    //@Consumes(MediaType.APPLICATION_JSON)
+    public Response createUser(DTOCreateUser dtoCrearUser){
+        Response response = null;
+        User user = new User();
+        Command command = CommandsFactory.createCreateUserCommand(user);
+        try {
+            command.execute();
+            String s = "Hola";
+            return Response.ok(new Gson().toJson(s)).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
     }
 
 }

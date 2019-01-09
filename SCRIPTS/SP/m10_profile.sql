@@ -28,7 +28,6 @@ END;
 $$
 LANGUAGE 'plpgsql' VOLATILE;
 
-<<<<<<< HEAD
 -- DROP FUNCTION m10_edit_user_by_profile(integer,varchar, varchar, integer, integer, varchar, varchar, varchar, varchar, varchar);
 CREATE OR REPLACE FUNCTION m10_edit_user_by_profile(
 	IN userId INTEGER, IN name VARCHAR, IN lastname VARCHAR,
@@ -48,7 +47,7 @@ BEGIN
 	use_phone = phone
 	WHERE use_id = userId;
 	END;
-=======
+
 -- drop function m10_select_responsabilities_by_company
 CREATE OR REPLACE FUNCTION m10_select_responsabilities_by_company (IN companyId INTEGER)
 RETURNS TABLE (userid_ INTEGER, username_ VARCHAR, name_ VARCHAR, lastname_ VARCHAR, identification_ INTEGER,
@@ -67,6 +66,5 @@ INNER JOIN PUBLIC.ROLE rol
 on rol.rol_id = r.res_rol_id
 WHERE c.com_id = companyId;
 END;
->>>>>>> c88ccc450f565cba4ddc7451ea58d11ddb3e614c
 $$
 LANGUAGE 'plpgsql' VOLATILE;
