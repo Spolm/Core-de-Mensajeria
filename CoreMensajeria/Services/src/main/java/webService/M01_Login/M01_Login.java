@@ -52,8 +52,8 @@ public class M01_Login {
 
             if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
                     loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
-               // _cmd.execute();
-                if( _userDAO.isBlockedUser(loginIntent.get_username()) /*_cmd.returnBool()*/ )
+                _cmd.execute();
+                if( /*_userDAO.isBlockedUser(loginIntent.get_username()) */_cmd.returnBool() )
                     throw new UserBlockedException("El usuario ingresado se encuentra bloqueado");
                 _command.execute();
                 user = (User) _command.Return();
