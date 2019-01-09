@@ -17,12 +17,14 @@ public interface IDAOProfile extends IDAO {
      */
     public ArrayList<Privilege> getPrivilegesByUserAndCompany(int userId, int companId);
 
+
     /**
-     * Abstract method to return the responsibility  by company
+     * Abstract method to return the responsibilities  by company
      * @param companyId id of the company
-     * @return  Responsability responsibility by company
+     * @return  ArrayList<Responsability> responsibilities by company
      */
-    public Responsability getResponsability(int companyId);
+    public ArrayList<Responsability> getResponsabilitiesByCompany(int companyId);
+
 
     /**
      * Abstract method which is responsible for editing a user profile

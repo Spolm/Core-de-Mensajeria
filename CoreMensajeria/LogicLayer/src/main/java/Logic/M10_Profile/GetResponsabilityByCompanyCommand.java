@@ -7,13 +7,17 @@ import Persistence.IDAOProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
+import java.util.ArrayList;
+
 /**
  * GetResponsabilityByCompanyCommand Class is responsible for looking for resposibilities by company
  */
 public class GetResponsabilityByCompanyCommand extends Command {
     private int companyId;
-    private Responsability responsability;
+    private ArrayList<Responsability> responsabilities;
     final static Logger log = LogManager.getLogger("CoreMensajeria");
+
 
     /**
      * CTOR GetResponsabilityByCompanyCommand
@@ -34,7 +38,8 @@ public class GetResponsabilityByCompanyCommand extends Command {
     public void execute() throws Exception {
         DAOAbstractFactory factory = DAOAbstractFactory.getFactory();
         IDAOProfile dao = factory.createDAOProfile();
-        responsability = dao.getResponsability(companyId);
+
+        responsabilities = dao.getResponsabilitiesByCompany(companyId);
 
         //region Instrumentation Info
         log.info("Se ejecuto el metodo execute() " +
@@ -43,7 +48,7 @@ public class GetResponsabilityByCompanyCommand extends Command {
 
         //region Instrumentation Debug
         log.debug("Saliendo metodo execute() de GetResponsabilityByCompanyCommand retornando:" +
-                " de Responsability : " + responsability.toString());
+                " de Responsability : " + responsabilities.toString());
         //endregion
     }
 
@@ -53,6 +58,6 @@ public class GetResponsabilityByCompanyCommand extends Command {
      */
     @Override
     public Object Return() {
-        return responsability;
+        return responsabilities;
     }
 }

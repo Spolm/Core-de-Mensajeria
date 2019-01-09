@@ -28,6 +28,7 @@ END;
 $$
 LANGUAGE 'plpgsql' VOLATILE;
 
+<<<<<<< HEAD
 -- DROP FUNCTION m10_edit_user_by_profile(integer,varchar, varchar, integer, integer, varchar, varchar, varchar, varchar, varchar);
 CREATE OR REPLACE FUNCTION m10_edit_user_by_profile(
 	IN userId INTEGER, IN name VARCHAR, IN lastname VARCHAR,
@@ -47,5 +48,25 @@ BEGIN
 	use_phone = phone
 	WHERE use_id = userId;
 	END;
+=======
+-- drop function m10_select_responsabilities_by_company
+CREATE OR REPLACE FUNCTION m10_select_responsabilities_by_company (IN companyId INTEGER)
+RETURNS TABLE (userid_ INTEGER, username_ VARCHAR, name_ VARCHAR, lastname_ VARCHAR, identification_ INTEGER,
+	birth_ TIMESTAMP, phone_ VARCHAR, rg_ INTEGER, email_ VARCHAR, rol_id_ INTEGER, rol_name_ VARCHAR)
+AS $$
+BEGIN
+RETURN QUERY  
+SELECT u.use_id, u.use_username, u.use_name, u.use_lastname, u .use_identification_number, u.use_date_of_birth, u.use_phone, u.use_rg_id, u.use_email,
+	rol.rol_id, rol.rol_name
+FROM PUBLIC.RESPONSABILITY r
+INNER JOIN PUBLIC.COMPANY c
+on r.res_com_id = c.com_id
+INNER JOIN PUBLIC.USER u
+on r.res_use_id = u.use_id
+INNER JOIN PUBLIC.ROLE rol
+on rol.rol_id = r.res_rol_id
+WHERE c.com_id = companyId;
+END;
+>>>>>>> c88ccc450f565cba4ddc7451ea58d11ddb3e614c
 $$
 LANGUAGE 'plpgsql' VOLATILE;

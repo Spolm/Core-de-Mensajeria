@@ -66,7 +66,7 @@ public class M10_Profile {
      * @return responsibilities by company (companyId)
      */
     @GET
-    @Path("/responsability")
+    @Path("/responsabilities")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getResponsability(@QueryParam("companyId") int companyId) {
         //region Instrumentation Debug

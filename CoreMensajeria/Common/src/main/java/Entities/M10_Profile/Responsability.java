@@ -10,6 +10,14 @@ public class Responsability extends Entity {
     private Company company;
     private Rol rol;
 
+    public Responsability(){}
+
+    public Responsability(User user, Company company, Rol rol){
+        this.user = user;
+        this.company = company;
+        this.rol = rol;
+    }
+
     public User getUser() {
         return user;
     }
