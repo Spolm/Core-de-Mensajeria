@@ -1,4 +1,4 @@
-package Mappers.CampaignMapper;
+package M03_Campaign;
 
 
 import DTO.DTOFactory;
@@ -10,6 +10,7 @@ import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 import Entities.Sql;
 import Exceptions.CompanyDoesntExistsException;
+import Mappers.CampaignMapper.*;
 import Mappers.MapperFactory;
 import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;

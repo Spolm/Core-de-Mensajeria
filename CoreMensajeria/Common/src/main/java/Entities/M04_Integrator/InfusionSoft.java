@@ -11,7 +11,7 @@ package Entities.M04_Integrator;
  * @see Integrator
  */
 
-public class InfusionSoft extends Integrator {
+public class InfusionSoft extends Integrator implements IIntegrator{
 
     /**
      * Constructor de la clase InfusionSoft
@@ -25,7 +25,8 @@ public class InfusionSoft extends Integrator {
      * @see Integrator
      */
 
-    public InfusionSoft(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator, boolean enabled) {
+    public InfusionSoft(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator,
+                        String apiIntegrator, boolean enabled) {
         super(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
     }
 

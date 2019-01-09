@@ -3,6 +3,7 @@ package Logic.M02_Company;
 import Entities.Entity;
 import Entities.M02_Company.Company;
 import Exceptions.M02_Company.CompanyInvalidDataException;
+import Exceptions.M07_Template.InvalidParameterException;
 import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Persistence.DAOFactory;
@@ -31,6 +32,9 @@ public class ChangeStatusCommand extends Command {
     public void execute() throws CompanyInvalidDataException, UnexpectedErrorException {
 
         try {
+            if ( _co.get_idCompany() == 0){
+                throw new CompanyInvalidDataException();
+            }
             IDAOCompany _dao = DAOFactory.instanciateDaoCompany();
             _dao.changeStatus(_co);
         }

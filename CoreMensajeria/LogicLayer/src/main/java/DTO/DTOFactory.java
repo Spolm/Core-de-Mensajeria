@@ -4,6 +4,12 @@ import DTO.M01_DTO.DTOPrivilege;
 import DTO.M01_DTO.DTOUser;
 import DTO.M02_DTO.*;
 import DTO.M03_DTO.*;
+import DTO.M04_Integrator.DTOIntegrator;
+import DTO.M05_Channel.DTOChannel;
+import DTO.M09_DTO.DTOStatistic;
+import Entities.Entity;
+import Entities.M02_Company.Company;
+import DTO.M04_Integrator.DTOIntegrator;
 import DTO.M07_Template.DTOMessage;
 import DTO.M07_Template.DTOParameter;
 import DTO.M07_Template.DTOTemplate;
@@ -17,7 +23,6 @@ import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.Status;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -61,7 +66,7 @@ public class DTOFactory {
      * @return Objeto del tipo DTOPrivilege
      */
 
-      
+
     public static DTOPrivilege CreateDTOPrivilege(int _idPrivileges, String _codePrivileges, String _actionPrivileges) {
 
         return new DTOPrivilege(_idPrivileges,_codePrivileges,_actionPrivileges);
@@ -69,7 +74,7 @@ public class DTOFactory {
     }
 
     /**
-    END REGION 
+    END REGION
   /// COMPANY
      */
     /**
@@ -191,6 +196,27 @@ public class DTOFactory {
     }
 
 //  END CAMPAIGN
+
+
+
+
+
+// M04_region
+    public static DTOIntegrator CreateDTOIntegrator (int threadCapacity, float messageCost,
+                                                     String nameIntegrator, String apiIntegrator, boolean enabled){
+        return new DTOIntegrator(threadCapacity,messageCost,nameIntegrator,apiIntegrator,enabled);
+    }
+
+    public static DTOChannel createDTOChannel (String nameChannel, String descriptionChannel, ArrayList<Entity> integrators){
+        return new DTOChannel(nameChannel, descriptionChannel, integrators);
+    }
+//end region
+
+
+
+
+
+
 
     /**
      * Metodo que instancia un obejto del tipo DTOStatistic

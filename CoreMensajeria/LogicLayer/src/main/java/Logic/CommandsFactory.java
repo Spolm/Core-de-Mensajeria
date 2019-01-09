@@ -3,6 +3,8 @@ package Logic;
 import DTO.DTO;
 import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
+import Logic.M04_Integrator.*;
+import Logic.M05_Channel.CommandGetAllChannels;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 
@@ -238,6 +240,30 @@ public class CommandsFactory {
     }
     //endregion
 
+
+    // region M04_Integrator
+    public static CommandDisableIntegrator createCommandDisableIntegrator(int id) {
+        return new CommandDisableIntegrator(id);
+    }
+
+    public static CommandEnableIntegrator createCommandEnableIntegrator(int id) {
+        return new CommandEnableIntegrator( id );
+    }
+
+    public static CommandGetAllIntegrator createCommandGetAllIntegrators() {
+        return new CommandGetAllIntegrator();
+    }
+
+    public static CommandGetConcreteIntegrator createCommandGetConcreteIntegrator(int id) {
+        return new CommandGetConcreteIntegrator(id);
+    }
+
+    public static CommandGetIntegratorByChannel createCommandGetIntegratorByChannel(int id){
+        return new CommandGetIntegratorByChannel(id);
+    }
+
+    public static CommandGetAllChannels instanceGetAllChannels(){ return new CommandGetAllChannels(); }
+    //endregion
 
     //M07_Templates
 
