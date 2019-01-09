@@ -53,13 +53,33 @@ public class MapperFactory {
         return new MapperFullCampaign();
     }
 
+
+    /**
+     * Metodos que instancian un obejto del tipo MapperIdCompany
+     * @return un objeto del tipo MapperIdCompany
+     */
     public static MapperIdCompany createMapperIdCompany(){
-        return  new MapperIdCompany();
+
+        return new MapperIdCompany();
     }
 
-    public static MapperIdStatusCompany createMapperIdStatusCompany(){ return  new MapperIdStatusCompany(); }
+    /**
+     * Metodos que instancian un obejto del tipo MapperIdStatusCompany
+     * @return un objeto del tipo MapperIdStatusCompany
+     */
+    public static MapperIdStatusCompany createMapperIdStatusCompany(){
 
-    public static MapperIdCompUser createMapperIdCompUser(){ return  new MapperIdCompUser(); }
+        return  new MapperIdStatusCompany();
+    }
+
+    /**
+     * Metodos que instancian un obejto del tipo MapperIdCompUser
+     * @return un objeto del tipo MapperIdCompUser
+     */
+    public static MapperIdCompUser createMapperIdCompUser(){
+
+        return  new MapperIdCompUser();
+    }
 
 
     /**
@@ -76,6 +96,7 @@ public class MapperFactory {
      * @return un objeto del tipo MapperIdCampaign
      */
     public static MapperIdCampaign createMapperIdCampaign(){
+
         return  new MapperIdCampaign();
     }
 
@@ -84,10 +105,12 @@ public class MapperFactory {
      * @return un objeto del tipo MapperCampaignWithOut_id_And_Company
      */
     public static MapperCampaignWithOut_id_And_Company CreateMapperCampaignWithOut_id_And_Company(){
+
         return new MapperCampaignWithOut_id_And_Company();
     }
 
     public static MapperIdStatusCampaign createMapperIdStatusCampaign(){
+
         return new MapperIdStatusCampaign();
     }
     // endregion
