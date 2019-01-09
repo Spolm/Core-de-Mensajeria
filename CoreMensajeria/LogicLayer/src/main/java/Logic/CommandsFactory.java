@@ -16,6 +16,7 @@ import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
 import Logic.M10_Profile.GetGeographicalRegionCommand;
 import Logic.M10_Profile.GetPrivilegesByUserCompanyCommand;
+import Logic.M10_Profile.GetResponsabilityByCompanyCommand;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
@@ -350,6 +351,10 @@ public class CommandsFactory {
 
     public static Command createGetGeographicalRegionCommand(int id){
         return new GetGeographicalRegionCommand(id);
+    }
+
+    public static Command createGetResponsabilityByCompanyCommand(int companyId){
+        return new GetResponsabilityByCompanyCommand(companyId);
     }
 
     //end region

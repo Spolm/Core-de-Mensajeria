@@ -37,4 +37,23 @@ public class M10_Profile {
         // 5. Return DTO
         return response;
     }
+
+    @GET
+    @Path("/responsability")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getResponsability(@QueryParam("companyId") int companyId){
+        Response response = null;
+        try {
+            // 1. Map DTO to Entity ...
+            Command command = CommandsFactory.createGetResponsabilityByCompanyCommand(companyId);
+            command.execute();
+            // 4. Map Entity to DTO
+            // 5. Return DTO
+            return Response.ok(new Gson().toJson(command.Return())).build();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        // 5. Return DTO
+        return response;
+    }
 }
