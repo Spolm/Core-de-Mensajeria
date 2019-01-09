@@ -70,7 +70,7 @@ public class DAOCompany extends DAOPostgres implements IDAOCompany {
             preparedStatement.setInt( 1, _comp.get_idCompany() );
             ResultSet _result = preparedStatement.executeQuery();
             while ( _result.next() ) {
-                _coList.add( getCompany( _result ) );
+                _coList.add( getCompanyResponsible( _result ) );
             }
         }catch (SQLException exc) {
             exc.printStackTrace();
@@ -88,6 +88,17 @@ public class DAOCompany extends DAOPostgres implements IDAOCompany {
         return  _coList;
     }
 
+    public Company getCompanyResponsible( ResultSet _result ) throws SQLException {
+
+        Company _company = EntityFactory.CreateFullCompany(
+                _result.getInt( "com_id" ),
+                _result.getString( "com_name" ),
+                _result.getString( "com_description" ),
+                _result.getBoolean( "com_status" ),
+                _result.getString( "com_route_link" ),
+                _result.getInt( "  r.res_use_id" ) );
+        return _company;
+    }
 
     public Company getCompany( ResultSet _result ) throws SQLException {
 
