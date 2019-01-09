@@ -1,10 +1,9 @@
 package Mappers.CompanyMapper;
 
 import DTO.DTOFactory;
-import DTO.M02_DTO.DTOIdCompany;
 import DTO.M02_DTO.DTOIdStatusCompany;
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M02_Company.Company;
 import Mappers.GenericMapper;
 
@@ -90,9 +89,9 @@ public class MapperIdStatusCompany  extends GenericMapper<DTOIdStatusCompany> {
     @Override
     public Entity CreateEntity( DTOIdStatusCompany dto ) {
 
-      //  Logger logger = Logger.getLogger(M02_Companies.class.getName());
-        //logger.info("Objeto compania recibido en Create Entity" + dto.get_idCompany() + " " +
-          //           dto.is_status());
+         Logger logger = Logger.getLogger(MapperIdStatusCompany.class.getName());
+         logger.info("Objeto compania recibido en Create Entity" + dto.get_idCompany() + " " +
+                      dto.is_status());
 
         try {
             Company _com = EntityFactory.CreateCompanyIDStatus( dto.get_idCompany(), dto.is_status() );

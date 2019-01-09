@@ -19,10 +19,10 @@ export class CompanyComponent implements OnInit {
               public rest: CompanyService, private toastr: ToastrService) { }
 
   private companyList = Array<Company>();
-  private company: Company;
   private vacio: boolean;
   private counter: number = 0;
   private lastCompanyId: number;
+  company: Company = new Company();
 
   ngOnInit() {
 
@@ -40,7 +40,7 @@ export class CompanyComponent implements OnInit {
   }
 
   
-  activateCompany(_idCompany: number , _statusCompany : boolean , Company : Company){
+  activateCompany(_idCompany: number , _statusCompany : boolean , company : Company){
     this.toastr.info("Para confirmar realice doble click de nuevo", "Activar la compañia id: "+ _idCompany,
     {
       timeOut: 2800,
@@ -48,8 +48,9 @@ export class CompanyComponent implements OnInit {
     });
     this.counter++;
     if(this.counter == 2 && this.lastCompanyId == _idCompany){
-      this.rest.activateCompany(_idCompany , _statusCompany , Company);
-      console.log("ACT " +Company);
+      this.rest.activateCompany(company).toPromise().then(res => {
+      });
+      console.log(company);
       this.toastr.success("Compañia activada", "Company id: "+ _idCompany,
       {
         timeOut: 2800,
@@ -62,7 +63,7 @@ export class CompanyComponent implements OnInit {
     this.lastCompanyId = _idCompany;
   }
   
-  deactivateCompany(_idCompany: number , _statusCompany : boolean , Company : Company){
+  deactivateCompany(_idCompany: number , _statusCompany : boolean , company : Company){
     this.toastr.info("Para confirmar realice doble click de nuevo", "Desactivar la compañia id: "+ _idCompany,
     {
       timeOut: 2800,
@@ -70,8 +71,10 @@ export class CompanyComponent implements OnInit {
     });
     this.counter++;
     if(this.counter == 2 && this.lastCompanyId == _idCompany){
-      console.log("Des " +Company);
-      this.rest.activateCompany(_idCompany , _statusCompany , Company);
+      console.log(company);
+      this.rest.activateCompany(company).toPromise().then(res => {
+        //manejo de la respuesta del servicio
+      });
       this.toastr.success("Compañia desactivada", "Company id: "+ _idCompany,
       {
         timeOut: 2800,

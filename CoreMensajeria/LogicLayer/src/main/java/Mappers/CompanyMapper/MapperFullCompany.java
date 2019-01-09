@@ -1,15 +1,13 @@
 package Mappers.CompanyMapper;
 
-import DTO.DTO;
 import DTO.M02_DTO.DTOFullCompany;
 import Entities.Entity;
-import Entities.Factory.EntityFactory;
+import Entities.EntityFactory;
 import Entities.M02_Company.Company;
 import Mappers.GenericMapper;
 import DTO.DTOFactory;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class MapperFullCompany extends GenericMapper <DTOFullCompany> {
 
@@ -94,6 +92,7 @@ public class MapperFullCompany extends GenericMapper <DTOFullCompany> {
     @Override
     public Entity CreateEntity(DTOFullCompany dto) {
         try {
+
             Company _com = EntityFactory.CreateFullCompany(dto.get_idCompany(), dto.get_name(), dto.get_desc(),
                                                             dto.get_status(), dto.get_link(), dto.get_idUser());
             return _com ;
