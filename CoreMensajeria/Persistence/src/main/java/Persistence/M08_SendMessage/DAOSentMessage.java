@@ -26,12 +26,12 @@ public class DAOSentMessage extends DAO implements IDAOSentMessage{
         SentMessage sentMessage = (SentMessage) e;
         try {
             PreparedStatement preparedStatement = _conn.prepareCall(CALL_INSERT);
-            preparedStatement.setTimestamp(1, sentMessage._sentTime);
-            preparedStatement.setInt(2, sentMessage._messageId);
-            preparedStatement.setInt(3, sentMessage._campaignId);
-            preparedStatement.setInt(4, sentMessage._channelId);
-            preparedStatement.setInt(5, sentMessage._integratorId);
-            preparedStatement.setInt(6, sentMessage._applicationId);
+            preparedStatement.setTimestamp(1, sentMessage.get_sentTime());
+            preparedStatement.setInt(2, sentMessage.get_message());
+            preparedStatement.setInt(3, sentMessage.get_campaignId());
+            preparedStatement.setInt(4, sentMessage.get_channel());
+            preparedStatement.setInt(5, sentMessage.get_integratorId());
+            preparedStatement.setInt(6, sentMessage.get_applicationId());
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 e.set_id(result.getInt("id"));

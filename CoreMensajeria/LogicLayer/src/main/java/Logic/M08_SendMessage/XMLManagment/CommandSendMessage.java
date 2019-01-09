@@ -43,7 +43,7 @@ public class CommandSendMessage extends Command {
      * SMS y/o Integrador.
      */
     @Override
-    public void execute() throws UnexpectedErrorException {
+    public void execute() throws Exception {
         ArrayList<Channel> _channels = _template.getChannels();
 
         for(Message message : _verifiedMessages) {
@@ -61,16 +61,23 @@ public class CommandSendMessage extends Command {
 
                 for(Entity entity : integrators){
                     Integrator integrator = (Integrator)entity;
-                    if (integrator.isEnabled()) {
-                        if(channel.get_nameChannel().equalsIgnoreCase("SMS")){ ///*** MOSCA CON ESTO
-                            //integrator.sendMessage(finalMessage,telefono,"Valor a cambiar");
-                            System.out.println(finalMessage + " destino " +  telefono);
-                        }else{
-                            //integrator.sendMessage(finalMessage,correo,"Valor a cambiar"); ///*** MOSCA CON ESTO
-                            System.out.println(finalMessage + " destino " +  correo);
+                    try {
+                        if (integrator.isEnabled()) {
+                            if (channel.get_nameChannel().equalsIgnoreCase("SMS")) { ///*** MOSCA CON ESTO
+                                //integrator.sendMessage(finalMessage,telefono,"Valor a cambiar");
+                                System.out.println(finalMessage + " destino " + telefono);
+                            } else {
+                                //integrator.sendMessage(finalMessage,correo,"Valor a cambiar"); ///*** MOSCA CON ESTO
+                                System.out.println(finalMessage + " destino " + correo);
+                            }
                         }
+                        Command<Entity> sc = CommandsFactory.createCommandInsertMessage(_template, integrator.get_id(),
+                                channel.get_id(), this._dateToBeSent);
+                        sc.execute();
+                    }catch (Exception e){
+                        log.error("Error al insertar en base de datos");
+                        throw e;
                     }
-
                 }
             }
         }
