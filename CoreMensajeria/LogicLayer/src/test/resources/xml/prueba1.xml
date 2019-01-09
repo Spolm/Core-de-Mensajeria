@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<template>
+	<id>5</id>
+	<message>
+		<correo>Carlos@gmail.com</correo>
+		<telefono>0416-2184569</telefono>
+		<parameter>
+			<name>FECHA Inicio</name>
+			<value>12-12-2019</value>
+		</parameter>
+		<parameter>
+			<name>Fecha Fin</name>
+			<value>01-03-2020</value>
+		</parameter>
+	</message>
+	<message>
+		<telefono>0416-2184569</telefono>
+		<correo>Carlos@gmail.com</correo>
+		<parameter>
+			<name>Fecha Inicio</name>
+			<value>05-12-2019</value>
+		</parameter>
+		<parameter>
+			<name>Fecha Fin</name>
+			<value>02-04-2020</value>
+		</parameter>
+	</message>
+	<message>
+		<correo>Sabrina@gmail.com</correo>
+		<telefono>0416-2184569</telefono>
+		<parameter>
+			<name>Fecha Inicio</name>
+			<value>11-14-2019</value>
+		</parameter>
+		<parameter>
+			<name>Fecha Fin</name>
+			<value>12-28-28</value>
+		</parameter>
+	</message>
+</template>

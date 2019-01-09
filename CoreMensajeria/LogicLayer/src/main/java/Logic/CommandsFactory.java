@@ -45,8 +45,20 @@ public class CommandsFactory {
     public static GetAllUsersCommand createGetAllUsersCommand () {
         return new GetAllUsersCommand();
     }
-    public static LogUserCommand createLogUserCommand (Entity user) {
-        return new LogUserCommand(user);
+    public static LogUserCommand createLogUserCommand (Entity log) {
+        return new LogUserCommand(log);
+    }
+    public static IsBlockedUserCommand isBlockedUserCommand (Entity log) {
+        return new IsBlockedUserCommand(log);
+    }
+    public static TokenGeneratorCommand tokenGeneratorCommand ( String email) {
+        return new TokenGeneratorCommand(email);
+    }
+    public static FindByUsernameOrEmailCommand findByUsernameOrEmailCommand (String username) {
+        return new FindByUsernameOrEmailCommand(username);
+    }
+    public static ChangePasswordCommand changePasswordCommand (String username, String password) {
+        return  new ChangePasswordCommand(username, password);
     }
 
     public static Command createScheduleMessage(VerifiedParameter verifiedParameters) {

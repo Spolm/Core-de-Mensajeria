@@ -2,10 +2,13 @@ package Persistence.M01_Login;
 
 import Entities.Entity;
 import Entities.EntityFactory;
+import Entities.M01_Login.LoginIntent;
 import Entities.M01_Login.User;
 import Entities.Sql;
+import Exceptions.UserBlockedException;
 import Persistence.DAO;
 
+import javax.ws.rs.core.Response;
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -243,6 +246,8 @@ public class DAOUser extends DAO implements  IDAOUser {
         }
     }
 
+
+
     public void updateUser(User user) throws SQLException {
         PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_UPDATE);
         preparedStatement.setString(1,user.get_passwordUser());
@@ -320,15 +325,25 @@ public class DAOUser extends DAO implements  IDAOUser {
      * @throws SQLException
      */
 
-    public User logUser(String username, String password) throws SQLException {
-        PreparedStatement preparedStatement = _conn.prepareCall(CALL_LOGIN);
-        preparedStatement.setString(1, username);
-        preparedStatement.setString(2, password);
-        _result = preparedStatement.executeQuery();
-        _user = null;
-        while (_result.next()) {
-            _user = new User();
-            setUserParams(_result, _user);
+    public User logUser(String username, String password) throws SQLException, UserBlockedException {
+        LoginIntent loginIntent = new LoginIntent();
+        loginIntent.set_username(username);
+        loginIntent.set_password(password);
+        DAOUser _userDAO = new DAOUser();
+        Error error;
+        User user;
+        try {
+            PreparedStatement preparedStatement = _conn.prepareCall(CALL_LOGIN);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            _result = preparedStatement.executeQuery();
+            _user = null;
+            while (_result.next()) {
+                _user = new User();
+                setUserParams(_result, _user);
+            }
+        }catch (Exception e) {
+            throw e;
         }
         return _user;
     }
