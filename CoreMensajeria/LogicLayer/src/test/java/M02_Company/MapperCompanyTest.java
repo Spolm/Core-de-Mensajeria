@@ -67,11 +67,12 @@ public class MapperCompanyTest {
 
         try {
             //-----CreateEntity----
-            DTOCompanyWithOut_Link _DTO = DTOFactory.CreateDtoCompanyWithOut_Link(1, "Company 1", "Des"
-                    , true);
+            DTOCompanyWithOut_Link _DTO = DTOFactory.CreateDtoCompanyWithOut_Link(1, "Company 1"
+                                                                                , "Des", true);
 
-            DTOCompanyWithOut_Link _DTO2 = DTOFactory.CreateDtoCompanyWithOut_Link(2, "Company 2", "Des1"
-                    , true);
+            DTOCompanyWithOut_Link _DTO2 = DTOFactory.CreateDtoCompanyWithOut_Link(2,
+                                                                                "Company 2", "Des1"
+                                                                                , true);
 
             List<DTOCompanyWithOut_Link> _listDto = new ArrayList<>();
 
@@ -132,11 +133,11 @@ public class MapperCompanyTest {
     void MapperCompanyWithOutIdAndLinkTest(){
         try {
             //-----CreateEntity----
-            DTOCompanyWithOutIdAndLink _DTO = DTOFactory.CreateDtoCompanyWithOut_idAndlink("Company 1", "Des"
-                    , true);
+            DTOCompanyWithOutIdAndLink _DTO = DTOFactory.CreateDtoCompanyWithOut_idAndlink("Company 1",
+                                                                                        "Des", true);
 
-            DTOCompanyWithOutIdAndLink _DTO2 = DTOFactory.CreateDtoCompanyWithOut_idAndlink("Company 2", "Des1"
-                    , true);
+            DTOCompanyWithOutIdAndLink _DTO2 = DTOFactory.CreateDtoCompanyWithOut_idAndlink("Company 2",
+                                                                                        "Des1", true);
 
             List<DTOCompanyWithOutIdAndLink> _listDto = new ArrayList<>();
 

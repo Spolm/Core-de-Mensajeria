@@ -1,14 +1,14 @@
 package webService.M01_Login;
 
 import DTO.M01_DTO.DTOLogin;
+import Entities.Entity;
 import Entities.M01_Login.*;
 import Exceptions.UserBlockedException;
+import Logic.Command;
 import Logic.CommandsFactory;
-import Logic.M01_Login.LogUserCommand;
+import Logic.M01_Login.*;
 import Mappers.LoginMapper.LoginMapper;
 import Mappers.MapperFactory;
-import Persistence.M01_Login.DAOUser;
-import Persistence.M01_Login.DAOPrivilege;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -25,7 +26,6 @@ import java.util.logging.Logger;
 public class M01_Login {
 
     Gson _gson = new Gson();
-    DAOUser _userDAO = new DAOUser();
 
     /**
      * This method is the connection between front-end and back-end. Verifies that the input data matches with the data
@@ -37,25 +37,23 @@ public class M01_Login {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response login( LoginIntent loginIntent){
+    public Response login( LoginIntent loginIntent) throws Exception {
         Error error;
+        //LoginMapper _mapper = MapperFactory.createLoginMapper();
+        LoginIntent _log; //= (LoginIntent) _mapper.CreateEntity(login);
         User user;
-//        try {
-//            LogUserCommand _command = CommandsFactory.createLogUserCommand(user);
-//            _command.execute();
-            LoginMapper _mapper = MapperFactory.createLoginMapper();
-//            ArrayList<Entity> _user = _command.ReturnList();
-//            DTOLogin _dtoLog = _mapper.CreateDto(user);
-//            _rb.entity( _gson.toJson( _dtoLog ) ) ;
-//        }
+        LogUserCommand _command = CommandsFactory.createLogUserCommand(loginIntent);
+        IsBlockedUserCommand _cmd = CommandsFactory.isBlockedUserCommand(loginIntent);
+        //DTOLogin _dtoLog = _mapper.CreateDto(_log);
         try {
+
             if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
                     loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
-
-                if( _userDAO.isBlockedUser(loginIntent.get_username()) )
+                _cmd.execute();
+                if( _cmd.returnBool() )
                     throw new UserBlockedException("El usuario ingresado se encuentra bloqueado");
-
-                user = _userDAO.logUser(loginIntent.get_username(),loginIntent.get_password());
+                _command.execute();
+                user = (User) _command.Return();
                 if (user == null)
                     throw new NullPointerException();
                 return Response.ok(_gson.toJson(user)).build();
@@ -100,10 +98,12 @@ public class M01_Login {
     @Produces(MediaType.APPLICATION_JSON)
     public Response requestPassword(@QueryParam("email") String email){
         Error error;
+        TokenGeneratorCommand _command = CommandsFactory.tokenGeneratorCommand(email);
         try {
 
             if(email.matches("^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$")){
-                String token = _userDAO.tokenGenerator(email);
+                _command.execute();
+                String token = _command.returnString();
                 Logger logger = Logger.getLogger(getClass().getName());
                 logger.info("token: "+token);
                 MailSender.generateAndSendEmail(token,email);
@@ -147,14 +147,22 @@ public class M01_Login {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response changePassword( PasswordChange passwordChange){
         Error error;
+        FindByUsernameOrEmailCommand _command =
+                CommandsFactory.findByUsernameOrEmailCommand(passwordChange.get_username());
+
         User user;
         try {
-            user = _userDAO.findByUsernameOrEmail(passwordChange.get_username());
-            if(_userDAO.tokenGenerator(user.get_emailUser()).equals(passwordChange.get_token())){
+            _command.execute();
+            user = (User) _command.Return();//_userDAO.findByUsernameOrEmail(passwordChange.get_username());
+            TokenGeneratorCommand _cmd = CommandsFactory.tokenGeneratorCommand(user.get_emailUser());
+            _cmd.execute();
+            if(_cmd.returnString().equals(passwordChange.get_token())){
                 Logger logger = Logger.getLogger(getClass().getName());
                 logger.info("Password: " + passwordChange.get_newPassword());
+
                 if(passwordChange.get_newPassword().matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$")){
-                    _userDAO.changePassword(user.get_usernameUser(),passwordChange.get_newPassword());
+                    ChangePasswordCommand passCmd = CommandsFactory.changePasswordCommand(user.get_usernameUser(), passwordChange.get_newPassword());
+                    passCmd.execute();
                     return Response.ok(_gson.toJson("Clave cambiada exitosamente")).build();
                 } else{
                     error = new Error("La clave no es segura");

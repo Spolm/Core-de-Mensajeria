@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class Statistics extends Entity {
 
-    public   ArrayList x;
-    public   ArrayList<Integer> y;
-    public   String type;
+    private   ArrayList x;
+    private   ArrayList<Integer> y;
+    private   String type;
 
 
     public Statistics(ArrayList x, ArrayList<Integer> y) {
@@ -36,14 +36,6 @@ public class Statistics extends Entity {
 
     public void setY(ArrayList<Integer> y) {
         this.y = y;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Statistics() {

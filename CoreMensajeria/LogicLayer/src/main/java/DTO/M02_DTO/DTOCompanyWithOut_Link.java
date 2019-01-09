@@ -9,7 +9,22 @@ public class DTOCompanyWithOut_Link  extends DTO{
     private String _desc;
     private boolean _status;
 
+    /**
+     * DTO para Company con id sin link
+     * @param id id para una campaña
+     * @param name nombre para una campaña recien creada
+     * @param desc descripcion de la campaña
+     * @param status el estatus de la campaña, puede ser activada o desactivada
+     */
 
+    public DTOCompanyWithOut_Link(int id, String name, String desc, boolean status) {
+
+        _idCompany = id;
+        _name = name;
+        _desc = desc;
+        _status = status;
+
+    }
     public int get_idCompany () {
         return _idCompany;
     }
@@ -44,21 +59,6 @@ public class DTOCompanyWithOut_Link  extends DTO{
 
 
 
-    /**
-     * DTO para Company con id sin link
-     * @param id id para una campaña
-     * @param name nombre para una campaña recien creada
-     * @param desc descripcion de la campaña
-     * @param status el estatus de la campaña, puede ser activada o desactivada
-     */
 
-    public DTOCompanyWithOut_Link(int id, String name, String desc, boolean status) {
-
-        _idCompany = id;
-        _name = name;
-        _desc = desc;
-        _status = status;
-
-    }
 
 }

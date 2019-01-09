@@ -37,8 +37,7 @@ enum EntityType {
 enum ChartType {
     line = "line",
     bar = "bar",
-    pie = "pie",
-    doughnut = "doughnut"
+    pie = "pie"
 }
 
 @Component({
@@ -85,7 +84,6 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         this.chartTypes = [
             ["bar", "barras", true],
             ["line", "línea", false],
-            ["doughnut", "dona", false]
         ];
     }
 
@@ -246,7 +244,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                     data,
                     this.channelsChartElement,
                     "Cantidad de mensajes por canal",
-                    ChartType.doughnut
+                    ChartType.bar
                 );
             },
             error => {
@@ -470,11 +468,11 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                     campaigns,
                     ChartType.bar
                 );
-
+                
                 this.updateChartData(
                     this.channelsChart,
                     channels,
-                    ChartType.doughnut
+                    ChartType.bar
                 );
 
                 this.updateChartData(

@@ -8,6 +8,11 @@ public class VerifiedParameter {
     private ArrayList<Message> _verifiedMessages;
     private Template _template;
 
+    public VerifiedParameter(ArrayList<Message> _verifiedMessages, Template _template) {
+        this._verifiedMessages = _verifiedMessages;
+        this._template = _template;
+    }
+
     public ArrayList<Message> get_verifiedMessages() {
         return _verifiedMessages;
     }
