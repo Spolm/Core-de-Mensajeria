@@ -219,11 +219,21 @@ public class CommandsFactory {
 
 
     // region m02
-    public static AddCompanyCommand createAddCompanyCommand( Company _co ){ return new AddCompanyCommand( _co ); }
-    public static ChangeStatusCommand createChangeStatusCommand(Company _co ) {return new ChangeStatusCommand( _co );}
-    public static GetAllCompaniesCommand createGetAllCompaniesCommand() {return new GetAllCompaniesCommand();}
-    public static GetCompanyCommand createGetCompanyCommand(Company _co){return new GetCompanyCommand(_co);}
-    public static UpdateCompanyCommand createUpdateCompanyCommand(Entity _co) {return new UpdateCompanyCommand(_co);}
+    public static AddCompanyCommand createAddCompanyCommand( Company _co ){
+        return new AddCompanyCommand( _co );
+    }
+    public static ChangeStatusCommand createChangeStatusCommand( Company _co  ) {
+        return new ChangeStatusCommand( _co );
+    }
+    public static GetAllCompaniesCommand createGetAllCompaniesCommand() {
+        return new GetAllCompaniesCommand();
+    }
+    public static GetCompanyCommand createGetCompanyCommand(Company _co){
+        return new GetCompanyCommand(_co);
+    }
+    public static UpdateCompanyCommand createUpdateCompanyCommand(Entity _co) {
+        return new UpdateCompanyCommand( _co );
+    }
     public static GetCompanyByUserCommand createGetCompanyByUserCommand( Company _co ){
         return new GetCompanyByUserCommand( _co );
     }
@@ -231,10 +241,18 @@ public class CommandsFactory {
 
 
     // region m03
-    public static UpdateCampaignCommand createUpdateCampaignCommand(Entity _co) {return new UpdateCampaignCommand(_co);}
-    public static AddCampaignCommand createAddCampaignCommand(Campaign _ca ){ return new AddCampaignCommand( _ca ); }
-    public static GetCampaignCommand createGetCampaignCommand(Campaign _ca ){ return new GetCampaignCommand( _ca ); }
-    public static CampaignUserCommand createCampaignUserCommand(Company _ca ){ return new CampaignUserCommand( _ca ); }
+    public static UpdateCampaignCommand createUpdateCampaignCommand(Entity _co) {
+        return new UpdateCampaignCommand(_co);
+    }
+    public static AddCampaignCommand createAddCampaignCommand(Campaign _ca ){
+        return new AddCampaignCommand( _ca );
+    }
+    public static GetCampaignCommand createGetCampaignCommand(Campaign _ca ){
+        return new GetCampaignCommand( _ca );
+    }
+    public static CampaignUserCommand createCampaignUserCommand(Company _ca ){
+        return new CampaignUserCommand( _ca );
+    }
     public static CampaignUserCompanyCommand createCampaignUserCompany( Company _ca ){
          return new CampaignUserCompanyCommand( _ca  );
       }
