@@ -4,6 +4,8 @@ import Entities.Entity;
 import Entities.M01_Login.Privilege;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Logic.Command;
+import Persistence.DAOFactory;
+import Persistence.M07_Template.DAOTemplate;
 
 import java.util.ArrayList;
 
@@ -23,8 +25,10 @@ public class CommandGetTemplatePrivilegesByUser extends Command {
 
     @Override
     public void execute() throws Exception {
-        TemplateHandler templateHandler = new TemplateHandler();
-        privileges = templateHandler.getTemplatePrivilegesByUser(userId,companyId);
+        //TemplateHandler templateHandler = new TemplateHandler();
+        //privileges = templateHandler.getTemplatePrivilegesByUser(userId,companyId);
+        DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
+        privileges = daoTemplate.getTemplatePrivilegesByUser(userId,companyId);
     }
 
     @Override

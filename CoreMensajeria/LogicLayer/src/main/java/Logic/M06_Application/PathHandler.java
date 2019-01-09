@@ -2,7 +2,7 @@ package Logic.M06_Application;
 
 import Entities.M02_Company.Company;
 import Entities.M02_Company.CompanyDAO;
-import Entities.M08_Validation.WatchDirectory;
+import Logic.M08_SendMessage.XMLManagment.WatchDirectory;
 import Exceptions.CompanyDoesntExistsException;
 
 import javax.servlet.ServletContextEvent;

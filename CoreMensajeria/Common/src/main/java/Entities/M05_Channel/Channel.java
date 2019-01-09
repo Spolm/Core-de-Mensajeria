@@ -1,61 +1,59 @@
 package Entities.M05_Channel;
 
-import Entities.M04_Integrator.Integrator;
-
+import Entities.Entity;
 import java.util.ArrayList;
 
 /**
  * Clase abstracta Channel que nos proporciona los metodos
  * para trabajar con los canales en concreto.
  *
- * @author José Salas
- * @author Manuel Espinoza
- * @author José Cedeño
+ * @author Kevin Martinez
+ * @author Braulio Picon
+ * @author Alexander Fernandez
  */
 
-public abstract class Channel {
-    private int idChannel;
-    private String nameChannel;
-    private String descriptionChannel;
-    ArrayList<Integrator> integrators;
+public abstract class Channel extends Entity {
 
-    public Channel(int idChannel, String channelName, String channelDescription, ArrayList<Integrator> integrators) {
-        this.idChannel = idChannel;
-        this.nameChannel = channelName;
-        this.descriptionChannel = channelDescription;
-        this.integrators = integrators;
+    private String _nameChannel;
+    private String _descriptionChannel;
+    ArrayList<Entity> _integrators;
+
+    public Channel(int idChannel, String channelName, String channelDescription, ArrayList<Entity> integrators) {
+        this.set_id(idChannel);
+        this._nameChannel = channelName;
+        this._descriptionChannel = channelDescription;
+        this._integrators = integrators;
     }
 
-    public int getIdChannel() {
-        return idChannel;
+    public Channel(int idChannel, String channelName, String channelDescription) {
+        this.set_id(idChannel);
+        this._nameChannel = channelName;
+        this._descriptionChannel = channelDescription;
+        this._integrators = null;
     }
 
-    public void setIdChannel(int idChannel) {
-        this.idChannel = idChannel;
+    public String get_nameChannel() {
+        return _nameChannel;
     }
 
-    public String getNameChannel() {
-        return nameChannel;
+    public void set_nameChannel(String _nameChannel) {
+        this._nameChannel = _nameChannel;
     }
 
-    public void setNameChannel(String nameChannel) {
-        this.nameChannel = nameChannel;
+    public String get_descriptionChannel() {
+        return _descriptionChannel;
     }
 
-    public String getDescriptionChannel() {
-        return descriptionChannel;
+    public void set_descriptionChannel(String _descriptionChannel) {
+        this._descriptionChannel = _descriptionChannel;
     }
 
-    public void setDescriptionChannel(String descriptionChannel) {
-        this.descriptionChannel = descriptionChannel;
+    public ArrayList<Entity> get_integrators() {
+        return _integrators;
     }
 
-    public ArrayList<Integrator> getIntegrators() {
-        return integrators;
-    }
-
-    public void setIntegrators(ArrayList<Integrator> integrators) {
-        this.integrators = integrators;
+    public void set_integrators(ArrayList<Entity> integrators) {
+        this._integrators = integrators;
     }
 
 }

@@ -56,18 +56,15 @@ public class DAOPlanning  extends DAO implements IDAOPlanning {
     }
 
     public void postPlanning(String[] planning, int templateId) {
-        Connection connection = getBdConnect();
-        String query = "INSERT INTO public.Planning" +
-                "(pla_start_date, pla_start_time, pla_end_date, pla_end_time, pla_template_id) " +
-                "VALUES ('" + planning[0] + "','" + planning[2] +
-                "','" + planning[1] + "','" + planning[3] + "'," + templateId + ")";
         try{
-            _st=connection.createStatement();
-            _salida=_st.execute( query );
-            if(_salida==false)
-            {
-                throw new Exception();
-            }
+            Connection connection = getBdConnect();
+            _pt = connection.prepareCall("{callm07_postPlanning(?)}");
+            _pt.setInt(1, templateId);
+            _pt.setTimestamp(2, transform(planning[0]));
+            _pt.setTimestamp(3, transform(planning[2]));
+            _pt.setTimestamp(4, transform(planning[1]));
+            _pt.setTimestamp(5, transform(planning[3]));
+            _pt.executeQuery();
         }catch (SQLException e) {
             e.printStackTrace();
         }catch ( NullPointerException e ){
@@ -81,17 +78,15 @@ public class DAOPlanning  extends DAO implements IDAOPlanning {
 
 
     public void updatePlanning(String[] planning, int templateId) {
-        Connection connection = getBdConnect();
-        String query = "update public.Planning \n" +
-                "set pla_start_date = '" + planning[0] + "',pla_start_time = '" + planning[2] + "', pla_end_date = '" + planning[1] + "', pla_end_time = '" + planning[3] + "'" +
-                "where pla_template_id = " + templateId;
         try{
-            _st=connection.createStatement();
-            _salida=_st.execute( query );
-            if(_salida==false)
-            {
-                throw new Exception();
-            }
+            Connection connection = getBdConnect();
+            _pt = connection.prepareCall("{m07_updatePlanning(?)}");
+            _pt.setInt(1, templateId);
+            _pt.setTimestamp(2, transform(planning[0]));
+            _pt.setTimestamp(3, transform(planning[2]));
+            _pt.setTimestamp(4, transform(planning[1]));
+            _pt.setTimestamp(5, transform(planning[3]));
+            _pt.executeQuery();
         }catch (SQLException e) {
             e.printStackTrace();
         }catch (Exception e){

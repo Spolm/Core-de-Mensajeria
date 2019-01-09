@@ -3,7 +3,7 @@ package DTO.M03_DTO;
 public class DTOIdStatusCampaign {
 
     private int _idCampaign;
-    private boolean _status;
+    private boolean _statusCampaign;
 
     /**
      * Constructor Vacio
@@ -20,7 +20,7 @@ public class DTOIdStatusCampaign {
     public DTOIdStatusCampaign ( int id, boolean status ) {
 
         _idCampaign = id;
-        _status = status;
+        _statusCampaign = status;
 
     }
 
@@ -33,10 +33,10 @@ public class DTOIdStatusCampaign {
     }
 
     public boolean is_status() {
-        return _status;
+        return _statusCampaign;
     }
 
     public void set_status( boolean _status ) {
-        this._status = _status;
+        this._statusCampaign = _status;
     }
 }

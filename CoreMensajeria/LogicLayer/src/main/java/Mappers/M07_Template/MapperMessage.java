@@ -28,7 +28,6 @@ public class MapperMessage extends GenericMapper {
 
     @Override
     public Entity CreateEntity(Object o) {
-
         DTOMessage dtoMessage = (DTOMessage) o;
         return EntityFactory.CreateMessage(dtoMessage.get_mMessageId(),dtoMessage.get_mParameterArrayList(),dtoMessage.get_mMessage());
     }

@@ -10,7 +10,7 @@ package Entities.M04_Integrator;
  * @see Integrator
  */
 
-public class MailChimp extends Integrator {
+public class MailChimp extends Integrator implements IIntegrator{
 
     /**
      * Constructor de la clase MailChimp
@@ -24,7 +24,8 @@ public class MailChimp extends Integrator {
      * @see Integrator
      */
 
-    public MailChimp(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator, boolean enabled) {
+    public MailChimp(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator,
+                     String apiIntegrator, boolean enabled) {
         super(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
     }
 

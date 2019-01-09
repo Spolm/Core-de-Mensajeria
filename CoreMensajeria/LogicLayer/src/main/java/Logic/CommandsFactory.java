@@ -1,24 +1,28 @@
 package Logic;
 
+import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
+import Logic.M04_Integrator.*;
+import Logic.M05_Channel.CommandGetAllChannels;
+import Entities.M02_Company.Company;
+import Entities.M03_Campaign.Campaign;
 
-import Logic.M10_Profile.*;
+//import Logic.M10_Profile.*;
+import Entities.M08_Validation.XMLManagement.Message;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
+import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
-
+import Logic.M08_SendMessage.XMLManagment.*;
+import Logic.M10_Profile.GetGeographicalRegionCommand;
+import Logic.M10_Profile.GetPrivilegesByUserCompanyCommand;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
-import Entities.M08_Validation.XMLManagement.CommandGetMessage;
-import Entities.M08_Validation.XMLManagement.CommandProcessXML;
-import Entities.M08_Validation.XMLManagement.CommandGetParameter;
-import Entities.M08_Validation.XMLManagement.CommandGetTagValue;
 import DTO.M07_Template.NewParameter;
 import Logic.M01_Login.GetUserCommand;
-import Logic.M08_SendMessage.CommandSendMessage;
 import Logic.M08_Validation.*;
 import Logic.M07_Template.*;
 import Logic.M02_Company.*;
@@ -41,7 +45,7 @@ public class CommandsFactory {
         return new LogUserCommand(user);
     }
 
-    public static Entities.M08_Validation.XMLManagement.Command createScheduleMessage(VerifiedParameter verifiedParameters) {
+    public static Command createScheduleMessage(VerifiedParameter verifiedParameters) {
         return new CommandScheduleMessage(verifiedParameters);
     }
 
@@ -206,21 +210,21 @@ public class CommandsFactory {
                                               List<Integer> dayofweekIds, List<Integer> weekofyearIds, List<Integer> dayofmonthIds,
                                               List<Integer> dayofyearIds, List<Integer> hourofdayIds, List<Integer> minuteofhourIds,
                                               List<Integer> secondofminuteIds, List<Integer> quarterIds){return new GetStatisticCommand(companyIds, campaignIds, channelIds,
-                                                                                                                                                    integratorIds, yearIds, monthIds,
-                                                                                                                                                    dayofweekIds, weekofyearIds, dayofmonthIds,
-                                                                                                                                                    dayofyearIds, hourofdayIds, minuteofhourIds,
-                                                                                                                                                    secondofminuteIds, quarterIds);}
+            integratorIds, yearIds, monthIds,
+            dayofweekIds, weekofyearIds, dayofmonthIds,
+            dayofyearIds, hourofdayIds, minuteofhourIds,
+            secondofminuteIds, quarterIds);}
 
     //endregion
 
 
     // region m02
-    public static AddCompanyCommand createAddCompanyCommand( Entity _co ){ return new AddCompanyCommand( _co ); }
-    public static ChangeStatusCommand createChangeStatusCommand(Entity _co ) {return new ChangeStatusCommand( _co );}
+    public static AddCompanyCommand createAddCompanyCommand( Company _co ){ return new AddCompanyCommand( _co ); }
+    public static ChangeStatusCommand createChangeStatusCommand(Company _co ) {return new ChangeStatusCommand( _co );}
     public static GetAllCompaniesCommand createGetAllCompaniesCommand() {return new GetAllCompaniesCommand();}
-    public static GetCompanyCommand createGetCompanyCommand(Entity _co){return new GetCompanyCommand(_co);}
+    public static GetCompanyCommand createGetCompanyCommand(Company _co){return new GetCompanyCommand(_co);}
     public static UpdateCompanyCommand createUpdateCompanyCommand(Entity _co) {return new UpdateCompanyCommand(_co);}
-    public static GetCompanyByUserCommand createGetCompanyByUserCommand( Entity _co ){
+    public static GetCompanyByUserCommand createGetCompanyByUserCommand( Company _co ){
         return new GetCompanyByUserCommand( _co );
     }
     //endregion
@@ -228,23 +232,43 @@ public class CommandsFactory {
 
     // region m03
     public static UpdateCampaignCommand createUpdateCampaignCommand(Entity _co) {return new UpdateCampaignCommand(_co);}
-    public static AddCampaignCommand createAddCampaignCommand(Entity _ca ){ return new AddCampaignCommand( _ca ); }
-    public static GetCampaignCommand createGetCampaignCommand(Entity _ca ){ return new GetCampaignCommand( _ca ); }
-    public static CampaignUserCommand createCampaignUserCommand(Entity _ca ){ return new CampaignUserCommand( _ca ); }
-    public static CampaignUserCompanyCommand createCampaignUserCompany( Entity _ca ){
-         return new CampaignUserCompanyCommand( _ca  );
-      }
-    public static ChangeStatusCampaignCommand createChangeStatusCampaign( Entity _ca ){
+    public static AddCampaignCommand createAddCampaignCommand(Campaign _ca ){ return new AddCampaignCommand( _ca ); }
+    public static GetCampaignCommand createGetCampaignCommand(Campaign _ca ){ return new GetCampaignCommand( _ca ); }
+    public static CampaignUserCommand createCampaignUserCommand(Company _ca ){ return new CampaignUserCommand( _ca ); }
+    public static CampaignUserCompanyCommand createCampaignUserCompany( Company _ca ){
+        return new CampaignUserCompanyCommand( _ca  );
+    }
+    public static ChangeStatusCampaignCommand createChangeStatusCampaign( Campaign _ca ){
         return new ChangeStatusCampaignCommand( _ca );
     }
     //endregion
 
 
-    //M07_Templates
-
-    public static CommandGetMessages createCommandGetMessages(){
-        return new CommandGetMessages();
+    // region M04_Integrator
+    public static CommandDisableIntegrator createCommandDisableIntegrator(int id) {
+        return new CommandDisableIntegrator(id);
     }
+
+    public static CommandEnableIntegrator createCommandEnableIntegrator(int id) {
+        return new CommandEnableIntegrator( id );
+    }
+
+    public static CommandGetAllIntegrator createCommandGetAllIntegrators() {
+        return new CommandGetAllIntegrator();
+    }
+
+    public static CommandGetConcreteIntegrator createCommandGetConcreteIntegrator(int id) {
+        return new CommandGetConcreteIntegrator(id);
+    }
+
+    public static CommandGetIntegratorByChannel createCommandGetIntegratorByChannel(int id){
+        return new CommandGetIntegratorByChannel(id);
+    }
+
+    public static CommandGetAllChannels instanceGetAllChannels(){ return new CommandGetAllChannels(); }
+    //endregion
+
+    //M07_Templates
 
     public static CommandPostParameter createCommandPostParameter(NewParameter newParameter){
         return new CommandPostParameter(newParameter);
@@ -276,28 +300,27 @@ public class CommandsFactory {
 
     public static CommandUpdateTemplate createCommandUpdateTemplate(String json){
         return new CommandUpdateTemplate(json);
-}
+    }
 
     //region M_08
-    public static CommandGetTagValue createCommandGetTagValue(String tag, Element element){
+    public static Command createCommandGetTagValue(String tag, Element element){
         return new CommandGetTagValue(tag,element);
     }
 
-    public static CommandGetParameter createCommandGetParameter(Node node, ArrayList<Parameter> parameter){
+    public static Command createCommandGetParameter(Node node, ArrayList<Parameter> parameter){
         return new CommandGetParameter(node, parameter);
     }
 
-    public static CommandGetMessage createCommandGetMessage(Node node, Template template){
+    public static Command createCommandGetMessage(Node node, Template template){
         return new CommandGetMessage(node,template);
     }
 
-    public static CommandProcessXML createCommandProcessXML(String filePath){
+    public static Command createCommandProcessXML(String filePath){
         return new CommandProcessXML(filePath);
     }
 
-    public static CommandValidateMessage createCommandValidateMessage(int template, String message,
-                                                                      String channel) {
-        return new CommandValidateMessage(template, message, channel);
+    public static CommandValidateMessage createCommandValidateMessage(int template) {
+        return new CommandValidateMessage(template);
 
     }
 
@@ -305,29 +328,30 @@ public class CommandsFactory {
         return new CommandValidateTemplate(id);
     }
 
-    public static CommandValidate createCommandValidate (int template, String message, String channel) {
-        return new CommandValidate(template, message, channel);
+    public static CommandValidate createCommandValidate (ParametersDTO dto) {
+        return new CommandValidate(dto);
     }
+
+    public static Command createSendMessage(VerifiedParameter parameters) {
+        return new CommandSendMessage(parameters);
+    }
+
+    public static Command createCommandParseMessage(Message message, Template template){
+        return new CommandParseMessage(message, template);
+    }
+
     //end region
 
     //region Commands M_10
-    public static AddUserByProfileCommand createAddUserByProfileCommand(){
-        return new AddUserByProfileCommand();
-    }
-    public static EditUserProfileCommand createEditUserProfileCommand(){
-        return new EditUserProfileCommand();
+
+    public static Command createGetPrivilegesByUserCompanyCommand(int userId, int companyId){
+        return new GetPrivilegesByUserCompanyCommand(userId, companyId);
     }
 
-    public static FindUserByIdCommand createFindUserByIdCommand(){
-        return new FindUserByIdCommand();
+    public static Command createGetGeographicalRegionCommand(int id){
+        return new GetGeographicalRegionCommand(id);
     }
 
-    public  static GetAllCompaniesToProfileCommand createGetAllCompaniesToProfileCommand(){
-        return new GetAllCompaniesToProfileCommand();
-    }
+    //end region
 
-    public static GetAllRolesCommand createGetAllRolesCommand(){
-        return new GetAllRolesCommand();
-    }
-    //endregion
 }

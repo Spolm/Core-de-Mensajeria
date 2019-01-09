@@ -1,9 +1,8 @@
 package Entities.M10_Profile;
-import Entities.Entity;
 
 import java.util.Objects;
 
-public class Rol extends Entity{
+public class Rol {
     private int _id;
     private String _name;
 

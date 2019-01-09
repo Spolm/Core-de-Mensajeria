@@ -1,5 +1,5 @@
 package Entities.M04_Integrator;
-
+import Entities.Entity;
 
 /**
  * Clase abstracta Integrador que implementa la interfaz IIntegrador
@@ -11,8 +11,7 @@ package Entities.M04_Integrator;
  * @see IIntegrator
  */
 
-public abstract class Integrator implements IIntegrator {
-    private int idIntegrator;
+public abstract class Integrator  extends Entity /*implements IIntegrator*/{
     private int threadCapacity;
     private float messageCost;
     private String nameIntegrator;
@@ -32,20 +31,12 @@ public abstract class Integrator implements IIntegrator {
      */
 
     public Integrator(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator, boolean enabled) {
-        this.idIntegrator = idIntegrator;
+        this.set_id(idIntegrator);
         this.threadCapacity = threadCapacity;
         this.messageCost = messageCost;
         this.nameIntegrator = nameIntegrator;
         this.apiIntegrator = apiIntegrator;
         this.enabled = enabled;
-    }
-
-    public int getIdIntegrator() {
-        return idIntegrator;
-    }
-
-    public void setIdIntegrator(int idIntegrator) {
-        this.idIntegrator = idIntegrator;
     }
 
     public int getThreadCapacity() {
@@ -97,7 +88,7 @@ public abstract class Integrator implements IIntegrator {
     @Override
     public String toString() {
         return "Integrator{" +
-                "idIntegrator=" + idIntegrator +
+                "idIntegrator=" + get_id() +
                 ", threadCapacity=" + threadCapacity +
                 ", messageCost=" + messageCost +
                 ", nameIntegrator='" + nameIntegrator + '\'' +

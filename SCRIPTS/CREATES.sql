@@ -1,4 +1,12 @@
 \c CoreMensajeria CoreMensajeria
+CREATE TABLE PUBLIC.GEOGRAPHICAL_REGION
+(
+	rg_id serial PRIMARY KEY,
+	rg_name VARCHAR(60) NOT NULL,
+	rg_type INTEGER NOT NULL,
+	rg_rg INTEGER,
+	CONSTRAINT fk_geografical_region_id FOREIGN KEY ("rg_rg") REFERENCES PUBLIC.GEOGRAPHICAL_REGION ("rg_id")
+);
 
 create table public.User
 (
@@ -15,10 +23,14 @@ create table public.User
     use_gender char
 );
 
-
 ALTER TABLE public.User
 ADD COLUMN use_blocked integer DEFAULT 0 NOT NULL,
 ADD CoLUMN use_remaining_attempts integer DEFAULT 3 NOT NULL;
+
+ALTER TABLE public.USER
+ADD COLUMN use_name VARCHAR(30),
+ADD COLUMN use_lastname VARCHAR(30),
+ADD COLUMN use_identification_number INTEGER;
 
 ALTER TABLE public.User
 ADD COLUMN use_rg_id integer,
@@ -241,13 +253,4 @@ CREATE TABLE public.Planning
     pla_template_id integer NOT NULL,
     CONSTRAINT fk_template_id FOREIGN KEY ("pla_template_id")
     REFERENCES public.Template(tem_id)
-);
-
-CREATE TABLE PUBLIC.GEOGRAPHICAL_REGION
-(
-	rg_id serial PRIMARY KEY,
-	rg_name VARCHAR(60) NOT NULL,
-	rg_type INTEGER NOT NULL,
-	rg_rg INTEGER,
-	CONSTRAINT fk_geografical_region_id FOREIGN KEY ("rg_rg") REFERENCES PUBLIC.GEOGRAPHICAL_REGION ("rg_id")
 );

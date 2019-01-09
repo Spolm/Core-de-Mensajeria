@@ -31,8 +31,8 @@
             <td>{{campaign._descCampaign}}</td> 
             <td>{{campaign._startCampaign}}</td> 
             <td>{{campaign._endCampaign}}</td> 
-            <td *ngIf="!campaign._statusCampaign"><span class="badge badge-danger" (click)="activateCampaign(campaign._idCampaign)">Inactiva</span></td>
-            <td *ngIf="campaign._statusCampaign"><span class="badge badge-success" (click)="deactivateCampaign(campaign._idCampaign)">Activa</span></td> 
+            <td *ngIf="!campaign._statusCampaign"><span class="badge badge-danger" (click)="activateCampaign(campaign._idCampaign,campaign._statusCampaign,campaign)">Inactiva</span></td>
+            <td *ngIf="campaign._statusCampaign"><span class="badge badge-success" (click)="desactivateCampaign(campaign._idCampaign,campaign._statusCampaign,campaign)">Activa</span></td> 
           </tr>
     </tbody>
   </table>
