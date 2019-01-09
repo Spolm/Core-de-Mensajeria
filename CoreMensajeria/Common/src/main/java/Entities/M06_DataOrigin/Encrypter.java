@@ -1,12 +1,13 @@
 package Entities.M06_DataOrigin;
 
+import Entities.Entity;
 import com.google.common.hash.Hashing;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Encrypter {
+public class Encrypter extends Entity {
 
     private String SITE_KEY = "CoreMensajeria";
 
@@ -41,7 +42,7 @@ public class Encrypter {
      *
      * @return un string con el tiempo actual (en el formato declarado)
      */
-    static String getCurrentTime() {
+    public static String getCurrentTime() {
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
         return dateFormat.format(date);
