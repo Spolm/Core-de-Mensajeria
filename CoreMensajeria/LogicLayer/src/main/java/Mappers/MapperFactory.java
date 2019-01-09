@@ -7,6 +7,8 @@ import Mappers.M04_Integrator.MapperIntegrator;
 import Mappers.M05_Channel.MapperChannel;
 import Mappers.LoginMapper.LoginMapper;
 import Mappers.LoginMapper.UserMapper;
+import Mappers.GenericMapper;
+import Mappers.M07_Template.MapperTemplate;
 import Mappers.StatisticMapper.StatisticMapper;
 
 public class MapperFactory {
@@ -98,6 +100,9 @@ public class MapperFactory {
 
 
     public static GenericMapper createStatisticMapper(){ return new StatisticMapper();}
+
+    // M07_Template
+    public static MapperTemplate createMapperTemplate(){ return new MapperTemplate();}
 
     public static UserMapper createUserMapper() {
         return new UserMapper();

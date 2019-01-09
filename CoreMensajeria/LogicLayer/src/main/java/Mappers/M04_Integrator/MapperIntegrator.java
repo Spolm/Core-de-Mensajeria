@@ -14,33 +14,20 @@ public class MapperIntegrator extends GenericMapper<DTOIntegrator> {
 
     @Override
     public DTOIntegrator CreateDto(Entity entity) {
-        try {
-            DTOIntegrator dto = null;
-            Integrator _integrator = (Integrator) entity;
-            dto = DTOFactory.CreateDTOIntegrator( _integrator.getThreadCapacity(),
-            _integrator.getMessageCost(),_integrator.getNameIntegrator(), _integrator.getApiIntegrator(),
-            _integrator.isEnabled());
-            return dto;
-        }
-        catch(Exception e){
-
-        }
-        return null;
+        Integrator _integrator = (Integrator) entity;
+        return DTOFactory.CreateDTOIntegrator(null, _integrator.getThreadCapacity(),
+                _integrator.getMessageCost(),_integrator.getNameIntegrator(), _integrator.getApiIntegrator(),
+                _integrator.isEnabled());
     }
 
 
     @Override
     public Entity CreateEntity(DTOIntegrator dtoIntegrator) {
-        try {
-            Integrator _integrator = EntityFactory.CreateIntegrator(null,-1,
-                    dtoIntegrator.getNameIntegrator(),dtoIntegrator.getMessageCost(), dtoIntegrator.getThreadCapacity(),
-                    dtoIntegrator.getApiIntegrator(), dtoIntegrator.isEnabled());
-            return _integrator ;
-
-        }
-        catch (Exception e){
-            throw e;
-        }
+        return EntityFactory.CreateIntegrator(
+                dtoIntegrator.getIntegratorType(),-1,
+                dtoIntegrator.getNameIntegrator(), dtoIntegrator.getMessageCost(),
+                dtoIntegrator.getThreadCapacity(), dtoIntegrator.getApiIntegrator(),
+                dtoIntegrator.isEnabled());
     }
 
 

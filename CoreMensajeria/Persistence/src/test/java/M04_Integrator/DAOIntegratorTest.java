@@ -70,7 +70,7 @@ class DAOIntegratorTest {
             assertNotNull(_integrator);
             assertEquals(_movistar.getNameIntegrator(), _integrator.getNameIntegrator());
             assertEquals(_movistar.getApiIntegrator(), _integrator.getApiIntegrator());
-            assertEquals(_movistar.getIdIntegrator(), _integrator.getIdIntegrator());
+            assertEquals(_movistar.get_id(), _integrator.get_id());
             assertEquals(_movistar.getThreadCapacity(), _integrator.getThreadCapacity());
             assertEquals(_movistar.getMessageCost(), _integrator.getMessageCost());
         } catch (DatabaseConnectionProblemException e) {

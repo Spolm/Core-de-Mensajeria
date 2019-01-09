@@ -14,6 +14,7 @@ import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.ApprovedStatus;
 import Entities.M07_Template.StatusPackage.NotApprovedStatus;
+import Entities.M07_Template.StatusPackage.Status;
 import Entities.M07_Template.Template;
 import Entities.M08_Validation.SentMessage;
 import Entities.M09_Statistics.Statistics;
@@ -241,8 +242,10 @@ public class EntityFactory {
         return new NotApprovedStatus(statusId, statusName);
     }
 
-    public Template CreateTemplate(int id, Campaign campaign, Application application, User user){
-        return new Template();
+    public static Template CreateTemplate(int id, Message message, Date creationDate, Status status,
+                                   ArrayList<Channel> channels, Campaign campaign, Application application,
+                                   User user, Planning planning){
+        return new Template(id, message, creationDate, status, channels, campaign, application, user, planning);
     }
 
 // M04_region

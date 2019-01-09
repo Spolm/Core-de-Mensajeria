@@ -34,11 +34,11 @@ export class TemplateComponent {
     this.templateService.getTemplatesByCompany(userId, companyId).subscribe(data => {
       this.templates = data;
     });
+    console.log(this.templates);
   }
 
   approveTemplates() {
-    console.log(this.userId)
-    console.log(localStorage.getItem('companyId'));
+    
     this.getTemplates(this.userId, localStorage.getItem('companyId'));
   }
 
@@ -77,9 +77,11 @@ export class TemplateComponent {
   }
 
   changeCompany(companyId: string){
+    
     localStorage.setItem('companyId', companyId);
     this.getTemplates(this.userId, companyId);
     this.getPrivileges(this.userId, Number(companyId));
+  
   }
 
   templateDetails(id: number) {

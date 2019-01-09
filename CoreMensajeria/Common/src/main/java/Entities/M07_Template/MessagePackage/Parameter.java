@@ -22,6 +22,11 @@ public class Parameter extends Entity {
     private String description;
 
     /**
+     * Company ID
+     */
+    private int companyId;
+
+    /**
      * empty builder
      */
     public Parameter() {}
@@ -66,6 +71,13 @@ public class Parameter extends Entity {
         this.description = description;
     }
 
+    public Parameter(int parameterId, String name, String description, int companyId) {
+        this.parameterId = parameterId;
+        this.name = name;
+        this.description = description;
+        this.companyId = companyId;
+    }
+
     /**
      * show id of the parameter
      * @return id of the parameter
@@ -101,6 +113,14 @@ public class Parameter extends Entity {
      * @param description new description
      */
     public void setDescription(String description) { this.description = description; }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
 
     @Override
     public boolean equals(Object o) {
