@@ -11,7 +11,8 @@ import Entities.M04_Integrator.Integrator;
 import Entities.M05_Channel.Channel;
 //import Entities.M05_Channel.ChannelFactory;
 import Entities.M06_DataOrigin.Application;
-import Entities.M06_DataOrigin.ApplicationDAO;
+//import Entities.M06_DataOrigin.ApplicationDAO;
+import Persistence.M06_DataOrigin.DAOApplication;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.Template;
@@ -197,7 +198,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             preparedStatement.setInt( 1, templateId );
             ResultSet _rs = preparedStatement.executeQuery();
             _rs.next();
-            ApplicationDAO applicationService = new ApplicationDAO();
+            DAOApplication applicationService = new DAOApplication();
             application = applicationService.getApplication
                     (_rs.getInt("applicationId"));
 
