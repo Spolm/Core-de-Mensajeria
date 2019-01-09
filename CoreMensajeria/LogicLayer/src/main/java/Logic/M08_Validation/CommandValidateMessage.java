@@ -42,7 +42,7 @@ public class CommandValidateMessage extends CommandValidateParameter{
             String msg = (message).getMessage();
             ArrayList<Channel> channels = template.getChannels();
             for (Channel channel: channels) {
-                String channelName = channel.getNameChannel();
+                String channelName = channel.get_nameChannel();
                 if ((channelName.equals("SMS"))&& (msg.length() > 160) ){
                     logger.warning("SMS supera 160 caracteres");
                     this.set_valid(false);

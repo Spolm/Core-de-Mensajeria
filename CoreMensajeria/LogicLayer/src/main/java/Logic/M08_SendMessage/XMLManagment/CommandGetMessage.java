@@ -127,7 +127,7 @@ public class CommandGetMessage extends Command<Message> {
                 _message.set_telefono(_commandGetTagValue.Return());
 
             } else if (_template.getChannels().size() == 1 &&
-                    _template.getChannels().get(0).getNameChannel().equalsIgnoreCase("SMS")){
+                    _template.getChannels().get(0).get_nameChannel().equalsIgnoreCase("SMS")){
                 _commandGetTagValue = CommandsFactory.createCommandGetTagValue("telefono", element);
                 _commandGetTagValue.execute();
                 _message.set_telefono(_commandGetTagValue.Return());

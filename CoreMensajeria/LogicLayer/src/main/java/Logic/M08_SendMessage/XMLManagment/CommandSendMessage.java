@@ -1,5 +1,6 @@
 package Logic.M08_SendMessage.XMLManagment;
 
+import Entities.Entity;
 import Entities.M04_Integrator.Integrator;
 import Entities.M05_Channel.Channel;
 import Entities.M07_Template.Template;
@@ -46,11 +47,12 @@ public class CommandSendMessage extends Command {
             String finalMessage = parseMessage(message);
 
             for(Channel channel : _channels){
-                ArrayList<Integrator> integrators = channel.getIntegrators();
+                ArrayList<Entity> integrators = channel.get_integrators();
 
-                for(Integrator integrator : integrators){
+                for(Entity entity : integrators){
+                    Integrator integrator = (Integrator)entity;
                     if (integrator.isEnabled()) {
-                        if(channel.getNameChannel().equalsIgnoreCase("SMS")){ ///*** MOSCA CON ESTO
+                        if(channel.get_nameChannel().equalsIgnoreCase("SMS")){ ///*** MOSCA CON ESTO
                             //integrator.sendMessage(finalMessage,telefono,"Valor a cambiar");
                             System.out.println(finalMessage + " destino " +  telefono);
                         }else{
