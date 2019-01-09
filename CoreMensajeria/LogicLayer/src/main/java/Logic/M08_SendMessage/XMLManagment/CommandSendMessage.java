@@ -78,6 +78,7 @@ public class CommandSendMessage extends Command {
      * @return el String a ser enviado.
      */
     private String parseMessage(Message message) {
+        log.info("Reemplazando los parámetros por sus valores respectivos");
         String text = _template.getMessage().getMessage();
         ArrayList<ParameterXML> params = message.get_param();
 
