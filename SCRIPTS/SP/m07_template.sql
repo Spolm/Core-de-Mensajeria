@@ -26,27 +26,32 @@ $gettemplates$
 LANGUAGE 'plpgsql' VOLATILE;
 
 -- DROP FUNCTION m07_select_all_templates();
-CREATE OR REPLACE FUNCTION m07_select_all_templates()
-RETURNS TABLE (tem_id integer,tem_creation_date timestamp,sta_id integer,sta_name varchar) 
-AS $$
-BEGIN
-RETURN QUERY
-select t.tem_id, t.tem_creation_date, s.sta_id, s.sta_name
-                    from template t
-                    inner join template_status ts
-                    on ts.ts_template = t.tem_id
-                    inner join
-                    (
-                    select ts_template, max(ts_id) maxID from template_status 
-                    group by ts_template
-                    )ts_ on ts_.ts_template = ts.ts_template
-                    and ts.ts_id = ts_.maxID
-                    inner join status s
-                    on ts.ts_status = s.sta_id
-                    order by t.tem_id;
-END;
+CREATE OR REPLEACE FUNCTION m07_select_all_templates() returns TABLE(tem_id integer, tem_creation_date timestamp without time zone,
+tem_user_id integer, sta_id integer, sta_name character varying)
+  language plpgsql
+as
 $$
-LANGUAGE 'plpgsql' VOLATILE;
+BEGIN
+  RETURN QUERY
+    select t.tem_id, t.tem_creation_date, t.tem_user_id, s.sta_id, s.sta_name
+    from template t
+           inner join template_status ts
+                      on ts.ts_template = t.tem_id
+           inner join
+         (
+           select ts_template, max(ts_id) maxID from template_status
+           group by ts_template
+         )ts_ on ts_.ts_template = ts.ts_template
+           and ts.ts_id = ts_.maxID
+           inner join status s
+                      on ts.ts_status = s.sta_id
+    order by t.tem_id;
+END;
+$$;
+
+alter function m07_select_all_templates() owner to "CoreMensajeria";
+
+
 
 -- DROP FUNCTION m07_select_privileges_by_user_company(integer,integer);
 CREATE OR REPLACE FUNCTION m07_select_privileges_by_user_company(
