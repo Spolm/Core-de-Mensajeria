@@ -42,7 +42,7 @@ public class M10_Profile {
     }
 
     @GET
-    @Path("/responsability")
+    @Path("/responsabilities")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getResponsability(@QueryParam("companyId") int companyId) {
         Response response = null;
