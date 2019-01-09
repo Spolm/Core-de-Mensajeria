@@ -6,7 +6,9 @@ import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.Message;
 import Entities.M08_Validation.XMLManagement.ParameterXML;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
+import Exceptions.UnexpectedErrorException;
 import Logic.Command;
+import Logic.CommandsFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,14 +39,19 @@ public class CommandSendMessage extends Command {
      * SMS y/o Integrador.
      */
     @Override
-    public void execute() {
+    public void execute() throws UnexpectedErrorException {
         ArrayList<Channel> _channels = _template.getChannels();
 
         for(Message message : _verifiedMessages) {
             String correo = message.get_correo();
             String telefono = message.get_telefono();
-            String finalMessage = parseMessage(message);
-
+            Command<String> c = CommandsFactory.createCommandParseMessage(message,this._template);
+            try {
+                c.execute();
+            } catch (Exception e){
+                throw new UnexpectedErrorException();
+            }
+            String finalMessage = c.Return();
             for(Channel channel : _channels){
                 ArrayList<Integrator> integrators = channel.getIntegrators();
 
@@ -68,21 +75,5 @@ public class CommandSendMessage extends Command {
     @Override
     public Object Return() {
         return null;
-    }
-
-    /**
-     * Método para parsear el mensaje final a ser enviado.
-     * @param message Mensaje que contiene los valores a ser enviado.
-     * @return el String a ser enviado.
-     */
-    private String parseMessage(Message message) {
-        String text = _template.getMessage().getMessage();
-        ArrayList<ParameterXML> params = message.get_param();
-
-        for (ParameterXML param : params) {
-            String parameterToBeReplaced = Pattern.quote("[.$" + param.get_name() + "$.]");
-            text = text.replaceAll("(?i)" + parameterToBeReplaced, param.get_value());
-        }
-        return text;
     }
 }
