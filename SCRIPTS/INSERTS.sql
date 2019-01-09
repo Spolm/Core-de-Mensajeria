@@ -310,7 +310,7 @@ INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_en
 VALUES ('2016-07-04','2019-12-01', '12:00', '23:15', 5);
 
 INSERT INTO public.application(app_name,app_description,app_token,app_date,app_status,app_user_creator, app_company) values
-('Facebook','Red Social','BF5453E0B1BF86A7FA020A4B87D7C0A9B0946ACCEB403E918E352D10BD35007D','04/05/1995',1,1,1);
+('Facebook','Red Social','BF5453E0B1BF86A7FA020A4B87D880A9B0946ACCEB403E918E352D10BD35007D','04/05/1995',1,1,1);
 INSERT INTO public.Parameter (par_name,par_company_id) 
 VALUES ('Numero Tarjeta',2);
 INSERT INTO public.Parameter (par_name,par_company_id) 
