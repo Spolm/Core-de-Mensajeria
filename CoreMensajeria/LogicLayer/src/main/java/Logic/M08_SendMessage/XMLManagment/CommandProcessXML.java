@@ -7,6 +7,7 @@ import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.M08_SendMessageManager.DateNotValidException;
 import Exceptions.M08_SendMessageManager.MissLengthXMLException;
 import Exceptions.M08_SendMessageManager.NullValueXMLException;
+import Exceptions.M08_SendMessageManager.NullXMLException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import org.apache.logging.log4j.LogManager;
@@ -52,9 +53,11 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
      *
      * @see CommandGetTagValue
      * @see CommandGetMessage
+     *
+     * @throws NullXMLException Si el XML esta vacio.
      */
     @Override
-    public void execute() {
+    public void execute() throws NullXMLException {
         try {
             DocumentBuilder _dBuilder = _dbFactory.newDocumentBuilder();
             Document doc = _dBuilder.parse(_xmlFile);
@@ -105,22 +108,26 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
             } else{
                 log.error("El Id del temple es vacío" );
             }
-        } catch (SAXException | ParserConfigurationException | IOException e1) {
-            System.out.println("Error"); ///*** TODO: PENDIENTE POR CAMBIAR
-            e1.printStackTrace();
-        } catch (TemplateDoesntExistsException e) {
+        } catch (SAXException | ParserConfigurationException | IOException e) {
+            String msg = "El archivo XML es vacio o inválido.";
+            _verifiedParameters = null;
+            log.error( "Se ha lanzado NullXMLException, " + msg );
+            throw new NullXMLException( msg, e);
+        } catch ( TemplateDoesntExistsException e ) {
+            _verifiedParameters = null;
             log.error( "la plantilla no existe" );
-        } catch (NullPointerException e){
-            System.out.println("Error 3: " + e); ///*** TODO: PENDIENTE POR CAMBIAR
         } catch ( NullValueXMLException e ){
+            _verifiedParameters = null;
             log.error( "valores nulos o vacios dentro del XML" );
-        } catch (NumberFormatException e){
+            String msg = "El archivo XML es inválido.";
+            throw new NullXMLException( msg, e);
+        } catch ( NumberFormatException e ){
+            _verifiedParameters = null;
             log.error( "El Id de la plantilla es inválido, solo números enteros" );
-        } catch (DateNotValidException e) {
-            log.error("La fecha de inicio o fin la plantilla es inválida");
         } catch (Exception e){
             log.error("Error inesperado de tipo "
                     + e.getClass().getName() );
+            _verifiedParameters = null;
         }
     }
 

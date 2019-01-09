@@ -1,6 +1,7 @@
 package Logic.M08_SendMessage.XMLManagment;
 
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
+import Exceptions.M08_SendMessageManager.NullXMLException;
 import Logic.Command;
 import Logic.CommandsFactory;
 
@@ -71,18 +72,27 @@ public class WatchDirectory implements Runnable{
                             + " en el directorio " + directory );
 
                     if(event.context().toString().endsWith(".xml")) {
-                        _commandProcessXML = CommandsFactory
-                                .createCommandProcessXML(directory + "/" + event.context().toString());
-                        _commandProcessXML.execute();
-                        log.info("Se ha procesado el XML");
-                        VerifiedParameter verifiedParameter = _commandProcessXML.Return();
-                        Command _commandSendMsg = CommandsFactory.createSendMessage(verifiedParameter);
-                        _commandSendMsg.execute();
+                        log.debug("Inicio del procesamiento del Archivo XML.");
+                        try {
+                            _commandProcessXML = CommandsFactory
+                                    .createCommandProcessXML(directory + "/" + event.context().toString());
+                            _commandProcessXML.execute();
+                            log.info("Se ha procesado el XML.");
+                            VerifiedParameter verifiedParameter = _commandProcessXML.Return();
+                            log.debug("Inicio del proceamiento para el envío del mensaje" );
+                            if( verifiedParameter != null) {
+                                Command _commandSendMsg = CommandsFactory.createSendMessage(verifiedParameter);
+                                _commandSendMsg.execute();
+                                log.info("Se ha enviado el mensaje." );
+                            }
+                        } catch (NullXMLException e) {
+                            log.error(e.getMessage());
+                        }
                     }
                 }
                 key.reset();
             }
-        } catch ( Exception e ) {
+        }catch ( Exception e ) {
             log.error("Error inesperado de tipo "
                     + e.getClass().getName() );
         }

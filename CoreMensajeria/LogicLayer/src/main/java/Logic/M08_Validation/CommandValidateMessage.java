@@ -28,9 +28,9 @@ public class CommandValidateMessage extends CommandValidateParameter{
     }
 
     /**
+     *
      * @throws SMSTooLongException
      * @throws TemplateDoesntExistsException
-     *
      */
     public void execute () throws Exception {
         Logger logger = Logger.getLogger(CommandValidateParameter.class.getName());

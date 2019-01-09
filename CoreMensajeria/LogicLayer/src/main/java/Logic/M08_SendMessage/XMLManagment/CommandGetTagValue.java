@@ -36,6 +36,7 @@ public class CommandGetTagValue extends Command<String> {
      * @throws NullValueXMLException si alguna etiqueta dentro
      * del XML no encuentra su valor o es ta vacio.
      * @throws UnexpectedErrorException si existe un error no esperado.
+     * @throws NullValueXMLException si
      */
     @Override
     public void execute() throws NullValueXMLException, UnexpectedErrorException {
@@ -45,7 +46,7 @@ public class CommandGetTagValue extends Command<String> {
             _value = _node.getNodeValue();
             log.debug( "Se obtiene el valor [" + _value + "] del tag <" + _tag + "> " );
         }catch ( NullPointerException e ){
-            String msg = "Ha ocurrido una execpción NullPointerException," +
+            String msg = "Ha ocurrido una excepción NullPointerException," +
                     " se ha lanzado NullValueXMLException" ;
             _value = "";
             log.error( msg );
