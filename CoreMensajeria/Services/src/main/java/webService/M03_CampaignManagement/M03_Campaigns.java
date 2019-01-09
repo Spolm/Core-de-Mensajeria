@@ -44,35 +44,8 @@ public class M03_Campaigns {
     Gson gson = new Gson();
     ArrayList<Campaign> _caList = new ArrayList<>();
 
-/*
-
-    //region Obtener Campañas
-    @GET
-    @Path("/GetCampaigns")
-    @Produces("application/json")
-
-    public Response getCampaigns(@QueryParam("id") int id) throws CampaignDoesntExistsException {
-
-        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        CampaignDAO caList = new CampaignDAO();
-        try {
-
-            _caList = caList.campaignList(id);
-            rb.entity(gson.toJson(_caList));
-        }
-        catch (CampaignDoesntExistsException e) {
-            e.printStackTrace();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return rb.build();
-    }
-    //endregion
-*/
 
 
-  ////////////////////////////////PATRONES///////////////////
 
 
     @GET
@@ -204,5 +177,31 @@ public class M03_Campaigns {
             return Response.status( 500 ).entity( e.getMessage() ).build();
         }
     }
+/*
+
+    //region Obtener Campañas
+    @GET
+    @Path("/GetCampaigns")
+    @Produces("application/json")
+
+    public Response getCampaigns(@QueryParam("id") int id) throws CampaignDoesntExistsException {
+
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CampaignDAO caList = new CampaignDAO();
+        try {
+
+            _caList = caList.campaignList(id);
+            rb.entity(gson.toJson(_caList));
+        }
+        catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
+    //endregion
+*/
 
 }

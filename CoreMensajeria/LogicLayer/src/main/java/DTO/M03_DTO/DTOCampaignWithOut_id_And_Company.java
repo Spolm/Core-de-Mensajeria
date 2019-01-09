@@ -15,6 +15,26 @@ public class DTOCampaignWithOut_id_And_Company extends DTO {
     private Date _endCampaign;
     private Company _company;
 
+
+    /**
+     * DTO para campañas sin id y sin Company
+     * @param nameCampaign nombre para una campaña recien creada
+     * @param descCampaign descripcion de la campaña
+     * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
+     * @param startCampaign fecha de inicio de la campaña
+     * @param endCampaign fecha de finalización de la campaña
+     */
+    public DTOCampaignWithOut_id_And_Company(String nameCampaign, String descCampaign, boolean statusCampaign,
+                                             Date startCampaign,  Date endCampaign) {
+
+        _nameCampaign = nameCampaign;
+        _descCampaign = descCampaign;
+        _statusCampaign = statusCampaign;
+        _startCampaign = startCampaign;
+        _endCampaign = endCampaign;
+    }
+
+
     private boolean _habilitado;
 
     public int get_idCampaign() {
@@ -68,21 +88,4 @@ public class DTOCampaignWithOut_id_And_Company extends DTO {
 
 
 
-    /**
-     * DTO para campañas sin id y sin Company
-     * @param nameCampaign nombre para una campaña recien creada
-     * @param descCampaign descripcion de la campaña
-     * @param statusCampaign el estatus de la campaña, puede ser activada o desactivada
-     * @param startCampaign fecha de inicio de la campaña
-     * @param endCampaign fecha de finalización de la campaña
-     */
-    public DTOCampaignWithOut_id_And_Company(String nameCampaign, String descCampaign, boolean statusCampaign,
-                                             Date startCampaign,  Date endCampaign) {
-
-        _nameCampaign = nameCampaign;
-        _descCampaign = descCampaign;
-        _statusCampaign = statusCampaign;
-        _startCampaign = startCampaign;
-        _endCampaign = endCampaign;
-    }
 }
