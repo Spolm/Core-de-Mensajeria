@@ -1,5 +1,7 @@
 package Entities.M04_Integrator;
 
+import Entities.Entity;
+
 /**
  * Clase concreta de tipo Integrador que nos permite tener
  * acceso a metodos concretos para realizar el envio de mensajes.
@@ -10,7 +12,7 @@ package Entities.M04_Integrator;
  * @see Integrator
  */
 
-public class Aweber extends Integrator {
+public class Aweber extends Integrator implements IIntegrator{
 
     /**
      * Constructor de la clase Aweber
@@ -24,7 +26,8 @@ public class Aweber extends Integrator {
      * @see Integrator
      */
 
-    public Aweber(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator, boolean enabled) {
+    public Aweber(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator,
+                  boolean enabled) {
         super(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
     }
 

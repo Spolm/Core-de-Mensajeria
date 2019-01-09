@@ -1,6 +1,8 @@
 package Entities.M06_DataOrigin;
 
-public class AddApplicationData {
+import Entities.Entity;
+
+public class AddApplicationData extends Entity {
 
     private String _nameApplication;
     private String _descriptionApplication;

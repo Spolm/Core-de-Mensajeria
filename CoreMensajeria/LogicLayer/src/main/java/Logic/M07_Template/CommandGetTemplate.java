@@ -4,6 +4,8 @@ import Entities.Entity;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
 import Logic.Command;
+import Persistence.DAOFactory;
+import Persistence.M07_Template.DAOTemplate;
 
 public class CommandGetTemplate extends Command {
 
@@ -19,8 +21,11 @@ public class CommandGetTemplate extends Command {
 
     @Override
     public void execute() throws Exception {
-        TemplateHandler templateHandler = new TemplateHandler();
-        template = templateHandler.getTemplate(templateId);
+        //TemplateHandler templateHandler = new TemplateHandler();
+        //template = templateHandler.getTemplate(templateId);
+        DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
+        template = (Template) daoTemplate.get(templateId);
+
     }
 
     @Override

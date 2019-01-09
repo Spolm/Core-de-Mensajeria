@@ -92,6 +92,7 @@ public class MapperFullCompany extends GenericMapper <DTOFullCompany> {
     @Override
     public Entity CreateEntity(DTOFullCompany dto) {
         try {
+
             Company _com = EntityFactory.CreateFullCompany(dto.get_idCompany(), dto.get_name(), dto.get_desc(),
                                                             dto.get_status(), dto.get_link(), dto.get_idUser());
             return _com ;

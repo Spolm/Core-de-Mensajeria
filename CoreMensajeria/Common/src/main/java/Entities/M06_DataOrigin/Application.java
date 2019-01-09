@@ -1,8 +1,10 @@
 package Entities.M06_DataOrigin;
 
+import Entities.Entity;
+
 import java.util.Date;
 
-public class Application {
+public class Application extends Entity {
 
     private int _idApplication;
     private String _nameApplication;

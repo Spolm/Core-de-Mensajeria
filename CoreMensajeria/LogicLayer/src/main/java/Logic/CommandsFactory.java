@@ -1,22 +1,32 @@
 package Logic;
 
+import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
+import Entities.M06_DataOrigin.AddApplicationData;
+import Logic.M04_Integrator.*;
+import Logic.M05_Channel.CommandGetAllChannels;
+import Entities.M02_Company.Company;
+import Entities.M03_Campaign.Campaign;
+
+//import Logic.M10_Profile.*;
+import Entities.M08_Validation.XMLManagement.Message;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
+import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
-import Logic.M08_SendMessage.CommandSendMessage;
+import Logic.M08_SendMessage.XMLManagment.*;
+import Logic.M10_Profile.GetGeographicalRegionCommand;
+import Logic.M10_Profile.GetPrivilegesByUserCompanyCommand;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
-import Entities.M08_Validation.XMLManagement.CommandGetMessage;
-import Entities.M08_Validation.XMLManagement.CommandProcessXML;
-import Entities.M08_Validation.XMLManagement.CommandGetParameter;
-import Entities.M08_Validation.XMLManagement.CommandGetTagValue;
 import DTO.M07_Template.NewParameter;
+//import Logic.M01_Login.GetUser;
+import Logic.M06_DataOrigin.*;
+//import Logic.M08_SendMessage.CommandSendMessage;
 import Logic.M01_Login.GetUserCommand;
-import Logic.M08_SendMessage.CommandSendMessage;
 import Logic.M08_Validation.*;
 import Logic.M07_Template.*;
 import Logic.M02_Company.*;
@@ -51,7 +61,7 @@ public class CommandsFactory {
         return  new ChangePasswordCommand(username, password);
     }
 
-    public static Entities.M08_Validation.XMLManagement.Command createScheduleMessage(VerifiedParameter verifiedParameters) {
+    public static Command createScheduleMessage(VerifiedParameter verifiedParameters) {
         return new CommandScheduleMessage(verifiedParameters);
     }
 
@@ -225,36 +235,178 @@ public class CommandsFactory {
 
 
     // region m02
-    public static AddCompanyCommand createAddCompanyCommand( Entity _co ){ return new AddCompanyCommand( _co ); }
-    public static ChangeStatusCommand createChangeStatusCommand(Entity _co ) {return new ChangeStatusCommand( _co );}
-    public static GetAllCompaniesCommand createGetAllCompaniesCommand() {return new GetAllCompaniesCommand();}
-    public static GetCompanyCommand createGetCompanyCommand(Entity _co){return new GetCompanyCommand(_co);}
-    public static UpdateCompanyCommand createUpdateCompanyCommand(Entity _co) {return new UpdateCompanyCommand(_co);}
-    public static GetCompanyByUserCommand createGetCompanyByUserCommand( Entity _co ){
+
+    /**
+     * Metodo que instancia un objeto del tipo AddCompanyCommand
+     * @return un objeto del tipo AddCompanyCommand
+     */
+    public static AddCompanyCommand createAddCompanyCommand( Company _co ){
+
+        return new AddCompanyCommand( _co );
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo ChangeStatusCommand
+     * @return un objeto del tipo ChangeStatusCommand
+     */
+    public static ChangeStatusCommand createChangeStatusCommand( Company _co  ) {
+        return new ChangeStatusCommand( _co );
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo GetAllCompaniesCommand
+     * @return un objeto del tipo GetAllCompaniesCommand
+     */
+    public static GetAllCompaniesCommand createGetAllCompaniesCommand() {
+
+        return new GetAllCompaniesCommand();
+    }
+
+
+    /**
+     * Metodo que instancia un objeto del tipo GetCompanyCommand
+     * @return un objeto del tipo GetCompanyCommand
+     */
+    public static GetCompanyCommand createGetCompanyCommand(Company _co){
+
+        return new GetCompanyCommand(_co);
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo UpdateCompanyCommand
+     * @return un objeto del tipo UpdateCompanyCommand
+     */
+    public static UpdateCompanyCommand createUpdateCompanyCommand(Entity _co) {
+
+        return new UpdateCompanyCommand( _co );
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo GetCompanyByUserCommand
+     * @return un objeto del tipo GetCompanyByUserCommand
+     */
+    public static GetCompanyByUserCommand createGetCompanyByUserCommand( Company _co ){
         return new GetCompanyByUserCommand( _co );
     }
     //endregion
 
 
     // region m03
-    public static UpdateCampaignCommand createUpdateCampaignCommand(Entity _co) {return new UpdateCampaignCommand(_co);}
-    public static AddCampaignCommand createAddCampaignCommand(Entity _ca ){ return new AddCampaignCommand( _ca ); }
-    public static GetCampaignCommand createGetCampaignCommand(Entity _ca ){ return new GetCampaignCommand( _ca ); }
-    public static CampaignUserCommand createCampaignUserCommand(Entity _ca ){ return new CampaignUserCommand( _ca ); }
-    public static CampaignUserCompanyCommand createCampaignUserCompany( Entity _ca ){
+    /**
+     * Metodo que instancia un objeto del tipo UpdateCampaignCommand
+     * @return un objeto del tipo UpdateCampaignCommand
+     */
+    public static UpdateCampaignCommand createUpdateCampaignCommand(Entity _co) {
+
+        return new UpdateCampaignCommand(_co);
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo AddCampaignCommand
+     * @return un objeto del tipo AddCampaignCommand
+     */
+    public static AddCampaignCommand createAddCampaignCommand(Campaign _ca ){
+
+        return new AddCampaignCommand( _ca );
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo GetCampaignCommand
+     * @return un objeto del tipo GetCampaignCommand
+     */
+    public static GetCampaignCommand createGetCampaignCommand(Campaign _ca ){
+
+        return new GetCampaignCommand( _ca );
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo CampaignUserCommand
+     * @return un objeto del tipo CampaignUserCommand
+     */
+    public static CampaignUserCommand createCampaignUserCommand(Company _ca ){
+
+        return new CampaignUserCommand( _ca );
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo CampaignUserCompanyCommand
+     * @return un objeto del tipo CampaignUserCompanyCommand
+     */
+    public static CampaignUserCompanyCommand createCampaignUserCompany( Company _ca ){
+
          return new CampaignUserCompanyCommand( _ca  );
       }
-    public static ChangeStatusCampaignCommand createChangeStatusCampaign( Entity _ca ){
+
+
+    /**
+     * Metodo que instancia un objeto del tipo ChangeStatusCampaignCommand
+     * @return un objeto del tipo ChangeStatusCampaignCommand
+     */
+    public static ChangeStatusCampaignCommand createChangeStatusCampaign( Campaign _ca ){
+
         return new ChangeStatusCampaignCommand( _ca );
     }
     //endregion
 
 
-    //M07_Templates
+    //region M06_Origin
+    public  static CreateApplicationCommand CreateApplication(AddApplicationData _app){
 
-    public static CommandGetMessages createCommandGetMessages(){
-        return new CommandGetMessages();
+        return new CreateApplicationCommand(_app);
     }
+
+    public  static GetApplicationByIdCommand GetApplicationId(int _co){
+
+        return new GetApplicationByIdCommand(_co);
+    }
+
+    public  static GetApplicationByIdCompanyCommand GetApplicationCompanyId(int _co){
+
+        return new GetApplicationByIdCompanyCommand(_co);
+    }
+
+    public  static GetApplicationByTokenCommand GetApplicationToken(String _co){
+
+        return new GetApplicationByTokenCommand(_co);
+    }
+
+    public static GetApplicationCommand GetApplication(){
+
+        return  new GetApplicationCommand();
+    }
+
+    public static UpdateApplicationCommand UpdateApplication(int _id,int status){
+
+        return new UpdateApplicationCommand(_id,status);
+    }
+    //endregion
+
+
+    // region M04_Integrator
+    public static CommandDisableIntegrator createCommandDisableIntegrator(int id) {
+        return new CommandDisableIntegrator(id);
+    }
+
+    public static CommandEnableIntegrator createCommandEnableIntegrator(int id) {
+        return new CommandEnableIntegrator( id );
+    }
+
+    public static CommandGetAllIntegrator createCommandGetAllIntegrators() {
+        return new CommandGetAllIntegrator();
+    }
+
+    public static CommandGetConcreteIntegrator createCommandGetConcreteIntegrator(int id) {
+        return new CommandGetConcreteIntegrator(id);
+    }
+
+    public static CommandGetIntegratorByChannel createCommandGetIntegratorByChannel(int id){
+        return new CommandGetIntegratorByChannel(id);
+    }
+
+    public static CommandGetAllChannels instanceGetAllChannels(){ return new CommandGetAllChannels(); }
+    //endregion
+
+    //M07_Templates
 
     public static CommandPostParameter createCommandPostParameter(NewParameter newParameter){
         return new CommandPostParameter(newParameter);
@@ -289,25 +441,24 @@ public class CommandsFactory {
 }
 
     //region M_08
-    public static CommandGetTagValue createCommandGetTagValue(String tag, Element element){
+    public static Command createCommandGetTagValue(String tag, Element element){
         return new CommandGetTagValue(tag,element);
     }
 
-    public static CommandGetParameter createCommandGetParameter(Node node, ArrayList<Parameter> parameter){
+    public static Command createCommandGetParameter(Node node, ArrayList<Parameter> parameter){
         return new CommandGetParameter(node, parameter);
     }
 
-    public static CommandGetMessage createCommandGetMessage(Node node, Template template){
+    public static Command createCommandGetMessage(Node node, Template template){
         return new CommandGetMessage(node,template);
     }
 
-    public static CommandProcessXML createCommandProcessXML(String filePath){
+    public static Command createCommandProcessXML(String filePath){
         return new CommandProcessXML(filePath);
     }
 
-    public static CommandValidateMessage createCommandValidateMessage(int template, String message,
-                                                                      String channel) {
-        return new CommandValidateMessage(template, message, channel);
+    public static CommandValidateMessage createCommandValidateMessage(int template, ArrayList<Message> messages) {
+        return new CommandValidateMessage(template,messages);
 
     }
 
@@ -315,8 +466,30 @@ public class CommandsFactory {
         return new CommandValidateTemplate(id);
     }
 
-    public static CommandValidate createCommandValidate (int template, String message, String channel) {
-        return new CommandValidate(template, message, channel);
+    public static CommandValidate createCommandValidate (VerifiedParameter parameters) {
+        return new CommandValidate(parameters);
     }
+
+    public static Command createSendMessage(VerifiedParameter parameters) {
+        return new CommandSendMessage(parameters);
+    }
+
+    public static Command createCommandParseMessage(Message message, Template template){
+        return new CommandParseMessage(message, template);
+    }
+
     //end region
+
+    //region Commands M_10
+
+    public static Command createGetPrivilegesByUserCompanyCommand(int userId, int companyId){
+        return new GetPrivilegesByUserCompanyCommand(userId, companyId);
+    }
+
+    public static Command createGetGeographicalRegionCommand(int id){
+        return new GetGeographicalRegionCommand(id);
+    }
+
+    //end region
+
 }
