@@ -7,8 +7,10 @@ import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 
 //import Logic.M10_Profile.*;
+import Entities.M08_Validation.XMLManagement.Message;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
+import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
 import org.w3c.dom.Element;
@@ -310,5 +312,10 @@ public class CommandsFactory {
     public static Command createSendMessage(VerifiedParameter parameters) {
         return new CommandSendMessage(parameters);
     }
+
+    public static Command createCommandParseMessage(Message message, Template template){
+        return new CommandParseMessage(message, template);
+    }
+
     //end region
 }
