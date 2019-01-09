@@ -50,11 +50,19 @@ export class CreateCampaignComponent implements OnInit {
           this.newCampaign._startCampaign = sDate.toISOString()
           this.newCampaign._endCampaign = fDate.toISOString()
 
+          if(this.newCampaign._startCampaign < this.newCampaign._endCampaign){
+
     this.campaignService.addCampaign(this.newCampaign).toPromise().then(res =>{
       console.log(this.newCampaign);
       this.newCampaign = new Campaign();
     });
 
+  }
+
+  else{
+    this.toastr.error("Fecha inicio mayor que Fecha Fin");
+  }
+  
   }
   else { 
     this.toastr.error("Algun Campo esta Vacio.");
