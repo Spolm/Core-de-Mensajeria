@@ -11,6 +11,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
+/**
+ * CommandGetParameters es una clase que permite obtener todos los parametros.
+ */
+
 public class CommandGetParameters extends Command {
     private int companyId;
     private ArrayList<Parameter> parameterList;
@@ -22,13 +26,15 @@ public class CommandGetParameters extends Command {
     public CommandGetParameters() {
     }
 
+    /**
+     * El metodo execute() es aquel donde se ejecuta la funcion principal de la clase
+     * @throws Exception
+     */
     @Override
     public void execute() throws Exception {
         //region Instrumentation Debug
         log.debug("Entrando a el metodo execute() de CommandGetParameters" );
         //endregion
-        //ParameterHandler parameterHandler = new ParameterHandler();
-        //parameterList = parameterHandler.getParameters(companyId);
         DAOParameter daoParameter = DAOFactory.instaciateDaoParameter();
         parameterList = daoParameter.getParameters(companyId);
         //region Instrumentation Info
@@ -39,6 +45,10 @@ public class CommandGetParameters extends Command {
         //endregion
     }
 
+    /**
+     * El metodo Return() retorna una lista de parametros.
+     * @return
+     */
     @Override
     public ArrayList<Parameter> Return() {
         //region Instrumentation Debug

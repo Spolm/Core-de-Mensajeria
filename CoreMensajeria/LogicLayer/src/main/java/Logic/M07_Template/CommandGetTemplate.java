@@ -9,6 +9,10 @@ import Persistence.M07_Template.DAOTemplate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * CommandGetParameters es una clase que permite obtener una plantilla especifica por su id.
+ */
+
 public class CommandGetTemplate extends Command {
 
     private int templateId;
@@ -20,6 +24,11 @@ public class CommandGetTemplate extends Command {
 
     public CommandGetTemplate() {
     }
+
+    /**
+     * El metodo execute() es aquel donde se ejecuta la funcion principal de la clase
+     * @throws Exception
+     */
 
     @Override
     public void execute() throws Exception {
@@ -37,7 +46,10 @@ public class CommandGetTemplate extends Command {
         log.debug("Saliendo de el metodo Return() de CommandGetTemplate" );
         //endregion
     }
-
+    /**
+     * El metodo Return() retorna la plantilla
+     * @return
+     */
     @Override
     public Template Return() {
         //region Instrumentation Debug

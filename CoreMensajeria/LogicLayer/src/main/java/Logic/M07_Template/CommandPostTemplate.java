@@ -8,7 +8,9 @@ import Persistence.DAOFactory;
 import Persistence.M07_Template.DAOTemplate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+/**
+ * CommandPostTemplate es una clase que permite insertar una plantilla nueva.
+ */
 public class CommandPostTemplate extends Command {
 
     private String json;
@@ -21,13 +23,15 @@ public class CommandPostTemplate extends Command {
     public CommandPostTemplate() {
     }
 
+    /**
+     * El metodo execute() es aquel donde se ejecuta la funcion principal de la clase
+     * @throws Exception
+     */
     @Override
     public void execute() throws Exception {
         //region Instrumentation Debug
         log.debug("Entrando a el metodo execute() de CommandPostTemplate" );
         //endregion
-        //TemplateHandler templateHandler = new TemplateHandler();
-        //rest = templateHandler.postTemplateData(json);
         DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
         rest = (Template) daoTemplate.postTemplateData(json);
         //region Instrumentation Info
@@ -38,6 +42,10 @@ public class CommandPostTemplate extends Command {
         //endregion
     }
 
+    /**
+     * El metodo Return() retorna un entity.
+     * @return
+     */
     @Override
     public Entity Return() {
         //region Instrumentation Debug
