@@ -14,6 +14,7 @@ import Logic.M02_Company.AddCompanyCommand;
 import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
+import Logic.M10_Profile.GetGeographicalRegionCommand;
 import Logic.M10_Profile.GetPrivilegesByUserCompanyCommand;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -345,6 +346,10 @@ public class CommandsFactory {
 
     public static Command createGetPrivilegesByUserCompanyCommand(int userId, int companyId){
         return new GetPrivilegesByUserCompanyCommand(userId, companyId);
+    }
+
+    public static Command createGetGeographicalRegionCommand(int id){
+        return new GetGeographicalRegionCommand(id);
     }
 
     //end region

@@ -15,3 +15,15 @@ RETURN QUERY
 	END;
 $$
 LANGUAGE 'plpgsql' VOLATILE;
+
+-- drop function m10_select_geographical_region(integer);
+CREATE OR REPLACE FUNCTION m10_select_geographical_region (IN geographicalRegionId INTEGER)
+RETURNS TABLE (rg_id_ INTEGER, rg_name_ VARCHAR, rg_type_ INTEGER, rg_rg_ INTEGER) 
+AS $$
+BEGIN
+RETURN QUERY
+SELECT rg_id, rg_name, rg_type, rg_rg 
+FROM GEOGRAPHICAL_REGION WHERE rg_rg = geographicalRegionId;
+END;
+$$
+LANGUAGE 'plpgsql' VOLATILE;
