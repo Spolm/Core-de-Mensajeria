@@ -1,4 +1,4 @@
-package StatisticMapper;
+package M09_Statistics;
 
 import DTO.DTO;
 import DTO.M09_DTO.DTOStatistic;
