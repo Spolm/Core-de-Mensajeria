@@ -9,11 +9,15 @@ import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M02_Company.DAOCompany;
+import Persistence.M02_Company.IDAOCompany;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
 public class AddCompanyCommand extends Command {
 
+    final static Logger _log = LogManager.getLogger("CoreMensajeria");
     private static Company _co;
 
 
@@ -36,14 +40,18 @@ public class AddCompanyCommand extends Command {
             if( _co.get_name() == "" ) {
                 throw new CompanyInvalidDataException();
             }
-            DAOCompany _dao = DAOFactory.instanciateDaoCompany ( );
+            _log.debug( "Objeto Compañia recibido en AddCompany: "+ _co.get_name()+ ","+ _co.get_desc()+","+
+                         _co.get_status()+","+ _co.get_idUser() );
+            IDAOCompany _dao = DAOFactory.instanciateDaoCompany ( );
             _dao.create( _co );
         }
 
         catch ( CompanyInvalidDataException e ){
+            _log.error( "Se ha lanzado un CompanyInvalidDataException en:"+ getClass().getName() );
             throw new  CompanyInvalidDataException("Datos Invalidos",e);
         }
         catch ( NullPointerException e ){
+            _log.error( "Se ha lanzado un CompanyInvalidDataException en:"+ getClass().getName() );
             throw new  CompanyInvalidDataException("Datos Invalidos",e);
         }catch ( Exception e ){
             throw new UnexpectedErrorException( e );

@@ -16,10 +16,10 @@ public class ServiceTest {
         _integratorService = new M04_Integrator();
     }
 
-    @Test
+    /*@Test
     public void listChannelTest(){
         Response response = _integratorService.listIntegrator();
         assertNotNull(response);
-    }
+    }*/
 
 }

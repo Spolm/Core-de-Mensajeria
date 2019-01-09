@@ -17,7 +17,7 @@ public class CommandGetConcreteIntegrator extends Command {
      *
      */
     public CommandGetConcreteIntegrator(int id) {
-        _entity = _entity;
+        this._id = id;
     }
 
     @Override

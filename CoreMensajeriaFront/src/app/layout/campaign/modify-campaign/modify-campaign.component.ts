@@ -18,6 +18,7 @@ export class ModifyCampaignComponent implements OnInit {
   opcamp: Campaign = new Campaign();
   verSeleccion: string = "";
   datos;
+  editMode: boolean = true;
   newCampaign: Campaign = new Campaign();
   campaigns: any = [];
 
@@ -26,12 +27,16 @@ export class ModifyCampaignComponent implements OnInit {
       campaignService.getCampaigns().subscribe(data => {
         this.campaigns = data;
       });
+      
     }
 
 
   private companyList = Array<Company>();
      private vacio: boolean;
      private campaignList = Array<Campaign>();
+     
+
+
   ngOnInit() {
 
     this.companyService.getCompanies().subscribe((data) => {
@@ -54,19 +59,22 @@ export class ModifyCampaignComponent implements OnInit {
       }, (err) => {
       console.log(err);
       })
+      
   }
 
 
   editCompany() {
 
-    if ( (this.opcamp._nameCampaign) && 
-         (this.opcamp._descCampaign != null) && (this.opcamp._startCampaign != null) &&
-         (this.opcamp._endCampaign != null) && (this.opcamp._idCompany != null) )    {
+    if ( (this.opcamp._nameCampaign) ||
+         (this.opcamp._descCampaign != null) ||
+         (this.opcamp._startCampaign != null) ||
+         (this.opcamp._endCampaign != null) ||
+          (this.opcamp._idCompany != null) )    {
+    var sDate =  new Date(this.opcamp._startCampaign+"T02:06:58.147")
+    var fDate =  new Date(this.opcamp._endCampaign+"T02:06:58.147")
 
-    var sDate =  new Date(this.opcamp._startCampaign)
-    console.log(sDate.toISOString);
-    this.opcamp._startCampaign = this.opcamp._startCampaign+"T02:06:58.147"
-    this.opcamp._endCampaign = this.opcamp._endCampaign+"T02:06:58.147"
+    this.opcamp._startCampaign =sDate.toISOString()
+    this.opcamp._endCampaign = fDate.toISOString()
     this.campaignService.editCampaign(this.opcamp).toPromise().then(res => {
       //manejo de la respuesta del servicio
     });
@@ -83,5 +91,14 @@ export class ModifyCampaignComponent implements OnInit {
   }
 
 }
+ enabledMode(){
+  console.log("llamando");
+  this.editMode = false; 
+  this.opcamp._startCampaign = null ;
+  this.opcamp._endCampaign = null ;
+}
+
+
+
 
 }

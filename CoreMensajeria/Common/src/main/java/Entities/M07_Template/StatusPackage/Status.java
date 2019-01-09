@@ -40,9 +40,9 @@ public abstract class Status extends Entity {
     public static Status createStatus(int statusId,String statusName){
         Status status;
         if(statusName.equals("Aprobado")){
-            status = EntityFactory.CreateApprovedStatus(statusId,statusName);
+            status = EntityFactory.CreateApprovedStatus(1,statusName);
         }else if(statusName.equals("No Aprobado")){
-            status = EntityFactory.CreateNotApprovedStatus(statusId,statusName);
+            status = EntityFactory.CreateNotApprovedStatus(2,statusName);
         }else{
             status = null;
         }
