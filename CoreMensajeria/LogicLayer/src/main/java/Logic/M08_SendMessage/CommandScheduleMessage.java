@@ -53,12 +53,12 @@ public class CommandScheduleMessage extends Command<Entity> {
         log.info("Fecha de inicio de la plantilla: " + startDate);
         log.info("Fecha de fin de la plantilla: " + endDate);
 
-//        try {
-//            DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
-//            startDate = df.parse("2019-01-09 6:20 PM");
-//            endDate = df.parse("2019-01-10 12:30 PM");
-//        } catch(ParseException e) {
-//        }
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
+            startDate = df.parse("2019-01-09 7:45 PM");
+            endDate = df.parse("2019-01-10 12:30 PM");
+        } catch(ParseException e) {
+        }
 
         System.out.println("Fecha de inicio de la plantilla: " + startDate);
         System.out.println("Fecha de fin de la plantilla: " + endDate);
