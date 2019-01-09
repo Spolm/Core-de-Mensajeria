@@ -1,11 +1,7 @@
 package M07_Template;
 
 import Entities.M07_Template.MessagePackage.Message;
-import Entities.M07_Template.Template;
-import Persistence.DAOFactory;
 import Persistence.Factory.DAOAbstractFactory;
-import Persistence.M07_Template.DAOMessage;
-import Persistence.M07_Template.DAOTemplate;
 import Persistence.M07_Template.IDAOMessage;
 import Persistence.M07_Template.IDAOTemplate;
 import org.junit.jupiter.api.AfterAll;
@@ -49,6 +45,18 @@ public class MessageDAOTest {private static String json;
     }
 
     @Test
+    public void postParameterOfMessageTest(){
+        try{
+            String[] _parametersTest = { "Fecha" };
+            _daoMessage.postParametersOfMessage(_message.get_id(), _parametersTest, 1);
+            _message = (Message) _daoMessage.getMessage( _templateId );
+            assertEquals("Fecha", _message.getParameterArrayList().get(0).getName() );
+        }catch ( Exception e ){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void getMessageTest(){
         try{
             Message _messageTest = (Message) _daoMessage.getMessage(_templateId);
@@ -81,17 +89,17 @@ public class MessageDAOTest {private static String json;
         }
     }
 
-    /*@Test
+    @Test
     public void updateParametersOfMessageTest(){
         try{
             String[] _parametersTest = { "Parametro" };
             _daoMessage.updateParameterOfMessage( _message.get_id(),_parametersTest,1 );
             Message _messageTest =  (Message)_daoMessage.getMessage( _templateId );
-            assertEquals("Parametro", _messageTest.getParameterArrayList().get(0) );
+            assertEquals("Parametro", _messageTest.getParameterArrayList().get(0).getName() );
         }catch ( Exception e ){
             e.printStackTrace();
         }
-    }*/
+    }
 
     @AfterAll
     public static void destroy(){
