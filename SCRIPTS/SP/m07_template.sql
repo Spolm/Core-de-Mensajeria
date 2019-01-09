@@ -26,7 +26,7 @@ $gettemplates$
 LANGUAGE 'plpgsql' VOLATILE;
 
 -- DROP FUNCTION m07_select_all_templates();
-CREATE OR REPLEACE FUNCTION m07_select_all_templates() returns TABLE(tem_id integer, tem_creation_date timestamp without time zone,
+CREATE OR REPLACE FUNCTION m07_select_all_templates() returns TABLE(tem_id integer, tem_creation_date timestamp without time zone,
 tem_user_id integer, sta_id integer, sta_name character varying)
   language plpgsql
 as
