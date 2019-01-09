@@ -102,7 +102,7 @@ export class TemplateService {
   postTemplate(formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[], campaignId: number ,applicationId: number, planning: any[]) {
     let flag: boolean;
     const json = {
-      'messagge': formMessage.valueOf(),
+      'message': formMessage.valueOf(),
       'userId': localStorage.getItem('userid'),
       'company': company,
       'parameters': parameters,
@@ -112,6 +112,7 @@ export class TemplateService {
       'campaign': campaignId,
       'planning': planning
     };
+    console.log(json);
     this.http.post(endpoint + 'templates/add', json).subscribe((res: boolean) => {
       flag = res;
       if (flag) {
