@@ -3,6 +3,7 @@ package M06_DataOrigin;
 import Entities.EntityFactory;
 import Entities.M06_DataOrigin.AddApplicationData;
 import Entities.M06_DataOrigin.Application;
+import Entities.Sql;
 import Exceptions.DatabaseConnectionProblemException;
 import Logic.Command;
 import Logic.CommandsFactory;
@@ -11,15 +12,20 @@ import Logic.M06_DataOrigin.GetApplicationByIdCompanyCommand;
 import Logic.M06_DataOrigin.GetApplicationCommand;
 import Logic.M06_DataOrigin.UpdateApplicationCommand;
 import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import Exceptions.ApplicationNotFoundException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class DAOApplicationTest {
+public class ApplicationCommandTest {
 
 
     private Application _application;
@@ -128,6 +134,15 @@ public class DAOApplicationTest {
         }
     }
 
+    @AfterEach
+    public void TearDownClass() throws SQLException{
 
+        Connection conn;
+        conn = Sql.getConInstance();
+        String query = "DELETE FROM public.application WHERE app_name = 'Metro de Caracas';";
+        Statement st = conn.createStatement();
+        st.executeUpdate(query);
+
+    }
 
 }
