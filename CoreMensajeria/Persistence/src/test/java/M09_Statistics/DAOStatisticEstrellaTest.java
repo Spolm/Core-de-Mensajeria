@@ -1,4 +1,4 @@
-package M09_Statistics;
+/*package M09_Statistics;
 
 import Entities.Entity;
 import Entities.M05_Channel.Channel;
@@ -316,4 +316,4 @@ class DAOStatisticEstrellaTest {
         }
         return params;
     }
-}
+}*/
