@@ -3,7 +3,6 @@ package webService.M02_CompanyManagement;
 import DTO.DTOFactory;
 import DTO.M02_DTO.*;
 import Entities.Entity;
-import Entities.M02_Company.CompanyDAO;
 import Entities.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
 import Exceptions.M07_Template.InvalidParameterException;

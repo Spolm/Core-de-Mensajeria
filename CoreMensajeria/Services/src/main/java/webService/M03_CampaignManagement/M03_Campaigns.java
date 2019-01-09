@@ -9,11 +9,7 @@ import DTO.M03_DTO.DTOIdStatusCampaign;
 import Entities.Entity;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
-import Entities.M03_Campaign.CampaignDAO;
-import Exceptions.CampaignDoesntExistsException;
 
-import Exceptions.M07_Template.InvalidParameterException;
-import Exceptions.ParameterCantBeNullException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M03_Campaign.AddCampaignCommand;
@@ -27,10 +23,8 @@ import Mappers.CompanyMapper.MapperFullCompany;
 import Mappers.CompanyMapper.MapperIdCompUser;
 import Mappers.CompanyMapper.MapperIdCompany;
 import Mappers.MapperFactory;
-import Persistence.DAO;
-import Persistence.M03_Campaign.DAOCampaign;
+
 import com.google.gson.Gson;
-import webService.M02_CompanyManagement.M02_Companies;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
