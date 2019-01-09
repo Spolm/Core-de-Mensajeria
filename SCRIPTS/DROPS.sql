@@ -18,6 +18,8 @@ ALTER SEQUENCE IF EXISTS template_channel_integrator_tci_id_seq RESTART;
 ALTER SEQUENCE IF EXISTS template_status_ts_id_seq RESTART;
 ALTER SEQUENCE IF EXISTS template_tem_id_seq RESTART;
 ALTER SEQUENCE IF EXISTS user_use_id_seq RESTART;
+ALTER SEQUENCE IF EXISTS geographical_region_rg_id_seq RESTART;
+ALTER SEQUENCE IF EXISTS planning_pla_id_seq RESTART;
 \c postgres
 DROP DATABASE IF EXISTS "CoreMensajeria_StarSchema";
 DROP DATABASE IF EXISTS "CoreMensajeria";

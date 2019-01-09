@@ -259,8 +259,6 @@ VALUES ('2016-07-04',5,2);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (5,12);
 
-INSERT INTO public.Message(mes_text, mes_template)
-VALUES ('Este es un mensaje para probar la validacion de la longitud de un mensaje sms, no debe ser mayor a 160 caracteres aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 6);
 INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (5,13);
 
