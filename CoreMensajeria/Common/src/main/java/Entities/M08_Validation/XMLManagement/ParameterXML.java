@@ -7,7 +7,15 @@ package Entities.M08_Validation.XMLManagement;
  */
 
 public class ParameterXML {
+
+    /**
+     * Nombre del parametro
+     */
     private String _name;
+
+    /**
+     * Valor asignado al parametroz
+     */
     private String _value;
 
 
@@ -60,8 +68,7 @@ public class ParameterXML {
      * almacenada en ParameterXML y transformarla a
      * un String
      *
-     * @return _name  nombre del parametro
-     * @return _value valor asignado a determinado parametro
+     * @return nombre del parametro y su valor
      */
 
     @Override
