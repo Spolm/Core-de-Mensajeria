@@ -1,4 +1,6 @@
-package Exceptions;
+package Exceptions.M08_SendMessageManager;
+
+import Exceptions.PersonalizedException;
 
 /**
  * Excepción personalizada para manejar la plantilla no aprobada
