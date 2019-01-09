@@ -76,9 +76,6 @@ public class M01_User {
         try {
             FindByUsernameIdCommand _command = CommandsFactory.findByUsernameIdCommand(id);
             _command.execute();
-//            DTO user = DTOFactory.CreateDTOUser();
-//            Command commandUser = CommandsFactory.instanciateGetUser(user);
-//            GetUserCommand cmd = (GetUserCommand) commandUser;
             return Response.ok(_gson.toJson(_command.Return())).build();
         } catch (SQLException e) {
             e.printStackTrace();
