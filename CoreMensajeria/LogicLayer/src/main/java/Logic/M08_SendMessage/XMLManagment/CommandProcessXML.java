@@ -97,8 +97,8 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
                 _verifiedParameters = new VerifiedParameter( _messageList, _template );
                 log.info("Se ha configurado la plantilla" );
 
-                //Command scheduleMessageCommand = CommandsFactory.createScheduleMessage(_verifiedParameters);
-                //scheduleMessageCommand.execute();
+//                Command scheduleMessageCommand = CommandsFactory.createScheduleMessage(_verifiedParameters);
+//                scheduleMessageCommand.execute();
             } else{
                 log.error("El Id del temple es vacío" );
             }

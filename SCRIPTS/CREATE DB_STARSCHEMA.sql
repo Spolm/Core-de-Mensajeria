@@ -13,7 +13,7 @@ CREATE EXTENSION postgres_fdw;
 
 CREATE SERVER statistics_server FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'localhost', port '5432', dbname 'CoreMensajeria');
 
-CREATE USER MAPPING FOR "postgres" SERVER statistics_server OPTIONS (user 'CoreMensajeria', password 'coremensajeria');
+CREATE USER MAPPING FOR "CoreMensajeria" SERVER statistics_server OPTIONS (user 'CoreMensajeria', password 'coremensajeria');
 
 CREATE SCHEMA stats;
 

@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
@@ -24,15 +25,17 @@ public class CommandSendMessage extends Command {
 
     private ArrayList<Message> _verifiedMessages;
     private Template _template;
+    private Date _dateToBeSent;
     final static Logger log = LogManager.getLogger("CoreMensajeria");
 
     /**
      * Constructor de la clase CommandSendMessage.
      * @param verifiedParameter parametros verificados.
      */
-    public CommandSendMessage(VerifiedParameter verifiedParameter){
+    public CommandSendMessage(VerifiedParameter verifiedParameter, Date dateToBeSent){
         _verifiedMessages = verifiedParameter.get_verifiedMessages();
         _template = verifiedParameter.get_template();
+        _dateToBeSent = dateToBeSent;
     }
 
     /**

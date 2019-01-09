@@ -34,6 +34,7 @@ import Logic.M03_Campaign.*;
 import Logic.M09_Statistics.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CommandsFactory {
@@ -59,10 +60,6 @@ public class CommandsFactory {
     }
     public static ChangePasswordCommand changePasswordCommand (String username, String password) {
         return  new ChangePasswordCommand(username, password);
-    }
-
-    public static Command createScheduleMessage(VerifiedParameter verifiedParameters) {
-        return new CommandScheduleMessage(verifiedParameters);
     }
 
     //region M09
@@ -470,12 +467,30 @@ public class CommandsFactory {
         return new CommandValidate(parameters);
     }
 
-    public static Command createSendMessage(VerifiedParameter parameters) {
-        return new CommandSendMessage(parameters);
+    /**
+     * @param parameters: Parámetros validados de la plantilla
+     * @param dateToBeSent: El día y hora que debe ser enviado el mensaje
+     * @return una instancia del objeto CommandSendMessage
+     */
+    public static Command createSendMessage(VerifiedParameter parameters, Date dateToBeSent) {
+        return new CommandSendMessage(parameters, dateToBeSent);
     }
 
+    /**
+     * @param message
+     * @param template
+     * @return
+     */
     public static Command createCommandParseMessage(Message message, Template template){
         return new CommandParseMessage(message, template);
+    }
+
+    /**
+     * @param verifiedParameters: Parámetros validados del template más el template
+     * @return una instancia de la clase CommandScheduleMessage
+     */
+    public static Command createScheduleMessage(VerifiedParameter verifiedParameters) {
+        return new CommandScheduleMessage(verifiedParameters);
     }
 
     //end region
