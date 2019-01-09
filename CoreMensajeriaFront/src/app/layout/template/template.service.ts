@@ -51,12 +51,12 @@ export class TemplateService {
 
   getCampaigns(companyId:number)
   {
-    return this.http.get(endpoint + 'M03_Campaigns/GetCampaigns?id=' + companyId.toString()).pipe(
+    return this.http.get(endpoint + 'M03_Campaigns/GetCampaignsByCompany/' + companyId.toString()+'/1').pipe(
       map(this.extractData));
   }
 
   getCompanies(userId: string) {
-    return this.http.get(endpoint + 'M02_Companies/GetCompaniesByUserPP/' + userId).pipe(
+    return this.http.get(endpoint + 'M02_Companies/GetCompaniesByResponsible/' + userId).pipe(
       map(this.extractData));
   }
 
