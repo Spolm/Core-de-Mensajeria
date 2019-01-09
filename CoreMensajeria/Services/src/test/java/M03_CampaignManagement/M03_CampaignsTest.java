@@ -2,7 +2,6 @@ package M03_CampaignManagement;
 
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
-import Entities.M03_Campaign.CampaignDAO;
 import Exceptions.CampaignDoesntExistsException;
 import Persistence.DAOFactory;
 import com.google.gson.Gson;
@@ -24,7 +23,6 @@ public class M03_CampaignsTest {
 
     private ArrayList<Company> _caList;
     private Campaign _ca;
-    private CampaignDAO _coMng = new CampaignDAO();
 
 
     /**

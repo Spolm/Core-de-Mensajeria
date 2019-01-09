@@ -93,8 +93,8 @@ public class MapperCompanyWithOut_Link extends GenericMapper<DTOCompanyWithOut_L
     public Entity CreateEntity(DTOCompanyWithOut_Link dto) {
 
         try {
-            Company _com = EntityFactory.CreateCompanyWithOutLink(dto.get_idCompany(), dto.get_name(), dto.get_desc(),
-                                                                  dto.get_status() );
+            Company _com = EntityFactory.CreateCompanyWithOutLink(dto.get_idCompany(), dto.get_name(),
+                                                                   dto.get_desc(),  dto.get_status() );
             return _com ;
 
         }

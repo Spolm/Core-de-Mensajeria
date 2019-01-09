@@ -3,7 +3,6 @@ package webService.M02_CompanyManagement;
 import DTO.DTOFactory;
 import DTO.M02_DTO.*;
 import Entities.Entity;
-import Entities.M02_Company.CompanyDAO;
 import Entities.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
 import Exceptions.M07_Template.InvalidParameterException;
@@ -38,35 +37,8 @@ public class M02_Companies {
     private final String MESSAGE_EXCEPTION = "Excepcion";
     private final String MESSAGE_ERROR_PARAMETERDOESNTEXIST= "La parametros ingresados no Validos";
 
-  /*  @GET
-    @Path("/CompanyDetails")
-    @Produces("application/json")
-
-    /**
-     * Metodo que recibe el id de una compañia y devuelve todos los detalles de la misma
-     * @param id el id de la compañia
-     * @return Response con status ok al encontrar la informacion solicitada
-     */
-  /*  public Response getCompanyDetails(@QueryParam("id") int id) throws CompanyDoesntExistsException {
-        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        CompanyDAO co = new CompanyDAO();
-        try {
-            _co = co.getDetails(id);
-            rb.entity(gson.toJson(_co));
-        }
-        catch (CompanyDoesntExistsException e) {
-            e.printStackTrace();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return rb.build();
-    }*/
 
 
-
-//---------- Region con los metodos ya con sus patrones
 
 
 
@@ -240,6 +212,32 @@ public class M02_Companies {
 
 //------------------------------------------------------
 
+
+  /*  @GET
+    @Path("/CompanyDetails")
+    @Produces("application/json")
+
+    /**
+     * Metodo que recibe el id de una compañia y devuelve todos los detalles de la misma
+     * @param id el id de la compañia
+     * @return Response con status ok al encontrar la informacion solicitada
+     */
+  /*  public Response getCompanyDetails(@QueryParam("id") int id) throws CompanyDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CompanyDAO co = new CompanyDAO();
+        try {
+            _co = co.getDetails(id);
+            rb.entity(gson.toJson(_co));
+        }
+        catch (CompanyDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return rb.build();
+    }*/
 
 
 
