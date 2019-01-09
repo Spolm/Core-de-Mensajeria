@@ -9,7 +9,8 @@ public class CompanyDoesntExistsException extends PersonalizedException {
 
 
     /**
-     * Excepción personalizada para el manejo de errores en los metodos que buscan informacion de compañias en la base de datos
+     * Excepción personalizada para el manejo de errores en los metodos que buscan informacion
+     * de compañias en la base de datos
      * @param error recibe el stack trace de la exception que atrapa
      * @param clase recibe la clase en la que ocurrio el error
      * @param metodo recibe el metodo en el que ocurrio el error
@@ -23,7 +24,8 @@ public class CompanyDoesntExistsException extends PersonalizedException {
     }
 
     /**
-     * Excepción personalizada para el manejo de errores en los metodos que buscan informacion de compañias en la base de datos
+     * Excepción personalizada para el manejo de errores en los metodos que buscan informacion
+     * de compañias en la base de datos
      * @param error recibe el stack trace de la exception que atrapa
      */
     public CompanyDoesntExistsException(Exception error) {

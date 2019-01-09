@@ -3,13 +3,13 @@ package Entities.M04_Integrator;
 import java.util.Objects;
 
 /**
- * Clase que nos permite realizar el envío de mensajes
- * por integrador
- *
- * @author José Salas
- * @author Manuel Espinoza
- * @author José Cedeño
- */
+* Clase que nos permite realizar el envío de mensajes
+* por integrador
+*
+* @author Kevin Martinez
+* @author Braulio Picon
+* @author Alexander Fernandez
+*/
 
 public class MessageIntegrator {
     private String msg;
@@ -36,8 +36,8 @@ public class MessageIntegrator {
         return send;
     }
 
-    public void setSend(boolean send) {
-        this.send = send;
+    public void send() {
+        this.send = true;
     }
 
     public String getMsg() {
@@ -66,8 +66,10 @@ public class MessageIntegrator {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || this.getClass() != o.getClass())
+            return false;
         MessageIntegrator that = (MessageIntegrator) o;
         return send == that.send &&
                 Objects.equals(msg, that.msg) &&

@@ -1,5 +1,7 @@
 package Persistence;
 
+//import Persistence.M01_Login.GetUserDao;
+import Persistence.M06_DataOrigin.DAOApplication;
 import Persistence.M04_Integrator.DAOIntegrator;
 import Persistence.M05_Channel.DAOChannel;
 import Persistence.M07_Template.*;
@@ -35,6 +37,11 @@ public class DAOFactory {
 
    static public DAOCampaign instanciateDaoCampaign ( ) { return new DAOCampaign(); }
 
+   //region M06
+
+    static public DAOApplication instanciateDaoApplication ( ) { return new DAOApplication(); }
+
+    //endregion
    //region M07
 
     static public DAOMessage  instaciateDaoMessage( ){

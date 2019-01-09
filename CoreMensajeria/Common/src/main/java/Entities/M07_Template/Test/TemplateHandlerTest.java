@@ -24,7 +24,7 @@ public class TemplateHandlerTest {
         //objectsNotNull();
     }
 
-    @Test
+   /* @Test
     void getTemplatesCorrectly(){
         assertEquals(templateHandler.getTemplates().size(), 5);
 
@@ -33,9 +33,9 @@ public class TemplateHandlerTest {
         }
 
         //statusTemplateCorrectly();
-    }
+    }*/
 
-    @Test
+   /* @Test
     void getTemplateCorrectly(){
         try{
 
@@ -47,9 +47,9 @@ public class TemplateHandlerTest {
         }catch (TemplateDoesntExistsException e){
             //logg
         }
-    }
+    }*/
 
-    @AfterEach
+/*    @AfterEach
     void tearDown(){
         templateHandler = null;
     }
@@ -70,9 +70,9 @@ public class TemplateHandlerTest {
         }catch (TemplateDoesntExistsException e){
             e.printStackTrace();
         }
-    }
+    }*/
 
-    void statusTemplateCorrectly(){
+ /*   void statusTemplateCorrectly(){
         try {
             assertEquals(templateHandler.getTemplate(1).getStatus(), "Aprobado");
             assertEquals(templateHandler.getTemplate(2).getStatus(), "No aprobado");
@@ -84,5 +84,5 @@ public class TemplateHandlerTest {
         }catch (Exception e){
             //logg
         }
-    }
+    }*/
 }

@@ -1,6 +1,8 @@
 package Entities.M01_Login;
 
-public class LoginIntent {
+import Entities.Entity;
+
+public class LoginIntent extends Entity {
     private String _username;
     private String _password;
 

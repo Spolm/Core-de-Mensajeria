@@ -12,7 +12,8 @@ import Mappers.GenericMapper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapperCampaignWithOut_id_And_Company extends GenericMapper <DTOCampaignWithOut_id_And_Company> {
+public class MapperCampaignWithOut_id_And_Company extends
+        GenericMapper <DTOCampaignWithOut_id_And_Company> {
 
 
     /**
@@ -25,9 +26,11 @@ public class MapperCampaignWithOut_id_And_Company extends GenericMapper <DTOCamp
         try {
             DTOCampaignWithOut_id_And_Company dto = null;
             Campaign _cam = (Campaign) entity;
-            dto = DTOFactory.CreateDtoCampaignWithOut_id_And_Company(_cam.get_nameCampaign(), _cam.get_descCampaign(),
-                                                                     _cam.get_statusCampaign(), _cam.get_startCampaign()
-                                                                     , _cam.get_endCampaign());
+            dto = DTOFactory.CreateDtoCampaignWithOut_id_And_Company(_cam.get_nameCampaign(),
+                                                                     _cam.get_descCampaign(),
+                                                                     _cam.get_statusCampaign(),
+                                                                     _cam.get_startCampaign(),
+                                                                     _cam.get_endCampaign());
 
             return dto;
         }
@@ -97,8 +100,10 @@ public class MapperCampaignWithOut_id_And_Company extends GenericMapper <DTOCamp
     public Entity CreateEntity(DTOCampaignWithOut_id_And_Company dto) {
         try {
             Campaign _cam = EntityFactory.CreateCampaignWithOut_ID_Company(dto.get_nameCampaign(),
-                                                                       dto.get_descCampaign(), dto.get_statusCampaign(),
-                                                                       dto.get_startCampaign(), dto.get_endCampaign());
+                                                                           dto.get_descCampaign(),
+                                                                           dto.get_statusCampaign(),
+                                                                           dto.get_startCampaign(),
+                                                                           dto.get_endCampaign());
             return _cam ;
 
         }

@@ -15,18 +15,17 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
 /**
- * Clase que implementa los métodos PUT y GET para el funcionamiento
- * del servicio RESTful referido a los canales del sistema.
- *
- * @author José Salas
- * @author Manuel Espinoza
- * @author José Cedeño
- */
-
+* Clase que implementa los métodos PUT y GET para el funcionamiento
+* del servicio RESTful referido a los canales del sistema.
+*
+* @author Kevin Martinez
+* @author Braulio Picon
+* @author Alexander Fernandez
+*/
 @Path("/channel")
 public class M05_Channel {
 
-    MapperChannel _mapper = MapperFactory.createMapperChannel();
+    private MapperChannel _mapper = MapperFactory.createMapperChannel();
 
     /**
      * Método que nos permite obtener una lista de
@@ -40,7 +39,7 @@ public class M05_Channel {
     public Response listChannel() {
         Response response;
         try {
-            CommandGetAllChannels command = CommandsFactory.instanceGetAllChannels();
+            CommandGetAllChannels command = CommandsFactory.createCommandGetAllChannels();
             command.execute();
             ArrayList<DTOChannel> c = (ArrayList<DTOChannel>) _mapper.CreateDtoList(command.returnList());
             response = Response.ok().entity(c).build();

@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapperChannel extends GenericMapper<DTOChannel> {
-
     @Override
     public DTOChannel CreateDto(Entity entity) {
         Channel channel = (Channel) entity;
         return DTOFactory.createDTOChannel(
+                channel.get_id(),
                 channel.get_nameChannel(),
                 channel.get_descriptionChannel(),
                 channel.get_integrators()
@@ -24,7 +24,7 @@ public class MapperChannel extends GenericMapper<DTOChannel> {
     @Override
     public Entity CreateEntity(DTOChannel dtoChannel) {
         return EntityFactory.createChannel(
-                -1,
+                dtoChannel.get_id(),
                 dtoChannel.get_nameChannel(),
                 dtoChannel.get_descriptionChannel(),
                 dtoChannel.get_integrators()
@@ -33,23 +33,19 @@ public class MapperChannel extends GenericMapper<DTOChannel> {
 
     @Override
     public List<DTOChannel> CreateDtoList(List<Entity> entities) {
-        ArrayList<DTOChannel> dtoChannelList = new ArrayList<>();
-
+        ArrayList<DTOChannel> dtoList = new ArrayList<>();
         for (Entity entity : entities) {
-            dtoChannelList.add(CreateDto(entity));
+            dtoList.add(CreateDto(entity));
         }
-
-        return dtoChannelList;
+        return dtoList;
     }
 
     @Override
     public List<Entity> CreateEntityList(List<DTOChannel> dtoChannels) {
         ArrayList<Entity> entityList = new ArrayList<>();
-
         for (DTOChannel dtoChannel : dtoChannels) {
             entityList.add(CreateEntity(dtoChannel));
         }
-
         return entityList;
     }
 }

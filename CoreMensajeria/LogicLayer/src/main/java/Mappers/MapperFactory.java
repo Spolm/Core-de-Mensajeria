@@ -9,6 +9,7 @@ import Mappers.LoginMapper.LoginMapper;
 import Mappers.LoginMapper.UserMapper;
 import Mappers.GenericMapper;
 import Mappers.M07_Template.MapperTemplate;
+import Mappers.M10_Profile.MapperEditUser;
 import Mappers.StatisticMapper.StatisticMapper;
 
 public class MapperFactory {
@@ -53,13 +54,33 @@ public class MapperFactory {
         return new MapperFullCampaign();
     }
 
+
+    /**
+     * Metodos que instancian un obejto del tipo MapperIdCompany
+     * @return un objeto del tipo MapperIdCompany
+     */
     public static MapperIdCompany createMapperIdCompany(){
-        return  new MapperIdCompany();
+
+        return new MapperIdCompany();
     }
 
-    public static MapperIdStatusCompany createMapperIdStatusCompany(){ return  new MapperIdStatusCompany(); }
+    /**
+     * Metodos que instancian un obejto del tipo MapperIdStatusCompany
+     * @return un objeto del tipo MapperIdStatusCompany
+     */
+    public static MapperIdStatusCompany createMapperIdStatusCompany(){
 
-    public static MapperIdCompUser createMapperIdCompUser(){ return  new MapperIdCompUser(); }
+        return  new MapperIdStatusCompany();
+    }
+
+    /**
+     * Metodos que instancian un obejto del tipo MapperIdCompUser
+     * @return un objeto del tipo MapperIdCompUser
+     */
+    public static MapperIdCompUser createMapperIdCompUser(){
+
+        return  new MapperIdCompUser();
+    }
 
 
     /**
@@ -76,6 +97,7 @@ public class MapperFactory {
      * @return un objeto del tipo MapperIdCampaign
      */
     public static MapperIdCampaign createMapperIdCampaign(){
+
         return  new MapperIdCampaign();
     }
 
@@ -84,19 +106,33 @@ public class MapperFactory {
      * @return un objeto del tipo MapperCampaignWithOut_id_And_Company
      */
     public static MapperCampaignWithOut_id_And_Company CreateMapperCampaignWithOut_id_And_Company(){
+
         return new MapperCampaignWithOut_id_And_Company();
     }
 
+
+    /**
+     * Metodos que instancian un obejto del tipo MapperIdStatusCampaign
+     * @return un objeto del tipo MapperIdStatusCampaign
+     */
     public static MapperIdStatusCampaign createMapperIdStatusCampaign(){
+
         return new MapperIdStatusCampaign();
     }
     // endregion
 
 
-    //M04_Region
-    public static MapperIntegrator createMapperIntegrator(){return new MapperIntegrator();}
-    public static MapperChannel createMapperChannel(){ return new MapperChannel(); }
-    // end M04_region
+    //M04_Integrator
+    public static MapperIntegrator createMapperIntegrator(){
+        return new MapperIntegrator();
+    }
+    //end M04_Integrator
+
+    //M05_Channels
+    public static MapperChannel createMapperChannel(){
+        return new MapperChannel();
+    }
+    //end M05_Channels
 
 
     public static GenericMapper createStatisticMapper(){ return new StatisticMapper();}
@@ -110,4 +146,13 @@ public class MapperFactory {
     public static LoginMapper createLoginMapper() {
         return new LoginMapper();
     }
+
+    //region M10
+
+    /**
+     * Method that instantiated a MapperEditUser object
+     * @return object MapperEditUser
+     */
+    public static MapperEditUser createMapperEditUser(){return new MapperEditUser();}
+    //endregion
 }

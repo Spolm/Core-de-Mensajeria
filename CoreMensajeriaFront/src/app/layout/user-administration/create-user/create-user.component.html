@@ -1,0 +1,19 @@
+<router-outlet></router-outlet>
+<div>
+  <h2 class="text-capitalize main-title">Crear Usuario</h2>
+  <hr>
+  <form>
+    <div class="form-row">
+
+      <!-- Textarea for the message of the template -->
+      <div class="form-group col-12 col-md-9">
+        <label for="formState">Estado</label>
+        <br>
+        <select class="form-control" id="formState" [(ngModel)]="formState" name="state" (change)="addState(formState)">
+          <option>
+            venezuela
+          </option>
+        </select>
+      </div>
+
+    </div>
