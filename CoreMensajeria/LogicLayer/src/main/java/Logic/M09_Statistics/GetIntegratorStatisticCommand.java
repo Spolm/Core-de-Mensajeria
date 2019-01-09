@@ -2,17 +2,18 @@ package Logic.M09_Statistics;
 
 import Entities.Entity;
 import Logic.Command;
-import Persistence.DAOFactory;
-import Persistence.M09_Statistics.DAOStatisticEstrella;
+import Persistence.Factory.DAOAbstractFactory;
+import Persistence.IDAO_StatisticEstrella;
 
 public class GetIntegratorStatisticCommand extends Command<Entity> {
 
-    DAOStatisticEstrella dao;
+    IDAO_StatisticEstrella dao;
     Entity statistic;
 
     @Override
     public void execute() throws Exception {
-        dao = DAOFactory.instanciateDaoStatisticsEstrella();
+        DAOAbstractFactory factory = DAOAbstractFactory.getFactory();
+        dao = factory.instanciateDaoStatisticsEstrella();
         statistic = dao.getIntegratorStatistic();
     }
 
