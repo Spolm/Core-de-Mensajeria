@@ -7,25 +7,15 @@ import Entities.M03_Campaign.Campaign;
 import Entities.M05_Channel.Channel;
 import Entities.M06_DataOrigin.Application;
 import Entities.M07_Template.Template;
-import Entities.Registry;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
-import Persistence.DAO;
 import Persistence.DAOFactory;
 import Persistence.M07_Template.DAOTemplate;
-import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.runners.MethodSorters;
 
-import java.io.Console;
-import java.nio.channels.Channels;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;

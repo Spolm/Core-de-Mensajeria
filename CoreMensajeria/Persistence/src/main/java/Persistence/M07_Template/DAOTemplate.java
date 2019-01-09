@@ -4,32 +4,25 @@ import Entities.Entity;
 import Entities.EntityFactory;
 import Entities.M01_Login.Privilege;
 import Entities.M01_Login.User;
-import Entities.M01_Login.UserDAO;
-import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 import Entities.M03_Campaign.CampaignDAO;
 import Entities.M04_Integrator.Integrator;
-//import Entities.M04_Integrator.IntegratorDAO;
 import Entities.M05_Channel.Channel;
-//import Entities.M05_Channel.ChannelFactory;
 import Entities.M06_DataOrigin.Application;
 import Entities.M06_DataOrigin.ApplicationDAO;
-import Entities.M07_Template.HandlerPackage.*;
 import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.Status;
 import Entities.M07_Template.Template;
-import Entities.Sql;
-import Exceptions.CampaignDoesntExistsException;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Persistence.DAO;
 import Persistence.DAOFactory;
+import Persistence.Factory.DAOAbstractFactory;
 import com.google.gson.*;
 import Persistence.M03_Campaign.DAOCampaign;
 import Persistence.M01_Login.DAOUser;
-import Persistence.M05_Channel.DAOChannel;
 import Persistence.M04_Integrator.DAOIntegrator;
 
 import java.sql.Connection;
@@ -86,17 +79,21 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             //se crea el template y se retorna su id
             int templateId = this.postTemplate(gsonObj.get("campaign").getAsInt(),gsonObj.get("applicationId").getAsInt(), gsonObj.get("userId").getAsInt());
             //se establece el template  como no aprobado
-            DAOStatus daoStatus = DAOFactory.createDAOStatus();
+
+            IDAOStatus daoStatus = DAOAbstractFactory.getFactory().createDAOStatus();
             //StatusHandler.postTemplateStatusNoAprovado(templateId);
             daoStatus.postTemplateStatusNotApproved(templateId);
             //insertamos los nuevos parametros
             String[] parameters = gson.fromJson(gsonObj.get("newParameters").getAsJsonArray(),String[].class);
-            DAOFactory.instaciateDaoParameter().postParameter(parameters,gsonObj.get("company").getAsInt());
+
+            IDAOParameter daoParameter = DAOAbstractFactory.getFactory().createDaoParameter();
+            daoParameter.postParameter(parameters,gsonObj.get("company").getAsInt());
             //obtenemos el valor del mensaje,y parametros
             parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
 
             String message = gsonObj.get("message").getAsString();
-            DAOFactory.instaciateDaoMessage().postMessage(message,gsonObj.get("company").getAsInt(),parameters,templateId);
+            IDAOMessage daoMessage = DAOAbstractFactory.getFactory().createDaoMessage();
+            daoMessage.postMessage(message,gsonObj.get("company").getAsInt(),parameters,templateId);
 
             //obtenemos los valores de los canales e integradores
             JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
@@ -104,7 +101,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
             //planning
             String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
-            PlanningHandler.postPlanning(planning,templateId);
+            IDAOPlanning daoPlanning = DAOAbstractFactory.getFactory().createDaoPlanning();
+            daoPlanning.postPlanning(planning,templateId);
 
             return this.get(templateId);
         } catch (Exception e){
@@ -507,18 +505,22 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
             //insertamos los nuevos parametros
             String[] parameters = gson.fromJson(gsonObj.get("newParameters").getAsJsonArray(),String[].class);
-            DAOFactory.instaciateDaoParameter().postParameter(parameters,gsonObj.get("company").getAsInt());
+            IDAOParameter daoParameter = DAOAbstractFactory.getFactory().createDaoParameter();
+            daoParameter.postParameter(parameters,gsonObj.get("company").getAsInt());
+
             //update de mensaje
             parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
-            String message = gsonObj.get("message").getAsString();
-            DAOFactory.instaciateDaoMessage().updateMessage(gsonObj.get("message").getAsString(),gsonObj.get("templateId").getAsInt(),parameters,gsonObj.get("company").getAsInt());
+
+            IDAOMessage daoMessage = DAOAbstractFactory.getFactory().createDaoMessage();
+            daoMessage.updateMessage(gsonObj.get("message").getAsString(),gsonObj.get("templateId").getAsInt(),parameters,gsonObj.get("company").getAsInt());
 
             //update de Channel Integrator
             JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
             updateChannelIntegrator(channelIntegrator,gsonObj.get("templateId").getAsInt());
             //planning
             String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
-            PlanningHandler.updatePlanning(planning,gsonObj.get("templateId").getAsInt());
+            IDAOPlanning daoPlanning = DAOAbstractFactory.getFactory().createDaoPlanning();
+            daoPlanning.updatePlanning(planning,gsonObj.get("templateId").getAsInt());
 
             return true;
         } catch (Exception e){
@@ -643,7 +645,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             Application _app = this.getApplicationByTemplate( templateId );
 
             //Message
-            Message _message = ( Message )DAOFactory.instaciateDaoMessage().getMessage( templateId );
+            IDAOMessage _daoMessage = DAOAbstractFactory.getFactory().createDaoMessage();
+            Message _message = ( Message )_daoMessage.getMessage( templateId );
 
             //user
             DAOUser _userDao = DAOFactory.instanciateDaoUser();
@@ -653,7 +656,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             ArrayList<Channel> _channels = this.getChannelsByTemplate( templateId );
 
             //Planning
-            Planning _planning = (Planning) DAOFactory.instaciateDaoPlanning().getPlanning( templateId );
+            IDAOPlanning _daoPlanning = DAOAbstractFactory.getFactory().createDaoPlanning();
+            Planning _planning = (Planning) _daoPlanning.getPlanning( templateId );
 
             //Status
             Status _status = Status.createStatus(_rs.getInt("tem_id"),

@@ -14,6 +14,8 @@ import java.sql.*;
 
 public class DAOPlanning  extends DAO implements IDAOPlanning {
 
+    final String POST_PLANNING = "{call m07_postPlanning(?,?,?,?,?)}";
+    final String UPDATE_PLANNING = "{ call m07_updatePlanning(?,?,?,?,?) }";
     PreparedStatement _pt;
     Statement  _st;
     boolean _salida;
@@ -58,12 +60,12 @@ public class DAOPlanning  extends DAO implements IDAOPlanning {
     public void postPlanning(String[] planning, int templateId) {
         try{
             Connection connection = getBdConnect();
-            _pt = connection.prepareCall("{callm07_postPlanning(?)}");
+            _pt = connection.prepareCall(POST_PLANNING);
             _pt.setInt(1, templateId);
-            _pt.setTimestamp(2, transform(planning[0]));
-            _pt.setTimestamp(3, transform(planning[2]));
-            _pt.setTimestamp(4, transform(planning[1]));
-            _pt.setTimestamp(5, transform(planning[3]));
+            _pt.setString(2, planning[0]);
+            _pt.setString(3, planning[2]);
+            _pt.setString(4, planning[1]);
+            _pt.setString(5, planning[3]);
             _pt.executeQuery();
         }catch (SQLException e) {
             e.printStackTrace();
@@ -80,12 +82,12 @@ public class DAOPlanning  extends DAO implements IDAOPlanning {
     public void updatePlanning(String[] planning, int templateId) {
         try{
             Connection connection = getBdConnect();
-            _pt = connection.prepareCall("{m07_updatePlanning(?)}");
+            _pt = connection.prepareCall(UPDATE_PLANNING);
             _pt.setInt(1, templateId);
-            _pt.setTimestamp(2, transform(planning[0]));
-            _pt.setTimestamp(3, transform(planning[2]));
-            _pt.setTimestamp(4, transform(planning[1]));
-            _pt.setTimestamp(5, transform(planning[3]));
+            _pt.setString(2, planning[0]);
+            _pt.setString(3, planning[2]);
+            _pt.setString(4, planning[1]);
+            _pt.setString(5, planning[3]);
             _pt.executeQuery();
         }catch (SQLException e) {
             e.printStackTrace();
