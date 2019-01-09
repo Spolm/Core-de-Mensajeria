@@ -3,6 +3,7 @@ package Logic.M08_SendMessage.XMLManagment;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.M08_SendMessageManager.DateNotValidException;
 import Exceptions.M08_SendMessageManager.NullXMLException;
+import Exceptions.TemplateNotApprovedException;
 import Logic.Command;
 import Logic.CommandsFactory;
 
@@ -90,6 +91,8 @@ public class WatchDirectory implements Runnable{
                             log.error( e.getMessage() );
                         } catch ( DateNotValidException e ){
                             log.error( e.getMessage() );
+                        } catch ( TemplateNotApprovedException e ){
+                            log.error( "La plantilla no esta aprobada" );
                         }
                     }
                 }
