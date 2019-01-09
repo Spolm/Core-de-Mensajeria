@@ -79,7 +79,7 @@ public class DAOApplicationTest {
     }
 
     @Test
-    public void getApplicationByTokenFaildTest()throws Exception{
+    public void getApplicationByTokenFailTest()throws Exception{
         try {
             Command c=CommandsFactory.GetApplicationToken("9586465");
             c.execute();
@@ -92,7 +92,7 @@ public class DAOApplicationTest {
     }
 
     @Test
-    public void getApplicationByIdFaildTest()throws Exception {
+    public void getApplicationByIdFailTest()throws Exception {
         try {
             Command c=CommandsFactory.GetApplicationId(9000);
             c.execute();
