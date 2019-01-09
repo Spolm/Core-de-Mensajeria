@@ -1,11 +1,8 @@
 package Logic.M08_Validation;
 
-import DTO.M08_DTO.ParametersDTO;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
-import Exceptions.MessageDoesntExistsException;
-import Exceptions.ParameterDoesntExistsException;
-import Exceptions.SMSTooLongException;
+import Exceptions.M08_SendMessageManager.SMSTooLongException;
 import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Logic.CommandsFactory;

@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 public class DAOSentMessage extends DAO implements IDAOSentMessage{
     private Connection _conn;
-    private final String CALL_INSERT = "{CALL m08_insertSentMessagge(?,?,?,?,?,?)}";
+    private final String CALL_INSERT = "{CALL m08_insertSentMessage(?,?,?,?,?,?)}";
 
     /**
      * @param e La entidad sentMessage que se va insertar en la bd
@@ -24,6 +24,7 @@ public class DAOSentMessage extends DAO implements IDAOSentMessage{
     public void create(Entity e) throws SQLException {
         _conn = getBdConnect();
         SentMessage sentMessage = (SentMessage) e;
+        System.out.println("El timestamp: "+sentMessage.get_sentTime());
         try {
             PreparedStatement preparedStatement = _conn.prepareCall(CALL_INSERT);
             preparedStatement.setTimestamp(1, sentMessage.get_sentTime());
