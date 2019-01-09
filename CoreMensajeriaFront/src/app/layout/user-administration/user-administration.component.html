@@ -1,0 +1,58 @@
+<h2 class="text-center text-capitalize main-title">
+  Administrar Usuarios
+</h2>
+
+<div class="d-flex flex-row-reverse">
+  <button type="button" class="btn btn-dark" routerLink="/profiles/create" >Crear Usuario</button>
+  <select class="form-control" id="company" name="company" [(ngModel)]="companyId" (change)="changeCompany(companyId)">
+    <ng-container *ngFor="let company of companiesJson">
+      <option *ngIf="company._status" [value]="company._idCompany">
+        <p>
+          {{company._name}}
+        </p>
+      </option>
+    </ng-container>
+
+  </select>
+  Seleccione una compañia
+</div>
+
+<div class="card">
+  <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">C.I.</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Rol</th>
+        <th scope="col">Email</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-center">
+          24685783
+        </td>
+        <td class="text-center">Boris</td>
+        <td class="text-center">
+          Torrado
+        </td>
+        <td class="text-center">
+          Admintrador
+        </td>
+        <td class="text-center">
+          boristor22@gmail.com
+        </td>
+        <td class="">
+          <div class="d-flex justify-content-around align-items-center">
+            <i class="fa fa-info-circle clickable" aria-hidden="true"
+              title="Detalles"></i>
+            <i class="fa fa-edit clickable" aria-hidden="true"
+              title="Editar" routerLink=""></i>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

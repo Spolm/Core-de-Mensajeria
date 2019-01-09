@@ -2,6 +2,7 @@ package webService.M10_Profile;
 
 import Logic.Command;
 import Logic.CommandsFactory;
+import com.google.gson.Gson;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -23,6 +24,7 @@ public class M10_GeographicalRegion {
             command.execute();
             // 4. Map Entity to DTO
             // 5. Return DTO
+            return Response.ok(new Gson().toJson(command.Return())).build();
         }catch (Exception e){
             e.printStackTrace();
         }
