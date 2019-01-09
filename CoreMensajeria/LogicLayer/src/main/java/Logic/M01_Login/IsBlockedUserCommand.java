@@ -10,6 +10,7 @@ import Persistence.M01_Login.DAOUser;
 public class IsBlockedUserCommand extends Command {
 
     private static LoginIntent _log;
+    private static boolean _block;
 
     public IsBlockedUserCommand( Entity _login  ) {
 
@@ -19,11 +20,15 @@ public class IsBlockedUserCommand extends Command {
     @Override
     public void execute() throws Exception {
         DAO _dao = DAOFactory.instanciateDaoUser();
-        ((DAOUser) _dao).isBlockedUser(_log.get_username());
+        _block = ((DAOUser) _dao).isBlockedUser(_log.get_username());
     }
 
     @Override
-    public Object Return() {
+    public Entity Return() {
         return _log;
+    }
+
+    public Boolean returnBool() {
+        return _block;
     }
 }

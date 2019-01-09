@@ -5,6 +5,7 @@ import Entities.Entity;
 import Entities.M01_Login.*;
 import Exceptions.UserBlockedException;
 import Logic.CommandsFactory;
+import Logic.M01_Login.IsBlockedUserCommand;
 import Logic.M01_Login.LogUserCommand;
 import Mappers.LoginMapper.LoginMapper;
 import Mappers.MapperFactory;
@@ -32,34 +33,33 @@ public class M01_Login {
     /**
      * This method is the connection between front-end and back-end. Verifies that the input data matches with the data
      * in the Data Base.
-     * @param login
+     * @param loginIntent
      * @return Response
      */
     @Path("/login")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response login( DTOLogin login) throws Exception {
-        Response.ResponseBuilder _rb = Response.status(Response.Status.ACCEPTED);
+    public Response login( LoginIntent loginIntent) throws Exception {
         Error error;
-        LoginMapper _mapper = MapperFactory.createLoginMapper();
-        LoginIntent _log = (LoginIntent) _mapper.CreateEntity(login);
-        LogUserCommand _command = CommandsFactory.createLogUserCommand(_log);
-        _command.execute();
-        Entity _cmd = _command.Return();
-        DTOLogin _dtoLog = _mapper.CreateDto(_cmd);
-        _rb.entity( _gson.toJson( _dtoLog ) ) ;
+        //LoginMapper _mapper = MapperFactory.createLoginMapper();
+        LoginIntent _log; //= (LoginIntent) _mapper.CreateEntity(login);
+        User user;
+        LogUserCommand _command = CommandsFactory.createLogUserCommand(loginIntent);
+        IsBlockedUserCommand _cmd = CommandsFactory.isBlockedUserCommand(loginIntent);
+        //DTOLogin _dtoLog = _mapper.CreateDto(_log);
         try {
-            if(_log.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
-                    _log.get_password().matches("[a-zA-Z0-9/*_-]+")){
 
-//                if( _userDAO.isBlockedUser(loginIntent.get_username()) )
-//                    throw new UserBlockedException("El usuario ingresado se encuentra bloqueado");
-//
-//                user = _userDAO.logUser(loginIntent.get_username(),loginIntent.get_password());
-//                if (user == null)
-//                    throw new NullPointerException();
-                return Response.ok(_gson.toJson(_cmd)).build();
+            if(loginIntent.get_username().matches("[a-zA-Z0-9.@+/*-]+") &&
+                    loginIntent.get_password().matches("[a-zA-Z0-9/*_-]+")){
+               // _cmd.execute();
+                if( _userDAO.isBlockedUser(loginIntent.get_username()) /*_cmd.returnBool()*/ )
+                    throw new UserBlockedException("El usuario ingresado se encuentra bloqueado");
+                _command.execute();
+                user = (User) _command.Return();
+                if (user == null)
+                    throw new NullPointerException();
+                return Response.ok(_gson.toJson(user)).build();
             }
             else {
                 error = new Error("Los datos ingresados no tienen el formato adecuado");
@@ -68,6 +68,14 @@ public class M01_Login {
                 return Response.status(404).entity(error).build();
             }
 
+        } catch(UserBlockedException e){
+            e.printStackTrace();
+            error = new Error("El usuario ha sido bloqueado");
+            return Response.status(401).entity(error).build();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            error = new Error("Error a nivel de base de datos");
+            return Response.status(500).entity(error).build();
         } catch (NullPointerException e){
             error = new Error("Las credenciales ingresadas son incorrectas");
             error.addError("credenciales","No se encontro el usuario deseado");

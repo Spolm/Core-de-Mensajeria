@@ -11,7 +11,7 @@ import Persistence.M01_Login.DAOUser;
 public class LogUserCommand extends Command {
 
     private static LoginIntent _log;
-
+    private static User _use;
 
 
     public LogUserCommand( Entity _login  ) {
@@ -27,7 +27,8 @@ public class LogUserCommand extends Command {
     public void execute() throws Exception {
         try {
             DAO _dao = DAOFactory.instanciateDaoUser();
-            ((DAOUser) _dao).logUser(_log.get_username(), _log.get_password());
+            _use = ((DAOUser) _dao).logUser(_log.get_username(), _log.get_password());
+
         }
 
         catch ( Exception e ){
@@ -37,6 +38,6 @@ public class LogUserCommand extends Command {
 
     @Override
     public Entity Return() {
-        return _log;
+        return _use;
     }
 }
