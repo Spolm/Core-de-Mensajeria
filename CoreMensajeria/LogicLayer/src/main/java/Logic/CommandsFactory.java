@@ -322,8 +322,8 @@ public class CommandsFactory {
         return new CommandProcessXML(filePath);
     }
 
-    public static CommandValidateMessage createCommandValidateMessage(int template) {
-        return new CommandValidateMessage(template);
+    public static CommandValidateMessage createCommandValidateMessage(int template, ArrayList<Message> messages) {
+        return new CommandValidateMessage(template,messages);
 
     }
 
@@ -331,8 +331,8 @@ public class CommandsFactory {
         return new CommandValidateTemplate(id);
     }
 
-    public static CommandValidate createCommandValidate (ParametersDTO dto) {
-        return new CommandValidate(dto);
+    public static CommandValidate createCommandValidate (VerifiedParameter parameters) {
+        return new CommandValidate(parameters);
     }
 
     public static Command createSendMessage(VerifiedParameter parameters) {
