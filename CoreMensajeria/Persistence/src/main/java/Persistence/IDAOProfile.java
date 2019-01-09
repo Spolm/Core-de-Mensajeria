@@ -10,15 +10,34 @@ import java.util.ArrayList;
  */
 public interface IDAOProfile extends IDAO {
     /**
-     * Interface to obtain the privileges by user and company
+     * Abstract method to obtain the privileges by user and company
      * @param userId id of the user
      * @param companId id of the company
-     * @return list of privileges by user and company
+     * @return ArrayList<Privilege> list of privileges by user and company
      */
     public ArrayList<Privilege> getPrivilegesByUserAndCompany(int userId, int companId);
 
+    /**
+     * Abstract method to return the responsibility  by company
+     * @param companyId id of the company
+     * @return  Responsability responsibility by company
+     */
     public Responsability getResponsability(int companyId);
 
+    /**
+     * Abstract method which is responsible for editing a user profile
+     * @param userId id of the user
+     * @param name  new name of the user
+     * @param lastname new lastname of the user
+     * @param ci new identification number of the user
+     * @param geographicalRegion new geographical region of the user
+     * @param address new address of the user
+     * @param birthdate new birthdate of the user
+     * @param gender new gender of the user
+     * @param email new email of the user
+     * @param phone new phone of the user
+     * @return String with information about the data base
+     */
     public String editProfile(int userId, String name, String lastname, int ci, int geographicalRegion, String address,
                               String birthdate, String gender, String email, String phone);
 }
