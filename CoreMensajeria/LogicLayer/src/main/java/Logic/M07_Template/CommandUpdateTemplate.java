@@ -7,7 +7,9 @@ import Persistence.DAOFactory;
 import Persistence.M07_Template.DAOTemplate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+/**
+ * CommandUpdateTemplate es una clase que permite modificar una plantilla.
+ */
 public class CommandUpdateTemplate extends Command {
     private String json;
     private Boolean rest;
@@ -19,13 +21,15 @@ public class CommandUpdateTemplate extends Command {
     public CommandUpdateTemplate() {
     }
 
+    /**
+     * El metodo execute() es aquel donde se ejecuta la funcion principal de la clase
+     * @throws Exception
+     */
     @Override
     public void execute() throws Exception {
         //region Instrumentation Debug
         log.debug("Entrando a el metodo execute() de CommandUpdateTemplate" );
         //endregion
-        //TemplateHandler templateHandler = new TemplateHandler();
-        //rest = templateHandler.updateTemplateData(json);
         DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
         rest = daoTemplate.updateTemplateData(json);
         //region Instrumentation Info
@@ -35,7 +39,10 @@ public class CommandUpdateTemplate extends Command {
         log.debug("Saliendo de el metodo execute() de CommandUpdateTemplate" );
         //endregion
     }
-
+    /**
+     * El metodo Return() retorna un booleano.
+     * @return
+     */
     @Override
     public Boolean Return() {
         //region Instrumentation Debug

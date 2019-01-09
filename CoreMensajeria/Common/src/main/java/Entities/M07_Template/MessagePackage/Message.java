@@ -5,27 +5,27 @@ import Entities.Entity;
 import java.util.*;
 
 /**
- * Message class uses for storing message information from a template
+ * La clase Message se usa para almacenar informacion del mensaje de una plantilla.
  */
 public class Message extends Entity {
     /**
-     * list of parameters of the message
+     * Lista de parametros de un mensaje
      */
     private ArrayList<Parameter> parameterArrayList;
     /**
-     * string with de message and parameters
+     * String de palabras del mensaje
      */
     private String message;
 
     private int templateId;
 
     /**
-     * empty builder
+     * Constructor vacio
      */
     public Message() {}
 
     /**
-     * builder with only the message id.
+     * Contructor con solo el id del mensaje
      * @param messageId message id
      */
     public Message(int messageId) {
@@ -33,7 +33,7 @@ public class Message extends Entity {
     }
 
     /**
-     * builder with the list of parameters and string with message and parameters
+     * Constructor con la lsita de parametros y un String con mensaje y parametros.
      * @param parameterArrayList list of parameters of the message
      * @param message string with message and parameters
      */
@@ -43,10 +43,10 @@ public class Message extends Entity {
     }
 
     /**
-     *  builder with id message, the list of parameters and string with message and parameters
+     * Constructor con el id del mensaje, la lista de parametros y un String con mensaje y parametros.
      * @param messageId message id
-     * @param parameterArrayList ist of parameters of the message
-     * @param message string with message and parameters
+     * @param parameterArrayList lista de parametros del mensaje
+     * @param message string con mensaje y parametros
      */
     public Message(int messageId, ArrayList<Parameter> parameterArrayList, String message) {
         this.set_id(messageId);
@@ -61,7 +61,7 @@ public class Message extends Entity {
     }
 
     /**
-     * Builder with all the data
+     * Constructor con toda la data.
      * @param messageId
      * @param parameterArrayList
      * @param message
@@ -75,7 +75,7 @@ public class Message extends Entity {
     }
 
     /**
-     * show the list of parameters of the message
+     * Muestra la lista de parametros del mensaje
      * @return ArrayList of parameters
      */
     public ArrayList<Parameter> getParameterArrayList() {
@@ -83,7 +83,7 @@ public class Message extends Entity {
     }
 
     /**
-     * add/modify the list of the parameters of the message
+     * Anadir/modificar la lista de parametros del mensaje
      * @param parameters new list of the parameters
      */
     public void setParameters(ArrayList<Parameter> parameters) {
@@ -95,7 +95,7 @@ public class Message extends Entity {
     }
 
     /**
-     * show string whit message and parameters of the message
+     * Muestra el string con mensaje y parametros del mensaje.
      * @return string whit message and parameters of the message
      */
     public String getMessage() {
@@ -103,7 +103,7 @@ public class Message extends Entity {
     }
 
     /**
-     * add/modify string whit message and parameters of the message
+     * Anadir/modificar el string con mensaje y parametros del mensaje.
      * @param message new string whit message and parameters
      */
     public void setMessage(String message) {
@@ -111,7 +111,7 @@ public class Message extends Entity {
     }
 
     /**
-     * Get the id of the Template
+     * Obtener el id de la plantilla.
      * @return Template ID
      */
     public int getTemplateId() {
@@ -119,7 +119,7 @@ public class Message extends Entity {
     }
 
     /**
-     * set Template ID
+     * Poner el id de la plantilla
      * @param templateId
      */
     public void setTemplateId(int templateId) {

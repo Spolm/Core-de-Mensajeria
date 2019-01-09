@@ -42,7 +42,10 @@ public class CommandPostParameter extends Command {
         log.debug("Saliendo de el metodo execute() de CommandPostParameter" );
         //endregion
     }
-
+    /**
+     * El metodo Return() retorna un entity.
+     * @return
+     */
     @Override
     public Entity Return() {
         //region Instrumentation Debug
