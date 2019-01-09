@@ -414,8 +414,8 @@ export class DropdownMethods {
             case EntityType.channel:
                 for (var index in data) {
                     this.channelsDropdown.push({
-                        channel_id: data[index]["idChannel"],
-                        channel_name: data[index]["nameChannel"]
+                        channel_id: data[index]["_id"],
+                        channel_name: data[index]["_nameChannel"]
                     });
                 }
                 break;
@@ -423,7 +423,7 @@ export class DropdownMethods {
                 this.integratorsDropdown = [];
                 for (var index in data) {
                     this.integratorsDropdown.push({
-                        integrator_id: data[index]["idIntegrator"],
+                        integrator_id: data[index]["_id"],
                         integrator_name: data[index]["nameIntegrator"]
                     });
                 }
