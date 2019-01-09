@@ -291,6 +291,10 @@ public class CommandsFactory {
     public static GetCompanyByUserCommand createGetCompanyByUserCommand( Company _co ){
         return new GetCompanyByUserCommand( _co );
     }
+
+    public static GetCompanyResponsibleCommand createGetCompanyByResponsibleCommand( Company _co ){
+        return new GetCompanyResponsibleCommand( _co );
+    }
     //endregion
 
 

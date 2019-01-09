@@ -16,7 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * M07_Parameter class is an API that is responsible for requesting information
+ * M07_Parameter es un API que es responsable de pedir informacion acerca de los parametros de un mensaje.
  * about the parameters of a message
  */
 @Path("/parameters")
@@ -29,8 +29,7 @@ public class M07_Parameter {
     Gson gson = new Gson();
 
     /**
-     *this method is responsible for making a new parameter associated
-     * with a company stored.
+     * Este metodo es responsable de hacer un parametro nuevo asociado con una compania almacenada.
      * @param newParameter new parameter with its name and companyid
      */
     @POST
@@ -78,7 +77,7 @@ public class M07_Parameter {
     }
 
     /**
-     *this method returns all the parameters filtering by a specified company
+     * Este metodo retorna todos los parametros filtrados por una compania especifica.
      * @param companyId company id
      * @return ArrayList of the parameters by company
      */
