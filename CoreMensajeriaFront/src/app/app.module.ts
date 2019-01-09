@@ -12,8 +12,8 @@ import { ToastrModule } from "ngx-toastr";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AuthGuard } from "./shared";
-//import { ChangePassComponent } from './change-pass/change-pass.component';
-//import { RecoverPassComponent } from './recover-pass/recover-pass.component';
+import { ChangePassComponent } from './change-pass/change-pass.component';
+import { RecoverPassComponent } from './recover-pass/recover-pass.component';
 
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
@@ -50,7 +50,7 @@ export const createTranslateLoader = (http: HttpClient) => {
         }),
         AppRoutingModule
     ],
-    declarations: [AppComponent/*, ChangePassComponent, RecoverPassComponent*/],
+    declarations: [AppComponent, ChangePassComponent, RecoverPassComponent],
     providers: [AuthGuard],
     bootstrap: [AppComponent]
 })
