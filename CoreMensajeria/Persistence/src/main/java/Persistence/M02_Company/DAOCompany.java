@@ -4,8 +4,8 @@ import Entities.Entity;
 import Entities.EntityFactory;
 import Entities.M02_Company.Company;
 import Entities.M06_DataOrigin.PathHandler;
-import Entities.Sql;
 import Persistence.DAO;
+import Persistence.Postgres.DAOPostgres;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DAOCompany extends DAO implements IDAOCompany {
+public class DAOCompany extends DAOPostgres implements IDAOCompany {
 
 
     final String UPDATE_COMPANY_STATUS = "{CALL m02_changecompanystatus(?,?)}";
@@ -35,7 +35,7 @@ public class DAOCompany extends DAO implements IDAOCompany {
     public void changeStatus(Entity e) {
 
         Company _co = ( Company ) e;
-        Connection _conn = this.getBdConnect();
+        Connection _conn = DAOPostgres.getConnection();
         PreparedStatement _preparedStatement = null;
 
         try {
@@ -44,45 +44,61 @@ public class DAOCompany extends DAO implements IDAOCompany {
             _preparedStatement.setBoolean( 2,  !( _co.get_status() ) );
             _preparedStatement.execute();
 
-        } catch ( SQLException e1 ) {
+        }catch ( SQLException e1 ) {
             e1.printStackTrace();
-        }
-        catch ( NullPointerException en ){
+        }catch ( NullPointerException en ){
             en.printStackTrace();
-        }
-        catch ( Exception ex ){
+        }catch ( Exception ex ){
             ex.printStackTrace();
+        }finally{
+         try {
+            _conn.close();
+        }catch ( SQLException e1 ) {
+             e1.printStackTrace();
+            }
         }
-        this.closeConnection();
     }
 
     @Override
     public ArrayList<Entity> companiesByResponsible( Entity e ) {
         ArrayList<Entity> _coList= new ArrayList<>();
         Company _comp = ( Company ) e;
-        Connection _conn = this.getBdConnect();
+        Connection _conn = DAOPostgres.getConnection();
 
         try {
             PreparedStatement  preparedStatement = _conn.prepareCall(SELECT_COMPANY_BY_RESPONSIBLE);
             preparedStatement.setInt( 1, _comp.get_idCompany() );
             ResultSet _result = preparedStatement.executeQuery();
             while ( _result.next() ) {
-                _coList.add( getCompany( _result ) );
+                _coList.add( getCompanyResponsible( _result ) );
+            }
+        }catch (SQLException exc) {
+            exc.printStackTrace();
+        }catch (NullPointerException en) {
+            en.printStackTrace();
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }finally{
+         try {
+             _conn.close();
+         }catch ( SQLException e1 ) {
+              e1.printStackTrace();
             }
         }
-        catch (SQLException exc) {
-            exc.printStackTrace();
-        }
-        catch (NullPointerException en) {
-            en.printStackTrace();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        this.closeConnection();
         return  _coList;
     }
 
+    public Company getCompanyResponsible( ResultSet _result ) throws SQLException {
+
+        Company _company = EntityFactory.CreateFullCompany(
+                _result.getInt( "com_id" ),
+                _result.getString( "com_name" ),
+                _result.getString( "com_description" ),
+                _result.getBoolean( "com_status" ),
+                _result.getString( "com_route_link" ),
+                _result.getInt( "res_use_id" ) );
+        return _company;
+    }
 
     public Company getCompany( ResultSet _result ) throws SQLException {
 
@@ -98,27 +114,29 @@ public class DAOCompany extends DAO implements IDAOCompany {
 
     @Override
     public Company companyById( Company e ) {
-        Company _company = ( Company ) e;
-        Connection _conn = this.getBdConnect();
+        Company _company =  e;
+        Connection _conn = DAOPostgres.getConnection();
 
         try {
-                PreparedStatement  _preparedStatement = _conn.prepareCall( SELECT_COMPANY_BY_ID );
-                _preparedStatement.setInt( 1, _company.get_idCompany() );
-                ResultSet _result = _preparedStatement.executeQuery();
+            PreparedStatement  _preparedStatement = _conn.prepareCall( SELECT_COMPANY_BY_ID );
+            _preparedStatement.setInt( 1, _company.get_idCompany() );
+            ResultSet _result = _preparedStatement.executeQuery();
                 while ( _result.next() ) {
                     _company = getCompany( _result );
                 }
-            }
-        catch (SQLException exc) {
+        }catch (SQLException exc) {
             exc.printStackTrace();
-        }
-        catch (NullPointerException en) {
+        }catch (NullPointerException en) {
             en.printStackTrace();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
+        }finally{
+         try {
+            _conn.close();
+        }catch ( SQLException e1 ) {
+                e1.printStackTrace();
+            }
         }
-        this.closeConnection();
         return _company;
 
     }
@@ -126,8 +144,8 @@ public class DAOCompany extends DAO implements IDAOCompany {
     @Override
     public ArrayList<Entity> companiesByUser( Company e ) {
         ArrayList<Entity> _coList= new ArrayList<>();
-        Company _company = ( Company ) e;
-        Connection _conn = this.getBdConnect();
+        Company _company =  e;
+        Connection _conn = DAOPostgres.getConnection();
 
         try {
             PreparedStatement _ps = _conn.prepareCall(SELECT_COMPANIES_BY_USER);
@@ -136,14 +154,17 @@ public class DAOCompany extends DAO implements IDAOCompany {
             while( _result.next() ){
                 _coList.add( getCompany( _result ) );
             }
-        }
-        catch (SQLException exc) {
+        }catch (SQLException exc) {
             exc.printStackTrace();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
+        }finally{
+         try {
+             _conn.close();
+         }catch ( SQLException e1 ) {
+             e1.printStackTrace();
+            }
         }
-        this.closeConnection();
         return _coList;
     }
 
@@ -154,9 +175,9 @@ public class DAOCompany extends DAO implements IDAOCompany {
     }
 
     @Override
-    public ArrayList<Entity> allCompanies() {
-        ArrayList<Entity> _coList = new ArrayList<>();
-        Connection _conn = this.getBdConnect();
+    public ArrayList<Company> allCompanies() {
+        ArrayList<Company> _coList = new ArrayList<>();
+        Connection _conn = DAOPostgres.getConnection();
 
         try {
             PreparedStatement _ps = _conn.prepareCall(SELECT_ALL_COMPANIES);
@@ -167,14 +188,17 @@ public class DAOCompany extends DAO implements IDAOCompany {
         }
         catch (SQLException exc) {
             exc.printStackTrace();
-        }
-        catch (NullPointerException en) {
+        }catch (NullPointerException en) {
             en.printStackTrace();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
+        }finally{
+         try {
+            _conn.close();
+        }catch ( SQLException e1 ) {
+             e1.printStackTrace();
+            }
         }
-        this.closeConnection();
         return _coList;
     }
 
@@ -183,7 +207,7 @@ public class DAOCompany extends DAO implements IDAOCompany {
     public void create( Entity e ) {
         Company _co = ( Company ) e;
         PathHandler _ph  = new PathHandler();
-        Connection _conn = this.getBdConnect();
+        Connection _conn = DAOPostgres.getConnection();
 
         try {
 
@@ -197,14 +221,17 @@ public class DAOCompany extends DAO implements IDAOCompany {
 
         }catch (SQLException exc) {
             exc.printStackTrace();
-        }
-        catch (NullPointerException en) {
+        }catch (NullPointerException en) {
             en.printStackTrace();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
+        }finally{
+         try {
+            _conn.close();
+        }catch( SQLException e1 ) {
+            e1.printStackTrace();
+            }
         }
-        this.closeConnection();
     }
 
     @Override
@@ -214,7 +241,7 @@ public class DAOCompany extends DAO implements IDAOCompany {
     public Entity update( Entity e ) {
         Company _co = ( Company ) e;
         PathHandler ph  = new PathHandler();
-        Connection _conn = this.getBdConnect();
+        Connection _conn = DAOPostgres.getConnection();
 
         try {
             PreparedStatement _ps = _conn.prepareCall( UPDATE_COMPANY );
@@ -227,18 +254,38 @@ public class DAOCompany extends DAO implements IDAOCompany {
             _ps.execute();
         }catch (SQLException exc) {
             exc.printStackTrace();
-        }
-        catch (NullPointerException en) {
+        }catch (NullPointerException en) {
             en.printStackTrace();
-        }
-        catch (Exception ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
+        }finally{
+         try {
+             _conn.close();
+         }catch ( SQLException e1 ) {
+              e1.printStackTrace();
+            }
         }
-        this.closeConnection();
         return _co;
     }
 
 
+  /*  public ArrayList<Company> allCompanies2() {
+        ArrayList<Company> _coList = new ArrayList<>();
+        Connection _conn = this.getBdConnect();
+
+        try {
+            PreparedStatement _ps = _conn.prepareCall(SELECT_ALL_COMPANIES);
+            ResultSet _result = _ps.executeQuery();
+            while( _result.next() ){
+                _coList.add( getCompany( _result ) );
+            }
+        }
+        catch (SQLException exc) {
+            exc.printStackTrace();
+        }
+
+        return _coList;
+    }*/
 
 }
 

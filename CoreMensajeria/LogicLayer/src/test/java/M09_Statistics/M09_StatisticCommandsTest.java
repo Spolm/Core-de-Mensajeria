@@ -1,4 +1,4 @@
-package M09_Statistics;
+/*package M09_Statistics;
 
 import Entities.Entity;
 import Entities.M02_Company.Company;
@@ -18,7 +18,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class M09_StatisticCommandsTest {
-/*
+
     private Entity entity;
 
     @BeforeEach
@@ -38,9 +38,9 @@ class M09_StatisticCommandsTest {
             channels = command.Return();
             assertNotNull(channels);
             Channel canal = channels.get(0);
-            assertEquals(canal.getNameChannel(),"SMS");
+            assertEquals(canal.get_nameChannel(),"SMS");
             canal = channels.get(1);
-            assertEquals(canal.getNameChannel(),"Email");
+            assertEquals(canal.get_nameChannel(),"Email");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -404,5 +404,5 @@ class M09_StatisticCommandsTest {
         } catch ( Exception e ) {
             e.printStackTrace();
         }
-    }*/
-}
+    }
+}*/

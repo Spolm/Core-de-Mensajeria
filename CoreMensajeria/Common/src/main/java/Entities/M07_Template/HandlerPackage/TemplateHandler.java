@@ -3,7 +3,7 @@ package Entities.M07_Template.HandlerPackage;
 import Entities.M01_Login.Privilege;
 import Entities.M01_Login.UserDAO;
 import Entities.M03_Campaign.Campaign;
-import Entities.M03_Campaign.CampaignDAO;
+//import Entities.M03_Campaign.CampaignDAO;
 //import Entities.M04_Integrator.IntegratorDAO;
 import Entities.M06_DataOrigin.Application;
 import Entities.M06_DataOrigin.ApplicationDAO;
@@ -83,7 +83,7 @@ public class TemplateHandler {
      * this method returns all templates without any type of filtering.
      * @return ArrayList of templates
      */
-    public ArrayList<Template> getTemplates(){
+   /* public ArrayList<Template> getTemplates(){
         ArrayList<Template> templateArrayList = new ArrayList<>();
         Connection connection = Sql.getConInstance();
         try{
@@ -112,7 +112,7 @@ public class TemplateHandler {
             Sql.bdClose(sql.getConn());
             return templateArrayList;
         }
-    }
+    }*/
 
     /**
      * this method returns a template filtering
@@ -121,7 +121,7 @@ public class TemplateHandler {
      * @return template
      * @throws TemplateDoesntExistsException
      */
-    public Template getTemplate(int id) throws TemplateDoesntExistsException{
+   /* public Template getTemplate(int id) throws TemplateDoesntExistsException{
         CampaignDAO campaignsService = new CampaignDAO();
         Template template = new Template();
         String query = "select tem_id,ts_id,tem_user_id,tem_application_id,tem_campaign_id, tem_creation_date, sta_name\n" +
@@ -158,7 +158,7 @@ public class TemplateHandler {
             Sql.bdClose(sql.getConn());
             return template;
         }
-    }
+    }*/
 
     public Campaign getCampaignsById(int campaignId){
         Campaign campaign =  new Campaign();
@@ -276,7 +276,7 @@ public class TemplateHandler {
      * @param templateId template id
      * @return campaign
      */
-    public Campaign getCampaingByTemplate(int templateId){
+   /* public Campaign getCampaingByTemplate(int templateId){
         Campaign campaign = new Campaign();
         try{
             //query que obtiene el id de la campana que tiene asociada la plantilla
@@ -303,7 +303,7 @@ public class TemplateHandler {
             }
             return campaign;
         }
-    }
+    }*/
 
     /**
      * This method returns the origin by application that is associated

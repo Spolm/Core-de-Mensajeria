@@ -477,8 +477,8 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
             name = result.getString("paramName");
             listNum.add( num );
             listName.add( name );
-            statistic.x = listName;
-            statistic.y = listNum;
+            statistic.setX(listName);
+            statistic.setY(listNum);
         }
         return statistic;
     }

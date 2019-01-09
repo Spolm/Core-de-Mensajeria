@@ -2,10 +2,16 @@ package webService.M08_MessageCoreManagement;
 
 
 import DTO.M08_DTO.ParametersDTO;
+import Entities.M07_Template.Template;
+import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.*;
+import Exceptions.M08_SendMessageManager.DateNotValidException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
+import Logic.M07_Template.CommandGetTemplate;
+import Logic.M08_SendMessage.CommandScheduleMessage;
+
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -32,22 +38,24 @@ public class M08_MessageValidation {
         Exception error = null;
         ParametersDTO response = dto;
         try {
-            Command<Boolean> c = CommandsFactory.createCommandValidate(dto);
-            c.execute();
-            if (c.Return() == true) {
-                //Codigo cuando es exitoso
-
+            CommandGetTemplate commandTemplate = CommandsFactory.createCommandGetTemplate(dto.get_idTemplate());
+            commandTemplate.execute();
+            Template t = commandTemplate.Return();
+            VerifiedParameter parameters = new VerifiedParameter(dto.get_verifiedMessages(),t);
+            Command<Boolean> commandValidate = CommandsFactory.createCommandValidate(parameters);
+            commandValidate.execute();
+            if (commandValidate.Return() == true) {
+                    //Codigo cuando es exitoso
+                Command commandSchedule = CommandsFactory.createScheduleMessage(parameters);
+                commandSchedule.execute();
             }
-
         } catch (TemplateDoesntExistsException e) {
             error = e;
         } catch (SMSTooLongException e) {
             error = e;
-        } catch (ParameterDoesntExistsException e) {
-            error = e;
-        } catch (MessageDoesntExistsException e) {
-            error = e;
         } catch (TemplateNotApprovedException e) {
+            error = e;
+        } catch (DateNotValidException e){
             error = e;
         } catch (UnexpectedErrorException e){
             error = e;

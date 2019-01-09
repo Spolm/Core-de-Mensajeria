@@ -3,7 +3,6 @@ package webService.M02_CompanyManagement;
 import DTO.DTOFactory;
 import DTO.M02_DTO.*;
 import Entities.Entity;
-import Entities.M02_Company.CompanyDAO;
 import Entities.M02_Company.Company;
 import Exceptions.CompanyDoesntExistsException;
 import Exceptions.M07_Template.InvalidParameterException;
@@ -13,6 +12,7 @@ import Logic.CommandsFactory;
 import Logic.M02_Company.AddCompanyCommand;
 import Logic.M02_Company.GetAllCompaniesCommand;
 import Logic.M02_Company.GetCompanyByUserCommand;
+import Logic.M02_Company.GetCompanyResponsibleCommand;
 import Mappers.CompanyMapper.*;
 import Mappers.MapperFactory;
 import webService.M01_Login.Error;
@@ -38,35 +38,8 @@ public class M02_Companies {
     private final String MESSAGE_EXCEPTION = "Excepcion";
     private final String MESSAGE_ERROR_PARAMETERDOESNTEXIST= "La parametros ingresados no Validos";
 
-  /*  @GET
-    @Path("/CompanyDetails")
-    @Produces("application/json")
-
-    /**
-     * Metodo que recibe el id de una compañia y devuelve todos los detalles de la misma
-     * @param id el id de la compañia
-     * @return Response con status ok al encontrar la informacion solicitada
-     */
-  /*  public Response getCompanyDetails(@QueryParam("id") int id) throws CompanyDoesntExistsException {
-        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        CompanyDAO co = new CompanyDAO();
-        try {
-            _co = co.getDetails(id);
-            rb.entity(gson.toJson(_co));
-        }
-        catch (CompanyDoesntExistsException e) {
-            e.printStackTrace();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return rb.build();
-    }*/
 
 
-
-//---------- Region con los metodos ya con sus patrones
 
 
 
@@ -237,9 +210,58 @@ public class M02_Companies {
         }
     }
 
+    @GET
+    @Path("/GetCompaniesByResponsible/{idUser}")
+    @Produces("application/json")
+    public Response getCompaniesByResponsible(@PathParam("idUser") int _id) throws  CompanyDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        DTOIdCompany _dto = DTOFactory.CreateDTOIdCompany( _id );
+        Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
 
+        try {
+            MapperIdCompany _mapper = MapperFactory.createMapperIdCompany();
+            Company _comp = ( Company )_mapper.CreateEntity( _dto );
+            GetCompanyResponsibleCommand _command = CommandsFactory.createGetCompanyByResponsibleCommand( _comp );
+            _command.execute();
+            MapperFullCompany _mappCompany = MapperFactory.CreateMapperFullCompany();
+            List < DTOFullCompany > _dtoCo = _mappCompany.CreateDtoList( _command.ReturnList() ) ;
+            _rb.entity( gson.toJson( _dtoCo ) ) ;
+            return _rb.build();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
 //------------------------------------------------------
 
+
+  /*  @GET
+    @Path("/CompanyDetails")
+    @Produces("application/json")
+
+    /**
+     * Metodo que recibe el id de una compañia y devuelve todos los detalles de la misma
+     * @param id el id de la compañia
+     * @return Response con status ok al encontrar la informacion solicitada
+     */
+  /*  public Response getCompanyDetails(@QueryParam("id") int id) throws CompanyDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CompanyDAO co = new CompanyDAO();
+        try {
+            _co = co.getDetails(id);
+            rb.entity(gson.toJson(_co));
+        }
+        catch (CompanyDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return rb.build();
+    }*/
 
 
 
