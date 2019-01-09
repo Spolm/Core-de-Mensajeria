@@ -112,6 +112,7 @@ export class TemplateService {
       'campaign': campaignId,
       'planning': planning
     };
+    console.log(json);
     this.http.post(endpoint + 'templates/add', json).subscribe((res: boolean) => {
       flag = res;
       if (flag) {
