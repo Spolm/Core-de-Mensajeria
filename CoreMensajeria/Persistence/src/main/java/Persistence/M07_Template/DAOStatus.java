@@ -18,10 +18,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Clase de acceso a persitencia para Estatus
+ */
 public class DAOStatus extends DAO implements IDAOStatus {
     private final String POST_STATUS_APPROVED = "{CALL m07_postTemplateStatusApproved(?,?)}";
     private final String POST_STATUS_NOT_APPROVED = "{CALL m07_postTemplateStatusNotApproved(?)}";
+    private final String DELETE_STATUS_TEMPLATE = "{ CALL m07_deleteStatusTemplate(?) }";
 
+    /**
+     * Actualiza el estatus de una plantilla a aprovado
+     * @param templateId
+     * @param userId
+     * @return
+     */
     @Override
     public Boolean postTemplateStatusApproved(int templateId, int userId) {
         Boolean flag=false;
@@ -41,6 +51,11 @@ public class DAOStatus extends DAO implements IDAOStatus {
         return flag;
     }
 
+    /**
+     * Crea el estatus no aprobado de una plantilla
+     * @param templateId
+     * @return
+     */
     @Override
     public Boolean postTemplateStatusNotApproved(int templateId) {
         Boolean flag=false;
@@ -58,6 +73,25 @@ public class DAOStatus extends DAO implements IDAOStatus {
         this.closeConnection();
         return flag;
     }
+
+    /**
+     * Borra la relacion entre estatus y plantilla
+     * @param templateId
+     */
+    @Override
+    public void deleteStatusTemplate(int templateId){
+        try {
+            Connection _conn = this.getBdConnect();
+            PreparedStatement _ps = _conn.prepareCall(DELETE_STATUS_TEMPLATE);
+            _ps.setInt(1,templateId);
+            _ps.execute();
+
+        }catch ( SQLException e1 ) {
+            e1.printStackTrace();
+        }
+    }
+
+
 
 
     @Override

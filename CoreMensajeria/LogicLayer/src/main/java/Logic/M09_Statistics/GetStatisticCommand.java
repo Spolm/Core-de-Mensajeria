@@ -37,20 +37,20 @@ public class GetStatisticCommand extends Command<Map<String, Entity>> {
                                List<Integer> dayofweekIds, List<Integer> weekofyearIds, List<Integer> dayofmonthIds,
                                List<Integer> dayofyearIds, List<Integer> hourofdayIds, List<Integer> minuteofhourIds,
                                List<Integer> secondofminuteIds, List<Integer> quarterIds){
-        companyin = setParametersforQuery(companyIds,"and me.sen_com_id in ");
-        campaignin = setParametersforQuery(campaignIds,"and me.sen_cam_id in ");
-        channelin = setParametersforQuery(channelIds,"and me.sen_cha_id in ");
-        integratorin = setParametersforQuery(integratorIds, "and me.sen_int_id in");
-        yearin = setParametersforQuery(yearIds, "and da.dat_year in");
-        monthin = setParametersforQuery(monthIds, "and da.dat_month in");
-        dayofweekin = setParametersforQuery(dayofweekIds,"and da.dat_dayofweek in");
-        weekofyearin = setParametersforQuery(weekofyearIds, "and da.dat_weekofyear in");
-        dayofmonthin = setParametersforQuery(dayofmonthIds, "and da.dat_dayofmonth in");
-        dayofyearin = setParametersforQuery(dayofyearIds, "and da.dat_dayofyear in");
-        hourin = setParametersforQuery(hourofdayIds, "and da.dat_hourofday in");
-        minutein = setParametersforQuery(minuteofhourIds, "and da.dat_minuteofhour in");
-        secondin = setParametersforQuery(secondofminuteIds, "and da.dat_secondofminute in");
-        quarterin = setParametersforQuery(quarterIds, "and da.dat_quarterofyear in");
+        companyin = setParametersforQueryCompany(companyIds);
+        campaignin = setParametersforQueryCampaign(campaignIds);
+        channelin = setParametersforQueryChannel(channelIds);
+        integratorin = setParametersforQueryIntegrator(integratorIds);
+        yearin = setParametersforQueryYear(yearIds);
+        monthin = setParametersforQueryMonth(monthIds);
+        dayofweekin = setParametersforQueryDayWeek(dayofweekIds);
+        weekofyearin = setParametersforQueryWeekYear(weekofyearIds);
+        dayofmonthin = setParametersforQueryDayMonth(dayofmonthIds);
+        dayofyearin = setParametersforQueryDayYear(dayofyearIds);
+        hourin = setParametersforQueryHour(hourofdayIds);
+        minutein = setParametersforQueryMinute(minuteofhourIds);
+        secondin = setParametersforQuerySeconds(secondofminuteIds);
+        quarterin = setParametersforQueryQuarter(quarterIds);
         stats = new HashMap<String, Entity>();
         if (!companyIds.isEmpty()) { flagCompany = true; }
         if (!campaignIds.isEmpty()) { flagCampaign = true;}
@@ -92,7 +92,77 @@ public class GetStatisticCommand extends Command<Map<String, Entity>> {
         return stats;
     }
 
-    private String setParametersforQuery(List<Integer> ids, String params){
+    private String setParametersforQueryCompany(List<Integer> ids){
+        String params = "and me.sen_com_id in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQueryCampaign(List<Integer> ids){
+        String params = "and me.sen_cam_id in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQueryChannel(List<Integer> ids){
+        String params = "and me.sen_cha_id in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQueryIntegrator(List<Integer> ids){
+        String params = "and me.sen_int_id in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQueryYear(List<Integer> ids){
+        String params = "and da.dat_year in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQueryMonth(List<Integer> ids){
+        String params = "and da.dat_month in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQueryDayWeek(List<Integer> ids){
+        String params = "and da.dat_dayofweek in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQueryWeekYear(List<Integer> ids){
+        String params = "and da.dat_weekofyear in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQueryDayMonth(List<Integer> ids){
+        String params = "and da.dat_dayofmonth in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQueryDayYear(List<Integer> ids){
+        String params = "and da.dat_dayofyear in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQueryHour(List<Integer> ids){
+        String params = "and da.dat_hourofday in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQueryMinute(List<Integer> ids){
+        String params = "and da.dat_minuteofhour in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQuerySeconds(List<Integer> ids){
+        String params = "and da.dat_secondofminute in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQueryQuarter(List<Integer> ids){
+        String params = "and da.dat_quarterofyear in ";
+        return setParametersforQuery(ids,params);
+    }
+
+    private String setParametersforQuery(List<Integer> ids,String params){
         if (ids.isEmpty()) {
             return "";
         }
@@ -108,5 +178,4 @@ public class GetStatisticCommand extends Command<Map<String, Entity>> {
         }
         return params;
     }
-
 }

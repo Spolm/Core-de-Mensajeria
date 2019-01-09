@@ -13,53 +13,53 @@ import java.sql.Date;
 import java.util.*;
 
 /**
- * Template class uses for storing template information
+ * Clase Template guarda informacion que constituyen la plantilla
  */
 public class Template extends Entity {
     /**
-     * Message of the template (with the parameters)
+     * Mensaje de la plantilla (con los parametros)
      */
-    private Message message;
+    private Message _message;
     /**
-     * date of creation of the template
+     * Dia de creacion de la plantilla
      */
-    private Date creationDate;
+    private Date _creationDate;
     /**
-     * status of the template (approved or not approved)
+     * Estatus de la plantilla (aprobado o no aprobado)
      */
-    private Status status;
+    private Status _status;
     /**
-     * channels (sms and/or email) of the template (with the integratos)
+     * Canales (sms y/o email) de una plantilla(con el integrador)
      */
-    private ArrayList<Channel> channels;
+    private ArrayList<Channel> _channels;
     /**
-     * campaing of the template
+     * Campana de la plantilla
      */
-    private Campaign campaign;
+    private Campaign _campaign;
     /**
-     * origin of application of the template
+     * Origen de la aplicacion de la plantilla
      */
-    private Application application;
+    private Application _application;
     /**
-     * user creator of the template
+     * Usuario creador de la plantilla
      */
-    private User user;
+    private User _user;
     /**
-     * planning of the template
+     * Planficacion de la plantilla
      */
-    private Planning planning;
+    private Planning _planning;
     /**
-     * Company ID
+     * Id de la compania
      */
-    private int companyId;
+    private int _companyId;
 
     /**
-     * empty builder
+     * Constructor vacio
      */
     public Template() {}
 
     /**
-     * builder with only the template id.
+     * Constructor con solo el id de la plantilla
      * @param templateId template id
      */
     public Template(int templateId) {
@@ -67,177 +67,177 @@ public class Template extends Entity {
     }
 
     /**
-     * builder with message, status, day of creation and id of the template.
-     * @param message message of the template
-     * @param status status of the template
-     * @param creationDate date of creation of the template
-     * @param templateId template id
+     * Constructor con mensaje,status,day of creation y id de la plantilla.
+     * @param message mensaje de la plantilla
+     * @param status estatus de la plantilla
+     * @param creationDate dia de creacion de la plantilla
+     * @param templateId id de la plantilla
      */
     public Template(Message message, Status status, Date creationDate, int templateId) {
-        this.message = message;
-        this.status = status;
-        this.creationDate = creationDate;
+        this._message = message;
+        this._status = status;
+        this._creationDate = creationDate;
         this.set_id(templateId);
     }
 
     /**
-     * builder with message, status, day of creation and id of the template.
-     * @param message message of the template
-     * @param status status of the template
-     * @param creationDate date of creation of the template
-     * @param templateId template id
+     * Constructor con  message, status, day of creation y id de la plantilla.
+     * @param message mensaje de la plantilla
+     * @param status estatus de la plantilla
+     * @param creationDate dia de creacion de la plantilla
+     * @param templateId id de la plantilla
      */
     public Template(Message message, Status status, String creationDate, int templateId) {
-        this.message = message;
-        this.status = status;
-        this.creationDate = Date.valueOf(creationDate);
+        this._message = message;
+        this._status = status;
+        this._creationDate = Date.valueOf(creationDate);
         this.set_id(templateId);
     }
 
     public Template(int id, Message message, Date creationDate, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning) {
-        this.message = message;
-        this.creationDate = creationDate;
-        this.status = status;
-        this.channels = channels;
-        this.campaign = campaign;
-        this.application = application;
-        this.user = user;
-        this.planning = planning;
+        this._message = message;
+        this._creationDate = creationDate;
+        this._status = status;
+        this._channels = channels;
+        this._campaign = campaign;
+        this._application = application;
+        this._user = user;
+        this._planning = planning;
         this.set_id(id);
     }
 
     /**
-     * show date of creation of the template.
+     * Muestra el dia de creacion de la plantilla
      * @return date of creation
      */
     public Date getCreationDate(){
-        return creationDate;
+        return _creationDate;
     }
 
     /**
-     * add date of creation of the template.
+     * Anade dia de creacion de la plantilla
      * @param creationDate new date of creation
      */
     public void setCreationDate(Date creationDate){
-        this.creationDate = creationDate;
+        this._creationDate = creationDate;
     }
 
     /**
-     * show current status of the template.
+     * Muestra el estatus actual de la plantilla
      * @return status (approved or not approved)
      */
     public Status getStatus() {
-        return status;
+        return _status;
     }
 
     /**
-     * add/modify status of the template
+     * Anade o modifica el estatus de la plantilla
      * @param status new status
      */
-    public void setStatus(Status status) { this.status = status; }
+    public void setStatus(Status status) { this._status = status; }
 
     /**
-     * show the message of the template with the parameters
-     * @return message and parameters of the template
+     * Muestra el mensaje de la plantilla con los parametros
+     * @return mensaje y parametros de la plantilla
      */
-    public Message getMessage(){ return message; }
+    public Message getMessage(){ return _message; }
 
     /**
-     * add/modify message and parameters of the template
+     * Anade o modifica mensaje y parametros de la plantilla
      * @param message new message and parameters
      */
-    public void setMessage(Message message) { this.message = message; }
+    public void setMessage(Message message) { this._message = message; }
 
     /**
-     * show the channels (sms or/and email) with the integrators
+     * Muestra los canales (sms o/y email) con los integradores
      * @return channels and integrators of the template
      */
     public ArrayList<Channel> getChannels() {
-        return channels;
+        return _channels;
     }
 
     /**
-     * add/modify the channels (sms or/and email) and the integrators
+     * Anade/modifica los canales (sms o/y email) y los integradores
      * @param channels new channels and integrators
      */
     public void setChannels(ArrayList<Channel> channels) {
-        this.channels = channels;
+        this._channels = channels;
     }
 
     public void addChannel(Channel channel){
-        channels.add(channel);
+        _channels.add(channel);
     }
 
     /**
-     * show the campaign of the template
+     * Muestra la campana de la plantilla
      * @return campaign of the template
      */
     public Campaign getCampaign() {
-        return campaign;
+        return _campaign;
     }
 
     /**
-     * add/modify the campaign of the template
+     * Anade/modifica la campana de la plantilla
      * @param campaign new campaign
      */
     public void setCampaign(Campaign campaign) {
-        this.campaign = campaign;
+        this._campaign = campaign;
     }
 
     /**
-     * show the origin of application of the template
+     * Muestra el origen de la aplicacion de la plantilla
      * @return origin of application of the template
      */
     public Application getApplication() {
-        return application;
+        return _application;
     }
 
     /**
-     * add/modify the origin of application of the template
+     * Anade/modifica el origen de la aplicacion de la plantilla
      * @param application new origin of application
      */
     public void setApplication(Application application) {
-        this.application = application;
+        this._application = application;
     }
 
     /**
-     * show user creator of the template
+     * Muestra el usuario creador de la plantilla
      * @return  user creator of the template
      */
     public User getUser() {
-        return user;
+        return _user;
     }
 
     /**
-     * add user creator of the template
+     * Anade usuario creador de la plantilla
      * @param user  new user
      */
     public void setUser(User user) {
-        this.user = user;
+        this._user = user;
     }
 
     /**
-     * show planning of the template
+     * Muestra la planificacion de la plantilla
      * @return planning of the template
      */
     public Planning getPlanning() {
-        return planning;
+        return _planning;
     }
 
     /**
-     * add/modify planning of the template
+     * Anade/modifica la planificacion de la plantilla
      * @param planning new planning
      */
     public void setPlanning(Planning planning) {
-        this.planning = planning;
+        this._planning = planning;
     }
 
     public int getCompanyId() {
-        return companyId;
+        return _companyId;
     }
 
     public void setCompanyId(int companyId) {
-        this.companyId = companyId;
+        this._companyId = companyId;
     }
 
     @Override
@@ -246,14 +246,14 @@ public class Template extends Entity {
         if (!(o instanceof Template)) return false;
         Template template = (Template) o;
         return get_id() == template.get_id() &&
-                Objects.equals(message, template.message) &&
+                Objects.equals(_message, template._message) &&
                 Objects.equals(getCreationDate(), template.getCreationDate()) &&
-                Objects.equals(status, template.status);
+                Objects.equals(_status, template._status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(message, getCreationDate(), get_id(), status);
+        return Objects.hash(_message, getCreationDate(), get_id(), _status);
     }
 
 }

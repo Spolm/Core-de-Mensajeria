@@ -4,6 +4,7 @@ import DTO.DTO;
 import DTO.M01_DTO.DTOUser;
 import DTO.DTOFactory;
 import Entities.Entity;
+import Entities.EntityFactory;
 import Entities.M01_Login.User;
 import Mappers.GenericMapper;
 
@@ -71,6 +72,19 @@ public class UserMapper extends GenericMapper <DTOUser> {
 
     @Override
     public Entity CreateEntity(DTOUser dto) {
-        return null;
+
+        Entity _use;
+
+        try {
+
+            _use = EntityFactory.CreateUser(dto.get_idUser(), dto.get_password(), dto.get_username(),
+                    dto.get_type(), dto.get_email(), dto.get_phone(), dto.get_dateOfBirth(), dto.get_country(),
+                    dto.get_address(), dto.get_gender(), dto.get_city());
+
+        }
+        catch (Exception e) {
+            throw e;
+        }
+        return _use;
     }
 }

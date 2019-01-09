@@ -64,7 +64,7 @@ public class TemplateHandler {
                     template.setCampaign(campaignArrayList.get(x));
                     template.setApplication(getApplicationByTemplate(template.get_id()));
                     //template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
-                    template.setMessage(MessageHandler.getMessage(template.get_id()));
+                    //template.setMessage(MessageHandler.getMessage(template.get_id()));
                     template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
                     templateArrayList.add(template);
                 }
@@ -99,28 +99,31 @@ public class TemplateHandler {
                 template.setChannels(getChannelsByTemplate(template.get_id()));
                 template.setCampaign(getCampaingByTemplate(template.get_id()));
                 ApplicationDAO applicationService = new ApplicationDAO();
-                template.setApplication(applicationService.getApplication
-                        (template.get_id()));
-                template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
-                templateArrayList.add(template);
-            }
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            Sql.bdClose(sql.getConn());
-            return templateArrayList;
-        }
-    }*/
+               /* template.setApplication(applicationService.getApplication
+                        (template.getTemplateId()));*/
+              //  template.setPlanning(PlanningHandler.getPlanning(template.getTemplateId()));
+               // template.setApplication(applicationService.getApplication
+               //         (template.get_id()));
+//                template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
+//                templateArrayList.add(template);
+//            }
+//        }catch (SQLException e) {
+//            e.printStackTrace();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }finally {
+//            Sql.bdClose(sql.getConn());
+//            return templateArrayList;
+//        }
+//    }*/
 
-    /**
-     * this method returns a template filtering
-     * by the id of the template that is desired.
-     * @param id template id
-     * @return template
-     * @throws TemplateDoesntExistsException
-     */
+//    /**
+//     * this method returns a template filtering
+//     * by the id of the template that is desired.
+//     * @param id template id
+//     * @return template
+//     * @throws TemplateDoesntExistsException
+//     */
    /* public Template getTemplate(int id) throws TemplateDoesntExistsException{
         CampaignDAO campaignsService = new CampaignDAO();
         Template template = new Template();
@@ -135,7 +138,7 @@ public class TemplateHandler {
                 template.set_id(resultSet.getInt("tem_id"));
                 template.setCreationDate(resultSet.getDate("tem_creation_date"));
                 //asignamos el mensaje y status del template
-                template.setMessage(MessageHandler.getMessage(template.get_id()));
+              //  template.setMessage(MessageHandler.getMessage(template.get_id()));
                 template.setStatus(Status.createStatus(resultSet.getInt("ts_id"),
                         resultSet.getString("sta_name")));
                 //asignamos canales, campaña y aplicacion
@@ -149,11 +152,7 @@ public class TemplateHandler {
                 template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
             }
 
-        }catch (ParameterDoesntExistsException e) {
-            //logg
-        }catch (MessageDoesntExistsException e){
-            //logg
-        } catch(SQLException e){
+        }catch(SQLException e){
             throw new TemplateDoesntExistsException
                     ("Error: la plantilla " + id + " no existe", e, id);
         } catch (Exception e){
@@ -324,8 +323,8 @@ public class TemplateHandler {
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             ApplicationDAO applicationService = new ApplicationDAO();
-            application = applicationService.getApplication
-                    (resultSet.getInt("applicationId"));
+           /* application = applicationService.getApplication
+                    (resultSet.getInt("applicationId")); */
         } catch (SQLException e){
             e.printStackTrace();
         } catch (Exception e){

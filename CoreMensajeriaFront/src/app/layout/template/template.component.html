@@ -47,13 +47,13 @@
         <td class="text-center">
           <div *ngFor="let channel of template.channels; let i = index">
             <hr *ngIf="i > 0">
-            {{channel.nameChannel}} {{channel.integrators.nameIntegrator}}
+            {{channel._nameChannel}} {{channel._integrators.nameIntegrator}}
           </div>
         </td>
         <td class="text-center">
           <div *ngFor="let channel of template.channels; let i = index">
             <hr *ngIf="i > 0">
-            <div *ngFor="let integrator of channel.integrators; let i = index">
+            <div *ngFor="let integrator of channel._integrators; let i = index">
               {{integrator.nameIntegrator}}
             </div>
           </div>

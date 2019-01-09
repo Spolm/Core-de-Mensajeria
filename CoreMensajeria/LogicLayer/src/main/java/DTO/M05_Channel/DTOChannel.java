@@ -6,21 +6,31 @@ import Entities.Entity;
 import java.util.ArrayList;
 
 public class DTOChannel extends DTO {
-
+    private int _id;
     private String _nameChannel;
     private String _descriptionChannel;
     private ArrayList<Entity> _integrators;
 
-    public DTOChannel(String nameChannel, String descriptionChannel, ArrayList<Entity> integrators) {
+    public DTOChannel(int id, String nameChannel, String descriptionChannel, ArrayList<Entity> integrators) {
+        this._id = id;
         this._nameChannel = nameChannel;
         this._descriptionChannel = descriptionChannel;
         this._integrators = integrators;
     }
 
-    public DTOChannel(String nameChannel, String descriptionChannel) {
+    public DTOChannel(int id, String nameChannel, String descriptionChannel) {
+        this._id = id;
         this._nameChannel = nameChannel;
         this._descriptionChannel = descriptionChannel;
         this._integrators = null;
+    }
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
     }
 
     public String get_nameChannel() {
