@@ -14,12 +14,18 @@ import org.w3c.dom.NodeList;
  */
 public class CommandGetTagValue extends Command<String> {
 
-    final static Logger log = LogManager.getLogger("CoreMensajeria");
+    private final static Logger log = LogManager.getLogger("CoreMensajeria");
     private String _tag;
     private Element _element;
     private Node _node;
     private String _value;
 
+    /**
+     * Constructor que inicializa un objeto de la clase CommandGetTagValue
+     * con la etiqueta y un objeto Element.
+     * @param tag Etiqueta del archivo XML.
+     * @param element Nodo del archivo XML.
+     */
     public CommandGetTagValue(String tag, Element element){
         this._tag = tag;
         this._element = element;
@@ -27,8 +33,10 @@ public class CommandGetTagValue extends Command<String> {
 
     /**
      * Obtiene el valor de una etiqueta o tag.
-     * @throws NullValueXMLException
-     * @throws UnexpectedErrorException
+     * @throws NullValueXMLException si alguna etiqueta dentro
+     * del XML no encuentra su valor o es ta vacio.
+     * @throws UnexpectedErrorException si existe un error no esperado.
+     * @throws NullValueXMLException si
      */
     @Override
     public void execute() throws NullValueXMLException, UnexpectedErrorException {
@@ -38,7 +46,7 @@ public class CommandGetTagValue extends Command<String> {
             _value = _node.getNodeValue();
             log.debug( "Se obtiene el valor [" + _value + "] del tag <" + _tag + "> " );
         }catch ( NullPointerException e ){
-            String msg = "Ha ocurrido una execpción NullPointerException," +
+            String msg = "Ha ocurrido una excepción NullPointerException," +
                     " se ha lanzado NullValueXMLException" ;
             _value = "";
             log.error( msg );
@@ -52,7 +60,7 @@ public class CommandGetTagValue extends Command<String> {
 
     /**
      * Método para devolve el valor del nodo para el manejo XML.
-     * @return
+     * @return Valor de la etiqueta en el archivo XML.
      */
     @Override
     public String Return() {

@@ -1,6 +1,5 @@
 package Persistence;
 
-import Persistence.M01_Login.GetUserDao;
 import Persistence.M04_Integrator.DAOIntegrator;
 import Persistence.M05_Channel.DAOChannel;
 import Persistence.M01_Login.DAOUser;

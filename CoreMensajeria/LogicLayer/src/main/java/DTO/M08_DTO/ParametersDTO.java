@@ -1,25 +1,15 @@
 package DTO.M08_DTO;
 
 import DTO.DTO;
+import Entities.M08_Validation.XMLManagement.Message;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class ParametersDTO extends DTO {
     @NotNull
     private int _idTemplate;
-    @NotNull(message = "_name es requerido")
-    private String _name;
-    @NotNull(message = "_lastName es requerido")
-    private String _lastName;
-    @NotNull
-    private String _personId;
-    private Timestamp _sendTime;
-    @NotNull
-    private String _channel;
-    @NotNull
-    private String _message;
+    private ArrayList<Message> _verifiedMessages;
 
     public int get_idTemplate() {
         return _idTemplate;
@@ -29,52 +19,11 @@ public class ParametersDTO extends DTO {
         this._idTemplate = _idTemplate;
     }
 
-    public String get_name() {
-        return _name;
+    public ArrayList<Message> get_verifiedMessages() {
+        return _verifiedMessages;
     }
 
-    public void set_name(String _name) {
-        this._name = _name;
+    public void set_verifiedMessages(ArrayList<Message> _verifiedMessages) {
+        this._verifiedMessages = _verifiedMessages;
     }
-
-    public String get_lastName() {
-        return _lastName;
-    }
-
-    public void set_lastName(String _lastName) {
-        this._lastName = _lastName;
-    }
-
-    public String get_personId() {
-        return _personId;
-    }
-
-    public void set_personId(String _personId) {
-        this._personId = _personId;
-    }
-
-    public Timestamp get_sendTime() {
-        return _sendTime;
-    }
-
-    public void set_sendTime(Timestamp _sendTime) {
-        this._sendTime = _sendTime;
-    }
-
-    public String get_channel() {
-        return _channel;
-    }
-
-    public void set_channel(String _channel) {
-        this._channel = _channel;
-    }
-
-    public String get_message() {
-        return _message;
-    }
-
-    public void set_message(String _message) {
-        this._message = _message;
-    }
-
 }

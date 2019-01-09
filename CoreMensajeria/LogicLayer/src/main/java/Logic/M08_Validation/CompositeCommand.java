@@ -2,6 +2,9 @@ package Logic.M08_Validation;
 
 import Logic.Command;
 
+/**
+ * @param <T> hace referencia al tipo de dato que retornara al comando
+ */
 public abstract class CompositeCommand<T> extends Command {
     private Command[] _commandList;
 

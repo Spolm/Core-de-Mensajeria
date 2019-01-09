@@ -4,7 +4,6 @@ import Entities.Entity;
 import Entities.EntityFactory;
 import Entities.M03_Campaign.Campaign;
 import Entities.M05_Channel.Channel;
-import Entities.M05_Channel.ChannelFactory;
 import Entities.M09_Statistics.FilterType;
 import Entities.M09_Statistics.Statistics;
 import Exceptions.CampaignDoesntExistsException;
@@ -59,16 +58,16 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
     }
 
     @Override
-    public ArrayList<Channel> getAllChannels() {
+    public ArrayList<Entity> getAllChannels() {
         String query = "SELECT DISTINCT cha_id, cha_name FROM dim_channel ORDER BY cha_id;";
-        ArrayList<Channel> channels = new ArrayList<>();
+        ArrayList<Entity> channels = new ArrayList<>();
         try {
             Statement statement = _conn.createStatement();
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
-                ChannelFactory channelFactory = new ChannelFactory();
-                Channel channel = channelFactory.getChannel(result.getInt("cha_id"), result.getString("cha_name"), null, null);
+                //Entity channel = channelFactory.getChannel(result.getInt("cha_id"), result.getString("cha_name"), null, null);
+                Entity channel = EntityFactory.createChannel(result.getInt("cha_id"),result.getString("cha_name"),null,null);
                 channels.add(channel);
             }
         } catch(SQLException e) {

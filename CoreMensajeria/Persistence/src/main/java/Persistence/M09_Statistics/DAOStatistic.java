@@ -3,7 +3,6 @@ package Persistence.M09_Statistics;
 import Entities.Entity;
 import Entities.EntityFactory;
 import Entities.M04_Integrator.Integrator;
-import Entities.M04_Integrator.IntegratorFactory;
 import Exceptions.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
 import Persistence.DAO;
@@ -62,21 +61,23 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
     }
 
     @Override
-    public ArrayList<Integrator> getIntegratorsForChannel(List<Integer> channelIds) throws ChannelNotFoundException{
+    public ArrayList<Entity> getIntegratorsForChannel(List<Integer> channelIds) throws ChannelNotFoundException{
         this.conn = getBdConnect();
         String query = "select int_id, int_name from m09_getIntegratorsByChannels(";
         for (int i = 0; i < channelIds.size() - 1;  i++) {
             query += channelIds.get(i) + ", ";
         }
         query += channelIds.get(channelIds.size() - 1) + ") ORDER BY int_id;";
-        ArrayList<Integrator> integrators = new ArrayList<>();
+        ArrayList<Entity> integrators = new ArrayList<>();
         try {
             Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(query);
 
             while (result.next()) {
-                Integrator integrator = IntegratorFactory.getIntegrator(result.getString("int_name"), result.getInt("int_id"),
-                        result.getString("int_name"), 0, 0, "", true);
+                //Integrator integrator = IntegratorFactory.getIntegrator(result.getString("int_name"), result.getInt("int_id"),
+                        //result.getString("int_name"), 0, 0, "", true);
+                Entity integrator = EntityFactory.CreateIntegrator(result.getString("int_name"),result.getInt("int_id"),
+                        result.getString("int_name"),0,0,"",true);
                 integrators.add(integrator);
             }
         } catch(SQLException e) {

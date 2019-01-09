@@ -4,7 +4,7 @@ import Entities.M01_Login.Privilege;
 import Entities.M01_Login.UserDAO;
 import Entities.M03_Campaign.Campaign;
 import Entities.M03_Campaign.CampaignDAO;
-import Entities.M04_Integrator.IntegratorDAO;
+//import Entities.M04_Integrator.IntegratorDAO;
 import Entities.M06_DataOrigin.Application;
 import Entities.M06_DataOrigin.ApplicationDAO;
 import Entities.M07_Template.StatusPackage.Status;
@@ -13,7 +13,7 @@ import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Entities.M05_Channel.Channel;
-import Entities.M05_Channel.ChannelFactory;
+//import Entities.M05_Channel.ChannelFactory;
 import Entities.M04_Integrator.Integrator;
 import Exceptions.ParameterDoesntExistsException;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
@@ -248,6 +248,7 @@ public class TemplateHandler {
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 ArrayList<Integrator> integrators = new ArrayList<>();
+                /*
                 IntegratorDAO integratorDAO = new IntegratorDAO();
                 Integrator integrator = integratorDAO.getConcreteIntegrator(
                         resultSet.getInt("ci_integrator_id")
@@ -260,6 +261,7 @@ public class TemplateHandler {
                         integrators
                 );
                 channels.add(channel);
+                */
             }
 
         } catch (SQLException e) {

@@ -338,7 +338,7 @@ public class EntityFactory {
 //end M04_region
 
     //region M_08
-    public static Entity createSendMessage() {
+    public static SentMessage createSendMessage() {
         return new SentMessage();
     }
 }
