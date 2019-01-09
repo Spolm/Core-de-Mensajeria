@@ -63,6 +63,12 @@ public class CommandsFactory {
     public static ChangePasswordCommand changePasswordCommand (String username, String password) {
         return  new ChangePasswordCommand(username, password);
     }
+    public static FindPrivilegeByUserIdCommand findPrivilegeByUserIdCommand (int id) {
+        return new FindPrivilegeByUserIdCommand(id);
+    }
+    public static FindByUsernameIdCommand findByUsernameIdCommand (int id) {
+        return new FindByUsernameIdCommand(id);
+    }
 
     public static Command createScheduleMessage(VerifiedParameter verifiedParameters) {
         return new CommandScheduleMessage(verifiedParameters);

@@ -4,6 +4,7 @@ import DTO.M01_DTO.DTOUser;
 import Entities.Entity;
 //import Entities.M01_Login.PrivilegeDao;
 import Entities.M01_Login.User;
+import Logic.M01_Login.FindByUsernameIdCommand;
 import Logic.M01_Login.FindPrivilegeByUserIdCommand;
 import Logic.M01_Login.SetPrivilegeParamsCommand;
 
@@ -28,8 +29,6 @@ public class M01_User {
 
     Gson _gson = new Gson();
     DAOUser _userDAO = new DAOUser();
-    DAOPrivilege _privilegeDAO = new DAOPrivilege();
-
     /**
      * This method returns a response from the server when it gets
      * @return
@@ -75,10 +74,12 @@ public class M01_User {
     public Response GetUser(@PathParam("id") int id) {
         Error error;
         try {
+            FindByUsernameIdCommand _command = CommandsFactory.findByUsernameIdCommand(id);
+            _command.execute();
 //            DTO user = DTOFactory.CreateDTOUser();
 //            Command commandUser = CommandsFactory.instanciateGetUser(user);
 //            GetUserCommand cmd = (GetUserCommand) commandUser;
-            return Response.ok(_gson.toJson(_userDAO.findByUsernameId(id))).build();
+            return Response.ok(_gson.toJson(_command.Return())).build();
         } catch (SQLException e) {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
@@ -121,7 +122,9 @@ public class M01_User {
     public Response GetUserPrivileges(@PathParam("id") int id) {
         Error error;
         try {
-            return Response.ok(_gson.toJson(_privilegeDAO.findPrivilegesByUserId(id))).build();
+            FindPrivilegeByUserIdCommand _command = CommandsFactory.findPrivilegeByUserIdCommand(id);
+            _command.execute();
+            return Response.ok(_gson.toJson(_command.Return())).build();
         } catch (SQLException e) {
             e.printStackTrace();
             error = new Error("Error a nivel de base de datos");
