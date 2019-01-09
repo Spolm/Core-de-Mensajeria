@@ -18,43 +18,43 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ValidationServiceTest {
 
-    @Test
-    public void testTemplateValid() {
-        Command c = CommandsFactory.createCommandValidateTemplate(1);
-        try{
-            c.execute();
-            assertEquals(true, c.Return());
-        } catch (Exception e) {}
-
-    }
-
-    @Test
-    public void testTemplateDoesntExist() {
-        Command c = new CommandsFactory().createCommandValidateTemplate(312873618);
-            assertThrows(TemplateDoesntExistsException.class,() -> c.execute());
-    }
-
-    @Test
-    public void testTemplateNotApproved() {
-        Command c = new CommandsFactory().createCommandValidateTemplate(2);
-        assertThrows(TemplateNotApprovedException.class,() -> c.execute());
-    }
-//
 //    @Test
-//    public void testMessageValid() {
-//        Command c = CommandsFactory.createCommandValidateMessage(1, "esto es un mensaje de template " +
-//                "con + un [.$Parametro$.]", "SMS");
-//        try {
+//    public void testTemplateValid() {
+//        Command c = CommandsFactory.createCommandValidateTemplate(1);
+//        try{
 //            c.execute();
 //            assertEquals(true, c.Return());
 //        } catch (Exception e) {}
+//
 //    }
-
-    @Test
-    public void testMessageNotValid() {
-        Command c = CommandsFactory.createCommandValidateMessage(6);
-        assertThrows(SMSTooLongException.class, () -> c.execute());
-    }
+//
+//    @Test
+//    public void testTemplateDoesntExist() {
+//        Command c = new CommandsFactory().createCommandValidateTemplate(312873618);
+//            assertThrows(TemplateDoesntExistsException.class,() -> c.execute());
+//    }
+//
+//    @Test
+//    public void testTemplateNotApproved() {
+//        Command c = new CommandsFactory().createCommandValidateTemplate(2);
+//        assertThrows(TemplateNotApprovedException.class,() -> c.execute());
+//    }
+////
+////    @Test
+////    public void testMessageValid() {
+////        Command c = CommandsFactory.createCommandValidateMessage(1, "esto es un mensaje de template " +
+////                "con + un [.$Parametro$.]", "SMS");
+////        try {
+////            c.execute();
+////            assertEquals(true, c.Return());
+////        } catch (Exception e) {}
+////    }
+//
+//    @Test
+//    public void testMessageNotValid() {
+//        Command c = CommandsFactory.createCommandValidateMessage(6);
+//        assertThrows(SMSTooLongException.class, () -> c.execute());
+//    }
 
 }
 
