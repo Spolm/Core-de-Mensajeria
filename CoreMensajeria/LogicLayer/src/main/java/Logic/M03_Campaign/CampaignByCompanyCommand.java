@@ -34,6 +34,7 @@ public class CampaignByCompanyCommand extends Command {
         @Override
         public void execute() throws CampaignNotFoundException, UnexpectedErrorException {
             try {
+                _log.info("Objeto Campaña recibido en CampaignbyComapny" +_ca.get_idCompany() );
                 IDAOCampaign _dao = DAOFactory.instanciateDaoCampaign();
                 _caList = _dao.campaignListCompany( _ca );
 
@@ -42,10 +43,13 @@ public class CampaignByCompanyCommand extends Command {
                 }
 
             } catch (CampaignNotFoundException e) {
+                _log.error( "Se ha lanzado un CampaignNotFoundException en:"+ getClass().getName() );
                 throw new CampaignNotFoundException("Campaña no encontrada", e);
             } catch (NullPointerException e) {
+                _log.error( "Se ha lanzado un CampaignNotFoundException en:"+ getClass().getName() );
                 throw new CampaignNotFoundException("Campaña no encontrada", e);
             } catch (Exception e) {
+                _log.error( "Se ha lanzado un UnexpectedErrorException en:"+ getClass().getName() );
                 throw new UnexpectedErrorException(e);
             }
 
