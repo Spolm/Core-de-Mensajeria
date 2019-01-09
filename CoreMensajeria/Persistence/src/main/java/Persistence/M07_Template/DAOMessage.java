@@ -2,19 +2,15 @@ package Persistence.M07_Template;
 
 import Entities.Entity;
 import Entities.EntityFactory;
-import Entities.M03_Campaign.Campaign;
 import Entities.M07_Template.HandlerPackage.ParameterHandler;
 import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.Template;
-import Entities.Sql;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Persistence.DAO;
 import Persistence.DAOFactory;
-import Persistence.M03_Campaign.DAOCampaign;
 
-import javax.ws.rs.POST;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
