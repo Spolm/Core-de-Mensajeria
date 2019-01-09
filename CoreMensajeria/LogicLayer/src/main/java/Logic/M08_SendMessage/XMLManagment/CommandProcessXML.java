@@ -98,9 +98,7 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
                     System.out.println(message.toString());
                 }
 
-                _verifiedParameters = new VerifiedParameter();
-                _verifiedParameters.set_verifiedMessages(_messageList);
-                _verifiedParameters.set_template(_template);
+                _verifiedParameters = new VerifiedParameter( _messageList, _template );
                 log.info("Se ha configurado la plantilla" );
 
                 //Command scheduleMessageCommand = CommandsFactory.createScheduleMessage(_verifiedParameters);

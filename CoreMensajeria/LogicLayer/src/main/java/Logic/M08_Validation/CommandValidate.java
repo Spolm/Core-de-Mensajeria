@@ -1,6 +1,7 @@
 package Logic.M08_Validation;
 
 import DTO.M08_DTO.ParametersDTO;
+import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
@@ -16,12 +17,13 @@ public class CommandValidate extends CompositeCommand<Boolean> {
     private boolean _valid = false;
 
     /**
-     * @param dto el json que se recibe de la aplicacion
+     * @param parameters parámetros estandar que se reciben tanto de aplicación como de archivo
      */
-    public CommandValidate(ParametersDTO dto) {
+    public CommandValidate(VerifiedParameter parameters) {
         Command[] commandList = new Command[2];
-        commandList[0] = CommandsFactory.createCommandValidateTemplate(dto.get_idTemplate());
-        commandList[1] = CommandsFactory.createCommandValidateMessage(dto.get_idTemplate());
+        commandList[0] = CommandsFactory.createCommandValidateTemplate(parameters.get_template().get_id());
+        commandList[1] = CommandsFactory.createCommandValidateMessage(parameters.get_template().get_id(),
+                parameters.get_verifiedMessages());
         set_commandList(commandList);
     }
 
