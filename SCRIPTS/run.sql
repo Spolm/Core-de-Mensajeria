@@ -39,6 +39,7 @@
 -- Modulo 10
 \ir SP/m10_getallcompanies.sql
 \ir SP/m10_getallroles.sql
+\ir SP/m10_profile.sql
 
 \ir 'CREATE DB_STARSCHEMA.sql'
 \ir CREATES_STARSCHEMA.sql

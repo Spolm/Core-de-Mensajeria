@@ -66,7 +66,7 @@ public class CommandScheduleMessage extends Command<Entity> {
         if (planningIsValid(startDate, endDate)) {
             ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
             long mills = startDate.getTime() - System.currentTimeMillis();
-            service.schedule(new ScheduleMessageTask(_verifiedParameters), mills, TimeUnit.MILLISECONDS);
+            service.schedule(new ScheduleMessageTask(_verifiedParameters, startDate), mills, TimeUnit.MILLISECONDS);
             log.info("El mensaje ha sido registrado para el envío");
             System.out.println("El mensaje ha sido registrado para el envío");
             log.info("El mensaje se enviará en " + mills + "milisegundos");
