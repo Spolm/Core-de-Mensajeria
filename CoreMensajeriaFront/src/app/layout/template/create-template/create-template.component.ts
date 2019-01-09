@@ -135,9 +135,9 @@ export class CreateTemplateComponent {
   }
 
   addIntegrator(channel: any, integratorId: number) {
-    if (!this.channels_integrators.find(x => x.channel.idChannel == channel.idChannel)) {
-      if (!this.channels_integrators.find(x => x.integrator.idIntegrator == integratorId)) {
-        const integrator = channel.integrators.find(x => x.idIntegrator == integratorId);
+    if (!this.channels_integrators.find(x => x.channel._id == channel._id)) {
+      if (!this.channels_integrators.find(x => x.integrator._id == integratorId)) {
+        const integrator = channel._integrators.find(x => x._id == integratorId);
         this.channels_integrators.push(
           { channel, integrator }
         );
