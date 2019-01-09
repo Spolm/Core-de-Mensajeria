@@ -55,8 +55,8 @@ public class CommandScheduleMessage extends Command<Entity> {
 
 //        try {
 //            DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
-//            startDate = df.parse("2019-01-08 12:50 PM");
-//            endDate = df.parse("2019-01-09 12:30 PM");
+//            startDate = df.parse("2019-01-09 6:20 PM");
+//            endDate = df.parse("2019-01-10 12:30 PM");
 //        } catch(ParseException e) {
 //        }
 
