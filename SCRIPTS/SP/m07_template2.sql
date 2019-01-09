@@ -72,7 +72,7 @@ CREATE OR REPLACE FUNCTION m07_findParameterByPar_Com_IDAndByParameterName(IN _c
  $BODY$
 BEGIN
 RETURN QUERY
-	select p.par_id, p.par_name,p.par_company_id from parameter p where _companyId = p.par_company_id and _name = p.par_name;
+	select p.par_id, p.par_name,p.par_company_id FROM public.parameter p where _companyId = p.par_company_id and _name = p.par_name;
 END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
@@ -227,15 +227,20 @@ $BODY$
 LANGUAGE plpgsql VOLATILE;
 -- select * from m07_getCampaignByTemplate(1);
 
-CREATE OR REPLACE FUNCTION m07_postChannelIntegrator(xtci_template_id integer, tci_ci_id integer, xci_channel_id integer, int_id integer)
-RETURNS VOID AS
-$BODY$
+create function m07_postchannelintegrator(_templateId integer, _channel integer, _integrator integer) returns void
+  language plpgsql
+as
+$$
 BEGIN
-INSERT INTO public.template_channel_integrator(tci_template_id, tci_ci_id) 
-VALUES(xtci_template_id,(select ci_id from public.channel_integrator as c where c.ci_channel_id = xci_channel_id and c.ci_integrator_id = int_id));
+  insert into public.template_channel_integrator (tci_template_id,tci_ci_id)
+                        values (_templateId ,(select ci_id from public.channel_integrator
+                        where ci_channel_id = _channel  and ci_integrator_id =  _integrator ));
 END;
-$BODY$
-LANGUAGE plpgsql VOLATILE;			
+$$;
+
+alter function m07_postchannelintegrator(integer, integer, integer) owner to "CoreMensajeria";
+
+		
 --DROP FUNCTION m07_postchannelintegrator(integer,integer,integer,integer);
 -- select * from m07_postChannelIntegrator(1,1,1,1);
 
@@ -357,6 +362,24 @@ END;
 $$;
 
 alter function m07_deletechannelintegrator(integer) owner to "CoreMensajeria";
+
+--FUNCION POST PARAMETERS OF MESSAGE
+CREATE OR REPLACE FUNCTION m07_postparameterofmessage(_messageId integer,_companyId integer, _parameter character varying)
+returns void
+  language plpgsql
+as
+$$
+BEGIN
+    insert into public.message_parameter(mp_message,mp_parameter)
+    values (_messageId ,(select par_id
+    from public.parameter
+    where par_company_id = _companyId and par_name = _parameter));
+END;
+$$;
+
+alter function m07_postparameterofmessage(integer,integer, varchar) owner to "CoreMensajeria";
+
+
 
 
 

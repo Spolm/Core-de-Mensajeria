@@ -9,7 +9,6 @@ import Entities.M03_Campaign.Campaign;
 //import Logic.M10_Profile.*;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
-import Entities.M07_Template.JSONTemplate;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
 import org.w3c.dom.Element;
