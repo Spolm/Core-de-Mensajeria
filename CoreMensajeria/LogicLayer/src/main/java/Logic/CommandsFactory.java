@@ -524,9 +524,16 @@ public class CommandsFactory {
     public static Command createEditUserProfileCommand(User user){
         return new EditUserProfileCommand(user);
     }
-//endregion
 
     public static Command createGetCompaniesByUserCommand(int userId){
         return new GetCompaniesByUserCommand(userId);
     }
+
+    public static Command createGetRolesCommand(){
+        return new GetRolesCommand();
+    }
+
+    public static Command createCreateUserCommand(User user){return new CreateUserCommand(user);}
+//endregion
+
 }

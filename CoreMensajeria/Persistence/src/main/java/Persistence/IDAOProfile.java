@@ -3,6 +3,7 @@ package Persistence;
 import Entities.M01_Login.Privilege;
 import Entities.M02_Company.Company;
 import Entities.M10_Profile.Responsability;
+import Entities.M10_Profile.Rol;
 
 import java.util.ArrayList;
 
@@ -45,4 +46,6 @@ public interface IDAOProfile extends IDAO {
                               String birthdate, String gender, String email, String phone);
 
     public ArrayList<Company> getCompaniesByUser(int userId);
+
+    public ArrayList<Rol> getRoles();
 }
