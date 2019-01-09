@@ -4,10 +4,8 @@ import DTO.DTOFactory;
 import DTO.M02_DTO.DTOFullCompany;
 import DTO.M02_DTO.DTOIdStatusCompany;
 import Entities.M02_Company.Company;
-import Entities.M02_Company.CompanyDAO;
 import Exceptions.CompanyDoesntExistsException;
-import Exceptions.M07_Template.InvalidParameterException;
-import com.google.gson.Gson;
+
 
 import java.util.ArrayList;
 
@@ -24,7 +22,6 @@ public class M02_CompaniesTest {
 
     private ArrayList<Company> _coList;
     private Company _co;
-    private CompanyDAO _coMng = new CompanyDAO();
 
 
 

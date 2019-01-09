@@ -134,7 +134,8 @@ public class EntityFactory {
      */
 
     public static Campaign CreateCampaignWithOut_Company(int idCampaign, String nameCampaign, String descCampaign,
-                                                         boolean statusCampaign, java.util.Date startCampaign, java.util.Date endCampaign ){
+                                                         boolean statusCampaign, java.util.Date startCampaign,
+                                                         java.util.Date endCampaign ){
 
         return new Campaign( idCampaign, nameCampaign, descCampaign, statusCampaign, startCampaign, endCampaign );
     }

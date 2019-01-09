@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION m03_getcampaignbyid ( IN _campaign integer)
 $BODY$
 BEGIN
 RETURN QUERY
-SELECT  c.cam_id, c.cam_name, c.cam_description, c.cam_start_date, c.cam_end_date, c.cam_status, cam_company_id
+SELECT  c.cam_id, c.cam_name, c.cam_description, c.cam_start_date, c.cam_end_date, c.cam_status, c.cam_company_id
         FROM campaign c 
         WHERE (c.cam_id = _campaign)
         ORDER BY cam_status DESC;

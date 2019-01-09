@@ -9,11 +9,7 @@ import DTO.M03_DTO.DTOIdStatusCampaign;
 import Entities.Entity;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
-import Entities.M03_Campaign.CampaignDAO;
-import Exceptions.CampaignDoesntExistsException;
 
-import Exceptions.M07_Template.InvalidParameterException;
-import Exceptions.ParameterCantBeNullException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M03_Campaign.AddCampaignCommand;
@@ -27,10 +23,8 @@ import Mappers.CompanyMapper.MapperFullCompany;
 import Mappers.CompanyMapper.MapperIdCompUser;
 import Mappers.CompanyMapper.MapperIdCompany;
 import Mappers.MapperFactory;
-import Persistence.DAO;
-import Persistence.M03_Campaign.DAOCampaign;
+
 import com.google.gson.Gson;
-import webService.M02_CompanyManagement.M02_Companies;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -50,35 +44,8 @@ public class M03_Campaigns {
     Gson gson = new Gson();
     ArrayList<Campaign> _caList = new ArrayList<>();
 
-/*
-
-    //region Obtener Campañas
-    @GET
-    @Path("/GetCampaigns")
-    @Produces("application/json")
-
-    public Response getCampaigns(@QueryParam("id") int id) throws CampaignDoesntExistsException {
-
-        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        CampaignDAO caList = new CampaignDAO();
-        try {
-
-            _caList = caList.campaignList(id);
-            rb.entity(gson.toJson(_caList));
-        }
-        catch (CampaignDoesntExistsException e) {
-            e.printStackTrace();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return rb.build();
-    }
-    //endregion
-*/
 
 
-  ////////////////////////////////PATRONES///////////////////
 
 
     @GET
@@ -210,5 +177,31 @@ public class M03_Campaigns {
             return Response.status( 500 ).entity( e.getMessage() ).build();
         }
     }
+/*
+
+    //region Obtener Campañas
+    @GET
+    @Path("/GetCampaigns")
+    @Produces("application/json")
+
+    public Response getCampaigns(@QueryParam("id") int id) throws CampaignDoesntExistsException {
+
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        CampaignDAO caList = new CampaignDAO();
+        try {
+
+            _caList = caList.campaignList(id);
+            rb.entity(gson.toJson(_caList));
+        }
+        catch (CampaignDoesntExistsException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
+    //endregion
+*/
 
 }

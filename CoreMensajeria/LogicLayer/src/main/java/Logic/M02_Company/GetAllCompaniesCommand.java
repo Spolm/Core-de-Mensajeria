@@ -1,6 +1,7 @@
 package Logic.M02_Company;
 
 import Entities.Entity;
+import Entities.M02_Company.Company;
 import Exceptions.M02_Company.CompanyNotFoundException;
 import Exceptions.UnexpectedErrorException;
 import Logic.Command;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public class GetAllCompaniesCommand extends Command {
 
     final static Logger _log = LogManager.getLogger("CoreMensajeria");
-    private static ArrayList<Entity> _coList;
+    private static ArrayList<Company> _coList;
 
     /**
      * Constructor de la clase.
@@ -22,7 +23,7 @@ public class GetAllCompaniesCommand extends Command {
      */
     public GetAllCompaniesCommand( ) {
 
-        _coList = new ArrayList<Entity>();
+        _coList = new ArrayList<Company>();
 
     }
 
@@ -51,6 +52,6 @@ public class GetAllCompaniesCommand extends Command {
     }
 
     //@Override
-    public ArrayList<Entity> ReturnList() { return _coList; }
+    public <T> ArrayList<T> ReturnList() { return (ArrayList<T>) _coList; }
 
 }
