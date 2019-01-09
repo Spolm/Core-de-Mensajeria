@@ -97,8 +97,9 @@ public class M10_Profile {
      * @param dto DTO with the information to edit
      * @return state of the edition in bd
      */
-    @Path("/edit")
+
     @PUT
+    @Path("/edit")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response editProfile(DTOEditUser dto){
