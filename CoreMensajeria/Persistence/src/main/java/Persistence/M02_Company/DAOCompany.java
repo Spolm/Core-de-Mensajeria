@@ -96,7 +96,7 @@ public class DAOCompany extends DAOPostgres implements IDAOCompany {
                 _result.getString( "com_description" ),
                 _result.getBoolean( "com_status" ),
                 _result.getString( "com_route_link" ),
-                _result.getInt( "  r.res_use_id" ) );
+                _result.getInt( "res_use_id" ) );
         return _company;
     }
 
