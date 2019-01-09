@@ -11,6 +11,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
+/**
+ * CommandGetTemplates es una clase que obtiene todas las plantillas
+ */
+
 public class CommandGetTemplates extends Command {
 
     private int userId;
@@ -23,6 +27,10 @@ public class CommandGetTemplates extends Command {
         this.companyId = companyId;
     }
 
+    /**
+     * El metodo execute() es aquel donde se ejecuta la funcion principal de la clase
+     * @throws Exception
+     */
     @Override
     public void execute() throws Exception {
         //region Instrumentation Debug
@@ -40,6 +48,10 @@ public class CommandGetTemplates extends Command {
         //endregion
     }
 
+    /**
+     * El metodo Return() retorna la lista de plantillas.
+     * @return
+     */
     @Override
     public ArrayList<Template> Return() {
         //region Instrumentation Debug

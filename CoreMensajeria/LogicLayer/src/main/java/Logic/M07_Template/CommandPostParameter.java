@@ -10,6 +10,9 @@ import Persistence.M07_Template.DAOParameter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * CommandPostParameter es una clase que permite insertar un parametro nuevo.
+ */
 public class CommandPostParameter extends Command {
 
     private NewParameter newParameter;
@@ -21,13 +24,15 @@ public class CommandPostParameter extends Command {
     public CommandPostParameter() {
     }
 
+    /**
+     * El metodo execute() es aquel donde se ejecuta la funcion principal de la clase
+     * @throws Exception
+     */
     @Override
     public void execute() throws Exception {
         //region Instrumentation Debug
         log.debug("Entrando a el metodo execute() de CommandPostParameter" );
         //endregion
-        //ParameterHandler parameterHandler = new ParameterHandler();
-        //parameterHandler.postParameter(newParameter.getName(),newParameter.getCompanyId());
         DAOParameter daoParameter = DAOFactory.instaciateDaoParameter();
         daoParameter.postParameter(newParameter.getName(),newParameter.getCompanyId());
         //region Instrumentation Info

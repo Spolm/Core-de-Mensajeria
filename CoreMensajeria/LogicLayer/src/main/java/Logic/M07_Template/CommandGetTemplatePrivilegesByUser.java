@@ -11,6 +11,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
+/**
+ * CommandGetTemplatePrivilegesByUser es una clase que permite obtener los privilegios de plantilla por usuario.
+ */
 public class CommandGetTemplatePrivilegesByUser extends Command {
 
     private int userId;
@@ -26,6 +29,10 @@ public class CommandGetTemplatePrivilegesByUser extends Command {
     public CommandGetTemplatePrivilegesByUser() {
     }
 
+    /**
+     * El metodo execute() es aquel donde se ejecuta la funcion principal de la clase
+     * @throws Exception
+     */
     @Override
     public void execute() throws Exception {
         //region Instrumentation Debug
@@ -43,6 +50,10 @@ public class CommandGetTemplatePrivilegesByUser extends Command {
         //endregion
     }
 
+    /**
+     * El metodo Return() retorna la lista de privilegios.
+     * @return
+     */
     @Override
     public ArrayList<Privilege> Return() {
         //region Instrumentation Debug
