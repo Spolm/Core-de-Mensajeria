@@ -45,4 +45,38 @@ public class DAOProfilePostgres extends DAOPostgres implements IDAOProfile {
 
         return privileges;
     }
+
+    public String editProfile(int userId, String name, String lastname, int ci, int geographicalRegion, String address,
+                              String birthdate, String gender, String email, String phone) {
+        Connection connection = DAOPostgres.getConnection();
+        String r = "";
+        try {
+            PreparedStatement preparedStatement = connection.prepareCall("{call m10_edit_user_by_profile(?,?,?,?,?,?,?,?,?,?)}");
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, lastname);
+            preparedStatement.setInt(4, ci);
+            preparedStatement.setInt(5, geographicalRegion);
+            preparedStatement.setString(6, address);
+            preparedStatement.setString(7, birthdate);
+            preparedStatement.setString(8, gender);
+            preparedStatement.setString(9, birthdate);
+            preparedStatement.setString(10, birthdate);
+
+            //Se realiza query
+            preparedStatement.executeQuery();
+            r =  "Perfil editado con éxito";
+        } catch (SQLException e) {
+            System.err.println(e.getStackTrace());
+            r = "Error al editar el perfil";
+        } finally {
+            try {
+                connection.close();
+                return r;
+            }catch (SQLException e){
+                e.printStackTrace();
+                return "Error al cerrar BD";
+            }
+        }
+    }
 }

@@ -344,4 +344,10 @@ public class EntityFactory {
     public static SentMessage createSendMessage() {
         return new SentMessage();
     }
+
+    //region M_10
+    static public Entity CreateUser(int id, String _passwordUser, String _usernameUser, int _typeUser, String _emailUser, String _phoneUser, java.sql.Date _dayOfBirthUser, String _countryUser, String _addressUser, String _genreUser, String _cityUser, String name, String lastname, int in, int rg, String bd) {
+        return new User(id, _passwordUser, _usernameUser, _typeUser, _emailUser, _phoneUser, _dayOfBirthUser, _countryUser, _addressUser, _genreUser, _cityUser, name, lastname, in, rg, bd);
+    }
+    //endregion
 }

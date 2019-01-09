@@ -2,6 +2,7 @@ package Logic;
 
 import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
+import Entities.M01_Login.User;
 import Logic.M04_Integrator.*;
 import Logic.M05_Channel.CommandGetAllChannels;
 import Entities.M02_Company.Company;
@@ -14,6 +15,7 @@ import Logic.M02_Company.AddCompanyCommand;
 import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
+import Logic.M10_Profile.EditUserProfileCommand;
 import Logic.M10_Profile.GetGeographicalRegionCommand;
 import Logic.M10_Profile.GetPrivilegesByUserCompanyCommand;
 import org.w3c.dom.Element;
@@ -350,6 +352,10 @@ public class CommandsFactory {
 
     public static Command createGetGeographicalRegionCommand(int id){
         return new GetGeographicalRegionCommand(id);
+    }
+
+    public static EditUserProfileCommand createEditUserProfileCommand(User user){
+        return new EditUserProfileCommand(user);
     }
 
     //end region
