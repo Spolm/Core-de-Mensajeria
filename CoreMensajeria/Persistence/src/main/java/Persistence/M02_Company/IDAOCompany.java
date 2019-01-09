@@ -4,7 +4,6 @@ import Entities.Entity;
 import Entities.M02_Company.Company;
 import Persistence.IDAO;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -23,7 +22,7 @@ public interface IDAOCompany extends IDAO {
 
     ArrayList<Entity> companiesEnabled();
 
-    ArrayList<Entity> allCompanies();
+    ArrayList<Company> allCompanies();
 
 
 }

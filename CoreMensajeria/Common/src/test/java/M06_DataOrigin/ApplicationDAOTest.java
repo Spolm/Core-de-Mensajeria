@@ -25,7 +25,7 @@ public class ApplicationDAOTest {
         );
     }
 
-    @Test
+  /*  @Test
     private void createApplicationsTest(){
         createAddApplicationData();
         try{
@@ -116,6 +116,6 @@ public class ApplicationDAOTest {
         } catch (ApplicationNotFoundException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 }
