@@ -3,7 +3,10 @@ package Exceptions.M08_SendMessageManager;
 import Exceptions.PersonalizedException;
 
 /**
- * Excepción personalizada para manejar la plantilla no aprobada
+ * Excepción personalizada que se ejecuta cuando la plantilla
+ * no esta en estado de aprobada
+ *
+ * @see PersonalizedException
  */
 
 public class TemplateNotApprovedException extends PersonalizedException {
