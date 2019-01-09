@@ -4,7 +4,9 @@ import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.M08_SendMessageManager.NullXMLException;
 import Logic.Command;
 import Logic.CommandsFactory;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -26,27 +28,32 @@ class CommandProcessXMLTest {
     public static void init(){
         ClassLoader classLoader = new CommandProcessXMLTest().getClass().getClassLoader();
         _file = new File(classLoader.getResource("xml/prueba1.xml").getFile());
-        _fileNull = new File(classLoader.getResource("xml/prueba3.xml").getFile());
+        _fileNull = new File(classLoader.getResource("xml/prueba4.xml").getFile());
         _text = _file.getPath();
         _text = _text.replaceAll("%20"," ");
-        _commandProcessXML = CommandsFactory.createCommandProcessXML(_text);
         _textNull = _fileNull.getPath();
         _textNull = _textNull.replaceAll("%20"," ");
-        initPruebas();
+    }
+
+    @BeforeEach
+    void cleanValues(){
+        _commandProcessXML = null;
     }
 
     @Test
     public void testCommandProcessXML(){
         try {
+            initPruebas();
+            _commandProcessXML = CommandsFactory.createCommandProcessXML(_text);
             _commandProcessXML.execute();
             verifiedParameter = _commandProcessXML.Return();
-            assertNotNull(verifiedParameter);
-            assertEquals(prueba ,verifiedParameter.get_verifiedMessages().get(0).toString());
-            assertEquals(prueba2 ,verifiedParameter.get_verifiedMessages().get(1).toString());
-            assertEquals(prueba3 ,verifiedParameter.get_verifiedMessages().get(2).toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            Assert.fail( e.getMessage() );
         }
+        assertNotNull(verifiedParameter);
+        assertEquals(prueba ,verifiedParameter.get_verifiedMessages().get(0).toString());
+        assertEquals(prueba2 ,verifiedParameter.get_verifiedMessages().get(1).toString());
+        assertEquals(prueba3 ,verifiedParameter.get_verifiedMessages().get(2).toString());
     }
 
     @Test
