@@ -7,10 +7,7 @@ import Persistence.Factory.DAOAbstractFactory;
 import Persistence.IDAOProfile;
 import com.google.gson.Gson;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -36,5 +33,13 @@ public class M10_Profile {
         }
         // 5. Return DTO
         return response;
+    }
+
+    @POST
+    @Path("/create")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createUser(){
+
+        return null;
     }
 }

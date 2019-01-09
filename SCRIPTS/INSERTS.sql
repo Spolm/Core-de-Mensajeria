@@ -114,21 +114,21 @@ INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_u
 INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 7', 'Description', true, 'Company7_03122018204456', 1);
 INSERT INTO Company(com_name, com_description, com_status, com_route_link, com_user_id) values ('Company 8', 'Description', true, 'Company8_03122018204456', 1);
 
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 1', 'Description', true, TIMESTAMP '2017-07-20 15:36:38', TIMESTAMP '2018-07-23 15:36:38', 1);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 2', 'Description', true, TIMESTAMP '2017-07-21 15:36:38', TIMESTAMP '2018-07-23 15:36:38', 1);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 3', 'Description', false, TIMESTAMP '2017-07-22 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 1);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 4', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 1);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 5', 'Description', true, TIMESTAMP '2017-10-01 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 1);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 6', 'Description', false, TIMESTAMP '2017-10-02 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 2);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 7', 'Description', false, TIMESTAMP '2017-10-11 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 2);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 8', 'Description', true, TIMESTAMP '2018-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 2);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 9', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 2);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 10', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 2);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 11', 'Description', false, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 3);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 12', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 3);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 13', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 4);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 14', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 4);
-INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 15', 'Description', true, TIMESTAMP '2017-07-23 15:36:38', TIMESTAMP '2017-07-23 15:36:38', 5);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 1', 'Description', true, TIMESTAMP '2016-07-20 15:36:38', TIMESTAMP '2018-07-23 15:36:38', 1);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 2', 'Description', true, TIMESTAMP '2016-07-21 15:36:38', TIMESTAMP '2018-07-23 15:36:38', 1);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 3', 'Description', false, TIMESTAMP '2016-07-22 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 1);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 4', 'Description', true, TIMESTAMP '2016-07-23 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 1);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 5', 'Description', true, TIMESTAMP '2016-10-01 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 1);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 6', 'Description', false, TIMESTAMP '2016-10-02 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 2);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 7', 'Description', false, TIMESTAMP '2016-10-11 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 2);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 8', 'Description', true, TIMESTAMP '2018-07-23 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 2);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 9', 'Description', true, TIMESTAMP '2016-07-23 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 2);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 10', 'Description', true, TIMESTAMP '2016-07-23 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 2);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 11', 'Description', false, TIMESTAMP '2016-07-23 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 3);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 12', 'Description', true, TIMESTAMP '2016-07-23 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 3);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 13', 'Description', true, TIMESTAMP '2016-07-23 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 4);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 14', 'Description', true, TIMESTAMP '2016-07-23 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 4);
+INSERT INTO Campaign(cam_name, cam_description, cam_status, cam_start_date, cam_end_date, cam_company_id) values ('Campaign 15', 'Description', true, TIMESTAMP '2016-07-23 15:36:38', TIMESTAMP '2016-07-23 15:36:38', 5);
 
 INSERT INTO public.Responsability(res_use_id, res_rol_id, res_com_id) values
 (3,2,1),(4,3,1),(5,4,1),(6,5,1);
@@ -139,7 +139,7 @@ INSERT INTO public.Responsability(res_use_id, res_rol_id, res_com_id) values
 
 INSERT INTO public.application(app_name,app_description,app_token,app_date,app_status,app_user_creator, app_company) values
 ('Amazon','Pagina Web','BF5453E0B1BF86A7FA020A4B87D7C0A9B0946ACCEB403E918E352D10BD35007D','04/05/1995',0,1,1),
-('Mercantil en linea','Aplicacion movil de mercantil','5E182FC1A42614D37B951A7A38648350D0D166E9D78BA26E59EF7ECE9462BE34','07/06/2017',1,1,2),
+('Mercantil en linea','Aplicacion movil de mercantil','5E182FC1A42614D37B951A7A38648350D0D166E9D78BA26E59EF7ECE9462BE34','07/06/2016',1,1,2),
 ('Banesco Online','Aplicacion web de banesco','5DD3CE9EF2B7614FB471B442050DDB24ADDBE88424B3C1382C7DD224A99203BD','01/08/2015',1,1,3);
 
 INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) 
@@ -268,44 +268,44 @@ INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUE
 INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (4,3);
 INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (5,6);
 
-INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-03-15', 1, 1, 1, 1, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-03-15', 1, 1, 1, 1, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-01-01', 1, 1, 2, 2, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-06-23', 1, 1, 1, 3, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-06-30', 1, 1, 2, 4, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-11-25', 1, 1, 1, 5, 1);
-INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-11-29', 1, 1, 2, 6, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-11-29', 1, 1, 2, 6, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-04-12', 1, 2, 1, 1, 1);
-INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-04-13', 1, 2, 2, 2, 1);
-INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-07-23', 1, 2, 1, 3, 1);
-INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-07-23', 1, 3, 2, 4, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-04-13', 1, 2, 2, 2, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-07-23', 1, 2, 1, 3, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-07-23', 1, 3, 2, 4, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-09-09', 1, 3, 1, 5, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-09-11', 1, 3, 2, 6, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-12-24', 1, 3, 1, 1, 1);
-INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-12-25', 1, 4, 2, 2, 1);
-INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-12-31', 1, 4, 1, 3, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-12-25', 1, 4, 2, 2, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-12-31', 1, 4, 1, 3, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-02-05', 2, 5, 2, 4, 1);
-INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-02-10', 2, 5, 1, 5, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-02-10', 2, 5, 1, 5, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-03-07', 2, 5, 2, 6, 1);
-INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-03-17', 2, 6, 1, 1, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-03-16', 2, 6, 1, 1, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-04-19', 2, 6, 2, 2, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-05-11', 2, 6, 1, 3, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-08-28', 2, 7, 2, 4, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-08-31', 2, 8, 1, 5, 1);
-INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-10-12', 2, 9, 2, 6, 1);
-INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-10-23', 2, 10, 1, 1, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-10-12', 2, 9, 2, 6, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-10-23', 2, 10, 1, 1, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-10-23', 2, 11, 2, 2, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-11-09', 2, 12, 1, 3, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2018-04-16', 2, 13, 2, 4, 1);
-INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-07-23', 2, 14, 1, 5, 1);
+INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-07-23', 2, 14, 1, 5, 1);
 
 INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
 VALUES ('2003-02-01','2022-04-04', '08:30', '18:30', 1);
 INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
-VALUES ('2014-10-11','2014-12-05', '07:00', '17:00', 2);
+VALUES ('2014-10-11','2014-12-05', '07:00', '16:00', 2);
 INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
 VALUES ('2014-10-12','2015-01-29', '10:45', '20:00', 3);
 INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
-VALUES ('2014-11-11','2020-04-11', '9:00', '17:30', 4);
+VALUES ('2014-11-11','2020-04-11', '9:00', '16:30', 4);
 INSERT INTO public.Planning(pla_start_date, pla_end_date, pla_start_time, pla_end_time, pla_template_id)
 VALUES ('2016-07-04','2019-12-01', '12:00', '23:15', 5);
 
@@ -541,68 +541,68 @@ INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Tovar',15)
 INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Tulio Febres Cordero',15);
 INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Zea',15);
 --3s de Miranda
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Acevedo',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Andrés Bello',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Baruta',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Brión',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Bolívar',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Buroz',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Carrizal',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Chacao',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','El Hatillo',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Guaicaipuro',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Gual',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Independencia',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Lander',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Los Salias',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Páez',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Paz Castillo',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Plaza',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Rojas',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Urdaneta',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Sucre',17);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Zamora',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Acevedo',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Andrés Bello',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Baruta',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Brión',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Bolívar',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Buroz',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Carrizal',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Chacao',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','El Hatillo',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Guaicaipuro',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Gual',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Independencia',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Lander',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Los Salias',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Páez',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Paz Castillo',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Plaza',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Rojas',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Urdaneta',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Sucre',16);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Zamora',16);
 --3s de Monagas
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Acosta',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Aguasay',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Bolívar',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Caripe',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Cedeño',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Libertador',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Maturín',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Piar',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Punceres',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Santa Bárbara',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Sotillo',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Uracoa',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Zamora',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Acosta',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Aguasay',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Bolívar',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Caripe',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Cedeño',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Libertador',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Maturín',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Piar',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Punceres',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Santa Bárbara',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Sotillo',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Uracoa',17);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Zamora',17);
 --3 de Nueva Esparta
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Antolín del Campo',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Arismendi',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Díaz',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','García',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Gómez',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Maneiro',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Marcano',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Mariño',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Península de Macanao',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Tubores',19);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Villalba',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Antolín del Campo',18);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Arismendi',18);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Díaz',18);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','García',18);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Gómez',18);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Maneiro',18);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Marcano',18);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Mariño',18);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Península de Macanao',18);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Tubores',18);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Villalba',18);
 --3s de Portuguesa
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Agua Blanca',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Araure',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Esteller',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Guanare',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Guanarito',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','José Vicente De Unda',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Ospino',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Páez',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Papelón',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','San Genaro de Boconoíto',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','San Rafael de Onoto',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Santa Rosalía',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Sucre',110);
-INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Turén',110);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Agua Blanca',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Araure',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Esteller',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Guanare',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Guanarito',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','José Vicente De Unda',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Ospino',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Páez',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Papelón',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','San Genaro de Boconoíto',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','San Rafael de Onoto',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Santa Rosalía',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Sucre',19);
+INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Turén',19);
 --3s de Sucre
 INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Arismendi',20);
 INSERT INTO GEOGRAPHICAL_REGION(rg_type, rg_name, rg_rg) VALUES ('3','Andrés Eloy Blanco',20);

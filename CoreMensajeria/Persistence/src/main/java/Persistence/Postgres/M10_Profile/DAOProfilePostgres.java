@@ -20,13 +20,13 @@ public class DAOProfilePostgres extends DAOPostgres implements IDAOProfile {
         return null;
     }
 
-    public ArrayList<Privilege> getPrivilegesByUserAndCompany(int user, int company) {
+    public ArrayList<Privilege> getPrivilegesByUserAndCompany(int userId, int companyId) {
         ArrayList<Privilege> privileges = new ArrayList<>();
         Connection connection = DAOPostgres.getConnection();
         try{
             PreparedStatement preparedStatement = connection.prepareCall("{call m10_select_privileges_by_user_company(?,?)}");
-            preparedStatement.setInt(1,user);
-            preparedStatement.setInt(2,company);
+            preparedStatement.setInt(1,userId);
+            preparedStatement.setInt(2,companyId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 Privilege privilege = new Privilege(
