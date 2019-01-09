@@ -27,3 +27,25 @@ FROM GEOGRAPHICAL_REGION WHERE rg_rg = geographicalRegionId;
 END;
 $$
 LANGUAGE 'plpgsql' VOLATILE;
+
+-- DROP FUNCTION m10_edit_user_by_profile(integer,varchar, varchar, integer, integer, varchar, varchar, varchar, varchar, varchar);
+CREATE OR REPLACE FUNCTION m10_edit_user_by_profile(
+	IN userId INTEGER, IN name VARCHAR, IN lastname VARCHAR,
+	IN ci INTEGER, IN gr INTEGER, IN address VARCHAR, IN birthdate VARCHAR,
+	IN gender CHAR, IN email VARCHAR, IN phone VARCHAR)
+RETURNS VOID AS $$
+BEGIN
+	UPDATE PUBLIC.User SET
+	use_name = name,
+	use_lastname = lastname,
+	use_identification_number = ci,
+	use_rg_id = gr,
+	use_address = address,
+	use_date_of_birth = TO_TIMESTAMP(birthdate,'YYYY-MM-DD'),
+	use_gender = gender,
+	use_email = email,
+	use_phone = phone
+	WHERE use_id = userId;
+	END;
+$$
+LANGUAGE 'plpgsql' VOLATILE;
