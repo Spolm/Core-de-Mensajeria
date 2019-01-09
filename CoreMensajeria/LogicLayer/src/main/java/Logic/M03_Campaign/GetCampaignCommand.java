@@ -7,6 +7,7 @@ import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M03_Campaign.DAOCampaign;
+import Persistence.M03_Campaign.IDAOCampaign;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class GetCampaignCommand extends Command {
     @Override
     public void execute() throws CampaignNotFoundException, UnexpectedErrorException {
         try {
-            DAOCampaign _dao = DAOFactory.instanciateDaoCampaign();
+            IDAOCampaign _dao = DAOFactory.instanciateDaoCampaign();
             _ca = _dao.campaignById( _ca );
 
             if (_ca.get_idCampaign()==0){
