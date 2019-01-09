@@ -11,7 +11,7 @@ import Entities.Entity;
  * @see IIntegrator
  */
 
-public abstract class Integrator  extends Entity /*implements IIntegrator*/{
+public abstract class Integrator  extends Entity implements IIntegrator{
     private int threadCapacity;
     private float messageCost;
     private String nameIntegrator;

@@ -71,9 +71,9 @@ public class CommandSendMessage extends Command {
                                 System.out.println(finalMessage + " destino " + correo);
                             }
                         }
-                        Command<Entity> sc = CommandsFactory.createCommandInsertMessage(_template, integrator.get_id(),
+                       /* Command<Entity> sc = CommandsFactory.createCommandInsertMessage(_template, integrator.get_id(),
                                 channel.get_id(), this._dateToBeSent);
-                        sc.execute();
+                        sc.execute();*/
                     }catch (Exception e){
                         log.error("Error al insertar en base de datos");
                         throw e;
