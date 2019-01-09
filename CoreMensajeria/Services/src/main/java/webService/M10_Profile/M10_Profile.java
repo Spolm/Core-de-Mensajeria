@@ -61,6 +61,38 @@ public class M10_Profile {
     }
 
     /**
+     *  methods that is responsible for obtaining responsibilities by company
+     * @param companyId if of the company
+     * @return responsibilities by company (companyId)
+     */
+    @GET
+    @Path("/responsability")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getResponsability(@QueryParam("companyId") int companyId) {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getResponsability(" + companyId +")");
+        //endregion
+        Response response = null;
+        try {
+            // 1. Map DTO to Entity ...
+            Command command = CommandsFactory.createGetResponsabilityByCompanyCommand(companyId);
+            command.execute();
+            // 4. Map Entity to DTO
+            // 5. Return DTO
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getResponsability(" + companyId +") exitosamente");
+            //endregion
+            return Response.ok(new Gson().toJson(command.Return())).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getResponsability(" + companyId +") arrojo la excepcion:" + e.getMessage());
+            //endregion
+        }
+        // 5. Return DTO
+        return response;
+    }
+    /**
      * this method is responsible for editing a user profile (non-administrator)
      * @param dto DTO with the information to edit
      * @return state of the edition in bd
@@ -79,7 +111,9 @@ public class M10_Profile {
             User user = (User) map.CreateEntity(dto);
             Command c = CommandsFactory.createEditUserProfileCommand(user);
             c.execute();
+            //region Instrumentation Info
             log.info("Se ejecuto el metodo editProfile(" + dto.toString() +") exitosamente");
+            //endregion
             response = Response.ok(new Gson().toJson(c.Return())).build();
         } catch (Exception e) {
             response =  Response.status(500).entity(e).build();

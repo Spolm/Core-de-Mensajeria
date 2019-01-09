@@ -8,6 +8,9 @@ import Persistence.IDAOProfile;
 
 import java.util.ArrayList;
 
+/**
+ * GetGeographicalRegionCommand Class
+ */
 public class GetGeographicalRegionCommand extends Command {
 
     private int id;

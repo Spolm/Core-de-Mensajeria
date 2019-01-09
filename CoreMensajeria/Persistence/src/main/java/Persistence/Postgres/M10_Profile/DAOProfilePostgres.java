@@ -2,6 +2,7 @@ package Persistence.Postgres.M10_Profile;
 
 import Entities.Entity;
 import Entities.M01_Login.Privilege;
+import Entities.M10_Profile.Responsability;
 import Persistence.IDAOProfile;
 import Persistence.Postgres.DAOPostgres;
 
@@ -20,13 +21,13 @@ public class DAOProfilePostgres extends DAOPostgres implements IDAOProfile {
         return null;
     }
 
-    public ArrayList<Privilege> getPrivilegesByUserAndCompany(int user, int company) {
+    public ArrayList<Privilege> getPrivilegesByUserAndCompany(int userId, int companyId) {
         ArrayList<Privilege> privileges = new ArrayList<>();
         Connection connection = DAOPostgres.getConnection();
         try{
             PreparedStatement preparedStatement = connection.prepareCall("{call m10_select_privileges_by_user_company(?,?)}");
-            preparedStatement.setInt(1,user);
-            preparedStatement.setInt(2,company);
+            preparedStatement.setInt(1,userId);
+            preparedStatement.setInt(2,companyId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 Privilege privilege = new Privilege(
@@ -44,6 +45,12 @@ public class DAOProfilePostgres extends DAOPostgres implements IDAOProfile {
         }
 
         return privileges;
+    }
+
+
+    public Responsability getResponsability(int companyId) {
+        Responsability responsability;
+        return null;
     }
 
     public String editProfile(int userId, String name, String lastname, int ci, int geographicalRegion, String address,

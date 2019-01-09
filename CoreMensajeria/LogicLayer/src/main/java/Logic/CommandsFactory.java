@@ -18,6 +18,7 @@ import Logic.M08_SendMessage.XMLManagment.*;
 import Logic.M10_Profile.EditUserProfileCommand;
 import Logic.M10_Profile.GetGeographicalRegionCommand;
 import Logic.M10_Profile.GetPrivilegesByUserCompanyCommand;
+import Logic.M10_Profile.GetResponsabilityByCompanyCommand;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
@@ -357,13 +358,21 @@ public class CommandsFactory {
 
     /**
      * Method that instantiates an object of type GetGeographicalRegionCommand
-     * @param id of the GeographicalRegion
+     * @param id id of the GeographicalRegion
      * @return object GetGeographicalRegionCommand
      */
     public static Command createGetGeographicalRegionCommand(int id){
         return new GetGeographicalRegionCommand(id);
     }
 
+    /**
+     * VMethod that instantiates an object of type GetResponsabilityByCompanyCommand
+     * @param companyId id of the company
+     * @return object GetResponsabilityByCompanyCommand
+     */
+    public static Command createGetResponsabilityByCompanyCommand(int companyId) {
+        return new GetResponsabilityByCompanyCommand(companyId);
+    }
     /**
      * Method that instantiates an object of type EditUserProfileCommand
      * @param user to modify
@@ -372,7 +381,6 @@ public class CommandsFactory {
     public static Command createEditUserProfileCommand(User user){
         return new EditUserProfileCommand(user);
     }
-
     //end region
 
 }
