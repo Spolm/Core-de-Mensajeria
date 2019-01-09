@@ -3,6 +3,7 @@ package Persistence.Postgres.M10_Profile;
 import Entities.Entity;
 import Entities.M01_Login.Privilege;
 import Entities.M01_Login.User;
+import Entities.M02_Company.Company;
 import Entities.M10_Profile.Responsability;
 import Entities.M10_Profile.Rol;
 import Persistence.IDAOProfile;
@@ -76,12 +77,36 @@ public class DAOProfilePostgres extends DAOPostgres implements IDAOProfile {
                 responsability.setRol(rol);
                 responsabilities.add(responsability);
             }
+            connection.close();
         }catch (SQLException e){
             e.printStackTrace();
         }catch (Exception e){
             e.printStackTrace();
         }
         return responsabilities;
+    }
+
+    public ArrayList<Company> getCompaniesByUser(int userId){
+        ArrayList<Company> companies = new ArrayList<>();
+        Connection connection = DAOPostgres.getConnection();
+        try{
+            PreparedStatement preparedStatement = connection.prepareCall("{call m02_getcompaniesbyresponsible(?)}");
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Company company = new Company();
+                company.set_idCompany(resultSet.getInt("com_id"));
+                company.set_name(resultSet.getString("com_name"));
+                company.set_status(resultSet.getBoolean("com_status"));
+                companies.add(company);
+            }
+            connection.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return companies;
     }
 
     public String editProfile(int userId, String name, String lastname, int ci, int geographicalRegion, String address,

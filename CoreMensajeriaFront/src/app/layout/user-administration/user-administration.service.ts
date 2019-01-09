@@ -34,4 +34,18 @@ export class UserAdministrationService {
       map(this.extractData));
   }
 
+  getUsers(companyId: String){
+    return this.http.get(endpoint + 'profiles/responsabilities?companyId=' + companyId).pipe(
+      map(this.extractData));
+  }
+  
+  getPrivilegesByUserAndCompany(userId: string, companyId: number) {
+    return this.http.get(endpoint + 'profiles/privileges?userId=' + userId + '&companyId=' + companyId).pipe(
+      map(this.extractData));
+  }
+
+  getCompanies(userId: string) {
+    return this.http.get(endpoint + 'profiles/companies?userId=' + userId).pipe(
+      map(this.extractData));
+  }
 }
