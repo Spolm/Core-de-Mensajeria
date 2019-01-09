@@ -4,6 +4,8 @@ import Entities.Entity;
 import Entities.M01_Login.Privilege;
 import Entities.Sql;
 import Persistence.DAO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 public class DAOPrivilege extends DAO implements IDAOPrivilege {
     final String CALL_FIND_PRIVILEGES_BY_USER = "{CALL m01_getprivileges(?)}";
 
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
     private Connection _conn;
     private Privilege _privilege;
     private ArrayList<Privilege> _privilegeList;
@@ -31,6 +34,9 @@ public class DAOPrivilege extends DAO implements IDAOPrivilege {
      * @throws SQLException
      */
     public ArrayList<Privilege> findPrivilegesByUserId(int id) throws SQLException {
+        //region Instrumentation Debug
+        log.debug("Entrando al metodo findPrivilegeByUserId("+id+") en DAOPrivilege");
+        //endregion
         _privilegeList = new ArrayList<>();
         PreparedStatement preparedStatement = _conn.prepareCall(CALL_FIND_PRIVILEGES_BY_USER);
         preparedStatement.setInt(1,id);

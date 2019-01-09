@@ -81,7 +81,7 @@ public class M01_User {
     @Produces(MediaType.APPLICATION_JSON)
     public Response GetUser(@PathParam("id") int id) {
         //region Instrumentation Debug
-        log.error("Entrando al metodo GetUser("+id+")");
+        log.debug("Entrando al metodo GetUser("+id+")");
         //endregion
         Error error;
         try {

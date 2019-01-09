@@ -7,6 +7,7 @@ import Entities.M01_Login.User;
 import Entities.Sql;
 import Exceptions.UserBlockedException;
 import Persistence.DAO;
+import org.apache.logging.log4j.LogManager;
 
 import javax.ws.rs.core.Response;
 import javax.xml.bind.DatatypeConverter;
@@ -19,6 +20,7 @@ import java.util.Date;
 
 public class DAOUser extends DAO implements  IDAOUser {
 
+    final static org.apache.logging.log4j.Logger log = LogManager.getLogger("CoreMensajeria");
     private Connection _conn = Sql.getConInstance();
 
     final String QUERY_SELECT_BY_USERNAME_OR_EMAIL = "SELECT * FROM public.user where use_username=? or use_email=?";
@@ -93,7 +95,9 @@ public class DAOUser extends DAO implements  IDAOUser {
 
     @Override
     public ArrayList<Entity> getUsers()  {
-
+        //region Instrumentation Debug
+        log.debug("Entrando al metodo getUsers() en DAOUser");
+        //endregion
         ArrayList<Entity> userList = new ArrayList<>();
         PreparedStatement preStatement;
         try {
@@ -113,7 +117,9 @@ public class DAOUser extends DAO implements  IDAOUser {
     }
 
     private User getUser(ResultSet result) throws SQLException {
-
+        //region Instrumentation Debug
+        log.debug("Entrando al metodo getUser en DAOUser");
+        //endregion
             User _user = (User) EntityFactory.CreateUser(
                     result.getInt( "use_id" ),
                     result.getString("use_password"),
@@ -142,6 +148,9 @@ public class DAOUser extends DAO implements  IDAOUser {
      * @throws SQLException
      */
     public User findByUsernameOrEmail(String username) throws SQLException {
+        //region Instrumentation Debug
+        log.debug("Entrando al metodo findByUsernameOrEmail en DAOUser");
+        //endregion
         PreparedStatement preparedStatement = _conn.prepareStatement(QUERY_SELECT_BY_USERNAME_OR_EMAIL);
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, username);
@@ -181,6 +190,9 @@ public class DAOUser extends DAO implements  IDAOUser {
      */
     //Stored Procedure
     public User findByUsernameId(int id) throws SQLException {
+        //region Instrumentation Debug
+        log.debug("Entrando al metodo findByUsernameId en DAOUser");
+        //endregion
         PreparedStatement st = _conn.prepareCall(CALL_FIND_USER);
         st.setInt(1, id);
         _result = st.executeQuery();
@@ -307,6 +319,9 @@ public class DAOUser extends DAO implements  IDAOUser {
      * @throws SQLException
      */
     public boolean isBlockedUser(String username) throws SQLException {
+        //region Instrumentation Debug
+        log.debug("Entrando al metodo isBlockedUser en DAOUser");
+        //endregion
         int blocked = 0;
         PreparedStatement preparedStatement = _conn.prepareCall(CALL_IS_BLOCKED);
         preparedStatement.setString(1, username);
@@ -326,6 +341,9 @@ public class DAOUser extends DAO implements  IDAOUser {
      */
 
     public User logUser(String username, String password) throws SQLException, UserBlockedException {
+        //region Instrumentation Debug
+        log.debug("Entrando al metodo logUser en DAOUser");
+        //endregion
         LoginIntent loginIntent = new LoginIntent();
         loginIntent.set_username(username);
         loginIntent.set_password(password);
@@ -356,6 +374,9 @@ public class DAOUser extends DAO implements  IDAOUser {
      * @throws NoSuchAlgorithmException
      */
     public String tokenGenerator(String email) throws SQLException, NoSuchAlgorithmException {
+        //region Instrumentation Debug
+        log.debug("Entrando al metodo tokenGenerator en DAOUser");
+        //endregion
         _user = findByUsernameOrEmail(email);
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         java.util.Date date = new Date();
@@ -376,6 +397,9 @@ public class DAOUser extends DAO implements  IDAOUser {
      * @throws SQLException
      */
     public void changePassword(String username, String password) throws SQLException {
+        //region Instrumentation Debug
+        log.debug("Entrando al metodo changePassword en DAOUser");
+        //endregion
         PreparedStatement st = _conn.prepareCall(CALL_CHANGE_PASSWORD);
         st.setString(1, username);
         st.setString(2, password);
