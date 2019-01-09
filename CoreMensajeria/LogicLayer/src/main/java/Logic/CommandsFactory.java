@@ -291,6 +291,10 @@ public class CommandsFactory {
     public static GetCompanyByUserCommand createGetCompanyByUserCommand( Company _co ){
         return new GetCompanyByUserCommand( _co );
     }
+
+    public static GetCompanyResponsibleCommand createGetCompanyByResponsibleCommand( Company _co ){
+        return new GetCompanyResponsibleCommand( _co );
+    }
     //endregion
 
 
@@ -385,7 +389,7 @@ public class CommandsFactory {
     //endregion
 
 
-    // region M04_Integrator
+    //M04_Integrator
     public static CommandDisableIntegrator createCommandDisableIntegrator(int id) {
         return new CommandDisableIntegrator(id);
     }
@@ -405,9 +409,13 @@ public class CommandsFactory {
     public static CommandGetIntegratorByChannel createCommandGetIntegratorByChannel(int id){
         return new CommandGetIntegratorByChannel(id);
     }
+    //end M04_Integrator
 
-    public static CommandGetAllChannels instanceGetAllChannels(){ return new CommandGetAllChannels(); }
-    //endregion
+    //M05_Channels
+    public static CommandGetAllChannels createCommandGetAllChannels(){
+        return new CommandGetAllChannels();
+    }
+    //end M05_Channels
 
     //M07_Templates
 

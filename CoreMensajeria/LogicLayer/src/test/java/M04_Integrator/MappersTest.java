@@ -25,8 +25,8 @@ public class MappersTest {
         _mapper = new MapperIntegrator();
         _integrator = new Movistar(1,25,13.4f,"Movistar",
                 "oqiwueyeiu", true);
-        _dtoIntegrator = new DTOIntegrator("MOVISTAR",25, 13.4f, "Movistar",
-                "oqiwueyeiu", true);
+        _dtoIntegrator = new DTOIntegrator(1,"MOVISTAR",25, 13.4f,
+                "Movistar", "oqiwueyeiu", true);
     }
 
     @Test
@@ -34,6 +34,7 @@ public class MappersTest {
 
         DTOIntegrator dtoIntegrator = _mapper.CreateDto(_integrator);
         assertNotNull(dtoIntegrator);
+        assertEquals(1, dtoIntegrator.getId());
         assertEquals("Movistar",dtoIntegrator.getNameIntegrator());
         assertEquals(25,dtoIntegrator.getThreadCapacity());
         assertEquals("oqiwueyeiu",dtoIntegrator.getApiIntegrator());
@@ -44,7 +45,7 @@ public class MappersTest {
     public void CreateEntityTest(){
         Integrator movistar = (Integrator) _mapper.CreateEntity(_dtoIntegrator);
         assertNotNull(movistar);
-        assertEquals(-1, movistar.get_id());
+        assertEquals(1, movistar.get_id());
         assertEquals("Movistar", movistar.getNameIntegrator());
         assertEquals("oqiwueyeiu", movistar.getApiIntegrator());
         assertEquals(25, movistar.getThreadCapacity());

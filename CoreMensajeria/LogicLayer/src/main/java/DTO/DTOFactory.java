@@ -209,16 +209,21 @@ public class DTOFactory {
 
 
 
-// M04_region
-    public static DTOIntegrator CreateDTOIntegrator (String integratorType, int threadCapacity, float messageCost,
-                                                     String nameIntegrator, String apiIntegrator, boolean enabled){
-        return new DTOIntegrator(integratorType, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+    //M04_Integrator
+    public static DTOIntegrator CreateDTOIntegrator (int id, String integratorType, int threadCapacity,
+                                                     float messageCost, String nameIntegrator,
+                                                     String apiIntegrator, boolean enabled){
+        return new DTOIntegrator(id, integratorType, threadCapacity, messageCost, nameIntegrator, apiIntegrator,
+                enabled);
     }
+    //end M04_Integrator
 
-    public static DTOChannel createDTOChannel (String nameChannel, String descriptionChannel, ArrayList<Entity> integrators){
-        return new DTOChannel(nameChannel, descriptionChannel, integrators);
+    //M05_Channels
+    public static DTOChannel createDTOChannel (int idChannel, String nameChannel, String descriptionChannel,
+                                               ArrayList<Entity> integrators){
+        return new DTOChannel(idChannel, nameChannel, descriptionChannel, integrators);
     }
-//end region
+    //end M05_Channels
 
 
 

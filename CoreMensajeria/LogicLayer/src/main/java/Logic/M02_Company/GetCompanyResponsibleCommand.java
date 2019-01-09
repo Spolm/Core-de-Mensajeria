@@ -17,7 +17,7 @@ public class GetCompanyResponsibleCommand extends Command {
 
     public GetCompanyResponsibleCommand( Entity _user ) {
 
-        _coList = new ArrayList<Entity>();
+        _coList = new ArrayList<>();
         this._u = _user;
 
     }

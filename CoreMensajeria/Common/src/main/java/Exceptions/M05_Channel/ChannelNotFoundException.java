@@ -1,4 +1,6 @@
-package Exceptions;
+package Exceptions.M05_Channel;
+
+import Exceptions.PersonalizedException;
 
 public class ChannelNotFoundException extends PersonalizedException {
     public ChannelNotFoundException(){}
