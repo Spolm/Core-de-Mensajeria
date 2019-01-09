@@ -5,7 +5,6 @@ import Entities.EntityFactory;
 import Entities.M01_Login.Privilege;
 import Entities.M01_Login.User;
 import Entities.M01_Login.UserDAO;
-import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 import Entities.M03_Campaign.CampaignDAO;
 import Entities.M04_Integrator.Integrator;
@@ -15,6 +14,7 @@ import Entities.M05_Channel.ChannelFactory;
 import Entities.M06_DataOrigin.Application;
 import Entities.M06_DataOrigin.ApplicationDAO;
 import Entities.M07_Template.HandlerPackage.*;
+import Entities.M07_Template.JSONTemplate;
 import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.Status;
@@ -67,38 +67,34 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
     /**
      * This method is responsible for saving a template in specific.
-     * @param json string json with information
+     * @param jsonTemplate string json with information
      * @return If the template was saved successfully it returns true,
      * otherwise it returns false.
      */
-    public Entity postTemplateData(String json){
+    public Entity postTemplateData(JSONTemplate jsonTemplate){
         try {
-            Gson gson = new Gson();
-            //recibimos el objeto json
-            JsonParser parser = new JsonParser();
-            JsonObject gsonObj = parser.parse(json).getAsJsonObject();
             //hay que extraer campaña y aplicacion, parametros por defecto
             //se crea el template y se retorna su id
-            int templateId = this.postTemplate(gsonObj.get("campaign").getAsInt(),gsonObj.get("applicationId").getAsInt(), gsonObj.get("userId").getAsInt());
+            int templateId = this.postTemplate(jsonTemplate.getCampaign(),jsonTemplate.getApplicationId(),jsonTemplate.getUserId());
             //se establece el template  como no aprobado
             DAOStatus daoStatus = DAOFactory.createDAOStatus();
             //StatusHandler.postTemplateStatusNoAprovado(templateId);
             daoStatus.postTemplateStatusNotApproved(templateId);
             //insertamos los nuevos parametros
-            String[] parameters = gson.fromJson(gsonObj.get("newParameters").getAsJsonArray(),String[].class);
-            DAOFactory.instaciateDaoParameter().postParameter(parameters,gsonObj.get("company").getAsInt());
+            Gson gson = new Gson();
+            String[] parameters = gson.fromJson(jsonTemplate.getParameters(),String[].class);
+            DAOFactory.instaciateDaoParameter().postParameter(parameters,jsonTemplate.getCompany());
             //obtenemos el valor del mensaje,y parametros
-            parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
+            parameters = gson.fromJson(jsonTemplate.getParameters(),String[].class);
 
-            String message = gsonObj.get("message").getAsString();
-            DAOFactory.instaciateDaoMessage().postMessage(message,gsonObj.get("company").getAsInt(),parameters,templateId);
+            String message = jsonTemplate.getMessage();
+            DAOFactory.instaciateDaoMessage().postMessage(message,jsonTemplate.getCompany(),parameters,templateId);
 
             //obtenemos los valores de los canales e integradores
-            JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
-            postChannelIntegrator(channelIntegrator,templateId);
+            postChannelIntegrator(jsonTemplate.getChannel_integrator(),templateId);
 
             //planning
-            String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
+            String[] planning = gson.fromJson(jsonTemplate.getPlanning(),String[].class);
             PlanningHandler.postPlanning(planning,templateId);
 
             return this.get(templateId);

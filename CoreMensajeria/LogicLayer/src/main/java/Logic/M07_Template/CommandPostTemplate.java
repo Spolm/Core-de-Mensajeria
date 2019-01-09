@@ -2,6 +2,7 @@ package Logic.M07_Template;
 
 import Entities.Entity;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
+import Entities.M07_Template.JSONTemplate;
 import Entities.M07_Template.Template;
 import Logic.Command;
 import Persistence.DAOFactory;
@@ -9,10 +10,10 @@ import Persistence.M07_Template.DAOTemplate;
 
 public class CommandPostTemplate extends Command {
 
-    private String json;
+    private JSONTemplate json;
     private Template rest;
 
-    public CommandPostTemplate(String json) {
+    public CommandPostTemplate(JSONTemplate json) {
         this.json = json;
     }
 
