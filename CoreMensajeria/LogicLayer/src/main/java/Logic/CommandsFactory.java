@@ -12,6 +12,7 @@ import Entities.M03_Campaign.Campaign;
 import Entities.M08_Validation.XMLManagement.Message;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
+import Logic.M08_SendMessage.CommandInsertMessage;
 import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
@@ -491,6 +492,10 @@ public class CommandsFactory {
      */
     public static Command createScheduleMessage(VerifiedParameter verifiedParameters) {
         return new CommandScheduleMessage(verifiedParameters);
+    }
+
+    public static Command createCommandInsertMessage(Template template, int integratorId, int channelId, Date time){
+        return new CommandInsertMessage(template,integratorId,channelId,time);
     }
 
     //end region
