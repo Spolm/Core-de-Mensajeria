@@ -17,6 +17,6 @@ public class TemplateNotApprovedException extends PersonalizedException {
 
     public TemplateNotApprovedException() {
         ERROR_CODE = 563;
-        ERROR_MSG = "Ha ocurrido un errror "+ERROR_CODE+" la plantilla no está aprobada";
+        ERROR_MSG = "Ha ocurrido un errror " + ERROR_CODE + " la plantilla no está aprobada";
     }
 }
