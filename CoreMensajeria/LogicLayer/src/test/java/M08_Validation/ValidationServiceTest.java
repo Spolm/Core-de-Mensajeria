@@ -1,4 +1,4 @@
-package M08_Validation;
+/*package M08_Validation;
 
 import Entities.M07_Template.StatusPackage.Status;
 import Entities.M07_Template.Template;
@@ -56,5 +56,5 @@ class ValidationServiceTest {
         //assertThrows(SMSTooLongException.class, () -> c.execute());
     }
 
-}
+}*/
 

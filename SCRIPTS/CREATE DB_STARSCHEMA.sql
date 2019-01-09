@@ -2,10 +2,8 @@ CREATE DATABASE "CoreMensajeria_StarSchema"
     WITH
     OWNER = "CoreMensajeria"
     ENCODING = 'UTF8'
-    -- LC_COLLATE = 'English_United States.1252'
-    -- LC_CTYPE = 'English_United States.1252'
-    LC_COLLATE = 'C'
-    LC_CTYPE = 'UTF-8'
+    -- LC_COLLATE = 'Spanish_Venezuela.1252'
+    -- LC_CTYPE = 'Spanish_Venezuela.1252'
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 
@@ -15,7 +13,7 @@ CREATE EXTENSION postgres_fdw;
 
 CREATE SERVER statistics_server FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'localhost', port '5432', dbname 'CoreMensajeria');
 
-CREATE USER MAPPING FOR "CoreMensajeria" SERVER statistics_server OPTIONS (user 'CoreMensajeria', password 'coremensajeria');
+CREATE USER MAPPING FOR "postgres" SERVER statistics_server OPTIONS (user 'CoreMensajeria', password 'coremensajeria');
 
 CREATE SCHEMA stats;
 

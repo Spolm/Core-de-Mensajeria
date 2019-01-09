@@ -3,8 +3,8 @@ package Logic.M08_Validation;
 
 import Entities.Entity;
 import Entities.M05_Channel.Channel;
-import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.Template;
+import Entities.M08_Validation.XMLManagement.Message;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.SMSTooLongException;
 import Logic.Command;
@@ -19,12 +19,16 @@ import java.util.logging.Logger;
  */
 public class CommandValidateMessage extends CommandValidateParameter{
     private int _template;
+    private ArrayList<Message> _messages;
 
     /**
      * @param _template recibe el id de una plantilla
+     * @param _messages recibe los parámetros
      */
-    public CommandValidateMessage(int _template) {
+    public CommandValidateMessage(int _template, ArrayList<Message> _messages)
+    {
         this._template = _template;
+        this._messages = _messages;
     }
 
     /**
@@ -38,15 +42,18 @@ public class CommandValidateMessage extends CommandValidateParameter{
             Command<Template> c =CommandsFactory.createCommandGetTemplate(_template);
             c.execute();
             Template template = c.Return();
-            Message message = (template).getMessage();
-            String msg = (message).getMessage();
             ArrayList<Channel> channels = template.getChannels();
             for (Channel channel: channels) {
                 String channelName = channel.get_nameChannel();
-                if ((channelName.equals("SMS"))&& (msg.length() > 160) ){
-                    logger.warning("SMS supera 160 caracteres");
-                    this.set_valid(false);
-                    throw new SMSTooLongException();
+                for (Message message: _messages){
+                    Command<String> commandParse = CommandsFactory.createCommandParseMessage(message,template);
+                    commandParse.execute();
+                    String msg = commandParse.Return();
+                    if ((channelName.equals("SMS"))&& (msg.length() > 160) ) {
+                        logger.warning("SMS supera 160 caracteres");
+                        this.set_valid(false);
+                        throw new SMSTooLongException();
+                    }
                 }
             }
             this.set_valid(true);

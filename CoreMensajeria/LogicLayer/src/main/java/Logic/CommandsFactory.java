@@ -1,6 +1,5 @@
 package Logic;
 
-import DTO.DTO;
 import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
 import Entities.M06_DataOrigin.AddApplicationData;
@@ -16,6 +15,8 @@ import Logic.M02_Company.AddCompanyCommand;
 import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
+import Logic.M10_Profile.GetGeographicalRegionCommand;
+import Logic.M10_Profile.GetPrivilegesByUserCompanyCommand;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import Entities.M07_Template.MessagePackage.Parameter;
@@ -355,8 +356,8 @@ public class CommandsFactory {
         return new CommandProcessXML(filePath);
     }
 
-    public static CommandValidateMessage createCommandValidateMessage(int template) {
-        return new CommandValidateMessage(template);
+    public static CommandValidateMessage createCommandValidateMessage(int template, ArrayList<Message> messages) {
+        return new CommandValidateMessage(template,messages);
 
     }
 
@@ -364,8 +365,8 @@ public class CommandsFactory {
         return new CommandValidateTemplate(id);
     }
 
-    public static CommandValidate createCommandValidate (ParametersDTO dto) {
-        return new CommandValidate(dto);
+    public static CommandValidate createCommandValidate (VerifiedParameter parameters) {
+        return new CommandValidate(parameters);
     }
 
     public static Command createSendMessage(VerifiedParameter parameters) {
@@ -377,4 +378,17 @@ public class CommandsFactory {
     }
 
     //end region
+
+    //region Commands M_10
+
+    public static Command createGetPrivilegesByUserCompanyCommand(int userId, int companyId){
+        return new GetPrivilegesByUserCompanyCommand(userId, companyId);
+    }
+
+    public static Command createGetGeographicalRegionCommand(int id){
+        return new GetGeographicalRegionCommand(id);
+    }
+
+    //end region
+
 }
