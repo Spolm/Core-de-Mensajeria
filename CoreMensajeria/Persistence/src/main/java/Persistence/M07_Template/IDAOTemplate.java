@@ -5,7 +5,6 @@ import Entities.M01_Login.Privilege;
 import Entities.M02_Company.Company;
 import Entities.M05_Channel.Channel;
 import Entities.M06_DataOrigin.Application;
-import Entities.M07_Template.JSONTemplate;
 import Entities.M07_Template.Template;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
@@ -18,7 +17,7 @@ public interface IDAOTemplate extends IDAO {
 
     public int postTemplate(int campaignId,int applicationId, int userId);
 
-    public Entity postTemplateData(JSONTemplate jsonTemplate);
+    public Entity postTemplateData(String json);
 
     public Entity get(int id) throws TemplateDoesntExistsException, MessageDoesntExistsException, ParameterDoesntExistsException;
 

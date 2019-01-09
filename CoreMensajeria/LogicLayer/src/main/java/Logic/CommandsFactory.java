@@ -266,7 +266,7 @@ public class CommandsFactory {
         return new CommandPostTemplateStatus(templateId,userId);
     }
 
-    public static CommandPostTemplate createCommandPostTemplate(JSONTemplate json){
+    public static CommandPostTemplate createCommandPostTemplate(String json){
         return new CommandPostTemplate(json);
     }
 
