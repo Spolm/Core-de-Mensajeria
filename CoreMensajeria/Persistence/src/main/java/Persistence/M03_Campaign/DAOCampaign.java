@@ -8,6 +8,7 @@ import Entities.M03_Campaign.Campaign;
 import Entities.Sql;
 import Exceptions.CampaignDoesntExistsException;
 import Persistence.DAO;
+import Persistence.Postgres.DAOPostgres;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class DAOCampaign extends DAO implements IDAOCampaign {
+public class DAOCampaign extends DAOPostgres implements IDAOCampaign {
 
     final String UPDATE_CAMPAIGN_STATUS = "{CALL m03_changecampaignstatus(?,?)}";
     final String SELECT_CAMPAIGN_BY_ID = "{CALL  m03_getcampaignbyid(?)}";
@@ -34,9 +35,9 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
     }
 
     @Override
-    public void changeStatusCampaign( Entity e ) {
-        Campaign _ca = ( Campaign ) e;
-        Connection _conn = this.getBdConnect();
+    public void changeStatusCampaign( Entity _e ) {
+        Campaign _ca = ( Campaign ) _e;
+        Connection _conn = DAOPostgres.getConnection();
         PreparedStatement preparedStatement = null;
 
         try {
@@ -44,11 +45,15 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
             preparedStatement.setInt(1, _ca.get_idCampaign() );
             preparedStatement.setBoolean(2, !( _ca.get_statusCampaign() ) );
             preparedStatement.execute();
-        } catch ( SQLException e1 ) {
+        }catch ( SQLException e1 ) {
             e1.printStackTrace();
-        }
-        this.closeConnection();
-
+        }finally{
+         try {
+            _conn.close();
+         } catch ( SQLException e1 ) {
+            e1.printStackTrace();
+           }
+         }
     }
 
     public Campaign getCampaign( ResultSet _result ) throws SQLException {
@@ -69,15 +74,14 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
         while ( _result.next() ){
             _caList.add( getCampaign(_result ) );
         }
-        this.closeConnection();
         return _caList;
     }
 
 
     @Override
-    public Campaign campaignById(Campaign e) {
-        Campaign _campaign =  e;
-        Connection _conn = this.getBdConnect();
+    public Campaign campaignById(Campaign _e ) {
+        Campaign _campaign =  _e;
+        Connection _conn = DAOPostgres.getConnection();
 
         try {
             PreparedStatement  preparedStatement = _conn.prepareCall( SELECT_CAMPAIGN_BY_ID );
@@ -86,11 +90,15 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
             while ( _result.next() ) {
                 _campaign = getCampaign( _result );
             }
-        }
-        catch (SQLException exc) {
+        }catch (SQLException exc) {
             exc.printStackTrace();
+        }finally{
+            try {
+                _conn.close();
+            } catch ( SQLException e1 ) {
+                e1.printStackTrace();
+            }
         }
-        this.closeConnection();
         return _campaign;
 
     }
@@ -99,7 +107,7 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
     public ArrayList<Entity> campaignListByUserCompany (  Entity _comp ) {
        Company _company = ( Company ) _comp;
        ArrayList<Entity> _caList= new ArrayList<>();
-        Connection _conn = this.getBdConnect();
+        Connection _conn = DAOPostgres.getConnection();
 
         try {
             PreparedStatement _ps = _conn.prepareCall( SELECT_CAMPAIGN_USER_COMPANY );
@@ -108,11 +116,15 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
             ResultSet _result = _ps.executeQuery();
             _caList = resultList( _result );
 
-        }
-        catch ( Exception exc ) {
+        }catch ( Exception exc ) {
             exc.printStackTrace();
+        }finally{
+            try {
+                _conn.close();
+            }catch ( SQLException e1 ) {
+                e1.printStackTrace();
+            }
         }
-        this.closeConnection();
         return _caList;
     }
 
@@ -120,7 +132,7 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
     public ArrayList<Entity> campaignListByUser(  Entity e ) {
         ArrayList<Entity> _caList= new ArrayList<>();
         Company _user = ( Company ) e;
-        Connection _conn = this.getBdConnect();
+        Connection _conn = DAOPostgres.getConnection();
 
         try {
             PreparedStatement _ps = _conn.prepareCall(SELECT_CAMPAIGN_BY_USER);
@@ -129,18 +141,22 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
             while( _result.next() ){
                 _caList.add( getCampaign( _result ) );
             }
-        }
-        catch ( Exception exc ) {
+        }catch ( Exception exc ) {
             exc.printStackTrace();
+        }finally{
+            try {
+                _conn.close();
+            }catch ( SQLException e1 ) {
+                e1.printStackTrace();
+            }
         }
-        this.closeConnection();
         return _caList;
     }
 
     @Override
     public ArrayList<Entity> campaignList() {
             ArrayList<Entity> _caList= new ArrayList<>();
-            Connection _conn = this.getBdConnect();
+        Connection _conn = DAOPostgres.getConnection();
 
         try {
                 PreparedStatement _ps = _conn.prepareCall(SELECT_ALL_CAMPAIGNS);
@@ -148,11 +164,15 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
                 resultList( _result );
 
 
-        }
-        catch (SQLException e) {
+        }catch (SQLException e) {
                 e.printStackTrace();
+        }finally{
+            try {
+                _conn.close();
+            } catch ( SQLException e1 ) {
+                e1.printStackTrace();
+            }
         }
-        this.closeConnection();
         return _caList;
         }
 
@@ -161,7 +181,7 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
         ArrayList<Entity> _caList = new ArrayList<>();
         PreparedStatement _ps;
         Company _company = (Company) _e;
-        Connection _conn = this.getBdConnect();
+        Connection _conn = DAOPostgres.getConnection();
 
         try {
             _ps = _conn.prepareCall(SELECT_CAMPAIGN_BY_COMPANY);
@@ -172,11 +192,15 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
                 _caList.add( getCampaign( _result ) );
             }
 
-        } catch ( SQLException e ) {
+        }catch ( SQLException e ) {
             e.printStackTrace();
+        }finally{
+            try {
+                _conn.close();
+            } catch ( SQLException e1 ) {
+                e1.printStackTrace();
+            }
         }
-
-        this.closeConnection();
         return _caList;
     }
 
@@ -184,7 +208,7 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
     @Override
     public void create( Entity e ) {
         Campaign _ca = ( Campaign ) e;
-        Connection _conn = this.getBdConnect();
+        Connection _conn = DAOPostgres.getConnection();
         Logger logger = Logger.getLogger(DAOCampaign.class.getName());
         logger.info("Objeto compania recibido en Create campaña" + _ca.get_idCampaign() + " " +
                     _ca.get_nameCampaign() + " "+ _ca.get_statusCampaign() + " " + _ca.get_descCampaign()+""+
@@ -201,9 +225,13 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
 
         }catch ( Exception exc ){
             exc.printStackTrace();
+        }finally{
+            try {
+                _conn.close();
+            } catch ( SQLException e1 ) {
+                e1.printStackTrace();
+            }
         }
-        this.closeConnection();
-
     }
 
     @Override
@@ -214,7 +242,7 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
     @Override
     public Entity update( Entity e ) {
         Campaign _ca = ( Campaign ) e;
-        Connection _conn = this.getBdConnect();
+        Connection _conn = DAOPostgres.getConnection();
         try{
             PreparedStatement _ps = _conn.prepareCall(UPDATE_CAMPAIGN);
             _ps.setString( 1, _ca.get_nameCampaign() );
@@ -228,8 +256,13 @@ public class DAOCampaign extends DAO implements IDAOCampaign {
 
         }catch ( Exception _exc ) {
             _exc.printStackTrace();
+        }finally{
+            try {
+                _conn.close();
+            } catch ( SQLException e1 ) {
+                e1.printStackTrace();
+            }
         }
-        this.closeConnection();
         return _ca;
     }
 

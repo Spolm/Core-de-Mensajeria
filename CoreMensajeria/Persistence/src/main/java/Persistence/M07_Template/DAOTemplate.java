@@ -7,7 +7,6 @@ import Entities.M01_Login.User;
 import Entities.M01_Login.UserDAO;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
-import Entities.M03_Campaign.CampaignDAO;
 import Entities.M04_Integrator.Integrator;
 //import Entities.M04_Integrator.IntegratorDAO;
 import Entities.M05_Channel.Channel;
@@ -273,7 +272,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
                 //instanciando el api de campana
                 DAOCampaign daoCampaign = DAOFactory.instanciateDaoCampaign();
-                CampaignDAO campaignsService = new CampaignDAO();
+                DAOCampaign campaignsService = new DAOCampaign();
                 Campaign c = EntityFactory.CreateCampaignId(_rs.getInt("tem_campaign_id"));
                 //obtener objeto campana con el id de campana del query anterior
                 campaign = daoCampaign.campaignById(c);

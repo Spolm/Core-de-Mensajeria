@@ -219,11 +219,56 @@ public class CommandsFactory {
 
 
     // region m02
-    public static AddCompanyCommand createAddCompanyCommand( Company _co ){ return new AddCompanyCommand( _co ); }
-    public static ChangeStatusCommand createChangeStatusCommand(Company _co ) {return new ChangeStatusCommand( _co );}
-    public static GetAllCompaniesCommand createGetAllCompaniesCommand() {return new GetAllCompaniesCommand();}
-    public static GetCompanyCommand createGetCompanyCommand(Company _co){return new GetCompanyCommand(_co);}
-    public static UpdateCompanyCommand createUpdateCompanyCommand(Entity _co) {return new UpdateCompanyCommand(_co);}
+
+    /**
+     * Metodo que instancia un objeto del tipo AddCompanyCommand
+     * @return un objeto del tipo AddCompanyCommand
+     */
+    public static AddCompanyCommand createAddCompanyCommand( Company _co ){
+
+        return new AddCompanyCommand( _co );
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo ChangeStatusCommand
+     * @return un objeto del tipo ChangeStatusCommand
+     */
+    public static ChangeStatusCommand createChangeStatusCommand( Company _co  ) {
+        return new ChangeStatusCommand( _co );
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo GetAllCompaniesCommand
+     * @return un objeto del tipo GetAllCompaniesCommand
+     */
+    public static GetAllCompaniesCommand createGetAllCompaniesCommand() {
+
+        return new GetAllCompaniesCommand();
+    }
+
+
+    /**
+     * Metodo que instancia un objeto del tipo GetCompanyCommand
+     * @return un objeto del tipo GetCompanyCommand
+     */
+    public static GetCompanyCommand createGetCompanyCommand(Company _co){
+
+        return new GetCompanyCommand(_co);
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo UpdateCompanyCommand
+     * @return un objeto del tipo UpdateCompanyCommand
+     */
+    public static UpdateCompanyCommand createUpdateCompanyCommand(Entity _co) {
+
+        return new UpdateCompanyCommand( _co );
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo GetCompanyByUserCommand
+     * @return un objeto del tipo GetCompanyByUserCommand
+     */
     public static GetCompanyByUserCommand createGetCompanyByUserCommand( Company _co ){
         return new GetCompanyByUserCommand( _co );
     }
@@ -231,14 +276,58 @@ public class CommandsFactory {
 
 
     // region m03
-    public static UpdateCampaignCommand createUpdateCampaignCommand(Entity _co) {return new UpdateCampaignCommand(_co);}
-    public static AddCampaignCommand createAddCampaignCommand(Campaign _ca ){ return new AddCampaignCommand( _ca ); }
-    public static GetCampaignCommand createGetCampaignCommand(Campaign _ca ){ return new GetCampaignCommand( _ca ); }
-    public static CampaignUserCommand createCampaignUserCommand(Company _ca ){ return new CampaignUserCommand( _ca ); }
+    /**
+     * Metodo que instancia un objeto del tipo UpdateCampaignCommand
+     * @return un objeto del tipo UpdateCampaignCommand
+     */
+    public static UpdateCampaignCommand createUpdateCampaignCommand(Entity _co) {
+
+        return new UpdateCampaignCommand(_co);
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo AddCampaignCommand
+     * @return un objeto del tipo AddCampaignCommand
+     */
+    public static AddCampaignCommand createAddCampaignCommand(Campaign _ca ){
+
+        return new AddCampaignCommand( _ca );
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo GetCampaignCommand
+     * @return un objeto del tipo GetCampaignCommand
+     */
+    public static GetCampaignCommand createGetCampaignCommand(Campaign _ca ){
+
+        return new GetCampaignCommand( _ca );
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo CampaignUserCommand
+     * @return un objeto del tipo CampaignUserCommand
+     */
+    public static CampaignUserCommand createCampaignUserCommand(Company _ca ){
+
+        return new CampaignUserCommand( _ca );
+    }
+
+    /**
+     * Metodo que instancia un objeto del tipo CampaignUserCompanyCommand
+     * @return un objeto del tipo CampaignUserCompanyCommand
+     */
     public static CampaignUserCompanyCommand createCampaignUserCompany( Company _ca ){
+
          return new CampaignUserCompanyCommand( _ca  );
       }
+
+
+    /**
+     * Metodo que instancia un objeto del tipo ChangeStatusCampaignCommand
+     * @return un objeto del tipo ChangeStatusCampaignCommand
+     */
     public static ChangeStatusCampaignCommand createChangeStatusCampaign( Campaign _ca ){
+
         return new ChangeStatusCampaignCommand( _ca );
     }
     //endregion

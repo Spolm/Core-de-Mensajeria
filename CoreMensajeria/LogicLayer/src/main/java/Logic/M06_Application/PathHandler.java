@@ -1,15 +1,16 @@
 package Logic.M06_Application;
 
+import Entities.Entity;
 import Entities.M02_Company.Company;
-import Entities.M02_Company.CompanyDAO;
 import Logic.M08_SendMessage.XMLManagment.WatchDirectory;
-import Exceptions.CompanyDoesntExistsException;
+import Persistence.M02_Company.DAOCompany;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebListener
 public class PathHandler implements ServletContextListener {
@@ -28,23 +29,24 @@ public class PathHandler implements ServletContextListener {
      */
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        CompanyDAO companyDAO = new CompanyDAO();
+        DAOCompany companyDAO = new DAOCompany();
 
         this.createDirectory(ORIGIN_HOME);
         this.createDirectory(ORIGIN_HOME_INBOX);
         this.createDirectory(ORIGIN_HOME_TRASH);
 
         try {
-            this.createOriginDirectories(ORIGIN_HOME_INBOX,companyDAO.companyListAll());
-            this.createOriginDirectories(ORIGIN_HOME_TRASH,companyDAO.companyListAll());
+            this.createOriginDirectories(ORIGIN_HOME_INBOX, companyDAO.allCompanies());
+            this.createOriginDirectories(ORIGIN_HOME_TRASH, companyDAO.allCompanies());
             System.out.println("--------------->PATHS CREATED");
 
             Thread myThread = new Thread(WatchDirectory.getInstance(_paths));
             myThread.setDaemon(true);
             myThread.start();
 
-        } catch (CompanyDoesntExistsException e) {
+        } catch (NullPointerException e) {
             System.out.println("Error creating paths");
+
         }
     }
 
@@ -69,11 +71,11 @@ public class PathHandler implements ServletContextListener {
     }
 
     /**
-     *
-     * @param rootPath direccion raiz de path
+     *  @param rootPath direccion raiz de path
      * @param companies Lista (array) de companias
      */
-    private void createOriginDirectories(String rootPath, ArrayList<Company> companies){
+    private void createOriginDirectories(String rootPath, List<Company> companies){
+
         for (Company company : companies) {
             _paths.add(rootPath + "/" + company.get_link());
             this.createDirectory(rootPath + "/" + company.get_link());
