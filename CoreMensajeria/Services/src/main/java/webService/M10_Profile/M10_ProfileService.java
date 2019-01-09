@@ -12,9 +12,9 @@ import javax.ws.rs.core.Response;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-@Path("/profile")
+//@Path("/profile")
 public class M10_ProfileService {
-    private Gson _gson = new Gson();
+    /*private Gson _gson = new Gson();
     private User _us;
     private ArrayList<User> _users;
     private ArrayList<Company> _comp;
@@ -139,5 +139,5 @@ public class M10_ProfileService {
         finally {
             return Response.ok(_gson.toJson(_users)).build();
         }
-    }
+    }*/
 }
