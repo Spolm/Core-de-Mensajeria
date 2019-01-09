@@ -30,7 +30,7 @@ public class ApplicationServiceTest {
     }
 
     @Test
-    public void AplicationFailTest() throws Exception {
+    public void ApplicationFailTest(){
         assertNotEquals("[]",_applicationEmpty);
     }
 
@@ -42,22 +42,22 @@ public class ApplicationServiceTest {
     }
 
     @Test
-    public void AplicationFailIdTest() throws Exception{
+    public void ApplicationFailIdTest(){
         assertNotEquals(1,_application.get_id());
     }
 
     @Test
-    public void AplicationFailTokenTest() throws Exception{
+    public void ApplicationFailTokenTest(){
         assertNotEquals("awdawd",_application.get_tokenApplication());
     }
 
     @Test
-    public  void AplicationFailActive() throws Exception{
+    public  void ApplicationFailActive(){
         assertNotEquals("0",_application.get_statusApplication());
     }
 
     @Test
-    public void AplicationFailCreate()throws Exception{
+    public void ApplicationFailCreate(){
         assertEquals(0,_applicationEmpty.get_statusApplication());
         assertEquals(0,_applicationEmpty.get_companyId());
         assertNotEquals("0",_applicationEmpty.get_descriptionApplication());
