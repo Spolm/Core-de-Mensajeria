@@ -493,8 +493,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         try {
             for (JsonElement list : channelIntegratorList){
                 channelIntegrator = list.getAsJsonObject();
-                channel = channelIntegrator.get("channel").getAsJsonObject().get("idChannel").getAsInt();
-                integrator = channelIntegrator.get("integrator").getAsJsonObject().get("idIntegrator").getAsInt();
+                channel = channelIntegrator.get("channel").getAsJsonObject().get("_id").getAsInt();
+                integrator = channelIntegrator.get("integrator").getAsJsonObject().get("_id").getAsInt();
                 _ps = _conn.prepareCall(CREATE_CHANNEL_INTEGRATOR);
                 _ps.setInt(1,templateId);
                 _ps.setInt(2,channel);

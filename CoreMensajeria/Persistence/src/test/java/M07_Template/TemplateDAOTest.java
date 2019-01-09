@@ -40,10 +40,10 @@ class TemplateDAOTest {
                 "    \"message\": \"Probando [.$Monto$.]\",\n" +
                 "    \"channel_integrator\": [{\n" +
                 "        \"channel\": {\n" +
-                "            \"idChannel\": 1\n" +
+                "            \"_id\": 1\n" +
                 "        },\n" +
                 "        \"integrator\": {\n" +
-                "            \"idIntegrator\": 1\n" +
+                "            \"_id\": 1\n" +
                 "        }\n" +
                 "    }],\n" +
                 "    \"planning\": [\n" +
@@ -95,10 +95,10 @@ class TemplateDAOTest {
                     "    \"message\": \"Probando [.$Monto$.]\",\n" +
                     "    \"channel_integrator\": [{\n" +
                     "        \"channel\": {\n" +
-                    "            \"idChannel\": 1\n" +
+                    "            \"_id\": 1\n" +
                     "        },\n" +
                     "        \"integrator\": {\n" +
-                    "            \"idIntegrator\": 1\n" +
+                    "            \"_id\": 1\n" +
                     "        }\n" +
                     "    }],\n" +
                     "    \"planning\": [\n" +

@@ -102,7 +102,7 @@ export class TemplateService {
   postTemplate(formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[], campaignId: number ,applicationId: number, planning: any[]) {
     let flag: boolean;
     const json = {
-      'messagge': formMessage.valueOf(),
+      'message': formMessage.valueOf(),
       'userId': localStorage.getItem('userid'),
       'company': company,
       'parameters': parameters,
