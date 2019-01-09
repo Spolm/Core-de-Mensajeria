@@ -12,10 +12,7 @@ import Entities.M03_Campaign.Campaign;
 
 import Logic.Command;
 import Logic.CommandsFactory;
-import Logic.M03_Campaign.AddCampaignCommand;
-import Logic.M03_Campaign.CampaignUserCommand;
-import Logic.M03_Campaign.CampaignUserCompanyCommand;
-import Logic.M03_Campaign.GetCampaignCommand;
+import Logic.M03_Campaign.*;
 import Mappers.CampaignMapper.MapperFullCampaign;
 import Mappers.CampaignMapper.MapperIdCampaign;
 import Mappers.CampaignMapper.MapperIdStatusCampaign;
@@ -177,31 +174,35 @@ public class M03_Campaigns {
             return Response.status( 500 ).entity( e.getMessage() ).build();
         }
     }
-/*
+
 
     //region Obtener Campañas
     @GET
-    @Path("/GetCampaigns")
+    @Path("/GetCampaigns/{idCompany}")
     @Produces("application/json")
 
-    public Response getCampaigns(@QueryParam("id") int id) throws CampaignDoesntExistsException {
+    public Response getCampaigns(@PathParam("idCompany") int id)  {
 
-        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
-        CampaignDAO caList = new CampaignDAO();
+        DTOIdCompany _dto = DTOFactory.CreateDTOIdCompany( id );
+        Response.ResponseBuilder _rb = Response.status(Response.Status.ACCEPTED);
+
         try {
+            MapperIdCompany _mapper = MapperFactory.createMapperIdCompany();
+            Company _camp = (Company) _mapper.CreateEntity( _dto );
+            CampaignByCompanyCommand _command = CommandsFactory.createCampaignByCompanyCommand( _camp );
+            _command.execute();
+            MapperFullCampaign _mappCamp = MapperFactory.CreateMapperFullCampaign();
+            List< DTOFullCampaign > _dtoCa = _mappCamp.CreateDtoList( _command.ReturnList() ) ;
+            _rb.entity( gson.toJson( _dtoCa ) ) ;
+            return _rb.build();
+        }
 
-            _caList = caList.campaignList(id);
-            rb.entity(gson.toJson(_caList));
-        }
-        catch (CampaignDoesntExistsException e) {
-            e.printStackTrace();
-        }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return rb.build();
+        return _rb.build();
     }
     //endregion
-*/
+
 
 }

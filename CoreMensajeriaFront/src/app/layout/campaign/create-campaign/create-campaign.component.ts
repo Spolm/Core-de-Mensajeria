@@ -56,7 +56,11 @@ export class CreateCampaignComponent implements OnInit {
       console.log(this.newCampaign);
       this.newCampaign = new Campaign();
     });
-
+    this.toastr.success("Campana agregada Correctamente")
+    this.newCampaign._nameCampaign = null;
+    this.newCampaign._descCampaign = null;
+    this.newCampaign._startCampaign = null;
+    this.newCampaign._endCampaign = null;
   }
 
   else{

@@ -350,6 +350,12 @@ public class CommandsFactory {
 
         return new ChangeStatusCampaignCommand( _ca );
     }
+
+    public static CampaignByCompanyCommand createCampaignByCompanyCommand( Company _ca ){
+
+        return new CampaignByCompanyCommand( _ca );
+    }
+
     //endregion
 
 
