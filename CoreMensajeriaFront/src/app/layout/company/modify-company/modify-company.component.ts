@@ -55,6 +55,10 @@ export class ModifyCompanyComponent implements OnInit {
   this.rest.editCompany(this.opcionSeleccionado).toPromise().then(res => {
     //manejo de la respuesta del servicio
   }); 
+  this.toastr.success("Compania modificada Correctamente")
+  this.opcionSeleccionado._name = null;
+  this.opcionSeleccionado._desc = null;
+
 }
   else { this.toastr.error("Algun Campo esta Vacio.");
   this.opcionSeleccionado._name = null;

@@ -5,7 +5,7 @@
   <form>
     <div class="form-row">
 
-      <!-- Textarea for the message of the template -->
+      <!-- Input for the state area of the user -->
       <div class="form-group col-12 col-md-9">
         <label for="formState">Estado</label>
         <br>
@@ -16,4 +16,15 @@
         </select>
       </div>
 
+
+      <!-- Input for the state area of the user -->
+      <div class="form-group col-12 col-md-9">
+        <label for="formTown">Municipio</label>
+        <br>
+        <select class="form-control" id="formTown" [(ngModel)]="formTown" name="town" (change)="addTown(formTown)">
+          <option>
+            libertador
+          </option>
+        </select>
+      </div>
     </div>

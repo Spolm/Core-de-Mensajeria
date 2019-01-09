@@ -79,16 +79,22 @@ LANGUAGE plpgsql VOLATILE;
 -- Select * from m07_findParameterByPar_Com_IDAndByParameterName('Parametro',1);
 
 --Funcion para el metodo post parameter PARTE II
-CREATE OR REPLACE FUNCTION m07_findParameterByPar_Com_IDAndByParameterNameInsert(IN _name character varying, IN _par_com_ID integer)
-RETURNS VOID AS
-$BODY$
+CREATE OR REPLACE FUNCTION m07_findparameterbypar_com_idandbyparameternameinsert(_name character varying, _par_com_id integer)
+returns integer
+  language plpgsql
+as
+$$
+DECLARE
+  _parId INTEGER;
 BEGIN
-INSERT INTO public.parameter(par_name,par_company_id)
-VALUES(_name,_par_com_ID);
+  INSERT INTO public.parameter(par_name,par_company_id)
+  VALUES(_name,_par_com_ID) returning par_id INTO _parId;
+  RETURN _parId;
 END;
-$BODY$
-LANGUAGE plpgsql VOLATILE;
--- Select m07_findParameterByPar_Com_IDAndByParameterNameInsert('test',2);
+$$;
+
+alter function m07_findparameterbypar_com_idandbyparameternameinsert(varchar, integer) owner to "CoreMensajeria";
+
 
 --Funcion para el metodo getParameters
 CREATE OR REPLACE FUNCTION m07_getParameters(IN _companyId integer)
@@ -117,7 +123,8 @@ LANGUAGE plpgsql VOLATILE;
 ---------------------------------------------------ParameterHandler-----------------------------------------------------
 
 --Funcion para el metodo PostPlanning
-CREATE OR REPLACE FUNCTION m07_postPlanning(_templateId integer,_start_date timestamp,_start_time timestamp,_end_date timestamp,_end_time timestamp)
+CREATE OR REPLACE FUNCTION m07_postPlanning(_templateId integer,_start_date character varying,
+_start_time character varying,_end_date character varying,_end_time character varying)
 RETURNS VOID AS
 $BODY$
 BEGIN
@@ -129,7 +136,8 @@ LANGUAGE plpgsql VOLATILE;
 --VER DESPUES
 
 --Funcion para el metodo updatePlanning 
-CREATE OR REPLACE FUNCTION m07_updatePlanning(_templateId integer,_start_date timestamp,_start_time timestamp,_end_date timestamp,_end_time timestamp )
+CREATE OR REPLACE FUNCTION m07_updatePlanning(_templateId integer,_start_date character varying,
+_start_time character varying,_end_date character varying,_end_time character varying )
 RETURNS void AS $$
 DECLARE
 BEGIN
@@ -366,6 +374,62 @@ END;
 $$;
 
 alter function m07_postparameterofmessage(integer,integer, varchar) owner to "CoreMensajeria";
+
+CREATE OR REPLACE FUNCTION m07_deletemessagebyid(_messageid integer) returns void
+	language plpgsql
+as $$
+DECLARE
+BEGIN
+  DELETE from public.message_parameter WHERE mp_message = _messageID;
+  DELETE from public.message WHERE mes_id = _messageID;
+END;
+$$;
+
+alter function m07_deletemessagebyid(integer) owner to "CoreMensajeria";
+
+-- Funcion para borrar planing
+CREATE OR REPLACE FUNCTION m07_deleteplanning(_templateId integer) returns void
+  language plpgsql
+as
+$$
+DECLARE
+BEGIN
+  DELETE from public.planning WHERE pla_template_id = _templateId;
+END;
+$$;
+
+alter function m07_deletemessagebyid(integer) owner to "CoreMensajeria";
+
+--funcion para borrar parameter
+CREATE OR REPLACE FUNCTION m07_deleteparameter(_parameterId integer) returns void
+  language plpgsql
+as
+$$
+DECLARE
+BEGIN
+  DELETE from public.message_parameter WHERE mp_parameter = _parameterId;
+  DELETE from public.parameter WHERE par_id = _parameterId;
+END;
+$$;
+
+alter function m07_deleteparameter(integer) owner to "CoreMensajeria";
+
+--funcion para borrar relacion de estatus y template
+CREATE OR REPLACE FUNCTION m07_deleteStatusTemplate(_parameterId integer) returns void
+  language plpgsql
+as
+$$
+DECLARE
+BEGIN
+  DELETE from public.template_status WHERE ts_template = _parameterId;
+END;
+$$;
+
+alter function m07_deleteStatusTemplate(integer) owner to "CoreMensajeria";
+
+
+
+
 
 
 
