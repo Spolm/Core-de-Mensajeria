@@ -15,7 +15,7 @@ public interface IDAO_StatisticEstrella extends IDAO {
 
     ArrayList<Entity> CampaignsForCompany(List<Integer> companyIds) throws CampaignDoesntExistsException;
 
-    ArrayList<Channel> getAllChannels();
+    ArrayList<Entity> getAllChannels();
 
     Entity getCompanyStatistic();
 

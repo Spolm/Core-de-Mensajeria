@@ -1,14 +1,19 @@
 package Logic.M02_Company;
 
 import Entities.Entity;
+import Exceptions.M02_Company.CompanyNotFoundException;
+import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M02_Company.IDAOCompany;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
 public class GetAllCompaniesCommand extends Command {
 
+    final static Logger _log = LogManager.getLogger("CoreMensajeria");
     private static ArrayList<Entity> _coList;
 
     /**
@@ -25,14 +30,18 @@ public class GetAllCompaniesCommand extends Command {
      * Metodo que ejecuta la Accion del comando
      */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws CompanyNotFoundException, UnexpectedErrorException {
         try {
+            _log.info( "Comando GetAllCompanies activado " );
             IDAOCompany _dao = DAOFactory.instanciateDaoCompany();
            _coList = _dao.allCompanies();
 
-
-        }catch(Exception exc) {
-
+        }catch(NullPointerException e) {
+            _log.error( "Se ha lanzado un CompanyNotFoundException en;"+ getClass().getName() );
+            throw new CompanyNotFoundException("Compañia no encontrada al Actualizar",e);
+        }catch ( Exception e ){
+            _log.error( "Se ha lanzado un UnexpectedErrorException en;"+ getClass().getName() );
+            throw new UnexpectedErrorException( e );
         }
     }
 

@@ -2,8 +2,13 @@ package Mappers;
 
 import Mappers.CompanyMapper.*;
 import Mappers.CampaignMapper.*;
+import Mappers.GenericMapper;
+import Mappers.M04_Integrator.MapperIntegrator;
+import Mappers.M05_Channel.MapperChannel;
 import Mappers.LoginMapper.LoginMapper;
 import Mappers.LoginMapper.UserMapper;
+import Mappers.GenericMapper;
+import Mappers.M07_Template.MapperTemplate;
 import Mappers.StatisticMapper.StatisticMapper;
 
 public class MapperFactory {
@@ -88,7 +93,16 @@ public class MapperFactory {
     // endregion
 
 
+    //M04_Region
+    public static MapperIntegrator createMapperIntegrator(){return new MapperIntegrator();}
+    public static MapperChannel createMapperChannel(){ return new MapperChannel(); }
+    // end M04_region
+
+
     public static GenericMapper createStatisticMapper(){ return new StatisticMapper();}
+
+    // M07_Template
+    public static MapperTemplate createMapperTemplate(){ return new MapperTemplate();}
 
     public static UserMapper createUserMapper() {
         return new UserMapper();

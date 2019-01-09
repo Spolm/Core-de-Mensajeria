@@ -1,9 +1,12 @@
 package Logic.M07_Template;
 
+import DTO.DTOFactory;
 import Entities.Entity;
 import Entities.M07_Template.HandlerPackage.ParameterHandler;
 import DTO.M07_Template.NewParameter;
 import Logic.Command;
+import Persistence.DAOFactory;
+import Persistence.M07_Template.DAOParameter;
 
 public class CommandPostParameter extends Command {
 
@@ -18,8 +21,10 @@ public class CommandPostParameter extends Command {
 
     @Override
     public void execute() throws Exception {
-        ParameterHandler parameterHandler = new ParameterHandler();
-        parameterHandler.postParameter(newParameter.getName(),newParameter.getCompanyId());
+        //ParameterHandler parameterHandler = new ParameterHandler();
+        //parameterHandler.postParameter(newParameter.getName(),newParameter.getCompanyId());
+        DAOParameter daoParameter = DAOFactory.instaciateDaoParameter();
+        daoParameter.postParameter(newParameter.getName(),newParameter.getCompanyId());
     }
 
     @Override

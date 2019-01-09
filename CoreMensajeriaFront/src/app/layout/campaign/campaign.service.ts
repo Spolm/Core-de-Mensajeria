@@ -52,8 +52,11 @@ export class CampaignService {
   }
 
 
-  activateCampaign(_idCampaign: Number){
-    return this.http.get(endpoint+'update/'+_idCampaign).subscribe();
+  activateCampaign (campaign): Observable<any> {
+    console.log(campaign)
+    return this.http.post<any>(endpoint + 'updateCampaignStatus', campaign, httpOptions).pipe(
+      tap((campaign) => console.log('updateCampaignStatus added w/ ${company._name}')),
+    );
   }
 
 }

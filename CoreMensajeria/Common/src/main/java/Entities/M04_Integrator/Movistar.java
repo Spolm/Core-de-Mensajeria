@@ -10,7 +10,7 @@ package Entities.M04_Integrator;
  * @see Integrator
  */
 
-public class Movistar extends Integrator {
+public class Movistar extends Integrator implements IIntegrator{
 
     /**
      * Constructor de la clase Movistar
@@ -24,7 +24,8 @@ public class Movistar extends Integrator {
      * @see Integrator
      */
 
-    public Movistar(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator, boolean enabled) {
+    public Movistar(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator,
+                    String apiIntegrator, boolean enabled) {
         super(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
     }
 
