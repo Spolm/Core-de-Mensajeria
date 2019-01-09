@@ -1,8 +1,8 @@
 package M10_Profile;
 
 import DTO.M10_DTO.DTOEditUser;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import webService.M03_CampaignManagement.M03_Campaigns;
 import webService.M10_Profile.M10_Profile;
 
 import javax.ws.rs.core.Response;
@@ -11,18 +11,50 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class M10_ProfileTest {
-    @Test
-    void editUser() {
+    M10_Profile instance = null;
 
+    @BeforeEach
+    void setUp() {
+        instance = new M10_Profile();
+    }
+
+    @Test
+    public void editUser() {
         try {
+            M10_Profile instance = new M10_Profile();
             DTOEditUser dto = new DTOEditUser(5, "Ruben", "Luna", 25217437, 359, "El Llanito",
                     "1996-08-16",  "M", "ruben@gmail.com", "04242237909");
-            M10_Profile instance = new M10_Profile();
-            Response _salida =  instance.editProfile(dto);
-            assertEquals(200, _salida.getStatus() );
-            assertNotNull( _salida.getEntity());
+            Response exit =  instance.editProfile(dto);
+            assertEquals(200, exit.getStatus() );
+            assertNotNull( exit.getEntity());
         } catch ( Exception e ){
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void getPrivileges() {
+        try {
+
+            Response exit =  instance.getPrivileges(3,1);
+            assertEquals(200, exit.getStatus() );
+            assertNotNull( exit.getEntity());
+        } catch ( Exception e ){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getResponsability() {
+        /*
+        try {
+            M10_Profile instance = new M10_Profile();
+            Response exit =  instance.getResponsability(1);
+            assertEquals(200, exit.getStatus() );
+            assertNotNull( exit.getEntity());
+        } catch ( Exception e ){
+            e.printStackTrace();
+        }
+        */
     }
 }

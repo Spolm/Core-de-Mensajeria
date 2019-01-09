@@ -5,19 +5,19 @@ import Entities.Entity;
 import java.util.*;
 
 /**
- * Message class uses for storing message information from a message
+ * La clase Parametros tiene la informacion de los parametros que pueden variar en un mensaje.
  */
 public class Parameter extends Entity {
     /**
-     * id of the parameter
+     * id del parametro
      */
     private int parameterId;
     /**
-     * name of the parameter
+     * nombre del parameter
      */
     private String name;
     /**
-     * description of the parameter
+     * descripcion del parameter
      */
     private String description;
 
@@ -27,22 +27,22 @@ public class Parameter extends Entity {
     private int companyId;
 
     /**
-     * empty builder
+     * Constructor vacio
      */
     public Parameter() {}
 
     /**
-     * builder with only name
-     * @param name name of the parameter
+     * Constructor con solo el nombre
+     * @param name nombre del parametro
      */
     public Parameter (String name){
         this.name = name;
     }
 
     /**
-     * builder with name and description
-     * @param name  name of the parameter
-     * @param description description of the parameter
+     * Constructor con nombre y descripcion
+     * @param name  nombre del parametro
+     * @param description descripcion del parametro
      */
     public Parameter(String name, String description) {
         this.name = name;
@@ -50,9 +50,9 @@ public class Parameter extends Entity {
     }
 
     /**
-     * builder with name and id of the parameter
-     * @param parameterId id of the parameter
-     * @param name name of the parameter
+     * Constructor con nombre y id del parametro
+     * @param parameterId id del parameter
+     * @param name nombre del parametro
      */
     public Parameter(int parameterId, String name) {
         this.parameterId = parameterId;
@@ -60,10 +60,10 @@ public class Parameter extends Entity {
     }
 
     /**
-     * buider with name, description and id of the parameter
-     * @param parameterId id of the parameter
-     * @param name name of the parameter
-     * @param description description of the parameter
+     * Constructor con nombre, descripcion e id del parametro.
+     * @param parameterId id del parametro
+     * @param name nombre del parametro
+     * @param description descripcion del parametro
      */
     public Parameter(int parameterId, String name, String description) {
         this.parameterId = parameterId;
@@ -79,45 +79,53 @@ public class Parameter extends Entity {
     }
 
     /**
-     * show id of the parameter
+     * Muestra id del parametro
      * @return id of the parameter
      */
     public int getParameterId() { return parameterId; }
 
     /**
-     * add the id of the parameter
+     * Anade el id del parametro
      * @param parameterId new id of the parameter
      */
     public void setParameterId(int parameterId) { this.parameterId = parameterId; }
 
     /**
-     * show the name of the parameter
+     * Muestra el nombre del parametro
      * @return  name of the parameter
      */
     public String getName() { return name; }
 
     /**
-     * add/modify the name of the parameter
+     * Anade/modifica el nombre del parametro
      * @param name  new name
      */
     public void setName(String name) { this.name = name; }
 
     /**
-     * show the description of the parameter
-     * @return  descrption of the parameter
+     * Muestra la descripcion del parametro
+     * @return  descripcion del parametro
      */
     public String getDescription() { return description; }
 
     /**
-     * add/modify description of the parameter
+     * Anade/modifica la descripcion del parametro
      * @param description new description
      */
     public void setDescription(String description) { this.description = description; }
 
+    /**
+     * Muestra el id de la compania
+     * @return
+     */
     public int getCompanyId() {
         return companyId;
     }
 
+    /**
+     * Anade/modifica el id de la compania
+     * @param companyId
+     */
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }

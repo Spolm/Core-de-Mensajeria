@@ -47,6 +47,8 @@ BEGIN
 	use_phone = phone
 	WHERE use_id = userId;
 	END;
+$$
+LANGUAGE 'plpgsql' VOLATILE;
 
 -- drop function m10_select_responsabilities_by_company
 CREATE OR REPLACE FUNCTION m10_select_responsabilities_by_company (IN companyId INTEGER)

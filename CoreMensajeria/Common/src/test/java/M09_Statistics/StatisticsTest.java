@@ -19,8 +19,8 @@ class StatisticsTest {
 
     @BeforeEach
     void init(){
-        x= new ArrayList();
-        y= new ArrayList<Integer>();
+        x = new ArrayList();
+        y = new ArrayList<Integer>();
         for (int i = 1; i<3;i++){
             x.add("Campaña " + i);
             y.add(i);

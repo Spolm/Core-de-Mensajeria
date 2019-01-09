@@ -122,10 +122,17 @@ public class MapperFactory {
     // endregion
 
 
-    //M04_Region
-    public static MapperIntegrator createMapperIntegrator(){return new MapperIntegrator();}
-    public static MapperChannel createMapperChannel(){ return new MapperChannel(); }
-    // end M04_region
+    //M04_Integrator
+    public static MapperIntegrator createMapperIntegrator(){
+        return new MapperIntegrator();
+    }
+    //end M04_Integrator
+
+    //M05_Channels
+    public static MapperChannel createMapperChannel(){
+        return new MapperChannel();
+    }
+    //end M05_Channels
 
 
     public static GenericMapper createStatisticMapper(){ return new StatisticMapper();}
