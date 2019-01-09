@@ -35,7 +35,7 @@ public class M08_MessageValidation {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public ParametersDTO sendMessage(@Valid ParametersDTO dto) throws WebApplicationException{
-        Exception error = null;
+        Error error = null;
         ParametersDTO response = dto;
         try {
             CommandGetTemplate commandTemplate = CommandsFactory.createCommandGetTemplate(dto.get_idTemplate());
@@ -50,15 +50,15 @@ public class M08_MessageValidation {
                 commandSchedule.execute();
             }
         } catch (TemplateDoesntExistsException e) {
-            error = e;
+            error = new Error(e.getMessage());
         } catch (SMSTooLongException e) {
-            error = e;
+            error = new Error(e.getMessage());
         } catch (TemplateNotApprovedException e) {
-            error = e;
+            error = new Error(e.getMessage());
         } catch (DateNotValidException e){
-            error = e;
+            error = new Error(e.getMessage());
         } catch (UnexpectedErrorException e){
-            error = e;
+            error = new Error(e.getMessage());
         } catch (Exception e) {
             throw new WebApplicationException(Response.status(500).entity(e).build());
         }
