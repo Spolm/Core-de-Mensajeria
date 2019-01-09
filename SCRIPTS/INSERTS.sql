@@ -65,13 +65,13 @@ INSERT INTO public.role(rol_name) values('Aprobador');
 INSERT INTO public.role(rol_name) values('Consultor');
 
 INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 1, pri_id FROM public.Privilege;
-INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 2, pri_id FROM public.Privilege 
+INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 2, pri_id FROM public.Privilege
 WHERE pri_code!='CADMIN';
-INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 3, pri_id FROM public.Privilege 
+INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 3, pri_id FROM public.Privilege
 WHERE pri_code = 'RUSER' or pri_code = 'RCAMPAIGN' or pri_code = 'RCOMPANY' or (pri_code like '%TEMPLATE' and pri_code != 'ATEMPLATE');
-INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 4, pri_id FROM public.Privilege 
+INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 4, pri_id FROM public.Privilege
 WHERE pri_code = 'RUSER' or pri_code = 'RCAMPAIGN' or pri_code = 'RCOMPANY' or pri_code = 'ATEMPLATE'or pri_code = 'RTEMPLATE';
-INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 5, pri_id FROM public.Privilege 
+INSERT INTO public.Rol_pri(rol_pri_rol_id, rol_pri_pri_id) SELECT 5, pri_id FROM public.Privilege
 WHERE pri_code like 'R%' or pri_code = 'STATISTICS';
 
 INSERT INTO public.Responsability(res_use_id, res_rol_id) values
@@ -142,7 +142,7 @@ INSERT INTO public.application(app_name,app_description,app_token,app_date,app_s
 ('Mercantil en linea','Aplicacion movil de mercantil','5E182FC1A42614D37B951A7A38648350D0D166E9D78BA26E59EF7ECE9462BE34','07/06/2017',1,1,2),
 ('Banesco Online','Aplicacion web de banesco','5DD3CE9EF2B7614FB471B442050DDB24ADDBE88424B3C1382C7DD224A99203BD','01/08/2015',1,1,3);
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) 
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id)
 VALUES ('2003-2-1', 1, 1, 3);
 
 INSERT INTO public.Message (mes_text,mes_template)
@@ -163,8 +163,10 @@ VALUES (1,1);
 INSERT INTO public.Status (sta_name)
 VALUES ('No Aprobado');
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) 
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id)
 VALUES ('2012-10-11', 4, 2,4);
+
+
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('BANESCO REGISTRO: CONSUMO EN PUNTO DE VENTA CON TDD [.$Numero tarjeta$.] BS. [.$Monto$.] EL [.$Fecha$.] REF [.$REF$.].',2);
@@ -173,7 +175,7 @@ INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Numero tarjeta',1);
 INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Monto',1);
-INSERT INTO public.Parameter (par_name,par_company_id) 
+INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Fecha',1);
 INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('REF',1);
@@ -181,16 +183,16 @@ VALUES ('REF',1);
 INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
 VALUES ('2012-10-11',2,2);
 
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (2,2);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (2,3);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (2,4);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (2,5);
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) 
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id)
 VALUES ('2014-10-11', 8, 3, 3);
 
 INSERT INTO public.Message(mes_text,mes_template)
@@ -198,32 +200,32 @@ VALUES ('Movistar te invita a una funcion gratuita del [.$Evento$.]. Ven el [.$F
 
 INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Evento',1);
-INSERT INTO public.Parameter (par_name,par_company_id) 
+INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Hora',1);
-INSERT INTO public.Parameter (par_name,par_company_id) 
+INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Lugar',1);
 
 INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
 VALUES ('2014-10-12',3,1);
 
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (3,6);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (3,4);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (3,7);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (3,8);
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) 
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id)
 VALUES ('2014-11-11', 10, 1, 4);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Acabas de escuchar [.$Cancion$.] Envia SI al [.$Codigo$.] si lo quieres como tu Entretono. Renta Bs.S. [.$Renta$.] c/impuestos. Entretono Bs.S. [.$Monto$.] c/impuestos.',4);
 
-INSERT INTO public.Parameter (par_name,par_company_id) 
+INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Cancion',1);
-INSERT INTO public.Parameter (par_name,par_company_id) 
+INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Codigo',1);
 INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Renta',1);
@@ -231,34 +233,45 @@ VALUES ('Renta',1);
 INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
 VALUES ('2014-11-11',4,2);
 
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (4,9);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (4,10);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (4,11);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (4,3);
 
-INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id) 
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id)
 VALUES ('2016-07-04', 13, 2, 4);
 
 INSERT INTO public.Message(mes_text,mes_template)
 VALUES ('Si tu edad es entre 18 y 30, alistate en la FANB. Prensentate del [.$Fecha inicio$.] al [.$Fecha fin$.] en la unidad militar mas cercana',5);
 
-INSERT INTO public.Parameter (par_name,par_company_id) 
+INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Fecha inicio',1);
-INSERT INTO public.Parameter (par_name,par_company_id) 
+INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Fecha fin',1);
 
 INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
 VALUES ('2016-07-04',5,2);
 
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (5,12);
-INSERT INTO public.Message_Parameter (mp_message,mp_parameter) 
+
+INSERT INTO public.Message(mes_text, mes_template)
+VALUES ('Este es un mensaje para probar la validacion de la longitud de un mensaje sms, no debe ser mayor a 160 caracteres aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 6);
+INSERT INTO public.Message_Parameter (mp_message,mp_parameter)
 VALUES (5,13);
 
+INSERT INTO public.Template (tem_creation_date, tem_campaign_id, tem_application_id, tem_user_id)
+VALUES ('2005-2-1', 1, 1, 3);
+
+INSERT INTO public.Message(mes_text, mes_template)
+VALUES ('Este es un mensaje para probar la validacion de la longitud de un mensaje sms, no debe ser mayor a 160 caracteres aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 6);
+
+INSERT INTO public.Template_Status (ts_date,ts_template,ts_status)
+VALUES ('2007-2-1',6,1);
 
 INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (1,1);
 INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (2,2);
@@ -267,6 +280,7 @@ INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUE
 INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (4,5);
 INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (4,3);
 INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (5,6);
+INSERT INTO PUBLIC.TEMPLATE_CHANNEL_INTEGRATOR (TCI_TEMPLATE_ID,TCI_CI_ID) VALUES (6,1);
 
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2017-03-15', 1, 1, 1, 1, 1);
 INSERT INTO Sent_Message(sen_time, sen_message, sen_campaign, sen_channel, sen_integrator, sen_application) VALUES (TIMESTAMP '2016-01-01', 1, 1, 2, 2, 1);
@@ -313,13 +327,13 @@ INSERT INTO public.application(app_name,app_description,app_token,app_date,app_s
 ('Facebook','Red Social','BF5453E0B1BF86A7FA020A4B87D880A9B0946ACCEB403E918E352D10BD35007D','04/05/1995',1,1,1);
 INSERT INTO public.Parameter (par_name,par_company_id) 
 VALUES ('Numero Tarjeta',2);
-INSERT INTO public.Parameter (par_name,par_company_id) 
+INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Fecha',2);
-INSERT INTO public.Parameter (par_name,par_company_id) 
+INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Renta',2);
-INSERT INTO public.Parameter (par_name,par_company_id) 
+INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Codigo',2);
-INSERT INTO public.Parameter (par_name,par_company_id) 
+INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Cancion',2);
-INSERT INTO public.Parameter (par_name,par_company_id) 
+INSERT INTO public.Parameter (par_name,par_company_id)
 VALUES ('Monto',2);

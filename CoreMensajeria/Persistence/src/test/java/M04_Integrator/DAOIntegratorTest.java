@@ -1,8 +1,12 @@
 package M04_Integrator;
 
+import Entities.Entity;
+import Entities.EntityFactory;
 import Entities.M04_Integrator.*;
+import Exceptions.ChannelNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
 import Exceptions.IntegratorNotFoundException;
+import Persistence.M04_Integrator.DAOIntegrator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class IntegratorDAOTest {
-    private static IntegratorDAO _integratorDAO;
-    private static ArrayList<Integrator> _integratorList;
+class DAOIntegratorTest {
+    private static DAOIntegrator _integratorDAO;
+    private static ArrayList<Entity> _integratorList;
     private static Integrator _movistar;
     private static Integrator _integrator;
     private static MessageIntegrator _messageIntegrator;
@@ -27,7 +31,7 @@ class IntegratorDAOTest {
     public static void before() {
 
         _integratorList = new ArrayList<>();
-        _movistar = IntegratorFactory.getIntegrator("MOVISTAR",1, "Movistar", 13.4f,
+        _movistar = EntityFactory.CreateIntegrator("MOVISTAR",1, "Movistar", 13.4f,
                 25 , "oqiwueyeiu", true);
         _integrator = null;
         _messageIntegrator = new MessageIntegrator("TestMsg", "TestDir", "TestId");
@@ -37,7 +41,7 @@ class IntegratorDAOTest {
 
     @BeforeEach
     public void init() {
-        _integratorDAO = new IntegratorDAO();
+        _integratorDAO = new DAOIntegrator();
     }
 
     /**
@@ -62,11 +66,11 @@ class IntegratorDAOTest {
     @Test
     public void ConcreteIntegratorTest() {
         try {
-            _integrator = _integratorDAO.getConcreteIntegrator(1);
+            _integrator = (Integrator) _integratorDAO.getConcreteIntegrator(1);
             assertNotNull(_integrator);
             assertEquals(_movistar.getNameIntegrator(), _integrator.getNameIntegrator());
             assertEquals(_movistar.getApiIntegrator(), _integrator.getApiIntegrator());
-            assertEquals(_movistar.getIdIntegrator(), _integrator.getIdIntegrator());
+            assertEquals(_movistar.get_id(), _integrator.get_id());
             assertEquals(_movistar.getThreadCapacity(), _integrator.getThreadCapacity());
             assertEquals(_movistar.getMessageCost(), _integrator.getMessageCost());
         } catch (DatabaseConnectionProblemException e) {
@@ -85,7 +89,7 @@ class IntegratorDAOTest {
     @Test
     public void IntegratorNotFoundExceptionTest() {
         assertThrows(IntegratorNotFoundException.class, () -> {
-            _integrator = _integratorDAO.getConcreteIntegrator(15);
+            _integrator = (Integrator) _integratorDAO.getConcreteIntegrator(15);
         });
     }
 
@@ -96,14 +100,14 @@ class IntegratorDAOTest {
     @Test
     public void IntegratorDisabledTest() {
         try {
-            _integrator = _integratorDAO.getConcreteIntegrator(1);
+            _integrator = (Integrator)_integratorDAO.getConcreteIntegrator(1);
             status = _integrator.isEnabled();
-            _integratorDAO = new IntegratorDAO();
+            _integratorDAO = new DAOIntegrator();
             _integratorDAO.disableIntegrator(1);
-            _integratorDAO = new IntegratorDAO();
-            _integrator = _integratorDAO.getConcreteIntegrator(1);
+            _integratorDAO = new DAOIntegrator();
+            _integrator = (Integrator)_integratorDAO.getConcreteIntegrator(1);
             if (status) {
-                _integratorDAO = new IntegratorDAO();
+                _integratorDAO = new DAOIntegrator();
                 _integratorDAO.enableIntegrator(1);
             }
             assertEquals(false, _integrator.isEnabled());
@@ -122,14 +126,14 @@ class IntegratorDAOTest {
     @Test
     public void IntegratorEnableTest() {
         try {
-            _integrator = _integratorDAO.getConcreteIntegrator(1);
+            _integrator = (Integrator)_integratorDAO.getConcreteIntegrator(1);
             status = _integrator.isEnabled();
-            _integratorDAO = new IntegratorDAO();
+            _integratorDAO = new DAOIntegrator();
             _integratorDAO.enableIntegrator(1);
-            _integratorDAO = new IntegratorDAO();
-            _integrator = _integratorDAO.getConcreteIntegrator(1);
+            _integratorDAO = new DAOIntegrator();
+            _integrator = (Integrator)_integratorDAO.getConcreteIntegrator(1);
             if (!status) {
-                _integratorDAO = new IntegratorDAO();
+                _integratorDAO = new DAOIntegrator();
                 _integratorDAO.disableIntegrator(1);
             }
             assertEquals(true, _integrator.isEnabled());
@@ -139,15 +143,40 @@ class IntegratorDAOTest {
             e.printStackTrace();
         }
     }
+    /**
+     * Prueba que nos permite  saber si la lista de
+     * los integradores por canales es diferente a Null.
+     */
+    @Test
+    public void TestIntegradorsByChannel() {
+        try {
+            _integratorList = _integratorDAO.listIntegratorByChannel(1);
+            assertNotNull(_integratorList);
+        } catch (DatabaseConnectionProblemException e) {
+            e.printStackTrace();
+        } catch (ChannelNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Prueba de la excepción, ejecutando el método de buscar un integrador
+     * cuando no se encuentra un canal.
+     */
 
+    @Test
+    public void channelNotFoundExceptionTest() {
+        assertThrows(ChannelNotFoundException.class, () -> {
+            _integratorList = _integratorDAO.listIntegratorByChannel(15);
+        });
+    }
     /**
      * Prueba que nos permite verificar que un integrador
      * este realizando el envio de los mensajes correctamente.
      */
-
+/*
     @Test
     public void sendMessageTest() {
         MessageIntegrator testMessage = _movistar.sendMessage("TestMsg", "TestDir", "TestId");
         assertEquals(_messageIntegrator, testMessage);
-    }
+    }*/
 }

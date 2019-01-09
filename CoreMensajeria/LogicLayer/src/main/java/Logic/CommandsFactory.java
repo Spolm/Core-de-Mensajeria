@@ -3,12 +3,16 @@ package Logic;
 import DTO.DTO;
 import DTO.M08_DTO.ParametersDTO;
 import Entities.Entity;
+import Logic.M04_Integrator.*;
+import Logic.M05_Channel.CommandGetAllChannels;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 
 //import Logic.M10_Profile.*;
+import Entities.M08_Validation.XMLManagement.Message;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
+import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
 import org.w3c.dom.Element;
@@ -239,6 +243,30 @@ public class CommandsFactory {
     //endregion
 
 
+    // region M04_Integrator
+    public static CommandDisableIntegrator createCommandDisableIntegrator(int id) {
+        return new CommandDisableIntegrator(id);
+    }
+
+    public static CommandEnableIntegrator createCommandEnableIntegrator(int id) {
+        return new CommandEnableIntegrator( id );
+    }
+
+    public static CommandGetAllIntegrator createCommandGetAllIntegrators() {
+        return new CommandGetAllIntegrator();
+    }
+
+    public static CommandGetConcreteIntegrator createCommandGetConcreteIntegrator(int id) {
+        return new CommandGetConcreteIntegrator(id);
+    }
+
+    public static CommandGetIntegratorByChannel createCommandGetIntegratorByChannel(int id){
+        return new CommandGetIntegratorByChannel(id);
+    }
+
+    public static CommandGetAllChannels instanceGetAllChannels(){ return new CommandGetAllChannels(); }
+    //endregion
+
     //M07_Templates
 
     public static CommandPostParameter createCommandPostParameter(NewParameter newParameter){
@@ -306,5 +334,10 @@ public class CommandsFactory {
     public static Command createSendMessage(VerifiedParameter parameters) {
         return new CommandSendMessage(parameters);
     }
+
+    public static Command createCommandParseMessage(Message message, Template template){
+        return new CommandParseMessage(message, template);
+    }
+
     //end region
 }

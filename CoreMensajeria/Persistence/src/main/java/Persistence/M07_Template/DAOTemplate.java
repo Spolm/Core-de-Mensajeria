@@ -9,9 +9,9 @@ import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 import Entities.M03_Campaign.CampaignDAO;
 import Entities.M04_Integrator.Integrator;
-import Entities.M04_Integrator.IntegratorDAO;
+//import Entities.M04_Integrator.IntegratorDAO;
 import Entities.M05_Channel.Channel;
-import Entities.M05_Channel.ChannelFactory;
+//import Entities.M05_Channel.ChannelFactory;
 import Entities.M06_DataOrigin.Application;
 import Entities.M06_DataOrigin.ApplicationDAO;
 import Entities.M07_Template.HandlerPackage.*;
@@ -26,9 +26,13 @@ import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Persistence.DAO;
 import Persistence.DAOFactory;
-import Persistence.M01_Login.DAOUser;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import Persistence.M03_Campaign.DAOCampaign;
-import com.google.gson.*;
+import Persistence.M01_Login.DAOUser;
+import Persistence.M05_Channel.DAOChannel;
+import Persistence.M04_Integrator.DAOIntegrator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -364,15 +368,14 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while( resultSet.next() ){
-                ArrayList<Integrator> integrators = new ArrayList<>();
-                IntegratorDAO integratorDAO = new IntegratorDAO();
-
-                Integrator integrator = integratorDAO.getConcreteIntegrator(
+                ArrayList<Entity> integrators = new ArrayList<>();
+                DAOIntegrator integratorDAO = DAOFactory.instanciateDaoIntegrator();
+                Integrator integrator = (Integrator) integratorDAO.getConcreteIntegrator(
                         resultSet.getInt("ci_integrator_id")
                 );
 
                 integrators.add(integrator);
-                Channel channel = new ChannelFactory().getChannel(
+                Channel channel = EntityFactory.createChannel(
                         resultSet.getInt("ci_channel_id"),
                         resultSet.getString("cha_name"),
                         resultSet.getString("cha_description"),

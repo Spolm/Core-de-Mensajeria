@@ -4,7 +4,10 @@ import Entities.M01_Login.Privilege;
 import Entities.M01_Login.User;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
+import Entities.M04_Integrator.*;
 import Entities.M05_Channel.Channel;
+import Entities.M05_Channel.ChannelEmail;
+import Entities.M05_Channel.ChannelSms;
 import Entities.M06_DataOrigin.Application;
 import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.MessagePackage.Parameter;
@@ -245,10 +248,100 @@ public class EntityFactory {
         return new Template(id, message, creationDate, status, channels, campaign, application, user, planning);
     }
 
+// M04_region
 
+    /**
+     * Metodo que se encarga de crear un canal en concreto
+     * La creacion de este tipo de canal dependerá del nameChannel
+     * que es recibido por parametro
+     *
+     * @param idChannel          id del canal a crear
+     * @param nameChannel        nombre del canal a crear
+     * @param descriptionChannel Breve descripción del canal
+     * @param integrators        Integradores que perteneces a esta canal
+     * @return Un objeto Channel con las caracteristicas enviadas por parametro
+     * @see Channel
+     */
+    public static Channel createChannel(int idChannel, String nameChannel, String descriptionChannel, ArrayList<Entity> integrators) {
+        if (nameChannel == null)
+            return null;
+        if (nameChannel.equalsIgnoreCase("SMS"))
+            return new ChannelSms(idChannel, nameChannel, descriptionChannel, integrators);
+        else if (nameChannel.equalsIgnoreCase("EMAIL"))
+            return new ChannelEmail(idChannel, nameChannel, descriptionChannel, integrators);
+        return null;
+    }
+
+    /**
+     * Metodo que se encarga de crear un canal en concreto
+     * La creacion de este tipo de canal dependerá del nameChannel
+     * que es recibido por parametro
+     *
+     * @param idChannel          id del canal a crear
+     * @param nameChannel        nombre del canal a crear
+     * @param descriptionChannel Breve descripción del canal
+     * @return Un objeto Channel con las caracteristicas enviadas por parametro
+     * @see Channel
+     */
+    public static Channel createChannel(int idChannel, String nameChannel, String descriptionChannel) {
+        if (nameChannel == null)
+            return null;
+        if (nameChannel.equalsIgnoreCase("SMS"))
+            return new ChannelSms(idChannel, nameChannel, descriptionChannel);
+        else if (nameChannel.equalsIgnoreCase("EMAIL"))
+            return new ChannelEmail(idChannel, nameChannel, descriptionChannel);
+        return null;
+    }
+
+    /**
+     * Método que se encarga de crear un integrador en concreto
+     * La creación de este tipo de integrador dependera del integratorType
+     * que es recibido por parametro
+     *
+     * @param integratorType el tipo de integrador, del cual dependera la creación del objeto
+     * @param idIntegrator   el id del integrador a crear
+     * @param nameIntegrator nombre del integrador
+     * @param messageCost    costo por mensaje del integrador
+     * @param threadCapacity capacidad de hilos que soportar el integrador
+     * @param apiIntegrator  un código de seguridad que se requiere para validar que
+     *                       el integrador sea el correcto
+     * @param enabled        Que nos indica cual es el estado del integrador
+     * @return Un objeto integrador con las caracteristicas enviadas por parametro
+     * @see Integrator
+     */
+
+    public static Integrator CreateIntegrator(String integratorType, int idIntegrator, String nameIntegrator,
+                                              float messageCost, int threadCapacity, String apiIntegrator, boolean enabled)
+    {
+        if (integratorType == null) {
+            return null;
+        }
+        if (integratorType.equalsIgnoreCase("MOVISTAR")) {
+            return new Movistar(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+
+        } else if (integratorType.equalsIgnoreCase("DIGITEL")) {
+            return new Digitel(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+
+        } else if (integratorType.equalsIgnoreCase("MOVILNET")) {
+            return new Movilnet(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+
+        } else if (integratorType.equalsIgnoreCase("MAILCHIMP")) {
+            return new MailChimp(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+
+        } else if (integratorType.equalsIgnoreCase("AWEBER")) {
+            return new Aweber(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+
+        } else if (integratorType.equalsIgnoreCase("INFUSIONSOFT")) {
+            return new InfusionSoft(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
+        }
+
+        return null;
+    }
+
+//end M04_region
 
     //region M_08
-    public static Entity createSendMessage() {
+    public static SentMessage createSendMessage() {
         return new SentMessage();
     }
 }

@@ -10,7 +10,7 @@ package Entities.M04_Integrator;
  * @see Integrator
  */
 
-public class Movilnet extends Integrator {
+public class Movilnet extends Integrator implements IIntegrator{
 
     /**
      * Constructor de la clase Movilnet
@@ -24,7 +24,8 @@ public class Movilnet extends Integrator {
      * @see Integrator
      */
 
-    public Movilnet(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator, boolean enabled) {
+    public Movilnet(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator,
+                    String apiIntegrator, boolean enabled) {
         super(idIntegrator, threadCapacity, messageCost, nameIntegrator, apiIntegrator, enabled);
     }
 
