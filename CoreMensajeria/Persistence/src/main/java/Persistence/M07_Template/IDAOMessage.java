@@ -15,4 +15,5 @@ public interface IDAOMessage {
     public Entity postMessage(String message, int companyId,String[] parameters, int templateId );
     public void updateMessage( String message, int templateId, String[] parameters,int companyId );
     public void updateParameterOfMessage(int messageId, String[] parameters, int companyId);
+    public void deleteMessage(int id);
 }

@@ -420,6 +420,13 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     }
 
 
+    /**
+     * Get campign by User or Company
+     * @param userId
+     * @param companyId
+     * @return
+     */
+    @Override
     public ArrayList<Campaign> getCampaignsByUserOrCompany(int userId, int companyId){
         ArrayList<Campaign> campaignArrayList = new ArrayList<>();
         Connection connection = this.getBdConnect();

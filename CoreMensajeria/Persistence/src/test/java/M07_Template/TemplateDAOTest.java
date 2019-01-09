@@ -11,7 +11,8 @@ import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Persistence.DAOFactory;
-import Persistence.M07_Template.DAOTemplate;
+import Persistence.Factory.DAOAbstractFactory;
+import Persistence.M07_Template.IDAOTemplate;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TemplateDAOTest {
     private static String json;
     private static Template _template;
-    private static DAOTemplate _daoTemplate = DAOFactory.instaciateDaoTemplate();
+    private static IDAOTemplate _daoTemplate = DAOAbstractFactory.getFactory().createDaoTemplate();
 
     @BeforeAll
     public static void init(){

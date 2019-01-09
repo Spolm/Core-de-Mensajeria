@@ -3,6 +3,7 @@ package Persistence.M07_Template;
 import Entities.Entity;
 import Entities.M01_Login.Privilege;
 import Entities.M02_Company.Company;
+import Entities.M03_Campaign.Campaign;
 import Entities.M05_Channel.Channel;
 import Entities.M06_DataOrigin.Application;
 import Entities.M07_Template.Template;
@@ -38,4 +39,6 @@ public interface IDAOTemplate extends IDAO {
     public void updateTemplate(int campaignId,int applicationId, int templateId);
 
     public void deleteTemplate(int id);
+
+    public ArrayList<Campaign> getCampaignsByUserOrCompany(int userId, int companyId);
 }

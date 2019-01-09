@@ -3,8 +3,11 @@ package M07_Template;
 import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.Template;
 import Persistence.DAOFactory;
+import Persistence.Factory.DAOAbstractFactory;
 import Persistence.M07_Template.DAOMessage;
 import Persistence.M07_Template.DAOTemplate;
+import Persistence.M07_Template.IDAOMessage;
+import Persistence.M07_Template.IDAOTemplate;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MessageDAOTest {private static String json;
     private static Message _message;
     private static int _templateId;
-    private static DAOMessage _daoMessage = DAOFactory.instaciateDaoMessage();
-    private static DAOTemplate _daoTemplate = DAOFactory.instaciateDaoTemplate();
+    private static IDAOMessage _daoMessage = DAOAbstractFactory.getFactory().createDaoMessage();
+    private static IDAOTemplate _daoTemplate = DAOAbstractFactory.getFactory().createDaoTemplate();
 
     @BeforeAll
     public static void init(){
@@ -84,7 +87,7 @@ public class MessageDAOTest {private static String json;
             String[] _parametersTest = { "Parametro" };
             _daoMessage.updateParameterOfMessage( _message.get_id(),_parametersTest,1 );
             Message _messageTest =  (Message)_daoMessage.getMessage( _templateId );
-            assertEquals("Parametro", _messageTest.getParameterArrayList().get() );
+            assertEquals("Parametro", _messageTest.getParameterArrayList().get(0) );
         }catch ( Exception e ){
             e.printStackTrace();
         }

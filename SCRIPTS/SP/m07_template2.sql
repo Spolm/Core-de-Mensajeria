@@ -369,6 +369,20 @@ $$;
 
 alter function m07_postparameterofmessage(integer,integer, varchar) owner to "CoreMensajeria";
 
+CREATE OR REPLACE FUNCTION m07_deletemessagebyid(_messageid integer) returns void
+	language plpgsql
+as $$
+DECLARE
+BEGIN
+  DELETE from public.message_parameter WHERE mp_message = _messageID;
+  DELETE from public.message WHERE mes_id = _messageID;
+END;
+$$;
+
+alter function m07_deletemessagebyid(integer) owner to "CoreMensajeria";
+
+
+
 
 
 
