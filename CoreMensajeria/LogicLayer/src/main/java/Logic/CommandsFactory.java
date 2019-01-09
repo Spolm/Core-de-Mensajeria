@@ -45,27 +45,73 @@ public class CommandsFactory {
         return new GetUserCommand(user);
     }
 
+    /**
+     * Metodo que instancia un objeto del tipo GetAllUsersCommand
+     * @return un objeto del tipo GetAllUsersCommand
+     */
     public static GetAllUsersCommand createGetAllUsersCommand () {
         return new GetAllUsersCommand();
     }
+    /**
+     * Metodo que instancia un objeto del tipo LogUserCommand
+     * @param  log objeto de tipo Entidad
+     * @return un objeto del tipo GetAllUsersCommand
+     */
     public static LogUserCommand createLogUserCommand (Entity log) {
         return new LogUserCommand(log);
     }
+    /**
+     * Metodo que instancia un objeto del tipo IsBlockedUserCommand
+     * @param  log objeto de tipo Entidad que sirve para revisar si el usuario esta bloqueado o no
+     * @return un objeto del tipo IsBlockedUserCommand
+     */
     public static IsBlockedUserCommand isBlockedUserCommand (Entity log) {
         return new IsBlockedUserCommand(log);
     }
+    /**
+     * Metodo que instancia un objeto del tipo TokenGeneratorCommand
+     * @param  email correo electronico del usuario al cual se le generará el token
+     * @return un objeto del tipo TokenGeneratorCommand
+     */
     public static TokenGeneratorCommand tokenGeneratorCommand ( String email) {
         return new TokenGeneratorCommand(email);
     }
+
+    /**
+     * Metodo que instancia un objeto del tipo FindByUsernameOrEmailCommand
+     * @param  username seudonimo del usuario que se quiere buscar
+     * @return un objeto del tipo FindByUsernameOrEmailCommand
+     */
+
     public static FindByUsernameOrEmailCommand findByUsernameOrEmailCommand (String username) {
         return new FindByUsernameOrEmailCommand(username);
     }
+
+    /**
+     * Metodo que instancia un objeto del tipo ChangePasswordCommand
+     * @param  username pseudonimo del usuario que se quiere buscar
+     * @param password contraseña correspondiente al pseudonimo del usuario al cual se le quiere
+     *                 cambiar la contraseña
+     * @return un objeto del tipo ChangePasswordCommand
+     */
     public static ChangePasswordCommand changePasswordCommand (String username, String password) {
         return  new ChangePasswordCommand(username, password);
     }
+
+    /**
+     * Metodo que instancia un objeto del tipo FindPrivilegeByUserIdCommand
+     * @param  id  identificador del usuario al que se le quieren consultar los privilegios
+     * @return un objeto del tipo FindPrivilegeByUserIdCommand
+     */
     public static FindPrivilegeByUserIdCommand findPrivilegeByUserIdCommand (int id) {
         return new FindPrivilegeByUserIdCommand(id);
     }
+
+    /**
+     * Metodo que instancia un objeto del tipo FindByUsernameIdCommand
+     * @param  id pseudonimo del usuario que se quiere buscar
+     * @return un objeto del tipo FindByUsernameIdCommand
+     */
     public static FindByUsernameIdCommand findByUsernameIdCommand (int id) {
         return new FindByUsernameIdCommand(id);
     }
