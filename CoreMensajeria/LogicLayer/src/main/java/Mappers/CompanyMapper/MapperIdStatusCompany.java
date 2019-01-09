@@ -9,6 +9,7 @@ import Mappers.GenericMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class MapperIdStatusCompany  extends GenericMapper<DTOIdStatusCompany> {
     /**
@@ -88,9 +89,9 @@ public class MapperIdStatusCompany  extends GenericMapper<DTOIdStatusCompany> {
     @Override
     public Entity CreateEntity( DTOIdStatusCompany dto ) {
 
-      //  Logger logger = Logger.getLogger(M02_Companies.class.getName());
-        //logger.info("Objeto compania recibido en Create Entity" + dto.get_idCompany() + " " +
-          //           dto.is_status());
+         Logger logger = Logger.getLogger(MapperIdStatusCompany.class.getName());
+         logger.info("Objeto compania recibido en Create Entity" + dto.get_idCompany() + " " +
+                      dto.is_status());
 
         try {
             Company _com = EntityFactory.CreateCompanyIDStatus( dto.get_idCompany(), dto.is_status() );

@@ -14,8 +14,6 @@ import { ToastrService } from 'ngx-toastr';
 export class CreateCampaignComponent implements OnInit {
 
   newCampaign: Campaign = new Campaign();
-
-  editMode: boolean = false;
   companies: any[];
   constructor(public companyService: CompanyService, public campaignService: CampaignService 
     , private toastr: ToastrService) {
@@ -47,9 +45,10 @@ export class CreateCampaignComponent implements OnInit {
     if( (this.newCampaign._nameCampaign != null ) && ( this.newCampaign._descCampaign != null  ) &&
         (this.newCampaign._startCampaign != null ) && (this.newCampaign._endCampaign != null ) &&
         (this.newCampaign._idCompany != null) ){
-    
-          this.newCampaign._startCampaign = this.newCampaign._startCampaign+"T02:06:58.147"
-          this.newCampaign._endCampaign = this.newCampaign._endCampaign+"T02:06:58.147"
+          var sDate =  new Date(this.newCampaign._startCampaign+"T02:06:58.147")
+          var fDate =  new Date(this.newCampaign._endCampaign+"T02:06:58.147")
+          this.newCampaign._startCampaign = sDate.toISOString()
+          this.newCampaign._endCampaign = fDate.toISOString()
 
     this.campaignService.addCampaign(this.newCampaign).toPromise().then(res =>{
       console.log(this.newCampaign);

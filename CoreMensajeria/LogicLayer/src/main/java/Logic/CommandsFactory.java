@@ -269,10 +269,6 @@ public class CommandsFactory {
 
     //M07_Templates
 
-    public static CommandGetMessages createCommandGetMessages(){
-        return new CommandGetMessages();
-    }
-
     public static CommandPostParameter createCommandPostParameter(NewParameter newParameter){
         return new CommandPostParameter(newParameter);
     }

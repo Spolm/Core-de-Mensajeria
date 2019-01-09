@@ -12,6 +12,7 @@ import Entities.M02_Company.Company;
 import DTO.M04_Integrator.DTOIntegrator;
 import DTO.M07_Template.DTOMessage;
 import DTO.M07_Template.DTOParameter;
+import DTO.M07_Template.DTOPlanning;
 import DTO.M07_Template.DTOTemplate;
 import DTO.M09_DTO.DTOStatistic;
 import Entities.M01_Login.User;
@@ -25,7 +26,6 @@ import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.Status;
 import java.util.ArrayList;
 import java.util.Date;
-
 /**
  * Fabrica que instancia todos los dto
  */
@@ -239,8 +239,12 @@ public class DTOFactory {
     }
 
 
-    public static DTOTemplate CreateDTOTemplate(Message message, String creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning){
-        return  new DTOTemplate(message,creationDate,templateId,status,channels,campaign,application,user,planning);
+    public static DTOTemplate CreateDTOTemplate(Message message, java.sql.Date creationDate, int templateId, Status status, ArrayList<Channel> channels, Campaign campaign, Application application, User user, Planning planning, int companyId){
+        return  new DTOTemplate(message,creationDate,templateId,status,channels,campaign,application,user,planning,companyId);
+    }
+
+    public static DTOPlanning CreateDTOPlanning(java.sql.Date _pStartDate, java.sql.Date _pEndDate, String _pStartTime, String _pEndTime, int _pIdPlanning){
+        return new DTOPlanning(_pStartDate,_pEndDate,_pStartTime,_pEndTime,_pIdPlanning);
     }
 
 

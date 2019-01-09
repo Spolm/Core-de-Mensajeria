@@ -1,5 +1,7 @@
 package webService.M07_Template;
 
+import DTO.M07_Template.DTOTemplate;
+import Entities.Entity;
 import Entities.M01_Login.Privilege;
 import Entities.M07_Template.HandlerPackage.StatusHandler;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
@@ -9,12 +11,20 @@ import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Logic.Command;
 import Logic.CommandsFactory;
+import Logic.M07_Template.CommandGetTemplate;
+import Logic.M07_Template.CommandGetTemplates;
+import Mappers.M07_Template.MapperTemplate;
+import Mappers.MapperFactory;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import webService.M01_Login.Error;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 /**
@@ -29,7 +39,10 @@ public class M07_Template {
     private final String MESSAGE_EXCEPTION = "Excepcion";
     private final String MESSAGE_ERROR_PARAMETERDOESNTEXIST= "El parámetro ingresado no existe";
 
-    Gson gson = new Gson();
+    Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
+
 
     /**
      * Method that returns all the templates filtered by a user and his company.
@@ -40,6 +53,9 @@ public class M07_Template {
     @GET
     public Response getTemplates(@QueryParam("userId") int userId,
                                  @QueryParam("companyId") int companyId){
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getTemplates("+userId+","+companyId+")" );
+        //endregion
         Response response;
         Error error;
         try {
@@ -48,22 +64,39 @@ public class M07_Template {
             }
             Command c = CommandsFactory.createCommandGetTemplates(userId,companyId);
             c.execute();
-            response = Response.ok(gson.toJson(c.Return())).build();
+            MapperTemplate mapperTemplate = MapperFactory.createMapperTemplate();
+            ArrayList<DTOTemplate> dtoTemplates = (ArrayList<DTOTemplate>) mapperTemplate.CreateDtoList(((CommandGetTemplates) c).Return());
+            response = Response.ok(gson.toJson(dtoTemplates)).build();
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getTemplates("+userId+","+companyId+") exitosamente");
+            //endregion
         } catch (InvalidParameterException e) {
             e.printStackTrace();
             error = new Error(e.getMessage());
             response = Response.status(404).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getTemplates("+userId+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }catch (ParameterDoesntExistsException e){
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getTemplates("+userId+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } catch (Exception e) {
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_INTERN);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getTemplates("+userId+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo getTemplates("+userId+","+companyId+") con retorno: "+ response.getEntity().toString());
+        //endregion
         return response;
     }
 
@@ -75,6 +108,9 @@ public class M07_Template {
     @GET
     @Path("/{templateId}")//Subsequent Path
     public Response getTemplate(@PathParam("templateId") int id){
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getTemplate("+id+")" );
+        //endregion
         Response response;
         Error error;
         try {
@@ -83,22 +119,40 @@ public class M07_Template {
             }
             Command c = CommandsFactory.createCommandGetTemplate(id);
             c.execute();
-            response = Response.ok(gson.toJson(c.Return())).build();
+            MapperTemplate mapperTemplate = MapperFactory.createMapperTemplate();
+            DTOTemplate dtoTemplate = mapperTemplate.CreateDto(((CommandGetTemplate) c).Return());
+            response = Response.ok(gson.toJson(dtoTemplate)).build();
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getTemplate() exitosamente");
+            //endregion
         } catch (InvalidParameterException e) {
             e.printStackTrace();
             error = new Error(e.getMessage());
             response = Response.status(404).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getTemplate("+id+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }catch (ParameterDoesntExistsException e){
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getTemplate("+id+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } catch (Exception e) {
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_INTERN);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getTemplate("+id+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo getTemplate("+id+") con retorno: "+ response.getEntity().toString());
+        //endregion
+
         return response;
     }
 
@@ -113,6 +167,9 @@ public class M07_Template {
     @Path("/privileges")
     public Response getTemplatePrivilegesByUser(@QueryParam("userId") int userId,
                                                 @QueryParam("companyId") int companyId){
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getTemplate("+userId+","+companyId+")" );
+        //endregion
         Response response;
         Error error;
         try {
@@ -122,20 +179,32 @@ public class M07_Template {
             Command c = CommandsFactory.createCommandGetTemplatePrivilegesByUser(userId,companyId);
             c.execute();
             response = Response.ok(gson.toJson(c.Return())).build();
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getTemplatePrivilegesByUser("+userId+","+companyId+") exitosamente");
+            //endregion
         } catch (InvalidParameterException e) {
             e.printStackTrace();
             error = new Error(e.getMessage());
             response = Response.status(404).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getTemplatePrivilegesByUser("+userId+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }catch (ParameterDoesntExistsException e){
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getTemplatePrivilegesByUser("+userId+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } catch (Exception e) {
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_INTERN);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getTemplatePrivilegesByUser("+userId+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }
         return response;
     }
@@ -152,6 +221,9 @@ public class M07_Template {
     @POST
     @Path("/update/{templateId}")//Subsequent Path
     public Response postTemplateStatus(@PathParam("templateId") int templateId, int userId){
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo postTemplateStatus("+templateId+","+userId+")" );
+        //endregion
         Response response;
         Error error;
         try {
@@ -161,20 +233,33 @@ public class M07_Template {
             Command c = CommandsFactory.createCommandPostTemplateStatus(templateId,userId);
             c.execute();
             response = Response.ok(gson.toJson(c.Return())).build();
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo postTemplateStatus("+templateId+","+userId+") exitosamente");
+            //endregion
         } catch (InvalidParameterException e) {
             e.printStackTrace();
             error = new Error(e.getMessage());
             response = Response.status(404).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo postTemplateStatus("+templateId+","+userId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }catch (ParameterDoesntExistsException e){
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo postTemplateStatus("+templateId+","+userId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
+
         } catch (Exception e) {
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_INTERN);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo postTemplateStatus("+templateId+","+userId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }
         return response;
     }
@@ -184,6 +269,9 @@ public class M07_Template {
     @Path("add")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postTemplate(String json){
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo postTemplate("+json+")" );
+        //endregion
         Response response;
         Error error;
         try {
@@ -193,20 +281,32 @@ public class M07_Template {
             Command c = CommandsFactory.createCommandPostTemplate(json);
             c.execute();
             response = Response.ok(gson.toJson(c.Return())).build();
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo postTemplate("+json+") exitosamente");
+            //endregion
         } catch (InvalidParameterException e) {
             e.printStackTrace();
             error = new Error(e.getMessage());
             response = Response.status(404).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo postTemplate("+json+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }catch (ParameterDoesntExistsException e){
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo postTemplate("+json+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } catch (Exception e) {
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_INTERN);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo postTemplate("+json+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }
         return response;
     }
@@ -215,6 +315,9 @@ public class M07_Template {
     @Path("update")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateTemplate(String json){
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo updateTemplate("+json+")" );
+        //endregion
         Response response;
         Error error;
         try {
@@ -224,20 +327,32 @@ public class M07_Template {
             Command c = CommandsFactory.createCommandUpdateTemplate(json);
             c.execute();
             response = Response.ok(gson.toJson(c.Return())).build();
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo updateTemplate("+json+") exitosamente");
+            //endregion
         } catch (InvalidParameterException e) {
             e.printStackTrace();
             error = new Error(e.getMessage());
             response = Response.status(404).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo updateTemplate("+json+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }catch (ParameterDoesntExistsException e){
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo updateTemplate("+json+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } catch (Exception e) {
             e.printStackTrace();
             error = new Error(MESSAGE_ERROR_INTERN);
             error.addError(MESSAGE_EXCEPTION,e.getMessage());
             response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo updateTemplate("+json+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }
         return response;
     }
