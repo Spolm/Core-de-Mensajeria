@@ -4,14 +4,12 @@ import Entities.Entity;
 import java.util.ArrayList;
 
 /**
- * Clase abstracta Channel que nos proporciona los metodos
- * para trabajar con los canales en concreto.
- *
- * @author Kevin Martinez
- * @author Braulio Picon
- * @author Alexander Fernandez
- */
-
+* Clase abstracta Channel que nos proporciona los metodos
+* para trabajar con los canales en concreto.
+* @author Kevin Martinez
+* @author Braulio Picon
+* @author Alexander Fernandez
+*/
 public abstract class Channel extends Entity {
 
     private String _nameChannel;
@@ -55,5 +53,4 @@ public abstract class Channel extends Entity {
     public void set_integrators(ArrayList<Entity> integrators) {
         this._integrators = integrators;
     }
-
 }

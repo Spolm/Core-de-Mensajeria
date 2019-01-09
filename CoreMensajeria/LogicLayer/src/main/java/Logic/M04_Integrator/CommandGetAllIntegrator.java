@@ -9,23 +9,16 @@ import Persistence.M04_Integrator.IDAOIntegrator;
 import java.util.ArrayList;
 
 public class CommandGetAllIntegrator extends Command {
+    private ArrayList<Entity> _entityList;
 
-    private static ArrayList< Entity > _entityList;
-
-    /**
-     *
-     */
     public CommandGetAllIntegrator() {
-
-        _entityList = new ArrayList<Entity>();
+        this._entityList = null;
     }
 
     @Override
     public void execute() throws DatabaseConnectionProblemException {
-
-        IDAOIntegrator _dao = DAOFactory.instanciateDaoIntegrator();
-        _entityList = _dao.listIntegrator();
-
+        IDAOIntegrator dao = DAOFactory.instanciateDaoIntegrator();
+        _entityList = dao.listIntegrator();
     }
 
     @Override
@@ -33,5 +26,5 @@ public class CommandGetAllIntegrator extends Command {
         return null;
     }
 
-    public ArrayList<Entity> ReturnList() { return _entityList; }
+    public ArrayList<Entity> returnList() { return _entityList; }
 }
