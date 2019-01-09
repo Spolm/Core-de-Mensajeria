@@ -9,21 +9,12 @@ import java.sql.Timestamp;
  * Entidad del mensaje enviado que será insertada en bd
  */
 public class SentMessage extends Entity {
-    public int _templateId;
-    public int _messageId;
-    public int _campaignId;
-    public int _integratorId;
-    public int _applicationId;
-    public int _channelId;
-    public Timestamp _sentTime;
-
-    public int get_templateId() {
-        return _templateId;
-    }
-
-    public void set_templateId(int _templateId) {
-        this._templateId = _templateId;
-    }
+    private int _messageId;
+    private int _campaignId;
+    private int _integratorId;
+    private int _applicationId;
+    private int _channelId;
+    private Timestamp _sentTime;
 
     public int get_message() { return _messageId; }
 
