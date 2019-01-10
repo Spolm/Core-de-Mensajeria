@@ -146,7 +146,7 @@ export class TemplateService {
   async updateTemplate(templateId: number, formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[], campaignId: number ,applicationId: number, planning: any[]) {
     let flag: boolean;
     const json = {
-      'messagge': formMessage.valueOf(),
+      'message': formMessage.valueOf(),
       'templateId': templateId,
       'company': company,
       'parameters': parameters,
@@ -157,6 +157,7 @@ export class TemplateService {
       'campaign': campaignId,
       'planning': planning
     };
+    console.log(json);
     this.http.put(endpoint + 'templates/update', json).subscribe(async (res: boolean) => {
       flag = res;
       if (flag) {
