@@ -1,4 +1,4 @@
-/*package M08_Validation;
+package M08_Validation;
 
 import Entities.M07_Template.StatusPackage.Status;
 import Entities.M07_Template.Template;
@@ -50,11 +50,11 @@ class ValidationServiceTest {
 //        } catch (Exception e) {}
 //    }
 
-    @Test
-    public void testMessageNotValid() {
-        Command c = CommandsFactory.createCommandValidateMessage(6);
+//    @Test
+//    public void testMessageNotValid() {
+//        Command c = CommandsFactory.createCommandValidateMessage(6);
         //assertThrows(SMSTooLongException.class, () -> c.execute());
-    }
+//    }
 
-}*/
+}
 
