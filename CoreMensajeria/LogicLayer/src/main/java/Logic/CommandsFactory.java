@@ -354,7 +354,7 @@ public class CommandsFactory {
 
 
     //region M06_Origin
-    public  static CreateApplicationCommand CreateApplication(AddApplicationData _app){
+    public  static CreateApplicationCommand CreateApplication(Entity _app){
 
         return new CreateApplicationCommand(_app);
     }

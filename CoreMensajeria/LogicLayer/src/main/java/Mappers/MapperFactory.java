@@ -2,12 +2,11 @@ package Mappers;
 
 import Mappers.CompanyMapper.*;
 import Mappers.CampaignMapper.*;
-import Mappers.GenericMapper;
 import Mappers.M04_Integrator.MapperIntegrator;
 import Mappers.M05_Channel.MapperChannel;
 import Mappers.LoginMapper.LoginMapper;
 import Mappers.LoginMapper.UserMapper;
-import Mappers.GenericMapper;
+import Mappers.M06_DataOrigin.MapperDTOAddApplication;
 import Mappers.M07_Template.MapperTemplate;
 import Mappers.M10_Profile.MapperEditUser;
 import Mappers.StatisticMapper.StatisticMapper;
@@ -134,6 +133,9 @@ public class MapperFactory {
     }
     //end M05_Channels
 
+    //M06_DataOrigin
+    public static MapperDTOAddApplication mapperDTOAddAplication() { return new MapperDTOAddApplication();}
+    //end M06_DataOrigin
 
     public static GenericMapper createStatisticMapper(){ return new StatisticMapper();}
 

@@ -21,7 +21,7 @@ public class DAOApplicationTest {
 
     @BeforeEach
     private void Before(){
-        _addApplicationData= EntityFactory.createAplicationData("Metro de Caracas",
+        _addApplicationData= EntityFactory.createApplicationData("Metro de Caracas",
                 "Pagina oficial del metro de caracas",1,1);
 
     }

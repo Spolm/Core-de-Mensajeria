@@ -1,5 +1,6 @@
 package Logic.M06_DataOrigin;
 
+import Entities.Entity;
 import Entities.M06_DataOrigin.AddApplicationData;
 import Entities.M06_DataOrigin.Application;
 import Logic.Command;
@@ -8,11 +9,11 @@ import Persistence.M06_DataOrigin.IDAOApplication;
 
 public class CreateApplicationCommand extends Command {
 
-    private  static AddApplicationData _appData;
+    private  static Entity _appData;
     private  static Application _app;
 
 
-    public CreateApplicationCommand(AddApplicationData _app) {
+    public CreateApplicationCommand(Entity _app) {
 
         this._appData = _app ;
     }
