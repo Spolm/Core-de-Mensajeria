@@ -10,6 +10,7 @@ import Entities.Entity;
 import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 
+import Entities.M04_Integrator.Integrator;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M03_Campaign.*;
@@ -44,6 +45,12 @@ public class M03_Campaigns {
 
 
 
+    /**
+     * Método que nos permite obtener un los detalles de una compania en concreto.
+     *
+     * @param id Id de la compania
+     * @return Los detalles de una compania en especifica
+     */
 
     @GET
     @Path("/CampaignDetails/{campaignId}")
@@ -69,6 +76,15 @@ public class M03_Campaigns {
         return _rb.build();
     }
 
+
+
+    /**
+     * Método que nos permite una compania en concreto.
+     *
+     * @param _dto DtoFullCompany con todos los datos de la compania a agregar
+     * @return Un response con Status 500
+     */
+
     @POST
     @Path("/AddCampaignP")
     @Produces("application/json")
@@ -93,6 +109,15 @@ public class M03_Campaigns {
         }
     }
 
+
+
+    /**
+     * Método que nos permite obtener una lista de compania asociadas al id de usuario logueado.
+     *
+     * @param id id del usuario
+     * @return Un response con una lista de Companias
+     */
+
     @GET
     @Path("/GetCampaignsByUser/{id}")
     @Produces("application/json")
@@ -114,6 +139,14 @@ public class M03_Campaigns {
         }
      }
 
+
+    /**
+     * Método que nos permite obtener una lista de campaigns asociadas al id de usuario logueado.
+     *
+     * @param _comp id del usuario
+     *  @param _user id del usuario
+     * @return Un response con una lista de Companias
+     */
     @GET
     @Path("/GetCampaignsByCompany/{idCompany}/{idUser}")
     @Produces("application/json")
@@ -137,6 +170,12 @@ public class M03_Campaigns {
     }
 
 
+    /**
+     * Método que nos permite  editar una campana especifica
+     *
+     * @param _dto DTOFullCompany que contiene toda la informacion a editar en esa campana indicada
+     * @return Un response Status 500
+     */
     @PUT
     @Path("/Edit/Campaign")
     @Produces("application/json")
@@ -157,6 +196,14 @@ public class M03_Campaigns {
 
     }
 
+
+    /**
+     * Método que nos permite  editar el status una camapana especifica
+     *
+     * @param _dto DTOIdStatusCampaign que contiene el status a modificar en esa campana indicada
+     * @return Un response con un status 500
+     */
+
     @POST
     @Path("/updateCampaignStatus")
     @Consumes("application/json")
@@ -176,6 +223,12 @@ public class M03_Campaigns {
     }
 
 
+    /**
+     * Método que nos permite obtener una las campanas  asociadas a un compania
+     *
+     * @param id id de la compania
+     * @return Un response con una lista de campanas
+     */
     //region Obtener Campañas
     @GET
     @Path("/GetCampaigns/{idCompany}")
