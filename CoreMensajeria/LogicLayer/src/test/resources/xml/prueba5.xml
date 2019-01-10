@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<template>
+		<parameter>
+			<name>Prueba</name>
+			<value>This is a test</value>
+		</parameter>
+</template>

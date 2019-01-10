@@ -1,7 +1,9 @@
 package Logic.M08_SendMessage.XMLManagment;
 
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
+import Exceptions.M08_SendMessageManager.DateNotValidException;
 import Exceptions.M08_SendMessageManager.NullXMLException;
+import Exceptions.M08_SendMessageManager.TemplateNotApprovedException;
 import Logic.Command;
 import Logic.CommandsFactory;
 
@@ -81,18 +83,24 @@ public class WatchDirectory implements Runnable{
                             VerifiedParameter verifiedParameter = _commandProcessXML.Return();
                             log.debug("Inicio del proceamiento para el envío del mensaje" );
                             if( verifiedParameter != null) {
-                                Command _commandSendMsg = CommandsFactory.createSendMessage(verifiedParameter);
+                                Command _commandSendMsg = CommandsFactory.createScheduleMessage( verifiedParameter );
                                 _commandSendMsg.execute();
-                                log.info("Se ha enviado el mensaje." );
+                                log.info("Se ha planificado el mensaje." );
                             }
-                        } catch (NullXMLException e) {
-                            log.error(e.getMessage());
+                        } catch ( NullXMLException e ) {
+                            log.error( e.getMessage() );
+                        } catch ( DateNotValidException e ){
+                            log.error( e.getMessage() );
+                        } catch ( TemplateNotApprovedException e ){
+                            log.error( "La plantilla no esta aprobada" );
                         }
                     }
                 }
                 key.reset();
             }
-        }catch ( Exception e ) {
+        } catch(DateNotValidException e) {
+            log.error("Error en las fechas del template: " + e.getClass().getName());
+        } catch ( Exception e ) {
             log.error("Error inesperado de tipo "
                     + e.getClass().getName() );
         }
