@@ -6,11 +6,12 @@ import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.*;
 import Exceptions.M08_SendMessageManager.DateNotValidException;
+import Exceptions.M08_SendMessageManager.SMSTooLongException;
+import Exceptions.M08_SendMessageManager.TemplateNotApprovedException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Logic.M07_Template.CommandGetTemplate;
-import Logic.M08_SendMessage.CommandScheduleMessage;
 
 import javax.validation.Valid;
 import javax.ws.rs.*;
@@ -35,7 +36,7 @@ public class M08_MessageValidation {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public ParametersDTO sendMessage(@Valid ParametersDTO dto) throws WebApplicationException{
-        Exception error = null;
+        Error error = null;
         ParametersDTO response = dto;
         try {
             CommandGetTemplate commandTemplate = CommandsFactory.createCommandGetTemplate(dto.get_idTemplate());
@@ -50,15 +51,15 @@ public class M08_MessageValidation {
                 commandSchedule.execute();
             }
         } catch (TemplateDoesntExistsException e) {
-            error = e;
+            error = new Error(e.getMessage());
         } catch (SMSTooLongException e) {
-            error = e;
+            error = new Error(e.getMessage());
         } catch (TemplateNotApprovedException e) {
-            error = e;
+            error = new Error(e.getMessage());
         } catch (DateNotValidException e){
-            error = e;
+            error = new Error(e.getMessage());
         } catch (UnexpectedErrorException e){
-            error = e;
+            error = new Error(e.getMessage());
         } catch (Exception e) {
             throw new WebApplicationException(Response.status(500).entity(e).build());
         }

@@ -66,8 +66,7 @@ public class CommandGetMessage extends Command<Message> {
 
                 idMessage = _template.get_id();
                 ArrayList<Parameter> _parameterList = ParameterHandler.getParametersByMessage(idMessage);
-                log.info("Se ejecutó el comando FALTANOMBRE " +
-                        " con el idMessage " + idMessage ); ///*** FALTA CAMBIAR POR EL NOMBRE DEL COMANDO
+                log.info("Se obtube el idMessage " + idMessage );
                 if( nodeList.getLength() == _parameterList.size() ){
                     for (int i = 0; i < nodeList.getLength(); i++) {
                         Command<ParameterXML> _commandGetParameter = CommandsFactory.
@@ -93,7 +92,7 @@ public class CommandGetMessage extends Command<Message> {
         } catch (MissLengthXMLException e){
             throw new MissLengthXMLException();
         } catch (ParameterDoesntExistsInXMLException e) {
-            log.error( "Los parametros del mensaje " + idMessage + " no existen" ); ///*** MOSCA CON LOS CAMBIOS
+            log.error( "Los parametros del mensaje " + idMessage + " no existen" );
             _message = null;
         }
         catch (Exception e) {

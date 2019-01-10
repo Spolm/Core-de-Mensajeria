@@ -24,6 +24,8 @@ import com.google.gson.*;
 import Persistence.M03_Campaign.DAOCampaign;
 import Persistence.M01_Login.DAOUser;
 import Persistence.M04_Integrator.DAOIntegrator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,6 +53,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     final String CREATE_CHANNEL_INTEGRATOR = "{CALL m07_postChannelIntegrator(?,?,?)}";
     final String DELETE = "{CALL m07_deletetemplate(?)}";
     final String DELETE_CHANNEL_INTEGRATOR = "{CALL m07_deleteChannelIntegrator(?)}";
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
 
     @Override
     public void create(Entity e) {
@@ -72,8 +75,11 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * @return Entidad con Plantilla si exitoso,
      * otherwise it returns false.
      */
-    public Entity postTemplateData(String json){
+    public Entity postTemplateData(String json) throws ParameterDoesntExistsException, TemplateDoesntExistsException, MessageDoesntExistsException {
         try {
+            //region Instrumentation Debug
+            log.debug("Entrando a el metodo postTemplateData("+json+")" );
+            //endregion
             Gson gson = new Gson();
             //recibimos el objeto json
             JsonParser parser = new JsonParser();
@@ -106,49 +112,27 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
             IDAOPlanning daoPlanning = DAOAbstractFactory.getFactory().createDaoPlanning();
             daoPlanning.postPlanning(planning,templateId);
-
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo postTemplateData() exitosamente");
+            //endregion
+            //region Instrumentation Debug
+            log.debug("Saliendo de el metodo postTemplateData() con retorno: "+ this.get(templateId));
+            //endregion
             return this.get(templateId);
         } catch (Exception e){
-            System.out.println(e);
-            return null;
+            //region Instrumentation Error
+            log.error("El metodo postTemplateData("+json+") arrojo la excepcion:" + e.getMessage());
+            //endregion
+            throw e;
         }
     }
 
-    /*@Override
-    public boolean postTemplateData(Entity e){
-
-        Template _t = (Template) e;
-        DAOParameter _daoParameter = DAOFactory.instaciateDaoParameter();
-        DAOMessage _daoMessage = DAOFactory.instaciateDaoMessage();
-        DAOPlanning _daoPlanning = DAOFactory.instaciateDaoPlanning();
-
-        try {
-            //
-            int templateId = postTemplate(_t.getCampaign().get_id(), _t.getApplication().get_idApplication(), _t.getUser().get_id() );
-            //se establece el template  como no aprobado
-            StatusHandler.postTemplateStatusNotApproved(templateId);
-            //insertamos los nuevos parametros
-            _daoParameter.postParameter( _t.getMessage().getParameterArrayList(), _t.getCompanyId() ); //Este codigo no va aqui
-            //obtenemos el valor del mensaje,y parametros
-            _daoMessage.postMessage(_t.getMessage(), _t.getCompanyId(), templateId);
-
-            //obtenemos los valores de los canales e integradores
-            //JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
-            //postChannelIntegrator(channelIntegrator,templateId);
-
-            //planning
-            _daoPlanning.postPlanning( _t.getPlanning(), templateId);
-        } catch (Exception ex){
-            System.out.println(ex);
-            return false;
-        }
-
-        this.closeConnection();
-        return true;
-    }*/
 
     @Override
     public int postTemplate(int campaignId,int applicationId, int userId) {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo postTemplate("+ campaignId+","+applicationId+","+userId+")" );
+        //endregion
 
         Connection _conn = this.getBdConnect();
 
@@ -177,6 +161,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }
 
         this.closeConnection();
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo postTemplate("+ campaignId+","+applicationId+","+userId+")" );
+        //endregion
         return 0;
     }
 
@@ -187,6 +174,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      */
     @Override
     public Entity get(int templateId) throws TemplateDoesntExistsException, MessageDoesntExistsException, ParameterDoesntExistsException {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo get("+ templateId+")" );
+        //endregion
         //Entity to Return
         Entity _t  = null;
         Connection _conn = this.getBdConnect();
@@ -218,6 +208,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }
 
         this.closeConnection();
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo get("+ templateId+") retornando:" + _t);
+        //endregion
         return _t;
     }
 
@@ -227,6 +220,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      */
     @Override
     public ArrayList<Entity> getAll() throws MessageDoesntExistsException, ParameterDoesntExistsException {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getAll()" );
+        //endregion
         //Entity to Return
         ArrayList<Entity> _t  = new ArrayList<>();
         Connection _conn = this.getBdConnect();
@@ -250,6 +246,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }
 
         this.closeConnection();
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo getAll() con retorno" +_t );
+        //endregion
         return _t;
     }
 
@@ -260,7 +259,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      */
     @Override
     public Campaign getCampaignByTemplate(int templateId) {
-
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getCampaignByTemplate("+ templateId+")" );
+        //endregion
         Connection _conn = getBdConnect();
         Campaign campaign = new Campaign();
         PreparedStatement preparedStatement = null;
@@ -288,8 +289,12 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             e.printStackTrace();
         } finally {
             closeConnection();
+            //region Instrumentation Debug
+            log.debug("Saliendo del metodo getCampaignByTemplate("+ templateId+") con retorno: " +campaign);
+            //endregion
             return campaign;
         }
+
     }
 
 
@@ -301,6 +306,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      */
     @Override
     public ArrayList<Template> getTemplatesByCampaign(int userId, int companyId) {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getTemplatesByCampaign("+userId+","+companyId+")" );
+        //endregion
         ArrayList<Template> templateArrayList = new ArrayList<>();
         ArrayList<Campaign> campaignArrayList = new ArrayList<>();
         Connection _conn = getBdConnect();
@@ -323,6 +331,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             e.printStackTrace();
         }finally {
             closeConnection();
+            //region Instrumentation Debug
+            log.debug("Saliendo dell metodo getTemplatesByCampaign("+userId+","+companyId+") con retorno: " +templateArrayList);
+            //endregion
             return templateArrayList;
         }
     }
@@ -334,6 +345,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      */
     @Override
     public Application getApplicationByTemplate(int templateId) {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getApplicationByTemplate("+templateId+")" );
+        //endregion
         Application _application = new Application();
         Connection _conn = getBdConnect();
 
@@ -358,6 +372,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }
 
         closeConnection();
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo getApplicationByTemplate("+templateId+") con retorno: " +_application);
+        //endregion
         return _application;
     }
 
@@ -368,6 +385,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      */
     @Override
     public ArrayList<Channel> getChannelsByTemplate(int templateId) {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getChannelsByTemplate("+templateId+")" );
+        //endregion
         ArrayList<Channel> channels = new ArrayList<>();
         Connection _conn = getBdConnect();
         try {
@@ -401,6 +421,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             e.printStackTrace();
         }finally{
             closeConnection();
+            //region Instrumentation Debug
+            log.debug("Saliendo del metodo getChannelsByTemplate("+templateId+") con retorno:"+channels);
+            //endregion
             return channels;
         }
     }
@@ -413,6 +436,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      */
     @Override
     public ArrayList<Privilege> getTemplatePrivilegesByUser(int userId, int companyId) {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getTemplatePrivilegesByUser("+userId+","+companyId+")" );
+        //endregion
         ArrayList<Privilege> privileges = new ArrayList<>();
         Connection _conn = getBdConnect();
         try {
@@ -433,6 +459,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             e.printStackTrace();
         }
         closeConnection();
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo getTemplatePrivilegesByUser("+userId+","+companyId+") con retorno: "+privileges );
+        //endregion
         return privileges;
     }
 
@@ -445,6 +474,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      */
     @Override
     public ArrayList<Campaign> getCampaignsByUserOrCompany(int userId, int companyId){
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getCampaignsByUserOrCompany("+userId+","+companyId+")" );
+        //endregion
         ArrayList<Campaign> campaignArrayList = new ArrayList<>();
         Connection _conn = getBdConnect();
         try{
@@ -475,6 +507,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             e.printStackTrace();
         } finally {
             closeConnection();
+            //region Instrumentation Debug
+            log.debug("Saliendo del metodo getCampaignsByUserOrCompany("+userId+","+companyId+") con retorno:" +campaignArrayList );
+            //endregion
             return campaignArrayList;
         }
     }
@@ -485,6 +520,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * @param templateId
      */
     private void postChannelIntegrator(JsonArray channelIntegratorList, int templateId) {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo postChannelIntegrator("+channelIntegratorList+","+templateId+")" );
+        //endregion
         JsonObject channelIntegrator;
         int channel;
         int integrator;
@@ -507,6 +545,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }catch(Exception e){
             e.printStackTrace();
         } finally {
+            //region Instrumentation Debug
+            log.debug("Saliendo del metodo postChannelIntegrator("+channelIntegratorList+","+templateId+")" );
+            //endregion
             closeConnection();
         }
     }
@@ -518,7 +559,12 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * otherwise it returns false.
      */
     public boolean updateTemplateData(String json){
+        boolean rest = false;
         try {
+
+            //region Instrumentation Debug
+            log.debug("Entrando a el metodo updateTemplateData("+json+")" );
+            //endregion
             Gson gson = new Gson();
             //recibimos el objeto json
             JsonParser parser = new JsonParser();
@@ -544,44 +590,17 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             IDAOPlanning daoPlanning = DAOAbstractFactory.getFactory().createDaoPlanning();
             daoPlanning.updatePlanning(planning,gsonObj.get("templateId").getAsInt());
 
-            return true;
+
+            rest= true;
         } catch (Exception e){
             System.out.println(e);
-            return false;
+            rest = false;
         }
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo updateTemplateData("+json+") con retorno:" +true);
+        //endregion
+        return rest;
     }
-    /*@Override
-    public boolean updateTemplateData(Entity e) {
-        Template _t = (Template) e;
-        DAOParameter _daoParameter = DAOFactory.instaciateDaoParameter();
-        DAOMessage _daoMessage = DAOFactory.instaciateDaoMessage();
-        DAOPlanning _daoPlanning = DAOFactory.instaciateDaoPlanning();
-
-        try {
-            updateTemplate(_t.getCampaign().get_id(), _t.getApplication().get_idApplication(), _t.getUser().get_id());
-
-            //insertamos los nuevos parametros
-            _daoParameter.postParameter( _t.getMessage().getParameterArrayList(), _t.getCompanyId() ); //Este codigo no va aqui
-
-            //update de mensaje
-            _daoMessage.updateMessage(_t.getMessage(), _t.getCompanyId(), _t.get_id());
-
-            //update de Channel Integrator
-            //JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
-            //updateChannelIntegrator(channelIntegrator,gsonObj.get("templateId").getAsInt());
-
-            //planning
-            _daoPlanning.updatePlanning( _t.getPlanning(), _t.get_id());
-
-
-        } catch (Exception ex){
-            System.out.println(ex);
-            return false;
-        }
-
-        this.closeConnection();
-        return true;
-    }*/
 
 
     /**
@@ -592,6 +611,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      */
     @Override
     public void updateTemplate(int campaignId, int applicationId, int templateId ) {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo updateTemplate("+campaignId+","+applicationId+","+templateId+")" );
+        //endregion
         Connection _conn = getBdConnect();
 
         PreparedStatement preparedStatement = null;
@@ -617,6 +639,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             e.printStackTrace();
         }
         closeConnection();
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo updateTemplate("+campaignId+","+applicationId+","+templateId+")" );
+        //endregion
     }
 
     /**
@@ -625,6 +650,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * @param templateId
      */
     private void updateChannelIntegrator(JsonArray channelIntegratorList, int templateId) {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo updateChannelIntegrator("+channelIntegratorList+","+templateId+")" );
+        //endregion
         Connection _conn = this.getBdConnect();
         PreparedStatement _ps = null;
         try{
@@ -639,6 +667,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         } finally {
             this.closeConnection();
         }
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo updateChannelIntegrator("+channelIntegratorList+","+templateId+")" );
+        //endregion
     }
 
     /**
@@ -647,6 +678,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      */
     @Override
     public void deleteTemplate(int id){
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo deleteTemplate("+id+")" );
+        //endregion
         try{
             Connection _conn = this.getBdConnect();
             PreparedStatement _ps = _conn.prepareCall(DELETE);
@@ -655,6 +689,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }catch( SQLException ex ){
             ex.printStackTrace();
         }
+        //region Instrumentation Debug
+        log.debug("Salinedo del metodo deleteTemplate("+id+")" );
+        //endregion
     }
 
     /**
@@ -663,6 +700,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
      * @return
      */
     private Entity createTemplate(ResultSet _rs) throws ParameterDoesntExistsException, MessageDoesntExistsException{
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo createTemplate("+_rs+")" );
+        //endregion
         Entity _t = null;
         try{
             int templateId = _rs.getInt("tem_id");
@@ -711,6 +751,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             throw new MessageDoesntExistsException( e );
         }
 
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo createTemplate("+_rs+") con retorno: "+_t );
+        //endregion
         return _t;
     }
 }

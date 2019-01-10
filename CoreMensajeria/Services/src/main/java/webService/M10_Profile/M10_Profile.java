@@ -92,7 +92,7 @@ public class M10_Profile {
         // 5. Return DTO
         return response;
     }
-    @GET
+    /*@GET
     @Path("/companies")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCompaniesByUser(@QueryParam("userId") int userId){
@@ -114,7 +114,7 @@ public class M10_Profile {
         Response response = null;
 
         return response;
-    }
+    }*/
 
     /**
      * this method is responsible for editing a user profile (non-administrator)
