@@ -6,20 +6,30 @@ import Exceptions.DatabaseConnectionProblemException;
 import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M04_Integrator.IDAOIntegrator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
 public class CommandGetIntegratorByChannel extends Command {
+
     private int _id;
     private ArrayList<Entity> _entityList;
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
 
     public CommandGetIntegratorByChannel(int id) {
+        //region Instrumentation Debug
+        log.debug("Entrando al constructor CommandGetIntegratorByChannel");
+        //endregion
         this._id = id;
         this._entityList = null;
     }
 
     @Override
     public void execute()throws DatabaseConnectionProblemException,ChannelNotFoundException {
+        //region Instrumentation Debug
+        log.debug("Entrando al metodo execute CommandGetIntegratorByChannel");
+        //endregion
         IDAOIntegrator _dao =DAOFactory.instanciateDaoIntegrator();
         _entityList = _dao.listIntegratorByChannel(_id);
     }
