@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
@@ -24,15 +25,17 @@ public class CommandSendMessage extends Command {
 
     private ArrayList<Message> _verifiedMessages;
     private Template _template;
+    private Date _dateToBeSent;
     final static Logger log = LogManager.getLogger("CoreMensajeria");
 
     /**
      * Constructor de la clase CommandSendMessage.
      * @param verifiedParameter parametros verificados.
      */
-    public CommandSendMessage(VerifiedParameter verifiedParameter){
+    public CommandSendMessage(VerifiedParameter verifiedParameter, Date dateToBeSent){
         _verifiedMessages = verifiedParameter.get_verifiedMessages();
         _template = verifiedParameter.get_template();
+        _dateToBeSent = dateToBeSent;
     }
 
     /**
@@ -40,7 +43,7 @@ public class CommandSendMessage extends Command {
      * SMS y/o Integrador.
      */
     @Override
-    public void execute() throws UnexpectedErrorException {
+    public void execute() throws Exception {
         ArrayList<Channel> _channels = _template.getChannels();
 
         for(Message message : _verifiedMessages) {
@@ -58,16 +61,23 @@ public class CommandSendMessage extends Command {
 
                 for(Entity entity : integrators){
                     Integrator integrator = (Integrator)entity;
-                    if (integrator.isEnabled()) {
-                        if(channel.get_nameChannel().equalsIgnoreCase("SMS")){ ///*** MOSCA CON ESTO
-                            //integrator.sendMessage(finalMessage,telefono,"Valor a cambiar");
-                            System.out.println(finalMessage + " destino " +  telefono);
-                        }else{
-                            //integrator.sendMessage(finalMessage,correo,"Valor a cambiar"); ///*** MOSCA CON ESTO
-                            System.out.println(finalMessage + " destino " +  correo);
+                    try {
+                        if (integrator.isEnabled()) {
+                            if (channel.get_nameChannel().equalsIgnoreCase("SMS")) {
+                                //integrator.sendMessage(finalMessage,telefono,"Valor a cambiar");
+                                log.debug( finalMessage + " destino " + telefono );
+                            } else {
+                                //integrator.sendMessage(finalMessage,correo,"Valor a cambiar");
+                                log.debug( finalMessage + " destino " + correo );
+                            }
                         }
+                       Command<Entity> sc = CommandsFactory.createCommandInsertMessage(_template, integrator.get_id(),
+                                channel.get_id(), this._dateToBeSent);
+                        sc.execute();
+                    }catch (Exception e){
+                        log.error("Error al insertar en base de datos");
+                        throw e;
                     }
-
                 }
             }
         }
