@@ -2,6 +2,10 @@ package Persistence.Factory;
 
 import Persistence.IDAOGeographicalRegion;
 import Persistence.IDAOProfile;
+import Persistence.M04_Integrator.DAOIntegrator;
+import Persistence.M04_Integrator.IDAOIntegrator;
+import Persistence.M05_Channel.DAOChannel;
+import Persistence.M05_Channel.IDAOChannel;
 import Persistence.IDAO_Statistic;
 import Persistence.IDAO_StatisticEstrella;
 import Persistence.Postgres.M09_Statistics.*;
@@ -19,6 +23,15 @@ public class PostgresFactory extends DAOAbstractFactory {
         return new DAOGeographicalRegionPostgres();
     }
 
+    @Override
+    public IDAOIntegrator createDAOIntegrator() {
+        return new DAOIntegrator();
+    }
+
+    @Override
+    public IDAOChannel createDAOChannel() {
+        return new DAOChannel();
+    }
     public IDAO_StatisticEstrella instanciateDaoStatisticsEstrella() { return new DAOSPostgrestatisticEstrella(); }
 
     public IDAO_Statistic instanciateDAOStatistic() { return new DAOSPostgrestatistic();  }
