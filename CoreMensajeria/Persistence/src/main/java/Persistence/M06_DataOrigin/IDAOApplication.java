@@ -20,5 +20,5 @@ public interface IDAOApplication extends IDAO {
 
     public Application updateApplication(int id, int status) throws DatabaseConnectionProblemException, ApplicationNotFoundException;
 
-    public Application createApplication (AddApplicationData app) throws DatabaseConnectionProblemException;
+    public Application createApplication (Entity app) throws DatabaseConnectionProblemException;
 }

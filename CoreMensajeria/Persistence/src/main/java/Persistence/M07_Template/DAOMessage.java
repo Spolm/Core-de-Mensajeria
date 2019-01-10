@@ -10,6 +10,8 @@ import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Persistence.DAO;
 import Persistence.DAOFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +28,7 @@ public class DAOMessage extends DAO implements IDAOMessage {
     final String POST_PARAMETER_OF_MESSAGE = "{CALL m07_postparameterofmessage(?,?,?)}";
     final String DELETE_MESSAGE = "{CALL m07_deletemessage(?)}";
     final String DELETE_MESSAGE_BY_ID = "{CALL m07_deletemessagebyid(?)}";
-
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
 
     @Override
     public void create(Entity e) {
@@ -42,6 +44,9 @@ public class DAOMessage extends DAO implements IDAOMessage {
      */
     @Override
     public Entity postMessage(String message, int companyId,String[] parameters, int templateId ) {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo postMessage("+message+","+companyId+","+parameters+","+templateId+")" );
+        //endregion
         Message _me = null;
         Connection _conn = getBdConnect();
         int messageId = 0;
@@ -58,13 +63,24 @@ public class DAOMessage extends DAO implements IDAOMessage {
             messageId = _rs.getInt(1);
             this.postParametersOfMessage(messageId, parameters,companyId);
             _me = ( Message )this.getMessage(templateId);
-
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo postMessage("+message+","+companyId+","+parameters+","+templateId+") exitosamente");
+            //endregion
         } catch ( SQLException e1 ) {
             e1.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo postMessage("+message+","+companyId+","+parameters+","+templateId+") arrojo la excepcion:" + e1.getMessage());
+            //endregion
         } catch ( ParameterDoesntExistsException e ){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo postMessage("+message+","+companyId+","+parameters+","+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } catch ( MessageDoesntExistsException e ){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo postMessage("+message+","+companyId+","+parameters+","+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }finally{
             closeConnection();
             return _me;
@@ -91,6 +107,9 @@ public class DAOMessage extends DAO implements IDAOMessage {
      */
     @Override
     public Entity getMessage(int templateId) throws ParameterDoesntExistsException, MessageDoesntExistsException{
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getMessage("+templateId+")" );
+        //endregion
         Entity _m  = null;
         Connection _conn = getBdConnect();
         DAOParameter _daoParameter = DAOFactory.instaciateDaoParameter();
@@ -104,15 +123,26 @@ public class DAOMessage extends DAO implements IDAOMessage {
 
             if(_rs.next())
             _m = this.createMessage(_rs);
-
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getMessage("+templateId+") exitosamente");
+            //endregion
         } catch ( SQLException e ) {
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getMessage("+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
             throw new MessageDoesntExistsException
                     ("Error: No existe mensaje para esta plantilla con id:"
                             + templateId, e, templateId);
         } catch ( ParameterDoesntExistsException e ){
+            //region Instrumentation Error
+            log.error("El metodo getMessage("+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
             throw new ParameterDoesntExistsException( "No hay mensajes para la plantilla " + templateId, e, templateId );
         } catch ( Exception e ){
+            //region Instrumentation Error
+            log.error("El metodo getMessage("+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
             e.printStackTrace();
         }
 
@@ -127,6 +157,9 @@ public class DAOMessage extends DAO implements IDAOMessage {
     @Override
     public ArrayList<Template> getMessages(ArrayList<Template> templateArrayList){
         try {
+            //region Instrumentation Debug
+            log.debug("Entrando a el metodo getMessages("+templateArrayList+")" );
+            //endregion
             Connection _conn = this.getBdConnect();
             PreparedStatement preparedStatement = _conn.prepareCall( GET_ALL_MESSAGES );
             for(int x = 0; x < templateArrayList.size(); x++){
@@ -139,10 +172,19 @@ public class DAOMessage extends DAO implements IDAOMessage {
                 message.setParameters(ParameterHandler.getParametersByMessage(message.get_id()));
                 templateArrayList.get(x).setMessage(message);
             }
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getMessages("+templateArrayList+") exitosamente");
+            //endregion
         }catch (SQLException e) {
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getMessages("+templateArrayList+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }catch(Exception e){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getMessages("+templateArrayList+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }finally {
             this.closeConnection();
             return templateArrayList;
@@ -176,11 +218,19 @@ public class DAOMessage extends DAO implements IDAOMessage {
 
                 _res = true;
             }
-
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo postParametersOfMessage("+messageId+","+parameters+","+companyId+")" );
+            //endregion
         }catch ( SQLException e1 ) {
             e1.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo postParametersOfMessage("+messageId+","+parameters+","+companyId+") arrojo la excepcion:" + e1.getMessage());
+            //endregion
         }catch (Exception e){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo postParametersOfMessage("+messageId+","+parameters+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } finally {
             closeConnection();
             return _res;
@@ -196,6 +246,9 @@ public class DAOMessage extends DAO implements IDAOMessage {
      */
     @Override
     public void updateMessage( String message, int templateId, String[] parameters,int companyId ) {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo updateMessage("+message+","+templateId+","+parameters+","+companyId+")" );
+        //endregion
         Message _me = null;
         Connection _conn = getBdConnect();
         int messageId = 0;
@@ -213,8 +266,14 @@ public class DAOMessage extends DAO implements IDAOMessage {
             messageId = _rs.getInt(1);
 
             updateParameterOfMessage(messageId, parameters,companyId);
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo updateMessage("+message+","+templateId+","+parameters+","+companyId+")" );
+            //endregion
         } catch ( SQLException e1 ) {
             e1.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo updateMessage("+message+","+templateId+","+parameters+","+companyId+") arrojo la excepcion:" + e1.getMessage());
+            //endregion
         }
 
         closeConnection();
@@ -228,7 +287,9 @@ public class DAOMessage extends DAO implements IDAOMessage {
      */
     @Override
     public void updateParameterOfMessage(int messageId, String[] parameters, int companyId) {
-
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo updateParameterOfMessage("+messageId+","+parameters+","+companyId+")" );
+        //endregion
         Connection _conn = getBdConnect();
         PreparedStatement _ps = null;
         try{
@@ -238,8 +299,14 @@ public class DAOMessage extends DAO implements IDAOMessage {
             _ps.execute();
 
             this.postParametersOfMessage(messageId,parameters,companyId);
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo updateParameterOfMessage("+messageId+","+parameters+","+companyId+")" );
+            //endregion
         } catch (Exception e){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo updateParameterOfMessage("+messageId+","+parameters+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } finally {
             closeConnection();
         }
@@ -250,6 +317,9 @@ public class DAOMessage extends DAO implements IDAOMessage {
      * @param _messageId
      */
     public void deleteMessage(int _messageId){
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo deleteMessage("+_messageId+")" );
+        //endregion
         try{
             Connection _conn = this.getBdConnect();
             PreparedStatement _ps = null;
@@ -257,9 +327,14 @@ public class DAOMessage extends DAO implements IDAOMessage {
             _ps = _conn.prepareCall(DELETE_MESSAGE_BY_ID);
             _ps.setInt(1,_messageId);
             _ps.execute();
-
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo deleteMessage("+_messageId+")" );
+            //endregion
         }catch(Exception e){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo deleteMessage("+_messageId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }finally{
             this.closeConnection();
         }
@@ -271,6 +346,9 @@ public class DAOMessage extends DAO implements IDAOMessage {
      * @return
      */
     private Entity createMessage( ResultSet _rs )throws ParameterDoesntExistsException{
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo createMessage("+_rs+")" );
+        //endregion
         Entity _m = null;
         try{
             //Parameters
@@ -283,11 +361,19 @@ public class DAOMessage extends DAO implements IDAOMessage {
                     _parameters,
                     _rs.getString("messagetext")
                     );
-
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo createMessage("+_rs+")" );
+            //endregion
         }catch ( ParameterDoesntExistsException ex ) {
+            //region Instrumentation Error
+            log.error("El metodo createMessage("+_rs+") arrojo la excepcion:" + ex.getMessage());
+            //endregion
             throw new ParameterDoesntExistsException( ex );
         }catch ( SQLException e1 ) {
             e1.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo createMessage("+_rs+") arrojo la excepcion:" + e1.getMessage());
+            //endregion
         }
 
         return _m;

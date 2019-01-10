@@ -1,33 +1,32 @@
 package M09_Statistics;
 
 import Entities.Entity;
-import Entities.M05_Channel.Channel;
 import Entities.M09_Statistics.Statistics;
 import Exceptions.CampaignDoesntExistsException;
-import Persistence.DAOFactory;
-import Persistence.M09_Statistics.DAOStatisticEstrella;
+import Persistence.Factory.DAOAbstractFactory;
+import Persistence.IDAO_StatisticEstrella;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DAOStatisticEstrellaTest {
-    DAOStatisticEstrella dao;
+class DAOSPostgrestatisticEstrellaTest {
+    IDAO_StatisticEstrella dao;
     Entity entity;
 
     @BeforeEach
     void setUp() {
-        dao = DAOFactory.instanciateDaoStatisticsEstrella();
+        DAOAbstractFactory factory = DAOAbstractFactory.getFactory();
+        dao = factory.instanciateDaoStatisticsEstrella();
     }
 
     @AfterEach
     void tearDown() {
-        dao.bdClose();
+        dao.close();
         entity = null;
     }
 
@@ -237,7 +236,7 @@ class DAOStatisticEstrellaTest {
             assertTrue(((Statistics) entity).getX().contains("Company " + i));
     }
 
- /*   @Test
+    @Test
     void getMessagesParamCampaign() {
         ArrayList<Integer> lista  = new ArrayList<>();
         String companyin = setParametersforQuery(lista,"and me.sen_com_id in ");
@@ -259,9 +258,9 @@ class DAOStatisticEstrellaTest {
         entity = dao.getMessagesParamCampaign(companyin, campaignin, channelin, integratorin, yearin, monthin,
                 weekofyearin, dayofweekin, dayofmonthin, dayofyearin, hourin, minutein, secondin, quarterin);
         assertNotNull(entity);
-        for (int i=1;i < 5; i++)
-            assertTrue(((Statistics) entity).getX().contains("Campaign " + i));
-    }*/
+        /*for (int i=1;i < 5; i++)
+            assertTrue(((Statistics) entity).getX().contains("Campaign " + i));*/
+    }
 
     @Test
     void getMessagesParamChannel() {

@@ -83,7 +83,7 @@ public class M02_Companies {
     @Produces("application/json")
     /**
      * Metodo Response que devuelve todas las compañias registradas en el sistema
-     * @return Response con status ok al encontrar la informacion solicitada
+     * @return Response con status ok al encontrar la informacion solicitada y la lista de companias
      */
     public Response getAllCompaniesPP() {
         Error error;
@@ -145,7 +145,7 @@ public class M02_Companies {
       /**
      * Metodo que recibe el id de un usuario y devuelve las compañias en las que es administrador
      * @param id posee el id del usuario
-     * @return Response con status ok al encontrar la informacion solicitada
+     * @return Response con status ok al encontrar la informacion solicitada y una lista de companias
      */
     public Response getCompaniesByUserPP( @PathParam("companyId") int id ){
         DTOIdCompany _dto = DTOFactory.CreateDTOIdCompany(id);
@@ -213,6 +213,11 @@ public class M02_Companies {
     @GET
     @Path("/GetCompaniesByResponsible/{idUser}")
     @Produces("application/json")
+    /**
+     * Metodo que consulta las companias de las cuales un usuario es responsable
+     * @param _id id de usuario al cual esta asociado esas companias
+     * @return Response con status ok al encontrar la informacion solicitada y la lista de companias
+     */
     public Response getCompaniesByResponsible(@PathParam("idUser") int _id) throws  CompanyDoesntExistsException {
         Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
         DTOIdCompany _dto = DTOFactory.CreateDTOIdCompany( _id );

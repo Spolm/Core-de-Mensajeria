@@ -1,11 +1,15 @@
 package webService.M06_DataOrigin;
 
+import DTO.M06_DataOrigin.DTOAddApplication;
+import Entities.Entity;
 import Entities.M06_DataOrigin.AddApplicationData;
 import Entities.M06_DataOrigin.Application;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M06_DataOrigin.CreateApplicationCommand;
 import Logic.M06_DataOrigin.UpdateApplicationCommand;
+import Mappers.M06_DataOrigin.MapperDTOAddApplication;
+import Mappers.MapperFactory;
 import com.google.gson.*;
 import Exceptions.ApplicationNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
@@ -190,12 +194,14 @@ public class M06_Application {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addApplication(AddApplicationData application){
+    public Response addApplication(DTOAddApplication application){
         try {
-            Command c = CommandsFactory.CreateApplication(application);
+            MapperDTOAddApplication _mapper = MapperFactory.mapperDTOAddAplication();
+            Entity _addApplication = _mapper.CreateEntity(application);
+            Command c = CommandsFactory.CreateApplication(_addApplication);
             c.execute();
             return Response.ok(this.generateSuccessAsJson("Aplicacion creada exitosamente.",
-                    (((CreateApplicationCommand) c).Return()))).build();
+                    ((CreateApplicationCommand) c).Return())).build();
         } catch (DatabaseConnectionProblemException e) {
             return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         } catch (Exception e) {

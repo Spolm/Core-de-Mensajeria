@@ -10,7 +10,8 @@ import Persistence.DAO;
 import Persistence.DAOFactory;
 import Persistence.M04_Integrator.DAOIntegrator;
 import Persistence.M04_Integrator.IDAOIntegrator;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +28,9 @@ import java.util.ArrayList;
 * @see Channel
 */
 public class DAOChannel extends DAO implements IDAOChannel {
+
     private final String SELECT_ALL_CHANNELS = "{call m04_getchannels()}";
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
     private Connection _conn;
 
     /**
@@ -49,6 +52,9 @@ public class DAOChannel extends DAO implements IDAOChannel {
     * @see Channel
     */
     public ArrayList<Entity> listChannel() throws DatabaseConnectionProblemException {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo listChannel DAOChannel");
+        //endregion
         try {
             ArrayList<Entity> channelList = new ArrayList<>();
             IDAOIntegrator daoIntegrator = DAOFactory.instanciateDaoIntegrator();
@@ -60,12 +66,24 @@ public class DAOChannel extends DAO implements IDAOChannel {
                 channel.set_integrators(daoIntegrator.listIntegratorByChannel(channel.get_id()));
                 channelList.add(channel);
             }
+        //region Intrumentation Info
+        log.info("Se ejecuto exitosamente el metodo listChannel DAOChannel");
+        //endregion
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo listChannel DAOChannel ");
+        //endregion
             return channelList;
         }
         catch (SQLException e) {
+        //region Instrumentation Error
+        log.error("El metodo listChannel arrojo la excepcion"+ e.getMessage()+"DAOChannel");
+        //endregion
             throw new DatabaseConnectionProblemException("Error de comunicacion con la base de datos.", e);
         }
         catch (ChannelNotFoundException e) {
+        //region Instrumentation Error
+        log.error("El metodo listChannel arrojo la excepcion"+ e.getMessage()+"DAOChannel");
+        //endregion
             throw new DatabaseConnectionProblemException("No se han encontrado canales.", e);
         }
     }
