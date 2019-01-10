@@ -1,7 +1,7 @@
 export class Integrator {
     apiIntegrator: string;
     enabled: boolean;
-    idIntegrator: number;
+    id: number;
     messageCost: number;
     nameIntegrator: string;
     threadCapacity: number;

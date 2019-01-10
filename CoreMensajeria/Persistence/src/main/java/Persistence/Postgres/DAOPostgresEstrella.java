@@ -1,12 +1,19 @@
-package Persistence;
+package Persistence.Postgres;
 
 import Entities.RegistryEstrella;
+import Persistence.IDAOEstrella;
+import Registry.Registry;
 
 import java.sql.*;
 
-public abstract class DAOEstrella implements IDAOEstrella{
+public abstract class DAOPostgresEstrella implements IDAOEstrella {
 
-    public Connection _conn = bdConnect();
+    private static final String PROPERTY_URL = "postgres.url";
+    private static final String PROPERTY_DRIVER = "postgres.driver";
+    private static final String PROPERTY_USERNAME = "postgres.username";
+    private static final String PROPERTY_PASSWORD = "postgres.password ";
+
+    public Connection _conn = getConnection();
     private Statement _st;
     private ResultSet _rs;
 
@@ -20,13 +27,19 @@ public abstract class DAOEstrella implements IDAOEstrella{
      * @see Connection
      * @see Statement
      */
-    private static Connection bdConnect()
+    private static Connection getConnection()
     {
+        String url = Registry.getInstance().getProperty(PROPERTY_URL);
+        String driver = Registry.getInstance().getProperty(PROPERTY_DRIVER);
+        String username = Registry.getInstance().getProperty(PROPERTY_USERNAME);
+        String password = Registry.getInstance().getProperty(PROPERTY_PASSWORD);
+
+        Connection connection = null;
         try
         {
 
-            Class.forName(RegistryEstrella.BD_CLASS_FOR_NAME );
-            return DriverManager.getConnection( RegistryEstrella.BD_URL,RegistryEstrella.BD_USER, RegistryEstrella.BD_PASSWORD );
+            Class.forName(RegistryEstrella.BD_CLASS_FOR_NAME);
+            connection = DriverManager.getConnection(RegistryEstrella.BD_URL, RegistryEstrella.BD_USER, RegistryEstrella.BD_PASSWORD);
         }
         catch ( ClassNotFoundException e )
         {
@@ -36,13 +49,13 @@ public abstract class DAOEstrella implements IDAOEstrella{
         {
             e.printStackTrace();
         }
-        return null;
+        return connection;
     }
 
 
     /**
      * Metodo que realiza un query a la base de datos con devolucion
-     * Realizar preferiblemente antes de bdConnect
+     * Realizar preferiblemente antes de getConnection
      * @param query
      * @return Tabla que representa la consulta del query
      * @throws SQLException Error en SQL
@@ -70,7 +83,7 @@ public abstract class DAOEstrella implements IDAOEstrella{
 
     /**
      * Metodo que realiza un query a la base de datos sin devolucion
-     * Realizar preferiblemente antes de bdConnect
+     * Realizar preferiblemente antes de getConnection
      * @param query
      * @return boolean
      * @throws SQLException Error en SQL
@@ -142,7 +155,7 @@ public abstract class DAOEstrella implements IDAOEstrella{
      * @param conn
      */
 
-    public static void bdClose( Connection conn ) {
+    public static void close(Connection conn ) {
         try{
             conn.close();
         }
@@ -156,7 +169,7 @@ public abstract class DAOEstrella implements IDAOEstrella{
      * la conexion a la base de datos del DAO
      */
 
-    public void bdClose() {
+    public void close() {
         try{
             _conn.close();
         }
