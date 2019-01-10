@@ -31,7 +31,10 @@ export class CreateCompanyComponent implements OnInit {
     this.companyService.addCompany(this.newCompany).toPromise().then(res => {
       //manejo de la respuesta del servicio
     });
-
+    this.toastr.success("Compania agregada Correctamente")
+    this.newCompany._name = null;
+    this.newCompany._desc = null;
+    
   }
   else {this.toastr.error("Algun Campo esta Vacio.");
       this.newCompany._name = null;

@@ -1,6 +1,5 @@
 package Mappers.M04_Integrator;
 
-import DTO.DTO;
 import DTO.DTOFactory;
 import DTO.M04_Integrator.DTOIntegrator;
 import Entities.Entity;
@@ -14,57 +13,37 @@ public class MapperIntegrator extends GenericMapper<DTOIntegrator> {
 
     @Override
     public DTOIntegrator CreateDto(Entity entity) {
-        Integrator _integrator = (Integrator) entity;
-        return DTOFactory.CreateDTOIntegrator(null, _integrator.getThreadCapacity(),
-                _integrator.getMessageCost(),_integrator.getNameIntegrator(), _integrator.getApiIntegrator(),
-                _integrator.isEnabled());
+        Integrator integrator = (Integrator) entity;
+        return DTOFactory.CreateDTOIntegrator(integrator.get_id(), integrator.getClass().getName(),
+                integrator.getThreadCapacity(), integrator.getMessageCost(),
+                integrator.getNameIntegrator(), integrator.getApiIntegrator(),
+                integrator.isEnabled());
     }
-
 
     @Override
     public Entity CreateEntity(DTOIntegrator dtoIntegrator) {
         return EntityFactory.CreateIntegrator(
-                dtoIntegrator.getIntegratorType(),-1,
+                dtoIntegrator.getIntegratorType(),dtoIntegrator.getId(),
                 dtoIntegrator.getNameIntegrator(), dtoIntegrator.getMessageCost(),
                 dtoIntegrator.getThreadCapacity(), dtoIntegrator.getApiIntegrator(),
                 dtoIntegrator.isEnabled());
     }
 
-
-
-
     @Override
     public List<DTOIntegrator> CreateDtoList(List<Entity> entities) {
-
-        try
-        {
-            ArrayList<DTOIntegrator> dtoIntegrators = new ArrayList<>();
-
-            for (Entity _integrator : entities) {
-                dtoIntegrators.add( CreateDto(_integrator));
-            }
-
-            return dtoIntegrators;
-
+        ArrayList<DTOIntegrator> dtoList = new ArrayList<>();
+        for (Entity _integrator : entities) {
+            dtoList.add( CreateDto(_integrator));
         }
-        catch (Exception e)
-        {
-            throw e;
-        }
+        return dtoList;
     }
 
     @Override
     public List<Entity> CreateEntityList(List<DTOIntegrator> dtoIntegrators) {
-
-        {
-            ArrayList<Entity> entityIntegrator = new ArrayList<>();
-
-            for (DTOIntegrator _dtointegrator : dtoIntegrators) {
-                entityIntegrator.add ( CreateEntity ( _dtointegrator ) );
-            }
-
-            return entityIntegrator ;
-
+        ArrayList<Entity> entityList = new ArrayList<>();
+        for (DTOIntegrator _dtointegrator : dtoIntegrators) {
+            entityList.add ( CreateEntity ( _dtointegrator ) );
         }
+        return entityList;
     }
 }

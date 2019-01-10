@@ -28,8 +28,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 
 /**
- * M07_Parameter class is an API that is responsible for requesting information
- * about the templates
+ * M07_Template es un API que es responsable de pedir informacion acerca de las plantillas.
  */
 
 @Path("/templates")
@@ -45,8 +44,8 @@ public class M07_Template {
 
 
     /**
-     * Method that returns all the templates filtered by a user and his company.
-     * @param userId id of the user
+     * Metodo que devuelve todas las plantillas filtradas por usuario y su compania.
+     * @param userId id del usuario
      * @param companyId id of the company
      * @return ArrayList of templates
      */
@@ -101,8 +100,8 @@ public class M07_Template {
     }
 
     /**
-     * this method returns a specific template
-     * @param id id of the template requested.
+     * Este metodo retorna una plantilla especifica.
+     * @param id id de la template que se pidio.
      * @return template
      */
     @GET
@@ -157,8 +156,7 @@ public class M07_Template {
     }
 
     /**
-     *
-     this method returns the privileges that a user has over the templates.
+     * Este metodo retorna los privilegios que un usuario tiene sobre una plantilla.
      * @param userId id of the user
      * @param companyId id of the company
      * @return
@@ -211,8 +209,7 @@ public class M07_Template {
 
     /**
      *
-     This method is responsible for updating the status
-     of a template in specific.
+     * Este metodo es responsable de actualizar el estatus de una plantilla en especifico.
      * @param templateId id of the template
      * @param userId id of the user
      * @return If the template was saved successfully it returns true,

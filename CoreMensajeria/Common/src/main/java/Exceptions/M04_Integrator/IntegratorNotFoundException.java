@@ -1,4 +1,6 @@
-package Exceptions;
+package Exceptions.M04_Integrator;
+
+import Exceptions.PersonalizedException;
 
 public class IntegratorNotFoundException extends PersonalizedException {
     public IntegratorNotFoundException() {

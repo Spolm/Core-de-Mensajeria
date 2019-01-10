@@ -4,34 +4,25 @@ import Entities.Entity;
 import Entities.EntityFactory;
 import Entities.M01_Login.Privilege;
 import Entities.M01_Login.User;
-import Entities.M01_Login.UserDAO;
-import Entities.M02_Company.Company;
 import Entities.M03_Campaign.Campaign;
 import Entities.M04_Integrator.Integrator;
-//import Entities.M04_Integrator.IntegratorDAO;
 import Entities.M05_Channel.Channel;
-//import Entities.M05_Channel.ChannelFactory;
 import Entities.M06_DataOrigin.Application;
-//import Entities.M06_DataOrigin.ApplicationDAO;
+import Exceptions.ApplicationNotFoundException;
 import Persistence.M06_DataOrigin.DAOApplication;
-import Entities.M07_Template.HandlerPackage.TemplateHandler;
-import Entities.M06_DataOrigin.ApplicationDAO;
-import Entities.M07_Template.HandlerPackage.*;
 import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.PlanningPackage.Planning;
 import Entities.M07_Template.StatusPackage.Status;
 import Entities.M07_Template.Template;
-import Entities.Sql;
-import Exceptions.CampaignDoesntExistsException;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Persistence.DAO;
 import Persistence.DAOFactory;
+import Persistence.Factory.DAOAbstractFactory;
 import com.google.gson.*;
 import Persistence.M03_Campaign.DAOCampaign;
 import Persistence.M01_Login.DAOUser;
-import Persistence.M05_Channel.DAOChannel;
 import Persistence.M04_Integrator.DAOIntegrator;
 
 import java.sql.Connection;
@@ -40,6 +31,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Clase para acceder a datos de la Plantilla en BD
+ */
 public class DAOTemplate extends DAO implements IDAOTemplate {
 
     final String CREATE_TEMPLATE_WITH_APP= "{CALL m07_posttemplate(?,?,?)}";
@@ -55,8 +49,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     final String UPDATE_TEMPLATE_WITH_APP = "{CALL m07_updatetemplate(?,?,?)}";
     final String UPDATE_TEMPLATE_WITHOUT_APP = "{CALL m07_updatetemplate2(?,?)}";
     final String CREATE_CHANNEL_INTEGRATOR = "{CALL m07_postChannelIntegrator(?,?,?)}";
-    private static String DELETE = "{CALL m07_deletetemplate(?)}";
-    private static final String DELETE_CHANNEL_INTEGRATOR = "{CALL m07_deleteChannelIntegrator(?)}";
+    final String DELETE = "{CALL m07_deletetemplate(?)}";
+    final String DELETE_CHANNEL_INTEGRATOR = "{CALL m07_deleteChannelIntegrator(?)}";
 
     @Override
     public void create(Entity e) {
@@ -73,9 +67,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     }
 
     /**
-     * This method is responsible for saving a template in specific.
-     * @param json string json with information
-     * @return If the template was saved successfully it returns true,
+     * Metodo para traer string en especifivo.
+     * @param json json con info
+     * @return Entidad con Plantilla si exitoso,
      * otherwise it returns false.
      */
     public Entity postTemplateData(String json){
@@ -88,17 +82,21 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             //se crea el template y se retorna su id
             int templateId = this.postTemplate(gsonObj.get("campaign").getAsInt(),gsonObj.get("applicationId").getAsInt(), gsonObj.get("userId").getAsInt());
             //se establece el template  como no aprobado
-            DAOStatus daoStatus = DAOFactory.createDAOStatus();
+
+            IDAOStatus daoStatus = DAOAbstractFactory.getFactory().createDAOStatus();
             //StatusHandler.postTemplateStatusNoAprovado(templateId);
             daoStatus.postTemplateStatusNotApproved(templateId);
             //insertamos los nuevos parametros
             String[] parameters = gson.fromJson(gsonObj.get("newParameters").getAsJsonArray(),String[].class);
-            DAOFactory.instaciateDaoParameter().postParameter(parameters,gsonObj.get("company").getAsInt());
+
+            IDAOParameter daoParameter = DAOAbstractFactory.getFactory().createDaoParameter();
+            daoParameter.postParameter(parameters,gsonObj.get("company").getAsInt());
             //obtenemos el valor del mensaje,y parametros
             parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
 
             String message = gsonObj.get("message").getAsString();
-            DAOFactory.instaciateDaoMessage().postMessage(message,gsonObj.get("company").getAsInt(),parameters,templateId);
+            IDAOMessage daoMessage = DAOAbstractFactory.getFactory().createDaoMessage();
+            daoMessage.postMessage(message,gsonObj.get("company").getAsInt(),parameters,templateId);
 
             //obtenemos los valores de los canales e integradores
             JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
@@ -106,7 +104,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
             //planning
             String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
-            PlanningHandler.postPlanning(planning,templateId);
+            IDAOPlanning daoPlanning = DAOAbstractFactory.getFactory().createDaoPlanning();
+            daoPlanning.postPlanning(planning,templateId);
 
             return this.get(templateId);
         } catch (Exception e){
@@ -255,14 +254,14 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     }
 
     /**
-     * Get campaing by template
+     * Busca campaña por plantilla
      * @param templateId
      * @return
      */
     @Override
     public Campaign getCampaignByTemplate(int templateId) {
 
-        Connection _conn = this.getBdConnect();
+        Connection _conn = getBdConnect();
         Campaign campaign = new Campaign();
         PreparedStatement preparedStatement = null;
 
@@ -273,9 +272,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
             if( _rs.next() ){
 
-                //instanciando el api de campana
+                //Se busca una campaña por it
                 DAOCampaign daoCampaign = DAOFactory.instanciateDaoCampaign();
-                DAOCampaign campaignsService = new DAOCampaign();
                 Campaign c = EntityFactory.CreateCampaignId(_rs.getInt("tem_campaign_id"));
                 //obtener objeto campana con el id de campana del query anterior
                 campaign = daoCampaign.campaignById(c);
@@ -289,20 +287,28 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }catch (Exception e){
             e.printStackTrace();
         } finally {
-            this.closeConnection();
+            closeConnection();
             return campaign;
         }
     }
 
 
+    /**
+     * Busca plantillas por campaña
+     * @param userId
+     * @param companyId
+     * @return
+     */
     @Override
     public ArrayList<Template> getTemplatesByCampaign(int userId, int companyId) {
         ArrayList<Template> templateArrayList = new ArrayList<>();
         ArrayList<Campaign> campaignArrayList = new ArrayList<>();
-        Connection _conn = this.getBdConnect();
+        Connection _conn = getBdConnect();
         try{
+            //Se busca la campaña con el id del usuario y el id de la compañia
             campaignArrayList = this.getCampaignsByUserOrCompany(userId,companyId);
             for(int x = 0; x < campaignArrayList.size(); x++){
+                //Se busca todas las plantillas por la campaña encontrada
                 PreparedStatement preparedStatement = _conn.prepareCall(GET_ALL_TEMPLATES_BY_CAMPAIGN);
                 preparedStatement.setInt(1,campaignArrayList.get(x).get_idCampaign());
                 ResultSet _rs = preparedStatement.executeQuery();
@@ -316,52 +322,57 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }catch (Exception e){
             e.printStackTrace();
         }finally {
-            this.closeConnection();
+            closeConnection();
             return templateArrayList;
         }
     }
 
     /**
-     * Get application by template
+     * Busca aplicacion por plantilla
      * @param templateId
      * @return
      */
     @Override
     public Application getApplicationByTemplate(int templateId) {
-        //Entity to Return
-        Application application = new Application();
-        Connection _conn = this.getBdConnect();
+        Application _application = new Application();
+        Connection _conn = getBdConnect();
 
-        PreparedStatement preparedStatement = null;
+        PreparedStatement _ps = null;
 
         try {
-
-            preparedStatement = _conn.prepareCall( GET_APPLICATION_BY_TEMPLATE );
-            preparedStatement.setInt( 1, templateId );
-            ResultSet _rs = preparedStatement.executeQuery();
+            //Se busca aplicacion por plantilla
+            _ps = _conn.prepareCall( GET_APPLICATION_BY_TEMPLATE );
+            _ps.setInt( 1, templateId );
+            ResultSet _rs = _ps.executeQuery();
             _rs.next();
-            DAOApplication applicationService = new DAOApplication();
-            application = applicationService.getApplication
-                    (_rs.getInt("applicationId"));
+            DAOApplication _daoApplication = DAOFactory.instanciateDaoApplication();
+            _application = _daoApplication.getApplication(_rs.getInt("applicationId"));
 
         }
         catch (SQLException el){
             el.printStackTrace();
+        }catch ( ApplicationNotFoundException e ){
+            e.printStackTrace();
         }catch (Exception e){
-        e.printStackTrace();
+            e.printStackTrace();
         }
 
-        this.closeConnection();
-        return application;
+        closeConnection();
+        return _application;
     }
 
+    /**
+     * Buscar Canales por Plantilla
+     * @param templateId
+     * @return
+     */
     @Override
     public ArrayList<Channel> getChannelsByTemplate(int templateId) {
         ArrayList<Channel> channels = new ArrayList<>();
-        Connection _conn = this.getBdConnect();
+        Connection _conn = getBdConnect();
         try {
 
-            // Search the Channel
+            //Busca el canal
             PreparedStatement preparedStatement = _conn.prepareCall( GET_CHANNEL_BY_TEMPLATE );
             preparedStatement.setInt(1,templateId);
 
@@ -389,13 +400,13 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         } catch (Exception e){
             e.printStackTrace();
         }finally{
-            this.closeConnection();
+            closeConnection();
             return channels;
         }
     }
 
     /**
-     * Get privileges
+     * Buscar privilegios
      * @param userId
      * @param companyId
      * @return
@@ -403,12 +414,14 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     @Override
     public ArrayList<Privilege> getTemplatePrivilegesByUser(int userId, int companyId) {
         ArrayList<Privilege> privileges = new ArrayList<>();
-        Connection _conn = this.getBdConnect();
+        Connection _conn = getBdConnect();
         try {
+            //Se busca los privilegios por usuario y compañia
             PreparedStatement preparedStatement = _conn.prepareCall(GET_PRIVILEGES_TEMPLATE);
             preparedStatement.setInt(1,userId);
             preparedStatement.setInt(2,companyId);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             while(resultSet.next()){
                 Privilege privilege = new Privilege();
                 privilege.set_idPrivileges(resultSet.getInt("pri_id"));
@@ -419,36 +432,41 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.closeConnection();
+        closeConnection();
         return privileges;
     }
 
 
+    /**
+     * Buscar campaña por Usuario o Compañia
+     * @param userId
+     * @param companyId
+     * @return
+     */
+    @Override
     public ArrayList<Campaign> getCampaignsByUserOrCompany(int userId, int companyId){
         ArrayList<Campaign> campaignArrayList = new ArrayList<>();
-        Connection connection = this.getBdConnect();
+        Connection _conn = getBdConnect();
         try{
-            PreparedStatement preparedStatement = connection.prepareCall(GET_CAMPAIGN_BY_USER_COMPANY);
+            PreparedStatement _ps = _conn.prepareCall(GET_CAMPAIGN_BY_USER_COMPANY);
+            //Si existen los dos Id's, se busca por los dos, si existe solo el id de usuario se busca solo por usuario
             if((userId!=0)&&(companyId!=0)){
-                preparedStatement.setInt(1,0);
-                preparedStatement.setInt(2,userId);
-                preparedStatement.setInt(3,companyId);
+                _ps.setInt(1,0);
+                _ps.setInt(2,userId);
+                _ps.setInt(3,companyId);
             }else if(userId!=0){
-                preparedStatement.setInt(1,userId);
-                preparedStatement.setInt(2,0);
-                preparedStatement.setInt(3,0);
+                _ps.setInt(1,userId);
+                _ps.setInt(2,0);
+                _ps.setInt(3,0);
             }else{
                 return null;
             }
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()){
-                Campaign campaign = new Campaign();
-                campaign.set_idCampaign(resultSet.getInt("cam_id"));
-                campaign.set_nameCampaign(resultSet.getString("cam_name"));
-                campaign.set_descCampaign(resultSet.getString("cam_description"));
-                campaign.set_statusCampaign(resultSet.getBoolean("cam_status"));
-                campaign.set_startCampaign(resultSet.getDate("cam_start_date"));
-                campaign.set_endCampaign(resultSet.getDate("cam_end_date"));
+            ResultSet _rs = _ps.executeQuery();
+            while(_rs.next()){
+                Campaign campaign = EntityFactory.CreateFullCampaign(_rs.getInt("cam_id"),
+                        _rs.getString("cam_name"),_rs.getString("cam_description"),
+                        _rs.getBoolean("cam_status"),_rs.getDate("cam_start_date"),
+                        _rs.getDate("cam_end_date"),companyId);
                 campaignArrayList.add(campaign);
             }
         }catch(SQLException e){
@@ -456,13 +474,13 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         } catch (Exception e){
             e.printStackTrace();
         } finally {
-            this.closeConnection();
+            closeConnection();
             return campaignArrayList;
         }
     }
 
     /**
-     * Store Channel and Integrator NEED TO CHANGE THIS
+     * Guarda relacion con canales e integradores
      * @param channelIntegratorList
      * @param templateId
      */
@@ -470,13 +488,13 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         JsonObject channelIntegrator;
         int channel;
         int integrator;
-        Connection _conn = this.getBdConnect();
+        Connection _conn = getBdConnect();
         PreparedStatement _ps = null;
         try {
             for (JsonElement list : channelIntegratorList){
                 channelIntegrator = list.getAsJsonObject();
-                channel = channelIntegrator.get("channel").getAsJsonObject().get("idChannel").getAsInt();
-                integrator = channelIntegrator.get("integrator").getAsJsonObject().get("idIntegrator").getAsInt();
+                channel = channelIntegrator.get("channel").getAsJsonObject().get("_id").getAsInt();
+                integrator = channelIntegrator.get("integrator").getAsJsonObject().get("_id").getAsInt();
                 _ps = _conn.prepareCall(CREATE_CHANNEL_INTEGRATOR);
                 _ps.setInt(1,templateId);
                 _ps.setInt(2,channel);
@@ -489,14 +507,14 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }catch(Exception e){
             e.printStackTrace();
         } finally {
-            this.closeConnection();
+            closeConnection();
         }
     }
 
     /**
-     * This method is responsible for modifying a specific template.
-     * @param json string json with information
-     * @return If the template was saved successfully it returns true,
+     * Modificar plantilla
+     * @param json
+     * @return
      * otherwise it returns false.
      */
     public boolean updateTemplateData(String json){
@@ -509,18 +527,22 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
             //insertamos los nuevos parametros
             String[] parameters = gson.fromJson(gsonObj.get("newParameters").getAsJsonArray(),String[].class);
-            DAOFactory.instaciateDaoParameter().postParameter(parameters,gsonObj.get("company").getAsInt());
+            IDAOParameter daoParameter = DAOAbstractFactory.getFactory().createDaoParameter();
+            daoParameter.postParameter(parameters,gsonObj.get("company").getAsInt());
+
             //update de mensaje
             parameters = gson.fromJson(gsonObj.get("parameters").getAsJsonArray(),String[].class);
-            String message = gsonObj.get("message").getAsString();
-            DAOFactory.instaciateDaoMessage().updateMessage(gsonObj.get("message").getAsString(),gsonObj.get("templateId").getAsInt(),parameters,gsonObj.get("company").getAsInt());
+
+            IDAOMessage daoMessage = DAOAbstractFactory.getFactory().createDaoMessage();
+            daoMessage.updateMessage(gsonObj.get("message").getAsString(),gsonObj.get("templateId").getAsInt(),parameters,gsonObj.get("company").getAsInt());
 
             //update de Channel Integrator
             JsonArray channelIntegrator = gsonObj.get("channel_integrator").getAsJsonArray();
             updateChannelIntegrator(channelIntegrator,gsonObj.get("templateId").getAsInt());
             //planning
             String[] planning = gson.fromJson(gsonObj.get("planning").getAsJsonArray(),String[].class);
-            PlanningHandler.updatePlanning(planning,gsonObj.get("templateId").getAsInt());
+            IDAOPlanning daoPlanning = DAOAbstractFactory.getFactory().createDaoPlanning();
+            daoPlanning.updatePlanning(planning,gsonObj.get("templateId").getAsInt());
 
             return true;
         } catch (Exception e){
@@ -561,9 +583,16 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         return true;
     }*/
 
+
+    /**
+     * Metodo que modifica tabla de plantilla
+     * @param campaignId
+     * @param applicationId
+     * @param templateId
+     */
     @Override
     public void updateTemplate(int campaignId, int applicationId, int templateId ) {
-        Connection _conn = this.getBdConnect();
+        Connection _conn = getBdConnect();
 
         PreparedStatement preparedStatement = null;
 
@@ -587,11 +616,11 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         }catch(Exception e){
             e.printStackTrace();
         }
-        this.closeConnection();
+        closeConnection();
     }
 
     /**
-     * Update Channel and integrator, NEED TO CHANGE THIS
+     * Moficiar relacion con canal e integrador
      * @param channelIntegratorList
      * @param templateId
      */
@@ -613,7 +642,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     }
 
     /**
-     * Delete Template
+     * Borra una plantilla
      * @param id
      */
     @Override
@@ -629,7 +658,7 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
     }
 
     /**
-     * Private function for creating Template Entity out of ResultSet
+     * Funcion para crear un entidad Plantilla
      * @param _rs
      * @return
      */
@@ -645,7 +674,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             Application _app = this.getApplicationByTemplate( templateId );
 
             //Message
-            Message _message = ( Message )DAOFactory.instaciateDaoMessage().getMessage( templateId );
+            IDAOMessage _daoMessage = DAOAbstractFactory.getFactory().createDaoMessage();
+            Message _message = ( Message )_daoMessage.getMessage( templateId );
 
             //user
             DAOUser _userDao = DAOFactory.instanciateDaoUser();
@@ -655,7 +685,8 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             ArrayList<Channel> _channels = this.getChannelsByTemplate( templateId );
 
             //Planning
-            Planning _planning = (Planning) DAOFactory.instaciateDaoPlanning().getPlanning( templateId );
+            IDAOPlanning _daoPlanning = DAOAbstractFactory.getFactory().createDaoPlanning();
+            Planning _planning = (Planning) _daoPlanning.getPlanning( templateId );
 
             //Status
             Status _status = Status.createStatus(_rs.getInt("tem_id"),

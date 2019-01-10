@@ -1,16 +1,15 @@
 package Entities.M04_Integrator;
+
 import Entities.Entity;
 
 /**
- * Clase abstracta Integrador que implementa la interfaz IIntegrador
- * que nos proporciona los métodos para trabajar con los integradores en concreto.
- *
- * @author José Salas
- * @author Manuel Espinoza
- * @author José Cedeño
- * @see IIntegrator
- */
-
+* Clase abstracta Integrador que implementa la interfaz IIntegrador
+* que nos proporciona los métodos para trabajar con los integradores en concreto.
+* @author Kevin Martinez
+* @author Braulio Picon
+* @author Alexander Fernandez
+* @see IIntegrator
+*/
 public abstract class Integrator  extends Entity implements IIntegrator{
     private int threadCapacity;
     private float messageCost;
@@ -19,17 +18,16 @@ public abstract class Integrator  extends Entity implements IIntegrator{
     private boolean enabled;
 
     /**
-     * Constructor de la clase Integrator
-     *
-     * @param idIntegrator   Id del Integrador.
-     * @param threadCapacity Capacidad de Hilos que soporta el integrador
-     * @param messageCost    Costo por mensaje
-     * @param nameIntegrator Nombre del integrador
-     * @param apiIntegrator  Token del Integrador
-     * @param enabled        Permite saber el estado en el que se encuentra el integrador
-     * @see Integrator
-     */
-
+    * Constructor de la clase Integrator
+    *
+    * @param idIntegrator   Id del Integrador.
+    * @param threadCapacity Capacidad de Hilos que soporta el integrador
+    * @param messageCost    Costo por mensaje
+    * @param nameIntegrator Nombre del integrador
+    * @param apiIntegrator  Token del Integrador
+    * @param enabled        Permite saber el estado en el que se encuentra el integrador
+    * @see Integrator
+    */
     public Integrator(int idIntegrator, int threadCapacity, float messageCost, String nameIntegrator, String apiIntegrator, boolean enabled) {
         this.set_id(idIntegrator);
         this.threadCapacity = threadCapacity;
@@ -72,11 +70,11 @@ public abstract class Integrator  extends Entity implements IIntegrator{
     }
 
     /**
-     * Nos retorna el estado en el que se encuentra el integrador
-     *
-     * @return Boolean
-     * @see MessageIntegrator
-     */
+    * Nos retorna el estado en el que se encuentra el integrador
+    *
+    * @return Boolean
+    * @see MessageIntegrator
+    */
     public boolean isEnabled() {
         return enabled;
     }

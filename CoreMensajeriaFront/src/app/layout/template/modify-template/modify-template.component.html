@@ -60,15 +60,15 @@
       <div class="form-row m-6" *ngFor="let channel of channelsJson; let i = index">
 
         <div class="form-group col-2" id="{{channel.idChannel}}">
-          {{channel.nameChannel}}
+          {{channel._nameChannel}}
         </div>
 
         <div class="form-grup col-4">
           <div class="form-check">
-            <select class="form-control" id="integratorInput" name="integratorInput" [(ngModel)]="channel.descriptionChannel"
-              (change)="addIntegrator(channel, channel.descriptionChannel)">
-              <ng-container *ngFor="let integrator of channel.integrators">
-                <option *ngIf="integrator.enabled" [value]="integrator.idIntegrator">
+            <select class="form-control" id="integratorInput" name="integratorInput" [(ngModel)]="channel._descriptionChannel"
+              (change)="addIntegrator(channel, channel._descriptionChannel)">
+              <ng-container *ngFor="let integrator of channel._integrators">
+                <option *ngIf="integrator.enabled" [value]="integrator._id">
                   <p>
                     {{integrator.nameIntegrator}} | {{integrator.messageCost}} (bs.S)
                   </p>
@@ -86,7 +86,7 @@
       <div *ngFor="let channel_integrator of channels_integrators">
         <button type="button" class="btn btn-danger m-1" (click)="deleteChannel_Integrator(channel_integrator)">
             <i class="fa fa-trash"></i>
-          {{channel_integrator.channel.nameChannel}} | {{channel_integrator.integrator.nameIntegrator}}
+          {{channel_integrator.channel._nameChannel}} | {{channel_integrator.integrator.nameIntegrator}}
         </button>
       </div>
     </div>
@@ -154,7 +154,7 @@
               <ng-container *ngFor="let campaign of campaignsJson">
               <option *ngIf="campaign._statusCampaign == 1" [value]="campaign._idCampaign">
                 <p>
-                  {{application._nameApplication}} | {{application._descriptionApplication}}
+                  {{campaign._nameCampaign}}
                 </p>
               </option>
             </ng-container>

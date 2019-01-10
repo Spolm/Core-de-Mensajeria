@@ -6,6 +6,8 @@ public class Rol {
     private int _id;
     private String _name;
 
+    public Rol(){}
+
     public Rol(int _id, String _name) {
         this._id = _id;
         this._name = _name;

@@ -64,7 +64,7 @@ public class TemplateHandler {
                     template.setCampaign(campaignArrayList.get(x));
                     template.setApplication(getApplicationByTemplate(template.get_id()));
                     //template.setUser(userDAO.findByUsernameId(resultSet.getInt("tem_user_id")));
-                    template.setMessage(MessageHandler.getMessage(template.get_id()));
+                    //template.setMessage(MessageHandler.getMessage(template.get_id()));
                     template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
                     templateArrayList.add(template);
                 }
@@ -138,7 +138,7 @@ public class TemplateHandler {
                 template.set_id(resultSet.getInt("tem_id"));
                 template.setCreationDate(resultSet.getDate("tem_creation_date"));
                 //asignamos el mensaje y status del template
-                template.setMessage(MessageHandler.getMessage(template.get_id()));
+              //  template.setMessage(MessageHandler.getMessage(template.get_id()));
                 template.setStatus(Status.createStatus(resultSet.getInt("ts_id"),
                         resultSet.getString("sta_name")));
                 //asignamos canales, campaña y aplicacion
@@ -152,11 +152,7 @@ public class TemplateHandler {
                 template.setPlanning(PlanningHandler.getPlanning(template.get_id()));
             }
 
-        }catch (ParameterDoesntExistsException e) {
-            //logg
-        }catch (MessageDoesntExistsException e){
-            //logg
-        } catch(SQLException e){
+        }catch(SQLException e){
             throw new TemplateDoesntExistsException
                     ("Error: la plantilla " + id + " no existe", e, id);
         } catch (Exception e){

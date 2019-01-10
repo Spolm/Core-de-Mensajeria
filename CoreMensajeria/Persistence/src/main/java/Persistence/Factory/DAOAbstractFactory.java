@@ -2,6 +2,7 @@ package Persistence.Factory;
 
 import Persistence.IDAOGeographicalRegion;
 import Persistence.IDAOProfile;
+import Persistence.M07_Template.*;
 import Registry.Registry;
 
 public abstract class DAOAbstractFactory {
@@ -24,4 +25,14 @@ public abstract class DAOAbstractFactory {
     /*Crear DAOs usando determinada interfaz*/
     public abstract IDAOProfile createDAOProfile();
     public abstract IDAOGeographicalRegion createDAOGeographicalRegion();
+
+    //region M07
+
+    public abstract IDAOMessage createDaoMessage( );
+    public abstract IDAOTemplate createDaoTemplate( );
+    public abstract IDAOPlanning createDaoPlanning( );
+    public abstract IDAOParameter createDaoParameter( );
+    public abstract IDAOStatus createDAOStatus();
+
+    // end region
 }
