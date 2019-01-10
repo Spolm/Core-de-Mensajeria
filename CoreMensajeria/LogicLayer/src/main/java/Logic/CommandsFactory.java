@@ -115,9 +115,6 @@ public class CommandsFactory {
         return new FindByUsernameIdCommand(id);
     }
 
-    public static Command createScheduleMessage(VerifiedParameter verifiedParameters) {
-        return new CommandScheduleMessage(verifiedParameters);
-    }
 
     //region M09
 
