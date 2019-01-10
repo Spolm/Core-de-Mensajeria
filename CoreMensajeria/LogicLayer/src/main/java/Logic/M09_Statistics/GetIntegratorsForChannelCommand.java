@@ -1,11 +1,10 @@
 package Logic.M09_Statistics;
 
 import Entities.Entity;
-import Entities.M04_Integrator.Integrator;
 import Exceptions.M05_Channel.ChannelNotFoundException;
 import Logic.Command;
-import Persistence.DAOFactory;
-import Persistence.M09_Statistics.DAOStatistic;
+import Persistence.Factory.DAOAbstractFactory;
+import Persistence.IDAO_Statistic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +12,15 @@ import java.util.List;
 public class GetIntegratorsForChannelCommand extends Command {
 
     ArrayList<Entity> integrators;
-    DAOStatistic dao;
+    IDAO_Statistic dao;
     List<Integer> channelIds;
 
     public GetIntegratorsForChannelCommand(List<Integer> channelIds){ this.channelIds = channelIds;}
 
     @Override
     public void execute() throws ChannelNotFoundException {
-        dao = DAOFactory.instanciateDAOStatistic();
+        DAOAbstractFactory factory = DAOAbstractFactory.getFactory();
+        dao = factory.instanciateDAOStatistic();
         integrators = dao.getIntegratorsForChannel(channelIds);
     }
 
