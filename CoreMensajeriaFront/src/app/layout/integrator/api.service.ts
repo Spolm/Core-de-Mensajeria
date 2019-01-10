@@ -32,7 +32,7 @@ export class ApiService {
 
   public getIntegratorsPerChannel(index: number): Observable<Integrator[]>{
     return this.http
-    .get(API_URL + '/channel/i/' + index)
+    .get(API_URL + '/integrators/channel/' + index)
     .pipe( map( response => {
       const integrators = response.json();
       return integrators.map( (integrator) => new Integrator(integrator) );
@@ -45,7 +45,7 @@ export class ApiService {
 
   public disabledIntegrator(integrator: Integrator): Observable<any>{
     return this.http
-      .put(API_URL + '/integrators/disabled/' + integrator.idIntegrator, JSON.stringify(integrator))
+      .put(API_URL + '/integrators/disabled/' + integrator.id, JSON.stringify(integrator))
       .pipe(
         catchError( err => {
           this.handleError( "Error inhabilitando integrador ", err );
@@ -56,7 +56,7 @@ export class ApiService {
 
   public enabledIntegrator(integrator: Integrator): Observable<any>{
     return this.http
-      .put(API_URL + '/integrators/enabled/' + integrator.idIntegrator, JSON.stringify(integrator))
+      .put(API_URL + '/integrators/enabled/' + integrator.id, JSON.stringify(integrator))
       .pipe(
         catchError( err => {
           this.handleError( "Error habilitando integrador ", err );

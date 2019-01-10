@@ -9,4 +9,5 @@ public interface IDAOEstrella {
     public Entity read(Entity e) ;
 
     public Entity update(Entity e);
+
 }

@@ -7,13 +7,13 @@
       *ngFor="let channel of channels">
       <div class="card">
         <div class="card-body">
-          <h2 class="card-title text-center"><b>{{ channel.nameChannel }}</b></h2>
-          <p class="card-text text-center"> {{ channel.descriptionChannel }}  </p>
+          <h2 class="card-title text-center"><b>{{ channel._nameChannel }}</b></h2>
+          <p class="card-text text-center"> {{ channel._descriptionChannel }}  </p>
         </div>
           <h3 class="card-title text-center"> Integradores </h3>
           <ul class="list-group list-group-flush">
               <li class="list-group-item"
-                *ngFor="let integrator of channel.integrators">
+                *ngFor="let integrator of channel._integrators">
                 <p>{{ integrator.nameIntegrator }}
                 
                   <span *ngIf="integrator.enabled; else elseBlock" 

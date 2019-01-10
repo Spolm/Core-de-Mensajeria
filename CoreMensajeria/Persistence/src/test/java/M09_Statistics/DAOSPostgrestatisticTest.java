@@ -6,7 +6,8 @@ import Entities.M04_Integrator.Integrator;
 import Exceptions.M05_Channel.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
 import Persistence.DAOFactory;
-import Persistence.M09_Statistics.DAOStatistic;
+import Persistence.Factory.DAOAbstractFactory;
+import Persistence.IDAO_Statistic;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,13 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class DAOStatisticTest {
+class DAOSPostgrestatisticTest {
 
-    private DAOStatistic dao;
+    private IDAO_Statistic dao;
 
     @BeforeEach
     void setUp() {
-        dao = DAOFactory.instanciateDAOStatistic();
+        DAOAbstractFactory factory = DAOAbstractFactory.getFactory();
+        dao = factory.instanciateDAOStatistic();
     }
 
     @AfterEach

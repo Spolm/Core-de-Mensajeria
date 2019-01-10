@@ -7,6 +7,8 @@ import Logic.CommandsFactory;
 import Logic.M05_Channel.CommandGetAllChannels;
 import Mappers.M05_Channel.MapperChannel;
 import Mappers.MapperFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 @Path("/channel")
 public class M05_Channel {
 
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
     private MapperChannel _mapper = MapperFactory.createMapperChannel();
 
     /**
@@ -37,15 +40,27 @@ public class M05_Channel {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response listChannel() {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo listChannel ServiceChannel");
+        //endregion
         Response response;
         try {
             CommandGetAllChannels command = CommandsFactory.createCommandGetAllChannels();
             command.execute();
             ArrayList<DTOChannel> c = (ArrayList<DTOChannel>) _mapper.CreateDtoList(command.returnList());
             response = Response.ok().entity(c).build();
+        //region Intrumentation Info
+        log.info("Se ejecuto exitosamente el metodo listChannel ServiceChannel");
+        //endregion
         } catch (DatabaseConnectionProblemException e) {
             response = Response.status(500).entity(e.getMessage()).build();
+        //region Instrumentation Error
+        log.error("El metodo listChannel arrojo la excepcion"+ e.getMessage()+"ServiceChannel");
+        //endregion
         }
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo listChannel ServiceChannel ");
+        //endregion
         return response;
     }
 }
