@@ -6,8 +6,6 @@ import Exceptions.M08_SendMessageManager.TemplateNotApprovedException;
 import Logic.CommandsFactory;
 import Logic.M07_Template.CommandGetTemplate;
 
-import java.util.logging.Logger;
-
 /**
  * Comando que permite validar plantillas para determinar que la plantilla
  * esta aprovada y existe
@@ -35,26 +33,28 @@ public class CommandValidateTemplate extends CommandValidateParameter {
      */
     public void execute() throws Exception {
         set_valid(false);
-        Logger logger = Logger.getLogger(CommandValidateParameter.class.getName());
         CommandGetTemplate c = CommandsFactory.createCommandGetTemplate(this._id);
         try {
             c.execute();
             Template t = c.Return();
             if (t.get_id() > 0) {
-                if (t.getStatus().getStatusName().equals("Aprobado"))
+                if (t.getStatus().getStatusName().equals("Aprobado")) {
+                    log.info("Validación de la Plantilla Coorrecta");
                     this.set_valid(true);
+                }
                 else {
-                    logger.warning("Status Plantilla: " + t.getStatus().getStatusName());
+                    log.error("Status Plantilla: " + t.getStatus().getStatusName());
                     this.set_valid(false);
                     throw new TemplateNotApprovedException();
                 }
-            } else {
-                logger.warning("Plantilla no Existe");
+            }
+            else {
+                log.error("Plantilla no Existe");
                 this.set_valid(false);
                 throw new TemplateDoesntExistsException();
             }
         } catch (TemplateDoesntExistsException e) {
-            logger.warning("Plantilla no Existe");
+            log.error("Plantilla no Existe");
             this.set_valid(false);
             throw e;
         }
