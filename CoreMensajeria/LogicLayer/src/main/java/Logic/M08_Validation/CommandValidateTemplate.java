@@ -9,9 +9,15 @@ import Logic.M07_Template.CommandGetTemplate;
 import java.util.logging.Logger;
 
 /**
- * Comando para validar plantillas
+ * Comando que permite validar plantillas para determinar que la plantilla
+ * esta aprovada y existe
+ *
+ * @see CommandValidateParameter
  */
 public class CommandValidateTemplate extends CommandValidateParameter {
+    /**
+     * Id de la plantilla que se va a realizar la validacion.
+     */
     int _id;
 
     /**
@@ -23,6 +29,8 @@ public class CommandValidateTemplate extends CommandValidateParameter {
 
     /**
      * Realiza todas las validaciones a una plantilla
+     *
+     * @throws TemplateNotApprovedException  cuando la plantilla esta en estado no aprovado
      * @throws TemplateDoesntExistsException cuando no existe la plantilla que se está buscando
      */
     public void execute() throws Exception {
@@ -40,8 +48,7 @@ public class CommandValidateTemplate extends CommandValidateParameter {
                     this.set_valid(false);
                     throw new TemplateNotApprovedException();
                 }
-            }
-            else {
+            } else {
                 logger.warning("Plantilla no Existe");
                 this.set_valid(false);
                 throw new TemplateDoesntExistsException();
