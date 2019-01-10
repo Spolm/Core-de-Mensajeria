@@ -73,7 +73,7 @@ export class CreateUserComponent {
     this.user._roleUser = Number(this.role);
     this.user._rgUser = Number(this.town);
     this.userAdministrationService.postUser(this.user).subscribe((result) => {
-      if(result){console.log("peroleo")}
+      if(result){console.log(result)}
       else{console.log("no peroleo")}
     })
   }
