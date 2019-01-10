@@ -2,6 +2,9 @@ package Persistence.Factory;
 
 import Persistence.IDAOGeographicalRegion;
 import Persistence.IDAOProfile;
+import Persistence.IDAO_Statistic;
+import Persistence.IDAO_StatisticEstrella;
+import Persistence.Postgres.M09_Statistics.*;
 import Persistence.M07_Template.*;
 import Persistence.Postgres.M10_Profile.DAOGeographicalRegionPostgres;
 import Persistence.Postgres.M10_Profile.DAOProfilePostgres;
@@ -16,6 +19,9 @@ public class PostgresFactory extends DAOAbstractFactory {
         return new DAOGeographicalRegionPostgres();
     }
 
+    public IDAO_StatisticEstrella instanciateDaoStatisticsEstrella() { return new DAOSPostgrestatisticEstrella(); }
+
+    public IDAO_Statistic instanciateDAOStatistic() { return new DAOSPostgrestatistic();  }
     //region M07
 
     public DAOMessage createDaoMessage( ){

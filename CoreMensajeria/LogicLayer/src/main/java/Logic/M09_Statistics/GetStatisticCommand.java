@@ -3,15 +3,15 @@ package Logic.M09_Statistics;
 import Entities.Entity;
 import Exceptions.M09_Statistic.StatisticParametersNotFoundException;
 import Logic.Command;
-import Persistence.DAOFactory;
-import Persistence.M09_Statistics.DAOStatisticEstrella;
+import Persistence.Factory.DAOAbstractFactory;
+import Persistence.IDAO_StatisticEstrella;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class GetStatisticCommand extends Command<Map<String, Entity>> {
-    DAOStatisticEstrella dao;
+    IDAO_StatisticEstrella dao;
     String companyin;
     String campaignin;
     String channelin;
@@ -60,7 +60,8 @@ public class GetStatisticCommand extends Command<Map<String, Entity>> {
 
     @Override
     public void execute() throws StatisticParametersNotFoundException {
-        dao = DAOFactory.instanciateDaoStatisticsEstrella();
+        DAOAbstractFactory factory = DAOAbstractFactory.getFactory();
+        dao = factory.instanciateDaoStatisticsEstrella();
         if (flagCompany) {
             stats.put("companies", dao.getMessagesParamCompany(companyin, campaignin, channelin, integratorin, yearin, monthin, dayofweekin,
                     weekofyearin, dayofmonthin, dayofyearin, hourin, minutein, secondin, quarterin));
@@ -81,7 +82,7 @@ public class GetStatisticCommand extends Command<Map<String, Entity>> {
                     weekofyearin, dayofmonthin, dayofyearin, hourin, minutein, secondin, quarterin));
             //stats.add();
         }
-        dao.bdClose();
+        dao.close();
         if (!flagCampaign && !flagCompany && !flagChannel && !flagIntegrator){
             throw new StatisticParametersNotFoundException();
         }

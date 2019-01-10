@@ -2,18 +2,17 @@ package Logic.M09_Statistics;
 
 import Entities.Entity;
 import Logic.Command;
-import Persistence.DAOFactory;
-import Persistence.M09_Statistics.DAOStatisticEstrella;
-
-import java.sql.SQLException;
+import Persistence.Factory.DAOAbstractFactory;
+import Persistence.IDAO_StatisticEstrella;
 
 public class UpdateStarSchemaCommand extends Command {
 
-    private DAOStatisticEstrella dao;
+    private IDAO_StatisticEstrella dao;
 
     @Override
     public void execute() {
-        dao = DAOFactory.instanciateDaoStatisticsEstrella();
+        DAOAbstractFactory factory = DAOAbstractFactory.getFactory();
+        dao = factory.instanciateDaoStatisticsEstrella();
         dao.updateStarSchema();
     }
 
