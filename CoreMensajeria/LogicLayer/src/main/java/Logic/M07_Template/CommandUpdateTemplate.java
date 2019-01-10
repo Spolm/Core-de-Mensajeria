@@ -4,7 +4,9 @@ import Entities.Entity;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Logic.Command;
 import Persistence.DAOFactory;
+import Persistence.Factory.DAOAbstractFactory;
 import Persistence.M07_Template.DAOTemplate;
+import Persistence.M07_Template.IDAOTemplate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 /**
@@ -30,7 +32,7 @@ public class CommandUpdateTemplate extends Command {
         //region Instrumentation Debug
         log.debug("Entrando a el metodo execute() de CommandUpdateTemplate" );
         //endregion
-        DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
+        IDAOTemplate daoTemplate = DAOAbstractFactory.getFactory().createDaoTemplate();
         rest = daoTemplate.updateTemplateData(json);
         //region Instrumentation Info
         log.info("Se ejecuto el metodo execute() exitosamente");
