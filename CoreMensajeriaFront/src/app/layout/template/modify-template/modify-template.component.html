@@ -86,7 +86,7 @@
       <div *ngFor="let channel_integrator of channels_integrators">
         <button type="button" class="btn btn-danger m-1" (click)="deleteChannel_Integrator(channel_integrator)">
             <i class="fa fa-trash"></i>
-          {{channel_integrator.channel.nameChannel}} | {{channel_integrator.integrator.nameIntegrator}}
+          {{channel_integrator.channel._nameChannel}} | {{channel_integrator.integrator.nameIntegrator}}
         </button>
       </div>
     </div>
