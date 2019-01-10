@@ -5,7 +5,7 @@ import Entities.M08_Validation.XMLManagement.Message;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.M08_SendMessageManager.*;
-import Exceptions.TemplateNotApprovedException;
+import Exceptions.M08_SendMessageManager.TemplateNotApprovedException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import org.apache.logging.log4j.LogManager;

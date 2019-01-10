@@ -3,7 +3,7 @@ package Logic.M08_SendMessage.XMLManagment;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.M08_SendMessageManager.DateNotValidException;
 import Exceptions.M08_SendMessageManager.NullXMLException;
-import Exceptions.TemplateNotApprovedException;
+import Exceptions.M08_SendMessageManager.TemplateNotApprovedException;
 import Logic.Command;
 import Logic.CommandsFactory;
 
