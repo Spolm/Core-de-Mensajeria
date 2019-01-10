@@ -1,6 +1,7 @@
 package webService.M09_StatisticsManagement;
 
 import DTO.DTO;
+import DTO.M05_Channel.DTOChannel;
 import DTO.M09_DTO.DTOStatistic;
 import Entities.Entity;
 import Entities.M05_Channel.Channel;
@@ -110,10 +111,13 @@ public class M09_Statistics extends Application {
         log.debug("Entrado al metodo getAllChannels()");
         Response response;
         Error error;
-        Command<ArrayList<Channel>> command = CommandsFactory.getAllChannelsCommand();
+        Command<ArrayList<Entity>> command = CommandsFactory.getAllChannelsCommand();
         try {
+            List<DTO> dto;
+            GenericMapper mapper = MapperFactory.createMapperChannel();
             command.execute();
-            response = Response.ok(gson.toJson(command.Return())).build();
+            dto = mapper.CreateDtoList(command.Return());
+            response = Response.ok(gson.toJson(dto)).build();
             log.info("Se ejecuto el metodo getAllChannels() exitosamente");
         } catch (Exception e) {
             e.printStackTrace();
@@ -133,12 +137,13 @@ public class M09_Statistics extends Application {
         log.debug("Entrado al metodo getIntegratorsForChannel(" + channelIds + ")");
         Response response;
         Error error;
-        Command command = CommandsFactory.getIntegratorsForChannelCommand(channelIds);
+        Command<ArrayList<Entity>> command = CommandsFactory.getIntegratorsForChannelCommand(channelIds);
         try {
+            List<DTO> dto;
+            GenericMapper mapper = MapperFactory.createMapperIntegrator();
             command.execute();
-            response = Response.ok(gson.toJson(
-                    command.Return()
-            )).build();
+            dto = mapper.CreateDtoList(command.Return());
+            response = Response.ok(gson.toJson(dto)).build();
             log.info("Se ejecuto el metodo getIntegratorsForChannel(" + channelIds + ") exitosamente");
         } catch (ChannelNotFoundException e) {
             e.printStackTrace();

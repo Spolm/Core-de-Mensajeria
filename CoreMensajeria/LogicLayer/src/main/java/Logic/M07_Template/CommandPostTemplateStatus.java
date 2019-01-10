@@ -3,7 +3,9 @@ package Logic.M07_Template;
 import Entities.M07_Template.HandlerPackage.StatusHandler;
 import Logic.Command;
 import Persistence.DAOFactory;
+import Persistence.Factory.DAOAbstractFactory;
 import Persistence.M07_Template.DAOStatus;
+import Persistence.M07_Template.IDAOStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,7 +35,7 @@ public class CommandPostTemplateStatus extends Command {
         //region Instrumentation Debug
         log.debug("Entrando a el metodo execute() de CommandPostTemplateStatus" );
         //endregion
-        DAOStatus daoStatus = DAOFactory.createDAOStatus();
+        IDAOStatus daoStatus = DAOAbstractFactory.getFactory().createDAOStatus();
         flag = daoStatus.postTemplateStatusApproved(templateId,userId);
         //region Instrumentation Info
         log.info("Se ejecuto el metodo execute() exitosamente");

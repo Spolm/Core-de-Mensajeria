@@ -13,6 +13,7 @@ import Entities.M03_Campaign.Campaign;
 import Entities.M08_Validation.XMLManagement.Message;
 import Logic.M01_Login.*;
 import Logic.M02_Company.AddCompanyCommand;
+import Logic.M08_SendMessage.CommandInsertMessage;
 import Logic.M08_SendMessage.CommandParseMessage;
 import Logic.M08_SendMessage.CommandScheduleMessage;
 import Logic.M08_SendMessage.XMLManagment.*;
@@ -34,6 +35,7 @@ import Logic.M03_Campaign.*;
 import Logic.M09_Statistics.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CommandsFactory {
@@ -42,28 +44,77 @@ public class CommandsFactory {
         return new GetUserCommand(user);
     }
 
+    /**
+     * Metodo que instancia un objeto del tipo GetAllUsersCommand
+     * @return un objeto del tipo GetAllUsersCommand
+     */
     public static GetAllUsersCommand createGetAllUsersCommand () {
         return new GetAllUsersCommand();
     }
+    /**
+     * Metodo que instancia un objeto del tipo LogUserCommand
+     * @param  log objeto de tipo Entidad
+     * @return un objeto del tipo GetAllUsersCommand
+     */
     public static LogUserCommand createLogUserCommand (Entity log) {
         return new LogUserCommand(log);
     }
+    /**
+     * Metodo que instancia un objeto del tipo IsBlockedUserCommand
+     * @param  log objeto de tipo Entidad que sirve para revisar si el usuario esta bloqueado o no
+     * @return un objeto del tipo IsBlockedUserCommand
+     */
     public static IsBlockedUserCommand isBlockedUserCommand (Entity log) {
         return new IsBlockedUserCommand(log);
     }
+    /**
+     * Metodo que instancia un objeto del tipo TokenGeneratorCommand
+     * @param  email correo electronico del usuario al cual se le generará el token
+     * @return un objeto del tipo TokenGeneratorCommand
+     */
     public static TokenGeneratorCommand tokenGeneratorCommand ( String email) {
         return new TokenGeneratorCommand(email);
     }
+
+    /**
+     * Metodo que instancia un objeto del tipo FindByUsernameOrEmailCommand
+     * @param  username seudonimo del usuario que se quiere buscar
+     * @return un objeto del tipo FindByUsernameOrEmailCommand
+     */
+
     public static FindByUsernameOrEmailCommand findByUsernameOrEmailCommand (String username) {
         return new FindByUsernameOrEmailCommand(username);
     }
+
+    /**
+     * Metodo que instancia un objeto del tipo ChangePasswordCommand
+     * @param  username pseudonimo del usuario que se quiere buscar
+     * @param password contraseña correspondiente al pseudonimo del usuario al cual se le quiere
+     *                 cambiar la contraseña
+     * @return un objeto del tipo ChangePasswordCommand
+     */
     public static ChangePasswordCommand changePasswordCommand (String username, String password) {
         return  new ChangePasswordCommand(username, password);
     }
 
-    public static Command createScheduleMessage(VerifiedParameter verifiedParameters) {
-        return new CommandScheduleMessage(verifiedParameters);
+    /**
+     * Metodo que instancia un objeto del tipo FindPrivilegeByUserIdCommand
+     * @param  id  identificador del usuario al que se le quieren consultar los privilegios
+     * @return un objeto del tipo FindPrivilegeByUserIdCommand
+     */
+    public static FindPrivilegeByUserIdCommand findPrivilegeByUserIdCommand (int id) {
+        return new FindPrivilegeByUserIdCommand(id);
     }
+
+    /**
+     * Metodo que instancia un objeto del tipo FindByUsernameIdCommand
+     * @param  id pseudonimo del usuario que se quiere buscar
+     * @return un objeto del tipo FindByUsernameIdCommand
+     */
+    public static FindByUsernameIdCommand findByUsernameIdCommand (int id) {
+        return new FindByUsernameIdCommand(id);
+    }
+
 
     //region M09
 
@@ -350,6 +401,12 @@ public class CommandsFactory {
 
         return new ChangeStatusCampaignCommand( _ca );
     }
+
+    public static CampaignByCompanyCommand createCampaignByCompanyCommand( Company _ca ){
+
+        return new CampaignByCompanyCommand( _ca );
+    }
+
     //endregion
 
 
@@ -478,12 +535,34 @@ public class CommandsFactory {
         return new CommandValidate(parameters);
     }
 
-    public static Command createSendMessage(VerifiedParameter parameters) {
-        return new CommandSendMessage(parameters);
+    /**
+     * @param parameters: Parámetros validados de la plantilla
+     * @param dateToBeSent: El día y hora que debe ser enviado el mensaje
+     * @return una instancia del objeto CommandSendMessage
+     */
+    public static Command createSendMessage(VerifiedParameter parameters, Date dateToBeSent) {
+        return new CommandSendMessage(parameters, dateToBeSent);
     }
 
+    /**
+     * @param message
+     * @param template
+     * @return
+     */
     public static Command createCommandParseMessage(Message message, Template template){
         return new CommandParseMessage(message, template);
+    }
+
+    /**
+     * @param verifiedParameters: Parámetros validados del template más el template
+     * @return una instancia de la clase CommandScheduleMessage
+     */
+    public static Command createScheduleMessage(VerifiedParameter verifiedParameters) {
+        return new CommandScheduleMessage(verifiedParameters);
+    }
+
+    public static Command createCommandInsertMessage(Template template, int integratorId, int channelId, Date time){
+        return new CommandInsertMessage(template,integratorId,channelId,time);
     }
 
     //end region

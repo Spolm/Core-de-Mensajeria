@@ -19,9 +19,13 @@ public class FindByUsernameOrEmailCommand extends Command {
 
     @Override
     public void execute() throws Exception {
-        IDAO _dao = DAOFactory.instanciateDaoUser();
-        _use = ((DAOUser) _dao).findByUsernameOrEmail(_username);
-
+       try {
+           IDAO _dao = DAOFactory.instanciateDaoUser();
+           _use = ((DAOUser) _dao).findByUsernameOrEmail(_username);
+       }
+       catch (Exception e) {
+           throw e;
+       }
     }
 
     @Override

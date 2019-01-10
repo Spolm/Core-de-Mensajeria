@@ -1,17 +1,15 @@
 package Logic.M08_Validation;
 
 
-import Entities.Entity;
 import Entities.M05_Channel.Channel;
 import Entities.M07_Template.Template;
 import Entities.M08_Validation.XMLManagement.Message;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
-import Exceptions.SMSTooLongException;
+import Exceptions.M08_SendMessageManager.SMSTooLongException;
 import Logic.Command;
 import Logic.CommandsFactory;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 
 /**

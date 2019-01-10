@@ -27,7 +27,7 @@ class TemplateDAOTest {
     private static IDAOTemplate _daoTemplate = DAOAbstractFactory.getFactory().createDaoTemplate();
 
     @BeforeAll
-    public static void init(){
+    public static void init() throws TemplateDoesntExistsException, ParameterDoesntExistsException, MessageDoesntExistsException {
         json = "{\n" +
                 "    \"campaign\": 1,\n" +
                 "    \"applicationId\": 1,\n" +
@@ -40,10 +40,10 @@ class TemplateDAOTest {
                 "    \"message\": \"Probando [.$Monto$.]\",\n" +
                 "    \"channel_integrator\": [{\n" +
                 "        \"channel\": {\n" +
-                "            \"idChannel\": 1\n" +
+                "            \"_id\": 1\n" +
                 "        },\n" +
                 "        \"integrator\": {\n" +
-                "            \"idIntegrator\": 1\n" +
+                "            \"_id\": 1\n" +
                 "        }\n" +
                 "    }],\n" +
                 "    \"planning\": [\n" +
@@ -76,7 +76,6 @@ class TemplateDAOTest {
             assertTrue(_templateId > 0);
         } catch (Exception e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         }
     }
 
@@ -96,10 +95,10 @@ class TemplateDAOTest {
                     "    \"message\": \"Probando [.$Monto$.]\",\n" +
                     "    \"channel_integrator\": [{\n" +
                     "        \"channel\": {\n" +
-                    "            \"idChannel\": 1\n" +
+                    "            \"_id\": 1\n" +
                     "        },\n" +
                     "        \"integrator\": {\n" +
-                    "            \"idIntegrator\": 1\n" +
+                    "            \"_id\": 1\n" +
                     "        }\n" +
                     "    }],\n" +
                     "    \"planning\": [\n" +
@@ -125,7 +124,6 @@ class TemplateDAOTest {
             assertEquals(2,_template.getCampaign().get_idCampaign());
         } catch (Exception e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         }
     }
 
@@ -136,10 +134,8 @@ class TemplateDAOTest {
             assertNotNull(_t);
         } catch (MessageDoesntExistsException e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         } catch (ParameterDoesntExistsException e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         } catch ( TemplateDoesntExistsException e){
             e.printStackTrace();
         }
@@ -153,7 +149,6 @@ class TemplateDAOTest {
             });
         } catch ( Exception e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         }
     }
 
@@ -164,10 +159,8 @@ class TemplateDAOTest {
             assertTrue(list.size()>=1);
         } catch (MessageDoesntExistsException e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         } catch (ParameterDoesntExistsException e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         }
 
     }
@@ -179,7 +172,6 @@ class TemplateDAOTest {
             assertEquals(1,_c.get_idCampaign());
         } catch (Exception e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         }
     }
 
@@ -190,7 +182,6 @@ class TemplateDAOTest {
             assertTrue(_t.size()>=1);
         } catch (Exception e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         }
     }
 
@@ -201,7 +192,6 @@ class TemplateDAOTest {
             assertEquals(1,_app.get_idApplication());
         } catch (Exception e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         }
     }
 
@@ -212,7 +202,6 @@ class TemplateDAOTest {
             assertTrue(_c.size() > 0);
         } catch (Exception e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         }
     }
 
@@ -223,7 +212,6 @@ class TemplateDAOTest {
             assertTrue(_p.size() > 0);
         } catch (Exception e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         }
     }
 
@@ -234,7 +222,6 @@ class TemplateDAOTest {
             assertTrue(_c.size() > 0);
         } catch (Exception e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         }
     }
 
@@ -244,7 +231,6 @@ class TemplateDAOTest {
             _daoTemplate.deleteTemplate(_template.get_id());
         } catch (Exception e) {
             e.printStackTrace();
-            //logger.error( "Metodo: {} {}", "getBdConnect", e.toString() );
         }
     }
 

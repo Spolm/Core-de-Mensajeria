@@ -1,10 +1,8 @@
 package Logic.M08_Validation;
 
-import Entities.M07_Template.StatusPackage.Status;
 import Entities.M07_Template.Template;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
-import Exceptions.TemplateNotApprovedException;
-import Exceptions.UnexpectedErrorException;
+import Exceptions.M08_SendMessageManager.TemplateNotApprovedException;
 import Logic.CommandsFactory;
 import Logic.M07_Template.CommandGetTemplate;
 
