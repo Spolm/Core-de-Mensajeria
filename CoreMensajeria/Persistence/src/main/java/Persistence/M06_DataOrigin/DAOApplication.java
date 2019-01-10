@@ -144,13 +144,14 @@ public class DAOApplication implements IDAOApplication {
 
     /**
      * Crea una aplicacion
-     * @param app un objeto con los datos para lle
+     * @param a un objeto con los datos para llenar la aplicacion
      * @return
      * @throws DatabaseConnectionProblemException
      */
     @Override
-    public Application createApplication (AddApplicationData app) throws DatabaseConnectionProblemException {
+    public Application createApplication (Entity a) throws DatabaseConnectionProblemException {
         try {
+            AddApplicationData app = (AddApplicationData) a;
 
             String token = _encrypter.encryptToken(app.get_userId() + app.get_companyId() +
                     app.get_nameApplication() + _encrypter.getCurrentTime());
