@@ -1,11 +1,12 @@
-package Persistence.M09_Statistics;
+package Persistence.Postgres.M09_Statistics;
 
 import Entities.Entity;
 import Entities.EntityFactory;
-import Entities.M04_Integrator.Integrator;
 import Exceptions.M05_Channel.ChannelNotFoundException;
 import Exceptions.CompanyDoesntExistsException;
 import Persistence.DAO;
+import Persistence.IDAO_Statistic;
+import Persistence.Postgres.DAOPostgres;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,11 +15,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOStatistic extends DAO implements IDAO_Statistic {
+public class DAOSPostgrestatistic extends DAOPostgres implements IDAO_Statistic {
 
     private Connection conn;
 
-    public DAOStatistic(){
+    public DAOSPostgrestatistic(){
 
     }
     @Override
@@ -38,7 +39,7 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
 
     @Override
     public ArrayList<Entity> getAllCompanies(Integer userId) throws CompanyDoesntExistsException {
-        this.conn = getBdConnect();
+        this.conn = getConnection();
         String query = "SELECT com_id, com_name from m02_getcompaniesbyresponsible(" + userId + ") ORDER BY com_id;";
         ArrayList<Entity> companies = new ArrayList<>();
         try {
@@ -62,7 +63,7 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
 
     @Override
     public ArrayList<Entity> getIntegratorsForChannel(List<Integer> channelIds) throws ChannelNotFoundException{
-        this.conn = getBdConnect();
+        this.conn = getConnection();
         String query = "select int_id, int_name from m09_getIntegratorsByChannels(";
         for (int i = 0; i < channelIds.size() - 1;  i++) {
             query += channelIds.get(i) + ", ";
@@ -90,6 +91,7 @@ public class DAOStatistic extends DAO implements IDAO_Statistic {
         return integrators;
     }
 
+    @Override
     public void close()
     {
         try

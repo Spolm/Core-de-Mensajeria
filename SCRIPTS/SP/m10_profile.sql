@@ -28,7 +28,6 @@ END;
 $$
 LANGUAGE 'plpgsql' VOLATILE;
 
-
 -- DROP FUNCTION m10_edit_user_by_profile(integer,varchar, varchar, integer, integer, varchar, varchar, varchar, varchar, varchar);
 CREATE OR REPLACE FUNCTION m10_edit_user_by_profile(
 	IN userId INTEGER, IN name VARCHAR, IN lastname VARCHAR,

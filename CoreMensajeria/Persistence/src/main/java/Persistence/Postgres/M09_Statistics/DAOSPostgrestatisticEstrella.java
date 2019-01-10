@@ -1,19 +1,19 @@
-package Persistence.M09_Statistics;
+package Persistence.Postgres.M09_Statistics;
 
 import Entities.Entity;
 import Entities.EntityFactory;
 import Entities.M03_Campaign.Campaign;
-import Entities.M05_Channel.Channel;
 import Entities.M09_Statistics.FilterType;
 import Entities.M09_Statistics.Statistics;
 import Exceptions.CampaignDoesntExistsException;
-import Persistence.DAOEstrella;
+import Persistence.Postgres.DAOPostgresEstrella;
+import Persistence.IDAO_StatisticEstrella;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticEstrella {
+public class DAOSPostgrestatisticEstrella extends DAOPostgresEstrella implements IDAO_StatisticEstrella {
 
 
     @Override
@@ -52,7 +52,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
             e.printStackTrace();
             throw new CampaignDoesntExistsException(e);
         } finally {
-            bdClose();
+            close();
             return  campaigns;
         }
     }
@@ -73,7 +73,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return channels;
     }
@@ -95,7 +95,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return companiesStatistic;
     }
@@ -117,7 +117,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return CampaignStatistic;
     }
@@ -139,7 +139,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return ChannelStatistic;
     }
@@ -161,7 +161,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return integratorStatistic;
     }
@@ -177,7 +177,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
     }
 
@@ -194,7 +194,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return years;
     }
@@ -212,7 +212,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return months;
     }
@@ -230,7 +230,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return daysofweek;
     }
@@ -248,7 +248,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return daysofmonth;
     }
@@ -266,7 +266,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return daysofyear;
     }
@@ -284,7 +284,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return weeksofyear;
     }
@@ -302,7 +302,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return quartersofyear;
     }
@@ -320,7 +320,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return hours;
     }
@@ -338,7 +338,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return minutes;
     }
@@ -356,7 +356,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            bdClose();
+            close();
         }
         return seconds;
     }
@@ -382,6 +382,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         return statistic;
     }
 
+    @Override
     public Entity getMessagesParamCompany(String companyIds, String campaignIds, String channelIds, String integratorIds, String yearIds,
                                    String monthIds, String dayofweekIds, String weekofyearIds, String dayofmonthIds, String dayofyearIds,
                                    String hourIds, String minuteIds, String secondIds, String quarterIds ){
@@ -403,6 +404,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         return statistic;
     }
 
+    @Override
     public Entity getMessagesParamCampaign(String companyIds, String campaignIds, String channelIds, String integratorIds, String yearIds,
                                           String monthIds, String dayofweekIds, String weekofyearIds, String dayofmonthIds, String dayofyearIds,
                                           String hourIds, String minuteIds, String secondIds, String quarterIds ){
@@ -424,6 +426,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
 
     }
 
+    @Override
     public Entity getMessagesParamChannel(String companyIds, String campaignIds, String channelIds, String integratorIds, String yearIds,
                                            String monthIds, String dayofweekIds, String weekofyearIds, String dayofmonthIds, String dayofyearIds,
                                            String hourIds, String minuteIds, String secondIds, String quarterIds ){
@@ -444,6 +447,7 @@ public class DAOStatisticEstrella extends DAOEstrella implements IDAO_StatisticE
         return statistic;
     }
 
+    @Override
     public Entity getMessagesParamIntegrator(String companyIds, String campaignIds, String channelIds, String integratorIds, String yearIds,
                                           String monthIds, String dayofweekIds, String weekofyearIds, String dayofmonthIds, String dayofyearIds,
                                           String hourIds, String minuteIds, String secondIds, String quarterIds ) {

@@ -51,7 +51,7 @@ public class CommandGetParameter extends Command<ParameterXML> {
     @Override
     public void execute() throws ParameterDoesntExistsInXMLException {
         try {
-                if (_node.getNodeType() == Node.ELEMENT_NODE) {
+            if (_node.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) _node;
                 _commandGetTagValue = CommandsFactory.createCommandGetTagValue("name", element);
                 _commandGetTagValue.execute();

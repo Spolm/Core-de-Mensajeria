@@ -53,12 +53,12 @@ public class CommandScheduleMessage extends Command<Entity> {
         log.info("Fecha de inicio de la plantilla: " + startDate);
         log.info("Fecha de fin de la plantilla: " + endDate);
 
-//        try {
-//            DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
-//            startDate = df.parse("2019-01-08 12:50 PM");
-//            endDate = df.parse("2019-01-09 12:30 PM");
-//        } catch(ParseException e) {
-//        }
+/*        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
+            startDate = df.parse("2019-01-09 9:10 PM");
+            endDate = df.parse("2019-01-10 12:30 PM");
+        } catch(ParseException e) {
+        }*/
 
         System.out.println("Fecha de inicio de la plantilla: " + startDate);
         System.out.println("Fecha de fin de la plantilla: " + endDate);
@@ -66,7 +66,7 @@ public class CommandScheduleMessage extends Command<Entity> {
         if (planningIsValid(startDate, endDate)) {
             ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
             long mills = startDate.getTime() - System.currentTimeMillis();
-            service.schedule(new ScheduleMessageTask(_verifiedParameters), mills, TimeUnit.MILLISECONDS);
+            service.schedule(new ScheduleMessageTask(_verifiedParameters, startDate), mills, TimeUnit.MILLISECONDS);
             log.info("El mensaje ha sido registrado para el envío");
             System.out.println("El mensaje ha sido registrado para el envío");
             log.info("El mensaje se enviará en " + mills + "milisegundos");

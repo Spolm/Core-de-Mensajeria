@@ -63,9 +63,7 @@ export class UserAdministrationComponent {
   getCompanies(userId: string) {
     this.userAdministrationService.getCompanies(userId).subscribe(data => {
       this.companiesJson = data;
-      console.log(this.companiesJson)
     });
-    console.log("perol")
   }
 
 }
