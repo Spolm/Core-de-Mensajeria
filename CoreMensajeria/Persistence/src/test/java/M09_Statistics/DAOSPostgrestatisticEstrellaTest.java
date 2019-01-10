@@ -236,7 +236,7 @@ class DAOSPostgrestatisticEstrellaTest {
             assertTrue(((Statistics) entity).getX().contains("Company " + i));
     }
 
-    @Test
+ /*   @Test
     void getMessagesParamCampaign() {
         ArrayList<Integer> lista  = new ArrayList<>();
         String companyin = setParametersforQuery(lista,"and me.sen_com_id in ");
@@ -260,7 +260,7 @@ class DAOSPostgrestatisticEstrellaTest {
         assertNotNull(entity);
         for (int i=1;i < 5; i++)
             assertTrue(((Statistics) entity).getX().contains("Campaign " + i));
-    }
+    }*/
 
     @Test
     void getMessagesParamChannel() {

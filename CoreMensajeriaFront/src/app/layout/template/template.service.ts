@@ -56,7 +56,7 @@ export class TemplateService {
   }
 
   getCompanies(userId: string) {
-    return this.http.get(endpoint + 'M02_Companies/GetCompaniesByResponsible?id=' + userId).pipe(
+    return this.http.get(endpoint + 'M02_Companies/GetCompaniesByUserPP/' + userId).pipe(
       map(this.extractData));
   }
 

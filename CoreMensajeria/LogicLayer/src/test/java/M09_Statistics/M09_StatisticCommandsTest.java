@@ -361,7 +361,7 @@ class M09_StatisticCommandsTest {
             e.printStackTrace();
         }
     }
-
+/*
     @Test
     void GetStatisticsCommand(){
         Command<Map<String, Entity>> command;
@@ -412,5 +412,5 @@ class M09_StatisticCommandsTest {
         } catch ( Exception e ) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

@@ -14,31 +14,61 @@ public class DAOParameter extends DAO implements IDAOParameter {
     private final String FIND_BY_COMID_NAME_INSERT = "{CALL m07_findParameterByPar_Com_IDAndByParameterNameInsert(?,?)}";
     private final String GET_PARAMETERS = "{CALL m07_getParameters(?)}";
     private final String GET_PARAMETERS_BY_MESSAGESS = "{CALL m07_getParametersByMessage(?)}";
+    private final String DELETE_PARAMETER = "{CALL m07_deleteParameter(?)}";
 
     PreparedStatement _pt;
     Statement _st;
     boolean _salida;
 
+    /**
+     * Guarda todos los parametros
+     * @param parameters
+     * @param companyId
+     * @return
+     */
     @Override
-    public void postParameter(String[] parameters, int companyId) {
-        for (int i = 0; i < parameters.length;i++)
-            postParameter(parameters[i],companyId);
+    public ArrayList<Entity> postParameter(String[] parameters, int companyId) {
+        ArrayList<Entity> _parameters = new ArrayList<>();
+
+        for (int i = 0; i < parameters.length;i++){
+            Entity _p = postParameter(parameters[i],companyId);
+            _parameters.add(_p);
+        }
+
+        return _parameters;
     }
 
+    /**
+     * Guarda parametro especifico
+     * @param name
+     * @param companyId
+     * @return
+     */
     @Override
-    public void postParameter(String name, int companyId) {
+    public Entity postParameter(String name, int companyId) {
+        Parameter _parameter = null;
         Connection connection=getBdConnect();
         try {
             _pt = connection.prepareCall(FIND_BY_COMID_NAME);
             _pt.setInt(1,companyId);
             _pt.setString(2,name);
             ResultSet resultSet = _pt.executeQuery();
+
             if (!resultSet.next()) {
                 _pt = connection.prepareCall(FIND_BY_COMID_NAME_INSERT);
                 _pt.setString(1,name);
                 _pt.setInt(2,companyId);
-                _pt.executeQuery();
+                ResultSet _rs = _pt.executeQuery();
+
+                if(_rs.next()){
+                    _parameter = new Parameter();
+                    _parameter.setName(name);
+                    _parameter.setCompanyId(companyId);
+                    _parameter.set_id(_rs.getInt(1));
+                }
+
             }
+
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,7 +77,7 @@ public class DAOParameter extends DAO implements IDAOParameter {
         } catch (Exception e){
             e.printStackTrace();
         }
-
+        return _parameter;
     }
 
     @Override
@@ -97,6 +127,23 @@ public class DAOParameter extends DAO implements IDAOParameter {
         }finally {
             closeConnection();
             return parameterList;
+        }
+    }
+
+    /**
+     * Borra un parametro
+     * @param id
+     */
+    @Override
+    public void deleteParameter(int id) {
+        try{
+            Connection _conn = this.getBdConnect();
+            PreparedStatement _ps = _conn.prepareCall(DELETE_PARAMETER);
+            _ps.setInt(1,id);
+            _ps.execute();
+
+        }catch ( Exception e ){
+            e.printStackTrace();
         }
     }
 

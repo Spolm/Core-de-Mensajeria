@@ -34,7 +34,7 @@
         <div class="form-group">
           <label for="formMessage">Compañia</label>
           <select class="form-control" [disabled]="editMode" [(ngModel)]="opcamp._idCompany" name="companiaId" required>
-            <option *ngFor="let company of companyList" value="{{opcamp._idCompany}}">{{company._name}}</option>
+            <option *ngFor="let company of companyList" value="{{company._idCompany}}">{{company._name}}</option>
           </select>
         </div>
       </div>

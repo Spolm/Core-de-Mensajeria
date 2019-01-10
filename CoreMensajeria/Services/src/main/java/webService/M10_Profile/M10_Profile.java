@@ -92,13 +92,38 @@ public class M10_Profile {
         // 5. Return DTO
         return response;
     }
+    @GET
+    @Path("/companies")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCompaniesByUser(@QueryParam("userId") int userId){
+        Response response = null;
+        try{
+            Command command = CommandsFactory.createGetCompaniesByUserCommand(userId);
+            command.execute();
+            return Response.ok(new Gson().toJson(command.Return())).build();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    @GET
+    @Path("/companies")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRoles(){
+        Response response = null;
+
+        return response;
+    }
+
     /**
      * this method is responsible for editing a user profile (non-administrator)
      * @param dto DTO with the information to edit
      * @return state of the edition in bd
      */
-    @Path("/edit")
+
     @PUT
+    @Path("/edit")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response editProfile(DTOEditUser dto){
@@ -129,4 +154,5 @@ public class M10_Profile {
             return response;
         }
     }
+
 }
