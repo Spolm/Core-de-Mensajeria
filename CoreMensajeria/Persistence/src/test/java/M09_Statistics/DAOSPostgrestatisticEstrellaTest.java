@@ -138,7 +138,7 @@ class DAOSPostgrestatisticEstrellaTest {
 
     @Test
     void getDaysofMonth() {
-        ArrayList<Integer> expectedDays = new ArrayList<>(Arrays.asList(1, 5, 7, 9, 10, 11, 12, 13, 15, 16, 19, 23,
+        ArrayList<Integer> expectedDays = new ArrayList<>(Arrays.asList(1, 5, 7, 9, 10, 11, 12, 13, 15, 16, 19, 21, 23,
                 24, 25, 28, 29, 30, 31));
         ArrayList<Integer> days = dao.getDaysofMonth();
         assertNotNull(days);
@@ -151,7 +151,7 @@ class DAOSPostgrestatisticEstrellaTest {
     @Test
     void getDaysofYear() {
         ArrayList<Integer> expectedDays = new ArrayList<>(Arrays.asList(1, 36, 41, 67, 75, 102, 104, 106, 109, 132,
-                175, 181, 205, 240, 243, 253, 254, 286, 296, 297, 314, 330, 334, 359, 360, 366));
+                175, 181, 205, 240, 243, 253, 254, 286, 296, 297, 314, 330, 334, 356, 359, 360, 366));
         ArrayList<Integer> days = dao.getDaysofYear();
         assertNotNull(days);
         for (int  i = 0; i < expectedDays.size(); i++){
