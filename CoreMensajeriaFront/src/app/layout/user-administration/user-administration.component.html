@@ -6,7 +6,7 @@
   <button type="button" class="btn btn-dark" routerLink="/profiles/create" *ngIf="CUSER">Crear Usuario</button>
   <select class="form-control" id="company" name="company" [(ngModel)]="companyId" (change)="changeCompany(companyId)">
     <ng-container *ngFor="let company of companiesJson">
-      <option *ngIf="company._status" [value]="company._idCompany">
+      <option [value]="company._idCompany">
         <p>
           {{company._name}}
         </p>

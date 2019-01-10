@@ -1,11 +1,13 @@
 package M01_Login;
 
 import Entities.Entity;
+import Entities.M01_Login.LoginIntent;
 import Entities.M01_Login.User;
 import Logic.Command;
 import Logic.CommandsFactory;
 import Logic.M01_Login.FindByUsernameIdCommand;
 import Logic.M01_Login.GetAllUsersCommand;
+import Logic.M01_Login.IsBlockedUserCommand;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class M01_LoginCommandsTest {
 
@@ -64,5 +68,39 @@ public class M01_LoginCommandsTest {
         }
 
     }
+
+    @Test
+    public void changePasswordCommandTest(){
+        Command command = CommandsFactory.changePasswordCommand("administrador","A1234567");
+        Command _cmd;
+        Entity _user;
+
+        try {
+            command.execute();
+            _cmd = CommandsFactory.findByUsernameOrEmailCommand("administrador");
+            _user = (User) (_cmd).Return();
+            assertEquals("A1234567", ((User) _user).get_passwordUser());
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void findByUsernameOrEmailCommandTest(){
+        Command command = CommandsFactory.findByUsernameIdCommand(1);
+        Entity _user;
+
+        try {
+            command.execute();
+            _user = (User) (command).Return();
+            assertNotNull(_user);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    
 
 }

@@ -40,8 +40,6 @@ public class CommandGetTemplatePrivilegesByUser extends Command {
         //region Instrumentation Debug
         log.debug("Entrando a el metodo execute de CommandGetTemplatePrivilegesByUser" );
         //endregion
-        //TemplateHandler templateHandler = new TemplateHandler();
-        //privileges = templateHandler.getTemplatePrivilegesByUser(userId,companyId);
         IDAOTemplate daoTemplate = DAOAbstractFactory.getFactory().createDaoTemplate();
         privileges = daoTemplate.getTemplatePrivilegesByUser(userId,companyId);
         //region Instrumentation Info

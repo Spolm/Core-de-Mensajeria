@@ -9,6 +9,9 @@ import Exceptions.M05_Channel.ChannelNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
 import Exceptions.M04_Integrator.IntegratorNotFoundException;
 import Persistence.DAO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +25,7 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
     private final String UPDATE_DISABLE_INTEGRATOR = "{call m04_disableintegrator(?)}";
     private final String UPDATE_ENABLE_INTEGRATOR = "{call m04_enableintegrator(?)}";
     private final String SELECT_ALL_INTEGRATORS_BY_CHANNEL = "{call m04_getIntegratorsByChannel(?)}";
-
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
     private Connection _conn;
 
     /**
@@ -45,11 +48,20 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
      * @see Integrator
      */
     public Entity getConcreteIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException{
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getConcreteIntegrator ("+id+") DAOIntegrator");
+        //endregion
         try {
             PreparedStatement preparedStatement = _conn.prepareCall(SELECT_CONCRETE_INTEGRATOR);
             preparedStatement.setInt(1, id);
             ResultSet result = preparedStatement.executeQuery();
             if(result.next()) {
+        //region Intrumentation Info
+        log.info("Se ejecuto exitosamente el metodo getConcreteIntegrator("+id+") DAOIntegrator");
+        //endregion
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo getConcreteIntegrator("+id+") DAOIntegrator");
+        //endregion
                 return extractIntegrator(result);
             }
             else {
@@ -57,6 +69,9 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
             }
         }
         catch (SQLException e) {
+        //region Instrumentation Error
+        log.error("El metodo getConcreteIntegrator ("+id+") arrojo la excepcion"+ e.getMessage()+"DAOIntegrator");
+        //endregion
             throw new DatabaseConnectionProblemException("Error de comunicacion con la base de datos.", e);
         }
     }
@@ -71,6 +86,9 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
     */
     @Override
     public ArrayList<Entity> listIntegrator() throws DatabaseConnectionProblemException {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo listIntegrator DAOIntegrator");
+        //endregion
         ArrayList<Entity> integratorList = new ArrayList<>();
         try {
             PreparedStatement st = _conn.prepareCall(SELECT_ALL_INTEGRATORS);
@@ -78,9 +96,17 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
             while (result.next()) {
                 integratorList.add(extractIntegrator(result));
             }
-
+        //region Intrumentation Info
+        log.info("Se ejecuto exitosamente el metodo listIntegrator DAOIntegrator");
+        //endregion
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo listintegrator  DAOIntegrator");
+        //endregion
             return integratorList;
         } catch (SQLException e) {
+        //region Instrumentation Error
+        log.error("El metodo listintegrator arrojo la excepcion"+ e.getMessage()+"DAOIntegrator");
+        //endregion
             throw new DatabaseConnectionProblemException("Error de comunicacion con la base de datos.", e);
         }
     }
@@ -96,6 +122,9 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
      */
     public ArrayList<Entity> listIntegratorByChannel(int id) throws DatabaseConnectionProblemException,
             ChannelNotFoundException {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo listIntegratorByChannel("+id+") DAOIntegrator");
+        //endregion
         ArrayList<Entity> integratorList = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = _conn.prepareCall(SELECT_ALL_INTEGRATORS_BY_CHANNEL);
@@ -107,9 +136,17 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
             if (integratorList.size() == 0) {
                 throw new ChannelNotFoundException("No se han encontrado integradores.");
             }
-
+        //region Intrumentation Info
+        log.info("Se ejecuto exitosamente el metodo listIntegratorByChannel("+id+")DAOIntegrator");
+        //endregion
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo listIntegratorByChannel("+id+") DAOIntegrator");
+        //endregion
             return integratorList;
         } catch (SQLException e) {
+        //region Instrumentation Error
+        log.error("El metodo listIntegratorByChannel ("+id+") arrojo la excepcion"+ e.getMessage()+"DAOIntegrator");
+        //endregion
             throw new DatabaseConnectionProblemException("Error de comunicacion con la base de datos.", e);
         }
     }
@@ -123,13 +160,24 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
      */
     @Override
     public Entity enableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo enableIntegrator("+id+") DAOIntegrator");
+        //endregion
         try {
             PreparedStatement preparedStatement = _conn.prepareCall(UPDATE_ENABLE_INTEGRATOR);
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
-
+        //region Intrumentation Info
+        log.info("Se ejecuto exitosamente el metodo enableIntegrator("+id+") DAOIntegrator");
+        //endregion
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo enableIntegrator("+id+") DAOIntegrator");
+        //endregion
             return getConcreteIntegrator(id);
         } catch (SQLException e) {
+        //region Instrumentation Error
+        log.error("El metodo enableIntegrator ("+id+") arrojo la excepcion"+ e.getMessage()+"DAOIntegrator");
+        //endregion
             throw new DatabaseConnectionProblemException("Error al habilitar integrator. ", e);
         }
     }
@@ -143,13 +191,24 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
     */
     @Override
     public Entity disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo disableIntegrator("+id+") DAOIntegrator");
+        //endregion
         try {
             PreparedStatement preparedStatement = _conn.prepareCall(UPDATE_DISABLE_INTEGRATOR);
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
-
+        //region Intrumentation Info
+        log.info("Se ejecuto exitosamente el metodo disableIntegrator("+id+") DAOIntegrator");
+        //endregion
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo disableIntegrator("+id+") DAOIntegrator");
+        //endregion
             return getConcreteIntegrator(id);
         } catch (SQLException e) {
+        //region Instrumentation Error
+        log.error("El metodo disableIntegrator ("+id+") arrojo la excepcion"+ e.getMessage()+"DAOIntegrator");
+        //endregion
             throw new DatabaseConnectionProblemException("Error al deshabilitar integrator. ", e);
         }
     }

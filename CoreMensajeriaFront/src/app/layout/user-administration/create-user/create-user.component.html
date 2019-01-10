@@ -9,9 +9,9 @@
       <div class="form-group col-12 col-md-9">
         <label for="formState">Estado</label>
         <br>
-        <select class="form-control" id="formState" [(ngModel)]="formState" name="state" (change)="addState(formState)">
-          <option>
-            venezuela
+        <select class="form-control" id="formState" [(ngModel)]="formState" name="state" (change)="changeState(formState)">
+          <option *ngFor="let state of stateJson" [value]="state.geographicalRegionId">
+            {{state.geographicalRegionName}}
           </option>
         </select>
       </div>
@@ -21,10 +21,77 @@
       <div class="form-group col-12 col-md-9">
         <label for="formTown">Municipio</label>
         <br>
-        <select class="form-control" id="formTown" [(ngModel)]="formTown" name="town" (change)="addTown(formTown)">
-          <option>
-            libertador
+        <select class="form-control" id="formTown" [(ngModel)]="formTown" name="town" (change)="changeTown(formTown)">
+          <option *ngFor="let town of townJson" [value]="town.geographicalRegionId">
+            {{town.geographicalRegionName}}
+          </option>
+        </select>
+      </div>
+
+      <!-- Input for the rol of the user -->
+      <div class="form-group col-12 col-md-9">
+        <label for="formRole">Rol</label>
+        <br>
+        <select class="form-control" id="formRole" [(ngModel)]="formRole" name="role" (change)="changeRole(formRole)">
+          <option *ngFor="let rol of rolesJson" [value]="rol._id">
+            {{rol._name}}
           </option>
         </select>
       </div>
     </div>
+
+    <!-- Input for the name of the user -->
+    <div class="form-group col-12 col-md-9">
+      <label for="formTown">Nombre</label>
+      <br>
+      <input type="text" name="name" [(ngModel)]="name">
+    </div>
+
+    <!-- Input for the lastnamte of the user -->
+    <div class="form-group col-12 col-md-9">
+      <label for="formTown">Apellido</label>
+      <br>
+      <input type="text" name="lastname" [(ngModel)]="lastname" >
+    </div>
+
+    <!-- Input for the name of the user -->
+    <div class="form-group col-12 col-md-9">
+      <label for="formTown">Username</label>
+      <br>
+      <input type="text" name="username" [(ngModel)]="username" >
+    </div>
+
+    <!-- Input for the name of the user -->
+    <div class="form-group col-12 col-md-9">
+        <label for="formTown">Email</label>
+        <br>
+        <input type="text" name="email" [(ngModel)]="email" >
+      </div>
+
+    <!-- Input for the name of the user -->
+    <div class="form-group col-12 col-md-9">
+      <label for="formTown">Identificacion</label>
+      <br>
+      <input type="text" name="identification" [(ngModel)]="identification" >
+    </div>
+
+    <!-- Input for the name of the user -->
+    <div class="form-group col-12 col-md-9">
+        <label for="formTown">Fecha nacimiento</label>
+        <br>
+        <input type="date" name="birth" [(ngModel)]="birth" >
+      </div>
+
+      <!-- Input for the name of the user -->
+    <div class="form-group col-12 col-md-9">
+        <label for="formTown">Telefono</label>
+        <br>
+        <input type="text" name="phone" [(ngModel)]="phone" >
+      </div>
+  </form>
+
+  <div class="d-flex flex-row-reverse">
+      <button type="button" class="btn btn-success m-1" (click)="postUser()">Crear</button>
+      <button type="button" class="btn btn-danger m-1" routerLink="/profiles">Cancelar</button>
+    </div>
+</div>
