@@ -96,9 +96,7 @@ public class CommandProcessXML extends Command<VerifiedParameter> {
                                 "revise la posición " + i + " del mensaje del archivo XML." );
                     }
                 }
-                for ( Message message : _messageList ){
-                    System.out.println(message.toString());
-                }
+
                 _verifiedParameters = new VerifiedParameter( _messageList, _template );
                 log.info("Se ha configurado la plantilla" );
 
