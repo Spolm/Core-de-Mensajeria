@@ -40,10 +40,8 @@ public class M10_ProfileCommandsTest {
             Command c = CommandsFactory.createGetResponsabilityByCompanyCommand(1);
             c.execute();
             responsabilities =  (ArrayList<Responsability>)c.Return();
-            assertEquals(3, responsabilities.get(0).getUser().get_idUser());
-            assertEquals(4, responsabilities.get(1).getUser().get_idUser());
-            assertEquals(6, responsabilities.get(2).getUser().get_idUser());
-            assertEquals(5, responsabilities.get(3).getUser().get_idUser());
+            assertEquals(4, responsabilities.size());
+
         } catch (Exception  e){
             e.printStackTrace();
         }
