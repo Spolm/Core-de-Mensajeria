@@ -11,7 +11,7 @@
       </span>
       <ng-template #elseBlock>
         <span>
-          <ngbd-modal-approve [templateId]="template.templateId" (spread)="getTemplate()"></ngbd-modal-approve>
+          <ngbd-modal-approve [templateId]="id" (spread)="getTemplate()"></ngbd-modal-approve>
         </span>
       </ng-template>
     </p>
@@ -26,7 +26,7 @@
 <div class="row">
   <div class="col-6">
     <p>Esta plantilla forma parte de la campaña
-      <Strong>{{campaign._nameCampaign}}</Strong>
+      <Strong>{{campaign._idCampaign}}</Strong>
     </p>
     <p *ngIf="application._idApplication > 0">Se origino a partir de la aplicacion de
         <Strong>{{application._nameApplication}}</Strong>

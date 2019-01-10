@@ -139,16 +139,23 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
         PreparedStatement preparedStatement = null;
 
         try {
+
             if( applicationId != 0){
                 preparedStatement = _conn.prepareCall( CREATE_TEMPLATE_WITH_APP );
                 preparedStatement.setInt(1, campaignId );
                 preparedStatement.setInt(2, applicationId );
                 preparedStatement.setInt(3, userId );
+                //region Instrumentation Debug
+                log.info("Se ejecuto el metodo postTemplate("+campaignId+","+applicationId+","+userId+")" );
+                //endregion
             }
             else{
                 preparedStatement = _conn.prepareCall( CREATE_TEMPLATE_WITHOUT_APP );
                 preparedStatement.setInt(1, campaignId );
                 preparedStatement.setInt(2, userId );
+                //region Instrumentation Debug
+                log.info("Se ejecuto el metodo postTemplate("+campaignId+","+applicationId+","+userId+")" );
+                //endregion
             }
 
            ResultSet _rs = preparedStatement.executeQuery();
@@ -158,6 +165,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
         } catch ( SQLException e1 ) {
             e1.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo postTemplate("+campaignId+","+applicationId+","+userId+") arrojo la excepcion:" + e1.getMessage());
+            //endregion
         }
 
         this.closeConnection();
@@ -188,7 +198,9 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             preparedStatement = _conn.prepareCall( GET_TEMPLATE );
             preparedStatement.setInt( 1, templateId );
             ResultSet _rs = preparedStatement.executeQuery();
-
+            //region Instrumentation Debug
+            log.info("Se ejecuto el metodo postTemplate("+templateId+")" );
+            //endregion
             if(_rs.next()){
                 _t = this.createTemplate(_rs);
             }else{
@@ -202,9 +214,15 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
                     ("Error: la plantilla " + templateId + " no existe", ex, templateId);
         } catch ( MessageDoesntExistsException ex ){
             ex.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo postTemplate("+templateId+") arrojo la excepcion:" + ex.getMessage());
+            //endregion
             throw new MessageDoesntExistsException();
         } catch ( ParameterDoesntExistsException ex ){
             ex.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo postTemplate("+templateId+") arrojo la excepcion:" + ex.getMessage());
+            //endregion
         }
 
         this.closeConnection();
@@ -239,9 +257,14 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
                 _t.add(_template);
             }
 
-
+            //region Instrumentation Debug
+            log.info("Se ejecuto el metodo getAll() exitosamente" );
+            //endregion
         }
         catch (SQLException el){
+            //region Instrumentation Error
+            log.error("El metodo postTemplate() arrojo la excepcion:" + el.getMessage());
+            //endregion
             el.printStackTrace();
         }
 
@@ -280,13 +303,18 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
                 campaign = daoCampaign.campaignById(c);
 
             }
-
+            //region Instrumentation Debug
+            log.info("Se ejecuto el metodo getCampaignByTemplate("+templateId+") exitosamente" );
+            //endregion
         } catch (SQLException e){
             e.printStackTrace();
             throw new TemplateDoesntExistsException
                     ("Error: la plantilla " + templateId + " no existe", e, templateId);
         }catch (Exception e){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getCampaignByTemplate("+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } finally {
             closeConnection();
             //region Instrumentation Debug
@@ -325,10 +353,19 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
                     templateArrayList.add(template);
                 }
             }
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getTemplatesByCampaign("+userId+","+companyId+") exitosamente" );
+            //endregion
         }catch (SQLException e) {
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getTemplatesByCampaign("+userId+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }catch (Exception e){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getTemplatesByCampaign("+userId+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }finally {
             closeConnection();
             //region Instrumentation Debug
@@ -361,14 +398,25 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             _rs.next();
             DAOApplication _daoApplication = DAOFactory.instanciateDaoApplication();
             _application = _daoApplication.getApplication(_rs.getInt("applicationId"));
-
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getApplicationByTemplate("+templateId+") exitosamente" );
+            //endregion
         }
         catch (SQLException el){
             el.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getApplicationByTemplate("+templateId+") arrojo la excepcion:" + el.getMessage());
+            //endregion
         }catch ( ApplicationNotFoundException e ){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getApplicationByTemplate("+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }catch (Exception e){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getApplicationByTemplate("+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }
 
         closeConnection();
@@ -414,9 +462,14 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
                 );
                 channels.add(channel);
             }
-
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getChannelsByTemplate("+templateId+") exitosamente" );
+            //endregion
         } catch (SQLException e) {
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getChannelsByTemplate("+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } catch (Exception e){
             e.printStackTrace();
         }finally{
@@ -455,8 +508,14 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
                 privilege.set_actionPrivileges(resultSet.getString("pri_action"));
                 privileges.add(privilege);
             }
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getTemplatePrivilegesByUser("+userId+","+companyId+") exitosamente" );
+            //endregion
         } catch (SQLException e) {
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getTemplatePrivilegesByUser("+userId+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }
         closeConnection();
         //region Instrumentation Debug
@@ -501,10 +560,19 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
                         _rs.getDate("cam_end_date"),companyId);
                 campaignArrayList.add(campaign);
             }
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getCampaignsByUserOrCompany("+userId+","+companyId+") exitosamente" );
+            //endregion
         }catch(SQLException e){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getCampaignsByUserOrCompany("+userId+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } catch (Exception e){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo getCampaignsByUserOrCompany("+userId+","+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } finally {
             closeConnection();
             //region Instrumentation Debug
@@ -540,10 +608,19 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
                 _ps.execute();
             }
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo postChannelIntegrator("+channelIntegratorList+","+templateId+") exitosamente" );
+            //endregion
         }catch (SQLException e) {
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo postChannelIntegrator("+channelIntegratorList+","+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }catch(Exception e){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo postChannelIntegrator("+channelIntegratorList+","+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } finally {
             //region Instrumentation Debug
             log.debug("Saliendo del metodo postChannelIntegrator("+channelIntegratorList+","+templateId+")" );
@@ -592,9 +669,15 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
 
 
             rest= true;
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo updateTemplateData("+json+") exitosamente" );
+            //endregion
         } catch (Exception e){
             System.out.println(e);
             rest = false;
+            //region Instrumentation Error
+            log.error("El metodo updateTemplateData("+json+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }
         //region Instrumentation Debug
         log.debug("Saliendo del metodo updateTemplateData("+json+") con retorno:" +true);
@@ -633,10 +716,19 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             }
 
             preparedStatement.execute();
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo updateTemplate("+campaignId+","+applicationId+","+templateId+") exitosamente" );
+            //endregion
         }catch (SQLException e) {
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo updateTemplate("+campaignId+","+applicationId+","+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }catch(Exception e){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo updateTemplate("+campaignId+","+applicationId+","+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }
         closeConnection();
         //region Instrumentation Debug
@@ -660,10 +752,19 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             _ps.setInt(1,templateId);
             _ps.execute();
             postChannelIntegrator(channelIntegratorList,templateId);
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo updateChannelIntegrator("+channelIntegratorList+","+templateId+") exitosamente" );
+            //endregion
         } catch (SQLException e) {
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo updateChannelIntegrator("+channelIntegratorList+","+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } catch(Exception e){
             e.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo updateChannelIntegrator("+channelIntegratorList+","+templateId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         } finally {
             this.closeConnection();
         }
@@ -686,8 +787,14 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
             PreparedStatement _ps = _conn.prepareCall(DELETE);
             _ps.setInt(1,id);
             _ps.execute();
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo deleteTemplate("+id+") exitosamente" );
+            //endregion
         }catch( SQLException ex ){
             ex.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo deleteTemplate("+id+") arrojo la excepcion:" + ex.getMessage());
+            //endregion
         }
         //region Instrumentation Debug
         log.debug("Salinedo del metodo deleteTemplate("+id+")" );
@@ -743,11 +850,23 @@ public class DAOTemplate extends DAO implements IDAOTemplate {
                     _user,
                     _planning
             );
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo createTemplate("+_rs+") exitosamente" );
+            //endregion
         }catch( SQLException ex ){
             ex.printStackTrace();
+            //region Instrumentation Error
+            log.error("El metodo createTemplate("+_rs+") arrojo la excepcion:" + ex.getMessage());
+            //endregion
         }catch (ParameterDoesntExistsException e) {
+            //region Instrumentation Error
+            log.error("El metodo createTemplate("+_rs+") arrojo la excepcion:" + e.getMessage());
+            //endregion
             throw new ParameterDoesntExistsException( e );
         }catch (MessageDoesntExistsException e){
+            //region Instrumentation Error
+            log.error("El metodo createTemplate("+_rs+") arrojo la excepcion:" + e.getMessage());
+            //endregion
             throw new MessageDoesntExistsException( e );
         }
 
