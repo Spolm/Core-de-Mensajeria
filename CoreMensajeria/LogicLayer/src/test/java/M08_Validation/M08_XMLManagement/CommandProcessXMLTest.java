@@ -2,7 +2,7 @@ package M08_Validation.M08_XMLManagement;
 
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.M08_SendMessageManager.NullXMLException;
-import Exceptions.TemplateNotApprovedException;
+import Exceptions.M08_SendMessageManager.TemplateNotApprovedException;
 import Logic.Command;
 import Logic.CommandsFactory;
 import org.junit.Assert;

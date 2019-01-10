@@ -63,17 +63,17 @@ public class CommandSendMessage extends Command {
                     Integrator integrator = (Integrator)entity;
                     try {
                         if (integrator.isEnabled()) {
-                            if (channel.get_nameChannel().equalsIgnoreCase("SMS")) { ///*** MOSCA CON ESTO
+                            if (channel.get_nameChannel().equalsIgnoreCase("SMS")) {
                                 //integrator.sendMessage(finalMessage,telefono,"Valor a cambiar");
-                                System.out.println(finalMessage + " destino " + telefono);
+                                log.debug( finalMessage + " destino " + telefono );
                             } else {
-                                //integrator.sendMessage(finalMessage,correo,"Valor a cambiar"); ///*** MOSCA CON ESTO
-                                System.out.println(finalMessage + " destino " + correo);
+                                //integrator.sendMessage(finalMessage,correo,"Valor a cambiar");
+                                log.debug( finalMessage + " destino " + correo );
                             }
                         }
-                       /* Command<Entity> sc = CommandsFactory.createCommandInsertMessage(_template, integrator.get_id(),
+                       Command<Entity> sc = CommandsFactory.createCommandInsertMessage(_template, integrator.get_id(),
                                 channel.get_id(), this._dateToBeSent);
-                        sc.execute();*/
+                        sc.execute();
                     }catch (Exception e){
                         log.error("Error al insertar en base de datos");
                         throw e;
