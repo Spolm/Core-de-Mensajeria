@@ -34,9 +34,7 @@ public class CommandInsertMessageTest {
         try {
             insertMessage = CommandsFactory.createCommandInsertMessage(_t, 1, 1, _fecha);
             insertMessage.execute();
-        } catch (Exception e){
-            System.out.println(e);
-        }
+        } catch (Exception e){}
         assertTrue(insertMessage.Return());
     }
 

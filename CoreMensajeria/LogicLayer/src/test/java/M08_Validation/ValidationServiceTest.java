@@ -1,22 +1,36 @@
-/*package M08_Validation;
+package M08_Validation;
 
-import Entities.M07_Template.StatusPackage.Status;
-import Entities.M07_Template.Template;
+import Entities.M08_Validation.XMLManagement.Message;
+import Entities.M08_Validation.XMLManagement.ParameterXML;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.M08_SendMessageManager.TemplateNotApprovedException;
 import Logic.Command;
 import Logic.CommandsFactory;
-
-import Logic.M07_Template.CommandGetTemplate;
-import Logic.M08_Validation.CommandValidateTemplate;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import Exceptions.M08_SendMessageManager.SMSTooLongException;
+import java.util.ArrayList;
+
 
 import static  org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ValidationServiceTest {
+    private static ArrayList<Message> _msgs = new ArrayList<>();
+
+    @BeforeAll
+    public static void setMesssage() {
+        ArrayList<ParameterXML> params = new ArrayList<>();
+        ParameterXML param = new ParameterXML();
+        param.set_name("Fernando");
+        param.set_value("Que est");
+        params.add(param);
+        Message msg = new Message();
+        msg.set_correo("prueba@gmail.com");
+        msg.set_telefono("+58 04166102982");
+        msg.set_param(params);
+        _msgs.add(msg);
+    }
 
     @Test
     public void testTemplateValid() {
@@ -39,22 +53,24 @@ class ValidationServiceTest {
         Command c = new CommandsFactory().createCommandValidateTemplate(2);
         assertThrows(TemplateNotApprovedException.class,() -> c.execute());
     }
-//
-//    @Test
-//    public void testMessageValid() {
-//        Command c = CommandsFactory.createCommandValidateMessage(1, "esto es un mensaje de template " +
-//                "con + un [.$Parametro$.]", "SMS");
-//        try {
-//            c.execute();
-//            assertEquals(true, c.Return());
-//        } catch (Exception e) {}
-//    }
+
+    @Test
+    public void testMessageValid() {
+        Command c = CommandsFactory.createCommandValidateMessage(1, _msgs);
+        try{
+            c.execute();
+            assertEquals(true, c.Return());
+        } catch (Exception e) {}
+    }
 
     @Test
     public void testMessageNotValid() {
-        Command c = CommandsFactory.createCommandValidateMessage(6);
-        //assertThrows(SMSTooLongException.class, () -> c.execute());
+
+        Command c = CommandsFactory.createCommandValidateMessage(6, _msgs);
+        assertThrows(SMSTooLongException.class, () -> c.execute());
     }
 
-}*/
+
+
+}
 
