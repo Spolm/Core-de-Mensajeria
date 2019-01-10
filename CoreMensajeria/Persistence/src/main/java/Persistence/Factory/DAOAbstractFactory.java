@@ -2,6 +2,8 @@ package Persistence.Factory;
 
 import Persistence.IDAOGeographicalRegion;
 import Persistence.IDAOProfile;
+import Persistence.M04_Integrator.IDAOIntegrator;
+import Persistence.M05_Channel.IDAOChannel;
 import Registry.Registry;
 
 public abstract class DAOAbstractFactory {
@@ -24,4 +26,6 @@ public abstract class DAOAbstractFactory {
     /*Crear DAOs usando determinada interfaz*/
     public abstract IDAOProfile createDAOProfile();
     public abstract IDAOGeographicalRegion createDAOGeographicalRegion();
+    public abstract IDAOIntegrator createDAOIntegrator();
+    public abstract IDAOChannel createDAOChannel();
 }
