@@ -2,6 +2,8 @@ package M07_Template;
 
 import Entities.Entity;
 import Entities.M07_Template.MessagePackage.Parameter;
+
+import Entities.M07_Template.Template;
 import Persistence.Factory.DAOAbstractFactory;
 import Persistence.M07_Template.IDAOParameter;
 import org.junit.jupiter.api.AfterAll;

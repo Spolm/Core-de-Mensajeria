@@ -5,9 +5,7 @@ import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
 import Logic.Command;
 import Persistence.DAOFactory;
-import Persistence.Factory.DAOAbstractFactory;
 import Persistence.M07_Template.DAOTemplate;
-import Persistence.M07_Template.IDAOTemplate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 /**
@@ -34,7 +32,7 @@ public class CommandPostTemplate extends Command {
         //region Instrumentation Debug
         log.debug("Entrando a el metodo execute() de CommandPostTemplate" );
         //endregion
-        IDAOTemplate daoTemplate = DAOAbstractFactory.getFactory().createDaoTemplate();
+        DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
         rest = (Template) daoTemplate.postTemplateData(json);
         //region Instrumentation Info
         log.info("Se ejecuto el metodo Return() exitosamente");

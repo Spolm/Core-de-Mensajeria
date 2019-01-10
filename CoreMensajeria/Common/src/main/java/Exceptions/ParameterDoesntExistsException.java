@@ -15,10 +15,6 @@ public class ParameterDoesntExistsException extends PersonalizedException{
         super(message, e);
     }
 
-    public ParameterDoesntExistsException(String message) {
-        super(message);
-    }
-
     public ParameterDoesntExistsException(String message, Exception e, int id) {
         super(message, e);
         this.id = id;

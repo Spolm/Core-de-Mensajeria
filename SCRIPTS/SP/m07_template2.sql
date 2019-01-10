@@ -222,8 +222,8 @@ END;
 $BODY$
 LANGUAGE plpgsql VOLATILE;
 -- select * from m07_getCampaignByTemplate(1);
-  
-create or replace function m07_postchannelintegrator(_templateId integer, _channel integer, _integrator integer) returns void
+
+create function m07_postchannelintegrator(_templateId integer, _channel integer, _integrator integer) returns void
   language plpgsql
 as
 $$

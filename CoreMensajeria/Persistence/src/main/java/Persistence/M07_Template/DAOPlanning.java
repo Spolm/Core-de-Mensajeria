@@ -2,7 +2,13 @@ package Persistence.M07_Template;
 
 import Entities.Entity;
 import Entities.M07_Template.PlanningPackage.Planning;
+import Entities.Sql;
 import Persistence.DAO;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import java.sql.*;
 
@@ -12,6 +18,8 @@ public class DAOPlanning  extends DAO implements IDAOPlanning {
     final String UPDATE_PLANNING = "{ call m07_updatePlanning(?,?,?,?,?) }";
     final String DELETE_PLANNING = "{ call m07_deletePlanning(?) }";
     PreparedStatement _pt;
+    Statement  _st;
+    boolean _salida;
 
     /**
      * Obtener Planificacion

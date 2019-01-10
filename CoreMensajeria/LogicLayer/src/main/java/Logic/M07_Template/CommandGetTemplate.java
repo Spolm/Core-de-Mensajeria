@@ -5,9 +5,7 @@ import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Entities.M07_Template.Template;
 import Logic.Command;
 import Persistence.DAOFactory;
-import Persistence.Factory.DAOAbstractFactory;
 import Persistence.M07_Template.DAOTemplate;
-import Persistence.M07_Template.IDAOTemplate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,7 +37,7 @@ public class CommandGetTemplate extends Command {
         //endregion
         //TemplateHandler templateHandler = new TemplateHandler();
         //template = templateHandler.getTemplate(templateId);
-        IDAOTemplate daoTemplate = DAOAbstractFactory.getFactory().createDaoTemplate();
+        DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
         template = (Template) daoTemplate.get(templateId);
         //region Instrumentation Info
         log.info("Se ejecuto el metodo Return() exitosamente");

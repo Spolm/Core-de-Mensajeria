@@ -5,9 +5,7 @@ import Entities.M01_Login.Privilege;
 import Entities.M07_Template.HandlerPackage.TemplateHandler;
 import Logic.Command;
 import Persistence.DAOFactory;
-import Persistence.Factory.DAOAbstractFactory;
 import Persistence.M07_Template.DAOTemplate;
-import Persistence.M07_Template.IDAOTemplate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,7 +40,7 @@ public class CommandGetTemplatePrivilegesByUser extends Command {
         //endregion
         //TemplateHandler templateHandler = new TemplateHandler();
         //privileges = templateHandler.getTemplatePrivilegesByUser(userId,companyId);
-        IDAOTemplate daoTemplate = DAOAbstractFactory.getFactory().createDaoTemplate();
+        DAOTemplate daoTemplate = DAOFactory.instaciateDaoTemplate();
         privileges = daoTemplate.getTemplatePrivilegesByUser(userId,companyId);
         //region Instrumentation Info
         log.info("Se ejecuto el metodo execute() exitosamente");
