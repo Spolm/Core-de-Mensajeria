@@ -59,6 +59,10 @@ public class User extends Entity {
         this._bdUser = _bdUser;
     }
 
+    public User(int idUser) {
+            _idUser = idUser;
+    }
+
     public User() {
     }
 

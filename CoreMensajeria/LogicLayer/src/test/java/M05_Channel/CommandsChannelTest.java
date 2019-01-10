@@ -8,7 +8,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class CommandsTest {
+public class CommandsChannelTest {
 
     /**
      * Prueba que nos permite saber la lista de canales

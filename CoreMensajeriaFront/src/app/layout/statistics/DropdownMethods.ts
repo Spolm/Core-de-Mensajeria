@@ -423,7 +423,7 @@ export class DropdownMethods {
                 this.integratorsDropdown = [];
                 for (var index in data) {
                     this.integratorsDropdown.push({
-                        integrator_id: data[index]["_id"],
+                        integrator_id: data[index]["id"],
                         integrator_name: data[index]["nameIntegrator"]
                     });
                 }

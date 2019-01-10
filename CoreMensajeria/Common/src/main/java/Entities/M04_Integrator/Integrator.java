@@ -10,7 +10,7 @@ import Entities.Entity;
 * @author Alexander Fernandez
 * @see IIntegrator
 */
-public abstract class Integrator  extends Entity /*implements IIntegrator*/{
+public abstract class Integrator  extends Entity implements IIntegrator{
     private int threadCapacity;
     private float messageCost;
     private String nameIntegrator;

@@ -1,20 +1,20 @@
 package Logic.M09_Statistics;
 
-import Entities.Entity;
 import Logic.Command;
-import Persistence.DAOFactory;
-import Persistence.M09_Statistics.DAOStatisticEstrella;
+import Persistence.Factory.DAOAbstractFactory;
+import Persistence.IDAO_StatisticEstrella;
 
 import java.util.ArrayList;
 
 public class GetSecondsCommand extends Command<ArrayList<Integer>> {
 
-    private DAOStatisticEstrella dao;
+    private IDAO_StatisticEstrella dao;
     private ArrayList<Integer> seconds;
 
     @Override
     public void execute() throws Exception {
-        dao = DAOFactory.instanciateDaoStatisticsEstrella();
+        DAOAbstractFactory factory = DAOAbstractFactory.getFactory();
+        dao = factory.instanciateDaoStatisticsEstrella();
         seconds = dao.getSeconds();
     }
 
