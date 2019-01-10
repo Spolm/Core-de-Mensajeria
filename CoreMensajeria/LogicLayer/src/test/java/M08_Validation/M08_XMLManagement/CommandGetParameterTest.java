@@ -66,7 +66,7 @@ class CommandGetParameterTest {
             commandGetParameter = CommandsFactory.createCommandGetParameter(element,param);
 
         } catch ( Exception e ) {
-            e.printStackTrace();
+
         }
     }
 }
