@@ -3,7 +3,7 @@
 import Entities.M07_Template.StatusPackage.Status;
 import Entities.M07_Template.Template;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
-import Exceptions.TemplateNotApprovedException;
+import Exceptions.M08_SendMessageManager.TemplateNotApprovedException;
 import Logic.Command;
 import Logic.CommandsFactory;
 
@@ -11,7 +11,7 @@ import Logic.M07_Template.CommandGetTemplate;
 import Logic.M08_Validation.CommandValidateTemplate;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.jupiter.api.Test;
-import Exceptions.SMSTooLongException;
+import Exceptions.M08_SendMessageManager.SMSTooLongException;
 
 import static  org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;

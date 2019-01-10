@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<template>
+    <id>3</id>
+    <message>
+        <correo>Carlos@gmail.com</correo>
+        <telefono>0416-2184569</telefono>
+        <parameter>
+            <name>Evento</name>
+            <value>Caracas Vs Magallanes</value>
+        </parameter>
+        <parameter>
+            <name>Fecha</name>
+            <value>01-03-2020</value>
+        </parameter>
+        <parameter>
+            <name>Hora</name>
+            <value>12:27 PM</value>
+        </parameter>
+        <parameter>
+            <name>Lugar</name>
+            <value>Valencia</value>
+        </parameter>
+    </message>
+    <message>
+        <telefono>0414-1779515</telefono>
+        <correo>Manuel@gmail.com</correo>
+        <parameter>
+            <name>Evento</name>
+            <value>Caracas Vs Magallanes</value>
+        </parameter>
+        <parameter>
+            <name>Fecha</name>
+            <value>01-03-2020</value>
+        </parameter>
+        <parameter>
+            <name>Hora</name>
+            <value>12:27 PM</value>
+        </parameter>
+        <parameter>
+            <name>Lugar</name>
+            <value>Valencia</value>
+        </parameter>
+    </message>
+</template>

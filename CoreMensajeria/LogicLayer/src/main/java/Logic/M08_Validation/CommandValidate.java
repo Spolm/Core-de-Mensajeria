@@ -1,22 +1,24 @@
 package Logic.M08_Validation;
 
-import DTO.M08_DTO.ParametersDTO;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
-import Exceptions.MessageDoesntExistsException;
-import Exceptions.ParameterDoesntExistsException;
-import Exceptions.SMSTooLongException;
+import Exceptions.M08_SendMessageManager.SMSTooLongException;
 import Exceptions.UnexpectedErrorException;
 import Logic.Command;
 import Logic.CommandsFactory;
 
 /**
- * Comando compuesto que ejecuta todos los comandos que validen los parametros de envio de un mensaje
+ * Comando compuesto que ejecuta todos los comandos que validen
+ * los parametros de envio de un mensaje
+ *
+ * @see CompositeCommand
  */
 public class CommandValidate extends CompositeCommand<Boolean> {
     private boolean _valid = false;
 
     /**
+     * Constructor del comando que recibe los parametros
+     *
      * @param parameters parámetros estandar que se reciben tanto de aplicación como de archivo
      */
     public CommandValidate(VerifiedParameter parameters) {
@@ -29,12 +31,14 @@ public class CommandValidate extends CompositeCommand<Boolean> {
 
 
     /**
+     * Metodo que ejecuta los comandos de validacion
+     *
      * @throws SMSTooLongException
      * @throws UnexpectedErrorException
      * @throws TemplateDoesntExistsException
      */
     @Override
-    public void execute() throws SMSTooLongException, UnexpectedErrorException, TemplateDoesntExistsException{
+    public void execute() throws SMSTooLongException, UnexpectedErrorException, TemplateDoesntExistsException {
         Command[] commandList = get_commandList();
         try {
             for (Command c : commandList) {

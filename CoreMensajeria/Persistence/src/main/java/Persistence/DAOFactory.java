@@ -6,6 +6,7 @@ import Persistence.M04_Integrator.DAOIntegrator;
 import Persistence.M05_Channel.DAOChannel;
 import Persistence.M07_Template.*;
 import Persistence.M01_Login.DAOUser;
+import Persistence.M08_SendMessage.DAOSentMessage;
 import Persistence.M09_Statistics.DAOStatistic;
 import Persistence.M09_Statistics.DAOStatisticEstrella;
 import Persistence.M02_Company.DAOCompany;
@@ -63,6 +64,12 @@ public class DAOFactory {
     static public DAOStatus createDAOStatus(){return new DAOStatus();}
 
     // end region
+
+    //region M08
+
+    static public DAOSentMessage instanciateDaoSentMessage( ) { return new DAOSentMessage(); }
+
+    //end region
 
 
 }

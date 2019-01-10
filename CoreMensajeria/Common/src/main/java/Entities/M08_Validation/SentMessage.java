@@ -6,27 +6,52 @@ import java.sql.Timestamp;
 
 
 /**
- * Entidad del mensaje enviado que será insertada en bd
+ * Entidad del mensaje enviado correctamente que sera
+ * insertado en la base de datos
+ *
+ * @see Entity
  */
 public class SentMessage extends Entity {
-    public int _templateId;
-    public int _messageId;
-    public int _campaignId;
-    public int _integratorId;
-    public int _applicationId;
-    public int _channelId;
-    public Timestamp _sentTime;
+    /**
+     * Id del mensaje
+     */
+    private int _messageId;
+    /**
+     * Id de la campaña
+     */
+    private int _campaignId;
+    /**
+     * Id del integrador por el cual se envio el mensaje
+     */
+    private int _integratorId;
+    /**
+     * Id de la aplicacion
+     */
+    private int _applicationId;
+    /**
+     * Id del canal por el que se envio el mensaje.
+     */
+    private int _channelId;
+    /**
+     * Fecha en la cual se enviara el mensaje
+     */
+    private Timestamp _sentTime;
 
-    public int get_templateId() {
-        return _templateId;
+    /**
+     * Metodo que nos permite obtener el id del mensaje
+     * que fue enviado
+     *
+     * @return _messageId id del mensaje
+     */
+    public int get_message() {
+        return _messageId;
     }
 
-    public void set_templateId(int _templateId) {
-        this._templateId = _templateId;
-    }
-
-    public int get_message() { return _messageId; }
-
+    /**
+     * Metodo que permite agregar el id a el Mensaje
+     *
+     * @param _message id del mensaje
+     */
     public void set_message(int _message) {
         this._messageId = _message;
     }
