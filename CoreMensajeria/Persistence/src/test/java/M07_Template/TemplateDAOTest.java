@@ -27,7 +27,7 @@ class TemplateDAOTest {
     private static IDAOTemplate _daoTemplate = DAOAbstractFactory.getFactory().createDaoTemplate();
 
     @BeforeAll
-    public static void init(){
+    public static void init() throws TemplateDoesntExistsException, ParameterDoesntExistsException, MessageDoesntExistsException {
         json = "{\n" +
                 "    \"campaign\": 1,\n" +
                 "    \"applicationId\": 1,\n" +
