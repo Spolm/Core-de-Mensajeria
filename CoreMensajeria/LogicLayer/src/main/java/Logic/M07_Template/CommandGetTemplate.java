@@ -37,8 +37,6 @@ public class CommandGetTemplate extends Command {
         //region Instrumentation Debug
         log.debug("Entrando a el metodo execute() de CommandGetTemplate" );
         //endregion
-        //TemplateHandler templateHandler = new TemplateHandler();
-        //template = templateHandler.getTemplate(templateId);
         IDAOTemplate daoTemplate = DAOAbstractFactory.getFactory().createDaoTemplate();
         template = (Template) daoTemplate.get(templateId);
         //region Instrumentation Info
