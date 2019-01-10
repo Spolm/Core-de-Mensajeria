@@ -1,21 +1,21 @@
 package Logic.M09_Statistics;
 
 import Entities.Entity;
-import Entities.M05_Channel.Channel;
 import Logic.Command;
-import Persistence.DAOFactory;
-import Persistence.M09_Statistics.DAOStatisticEstrella;
+import Persistence.Factory.DAOAbstractFactory;
+import Persistence.IDAO_StatisticEstrella;
 
 import java.util.ArrayList;
 
 public class GetAllChannelsCommand extends Command<ArrayList<Entity>> {
 
     private ArrayList<Entity> channels;
-    private DAOStatisticEstrella dao;
+    private IDAO_StatisticEstrella dao;
 
     @Override
     public void execute() throws Exception {
-        dao = DAOFactory.instanciateDaoStatisticsEstrella();
+        DAOAbstractFactory factory = DAOAbstractFactory.getFactory();
+        dao = factory.instanciateDaoStatisticsEstrella();
         channels = dao.getAllChannels();
     }
 

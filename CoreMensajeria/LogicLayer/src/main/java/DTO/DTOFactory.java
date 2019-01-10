@@ -5,8 +5,10 @@ import DTO.M01_DTO.DTOPrivilege;
 import DTO.M01_DTO.DTOUser;
 import DTO.M02_DTO.*;
 import DTO.M03_DTO.*;
+import DTO.M06_DataOrigin.DTOAddApplication;
 import DTO.M04_Integrator.DTOIntegrator;
 import DTO.M05_Channel.DTOChannel;
+import DTO.M06_DataOrigin.DTOAddApplication;
 import DTO.M09_DTO.DTOStatistic;
 import Entities.Entity;
 import Entities.M02_Company.Company;
@@ -225,11 +227,17 @@ public class DTOFactory {
     }
     //end M05_Channels
 
+    //M06_DataOrigin
+
+
+    public static DTOAddApplication addApplication (String nameApplication, String descriptionApplication,
+                                                    int userId, int companyId){
+        return new DTOAddApplication(nameApplication, descriptionApplication, userId, companyId);
+    }
 
 
 
-
-
+    //
 
     /**
      * Metodo que instancia un obejto del tipo DTOStatistic

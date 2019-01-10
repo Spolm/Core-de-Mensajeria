@@ -2,6 +2,11 @@ package Persistence.Factory;
 
 import Persistence.IDAOGeographicalRegion;
 import Persistence.IDAOProfile;
+import Persistence.M04_Integrator.IDAOIntegrator;
+import Persistence.M05_Channel.IDAOChannel;
+import Persistence.IDAO_Statistic;
+import Persistence.IDAO_StatisticEstrella;
+import Persistence.Postgres.M09_Statistics.*;
 import Persistence.M07_Template.*;
 import Registry.Registry;
 
@@ -25,6 +30,10 @@ public abstract class DAOAbstractFactory {
     /*Crear DAOs usando determinada interfaz*/
     public abstract IDAOProfile createDAOProfile();
     public abstract IDAOGeographicalRegion createDAOGeographicalRegion();
+    public abstract IDAOIntegrator createDAOIntegrator();
+    public abstract IDAOChannel createDAOChannel();
+    public abstract IDAO_StatisticEstrella instanciateDaoStatisticsEstrella();
+    public abstract IDAO_Statistic instanciateDAOStatistic();
 
     //region M07
 

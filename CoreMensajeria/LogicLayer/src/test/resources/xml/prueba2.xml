@@ -40,9 +40,5 @@
 			<name>Fecha Inicio</name>
 			<value>11-14-2019</value>
 		</parameter>
-		<parameter>
-			<name>Fecha Fin</name>
-			<value>12-28-28</value>
-		</parameter>
 	</message>
 </template>

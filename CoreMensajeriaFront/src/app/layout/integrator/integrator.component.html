@@ -9,7 +9,7 @@
         (click)="getAllIntegrators()">Todos los Integradores</button>
         
         <button *ngFor="let channel of channels" type="button" class="btn btn-primary" 
-        (click)="getIntegratorsPerChannel(channel.idChannel)">{{ channel.nameChannel }}</button>
+        (click)="getIntegratorsPerChannel(channel._id)">{{ channel._nameChannel }}</button>
         
     </div>
   </div>
@@ -38,7 +38,7 @@
             <li class="list-group-item">Capacidad de Hilos: {{ integrator.threadCapacity }}</li>
             <li class="list-group-item">Costo del Mensaje: {{ integrator.messageCost }}</li>
             <li class="list-group-item">API: {{ integrator.apiIntegrator }}</li>
-            <li class="list-group-item">Id: <b>{{ integrator.idIntegrator }}</b></li>
+            <li class="list-group-item">Id: <b>{{ integrator.id }}</b></li>
             <li class="list-group-item text-center">
               <button type="button" class="btn btn-danger"
                 (click)="disabledIntegrator(integrator)" 

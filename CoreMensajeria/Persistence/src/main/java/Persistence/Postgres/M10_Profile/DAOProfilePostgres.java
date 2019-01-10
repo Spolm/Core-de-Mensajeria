@@ -167,6 +167,27 @@ public class DAOProfilePostgres extends DAOPostgres implements IDAOProfile {
         return companies;
     }
 
+    public ArrayList<Rol> getRoles(){
+        ArrayList<Rol> roles = new ArrayList<>();
+        Connection connection = DAOPostgres.getConnection();
+        try{
+            PreparedStatement preparedStatement = connection.prepareCall("{call m10_getallroles()}");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Rol rol = new Rol();
+                rol.set_id(resultSet.getInt("rol_id"));
+                rol.set_name(resultSet.getString("rol_name"));
+                roles.add(rol);
+            }
+            connection.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return roles;
+    }
+
     /**
      * Implemented method of IDAOProfile which is responsible for editing the profile of a user in the database
      * @param userId id of the user

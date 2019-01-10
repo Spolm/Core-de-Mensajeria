@@ -22,8 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * Pruebas unitarias para la clase del comando GetTagVaule
  */
 class CommandGetTagValueTest {
-    private static DocumentBuilderFactory _dbFactory;
-    private static DocumentBuilder dBuilder;
     private static NodeList node1;
     private static Document doc1;
 
@@ -36,16 +34,15 @@ class CommandGetTagValueTest {
     static void settingUp() {
         ClassLoader classLoader = new CommandGetMessageTest().getClass().getClassLoader();
         File _file1 = new File(classLoader.getResource("xml/prueba1.xml").getFile());
-        _dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory _dbFactory = DocumentBuilderFactory.newInstance();
         try {
-            dBuilder = _dbFactory.newDocumentBuilder();
+            DocumentBuilder dBuilder = _dbFactory.newDocumentBuilder();
             doc1 = dBuilder.parse( _file1.getPath() );
             doc1.getDocumentElement().normalize();
             node1 = doc1.getElementsByTagName( "template" );
         } catch ( Exception e ) {
             Assert.fail( e.getMessage()
             + "[Error en el BeforeAll]" );
-            e.printStackTrace();
         }
     }
 

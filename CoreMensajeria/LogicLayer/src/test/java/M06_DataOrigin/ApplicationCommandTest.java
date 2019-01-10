@@ -7,11 +7,9 @@ import Entities.Sql;
 import Exceptions.DatabaseConnectionProblemException;
 import Logic.Command;
 import Logic.CommandsFactory;
-import Logic.M06_DataOrigin.GetApplicationByIdCommand;
 import Logic.M06_DataOrigin.GetApplicationByIdCompanyCommand;
 import Logic.M06_DataOrigin.GetApplicationCommand;
 import Logic.M06_DataOrigin.UpdateApplicationCommand;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+
 import Exceptions.ApplicationNotFoundException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -34,7 +32,7 @@ public class ApplicationCommandTest {
 
     @BeforeEach
     public void before(){
-        _addApplicationData=EntityFactory.createAplicationData("Metro de Caracas",
+        _addApplicationData=EntityFactory.createApplicationData("Metro de Caracas",
                 "Pagina oficial del metro de caracas",1,1);
     }
 

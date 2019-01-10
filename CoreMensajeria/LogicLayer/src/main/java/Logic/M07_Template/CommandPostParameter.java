@@ -6,7 +6,9 @@ import Entities.M07_Template.HandlerPackage.ParameterHandler;
 import DTO.M07_Template.NewParameter;
 import Logic.Command;
 import Persistence.DAOFactory;
+import Persistence.Factory.DAOAbstractFactory;
 import Persistence.M07_Template.DAOParameter;
+import Persistence.M07_Template.IDAOParameter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,7 +35,7 @@ public class CommandPostParameter extends Command {
         //region Instrumentation Debug
         log.debug("Entrando a el metodo execute() de CommandPostParameter" );
         //endregion
-        DAOParameter daoParameter = DAOFactory.instaciateDaoParameter();
+        IDAOParameter daoParameter = DAOAbstractFactory.getFactory().createDaoParameter();
         daoParameter.postParameter(newParameter.getName(),newParameter.getCompanyId());
         //region Instrumentation Info
         log.info("Se ejecuto el metodo execute() exitosamente");

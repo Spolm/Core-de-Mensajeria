@@ -6,6 +6,7 @@ import { p } from '@angular/core/src/render3';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { delay } from 'q';
+import { User } from './models/user';
 
 const endpoint = 'http://localhost:8080/CoreMensajeria_war_exploded/';
 const httpOptions = {
@@ -34,6 +35,11 @@ export class UserAdministrationService {
       map(this.extractData));
   }
 
+  getTown(town: string) {
+    return this.http.get(endpoint + 'geographical_regions?id=' + town).pipe(
+      map(this.extractData));
+  }
+
   getUsers(companyId: String){
     return this.http.get(endpoint + 'profiles/responsabilities?companyId=' + companyId).pipe(
       map(this.extractData));
@@ -47,5 +53,18 @@ export class UserAdministrationService {
   getCompanies(userId: string) {
     return this.http.get(endpoint + 'profiles/companies?userId=' + userId).pipe(
       map(this.extractData));
+  }
+
+  getRoles() {
+    return this.http.get(endpoint + 'profiles/roles').pipe(
+      map(this.extractData));
+  }
+
+  postUser(user: User): Observable<any>{
+    console.log('postUser')
+    console.log(user)
+    return this.http.post<any>( endpoint + 'profiles/createUser', JSON.stringify(user), httpOptions).pipe(
+    tap((user) => console.log(`User created`)),
+    );
   }
 }

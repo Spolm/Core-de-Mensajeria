@@ -357,7 +357,7 @@ public class EntityFactory {
      * @param userId usuario al cual se le asignara la aplicacion
      * @param companyId compañia al cual se le asignara
      **/
-    public static AddApplicationData createAplicationData(String nameApplication, String descriptionApplication, int userId, int companyId){
+    public static AddApplicationData createApplicationData(String nameApplication, String descriptionApplication, int userId, int companyId){
         return new AddApplicationData(nameApplication,descriptionApplication,userId,companyId);
     }
 
