@@ -5,10 +5,7 @@ import Entities.M08_Validation.XMLManagement.Message;
 import Entities.M08_Validation.XMLManagement.VerifiedParameter;
 import Exceptions.M07_Template.TemplateDoesntExistsException;
 import Exceptions.M08_SendMessageManager.*;
-<<<<<<< HEAD
 import Exceptions.M08_SendMessageManager.TemplateNotApprovedException;
-=======
->>>>>>> 5a28b57f40154c033aaa4d5a6bab8758ebe44da8
 import Logic.Command;
 import Logic.CommandsFactory;
 import org.apache.logging.log4j.LogManager;
