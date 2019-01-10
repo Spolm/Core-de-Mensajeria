@@ -55,9 +55,7 @@ public class M10_ProfileCommandsTest {
             c.execute();
             companies =  (ArrayList<Company>)c.Return();
 
-            assertEquals(2, companies.get(0).get_idCompany());
-            assertEquals(3, companies.get(1).get_idCompany());
-            assertEquals(1, companies.get(2).get_idCompany());
+            assertEquals(3, companies.size());
         } catch (Exception  e){
             e.printStackTrace();
         }
