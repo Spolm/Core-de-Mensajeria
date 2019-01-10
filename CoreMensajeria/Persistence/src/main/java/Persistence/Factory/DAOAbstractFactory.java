@@ -4,6 +4,7 @@ import Persistence.IDAOGeographicalRegion;
 import Persistence.IDAOProfile;
 import Persistence.M04_Integrator.IDAOIntegrator;
 import Persistence.M05_Channel.IDAOChannel;
+import Persistence.M07_Template.*;
 import Registry.Registry;
 
 public abstract class DAOAbstractFactory {
@@ -28,4 +29,14 @@ public abstract class DAOAbstractFactory {
     public abstract IDAOGeographicalRegion createDAOGeographicalRegion();
     public abstract IDAOIntegrator createDAOIntegrator();
     public abstract IDAOChannel createDAOChannel();
+
+    //region M07
+
+    public abstract IDAOMessage createDaoMessage( );
+    public abstract IDAOTemplate createDaoTemplate( );
+    public abstract IDAOPlanning createDaoPlanning( );
+    public abstract IDAOParameter createDaoParameter( );
+    public abstract IDAOStatus createDAOStatus();
+
+    // end region
 }

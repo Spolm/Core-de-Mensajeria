@@ -6,6 +6,7 @@ import Persistence.M04_Integrator.DAOIntegrator;
 import Persistence.M04_Integrator.IDAOIntegrator;
 import Persistence.M05_Channel.DAOChannel;
 import Persistence.M05_Channel.IDAOChannel;
+import Persistence.M07_Template.*;
 import Persistence.Postgres.M10_Profile.DAOGeographicalRegionPostgres;
 import Persistence.Postgres.M10_Profile.DAOProfilePostgres;
 
@@ -28,4 +29,25 @@ public class PostgresFactory extends DAOAbstractFactory {
     public IDAOChannel createDAOChannel() {
         return new DAOChannel();
     }
+    //region M07
+
+    public DAOMessage createDaoMessage( ){
+        return new DAOMessage();
+    }
+
+    public DAOTemplate createDaoTemplate( ){
+        return new DAOTemplate();
+    }
+
+    public DAOPlanning createDaoPlanning( ){
+        return new DAOPlanning();
+    }
+
+    public DAOParameter createDaoParameter( ){
+        return new DAOParameter();
+    }
+
+    public DAOStatus createDAOStatus(){return new DAOStatus();}
+
+    // end region
 }

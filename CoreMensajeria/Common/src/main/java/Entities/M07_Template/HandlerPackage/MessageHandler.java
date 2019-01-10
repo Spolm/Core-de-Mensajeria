@@ -48,7 +48,7 @@ public class MessageHandler {
                 message.set_id(resultSet.getInt("messageId"));
                 message.setMessage(resultSet.getString("messageText"));
                 message.setParameters(ParameterHandler.getParametersByMessage(message.get_id()));
-                templateArrayList.get(x).setMessage(message);
+             //   templateArrayList.get(x).setMessage(message);
             }
         }catch (SQLException e) {
             e.printStackTrace();

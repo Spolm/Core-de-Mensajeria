@@ -176,7 +176,7 @@ public class DAOCampaign extends DAOPostgres implements IDAOCampaign {
         return _caList;
         }
 
-
+    @Override
     public ArrayList< Entity > campaignListCompany( Entity _e ) {
         ArrayList<Entity> _caList = new ArrayList<>();
         PreparedStatement _ps;
@@ -185,7 +185,7 @@ public class DAOCampaign extends DAOPostgres implements IDAOCampaign {
 
         try {
             _ps = _conn.prepareCall(SELECT_CAMPAIGN_BY_COMPANY);
-            _ps.setInt(1, _company.get_id());
+            _ps.setInt(1, _company.get_idCompany());
             ResultSet _result = _ps.executeQuery();
 
             while( _result.next() ){

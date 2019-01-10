@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserAdministrationService } from './user-administration.service';
+import { delay } from 'q';
 
 @Component({
   selector: 'app-user-administration',
@@ -9,43 +10,62 @@ import { UserAdministrationService } from './user-administration.service';
 export class UserAdministrationComponent {
 
   userId: string = localStorage.getItem("userid");
-  users: any = [
-    {
-      "_idUser": 1,
-      "_ciUser": 24685783,
-      "_nameUser": "Boris",
-      "_lastnameUser": "Torrado",
-      "_rolUser": "Aprobador",
-      "_emailUser": "boristor22@gmail.com"
-    }
-  ];
+  usersJson: any = [];
   privilegesJson: any = [];
-  companiesJson: any = [
-    {
-      "_idCompany": 1,
-      "_name": "Company 1",
-      "_status": true
-    },
-    {
-      "_idCompany": 2,
-      "_name": "Company 2",
-      "_status": true
-    },
-    {
-      "_idCompany": 3,
-      "_name": "Company 3",
-      "_status": true
-    }
-  ];
+  companiesJson: any = [];
+  CUSER = false;
+  RUSER = false;
+  UUSER = false;
+  DUSER = false;
 
-  constructor(userAdministrationService: UserAdministrationService) {
-    console.log(this.companiesJson);
+  constructor( private userAdministrationService: UserAdministrationService ) {
+    this.getCompanies(this.userId);
   }
 
   changeCompany(companyId: string) {
-    console.log(companyId);
     localStorage.setItem('companyId', companyId);
+    this.getUsers(localStorage.getItem('companyId'));    
+    this.getPrivileges(this.userId, Number(companyId));
+  }
 
+  getUsers(companyId: string){
+    this.userAdministrationService.getUsers(companyId).subscribe(data => {
+      this.usersJson = data;
+    });
+  }
+
+  async getPrivileges(userId: string, companyId: number) {
+    this.userAdministrationService.getPrivilegesByUserAndCompany(userId, companyId).subscribe(data => {
+      this.privilegesJson = data;
+      console.log(this.privilegesJson)
+    });
+    await delay(1000);
+    this.assignPrivileges(this.privilegesJson);
+  }
+
+  assignPrivileges(privileges: Array<any>) {
+    privileges.forEach((privilege) => {
+      if (privilege._codePrivileges == 'CUSER') {
+        this.CUSER = true;
+      }
+      else if (privilege._codePrivileges == 'RUSER') {
+        this.RUSER = true
+      }
+      else if (privilege._codePrivileges == 'UUSER') {
+        this.UUSER = true
+      }
+      else if (privilege._codePrivileges == 'DUSER') {
+        this.DUSER = true
+      }
+    })
+  }
+
+  getCompanies(userId: string) {
+    this.userAdministrationService.getCompanies(userId).subscribe(data => {
+      this.companiesJson = data;
+      console.log(this.companiesJson)
+    });
+    console.log("perol")
   }
 
 }
