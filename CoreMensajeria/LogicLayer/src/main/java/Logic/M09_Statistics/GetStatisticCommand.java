@@ -5,6 +5,8 @@ import Exceptions.M09_Statistic.StatisticParametersNotFoundException;
 import Logic.Command;
 import Persistence.Factory.DAOAbstractFactory;
 import Persistence.IDAO_StatisticEstrella;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +33,7 @@ public class GetStatisticCommand extends Command<Map<String, Entity>> {
     Boolean flagCampaign = false;
     Boolean flagChannel = false;
     Boolean flagIntegrator = false;
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
 
     public GetStatisticCommand(List<Integer> companyIds, List<Integer> campaignIds, List<Integer> channelIds,
                                List<Integer> integratorIds, List<Integer> yearIds, List<Integer> monthIds,
@@ -60,6 +63,9 @@ public class GetStatisticCommand extends Command<Map<String, Entity>> {
 
     @Override
     public void execute() throws StatisticParametersNotFoundException {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo execute() de GetStatisticCommand" );
+        //endregion
         DAOAbstractFactory factory = DAOAbstractFactory.getFactory();
         dao = factory.instanciateDaoStatisticsEstrella();
         if (flagCompany) {
@@ -86,10 +92,25 @@ public class GetStatisticCommand extends Command<Map<String, Entity>> {
         if (!flagCampaign && !flagCompany && !flagChannel && !flagIntegrator){
             throw new StatisticParametersNotFoundException();
         }
+        //region Instrumentation Info
+        log.info("Se ejecuto el metodo execute() exitosamente");
+        //endregion
+        //region Instrumentation Debug
+        log.debug("Saliendo de el metodo execute() de GetStatisticCommand" );
+        //endregion
     }
 
     @Override
     public Map<String, Entity> Return(){
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo return() de GetStatisticCommand" );
+        //endregion
+        //region Instrumentation Info
+        log.info("Se ejecuto el metodo Return() exitosamente");
+        //endregion
+        //region Instrumentation Debug
+        log.debug("Saliendo de el metodo Return() de GetStatisticCommand" );
+        //endregion
         return stats;
     }
 
