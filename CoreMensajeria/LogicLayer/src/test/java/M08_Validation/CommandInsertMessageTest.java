@@ -31,7 +31,6 @@ public class CommandInsertMessageTest {
 
     @Test
     public void testInsertMessageOk(){
-        System.out.println(_t);
         try {
             insertMessage = CommandsFactory.createCommandInsertMessage(_t, 1, 1, _fecha);
             insertMessage.execute();
