@@ -2,19 +2,15 @@ package Persistence.M07_Template;
 
 import Entities.Entity;
 import Entities.EntityFactory;
-import Entities.M03_Campaign.Campaign;
 import Entities.M07_Template.HandlerPackage.ParameterHandler;
 import Entities.M07_Template.MessagePackage.Message;
 import Entities.M07_Template.MessagePackage.Parameter;
 import Entities.M07_Template.Template;
-import Entities.Sql;
 import Exceptions.MessageDoesntExistsException;
 import Exceptions.ParameterDoesntExistsException;
 import Persistence.DAO;
 import Persistence.DAOFactory;
-import Persistence.M03_Campaign.DAOCampaign;
 
-import javax.ws.rs.POST;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,17 +27,14 @@ public class DAOMessage extends DAO implements IDAOMessage {
     final String DELETE_MESSAGE = "{CALL m07_deletemessage(?)}";
     final String DELETE_MESSAGE_BY_ID = "{CALL m07_deletemessagebyid(?)}";
 
-    /**
-     * Add message to Database
-     * @param e
-     */
+
     @Override
     public void create(Entity e) {
 
     }
 
     /**
-     * Post Message
+     * Crea un mensaje
      * @param message
      * @param companyId
      * @param parameters
@@ -50,19 +43,17 @@ public class DAOMessage extends DAO implements IDAOMessage {
     @Override
     public Entity postMessage(String message, int companyId,String[] parameters, int templateId ) {
         Message _me = null;
-        Connection _conn = this.getBdConnect();
+        Connection _conn = getBdConnect();
         int messageId = 0;
 
-        PreparedStatement preparedStatement = null;
+        PreparedStatement _ps = null;
 
         try {
-            //Insert the new Message on DB
-            preparedStatement = _conn.prepareCall( CREATE_MESSAGE );
-            preparedStatement.setString( 1, message );
-            preparedStatement.setInt( 2, templateId );
-            ResultSet _rs = preparedStatement.executeQuery();
+            _ps = _conn.prepareCall( CREATE_MESSAGE );
+            _ps.setString( 1, message );
+            _ps.setInt( 2, templateId );
+            ResultSet _rs = _ps.executeQuery();
 
-            //Get the ID of the inserted message and insert Parameters
             if(_rs.next())
             messageId = _rs.getInt(1);
             this.postParametersOfMessage(messageId, parameters,companyId);
@@ -75,16 +66,12 @@ public class DAOMessage extends DAO implements IDAOMessage {
         } catch ( MessageDoesntExistsException e ){
             e.printStackTrace();
         }finally{
-            this.closeConnection();
+            closeConnection();
             return _me;
         }
     }
 
-    /**
-     * Search a specific message on the DB
-     * @param e
-     * @return message
-     */
+
     @Override
     public Entity read(Entity e) {
         return null;
@@ -96,7 +83,7 @@ public class DAOMessage extends DAO implements IDAOMessage {
     }
 
     /**
-     * Finds message by template
+     * Busca mensaje por plantilla
      * @param templateId
      * @return
      * @throws ParameterDoesntExistsException
@@ -105,15 +92,15 @@ public class DAOMessage extends DAO implements IDAOMessage {
     @Override
     public Entity getMessage(int templateId) throws ParameterDoesntExistsException, MessageDoesntExistsException{
         Entity _m  = null;
-        Connection _conn = this.getBdConnect();
+        Connection _conn = getBdConnect();
         DAOParameter _daoParameter = DAOFactory.instaciateDaoParameter();
 
-        PreparedStatement preparedStatement = null;
+        PreparedStatement _ps = null;
 
         try {
-            preparedStatement = _conn.prepareCall( GET_MESSAGE_BY_TEMPLATE );
-            preparedStatement.setInt( 1, templateId );
-            ResultSet _rs = preparedStatement.executeQuery();
+            _ps = _conn.prepareCall( GET_MESSAGE_BY_TEMPLATE );
+            _ps.setInt( 1, templateId );
+            ResultSet _rs = _ps.executeQuery();
 
             if(_rs.next())
             _m = this.createMessage(_rs);
@@ -129,12 +116,12 @@ public class DAOMessage extends DAO implements IDAOMessage {
             e.printStackTrace();
         }
 
-        this.closeConnection();
+        closeConnection();
         return _m;
     }
 
     /**
-     * Get all the messages
+     * Busca todos los mensajes
      * @return
      */
     @Override
@@ -163,24 +150,29 @@ public class DAOMessage extends DAO implements IDAOMessage {
     }
 
 
-
-
+    /**
+     * Guarda relacion entre parametro y mensaje
+     * @param messageId
+     * @param parameters
+     * @param companyId
+     * @return
+     */
     @Override
     public boolean postParametersOfMessage(int messageId, String[] parameters, int companyId) {
 
-        Connection _conn = this.getBdConnect();
-        PreparedStatement preparedStatement = null;
+        Connection _conn = getBdConnect();
+        PreparedStatement _ps = null;
         boolean _res = false;
 
         try{
-            preparedStatement = _conn.prepareCall(POST_PARAMETER_OF_MESSAGE);
+            _ps = _conn.prepareCall(POST_PARAMETER_OF_MESSAGE);
 
             for (int i = 0; i < parameters.length; i++ ){
-                preparedStatement.setInt( 1, messageId );
-                preparedStatement.setInt( 2, companyId );
-                preparedStatement.setString( 3, parameters[i]);
+                _ps.setInt( 1, messageId );
+                _ps.setInt( 2, companyId );
+                _ps.setString( 3, parameters[i]);
 
-                preparedStatement.execute();
+                _ps.execute();
 
                 _res = true;
             }
@@ -190,15 +182,22 @@ public class DAOMessage extends DAO implements IDAOMessage {
         }catch (Exception e){
             e.printStackTrace();
         } finally {
-            this.closeConnection();
+            closeConnection();
             return _res;
         }
     }
 
+    /**
+     * Actualiza mensaje
+     * @param message
+     * @param templateId
+     * @param parameters
+     * @param companyId
+     */
     @Override
     public void updateMessage( String message, int templateId, String[] parameters,int companyId ) {
         Message _me = null;
-        Connection _conn = this.getBdConnect();
+        Connection _conn = getBdConnect();
         int messageId = 0;
 
         PreparedStatement preparedStatement = null;
@@ -213,18 +212,24 @@ public class DAOMessage extends DAO implements IDAOMessage {
             if(_rs.next())
             messageId = _rs.getInt(1);
 
-            this.updateParameterOfMessage(messageId, parameters,companyId);
+            updateParameterOfMessage(messageId, parameters,companyId);
         } catch ( SQLException e1 ) {
             e1.printStackTrace();
         }
 
-        this.closeConnection();
+        closeConnection();
     }
 
+    /**
+     * Actualiza relacion entre parametro y mensaje
+     * @param messageId
+     * @param parameters
+     * @param companyId
+     */
     @Override
     public void updateParameterOfMessage(int messageId, String[] parameters, int companyId) {
 
-        Connection _conn = this.getBdConnect();
+        Connection _conn = getBdConnect();
         PreparedStatement _ps = null;
         try{
 
@@ -236,7 +241,7 @@ public class DAOMessage extends DAO implements IDAOMessage {
         } catch (Exception e){
             e.printStackTrace();
         } finally {
-            this.closeConnection();
+            closeConnection();
         }
     }
 
