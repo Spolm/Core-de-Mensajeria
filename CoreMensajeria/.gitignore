@@ -101,3 +101,13 @@ fabric.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Configuración del log4j
+!log4j2.xml
+!prueba1.xml
+!prueba2.xml
+!prueba3.xml
+!prueba4.xml
+!prueba5.xml
+!prueba6.xml
+!prueba7.xml

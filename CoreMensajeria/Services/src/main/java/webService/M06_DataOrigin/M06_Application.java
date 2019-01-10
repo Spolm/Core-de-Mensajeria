@@ -1,21 +1,27 @@
 package webService.M06_DataOrigin;
 
-import Classes.M06_DataOrigin.AddApplicationData;
-import Classes.M06_DataOrigin.Application;
-import Classes.M06_DataOrigin.ApplicationDAO;
+import DTO.M06_DataOrigin.DTOAddApplication;
+import Entities.Entity;
+import Entities.M06_DataOrigin.AddApplicationData;
+import Entities.M06_DataOrigin.Application;
+import Logic.Command;
+import Logic.CommandsFactory;
+import Logic.M06_DataOrigin.CreateApplicationCommand;
+import Logic.M06_DataOrigin.UpdateApplicationCommand;
+import Mappers.M06_DataOrigin.MapperDTOAddApplication;
+import Mappers.MapperFactory;
 import com.google.gson.*;
 import Exceptions.ApplicationNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 
 @Path("/applications")
 public class M06_Application {
 
     private Gson gson = new Gson();
-        private ApplicationDAO _applicationDAO = new ApplicationDAO();
+    //    private ApplicationDAO _applicationDAO = new ApplicationDAO();
 
     //                   GET ENDPOINTS
     //Get all applications endpoint. Path: applications
@@ -28,11 +34,18 @@ public class M06_Application {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getApplications(){
         try{
-            return Response.ok(gson.toJson(_applicationDAO.getApplications())).build();
+            Command c = CommandsFactory.GetApplication();
+            c.execute();
+            return Response.ok(gson.toJson(c.Return())).build();
         }
         catch (DatabaseConnectionProblemException e) {
             return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
 
     }
 
@@ -47,12 +60,17 @@ public class M06_Application {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getApplications(@PathParam("companyId") int companyId){
         try{
-            return Response.ok(gson.toJson(_applicationDAO.getApplications(companyId))).build();
+            Command c = CommandsFactory.GetApplicationCompanyId(companyId);
+            c.execute();
+            return Response.ok(gson.toJson(c.Return())).build();
         }
         catch (DatabaseConnectionProblemException e) {
             return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
-
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     //Get application by application ID endpoint. Path: applications/id/(id)
@@ -66,14 +84,20 @@ public class M06_Application {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getApplication(@PathParam("id") int id){
         try{
-            return Response.ok(gson.toJson(_applicationDAO.getApplication(id))).build();
+            Command c = CommandsFactory.GetApplicationId(id);
+            c.execute();
+            return Response.ok(gson.toJson(c.Return())).build();
         }catch (ApplicationNotFoundException e){
             return Response.status(404).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
         catch (DatabaseConnectionProblemException e) {
             return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return null;
     }
 
     //Get application by Token endpoint. Path: applications/token/{token}
@@ -87,13 +111,20 @@ public class M06_Application {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getApplication(@PathParam("token") String token){
         try{
-            return Response.ok(gson.toJson(_applicationDAO.getApplication(token))).build();
+            Command c = CommandsFactory.GetApplicationToken(token);
+            c.execute();
+            return Response.ok(gson.toJson(c.Return())).build();
         }catch (ApplicationNotFoundException e){
             return Response.status(404).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
         catch (DatabaseConnectionProblemException e) {
             return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
         }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
 
     }
 
@@ -109,13 +140,19 @@ public class M06_Application {
     @Produces(MediaType.APPLICATION_JSON)
     public Response activeApplication(@PathParam("id") int id) {
         try {
+            Command c = CommandsFactory.UpdateApplication(id , 1);
+            c.execute();
             return Response.ok(generateSuccessAsJson("Aplicacion activada exitosamente.",
-                    _applicationDAO.updateApplication(id,1))).build();
+                    ((UpdateApplicationCommand) c).Return())).build();
         } catch (DatabaseConnectionProblemException e) {
             return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
-        }catch (ApplicationNotFoundException e){
+        } catch (ApplicationNotFoundException e){
             return Response.status(404).entity(this.generateErrorAsJson(e.getMessage())).build();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        return null;
     }
 
     //Inactivate an application by application Id. Path: applications/inactive/{id}
@@ -129,13 +166,19 @@ public class M06_Application {
     @Produces(MediaType.APPLICATION_JSON)
     public Response inactiveApplication(@PathParam("id") int id) {
         try {
+            Command c = CommandsFactory.UpdateApplication(id , 0);
+            c.execute();
             return Response.ok(this.generateSuccessAsJson("Aplicacion pausada exitosamente.",
-                    _applicationDAO.updateApplication(id, 0))).build();
+                    ((UpdateApplicationCommand) c).Return())).build();
         } catch (DatabaseConnectionProblemException e) {
             return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
-        }catch (ApplicationNotFoundException e){
+        } catch (ApplicationNotFoundException e){
             return Response.status(404).entity(this.generateErrorAsJson(e.getMessage())).build();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        return null;
     }
 
     //                   POST ENDPOINTS
@@ -151,13 +194,21 @@ public class M06_Application {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addApplication(AddApplicationData application){
+    public Response addApplication(DTOAddApplication application){
         try {
+            MapperDTOAddApplication _mapper = MapperFactory.mapperDTOAddAplication();
+            Entity _addApplication = _mapper.CreateEntity(application);
+            Command c = CommandsFactory.CreateApplication(_addApplication);
+            c.execute();
             return Response.ok(this.generateSuccessAsJson("Aplicacion creada exitosamente.",
-                    _applicationDAO.createApplication(application))).build();
+                    ((CreateApplicationCommand) c).Return())).build();
         } catch (DatabaseConnectionProblemException e) {
             return Response.status(500).entity(this.generateErrorAsJson(e.getMessage())).build();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        return null;
     }
 
     //                   DELETE ENDPOINTS

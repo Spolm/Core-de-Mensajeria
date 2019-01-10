@@ -18,9 +18,9 @@ import {
 import { MoreFiltersComponent } from "./more-filters/more-filters.component";
 import { Chart } from "chart.js";
 import { Point } from "./point";
-import { forEach } from "@angular/router/src/utils/collection";
-import { ChartsComponent } from "../charts/charts.component";
-import { DropdownComponent } from "../bs-component/components";
+//import { forEach } from "@angular/router/src/utils/collection";
+//import { ChartsComponent } from "../charts/charts.component";
+//import { DropdownComponent } from "../bs-component/components";
 import { DropdownMethods } from "./DropdownMethods";
 //import { create } from "domain";
 
@@ -37,8 +37,7 @@ enum EntityType {
 enum ChartType {
     line = "line",
     bar = "bar",
-    pie = "pie",
-    doughnut = "doughnut"
+    pie = "pie"
 }
 
 @Component({
@@ -85,7 +84,6 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
         this.chartTypes = [
             ["bar", "barras", true],
             ["line", "línea", false],
-            ["doughnut", "dona", false]
         ];
     }
 
@@ -246,7 +244,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                     data,
                     this.channelsChartElement,
                     "Cantidad de mensajes por canal",
-                    ChartType.doughnut
+                    ChartType.bar
                 );
             },
             error => {
@@ -470,11 +468,11 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
                     campaigns,
                     ChartType.bar
                 );
-
+                
                 this.updateChartData(
                     this.channelsChart,
                     channels,
-                    ChartType.doughnut
+                    ChartType.bar
                 );
 
                 this.updateChartData(
@@ -557,7 +555,7 @@ export class StatisticsComponent extends DropdownMethods implements OnInit {
 
     convertselectedDaysOfWeekIdsIntoHttpParams(params: HttpParams) {
         this.selectedDaysOfWeek.forEach(dayOfWeekId => {
-            params = params.append("dayofweekId", dayOfWeekId.toString());
+            params = params.append("dayofweekId", dayOfWeekId.dayOfWeek_id.toString());
         });
         return params;
     }

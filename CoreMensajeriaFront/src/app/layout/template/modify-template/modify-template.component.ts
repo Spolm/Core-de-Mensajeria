@@ -26,8 +26,10 @@ export class ModifyTemplateComponent {
   parametersJson: any = [];
   channelsJson: any = [];
   applicationsJson: any = [];
+  campaignsJson: any = [];
   originOption = 'app';
   applicationId: number;
+  campaignId:number;
   formMessage = '';
   parameters: Array<string> = [];
   newParameters: Array<string> = [];
@@ -45,8 +47,10 @@ export class ModifyTemplateComponent {
     this.getParameters();
     this.getChannels();
     this.getApplications(Number(this.companyId));
+    this.getCampaigns(Number(this.companyId));
     this.getTemplate();    
     this.getPrivileges(this.userId, Number(this.companyId));
+
   }
 
   async getPrivileges(userId: string, companyId: number) {
@@ -95,19 +99,28 @@ export class ModifyTemplateComponent {
     });
   }
 
-  async getTemplate() {
+  getCampaigns(company: number) {
+    this.templateService.getCampaigns(company).subscribe(data => {
+      this.campaignsJson = data;
+    });
+  }
+
+ getTemplate() {
     this.templateService.getTemplate(this.templateId).subscribe(data => {
       this.templateJson = data;
+      console.log(this.templateJson);
+      this.formMessage = this.templateJson.message.message;
+      this.dateIni = this.templateJson.planning.startDate.substring(0,10);
+      this.dateEnd = this.templateJson.planning.endDate.substring(0,10);
+      this.timeIni = this.templateJson.planning.startTime;
+      this.timeEnd = this.templateJson.planning.endTime;
+      this.applicationId = this.templateJson.application._idApplication;
+      this.assignParameter(this.parameters, this.templateJson.message.parameterArrayList);
+      this.assignChannelsIntegrators(this.channels_integrators, this.templateJson.channels);
+      console.log(data);
     });
-    await delay(1000);
-    this.formMessage = this.templateJson.message.message;
-    this.dateIni = this.templateJson.planning.startDate;
-    this.dateEnd = this.templateJson.planning.endDate;
-    this.timeIni = this.templateJson.planning.startTime;
-    this.timeEnd = this.templateJson.planning.endTime;
-    this.applicationId = this.templateJson.application._idApplication;
-    this.assignParameter(this.parameters, this.templateJson.message.parameterArrayList);
-    this.assignChannelsIntegrators(this.channels_integrators, this.templateJson.channels);
+    
+    
   }
 
   assignParameter(place: Array<any>, data: Array<any>) {
@@ -118,7 +131,7 @@ export class ModifyTemplateComponent {
 
   assignChannelsIntegrators(place: Array<any>, data: Array<any>) {
     data.forEach((channel) => {
-      channel.integrators.forEach((integrator) => {
+      channel._integrators.forEach((integrator) => {
         place.push(
           { channel, integrator }
         );
@@ -162,9 +175,9 @@ export class ModifyTemplateComponent {
   }
 
   addIntegrator(channel: any, integratorId: number) {
-    if (!this.channels_integrators.find(x => x.channel.idChannel == channel.idChannel)) {
-      if (!this.channels_integrators.find(x => x.integrator.idIntegrator == integratorId)) {
-        const integrator = channel.integrators.find(x => x.idIntegrator == integratorId);
+    if (!this.channels_integrators.find(x => x.channel._id == channel._id)) {
+      if (!this.channels_integrators.find(x => x.integrator._id == integratorId)) {
+        const integrator = channel._integrators.find(x => x._id == integratorId);
         this.channels_integrators.push(
           { channel, integrator }
         );
@@ -177,10 +190,8 @@ export class ModifyTemplateComponent {
   }
 
   deleteParameter(message: string, parameterName: string) {
-    const pointer = message.search(parameterName) - 4;
-    const startMessage = message.slice(0, pointer);
-    const endMessage = message.slice(pointer + parameterName.length + 8, message.length);
-    this.formMessage = startMessage + endMessage;
+    var text = '[.$'+parameterName+'$.]';
+    this.formMessage=message.replace(text,'');
     this.parameters.splice(this.parameters.indexOf(parameterName), 1);
     if (this.newParameters.find(x => x == parameterName)) {
       this.newParameters.splice(this.newParameters.indexOf(parameterName), 1);
@@ -202,7 +213,7 @@ export class ModifyTemplateComponent {
           if (this.formMessage != '') {
               if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
                   if (this.channels_integrators[0]) {
-                      this.templateService.updateTemplate(this.templateId, this.formMessage, this.parameters, this.newParameters, Number(this.companyId), this.channels_integrators,this.applicationId, planning);
+                      this.templateService.updateTemplate(this.templateId, this.formMessage, this.parameters, this.newParameters, Number(this.companyId), this.channels_integrators, this.campaignId ,this.applicationId, planning);
                   } else {
                       this.toastr.error('Falta llenar un campo', 'Error',
                           {

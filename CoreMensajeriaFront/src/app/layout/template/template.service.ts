@@ -49,8 +49,14 @@ export class TemplateService {
       map(this.extractData));
   }
 
+  getCampaigns(companyId:number)
+  {
+    return this.http.get(endpoint + 'M03_Campaigns/GetCampaignsByCompany/' + companyId.toString()+'/1').pipe(
+      map(this.extractData));
+  }
+
   getCompanies(userId: string) {
-    return this.http.get(endpoint + 'M02_Companies/GetCompaniesByResponsible?id=' + userId).pipe(
+    return this.http.get(endpoint + 'M02_Companies/GetCompaniesByResponsible/' + userId).pipe(
       map(this.extractData));
   }
 
@@ -93,20 +99,20 @@ export class TemplateService {
   }
 
   // @ts-ignore
-  postTemplate(formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[], applicationId: number, planning: any[]) {
+  postTemplate(formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[], campaignId: number ,applicationId: number, planning: any[]) {
     let flag: boolean;
     const json = {
-      'messagge': formMessage.valueOf(),
+      'message': formMessage.valueOf(),
       'userId': localStorage.getItem('userid'),
       'company': company,
       'parameters': parameters,
       'newParameters': newParameters,
       'channel_integrator': channel_integrator.valueOf(),
-      // se coloca una campaña y origen por defecto
       'applicationId': applicationId,
-      'campaign': 10,
+      'campaign': campaignId,
       'planning': planning
     };
+    console.log(json);
     this.http.post(endpoint + 'templates/add', json).subscribe((res: boolean) => {
       flag = res;
       if (flag) {
@@ -117,7 +123,7 @@ export class TemplateService {
           });
         this.router.navigate(['/template']);
       } else {
-        this.toastr.error('No se a podido insertar', 'Error',
+        this.toastr.error('No se ha podido insertar', 'Error',
           {
             timeOut: 2800,
             progressBar: true
@@ -137,10 +143,10 @@ export class TemplateService {
     this.router.navigate(['template', id]);
   }
 
-  async updateTemplate(templateId: number, formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[], applicationId: number, planning: any[]) {
+  async updateTemplate(templateId: number, formMessage: string, parameters: any[], newParameters: any[], company: number, channel_integrator: any[], campaignId: number ,applicationId: number, planning: any[]) {
     let flag: boolean;
     const json = {
-      'messagge': formMessage.valueOf(),
+      'message': formMessage.valueOf(),
       'templateId': templateId,
       'company': company,
       'parameters': parameters,
@@ -148,9 +154,10 @@ export class TemplateService {
       'channel_integrator': channel_integrator.valueOf(),
       // se coloca una campaña y origen por defecto
       'applicationId': applicationId,
-      'campaign': 10,
+      'campaign': campaignId,
       'planning': planning
     };
+    console.log(json);
     this.http.put(endpoint + 'templates/update', json).subscribe(async (res: boolean) => {
       flag = res;
       if (flag) {
@@ -162,7 +169,7 @@ export class TemplateService {
         await delay(1000);
         this.router.navigate(['template', templateId]);
       } else {
-        this.toastr.error('No se a podido insertar', 'Error',
+        this.toastr.error('No se ha podido insertar', 'Error',
           {
             timeOut: 2800,
             progressBar: true
@@ -170,7 +177,7 @@ export class TemplateService {
       }
     },
       error => {
-        this.toastr.error('Falla en la conexion', 'Error',
+        this.toastr.error('Falla en la conexión', 'Error',
           {
             timeOut: 2800,
             progressBar: true

@@ -3,15 +3,14 @@ package Exceptions;
 /**
  * Creado por M02 para manejo de errores en la obtencion de campañas
  */
-public class CompanyDoesntExistsException extends Exception {
-    public final int ERROR_CODE = 560;
-    public final String ERROR_MSG = "Ha ocurrido un error "+ ERROR_CODE+". La compañia que desea visualizar no existe.";
+public class CompanyDoesntExistsException extends PersonalizedException {
     private String _clase;
     private String _metodo;
 
 
     /**
-     * Excepción personalizada para el manejo de errores en los metodos que buscan informacion de compañias en la base de datos
+     * Excepción personalizada para el manejo de errores en los metodos que buscan informacion
+     * de compañias en la base de datos
      * @param error recibe el stack trace de la exception que atrapa
      * @param clase recibe la clase en la que ocurrio el error
      * @param metodo recibe el metodo en el que ocurrio el error
@@ -20,28 +19,21 @@ public class CompanyDoesntExistsException extends Exception {
         super(error);
         _clase = clase;
         _metodo = metodo;
+        ERROR_CODE = 560;
+        ERROR_MSG = "Ha ocurrido un error "+ ERROR_CODE+". La compañia que desea visualizar no existe.";
     }
 
     /**
-     * Excepción personalizada para el manejo de errores en los metodos que buscan informacion de compañias en la base de datos
+     * Excepción personalizada para el manejo de errores en los metodos que buscan informacion
+     * de compañias en la base de datos
      * @param error recibe el stack trace de la exception que atrapa
      */
     public CompanyDoesntExistsException(Exception error) {
         super(error);
-
+        ERROR_CODE = 560;
+        ERROR_MSG = "Ha ocurrido un error "+ ERROR_CODE+". El parametro "+" no puede ser Null";
     }
-    @Override
-    public String toString()
-    {
-        StringBuilder str = null;
 
-
-        str = new StringBuilder( ERROR_CODE + "\n" );
-        str.append( ERROR_MSG + "\n" );
-        str.append( super.toString() );
-
-        return str.toString();
-    }
 
 
 }

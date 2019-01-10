@@ -12,16 +12,21 @@ export class TemplatePageComponent implements OnInit {
 
   userId: string = localStorage.getItem("userid");
   companyId: string = localStorage.getItem("companyId");
+  application: any =[];
   privilegesJson: any = [];
   CTEMPLATE = false;
   RTEMPLATE = false;
   UTEMPLATE = false;
   DTEMPLATE = false;
   ATEMPLATE = false;
-
+  status:string;
   id: number;
+  message:any=[]
+  user:any=[]
   private sub: any;
   template: any = [];
+  campaign:any=[];
+  planning:any=[];
 
   constructor(private templateService: TemplateService, private route: ActivatedRoute) {
     this.sub = this.route.params.subscribe(params => {
@@ -29,6 +34,7 @@ export class TemplatePageComponent implements OnInit {
     });
     this.getTemplate();
     this.getPrivileges(this.userId, Number(this.companyId));
+    console.log(this.status);
   }
 
   async getPrivileges(userId: string, companyId: number) {
@@ -69,6 +75,12 @@ export class TemplatePageComponent implements OnInit {
   getTemplate() {
     this.templateService.getTemplate(this.id).subscribe(data => {
       this.template = data;
+      this.status=this.template.status.statusName;
+      this.application=this.template.application;
+      this.user=this.template.user;
+      this.message=this.template.message;
+      this.campaign=this.template.campaign;
+      this.planning=this.template.planning;
     });
   }
 

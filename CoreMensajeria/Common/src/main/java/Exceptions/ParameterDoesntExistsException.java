@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class ParameterDoesntExistsException extends Exception{
+public class ParameterDoesntExistsException extends PersonalizedException{
     private int id;
 
     public ParameterDoesntExistsException() {
@@ -13,6 +13,10 @@ public class ParameterDoesntExistsException extends Exception{
 
     public ParameterDoesntExistsException(String message, Exception e) {
         super(message, e);
+    }
+
+    public ParameterDoesntExistsException(String message) {
+        super(message);
     }
 
     public ParameterDoesntExistsException(String message, Exception e, int id) {

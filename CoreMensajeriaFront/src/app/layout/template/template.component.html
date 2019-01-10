@@ -6,7 +6,6 @@
 <div class="d-flex flex-row-reverse">
   <button type="button" class="btn btn-dark" routerLink="/template/create" *ngIf="CTEMPLATE">Crear Plantilla</button>
   <select class="form-control" id="company" name="company" [(ngModel)]="companyId" (change)="changeCompany(companyId)">
-
     <ng-container *ngFor="let company of companiesJson">
       <option *ngIf="company._status" [value]="company._idCompany">
         <p>
@@ -33,39 +32,39 @@
     <tbody *ngIf="RTEMPLATE">
       <tr *ngFor="let template of templates; let i = index">
         <td class="text-center" *ngIf="template.status.statusName == 'Aprobado'; else elseBlock">
-          {{template.templateId}}
+          {{template._id}}
           <br>
           <span class="badge badge-success notclickable">Aprobado</span>
         </td>
         <ng-template #elseBlock>
           <td class="text-center">
-            {{template.templateId}}
+            {{template._id}}
             <br>
-            <ngbd-modal-approve [templateId]="template.templateId" (spread)="regetTemplates()"></ngbd-modal-approve>
+            <ngbd-modal-approve [templateId]="template._id" (spread)="regetTemplates()"></ngbd-modal-approve>
           </td>
         </ng-template>
         <td class="message">{{template.message.message}}</td>
         <td class="text-center">
           <div *ngFor="let channel of template.channels; let i = index">
             <hr *ngIf="i > 0">
-            {{channel.nameChannel}} {{channel.integrators.nameIntegrator}}
+            {{channel._nameChannel}} {{channel._integrators.nameIntegrator}}
           </div>
         </td>
         <td class="text-center">
           <div *ngFor="let channel of template.channels; let i = index">
             <hr *ngIf="i > 0">
-            <div *ngFor="let integrator of channel.integrators; let i = index">
+            <div *ngFor="let integrator of channel._integrators; let i = index">
               {{integrator.nameIntegrator}}
             </div>
           </div>
         </td>
-        <td class="text-center">Banesco online</td>
+        <td class="text-center">{{template.application._nameApplication}}</td>
         <td class="">
           <div class="d-flex justify-content-around align-items-center">
-            <i class="fa fa-info-circle clickable" aria-hidden="true" (click)="templateDetails(template.templateId)"
+            <i class="fa fa-info-circle clickable" aria-hidden="true" (click)="templateDetails(template._id)"
               title="Detalles" *ngIf="RTEMPLATE"></i>
             <i class="fa fa-edit clickable" aria-hidden="true" *ngIf="template.status.statusName == 'No Aprobado' && UTEMPLATE"
-              title="Editar" routerLink="/template/modify/{{template.templateId}}"></i>
+              title="Editar" routerLink="/template/modify/{{template._id}}"></i>
           </div>
         </td>
       </tr>

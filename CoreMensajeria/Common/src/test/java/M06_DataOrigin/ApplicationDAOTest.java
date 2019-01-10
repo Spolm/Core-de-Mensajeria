@@ -1,8 +1,8 @@
 package M06_DataOrigin;
 
-import Classes.M06_DataOrigin.AddApplicationData;
-import Classes.M06_DataOrigin.Application;
-import Classes.M06_DataOrigin.ApplicationDAO;
+import Entities.M06_DataOrigin.AddApplicationData;
+import Entities.M06_DataOrigin.Application;
+import Entities.M06_DataOrigin.ApplicationDAO;
 import Exceptions.ApplicationNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class ApplicationDAOTest {
         );
     }
 
-    @Test
+  /*  @Test
     private void createApplicationsTest(){
         createAddApplicationData();
         try{
@@ -116,6 +116,6 @@ public class ApplicationDAOTest {
         } catch (ApplicationNotFoundException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 }

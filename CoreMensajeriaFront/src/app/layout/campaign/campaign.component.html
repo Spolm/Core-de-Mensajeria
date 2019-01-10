@@ -4,6 +4,10 @@
   <button type="button" class="btn btn-dark" routerLink="/campaigns/create">Crear Campaña</button>
 </div>
 
+<div class="d-flex flex-row-reverse">
+    <button type="button" class="btn btn-dark" routerLink="/campaigns/modify">Modificar Campaña</button>
+  </div>
+
 <div class="card">
   <table class="table table-bordered table-hover">
     <thead class="thead-dark">
@@ -27,8 +31,8 @@
             <td>{{campaign._descCampaign}}</td> 
             <td>{{campaign._startCampaign}}</td> 
             <td>{{campaign._endCampaign}}</td> 
-            <td *ngIf="!campaign._statusCampaign"><span class="badge badge-danger" (click)="activateCampaign(campaign._idCampaign)">Inactiva</span></td>
-            <td *ngIf="campaign._statusCampaign"><span class="badge badge-success" (click)="deactivateCampaign(campaign._idCampaign)">Activa</span></td> 
+            <td *ngIf="!campaign._statusCampaign"><span class="badge badge-danger" (click)="activateCampaign(campaign._idCampaign,campaign._statusCampaign,campaign)">Inactiva</span></td>
+            <td *ngIf="campaign._statusCampaign"><span class="badge badge-success" (click)="desactivateCampaign(campaign._idCampaign,campaign._statusCampaign,campaign)">Activa</span></td> 
           </tr>
     </tbody>
   </table>

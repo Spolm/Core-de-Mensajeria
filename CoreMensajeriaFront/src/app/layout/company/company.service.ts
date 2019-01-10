@@ -1,3 +1,4 @@
+import { Company } from './../../../model/company-model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -15,6 +16,8 @@ const httpOptions = {
 })
 export class CompanyService {
 
+
+
   constructor(private http: HttpClient) { 
       
    }
@@ -26,7 +29,7 @@ export class CompanyService {
 
   getCompanies(): Observable<any> {
    
-      return this.http.get(endpoint + 'GetCompanies?id='+localStorage.getItem('userid')).pipe(
+      return this.http.get(endpoint + 'GetCompaniesByUserPP/'+localStorage.getItem('userid')).pipe(
         map(this.extractData));
       
   }
@@ -46,12 +49,24 @@ export class CompanyService {
   }*/
 
   addCompany (company): Observable<any> {
-    return this.http.post<any>(endpoint + 'M02_Company/AddCompany', company, httpOptions).pipe(
-      tap((company) => console.log(`company added w/ ${company._name}`)),
+    company._idUser = localStorage.getItem('userid')
+    console.log(company)
+    return this.http.post<any>(endpoint + 'AddCompanyPP', company, httpOptions).pipe(
+      tap((company) => console.log('company added w/ ${company._name}')),
+    );
+  }
+  editCompany (opcionSeleccionado): Observable<any> {
+    opcionSeleccionado._idUser = localStorage.getItem('userid')
+    console.log(opcionSeleccionado)
+    return this.http.put<any>(endpoint + 'Edit/CompanyPP', opcionSeleccionado, httpOptions).pipe(
+      tap((company) => console.log('company added w/ ${company._name}')),
     );
   }
 
-  activateCompany(_idCompany: Number){
-    return this.http.get(endpoint+'update/'+_idCompany).subscribe();
+
+  activateCompany (company): Observable<any> {
+    return this.http.post<any>(endpoint + 'updateCompanyStatus', company, httpOptions).pipe(
+      tap((company) => console.log('company added w/ ${company._name}')),
+    );
   }
 }

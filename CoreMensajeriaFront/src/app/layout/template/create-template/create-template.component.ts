@@ -25,8 +25,10 @@ export class CreateTemplateComponent {
   parametersJson: any = [];
   channelsJson: any = [];
   applicationsJson: any = [];
+  campaignsJson:any=[];
   originOption = 'app';
   applicationId: number;
+  campaignId: number;
   formMessage = '';
   parameters: Array<string> = [];
   newParameters: Array<string> = [];
@@ -43,6 +45,7 @@ export class CreateTemplateComponent {
     this.getChannels();
     this.getApplications(Number(this.companyId));
     this.getPrivileges(this.userId, Number(this.companyId));
+    this.getCampaigns(Number(this.companyId));
   }
 
   async getPrivileges(userId: string, companyId: number) {
@@ -87,6 +90,14 @@ export class CreateTemplateComponent {
     });
   }
 
+  getCampaigns(company: number) {
+    this.templateService.getCampaigns(company).subscribe(data => {
+      this.campaignsJson = data;
+      console.log(this.campaignsJson);
+    });
+    
+  }
+
   addParameter(message: string, parameterName: string) {
     const myFormMessage = document.getElementById('formMessage');
     const pointer = (myFormMessage as HTMLTextAreaElement).selectionStart;
@@ -124,9 +135,9 @@ export class CreateTemplateComponent {
   }
 
   addIntegrator(channel: any, integratorId: number) {
-    if (!this.channels_integrators.find(x => x.channel.idChannel == channel.idChannel)) {
-      if (!this.channels_integrators.find(x => x.integrator.idIntegrator == integratorId)) {
-        const integrator = channel.integrators.find(x => x.idIntegrator == integratorId);
+    if (!this.channels_integrators.find(x => x.channel._id == channel._id)) {
+      if (!this.channels_integrators.find(x => x.integrator._id == integratorId)) {
+        const integrator = channel._integrators.find(x => x._id == integratorId);
         this.channels_integrators.push(
           { channel, integrator }
         );
@@ -139,10 +150,8 @@ export class CreateTemplateComponent {
   }
 
   deleteParameter(message: string, parameterName: string) {
-    const pointer = message.search(parameterName) - 4;
-    const startMessage = message.slice(0, pointer);
-    const endMessage = message.slice(pointer + parameterName.length + 8, message.length);
-    this.formMessage = startMessage + endMessage;
+    var text = '[.$'+parameterName+'$.]';
+    this.formMessage = message.replace(text,'');
     this.parameters.splice(this.parameters.indexOf(parameterName), 1);
     if (this.newParameters.find(x => x == parameterName)) {
       this.newParameters.splice(this.newParameters.indexOf(parameterName), 1);
@@ -167,7 +176,14 @@ export class CreateTemplateComponent {
           if (this.formMessage != '') {
               if ((this.formMessage !== undefined) && (this.formMessage.length > 5)) {
                   if (this.channels_integrators[0] && (this.applicationId !== undefined) && this.dateIni !== undefined && this.dateEnd !== undefined && this.timeIni !== undefined && this.timeEnd !== undefined) {
-                      this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, Number(this.companyId), this.channels_integrators, this.applicationId, planning);
+                      this.templateService.postTemplate(this.formMessage, this.parameters, this.newParameters, Number(this.companyId), this.channels_integrators, this.campaignId,this.applicationId, planning);
+                      console.log(this.formMessage);
+                      console.log(this.parameters);
+                      console.log(this.newParameters);
+                      console.log(Number(this.companyId));
+                      console.log(this.channels_integrators);
+                      console.log(this.applicationId);
+                      console.log(planning);
                   } else {
                       this.toastr.warning('Falta llenar un campo', 'Aviso',
                           {

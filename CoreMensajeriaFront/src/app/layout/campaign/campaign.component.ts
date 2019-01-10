@@ -17,6 +17,7 @@ import { Company } from '../../../model/company-model';
 export class CampaignComponent implements OnInit {
 
   campaigns: any = [];
+
   companyList: any;
   companies: any [];
 
@@ -30,11 +31,14 @@ private counter: number = 0;
 private campaignList = Array<Campaign>();
 private vacio: boolean;
 private lastCampaignId: number;
+campaign: Campaign = new Campaign();
+campaignStatus: any;
 ngOnInit() {
 
   this.companyService.getCompanies().subscribe((data) => {
     this.vacio = true;
     this.companyList = data;
+    console.log(this.companyList);
     localStorage.setItem('companyid', data._idCompany);
     if (this.companyList.length > 0) {
     this.vacio = false;
@@ -42,9 +46,12 @@ ngOnInit() {
     }, (err) => {
     console.log(err);
     })
-this.campaignService.getCampaignsByCompany().subscribe((data) => {
+
+
+this.campaignService.getCampaigns().subscribe((data) => {
 this.vacio = true;
 this.campaignList = data;
+console.log(this.campaignList);
 if (this.campaignList.length > 0) {
 this.vacio = false;
 }
@@ -53,16 +60,20 @@ console.log(err);
 })
 }
 
-activateCampaign(_idCampaign: number){
-  this.toastr.info("Para confirmar realice doble click de nuevo", "Activar la campaña id: "+ _idCampaign,
+activateCampaign(_idCampaign: number , _statusCampaign : boolean , campaignt : Campaign){
+  this.toastr.info("Para confirmar realice doble click de nuevo", "Activar la compañia id: "+ _idCampaign,
   {
     timeOut: 2800,
     progressBar: true
   });
   this.counter++;
+  var stat = {_idCampaign:campaignt._idCampaign, _status:campaignt._statusCampaign};
   if(this.counter == 2 && this.lastCampaignId == _idCampaign){
-    this.campaignService.activateCampaign(_idCampaign);
-    this.toastr.success("Campaña activada", "Campaign id: "+ _idCampaign,
+    this.campaignService.activateCampaign(stat).toPromise().then(res => {
+    });
+    console.log(campaignt);
+  
+    this.toastr.success("Campaign activada", "Campaign id: "+ _idCampaign,
     {
       timeOut: 2800,
       progressBar: true
@@ -74,16 +85,20 @@ activateCampaign(_idCampaign: number){
   this.lastCampaignId = _idCampaign;
 }
 
-deactivateCampaign(_idCampaign: number){
-  this.toastr.info("Para confirmar realice doble click de nuevo", "Desactivar la campaña id: "+ _idCampaign,
+desactivateCampaign(_idCampaign: number , _statusCampaign : boolean , campaignta : Campaign){
+  this.toastr.info("Para confirmar realice doble click de nuevo", "Desactivar la compañia id: "+ _idCampaign,
   {
     timeOut: 2800,
     progressBar: true
   });
   this.counter++;
   if(this.counter == 2 && this.lastCampaignId == _idCampaign){
-    this.campaignService.activateCampaign(_idCampaign);
-    this.toastr.success("Campaña desactivada", "Campaign id: "+ _idCampaign,
+    console.log(campaignta);
+    var stat = {_idCampaign:campaignta._idCampaign, _status:campaignta._statusCampaign};
+    this.campaignService.activateCampaign(stat).toPromise().then(res => {
+      //manejo de la respuesta del servicio
+    });
+    this.toastr.success("campaign desactivada", "Campaign id: "+ _idCampaign,
     {
       timeOut: 2800,
       progressBar: true

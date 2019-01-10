@@ -1,58 +1,132 @@
 package webService.M07_Template;
 
 
-import Classes.M07_Template.HandlerPackage.ParameterHandler;
-import Classes.M07_Template.MessagePackage.Parameter;
+import DTO.M07_Template.NewParameter;
+import Exceptions.M07_Template.InvalidParameterException;
 import Exceptions.ParameterDoesntExistsException;
+import Logic.Command;
+import Logic.CommandsFactory;
 import com.google.gson.Gson;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import webService.M01_Login.Error;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 
 /**
- * M07_Parameter class is an API that is responsible for requesting information
+ * M07_Parameter es un API que es responsable de pedir informacion acerca de los parametros de un mensaje.
  * about the parameters of a message
  */
 @Path("/parameters")
 @Produces(MediaType.APPLICATION_JSON)
 public class M07_Parameter {
+    private final String MESSAGE_ERROR_INTERN = "Error Interno";
+    private final String MESSAGE_EXCEPTION = "Excepcion";
+    private final String MESSAGE_ERROR_PARAMETERDOESNTEXIST= "El parámetro ingresado no existe";
+    final static Logger log = LogManager.getLogger("CoreMensajeria");
+    Gson gson = new Gson();
 
     /**
-     * serialization and deserialization between Java objects
-     */
-    public Gson gson = new Gson();
-
-    /**
-     *this method is responsible for making a new parameter associated
-     * with a company stored.
-     * @param name name of the parameter
-     * @param companyId company id
+     * Este metodo es responsable de hacer un parametro nuevo asociado con una compania almacenada.
+     * @param newParameter new parameter with its name and companyid
      */
     @POST
     @Path("add")
-    public void postParameter(@FormParam("name") String name,@FormParam("companyId") int companyId){
-        ParameterHandler parameterHandler = new ParameterHandler();
-        parameterHandler.postParameter(name,companyId);
+    public Response postParameter(NewParameter newParameter) {
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo postParameter("+newParameter+")" );
+        //endregion
+        Response response;
+        Error error;
+        try {
+            if(newParameter ==null){
+                throw new InvalidParameterException();
+            }
+            if(newParameter.getName() ==null || newParameter.getCompanyId()==0){
+                throw new InvalidParameterException();
+            }
+            Command c = CommandsFactory.createCommandPostParameter(newParameter);
+            c.execute();
+            response = Response.ok(gson.toJson(c.Return())).build();
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo postParameter("+newParameter+") exitosamente");
+            //endregion
+
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
+            error = new Error(e.getMessage());
+            response = Response.status(404).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo postParameter("+newParameter+") arrojo la excepcion:" + e.getMessage());
+            //endregion
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo postParameter("+newParameter+") arrojo la excepcion:" + e.getMessage());
+            //endregion
+        }
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo postParameter("+newParameter+") con retorno: "+ response.getEntity().toString());
+        //endregion
+        return response;
     }
 
     /**
-     *this method returns all the parameters filtering by a specified company
+     * Este metodo retorna todos los parametros filtrados por una compania especifica.
      * @param companyId company id
      * @return ArrayList of the parameters by company
      */
     @GET
     @Path("get")
     public Response getParameters(@QueryParam("companyId") int companyId){
-        ParameterHandler parameterHandler = new ParameterHandler();
-        ArrayList<Parameter> parameterList = new ArrayList<Parameter>();
+        //region Instrumentation Debug
+        log.debug("Entrando a el metodo getParameters("+companyId+")" );
+        //endregion
+        Response response;
+        Error error;
         try {
-            parameterList = parameterHandler.getParameters(companyId);
-        }catch (ParameterDoesntExistsException e){
-            //logg
+            if(companyId==0){
+                throw new InvalidParameterException();
+            }
+            Command c = CommandsFactory.createCommandGetParameters(companyId);
+            c.execute();
+            response = Response.ok(gson.toJson(c.Return())).build();
+            //region Instrumentation Info
+            log.info("Se ejecuto el metodo getParameters("+companyId+") exitosamente");
+            //endregion
+        } catch (InvalidParameterException e) {
+            e.printStackTrace();
+            error = new Error(e.getMessage());
+            response = Response.status(404).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getParameters("+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
+        } catch (ParameterDoesntExistsException e){
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_PARAMETERDOESNTEXIST);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getParameters("+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
+        } catch (Exception e) {
+            e.printStackTrace();
+            error = new Error(MESSAGE_ERROR_INTERN);
+            error.addError(MESSAGE_EXCEPTION,e.getMessage());
+            response = Response.status(500).entity(error).build();
+            //region Instrumentation Error
+            log.error("El metodo getParameters("+companyId+") arrojo la excepcion:" + e.getMessage());
+            //endregion
         }
-            return Response.ok(gson.toJson(parameterList)).build();
+        //region Instrumentation Debug
+        log.debug("Saliendo del metodo getParameters("+companyId+") con retorno: "+ response.getEntity().toString());
+        //endregion
+        return response;
     }
 
 }

@@ -1,9 +1,9 @@
 package webService.M10_Profile;
 
-import Classes.M01_Login.User;
-import Classes.M01_Login.UserDAO;
-import Classes.M02_Company.Company;
-import Classes.M10_Profile.*;
+import Entities.M01_Login.User;
+import Entities.M02_Company.Company;
+import Entities.M10_Profile.*;
+import Persistence.M01_Login.DAOUser;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -12,14 +12,14 @@ import javax.ws.rs.core.Response;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-@Path("/profile")
+//@Path("/profile")
 public class M10_ProfileService {
-    private Gson _gson = new Gson();
+    /*private Gson _gson = new Gson();
     private User _us;
     private ArrayList<User> _users;
     private ArrayList<Company> _comp;
     private M10_Profile _daoProfile;
-    private UserDAO _daoUser;
+    private DAOUser _daoUser;
     private ArrayList<Rol> _rols;
 
 
@@ -36,7 +36,7 @@ public class M10_ProfileService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listIntegrator(@PathParam("id") int id) { //Hay que cambiarle el nombre a esto
         try {
-            _daoUser = new UserDAO();
+            _daoUser = new DAOUser();
             _us = _daoUser.findByUsernameId(id);
         } catch (NullPointerException e) {
             _us = null;
@@ -139,5 +139,5 @@ public class M10_ProfileService {
         finally {
             return Response.ok(_gson.toJson(_users)).build();
         }
-    }
+    }*/
 }
