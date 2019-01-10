@@ -2,7 +2,6 @@ package Persistence.M07_Template;
 
 import Entities.Entity;
 import Entities.M07_Template.MessagePackage.Parameter;
-import Entities.Sql;
 import Exceptions.ParameterDoesntExistsException;
 import Persistence.DAO;
 
@@ -17,8 +16,6 @@ public class DAOParameter extends DAO implements IDAOParameter {
     private final String DELETE_PARAMETER = "{CALL m07_deleteParameter(?)}";
 
     PreparedStatement _pt;
-    Statement _st;
-    boolean _salida;
 
     /**
      * Guarda todos los parametros
