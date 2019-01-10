@@ -72,7 +72,10 @@ export class ModifyCampaignComponent implements OnInit {
           (this.opcamp._idCompany != null) )    {
     var sDate =  new Date(this.opcamp._startCampaign+"T02:06:58.147")
     var fDate =  new Date(this.opcamp._endCampaign+"T02:06:58.147")
-
+           
+    console.log(this.opcamp._idCompany);
+    console.log(this.opcamp);
+    
     this.opcamp._startCampaign =sDate.toISOString()
     this.opcamp._endCampaign = fDate.toISOString()
     if(this.opcamp._startCampaign < this.opcamp._endCampaign){
@@ -80,15 +83,23 @@ export class ModifyCampaignComponent implements OnInit {
       this.campaignService.editCampaign(this.opcamp).toPromise().then(res => {
         //manejo de la respuesta del servicio
       });
+      this.toastr.success("Campana modificada Correctamente")
+
+      this.opcamp._descCampaign = null ; 
+      this.opcamp._startCampaign = null ;
+      this.opcamp._endCampaign = null ;
+
     }
       else{
         this.toastr.error("Fecha inicio mayor que Fecha Fin");
+        
+        this.opcamp._descCampaign = null ; 
+        this.opcamp._startCampaign = null ;
+        this.opcamp._endCampaign = null ;
       }
-
-
   }
   else{
-    
+    this.toastr.error("Falta llenar algun campo");
     this.opcamp._nameCampaign = null ;
     this.opcamp._descCampaign = null ; 
     this.opcamp._startCampaign = null ;
