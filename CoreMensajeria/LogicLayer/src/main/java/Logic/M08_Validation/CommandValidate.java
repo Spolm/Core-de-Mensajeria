@@ -8,12 +8,20 @@ import Logic.Command;
 import Logic.CommandsFactory;
 
 /**
- * Comando compuesto que ejecuta todos los comandos que validen los parametros de envio de un mensaje
+ * Comando compuesto que ejecuta todos los comandos que validen
+ * los parametros de envio de un mensaje
+ *
+ * @see CompositeCommand
  */
 public class CommandValidate extends CompositeCommand<Boolean> {
+    /**
+     * Variable que nos permite saber si la validacion fue exitosa
+     */
     private boolean _valid = false;
 
     /**
+     * Constructor del comando que recibe los parametros
+     *
      * @param parameters parámetros estandar que se reciben tanto de aplicación como de archivo
      */
     public CommandValidate(VerifiedParameter parameters) {
@@ -26,12 +34,14 @@ public class CommandValidate extends CompositeCommand<Boolean> {
 
 
     /**
+     * Metodo que ejecuta los comandos de validacion
+     *
      * @throws SMSTooLongException
      * @throws UnexpectedErrorException
      * @throws TemplateDoesntExistsException
      */
     @Override
-    public void execute() throws SMSTooLongException, UnexpectedErrorException, TemplateDoesntExistsException{
+    public void execute() throws SMSTooLongException, UnexpectedErrorException, TemplateDoesntExistsException {
         Command[] commandList = get_commandList();
         try {
             for (Command c : commandList) {

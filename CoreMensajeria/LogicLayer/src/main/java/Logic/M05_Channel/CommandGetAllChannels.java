@@ -8,8 +8,11 @@ import Persistence.M05_Channel.DAOChannel;
 import java.util.ArrayList;
 
 public class CommandGetAllChannels extends Command {
+    private ArrayList<Entity> _channelList;
 
-    ArrayList<Entity> _channelList;
+    public CommandGetAllChannels(){
+        this._channelList = null;
+    }
 
     @Override
     public void execute() throws DatabaseConnectionProblemException {

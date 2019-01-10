@@ -50,7 +50,7 @@ export class ModifyTemplateComponent {
     this.getCampaigns(Number(this.companyId));
     this.getTemplate();    
     this.getPrivileges(this.userId, Number(this.companyId));
-    console.log(this.campaignsJson);
+
   }
 
   async getPrivileges(userId: string, companyId: number) {
@@ -103,22 +103,24 @@ export class ModifyTemplateComponent {
     this.templateService.getCampaigns(company).subscribe(data => {
       this.campaignsJson = data;
     });
-    console.log(this.campaignsJson);
   }
 
-  async getTemplate() {
+ getTemplate() {
     this.templateService.getTemplate(this.templateId).subscribe(data => {
       this.templateJson = data;
+      console.log(this.templateJson);
+      this.formMessage = this.templateJson.message.message;
+      this.dateIni = this.templateJson.planning.startDate.substring(0,10);
+      this.dateEnd = this.templateJson.planning.endDate.substring(0,10);
+      this.timeIni = this.templateJson.planning.startTime;
+      this.timeEnd = this.templateJson.planning.endTime;
+      this.applicationId = this.templateJson.application._idApplication;
+      this.assignParameter(this.parameters, this.templateJson.message.parameterArrayList);
+      this.assignChannelsIntegrators(this.channels_integrators, this.templateJson.channels);
+      console.log(data);
     });
-    await delay(1000);
-    this.formMessage = this.templateJson.message.message;
-    this.dateIni = this.templateJson.planning.startDate;
-    this.dateEnd = this.templateJson.planning.endDate;
-    this.timeIni = this.templateJson.planning.startTime;
-    this.timeEnd = this.templateJson.planning.endTime;
-    this.applicationId = this.templateJson.application._idApplication;
-    this.assignParameter(this.parameters, this.templateJson.message.parameterArrayList);
-    this.assignChannelsIntegrators(this.channels_integrators, this.templateJson.channels);
+    
+    
   }
 
   assignParameter(place: Array<any>, data: Array<any>) {
@@ -129,7 +131,7 @@ export class ModifyTemplateComponent {
 
   assignChannelsIntegrators(place: Array<any>, data: Array<any>) {
     data.forEach((channel) => {
-      channel.integrators.forEach((integrator) => {
+      channel._integrators.forEach((integrator) => {
         place.push(
           { channel, integrator }
         );
@@ -173,9 +175,9 @@ export class ModifyTemplateComponent {
   }
 
   addIntegrator(channel: any, integratorId: number) {
-    if (!this.channels_integrators.find(x => x.channel.idChannel == channel.idChannel)) {
-      if (!this.channels_integrators.find(x => x.integrator.idIntegrator == integratorId)) {
-        const integrator = channel.integrators.find(x => x.idIntegrator == integratorId);
+    if (!this.channels_integrators.find(x => x.channel._id == channel._id)) {
+      if (!this.channels_integrators.find(x => x.integrator._id == integratorId)) {
+        const integrator = channel._integrators.find(x => x._id == integratorId);
         this.channels_integrators.push(
           { channel, integrator }
         );

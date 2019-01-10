@@ -12,6 +12,7 @@ import Logic.CommandsFactory;
 import Logic.M02_Company.AddCompanyCommand;
 import Logic.M02_Company.GetAllCompaniesCommand;
 import Logic.M02_Company.GetCompanyByUserCommand;
+import Logic.M02_Company.GetCompanyResponsibleCommand;
 import Mappers.CompanyMapper.*;
 import Mappers.MapperFactory;
 import webService.M01_Login.Error;
@@ -209,7 +210,30 @@ public class M02_Companies {
         }
     }
 
+    @GET
+    @Path("/GetCompaniesByResponsible/{idUser}")
+    @Produces("application/json")
+    public Response getCompaniesByResponsible(@PathParam("idUser") int _id) throws  CompanyDoesntExistsException {
+        Response.ResponseBuilder rb = Response.status(Response.Status.ACCEPTED);
+        DTOIdCompany _dto = DTOFactory.CreateDTOIdCompany( _id );
+        Response.ResponseBuilder _rb = Response.status( Response.Status.OK );
 
+        try {
+            MapperIdCompany _mapper = MapperFactory.createMapperIdCompany();
+            Company _comp = ( Company )_mapper.CreateEntity( _dto );
+            GetCompanyResponsibleCommand _command = CommandsFactory.createGetCompanyByResponsibleCommand( _comp );
+            _command.execute();
+            MapperFullCompany _mappCompany = MapperFactory.CreateMapperFullCompany();
+            List < DTOFullCompany > _dtoCo = _mappCompany.CreateDtoList( _command.ReturnList() ) ;
+            _rb.entity( gson.toJson( _dtoCo ) ) ;
+            return _rb.build();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rb.build();
+    }
 //------------------------------------------------------
 
 

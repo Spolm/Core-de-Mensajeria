@@ -3,42 +3,42 @@ package DTO.M04_Integrator;
 import DTO.DTO;
 
 public class DTOIntegrator extends DTO {
-
-    private String integratorType;
+    private int id;
     private int threadCapacity;
     private float messageCost;
+    private boolean enabled;
+    private String integratorType;
     private String nameIntegrator;
     private String apiIntegrator;
-    private boolean enabled;
 
     /**
-     *
-
-     * @param threadCapacity
-     * @param messageCost
-     * @param nameIntegrator
-     * @param apiIntegrator
-     * @param enabled
-     */
-    public DTOIntegrator(String integratorType, int threadCapacity, float messageCost, String nameIntegrator,
+    * @param id
+    * @param integratorType
+    * @param threadCapacity
+    * @param messageCost
+    * @param nameIntegrator
+    * @param apiIntegrator
+    * @param enabled
+     * @see DTOIntegrator
+    */
+    public DTOIntegrator(int id, String integratorType, int threadCapacity, float messageCost, String nameIntegrator,
                          String apiIntegrator, boolean enabled) {
-
+        this.id = id;
+        this.integratorType = integratorType;
         this.threadCapacity = threadCapacity;
         this.messageCost = messageCost;
         this.nameIntegrator = nameIntegrator;
         this.apiIntegrator = apiIntegrator;
         this.enabled = enabled;
-        this.integratorType = integratorType;
     }
 
-    /**
-     *
-     */
-    public DTOIntegrator() {
-
+    public int getId() {
+        return id;
     }
 
-
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getThreadCapacity() {
         return threadCapacity;

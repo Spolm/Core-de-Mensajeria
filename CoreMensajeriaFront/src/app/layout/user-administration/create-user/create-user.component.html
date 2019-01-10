@@ -1,0 +1,30 @@
+<router-outlet></router-outlet>
+<div>
+  <h2 class="text-capitalize main-title">Crear Usuario</h2>
+  <hr>
+  <form>
+    <div class="form-row">
+
+      <!-- Input for the state area of the user -->
+      <div class="form-group col-12 col-md-9">
+        <label for="formState">Estado</label>
+        <br>
+        <select class="form-control" id="formState" [(ngModel)]="formState" name="state" (change)="addState(formState)">
+          <option>
+            venezuela
+          </option>
+        </select>
+      </div>
+
+
+      <!-- Input for the state area of the user -->
+      <div class="form-group col-12 col-md-9">
+        <label for="formTown">Municipio</label>
+        <br>
+        <select class="form-control" id="formTown" [(ngModel)]="formTown" name="town" (change)="addTown(formTown)">
+          <option>
+            libertador
+          </option>
+        </select>
+      </div>
+    </div>

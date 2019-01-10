@@ -5,9 +5,9 @@ import Entities.EntityFactory;
 import Entities.M04_Integrator.Integrator;
 import Entities.M05_Channel.Channel;
 import Entities.Sql;
-import Exceptions.ChannelNotFoundException;
+import Exceptions.M05_Channel.ChannelNotFoundException;
 import Exceptions.DatabaseConnectionProblemException;
-import Exceptions.IntegratorNotFoundException;
+import Exceptions.M04_Integrator.IntegratorNotFoundException;
 import Persistence.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,49 +24,15 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
     private final String SELECT_ALL_INTEGRATORS_BY_CHANNEL = "{call m04_getIntegratorsByChannel(?)}";
 
     private Connection _conn;
-    private Integrator _integrator;
-    private ArrayList<Entity> _integratorList;
-    private ResultSet _result;
 
     /**
-     * Constructor que se encarga de realizar la conexión
-     * a la base de datos
-     *
-     * @see Connection
-     */
-
+    * Constructor que se encarga de realizar la conexión
+    * a la base de datos
+    *
+    * @see Connection
+    */
     public DAOIntegrator() {
         this._conn = Sql.getConInstance();
-    }
-
-    /**
-     * Retorna una lista de Integradores
-     * Este método retorna una lista de integradores, en caso de no existir
-     * el archivo se encontrara en blanco.
-     *
-     * @return Lista de Integradores
-     * @see Integrator
-     */
-
-    @Override
-    public ArrayList<Entity> listIntegrator() throws DatabaseConnectionProblemException {
-         _integratorList = new ArrayList<>();
-        try {
-
-           // Integrator _integrator = (Integrator) e;
-            _integratorList = new ArrayList<>();
-            PreparedStatement st = _conn.prepareCall(SELECT_ALL_INTEGRATORS);
-            _result = st.executeQuery();
-
-            while (_result.next()) {
-                _integratorList.add(extractIntegrator(_result));
-            }
-            return _integratorList;
-        } catch (SQLException exc) {
-            throw new DatabaseConnectionProblemException("Error de comunicacion con la base de datos.", exc);
-        } finally {
-            Sql.bdClose(_conn);
-        }
     }
 
     /**
@@ -78,7 +44,6 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
      * @return Lista de Integradores
      * @see Integrator
      */
-
     public Entity getConcreteIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException{
         try {
             PreparedStatement preparedStatement = _conn.prepareCall(SELECT_CONCRETE_INTEGRATOR);
@@ -91,32 +56,61 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
                 throw new IntegratorNotFoundException("El integrador no existe.");
             }
         }
-        catch (SQLException exc) {
-            throw new DatabaseConnectionProblemException("Error al obtener integrador.", exc);
+        catch (SQLException e) {
+            throw new DatabaseConnectionProblemException("Error de comunicacion con la base de datos.", e);
         }
-
-
     }
 
     /**
-     * Método que nos permite deshabilitar integrador
-     * permite cambiar el estado del integrador
+    * Retorna una lista de Integradores
+    * Este método retorna una lista de integradores, en caso de no existir
+    * el archivo se encontrara en blanco.
+    *
+    * @return Lista de Integradores
+    * @see Integrator
+    */
+    @Override
+    public ArrayList<Entity> listIntegrator() throws DatabaseConnectionProblemException {
+        ArrayList<Entity> integratorList = new ArrayList<>();
+        try {
+            PreparedStatement st = _conn.prepareCall(SELECT_ALL_INTEGRATORS);
+            ResultSet result = st.executeQuery();
+            while (result.next()) {
+                integratorList.add(extractIntegrator(result));
+            }
+
+            return integratorList;
+        } catch (SQLException e) {
+            throw new DatabaseConnectionProblemException("Error de comunicacion con la base de datos.", e);
+        }
+    }
+
+    /**
+     * Retorna una lista de integradores por canal.
+     * Este método retorna una lista de integradores, en caso de no tener
+     * el archivo se encontrara en blanco.
      *
-     * @param id del integrador a buscar en la base de datos
+     * @return Lista de canales
+     * @see Channel
      * @see Integrator
      */
-    @Override
-    public Entity disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
+    public ArrayList<Entity> listIntegratorByChannel(int id) throws DatabaseConnectionProblemException,
+            ChannelNotFoundException {
+        ArrayList<Entity> integratorList = new ArrayList<>();
         try {
-
-            _conn = Sql.getConInstance();
-            PreparedStatement preparedStatement = _conn.prepareCall(UPDATE_DISABLE_INTEGRATOR);
+            PreparedStatement preparedStatement = _conn.prepareCall(SELECT_ALL_INTEGRATORS_BY_CHANNEL);
             preparedStatement.setInt(1, id);
-            preparedStatement.execute();
-            return getConcreteIntegrator(id);
-        } catch (SQLException exc) {
-            exc.printStackTrace();
-            throw new DatabaseConnectionProblemException("Error al deshabilitar integrator. ", exc);
+            ResultSet result = preparedStatement.executeQuery();
+            while (result.next()) {
+                integratorList.add(extractIntegrator(result));
+            }
+            if (integratorList.size() == 0) {
+                throw new ChannelNotFoundException("No se han encontrado integradores.");
+            }
+
+            return integratorList;
+        } catch (SQLException e) {
+            throw new DatabaseConnectionProblemException("Error de comunicacion con la base de datos.", e);
         }
     }
 
@@ -130,67 +124,47 @@ public class DAOIntegrator extends DAO implements IDAOIntegrator {
     @Override
     public Entity enableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
         try {
-
-            _conn = Sql.getConInstance();
             PreparedStatement preparedStatement = _conn.prepareCall(UPDATE_ENABLE_INTEGRATOR);
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
+
             return getConcreteIntegrator(id);
-        } catch (SQLException exc) {
-            exc.printStackTrace();
-            throw new DatabaseConnectionProblemException("Error al habilitar integrator. ", exc);
+        } catch (SQLException e) {
+            throw new DatabaseConnectionProblemException("Error al habilitar integrator. ", e);
         }
-
     }
 
     /**
-     * Retorna una lista de integradores por canal.
-     * Este método retorna una lista de integradores, en caso de no tener
-     * el archivo se encontrara en blanco.
-     *
-     * @return Lista de canales
-     * @see Channel
-     * @see Integrator
-     */
-
-    public ArrayList<Entity> listIntegratorByChannel(int id) throws DatabaseConnectionProblemException,
-            ChannelNotFoundException {
-        _integratorList = new ArrayList<>();
+    * Método que nos permite deshabilitar integrador
+    * permite cambiar el estado del integrador
+    *
+    * @param id del integrador a buscar en la base de datos
+    * @see Integrator
+    */
+    @Override
+    public Entity disableIntegrator(int id) throws DatabaseConnectionProblemException, IntegratorNotFoundException {
         try {
-           // Channel channel = (Channel) e;
-            Sql.bdClose(_conn);
-            _conn = Sql.getConInstance();
-           // ArrayList<Entity> integratorList = new ArrayList<>();
-            PreparedStatement preparedStatement = _conn.prepareCall(SELECT_ALL_INTEGRATORS_BY_CHANNEL);
+            PreparedStatement preparedStatement = _conn.prepareCall(UPDATE_DISABLE_INTEGRATOR);
             preparedStatement.setInt(1, id);
-            ResultSet result = preparedStatement.executeQuery();
+            preparedStatement.execute();
 
-            while (result.next())
-                _integratorList.add(extractIntegrator(result));
-            if (_integratorList.size() == 0)
-                throw new ChannelNotFoundException("El canal no existe");
-
-            return _integratorList;
-        }
-        catch (SQLException ex) {
-            throw new DatabaseConnectionProblemException("Error de comunicacion con la base de datos.", ex);
-        }
-        finally {
-            Sql.bdClose(_conn);
+            return getConcreteIntegrator(id);
+        } catch (SQLException e) {
+            throw new DatabaseConnectionProblemException("Error al deshabilitar integrator. ", e);
         }
     }
 
     /**
-     *
-     * @param rs
-     * @return El integrador solicitado
-     * @throws SQLException
-     */
-    private static Integrator extractIntegrator(ResultSet rs) throws SQLException {
-         return EntityFactory.CreateIntegrator(rs.getString("int_name"),
-                rs.getInt("int_id"), rs.getString("int_name"),
-                rs.getFloat("int_messageCost"), rs.getInt("int_threadCapacity"),
-                rs.getString("int_tokenApi"), rs.getBoolean("int_enabled"));
+    *
+    * @param result objeto obtenido de la base de datos.
+    * @return El integrador solicitado
+    * @throws SQLException en caso de un error en la base de datos
+    */
+    private static Integrator extractIntegrator(ResultSet result) throws SQLException {
+         return EntityFactory.CreateIntegrator(result.getString("int_name"),
+                result.getInt("int_id"), result.getString("int_name"),
+                result.getFloat("int_messageCost"), result.getInt("int_threadCapacity"),
+                result.getString("int_tokenApi"), result.getBoolean("int_enabled"));
     }
 
     @Override

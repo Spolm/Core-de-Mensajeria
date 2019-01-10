@@ -25,6 +25,7 @@ const routes: Routes = [
             { path: 'company', loadChildren: './company/company.module#CompanyModule' },
             { path: 'campaigns', loadChildren: './campaign/campaign.module#CampaignModule' },
             { path: 'createuser', loadChildren: './createuser/createuser.module#CreateuserModule'},
+            { path: 'profiles', loadChildren: './user-administration/user-administration.module#UserAdministrationModule'},
         ]
     }
 ];

@@ -12,16 +12,11 @@ import java.util.ArrayList;
 public class FindPrivilegeByUserIdCommand extends Command {
     private static int _id;
     private static Entity _us;
-
+    private static ArrayList<Privilege> priList;
     public FindPrivilegeByUserIdCommand(int id) {this._id = id;}
 
     @Override
     public void execute() throws SQLException {
-
-    }
-    @Override
-    public ArrayList<Privilege> Return() {
-        ArrayList<Privilege> priList = new ArrayList<>();
 
         try{
 
@@ -31,8 +26,12 @@ public class FindPrivilegeByUserIdCommand extends Command {
         }
 
         catch (Exception e){
-
+            throw e;
         }
+
+    }
+    @Override
+    public ArrayList<Privilege> Return() {
         return priList;
     }
 }

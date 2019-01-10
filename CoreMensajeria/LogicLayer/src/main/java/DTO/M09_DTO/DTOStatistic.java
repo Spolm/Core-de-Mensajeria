@@ -8,7 +8,6 @@ public class DTOStatistic extends DTO {
 
     private ArrayList x;
     private   ArrayList<Integer> y;
-    private   String type;
 
     public DTOStatistic() {
         x = new ArrayList();
@@ -18,12 +17,6 @@ public class DTOStatistic extends DTO {
     public DTOStatistic(ArrayList x, ArrayList<Integer> y) {
         this.x = x;
         this.y = y;
-    }
-
-    public DTOStatistic(ArrayList x, ArrayList<Integer> y, String type) {
-        this.x = x;
-        this.y = y;
-        this.type = type;
     }
 
     public ArrayList getX() {
@@ -40,13 +33,5 @@ public class DTOStatistic extends DTO {
 
     public void setY(ArrayList<Integer> y) {
         this.y = y;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

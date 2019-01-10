@@ -9,6 +9,7 @@ import Mappers.LoginMapper.LoginMapper;
 import Mappers.LoginMapper.UserMapper;
 import Mappers.GenericMapper;
 import Mappers.M07_Template.MapperTemplate;
+import Mappers.M10_Profile.MapperEditUser;
 import Mappers.StatisticMapper.StatisticMapper;
 
 public class MapperFactory {
@@ -121,10 +122,17 @@ public class MapperFactory {
     // endregion
 
 
-    //M04_Region
-    public static MapperIntegrator createMapperIntegrator(){return new MapperIntegrator();}
-    public static MapperChannel createMapperChannel(){ return new MapperChannel(); }
-    // end M04_region
+    //M04_Integrator
+    public static MapperIntegrator createMapperIntegrator(){
+        return new MapperIntegrator();
+    }
+    //end M04_Integrator
+
+    //M05_Channels
+    public static MapperChannel createMapperChannel(){
+        return new MapperChannel();
+    }
+    //end M05_Channels
 
 
     public static GenericMapper createStatisticMapper(){ return new StatisticMapper();}
@@ -138,4 +146,13 @@ public class MapperFactory {
     public static LoginMapper createLoginMapper() {
         return new LoginMapper();
     }
+
+    //region M10
+
+    /**
+     * Method that instantiated a MapperEditUser object
+     * @return object MapperEditUser
+     */
+    public static MapperEditUser createMapperEditUser(){return new MapperEditUser();}
+    //endregion
 }
