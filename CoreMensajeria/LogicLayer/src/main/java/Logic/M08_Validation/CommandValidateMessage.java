@@ -10,53 +10,58 @@ import Logic.Command;
 import Logic.CommandsFactory;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 /**
- * Comando para validar mensajes
+ * Comando que permite realizar la validacion de los mensajes
+ *
+ * @see CommandValidateParameter
  */
-public class CommandValidateMessage extends CommandValidateParameter{
+public class CommandValidateMessage extends CommandValidateParameter {
+    /**
+     * ID de la plantilla
+     */
     private int _template;
+    /**
+     * Lista de mensajes con los parametros
+     */
     private ArrayList<Message> _messages;
 
     /**
      * @param _template recibe el id de una plantilla
      * @param _messages recibe los parámetros
      */
-    public CommandValidateMessage(int _template, ArrayList<Message> _messages)
-    {
+    public CommandValidateMessage(int _template, ArrayList<Message> _messages) {
         this._template = _template;
         this._messages = _messages;
     }
 
     /**
-     *
      * @throws SMSTooLongException
      * @throws TemplateDoesntExistsException
      */
-    public void execute () throws Exception {
-        Logger logger = Logger.getLogger(CommandValidateParameter.class.getName());
+    public void execute() throws Exception {
         try {
-            Command<Template> c =CommandsFactory.createCommandGetTemplate(_template);
+            Command<Template> c = CommandsFactory.createCommandGetTemplate(_template);
             c.execute();
             Template template = c.Return();
             ArrayList<Channel> channels = template.getChannels();
-            for (Channel channel: channels) {
+            for (Channel channel : channels) {
                 String channelName = channel.get_nameChannel();
-                for (Message message: _messages){
-                    Command<String> commandParse = CommandsFactory.createCommandParseMessage(message,template);
+                for (Message message : _messages) {
+                    Command<String> commandParse = CommandsFactory.createCommandParseMessage(message, template);
                     commandParse.execute();
                     String msg = commandParse.Return();
-                    if ((channelName.equals("SMS"))&& (msg.length() > 160) ) {
-                        logger.warning("SMS supera 160 caracteres");
+                    if ((channelName.equals("SMS")) && (msg.length() > 160)) {
+                        log.error("SMS supera 160 caracteres");
                         this.set_valid(false);
                         throw new SMSTooLongException();
                     }
                 }
             }
+            log.info("Validación del Mensaje Correcta");
             this.set_valid(true);
         } catch (TemplateDoesntExistsException e) {
-            logger.warning("Plantilla no Existe");
+            log.error("Plantilla no Existe");
             this.set_valid(false);
             throw e;
         } catch (Exception e) {

@@ -8,6 +8,7 @@ import Logic.Command;
 import Persistence.DAOFactory;
 import Persistence.M08_SendMessage.IDAOSentMessage;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -40,7 +41,7 @@ public class CommandInsertMessage extends Command<Boolean> {
      Método que construye el objeto de la clase sentMessage para almacenarlo en base de datos
      */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws SQLException {
         SentMessage sentMessage = EntityFactory.createSendMessage();
         sentMessage.set_applicationId(this._template.getApplication().get_idApplication());
         sentMessage.set_campaignId(this._template.getCampaign().get_idCampaign());

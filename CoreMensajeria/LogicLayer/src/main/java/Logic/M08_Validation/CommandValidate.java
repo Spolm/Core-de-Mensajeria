@@ -14,6 +14,9 @@ import Logic.CommandsFactory;
  * @see CompositeCommand
  */
 public class CommandValidate extends CompositeCommand<Boolean> {
+    /**
+     * Variable que nos permite saber si la validacion fue exitosa
+     */
     private boolean _valid = false;
 
     /**
